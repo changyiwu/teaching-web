@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智慧課堂教學整合網 - 康軒 | 翰林 | 南一 | 班級工具</title>
+  <meta name="description" content="專為教師設計的課堂教學整合門戶，快速連結康軒數位高手、翰林行動大師、南一數位資源入口網與各式班級教學工具，並提供各冊教學資料預留空間。">
+  
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating animated background blobs for a premium visual aesthetic -->
+  <div class="background-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="container">
+    <!-- Header Area -->
+    <header>
+      <div class="title-section">
+        <div class="logo-icon" aria-hidden="true">
+          <i class="fa-solid fa-laptop-code"></i>
+        </div>
+        <div class="site-title">
+          <h1>課堂教學整合網</h1>
+          <p>高效整合數位平台 • 豐富您的課堂內容</p>
+        </div>
+      </div>
+      
+      <!-- Live Classroom Clock & Date Widget -->
+      <div class="clock-widget" id="classroom-clock" title="課堂即時時間">
+        <i class="fa-regular fa-clock clock-icon" aria-hidden="true"></i>
+        <div class="clock-time" id="clock-time">00:00:00</div>
+        <div class="clock-date">
+          <span id="clock-date">2026年06月26日</span>
+          <span id="clock-day">星期五</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Top Section: Core Portals & Tools -->
+    <main>
+      <section class="section-card" id="quick-portals">
+        <h2 class="section-title">
+          <i class="fa-solid fa-link" aria-hidden="true"></i>常用教學資源與工具
+        </h2>
+        <div class="portal-grid">
+          <!-- 1. KNSH -->
+          <a href="https://digitalmaster.knsh.com.tw/" target="_blank" rel="noopener noreferrer" class="portal-card knsh" id="portal-knsh">
+            <div class="portal-card-header">
+              <div class="portal-icon-wrapper">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
+            </div>
+            <div class="portal-card-body">
+              <h3 class="portal-card-title">康軒數位高手</h3>
+              <p class="portal-card-desc">提供康軒線上備課、電子書與多元數位教學媒材資源。</p>
+            </div>
+          </a>
+
+          <!-- 2. HLE -->
+          <a href="https://edisc3.hle.com.tw/edisc_v3/index.html?t=1901286642" target="_blank" rel="noopener noreferrer" class="portal-card hle" id="portal-hle">
+            <div class="portal-card-header">
+              <div class="portal-icon-wrapper">
+                <i class="fa-solid fa-chalkboard-user"></i>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
+            </div>
+            <div class="portal-card-body">
+              <h3 class="portal-card-title">翰林行動大師</h3>
+              <p class="portal-card-desc">便利的翰林教學資源平台，隨選隨用各式備課教案與電子書。</p>
+            </div>
+          </a>
+
+          <!-- 3. Nani -->
+          <a href="https://nanidigi.nani.com.tw/" target="_blank" rel="noopener noreferrer" class="portal-card nani" id="portal-nani">
+            <div class="portal-card-header">
+              <div class="portal-icon-wrapper">
+                <i class="fa-solid fa-school"></i>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
+            </div>
+            <div class="portal-card-body">
+              <h3 class="portal-card-title">南一數位資源入口網</h3>
+              <p class="portal-card-desc">整合南一書局各學段備課軟體、數位電子書及教學補充包。</p>
+            </div>
+          </a>
+
+          <!-- 4. Class Tools -->
+          <a href="https://changyiwu.github.io/class-tools-2" target="_blank" rel="noopener noreferrer" class="portal-card tools" id="portal-class-tools">
+            <div class="portal-card-header">
+              <div class="portal-icon-wrapper">
+                <i class="fa-solid fa-toolbox"></i>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
+            </div>
+            <div class="portal-card-body">
+              <h3 class="portal-card-title">班級工具</h3>
+              <p class="portal-card-desc">課堂計時器、隨機抽籤、搶答器等互動教學輔助工具箱。</p>
+            </div>
+          </a>
+
+          <!-- 5. Class Score -->
+          <a href="https://changyiwu.github.io/class-score" target="_blank" rel="noopener noreferrer" class="portal-card score" id="portal-class-score">
+            <div class="portal-card-header">
+              <div class="portal-icon-wrapper">
+                <i class="fa-solid fa-trophy"></i>
+              </div>
+              <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
+            </div>
+            <div class="portal-card-body">
+              <h3 class="portal-card-title">班級計分</h3>
+              <p class="portal-card-desc">即時課堂評分與小組競賽點數管理，增添班級學習互動樂趣。</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Bottom Section: Volumes 1 to 6 Teaching Materials (Reserved Space) -->
+      <section class="section-card" id="volume-materials">
+        <h2 class="section-title">
+          <i class="fa-solid fa-book-open" aria-hidden="true"></i>各冊教學資料庫
+        </h2>
+        
+        <div class="tabs-container">
+          <!-- Tab Buttons (Volume 1 to 6) -->
+          <div class="tabs-navigation" role="tablist" aria-label="教學冊別分頁">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-v1" id="tab-v1">
+              <i class="fa-solid fa-bookmark"></i>第一冊
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-v2" id="tab-v2">
+              <i class="fa-solid fa-bookmark"></i>第二冊
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-v3" id="tab-v3">
+              <i class="fa-solid fa-bookmark"></i>第三冊
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-v4" id="tab-v4">
+              <i class="fa-solid fa-bookmark"></i>第四冊
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-v5" id="tab-v5">
+              <i class="fa-solid fa-bookmark"></i>第五冊
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-v6" id="tab-v6">
+              <i class="fa-solid fa-bookmark"></i>第六冊
+            </button>
+          </div>
+
+          <!-- Tab Panels -->
+          <div class="tab-panels">
+            <!-- V1 -->
+            <div class="tab-panel active" id="panel-v1" role="tabpanel" aria-labelledby="tab-v1">
+              <div class="materials-grid">
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第一冊 備課教材</h4>
+                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第一冊 簡報與影音</h4>
+                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第一冊 學習單與試卷</h4>
+                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
+                </div>
+                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(1)">
+                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第一冊連結</h4>
+                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- V2 -->
+            <div class="tab-panel" id="panel-v2" role="tabpanel" aria-labelledby="tab-v2">
+              <div class="materials-grid">
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第二冊 備課教材</h4>
+                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第二冊 簡報與影音</h4>
+                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第二冊 學習單與試卷</h4>
+                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
+                </div>
+                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(2)">
+                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第二冊連結</h4>
+                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- V3 -->
+            <div class="tab-panel" id="panel-v3" role="tabpanel" aria-labelledby="tab-v3">
+              <div class="materials-grid">
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第三冊 備課教材</h4>
+                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第三冊 簡報與影音</h4>
+                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第三冊 學習單與試卷</h4>
+                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
+                </div>
+                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(3)">
+                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第三冊連結</h4>
+                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- V4 -->
+            <div class="tab-panel" id="panel-v4" role="tabpanel" aria-labelledby="tab-v4">
+              <div class="materials-grid">
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第四冊 備課教材</h4>
+                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第四冊 簡報與影音</h4>
+                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第四冊 學習單與試卷</h4>
+                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
+                </div>
+                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(4)">
+                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第四冊連結</h4>
+                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- V5 -->
+            <div class="tab-panel" id="panel-v5" role="tabpanel" aria-labelledby="tab-v5">
+              <div class="materials-grid">
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第五冊 備課教材</h4>
+                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第五冊 簡報與影音</h4>
+                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第五冊 學習單與試卷</h4>
+                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
+                </div>
+                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(5)">
+                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第五冊連結</h4>
+                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- V6 -->
+            <div class="tab-panel" id="panel-v6" role="tabpanel" aria-labelledby="tab-v6">
+              <div class="materials-grid">
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第六冊 備課教材</h4>
+                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第六冊 簡報與影音</h4>
+                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
+                </div>
+                <div class="material-placeholder-card">
+                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title">第六冊 學習單與試卷</h4>
+                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
+                </div>
+                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(6)">
+                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
+                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第六冊連結</h4>
+                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Side Section: Classroom Notes (A very handy utility for teachers) -->
+      <section class="section-card" id="classroom-notes">
+        <h2 class="section-title">
+          <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>課堂隨堂備忘錄
+        </h2>
+        <div class="notes-container">
+          <textarea id="teacher-notes" class="quick-note-textarea" placeholder="在此輸入課堂隨手筆記或待辦事項（系統會為您自動儲存，下次上課時不會消失）..."></textarea>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 課堂智慧教學整合門戶系統. 專為高效課堂互動設計.</p>
+    </footer>
+  </div>
+
+  <!-- Interactive Modal to Add Custom Link to Volumes -->
+  <div class="modal" id="add-link-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeAddLinkModal()" aria-label="關閉視窗">&times;</button>
+      <h3 class="modal-header" id="modal-title">新增教學連結 - 第 <span id="target-volume-num">1</span> 冊</h3>
+      <form id="add-link-form" onsubmit="handleFormSubmit(event)">
+        <input type="hidden" id="modal-volume-index" value="1">
+        <div class="form-group">
+          <label for="link-title">連結名稱</label>
+          <input type="text" id="link-title" required placeholder="例如：第1冊 Google Drive 教材庫" maxlength="25">
+        </div>
+        <div class="form-group">
+          <label for="link-url">連結網址 (URL)</label>
+          <input type="url" id="link-url" required placeholder="https://example.com/folder">
+        </div>
+        <div class="form-group">
+          <label for="link-desc">簡短描述 (選填)</label>
+          <input type="text" id="link-desc" placeholder="例如：含全冊影片及複習題庫" maxlength="50">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeAddLinkModal()">取消</button>
+          <button type="submit" class="btn btn-primary">確認新增</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Javascript Logic -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# Windows thumbnail databases
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file system templates
+$RECYCLE.BIN/
+
+# VS Code project settings and history
+.vscode/
+.history/
+
+# IntelliJ IDEA settings
+.idea/
+
+# Mac OS files
+.DS_Store
+
+# Temporary files
+*.tmp
+*.log
