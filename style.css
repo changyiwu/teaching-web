@@ -40,6 +40,11 @@
 
 body {
   background: var(--background-gradient);
+  background-image: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.45)), url('background.png');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: var(--text-main);
   min-height: 100vh;
   display: flex;
