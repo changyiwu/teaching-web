@@ -40,7 +40,7 @@
 
 body {
   background: var(--background-gradient);
-  background-image: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.45)), url('background.png');
+  background-image: linear-gradient(rgba(10, 8, 28, 0.75), rgba(10, 8, 28, 0.75)), url('background.png');
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
