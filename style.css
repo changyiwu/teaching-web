@@ -317,6 +317,7 @@ header {
 .portal-card.nani .portal-icon-wrapper { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
 .portal-card.tools .portal-icon-wrapper { background: rgba(6, 182, 212, 0.15); color: #06b6d4; }
 .portal-card.score .portal-icon-wrapper { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+.portal-card.wordcloud .portal-icon-wrapper { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
 
 .external-icon {
   font-size: 0.85rem;
@@ -361,6 +362,7 @@ header {
 .portal-card.nani:hover { box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2); border-color: rgba(245, 158, 11, 0.4); }
 .portal-card.tools:hover { box-shadow: 0 8px 25px rgba(6, 182, 212, 0.2); border-color: rgba(6, 182, 212, 0.4); }
 .portal-card.score:hover { box-shadow: 0 8px 25px rgba(236, 72, 153, 0.2); border-color: rgba(236, 72, 153, 0.4); }
+.portal-card.wordcloud:hover { box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.4); }
 
 .portal-card:hover .portal-icon-wrapper {
   transform: scale(1.1) rotate(5deg);
