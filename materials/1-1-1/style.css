@@ -659,28 +659,49 @@ input[type="range"]::-webkit-slider-thumb:hover {
   padding: 1.75rem;
 }
 
+.summary-section .section-title {
+  background: linear-gradient(135deg, #ffffff 40%, #a7f3d0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.summary-section .section-title i {
+  color: #10b981;
+  -webkit-text-fill-color: initial;
+}
+
 .summary-card h4 {
   font-size: 1.15rem;
   font-weight: 750;
-  color: white;
   margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.summary-card h4 i {
-  color: var(--success);
+.summary-card:nth-child(1) h4 {
+  color: #34d399;
+}
+.summary-card:nth-child(1) h4 i {
+  color: #34d399;
+}
+.summary-card:nth-child(1) strong {
+  color: #a7f3d0;
 }
 
+.summary-card:nth-child(2) h4 {
+  color: #06b6d4;
+}
 .summary-card:nth-child(2) h4 i {
-  color: var(--secondary);
+  color: #06b6d4;
+}
+.summary-card:nth-child(2) strong {
+  color: #a5f3fc;
 }
 
 .context-story h5 {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--secondary);
+  color: #22d3ee;
   margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
