@@ -25,16 +25,25 @@
    - 使用 Outfit 與 Noto Sans TC 精緻字型。
    - 採用磨砂玻璃視覺風格（Glassmorphic UI）及流暢的懸停發光微粒子效果，大螢幕呈現質感極佳。
 
+6. **動態課程資料庫與 Canvas 互動教材**
+   - **動態課程選擇器**：動態載入國中 6 冊完整 58 個小節課程資料庫，並提供對應的狀態標記（已完成 / 待施工）。
+   - **1-1-1 負數與數線互動網頁**：內嵌溫度計、數線坐標、相反數鏡像、絕對值距離 4 個 HTML5 Canvas 視覺探索元件（均完成 Retina 觸碰焦點偏位修正），並提供 9 題附詳解的形成性評量與超萌水豚（卡皮巴拉）手繪插圖。
+   - **自動化佔位結構**：其餘 57 個小節資料夾皆已自動生成並配置獨立的「施工中」預留網頁。
+
 ## 📂 檔案結構
 
 ```text
 c:\Users\chang\我的雲端硬碟\agents\teaching-web\
-├── index.html        # 主網頁結構與版面佈局
-├── style.css         # 設計系統、磨砂玻璃樣式與響應式 CSS
-├── script.js        # 即時時鐘、分頁切換、備忘錄與自訂書籤 JavaScript 邏輯
-├── ANTIGRAVITY.md   # AI 開發規則與開收工指南
-├── README.md         # 專案說明書
-└── .gitignore        # Git 忽略設定檔
+├── index.html          # 主網頁結構與版面佈局
+├── style.css           # 設計系統、磨砂玻璃樣式與響應式 CSS
+├── script.js           # 內嵌完整課程 JSON 資料、時鐘、自訂書籤與動態渲染邏輯
+├── materials/          # 58 個小節教材子目錄
+│   ├── 1-1-1/          # 第一冊 1-1-1「負數與數線」互動網頁 (HTML/CSS/JS/水豚插圖)
+│   └── 1-1-2~6-3-1/    # 其餘小節「待施工」佔位網頁
+├── .agents/            # 專案自訂技能設定（存放 math-interactive-material 技能）
+├── ANTIGRAVITY.md     # AI 開發規則與開收工指南
+├── README.md           # 專案說明書
+└── .gitignore          # Git 忽略設定檔
 ```
 
 ## 🚀 如何使用與部署
@@ -44,3 +53,4 @@ c:\Users\chang\我的雲端硬碟\agents\teaching-web\
 
 ### 部署至 GitHub Pages（推薦）
 本專案已設定 GitHub Pages 自動部署。建立 GitHub 儲存庫並 Push 後，即可透過 GitHub Pages 網址線上開啟，在任何裝置上登入瀏覽器皆可同步使用您的自訂配置。
+
