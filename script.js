@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initClock();
   initTabs();
   initNotepad();
-  initCustomLinks();
+  initCurriculum();
 });
 
 /* ==========================================================================
@@ -85,7 +85,7 @@ function initNotepad() {
     notepad.value = savedNotes;
   }
 
-  // Auto-save on input with small debounce
+  // Auto-save on input with small devounce
   let saveTimeout;
   notepad.addEventListener('input', () => {
     clearTimeout(saveTimeout);
@@ -96,179 +96,429 @@ function initNotepad() {
 }
 
 /* ==========================================================================
-   4. Custom Links System (Volume-specific bookmarks)
+   4. Curriculum Database Dynamically Rendered
    ========================================================================== */
-const LINKS_STORAGE_KEY = 'teaching_portal_custom_links';
-let customLinks = {};
-
-function initCustomLinks() {
-  // Load custom links from localStorage
-  const savedLinks = localStorage.getItem(LINKS_STORAGE_KEY);
-  if (savedLinks) {
-    try {
-      customLinks = JSON.parse(savedLinks);
-    } catch (e) {
-      console.error('Failed to parse custom links', e);
-      customLinks = {};
+const curriculumData = {
+  "1": [
+    {
+      "chapter": "第1章 整數的運算",
+      "sections": [
+        {
+          "code": "1-1",
+          "title": "負數與數線"
+        },
+        {
+          "code": "1-2",
+          "title": "整數的加減"
+        },
+        {
+          "code": "1-3",
+          "title": "整數的乘除與四則運算"
+        },
+        {
+          "code": "1-4",
+          "title": "指數記法與科學記號"
+        }
+      ]
+    },
+    {
+      "chapter": "第2章 分數的運算",
+      "sections": [
+        {
+          "code": "2-1",
+          "title": "因數與倍數"
+        },
+        {
+          "code": "2-2",
+          "title": "最大公因數與最小公倍數"
+        },
+        {
+          "code": "2-3",
+          "title": "分數的四則運算"
+        },
+        {
+          "code": "2-4",
+          "title": "指數律"
+        }
+      ]
+    },
+    {
+      "chapter": "第3章 一元一次方程式",
+      "sections": [
+        {
+          "code": "3-1",
+          "title": "代數式的化簡"
+        },
+        {
+          "code": "3-2",
+          "title": "一元一次方程式"
+        },
+        {
+          "code": "3-3",
+          "title": "應用問題"
+        }
+      ]
     }
-  }
-
-  // Render links for each volume
-  for (let i = 1; i <= 6; i++) {
-    renderVolumeLinks(i);
-  }
-}
-
-// Render links for a specific volume
-function renderVolumeLinks(volumeIndex) {
-  const panel = document.getElementById(`panel-v${volumeIndex}`);
-  if (!panel) return;
-
-  const grid = panel.querySelector('.materials-grid');
-  if (!grid) return;
-
-  // Clear existing dynamically added custom cards
-  const existingCustoms = grid.querySelectorAll('.portal-card.custom-link');
-  existingCustoms.forEach(c => c.remove());
-
-  // Get custom links for this volume
-  const volLinks = customLinks[volumeIndex] || [];
-
-  // Find the 'add-custom-card' element so we can insert new cards before it
-  const addCard = grid.querySelector('.add-custom-card');
-
-  volLinks.forEach((link, idx) => {
-    // Create link card element
-    const linkCard = document.createElement('div');
-    linkCard.className = 'portal-card custom-link';
-    linkCard.style.minHeight = '180px';
-    linkCard.style.borderStyle = 'solid';
-    linkCard.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-
-    // Build internal HTML structure
-    linkCard.innerHTML = `
-      <div class="portal-card-header">
-        <div class="portal-icon-wrapper" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">
-          <i class="fa-solid fa-link"></i>
-        </div>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <button class="delete-btn" onclick="deleteCustomLink(${volumeIndex}, ${idx}, event)" 
-                  style="background: transparent; border: none; color: #ef4444; opacity: 0.6; cursor: pointer; transition: opacity 0.3s;"
-                  title="刪除連結">
-            <i class="fa-solid fa-trash-can"></i>
-          </button>
-          <a href="${link.url}" target="_blank" rel="noopener noreferrer" style="color: inherit;">
-            <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
-          </a>
-        </div>
-      </div>
-      <div class="portal-card-body" style="margin-top: 1rem;">
-        <a href="${link.url}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
-          <h3 class="portal-card-title">${escapeHtml(link.title)}</h3>
-          <p class="portal-card-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-            ${escapeHtml(link.desc || '自訂教學檔案連結')}
-          </p>
-        </a>
-      </div>
-    `;
-
-    // Make the whole card clickable except the delete button
-    linkCard.addEventListener('click', (e) => {
-      if (e.target.closest('.delete-btn')) return;
-      window.open(link.url, '_blank', 'noopener,noreferrer');
-    });
-
-    // Style the delete button hover effect
-    const delBtn = linkCard.querySelector('.delete-btn');
-    delBtn.addEventListener('mouseenter', () => delBtn.style.opacity = '1');
-    delBtn.addEventListener('mouseleave', () => delBtn.style.opacity = '0.6');
-
-    // Insert before the "Add custom link" card
-    grid.insertBefore(linkCard, addCard);
-  });
-}
-
-// Modal Toggle Functions (Scoped globally for HTML onclick handlers)
-window.openAddLinkModal = function(volumeIndex) {
-  const modal = document.getElementById('add-link-modal');
-  const volumeNumSpan = document.getElementById('target-volume-num');
-  const volumeIndexInput = document.getElementById('modal-volume-index');
-  const form = document.getElementById('add-link-form');
-
-  // Reset form
-  form.reset();
-
-  // Set target volume metadata
-  volumeNumSpan.textContent = volumeIndex;
-  volumeIndexInput.value = volumeIndex;
-
-  // Show modal
-  modal.style.display = 'flex';
-  document.getElementById('link-title').focus();
+  ],
+  "2": [
+    {
+      "chapter": "第1章 二元一次聯立方程式",
+      "sections": [
+        {
+          "code": "1-1",
+          "title": "二元一次方程式"
+        },
+        {
+          "code": "1-2",
+          "title": "解二元一次聯立方程式"
+        },
+        {
+          "code": "1-3",
+          "title": "應用問題"
+        }
+      ]
+    },
+    {
+      "chapter": "第2章 直角坐標與二元一次方程式的圖形",
+      "sections": [
+        {
+          "code": "2-1",
+          "title": "直角坐標平面"
+        },
+        {
+          "code": "2-2",
+          "title": "二元一次方程式的圖形"
+        }
+      ]
+    },
+    {
+      "chapter": "第3章 比與比例式",
+      "sections": [
+        {
+          "code": "3-1",
+          "title": "比例式"
+        },
+        {
+          "code": "3-2",
+          "title": "正比與反比"
+        }
+      ]
+    },
+    {
+      "chapter": "第4章 一元一次不等式",
+      "sections": [
+        {
+          "code": "4-1",
+          "title": "認識一元一次不等式"
+        },
+        {
+          "code": "4-2",
+          "title": "解一元一次不等式"
+        }
+      ]
+    },
+    {
+      "chapter": "第5章 統計",
+      "sections": [
+        {
+          "code": "5-1",
+          "title": "統計圖表與資料分析"
+        }
+      ]
+    },
+    {
+      "chapter": "第6章 生活中的幾何",
+      "sections": [
+        {
+          "code": "6-1",
+          "title": "垂直、線對稱與三視圖"
+        }
+      ]
+    }
+  ],
+  "3": [
+    {
+      "chapter": "第1章 乘法公式與多項式",
+      "sections": [
+        {
+          "code": "1-1",
+          "title": "乘法公式"
+        },
+        {
+          "code": "1-2",
+          "title": "多項式與其加減運算"
+        },
+        {
+          "code": "1-3",
+          "title": "多項式的乘除運算"
+        }
+      ]
+    },
+    {
+      "chapter": "第2章 平方根與畢氏定理",
+      "sections": [
+        {
+          "code": "2-1",
+          "title": "平方根與近似值"
+        },
+        {
+          "code": "2-2",
+          "title": "根式的運算"
+        },
+        {
+          "code": "2-3",
+          "title": "畢氏定理"
+        }
+      ]
+    },
+    {
+      "chapter": "第3章 因式分解",
+      "sections": [
+        {
+          "code": "3-1",
+          "title": "利用提公因式與乘法公式做因式分解"
+        },
+        {
+          "code": "3-2",
+          "title": "利用十字交乘法做因式分解"
+        }
+      ]
+    },
+    {
+      "chapter": "第4章 一元二次方程式",
+      "sections": [
+        {
+          "code": "4-1",
+          "title": "因式分解解一元二次方程式"
+        },
+        {
+          "code": "4-2",
+          "title": "配方法與公式解"
+        },
+        {
+          "code": "4-3",
+          "title": "應用問題"
+        }
+      ]
+    },
+    {
+      "chapter": "第5章 統計資料處理",
+      "sections": [
+        {
+          "code": "5-1",
+          "title": "資料整理與統計圖表"
+        }
+      ]
+    }
+  ],
+  "4": [
+    {
+      "chapter": "第1章 數列與級數",
+      "sections": [
+        {
+          "code": "1-1",
+          "title": "等差數列"
+        },
+        {
+          "code": "1-2",
+          "title": "等差級數"
+        },
+        {
+          "code": "1-3",
+          "title": "等比數列"
+        }
+      ]
+    },
+    {
+      "chapter": "第2章 函數",
+      "sections": [
+        {
+          "code": "2-1",
+          "title": "函數與函數圖形"
+        }
+      ]
+    },
+    {
+      "chapter": "第3章 三角形的基本性質",
+      "sections": [
+        {
+          "code": "3-1",
+          "title": "三角形與多邊形的內角與外角"
+        },
+        {
+          "code": "3-2",
+          "title": "尺規作圖"
+        },
+        {
+          "code": "3-3",
+          "title": "三角形的全等性質"
+        },
+        {
+          "code": "3-4",
+          "title": "中垂線與角平分線的性質"
+        },
+        {
+          "code": "3-5",
+          "title": "三角形的邊角關係"
+        }
+      ]
+    },
+    {
+      "chapter": "第4章 平行與四邊形",
+      "sections": [
+        {
+          "code": "4-1",
+          "title": "平行"
+        },
+        {
+          "code": "4-2",
+          "title": "平行四邊形"
+        },
+        {
+          "code": "4-3",
+          "title": "特殊四邊形的性質"
+        }
+      ]
+    }
+  ],
+  "5": [
+    {
+      "chapter": "第1章 相似形",
+      "sections": [
+        {
+          "code": "1-1",
+          "title": "連比例"
+        },
+        {
+          "code": "1-2",
+          "title": "比例線段"
+        },
+        {
+          "code": "1-3",
+          "title": "縮放與相似"
+        },
+        {
+          "code": "1-4",
+          "title": "相似三角形的應用"
+        }
+      ]
+    },
+    {
+      "chapter": "第2章 圓",
+      "sections": [
+        {
+          "code": "2-1",
+          "title": "點、直線與圓之間的位置關係"
+        },
+        {
+          "code": "2-2",
+          "title": "圓心角、圓周角與弧的關係"
+        }
+      ]
+    },
+    {
+      "chapter": "第3章 幾何與證明",
+      "sections": [
+        {
+          "code": "3-1",
+          "title": "證明與推理"
+        },
+        {
+          "code": "3-2",
+          "title": "三角形的外心、內心與重心"
+        }
+      ]
+    }
+  ],
+  "6": [
+    {
+      "chapter": "第1章 二次函數",
+      "sections": [
+        {
+          "code": "1-1",
+          "title": "二次函數的圖形與最大值、最小值"
+        }
+      ]
+    },
+    {
+      "chapter": "第2章 統計與機率",
+      "sections": [
+        {
+          "code": "2-1",
+          "title": "資料的分析"
+        },
+        {
+          "code": "2-2",
+          "title": "機率"
+        }
+      ]
+    },
+    {
+      "chapter": "第3章 生活中的立體圖形",
+      "sections": [
+        {
+          "code": "3-1",
+          "title": "空間中的線、平面與形體"
+        }
+      ]
+    }
+  ]
 };
 
-window.closeAddLinkModal = function() {
-  const modal = document.getElementById('add-link-modal');
-  modal.style.display = 'none';
-};
-
-// Form submission handler
-window.handleFormSubmit = function(event) {
-  event.preventDefault();
-
-  const volumeIndex = document.getElementById('modal-volume-index').value;
-  const title = document.getElementById('link-title').value.trim();
-  const url = document.getElementById('link-url').value.trim();
-  const desc = document.getElementById('link-desc').value.trim();
-
-  if (!title || !url) return;
-
-  // Save new link
-  if (!customLinks[volumeIndex]) {
-    customLinks[volumeIndex] = [];
-  }
-
-  customLinks[volumeIndex].push({ title, url, desc });
-
-  // Update local storage
-  localStorage.setItem(LINKS_STORAGE_KEY, JSON.stringify(customLinks));
-
-  // Rerender volume section
-  renderVolumeLinks(volumeIndex);
-
-  // Close modal
-  closeAddLinkModal();
-};
-
-// Delete handler
-window.deleteCustomLink = function(volumeIndex, linkIdx, event) {
-  event.stopPropagation(); // Avoid triggering card click
-  
-  if (!confirm('確定要刪除此自訂連結嗎？')) return;
-
-  if (customLinks[volumeIndex]) {
-    customLinks[volumeIndex].splice(linkIdx, 1);
+function initCurriculum() {
+  // Render each volume's curriculum
+  for (let volId = 1; volId <= 6; volId++) {
+    const container = document.getElementById(`chapters-v${volId}`);
+    if (!container) continue;
     
-    // Clean up key if empty
-    if (customLinks[volumeIndex].length === 0) {
-      delete customLinks[volumeIndex];
-    }
-
-    // Update storage
-    localStorage.setItem(LINKS_STORAGE_KEY, JSON.stringify(customLinks));
-
-    // Rerender
-    renderVolumeLinks(volumeIndex);
+    container.innerHTML = '';
+    const chapters = curriculumData[volId] || [];
+    
+    chapters.forEach((ch, chIdx) => {
+      const chNum = chIdx + 1; // 1-indexed for C in V-C-S
+      const card = document.createElement('div');
+      card.className = 'chapter-card';
+      
+      // Header for the Chapter
+      const header = document.createElement('div');
+      header.className = 'chapter-header';
+      header.innerHTML = `<i class="fa-solid fa-folder-open"></i> <span>${escapeHtml(ch.chapter)}</span>`;
+      card.appendChild(header);
+      
+      // Sections List
+      const list = document.createElement('div');
+      list.className = 'sections-list';
+      
+      ch.sections.forEach((sec, secIdx) => {
+        const sNum = secIdx + 1; // 1-indexed for S in V-C-S
+        const link = document.createElement('a');
+        const match = ch.chapter.match(/第\s*(\d+)\s*章/);
+        const chNum = match ? match[1] : (chIdx + 1);
+        const folderName = `${volId}-${chNum}-${sNum}`;
+        link.href = `./materials/${folderName}/index.html`;
+        link.className = 'section-link';
+        
+        // Special case: Volume 1, Chapter 1, Section 1 (1-1-1) is complete, others are pending
+        const isComplete = (volId === 1 && ch.chapter.includes('第1章') && sNum === 1);
+        const statusBadge = isComplete 
+          ? `<span class="status-badge completed"><i class="fa-solid fa-circle-check"></i> 已完成</span>`
+          : `<span class="status-badge pending"><i class="fa-solid fa-person-digging"></i> 待施工</span>`;
+          
+        link.innerHTML = `
+          <div class="section-info">
+            <span class="section-code">${escapeHtml(sec.code)}</span>
+            <span class="section-title-text">${escapeHtml(sec.title)}</span>
+          </div>
+          ${statusBadge}
+        `;
+        list.appendChild(link);
+      });
+      
+      card.appendChild(list);
+      container.appendChild(card);
+    });
   }
-};
-
-// Close modal if user clicks outside of modal content
-window.addEventListener('click', (e) => {
-  const modal = document.getElementById('add-link-modal');
-  if (e.target === modal) {
-    closeAddLinkModal();
-  }
-});
+}
 
 // Basic HTML escaping utility
 function escapeHtml(text) {

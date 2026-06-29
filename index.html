@@ -180,158 +180,32 @@
           <div class="tab-panels">
             <!-- V1 -->
             <div class="tab-panel active" id="panel-v1" role="tabpanel" aria-labelledby="tab-v1">
-              <div class="materials-grid">
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第一冊 備課教材</h4>
-                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第一冊 簡報與影音</h4>
-                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第一冊 學習單與試卷</h4>
-                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
-                </div>
-                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(1)">
-                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第一冊連結</h4>
-                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
-                </div>
-              </div>
+              <div class="chapters-grid" id="chapters-v1"></div>
             </div>
 
             <!-- V2 -->
             <div class="tab-panel" id="panel-v2" role="tabpanel" aria-labelledby="tab-v2">
-              <div class="materials-grid">
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第二冊 備課教材</h4>
-                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第二冊 簡報與影音</h4>
-                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第二冊 學習單與試卷</h4>
-                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
-                </div>
-                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(2)">
-                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第二冊連結</h4>
-                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
-                </div>
-              </div>
+              <div class="chapters-grid" id="chapters-v2"></div>
             </div>
 
             <!-- V3 -->
             <div class="tab-panel" id="panel-v3" role="tabpanel" aria-labelledby="tab-v3">
-              <div class="materials-grid">
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第三冊 備課教材</h4>
-                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第三冊 簡報與影音</h4>
-                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第三冊 學習單與試卷</h4>
-                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
-                </div>
-                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(3)">
-                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第三冊連結</h4>
-                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
-                </div>
-              </div>
+              <div class="chapters-grid" id="chapters-v3"></div>
             </div>
 
             <!-- V4 -->
             <div class="tab-panel" id="panel-v4" role="tabpanel" aria-labelledby="tab-v4">
-              <div class="materials-grid">
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第四冊 備課教材</h4>
-                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第四冊 簡報與影音</h4>
-                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第四冊 學習單與試卷</h4>
-                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
-                </div>
-                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(4)">
-                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第四冊連結</h4>
-                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
-                </div>
-              </div>
+              <div class="chapters-grid" id="chapters-v4"></div>
             </div>
 
             <!-- V5 -->
             <div class="tab-panel" id="panel-v5" role="tabpanel" aria-labelledby="tab-v5">
-              <div class="materials-grid">
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第五冊 備課教材</h4>
-                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第五冊 簡報與影音</h4>
-                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第五冊 學習單與試卷</h4>
-                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
-                </div>
-                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(5)">
-                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第五冊連結</h4>
-                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
-                </div>
-              </div>
+              <div class="chapters-grid" id="chapters-v5"></div>
             </div>
 
             <!-- V6 -->
             <div class="tab-panel" id="panel-v6" role="tabpanel" aria-labelledby="tab-v6">
-              <div class="materials-grid">
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-book placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第六冊 備課教材</h4>
-                  <p class="placeholder-subtitle">已預留教學資料庫連結，可在此存放課本電子書與教案</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-file-powerpoint placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第六冊 簡報與影音</h4>
-                  <p class="placeholder-subtitle">教學 PowerPoint、補充影片及課堂補充學習資源</p>
-                </div>
-                <div class="material-placeholder-card">
-                  <i class="fa-solid fa-paste placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title">第六冊 學習單與試卷</h4>
-                  <p class="placeholder-subtitle">課堂測驗紙、學生學習單與段考練習題庫庫存處</p>
-                </div>
-                <div class="material-placeholder-card add-custom-card" onclick="openAddLinkModal(6)">
-                  <i class="fa-solid fa-circle-plus placeholder-icon" aria-hidden="true"></i>
-                  <h4 class="placeholder-title" style="color: var(--primary-hover);">新增第六冊連結</h4>
-                  <p class="placeholder-subtitle">點擊在此冊新增自訂教學網站或雲端資料夾連結</p>
-                </div>
-              </div>
+              <div class="chapters-grid" id="chapters-v6"></div>
             </div>
           </div>
         </div>
