@@ -510,9 +510,15 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .options-container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
   margin-bottom: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .options-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 .option-label {
@@ -768,71 +774,25 @@ footer {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
-/* Quiz Option-Specific Vibrant Colors (A, B, C, D) */
-.options-container .option-label:nth-child(1):hover {
-  border-color: rgba(244, 63, 94, 0.4);
-  background: rgba(244, 63, 94, 0.04);
+/* Uniform Option Styling (A, B, C, D all look the same) */
+.options-container .option-label:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(139, 92, 246, 0.04);
 }
-.options-container .option-label:nth-child(1).selected {
-  background: rgba(244, 63, 94, 0.08);
-  border-color: rgba(244, 63, 94, 0.4);
-  box-shadow: 0 0 12px rgba(244, 63, 94, 0.2);
+.options-container .option-label.selected {
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.25);
 }
-.options-container .option-label:nth-child(1) input[type="radio"] {
-  accent-color: #f43f5e;
+.options-container .option-label input[type="radio"] {
+  accent-color: #8b5cf6;
 }
-.options-container .option-label:nth-child(1) .option-text {
-  color: #fca5a5;
-  font-weight: 600;
+.options-container .option-label .option-text {
+  color: #cbd5e1;
+  font-weight: 500;
+  transition: color 0.25s ease;
 }
-
-.options-container .option-label:nth-child(2):hover {
-  border-color: rgba(16, 185, 129, 0.4);
-  background: rgba(16, 185, 129, 0.04);
-}
-.options-container .option-label:nth-child(2).selected {
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.4);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
-}
-.options-container .option-label:nth-child(2) input[type="radio"] {
-  accent-color: #10b981;
-}
-.options-container .option-label:nth-child(2) .option-text {
-  color: #a7f3d0;
-  font-weight: 600;
-}
-
-.options-container .option-label:nth-child(3):hover {
-  border-color: rgba(6, 182, 212, 0.4);
-  background: rgba(6, 182, 212, 0.04);
-}
-.options-container .option-label:nth-child(3).selected {
-  background: rgba(6, 182, 212, 0.08);
-  border-color: rgba(6, 182, 212, 0.4);
-  box-shadow: 0 0 12px rgba(6, 182, 212, 0.2);
-}
-.options-container .option-label:nth-child(3) input[type="radio"] {
-  accent-color: #06b6d4;
-}
-.options-container .option-label:nth-child(3) .option-text {
-  color: #a5f3fc;
-  font-weight: 600;
-}
-
-.options-container .option-label:nth-child(4):hover {
-  border-color: rgba(245, 158, 11, 0.4);
-  background: rgba(245, 158, 11, 0.04);
-}
-.options-container .option-label:nth-child(4).selected {
-  background: rgba(245, 158, 11, 0.08);
-  border-color: rgba(245, 158, 11, 0.4);
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
-}
-.options-container .option-label:nth-child(4) input[type="radio"] {
-  accent-color: #f59e0b;
-}
-.options-container .option-label:nth-child(4) .option-text {
-  color: #fef08a;
-  font-weight: 600;
+.options-container .option-label:hover .option-text,
+.options-container .option-label.selected .option-text {
+  color: #ffffff;
 }

@@ -157,18 +157,22 @@ header {
 }
 
 .site-title h1 {
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: 2.2rem;
+  font-weight: 900;
   letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
+  background: linear-gradient(135deg, #ffffff 10%, #a78bfa 50%, #f472b6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(168, 85, 247, 0.3));
 }
 
 .site-title p {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-top: 2px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #a5b4fc 0%, #cbd5e1 50%, #fbcfe8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 4px;
 }
 
 /* Classroom Clock Widget */
@@ -247,13 +251,48 @@ header {
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 1.75rem;
-  color: #fff;
+  color: #f8fafc;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 0.75rem;
+  transition: border-color 0.3s ease;
 }
 
 .section-title i {
   color: var(--primary-hover);
+  transition: all 0.3s ease;
+}
+
+/* Individual Section Themes for Title and Icons */
+#teaching-resources .section-title {
+  border-bottom-color: rgba(96, 165, 250, 0.2);
+}
+#teaching-resources .section-title i {
+  color: #60a5fa;
+  text-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+}
+
+#classroom-tools-section .section-title {
+  border-bottom-color: rgba(34, 211, 238, 0.2);
+}
+#classroom-tools-section .section-title i {
+  color: #22d3ee;
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
+}
+
+#volume-materials .section-title {
+  border-bottom-color: rgba(244, 114, 182, 0.2);
+}
+#volume-materials .section-title i {
+  color: #f472b6;
+  text-shadow: 0 0 10px rgba(244, 114, 182, 0.4);
+}
+
+#classroom-notes .section-title {
+  border-bottom-color: rgba(251, 146, 60, 0.2);
+}
+#classroom-notes .section-title i {
+  color: #fb923c;
+  text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);
 }
 
 /* Portal Link Cards Grid */
@@ -337,14 +376,40 @@ header {
   line-height: 1.4;
   margin-bottom: 0.35rem;
   color: #ffffff;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .portal-card-desc {
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: #94a3b8;
   line-height: 1.4;
+  transition: color 0.3s ease;
 }
+
+/* Individual Portal Card Colored Typography */
+.portal-card.knsh .portal-card-title { color: #93c5fd; }
+.portal-card.knsh .portal-card-desc { color: #cbd5e1; }
+.portal-card.knsh:hover .portal-card-title { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
+
+.portal-card.hle .portal-card-title { color: #a7f3d0; }
+.portal-card.hle .portal-card-desc { color: #cbd5e1; }
+.portal-card.hle:hover .portal-card-title { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
+
+.portal-card.nani .portal-card-title { color: #fde68a; }
+.portal-card.nani .portal-card-desc { color: #cbd5e1; }
+.portal-card.nani:hover .portal-card-title { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
+
+.portal-card.tools .portal-card-title { color: #cffafe; }
+.portal-card.tools .portal-card-desc { color: #cbd5e1; }
+.portal-card.tools:hover .portal-card-title { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
+
+.portal-card.score .portal-card-title { color: #fbcfe8; }
+.portal-card.score .portal-card-desc { color: #cbd5e1; }
+.portal-card.score:hover .portal-card-title { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
+
+.portal-card.wordcloud .portal-card-title { color: #e9d5ff; }
+.portal-card.wordcloud .portal-card-desc { color: #cbd5e1; }
+.portal-card.wordcloud:hover .portal-card-title { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
 
 /* Portal Card Hover Effects */
 .portal-card:hover {
@@ -419,11 +484,46 @@ header {
   color: var(--text-main);
 }
 
+/* Custom Active Colors and Icons for Volume Tabs */
+.tab-btn:hover i {
+  transform: translateY(-1px) scale(1.1);
+}
+
+#tab-v1 i { color: #f87171; }
+#tab-v2 i { color: #fb923c; }
+#tab-v3 i { color: #fbbf24; }
+#tab-v4 i { color: #4ade80; }
+#tab-v5 i { color: #60a5fa; }
+#tab-v6 i { color: #c084fc; }
+
 .tab-btn.active {
-  background: var(--primary-gradient);
-  color: white;
+  color: white !important;
   border-color: transparent;
-  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.tab-btn.active#tab-v1 {
+  background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+.tab-btn.active#tab-v2 {
+  background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+}
+.tab-btn.active#tab-v3 {
+  background: linear-gradient(135deg, #eab308 0%, #fbbf24 100%);
+  box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
+}
+.tab-btn.active#tab-v4 {
+  background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+}
+.tab-btn.active#tab-v5 {
+  background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+.tab-btn.active#tab-v6 {
+  background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
 }
 
 /* Tabs Content panels */
@@ -666,9 +766,9 @@ footer p {
 }
 
 .quick-note-textarea:focus {
-  border-color: var(--secondary);
+  border-color: #fb923c;
   background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+  box-shadow: 0 0 15px rgba(251, 146, 60, 0.2);
 }
 
 /* Screen size adjustments */
@@ -732,6 +832,47 @@ footer p {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+/* Colorized Chapter Folder Icons and Section Codes per Volume */
+#panel-v1 .chapter-header i { color: #f87171; }
+#panel-v2 .chapter-header i { color: #fb923c; }
+#panel-v3 .chapter-header i { color: #fbbf24; }
+#panel-v4 .chapter-header i { color: #4ade80; }
+#panel-v5 .chapter-header i { color: #60a5fa; }
+#panel-v6 .chapter-header i { color: #c084fc; }
+
+#panel-v1 .section-code { color: #f87171; }
+#panel-v2 .section-code { color: #fb923c; }
+#panel-v3 .section-code { color: #fbbf24; }
+#panel-v4 .section-code { color: #4ade80; }
+#panel-v5 .section-code { color: #60a5fa; }
+#panel-v6 .section-code { color: #c084fc; }
+
+/* Custom hover effects for links in each Volume */
+#panel-v1 .section-link:hover {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+#panel-v2 .section-link:hover {
+  background: rgba(249, 115, 22, 0.08);
+  border-color: rgba(249, 115, 22, 0.25);
+}
+#panel-v3 .section-link:hover {
+  background: rgba(234, 179, 8, 0.08);
+  border-color: rgba(234, 179, 8, 0.25);
+}
+#panel-v4 .section-link:hover {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+#panel-v5 .section-link:hover {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+#panel-v6 .section-link:hover {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.25);
 }
 
 .chapter-header i {
