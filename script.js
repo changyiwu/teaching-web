@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   initNotepad();
   initCurriculum();
+  initSidebar();
 });
 
 /* ==========================================================================
@@ -529,4 +530,66 @@ function escapeHtml(text) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+/* ==========================================================================
+   5. Sliding Sidebar drawer for Classroom Tools
+   ========================================================================== */
+function initSidebar() {
+  const sidebar = document.getElementById('sidebar-tools');
+  const toggleBtn = document.getElementById('sidebar-toggle');
+  const closeBtn = document.getElementById('sidebar-close-btn');
+
+  if (!sidebar || !toggleBtn) return;
+
+  function toggleSidebar(state) {
+    if (state === undefined) {
+      sidebar.classList.toggle('open');
+      toggleBtn.classList.toggle('open');
+    } else if (state) {
+      sidebar.classList.add('open');
+      toggleBtn.classList.add('open');
+    } else {
+      sidebar.classList.remove('open');
+      toggleBtn.classList.remove('open');
+    }
+    
+    // Toggle arrow icon class
+    const arrowIcon = toggleBtn.querySelector('.arrow-icon');
+    if (arrowIcon) {
+      if (sidebar.classList.contains('open')) {
+        arrowIcon.className = 'fa-solid fa-chevron-right arrow-icon';
+      } else {
+        arrowIcon.className = 'fa-solid fa-chevron-left arrow-icon';
+      }
+    }
+  }
+
+  // Toggle button click
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleSidebar();
+  });
+
+  // Close button click if present
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleSidebar(false);
+    });
+  }
+
+  // Click outside sidebar to close it
+  document.addEventListener('click', (e) => {
+    if (sidebar.classList.contains('open')) {
+      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+        toggleSidebar(false);
+      }
+    }
+  });
+
+  // Prevent clicks inside sidebar from bubble up and closing it
+  sidebar.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
 }

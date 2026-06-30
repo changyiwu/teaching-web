@@ -97,55 +97,6 @@
         </div>
       </section>
 
-      <!-- Middle Section: Classroom Tools -->
-      <section class="section-card" id="classroom-tools-section">
-        <h2 class="section-title">
-          <i class="fa-solid fa-toolbox" aria-hidden="true"></i>課堂工具
-        </h2>
-        <div class="portal-grid">
-          <!-- 4. Class Tools -->
-          <a href="https://changyiwu.github.io/class-tools-2" target="_blank" rel="noopener noreferrer" class="portal-card tools" id="portal-class-tools">
-            <div class="portal-card-header">
-              <div class="portal-icon-wrapper">
-                <i class="fa-solid fa-toolbox"></i>
-              </div>
-              <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
-            </div>
-            <div class="portal-card-body">
-              <h3 class="portal-card-title">班級工具</h3>
-              <p class="portal-card-desc">課堂計時器、隨機抽籤、搶答器等互動教學輔助工具箱。</p>
-            </div>
-          </a>
-
-          <!-- 5. Class Score -->
-          <a href="https://changyiwu.github.io/class-score" target="_blank" rel="noopener noreferrer" class="portal-card score" id="portal-class-score">
-            <div class="portal-card-header">
-              <div class="portal-icon-wrapper">
-                <i class="fa-solid fa-clipboard-list"></i>
-              </div>
-              <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
-            </div>
-            <div class="portal-card-body">
-              <h3 class="portal-card-title">課堂表現登記系統</h3>
-              <p class="portal-card-desc">即時記錄學生課堂表現與參與度。</p>
-            </div>
-          </a>
-
-          <!-- 6. Online Word Cloud -->
-          <a href="https://changyiwu.github.io/online-word-cloud" target="_blank" rel="noopener noreferrer" class="portal-card wordcloud" id="portal-online-word-cloud">
-            <div class="portal-card-header">
-              <div class="portal-icon-wrapper">
-                <i class="fa-solid fa-cloud"></i>
-              </div>
-              <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
-            </div>
-            <div class="portal-card-body">
-              <h3 class="portal-card-title">線上文字雲</h3>
-              <p class="portal-card-desc">老師，我想對您說。</p>
-            </div>
-          </a>
-        </div>
-      </section>
 
       <!-- Bottom Section: Volumes 1 to 6 Teaching Materials (Reserved Space) -->
       <section class="section-card" id="volume-materials">
@@ -254,6 +205,63 @@
       </form>
     </div>
   </div>
+
+  <!-- Sliding Sidebar for Classroom Tools -->
+  <div class="sidebar-tools" id="sidebar-tools">
+    <div class="sidebar-header">
+      <h2><i class="fa-solid fa-toolbox" aria-hidden="true"></i>課堂工具</h2>
+      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="收起側邊欄">&times;</button>
+    </div>
+    <div class="portal-grid">
+      <!-- 4. Class Tools -->
+      <a href="https://changyiwu.github.io/class-tools-2" target="_blank" rel="noopener noreferrer" class="portal-card tools" id="portal-class-tools">
+        <div class="portal-card-header">
+          <div class="portal-icon-wrapper">
+            <i class="fa-solid fa-toolbox"></i>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
+        </div>
+        <div class="portal-card-body">
+          <h3 class="portal-card-title">班級工具</h3>
+          <p class="portal-card-desc">課堂計時器、隨機抽籤、搶答器等互動教學輔助工具箱。</p>
+        </div>
+      </a>
+
+      <!-- 5. Class Score -->
+      <a href="https://changyiwu.github.io/class-score" target="_blank" rel="noopener noreferrer" class="portal-card score" id="portal-class-score">
+        <div class="portal-card-header">
+          <div class="portal-icon-wrapper">
+            <i class="fa-solid fa-clipboard-list"></i>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
+        </div>
+        <div class="portal-card-body">
+          <h3 class="portal-card-title">課堂表現登記系統</h3>
+          <p class="portal-card-desc">即時記錄學生課堂表現與參與度。</p>
+        </div>
+      </a>
+
+      <!-- 6. Online Word Cloud -->
+      <a href="https://changyiwu.github.io/online-word-cloud" target="_blank" rel="noopener noreferrer" class="portal-card wordcloud" id="portal-online-word-cloud">
+        <div class="portal-card-header">
+          <div class="portal-icon-wrapper">
+            <i class="fa-solid fa-cloud"></i>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
+        </div>
+        <div class="portal-card-body">
+          <h3 class="portal-card-title">線上文字雲</h3>
+          <p class="portal-card-desc">老師，我想對您說。</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Floating Toggle Button for Sidebar -->
+  <button class="sidebar-toggle-btn" id="sidebar-toggle" aria-label="開啟課堂工具" title="開啟課堂工具">
+    <i class="fa-solid fa-toolbox"></i>
+    <i class="fa-solid fa-chevron-left arrow-icon"></i>
+  </button>
 
   <!-- Main Javascript Logic -->
   <script src="script.js"></script>

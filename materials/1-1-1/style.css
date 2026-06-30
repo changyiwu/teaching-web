@@ -796,3 +796,8 @@ footer {
 .options-container .option-label.selected .option-text {
   color: #ffffff;
 }
+
+/* Comic Image Hover micro-animation */
+.comic-img:hover {
+  transform: scale(1.02);
+}
