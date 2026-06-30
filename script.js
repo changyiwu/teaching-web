@@ -499,8 +499,8 @@ function initCurriculum() {
         link.href = `./materials/${folderName}/index.html`;
         link.className = 'section-link';
         
-        // Special case: Volume 1, Chapter 1, Section 1 (1-1-1) and Section 2 (1-1-2) are complete, others are pending
-        const isComplete = (volId === 1 && ch.chapter.includes('第1章') && (sNum === 1 || sNum === 2));
+        // Special case: Volume 1, Chapter 1, Section 1 (1-1-1), Section 2 (1-1-2), and Section 3 (1-1-3) are complete, others are pending
+        const isComplete = (volId === 1 && ch.chapter.includes('第1章') && (sNum === 1 || sNum === 2 || sNum === 3));
         const statusBadge = isComplete 
           ? `<span class="status-badge completed"><i class="fa-solid fa-circle-check"></i> 已完成</span>`
           : `<span class="status-badge pending"><i class="fa-solid fa-person-digging"></i> 待施工</span>`;
