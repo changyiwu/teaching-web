@@ -233,24 +233,24 @@ function initConcept1Canvas() {
     const temp = parseInt(slider.value);
     
     // Update labels and classes
-    tempValSpan.textContent = temp > 0 ? `+${temp}°C` : `${temp}°C`;
+    tempValSpan.innerHTML = temp > 0 ? `\(+${temp}^\circ\text{C}\)` : `\(${temp}^\circ\text{C}\)`; if (window.MathJax) { MathJax.typesetPromise([tempValSpan]).catch(err => console.log(err)); }
     tempValSpan.className = '';
     if (temp > 0) {
       tempValSpan.classList.add('positive');
-      feedbackDiv.textContent = `正數 (如 +${temp}℃) 代表溫度高於基準點 0℃。數字越大代表越熱！`;
+      feedbackDiv.innerHTML = `正數 (如 \(+${temp}^\circ\text{C}\)) 代表溫度高於基準點 \(0^\circ\text{C}\)。數字越大代表越熱！`; if (window.MathJax) { MathJax.typesetPromise([feedbackDiv]).catch(err => console.log(err)); }
     } else if (temp < 0) {
       tempValSpan.classList.add('negative');
       // Highlight gelato storage temperature
       if (temp >= -25 && temp <= -18) {
-        feedbackDiv.innerHTML = `<strong style="color: #10b981;">-${Math.abs(temp)}℃ 正處於義式冰淇淋的最佳儲存溫度 (－25℃ ∼ －18℃)！</strong>`;
+        feedbackDiv.innerHTML = `<strong style="color: #10b981;">\(-${Math.abs(temp)}^\circ\text{C}\) 正處於義式冰淇淋的最佳儲存溫度 (\(-25^\circ\text{C} \sim -18^\circ\text{C}\))！</strong>`; if (window.MathJax) { MathJax.typesetPromise([feedbackDiv]).catch(err => console.log(err)); }
       } else if (temp >= -15 && temp <= -12) {
-        feedbackDiv.innerHTML = `<strong style="color: #06b6d4;">-${Math.abs(temp)}℃ 正處於義式冰淇淋的最佳食用溫度 (－15℃ ∼ －12℃)！</strong>`;
+        feedbackDiv.innerHTML = `<strong style="color: #06b6d4;">\(-${Math.abs(temp)}^\circ\text{C}\) 正處於義式冰淇淋的最佳食用溫度 (\(-15^\circ\text{C} \sim -12^\circ\text{C}\))！</strong>`; if (window.MathJax) { MathJax.typesetPromise([feedbackDiv]).catch(err => console.log(err)); }
       } else {
-        feedbackDiv.textContent = `負數 (如 -${Math.abs(temp)}℃) 代表溫度低於基準點 0℃。絕對值（數字部分）越大的負數，溫度越低！`;
+        feedbackDiv.innerHTML = `負數 (如 \(-${Math.abs(temp)}^\circ\text{C}\)) 代表溫度低於基準點 \(0^\circ\text{C}\)。絕對值（數字部分）越大的負數，溫度越低！`; if (window.MathJax) { MathJax.typesetPromise([feedbackDiv]).catch(err => console.log(err)); }
       }
     } else {
       tempValSpan.classList.add('zero');
-      feedbackDiv.textContent = `0℃ 是水結冰的溫度，也是正負溫度的分界點。0 既不是正數，也不是負數。`;
+      feedbackDiv.innerHTML = `\(0^\circ\text{C}\) 是水結冰的溫度，也是正負溫度的分界點。\(0\) 既不是正數，也不是負數。`; if (window.MathJax) { MathJax.typesetPromise([feedbackDiv]).catch(err => console.log(err)); }
     }
 
     drawThermometer(temp);
@@ -357,15 +357,15 @@ function initConcept2Canvas() {
   }
 
   function updateTexts() {
-    coordA.textContent = `A(${valA})`;
-    coordB.textContent = `B(${valB})`;
+    coordA.innerHTML = `\(A(${valA})\)`; if (window.MathJax) { MathJax.typesetPromise([coordA]).catch(err => console.log(err)); }
+    coordB.innerHTML = `\(B(${valB})\)`; if (window.MathJax) { MathJax.typesetPromise([coordB]).catch(err => console.log(err)); }
 
     if (valA > valB) {
-      feedback.innerHTML = `因為 A(${valA}) 在 B(${valB}) 的右邊，所以 <span style="color:#f43f5e;">${valA}</span> ＞ <span style="color:#10b981;">${valB}</span>`;
+      feedback.innerHTML = `因為 \(A(${valA})\) 在 \(B(${valB})\) 的右邊，所以 <span style="color:#f43f5e;">\(${valA}\)</span> \(>\) <span style="color:#10b981;">\(${valB}\)</span>`; if (window.MathJax) { MathJax.typesetPromise([feedback]).catch(err => console.log(err)); }
     } else if (valA < valB) {
-      feedback.innerHTML = `因為 A(${valA}) 在 B(${valB}) 的左邊，所以 <span style="color:#f43f5e;">${valA}</span> ＜ <span style="color:#10b981;">${valB}</span>`;
+      feedback.innerHTML = `因為 \(A(${valA})\) 在 \(B(${valB})\) 的左邊，所以 <span style="color:#f43f5e;">\(${valA}\)</span> \(<\) <span style="color:#10b981;">\(${valB}\)</span>`; if (window.MathJax) { MathJax.typesetPromise([feedback]).catch(err => console.log(err)); }
     } else {
-      feedback.innerHTML = `A(${valA}) 與 B(${valB}) 在同一個位置，所以 <span style="color:#f43f5e;">${valA}</span> ＝ <span style="color:#10b981;">${valB}</span>`;
+      feedback.innerHTML = `\(A(${valA})\) 與 \(B(${valB})\) 在同一個位置，所以 <span style="color:#f43f5e;">\(${valA}\)</span> \(=\) <span style="color:#10b981;">\(${valB}\)</span>`; if (window.MathJax) { MathJax.typesetPromise([feedback]).catch(err => console.log(err)); }
     }
   }
 
@@ -554,14 +554,14 @@ function initConcept3Canvas() {
   }
 
   function updateTexts() {
-    oppASpan.textContent = valA > 0 ? `+${valA}` : `${valA}`;
-    oppBSpan.textContent = -valA > 0 ? `+${-valA}` : `${-valA}`;
+    oppASpan.innerHTML = valA > 0 ? `\(+${valA}\)` : `\(${valA}\)`;
+    oppBSpan.innerHTML = -valA > 0 ? `\(+${-valA}\)` : `\(${-valA}\)`; if (window.MathJax) { MathJax.typesetPromise([oppASpan, oppBSpan]).catch(err => console.log(err)); }
 
     if (valA === 0) {
-      oppFeedback.innerHTML = `<strong>0 的相反數規定就是 0</strong>。`;
+      oppFeedback.innerHTML = `<strong>\(0\) 的相反數規定就是 \(0\)</strong>。`; if (window.MathJax) { MathJax.typesetPromise([oppFeedback]).catch(err => console.log(err)); }
     } else {
       const positiveVal = Math.abs(valA);
-      oppFeedback.innerHTML = `在原點兩側：<span style="color:#f43f5e;">A(${valA})</span> 與 <span style="color:#10b981;">A'(${-valA})</span> 到原點的距離都是 <strong style="color:#c084fc;">${positiveVal}</strong>，但方向相反，因此它們<strong>互為相反數</strong>。`;
+      oppFeedback.innerHTML = `在原點兩側：<span style="color:#f43f5e;">\(A(${valA})\)</span> 與 <span style="color:#10b981;">\(A'(${-valA})\)</span> 到原點的距離都是 <strong style="color:#c084fc;">\(${positiveVal}\)</strong>，但方向相反，因此它們<strong>互為相反數</strong>。`; if (window.MathJax) { MathJax.typesetPromise([oppFeedback]).catch(err => console.log(err)); }
     }
   }
 
@@ -713,12 +713,12 @@ function initConcept4Canvas() {
   }
 
   function updateTexts() {
-    absCoord.textContent = valA > 0 ? `+${valA}` : `${valA}`;
+    absCoord.innerHTML = valA > 0 ? `\(+${valA}\)` : `\(${valA}\)`;
     const absolute = Math.abs(valA);
-    absVal.textContent = absolute;
+    absVal.innerHTML = `\(${absolute}\)\`; if (window.MathJax) { MathJax.typesetPromise([absCoord, absVal]).catch(err => console.log(err)); }
 
     if (valA === 0) {
-      absFeedback.innerHTML = `<strong>|0| ＝ 0</strong>，代表原點到自己本身的距離是 0。`;
+      absFeedback.innerHTML = `<strong>\(|0| = 0\)</strong>，代表原點到自己本身的距離是 \(0\)。`; if (window.MathJax) { MathJax.typesetPromise([absFeedback]).catch(err => console.log(err)); }
     } else {
       const codeStr = valA > 0 ? `+${valA}` : `${valA}`;
       let text = `<strong>|${codeStr}| ＝ ${absolute}</strong>，代表 <span style="color:#f43f5e;">A(${valA})</span> 與原點的距離是 ${absolute} 個單位長。`;
@@ -727,7 +727,7 @@ function initConcept4Canvas() {
       if (valA < 0) {
         text += `<br><span style="style: italic; color: #a855f7; font-size:0.9rem;">提示：${valA} 的絕對值是 ${absolute}，代表距離原點很遠。負數的絕對值越大，在數線上越靠左邊，所以其值越小。</span>`;
       }
-      absFeedback.innerHTML = text;
+      absFeedback.innerHTML = text; if (window.MathJax) { MathJax.typesetPromise([absFeedback]).catch(err => console.log(err)); }
     }
   }
 

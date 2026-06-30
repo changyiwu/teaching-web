@@ -10,6 +10,8 @@
   
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
@@ -73,14 +75,14 @@
           <div class="explanation-card">
             <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
             <ul class="bullet-list">
-              <li><strong>相反量</strong>：日常生活中，常有許多性質相反的量。我們可以用「<strong>＋</strong>」與「<strong>－</strong>」符號來表徵。例如：賺錢為正、賠錢為負；高於海平面為正、低於海平面為負。</li>
+              <li><strong>相反量</strong>：日常生活中，常有許多性質相反的量。我們可以用「<strong>\(+\)</strong>」與「<strong>\(-\)</strong>」符號來表徵。例如：賺錢為正、賠錢為負；高於海平面為正、低於海平面為負。</li>
               <li><strong>性質符號</strong>：
                 <ul>
-                  <li>在數字前面加上「＋」（讀作正）的數，稱為<strong>正數</strong>（如：+5、+3.5）。一般正數前面的「＋」常可省略。</li>
-                  <li>在數字前面加上「－」（讀作負）的數，稱為<strong>負數</strong>（如：-8、-1.2）。</li>
+                  <li>在數字前面加上「＋」（讀作正）的數，稱為<strong>正數</strong>（如：\(+5\)、\(+3.5\)）。一般正數前面的「＋」常可省略。</li>
+                  <li>在數字前面加上「－」（讀作負）的數，稱為<strong>負數</strong>（如：\(-8\)、\(-1.2\)）。</li>
                 </ul>
               </li>
-              <li><strong>數字 0</strong>：數字 <strong>0 既不是正數，也不是負數</strong>。它是正數與負數的分界基準。</li>
+              <li><strong>數字 0</strong>：數字 <strong>\(0\) 既不是正數，也不是負數</strong>。它是正數與負數的分界基準。</li>
               <li><strong>同號數與異號數</strong>：性質符號相同的兩數稱為同號數；性質符號相異的兩數稱為異號數。</li>
               <li><strong>整數分類</strong>：整數可分為<strong>正整數</strong>（如：1, 2, 3...）、<strong>0</strong> 與<strong>負整數</strong>（如：-1, -2, -3...）。</li>
             </ul>
@@ -104,7 +106,7 @@
                   <input type="range" id="temp-slider" min="-30" max="40" value="15" step="1">
                 </div>
                 <div class="visual-feedback" id="temp-feedback">
-                  義式冰淇淋儲存溫度為 －25℃ ∼ －18℃
+                  義式冰淇淋儲存溫度為 \(-25^\circ\text{C} \sim -18^\circ\text{C}\)
                 </div>
               </div>
             </div>
@@ -149,25 +151,25 @@
             <div class="options-container">
               <label class="option-label">
                 <input type="radio" name="q1-2" value="A">
-                <span class="option-text">A. 0 是最小的正整數</span>
+                <span class="option-text">A. \(0\) 是最小的正整數</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q1-2" value="B">
-                <span class="option-text">B. 0 既不是正數，也不是負數</span>
+                <span class="option-text">B. \(0\) 既不是正數，也不是負數</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q1-2" value="C">
-                <span class="option-text">C. 0 是一個負整數</span>
+                <span class="option-text">C. \(0\) 是一個負整數</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q1-2" value="D">
-                <span class="option-text">D. 在數線上，0 的位置是任意決定的，不具特殊意義</span>
+                <span class="option-text">D. 在數線上，\(0\) 的位置是任意決定的，不具特殊意義</span>
               </label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
               <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>0 是正數與負數的分界基準點，因此規定 0 既不是正數，也不是負數。0 也是整數的一部分，它是介於正整數與負整數之間的重要分界。</p>
+              <p class="explanation-desc"><strong>解析：</strong>\(0\) 是正數與負數的分界基準點，因此規定 \(0\) 既不是正數，也不是負數。\(0\) 也是整數的一部分，它是介於正整數與負整數之間的重要分界。</p>
             </div>
           </div>
         </div>
@@ -193,12 +195,12 @@
                   <li><strong>單位長</strong>：設定代表一個單位的長度，在數線上刻度間距必須<strong>保持一樣長</strong>。</li>
                 </ul>
               </li>
-              <li><strong>坐標表示</strong>：數線上每一個點都可以用一個數來代表。點 A 代表的數是 a，記作 <strong>A(a)</strong>。</li>
+              <li><strong>坐標表示</strong>：數線上每一個點都可以用一個數來代表。點 \(A\) 代表的數是 \(a\)，記作 <strong>\(A(a)\)</strong>。</li>
               <li><strong>數的大小比較</strong>：
                 <ul>
                   <li>在數線上，<strong>右邊的點所代表的數，一定大於左邊的點所代表的數</strong>。</li>
-                  <li>性質關係：<strong>負數 ＜ 0 ＜ 正數</strong>。</li>
-                  <li><strong>遞移律</strong>：若 a ＞ b，且 b ＞ c，則 <strong>a ＞ c</strong>。</li>
+                  <li>性質關係：<strong>\(\text{負數} < 0 < \text{正數}\)</strong>。</li>
+                  <li><strong>遞移律</strong>：若 \(a > b\)，且 \(b > c\)，則 <strong>\(a > c\)</strong>。</li>
                 </ul>
               </li>
             </ul>
@@ -210,22 +212,22 @@
           <!-- Canvas Interaction -->
           <div class="interactive-card">
             <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：動態數線坐標</h3>
-            <p class="interactive-instruction">在數線上左右拖動點 A (紅色) 或點 B (綠色)，觀察它們的坐標值以及兩數的大小關係：</p>
+            <p class="interactive-instruction">在數線上左右拖動點 \(A\)（紅色）或點 \(B\)（綠色），觀察它們的坐標值以及兩數的大小關係：</p>
             <div class="canvas-container">
               <canvas id="canvas-line" width="460" height="150"></canvas>
               <div class="control-panel">
                 <div class="value-display" style="justify-content: space-around;">
                   <div>
-                    <span>點 A 的位置:</span>
-                    <span id="coord-a" style="color: #f43f5e; font-weight: 700;">A(2)</span>
+                    <span>點 \(A\) 的位置:</span>
+                    <span id="coord-a" style="color: #f43f5e; font-weight: 700;">\(A(2)\)</span>
                   </div>
                   <div>
                     <span>點 B 的位置:</span>
-                    <span id="coord-b" style="color: #10b981; font-weight: 700;">B(-3)</span>
+                    <span id="coord-b" style="color: #10b981; font-weight: 700;">\(B(-3)\)</span>
                   </div>
                 </div>
                 <div class="visual-feedback" id="line-feedback" style="font-size: 1.1rem; text-align: center; color: #fff; font-weight: bold;">
-                  因為 A 在 B 的右邊，所以 2 ＞ -3
+                  因為 \(A\) 在 \(B\) 的右邊，所以 \(2 > -3\)
                 </div>
               </div>
             </div>
@@ -242,7 +244,7 @@
             <div class="options-container">
               <label class="option-label">
                 <input type="radio" name="q2-1" value="A">
-                <span class="option-text">A. 標記為 0 的原點</span>
+                <span class="option-text">A. 標記為 \(0\) 的原點</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q2-1" value="B">
@@ -266,23 +268,23 @@
 
           <!-- Q2 -->
           <div class="quiz-card" data-quiz="2-2">
-            <p class="quiz-question"><strong>Q2.</strong> 在數線上，點 A 位於點 B 的左邊，且點 B 位於原點 O 的左邊。則關於 A、B 與 0 的大小關係，下列何者正確？</p>
+            <p class="quiz-question"><strong>Q2.</strong> 在數線上，點 \(A\) 位於點 B 的左邊，且點 B 位於原點 O 的左邊。則關於 A、B 與 0 的大小關係，下列何者正確？</p>
             <div class="options-container">
               <label class="option-label">
                 <input type="radio" name="q2-2" value="A">
-                <span class="option-text">A. A ＞ B</span>
+                <span class="option-text">A. \(A > B\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q2-2" value="B">
-                <span class="option-text">B. B ＞ 0</span>
+                <span class="option-text">B. \(B > 0\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q2-2" value="C">
-                <span class="option-text">C. A ＜ B ＜ 0</span>
+                <span class="option-text">C. \(A < B < 0\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q2-2" value="D">
-                <span class="option-text">D. A ＞ 0</span>
+                <span class="option-text">D. \(A > 0\)</span>
               </label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
@@ -310,15 +312,15 @@
               <li><strong>定義</strong>：在數線上，位於<strong>原點左右兩側</strong>，且與<strong>原點的距離相等</strong>的兩個點所表示的數，互為<strong>相反數</strong>。</li>
               <li><strong>幾何特徵</strong>：
                 <ul>
-                  <li>數字部分相同，性質符號相異（如：5 與 -5 互為相反數）。</li>
+                  <li>數字部分相同，性質符號相異（如：\(5\) 與 \(-5\) 互為相反數）。</li>
                   <li>互為相反數的兩個數在數線上所對應的點，與原點距離相等。</li>
                 </ul>
               </li>
               <li><strong>代數性質</strong>：
                 <ul>
-                  <li>任何一個數 a 的相反數就是 <strong>－a</strong>。</li>
-                  <li>負數的相反數就是正數，也就是雙重否定律：<strong>－(－a) ＝ a</strong>（例如：－(－4) ＝ 4）。</li>
-                  <li><strong>0 的相反數規定就是 0</strong>。</li>
+                  <li>任何一個數 \(a\) 的相反數就是 <strong>\(-a\)</strong>。</li>
+                  <li>負數的相反數就是正數，也就是雙重否定律：<strong>\(-(-a) = a\)</strong>（例如：\(-(-4) = 4\)）。</li>
+                  <li><strong>\(0\) 的相反數規定就是 \(0\)</strong>。</li>
                 </ul>
               </li>
             </ul>
@@ -327,22 +329,22 @@
           <!-- Canvas Interaction -->
           <div class="interactive-card">
             <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：相反數的鏡像對稱</h3>
-            <p class="interactive-instruction">拖拉紅色點 A，觀察綠色點 A' 如何在原點 (0) 另一側形成對稱，並確認兩者到原點的距離均相等：</p>
+            <p class="interactive-instruction">拖拉紅色點 \(A\)，觀察綠色點 \(A\)' 如何在原點 (\(0\)) 另一側形成對稱，並確認兩者到原點的距離均相等：</p>
             <div class="canvas-container">
               <canvas id="canvas-opposite" width="460" height="150"></canvas>
               <div class="control-panel">
                 <div class="value-display" style="justify-content: space-around;">
                   <div>
-                    <span>點 A:</span>
-                    <span id="opp-a" style="color: #f43f5e; font-weight: bold;">3</span>
+                    <span>點 \(A\):</span>
+                    <span id="opp-a" style="color: #f43f5e; font-weight: bold;">\(3\)</span>
                   </div>
                   <div>
-                    <span>點 A' (相反數):</span>
-                    <span id="opp-b" style="color: #10b981; font-weight: bold;">-3</span>
+                    <span>點 \(A\)' (相反數):</span>
+                    <span id="opp-b" style="color: #10b981; font-weight: bold;">\(-3\)</span>
                   </div>
                 </div>
                 <div class="visual-feedback" id="opp-feedback" style="text-align: center; color: #fff; font-weight: bold;">
-                  3 與 -3 互為相反數，它們到原點的距離都是 3
+                  \(3\) 與 \(-3\) 互為相反數，它們到原點的距離都是 \(3\)
                 </div>
               </div>
             </div>
@@ -359,7 +361,7 @@
             <div class="options-container">
               <label class="option-label">
                 <input type="radio" name="q3-1" value="A">
-                <span class="option-text">A. 0 的相反數就是 0</span>
+                <span class="option-text">A. \(0\) 的相反數就是 \(0\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q3-1" value="B">
@@ -367,7 +369,7 @@
               </label>
               <label class="option-label">
                 <input type="radio" name="q3-1" value="C">
-                <span class="option-text">C. -(-7.2) 的值等於 7.2</span>
+                <span class="option-text">C. \(-(-7.2)\) 的值等於 \(7.2\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q3-1" value="D">
@@ -387,19 +389,19 @@
             <div class="options-container">
               <label class="option-label">
                 <input type="radio" name="q3-2" value="A">
-                <span class="option-text">A. 16 與 -16</span>
+                <span class="option-text">A. \(16\) 與 \(-16\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q3-2" value="B">
-                <span class="option-text">B. 8 與 -8</span>
+                <span class="option-text">B. \(8\) 與 \(-8\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q3-2" value="C">
-                <span class="option-text">C. 0 與 16</span>
+                <span class="option-text">C. \(0\) 與 \(16\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q3-2" value="D">
-                <span class="option-text">D. 4 與 -12</span>
+                <span class="option-text">D. \(4\) 與 \(-12\)</span>
               </label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
@@ -424,18 +426,18 @@
           <div class="explanation-card">
             <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
             <ul class="bullet-list">
-              <li><strong>定義</strong>：在數線上，一個數 a 所代表的點與原點之間的<strong>距離</strong>，稱為 a 的<strong>絕對值</strong>，記作 <strong>｜a｜</strong>。</li>
+              <li><strong>定義</strong>：在數線上，一個數 \(a\) 所代表的點與原點之間的<strong>距離</strong>，稱為 \(a\) 的<strong>絕對值</strong>，記作 <strong>\(|a|\)</strong>。</li>
               <li><strong>性質</strong>：
                 <ul>
-                  <li>距離必為非負值，因此任何數的絕對值必定<strong>大於或等於 0</strong>（即 ｜a｜ ≧ 0）。</li>
-                  <li>互為相反數的兩數，其絕對值相等：<strong>｜a｜ ＝ ｜－a｜</strong>（如：｜5｜ ＝ ｜－5｜ ＝ 5）。</li>
+                  <li>距離必為非負值，因此任何數的絕對值必定<strong>大於或等於 \(0\)</strong>（即 \(|a| \ge 0\)）。</li>
+                  <li>互為相反數的兩數，其絕對值相等：<strong>\(|a| = |-a|\)</strong>（如：\(|5| = |-5| = 5\)）。</li>
                   <li>不看性質符號（正負號），只看數字部分就是絕對值。</li>
                 </ul>
               </li>
               <li><strong>負數的大小比較（重要！）</strong>：
                 <ul>
                   <li>在負數中，<strong>絕對值愈大的數，其值反而愈小</strong>。</li>
-                  <li>例如：｜－9｜＝ 9，｜－3｜＝ 3。因為 9 ＞ 3（距離更遠，在數線更左側），所以 <strong>－9 ＜ －3</strong>。</li>
+                  <li>例如：\(|-9| = 9\)，\(|-3| = 3\)。因為 \(9 > 3\)（距離更遠，在數線更左側），所以 <strong>\(-9 < -3\)</strong>。</li>
                 </ul>
               </li>
             </ul>
@@ -444,22 +446,22 @@
           <!-- Canvas Interaction -->
           <div class="interactive-card">
             <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：絕對值是距離</h3>
-            <p class="interactive-instruction">拖曳數線上的紅點 A，觀察它與原點的「距離測量條」，並體會絕對值與負數大小的關係：</p>
+            <p class="interactive-instruction">拖曳數線上的紅點 \(A\)，觀察它與原點的「距離測量條」，並體會絕對值與負數大小的關係：</p>
             <div class="canvas-container">
               <canvas id="canvas-abs" width="460" height="150"></canvas>
               <div class="control-panel">
                 <div class="value-display" style="justify-content: space-around;">
                   <div>
-                    <span>點 A:</span>
-                    <span id="abs-coord" style="color: #f43f5e; font-weight: bold;">-4</span>
+                    <span>點 \(A\):</span>
+                    <span id="abs-coord" style="color: #f43f5e; font-weight: bold;">\(-4\)</span>
                   </div>
                   <div>
                     <span>絕對值 |A| (到原點距離):</span>
-                    <span id="abs-val" style="color: #06b6d4; font-weight: bold;">4</span>
+                    <span id="abs-val" style="color: #06b6d4; font-weight: bold;">\(4\)</span>
                   </div>
                 </div>
                 <div class="visual-feedback" id="abs-feedback" style="text-align: center; color: #fff; font-weight: bold;">
-                  |-4| = 4，代表該點到原點距離為 4 個單位長
+                  \(|-4| = 4\)，代表該點到原點距離為 \(4\) 個單位長
                 </div>
               </div>
             </div>
@@ -476,25 +478,25 @@
             <div class="options-container">
               <label class="option-label">
                 <input type="radio" name="q4-1" value="A">
-                <span class="option-text">A. ｜－9.3｜</span>
+                <span class="option-text">A. \(|-9.3|\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q4-1" value="B">
-                <span class="option-text">B. ｜7｜</span>
+                <span class="option-text">B. \(|7|\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q4-1" value="C">
-                <span class="option-text">C. ｜－5｜</span>
+                <span class="option-text">C. \(|-5|\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q4-1" value="D">
-                <span class="option-text">D. ｜－1.2｜</span>
+                <span class="option-text">D. \(|-1.2|\)</span>
               </label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
               <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>各數的絕對值運算結果為：A. ｜－9.3｜＝ 9.3；B. ｜7｜＝ 7；C. ｜－5｜＝ 5；D. ｜－1.2｜＝ 1.2。其中以 9.3 最大。</p>
+              <p class="explanation-desc"><strong>解析：</strong>各數的絕對值運算結果為：A. \(|-9.3|\)＝ 9.3；B. \(|7|\)＝ 7；C. \(|-5|\)＝ 5；D. \(|-1.2|\)＝ 1.2。其中以 9.3 最大。</p>
             </div>
           </div>
 
@@ -504,15 +506,15 @@
             <div class="options-container">
               <label class="option-label">
                 <input type="radio" name="q4-2" value="A">
-                <span class="option-text">A. 5 個</span>
+                <span class="option-text">A. \(5\) 個</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q4-2" value="B">
-                <span class="option-text">B. 10 個</span>
+                <span class="option-text">B. \(10\) 個</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q4-2" value="C">
-                <span class="option-text">C. 11 個</span>
+                <span class="option-text">C. \(11\) 個</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q4-2" value="D">
@@ -532,19 +534,19 @@
             <div class="options-container">
               <label class="option-label">
                 <input type="radio" name="q4-3" value="A">
-                <span class="option-text">A. －15 ＞ －22</span>
+                <span class="option-text">A. \(-15 > -22\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q4-3" value="B">
-                <span class="option-text">B. －15 ＝ －22</span>
+                <span class="option-text">B. \(-15 = -22\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q4-3" value="C">
-                <span class="option-text">C. －15 ＜ －22</span>
+                <span class="option-text">C. \(-15 < -22\)</span>
               </label>
               <label class="option-label">
                 <input type="radio" name="q4-3" value="D">
-                <span class="option-text">D. 絕對值較大者，其數值愈大，因此 －22 ＞ －15</span>
+                <span class="option-text">D. 絕對值較大者，其數值愈大，因此 \(-22 > -15\)</span>
               </label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
@@ -565,9 +567,9 @@
           <div class="summary-card">
             <h4><i class="fa-solid fa-list-check"></i> 本節核心重點回顧</h4>
             <ul class="bullet-list">
-              <li><strong>相反物理量</strong>可以用 ＋、－ 來表示，而 0 是分界基準（非正非負）。</li>
+              <li><strong>相反物理量</strong>可以用 \(+\)、\(-\) 來表示，而 \(0\) 是分界基準（非正非負）。</li>
               <li><strong>數線三要素</strong>是原點、正向、單位長，右邊的值一定大於左邊的值。</li>
-              <li><strong>相反數</strong>是兩點位於原點兩側且與原點距離相等，a 的相反數為 -a。</li>
+              <li><strong>相反數</strong>是兩點位於原點兩側且與原點距離相等，\(a\) 的相反數為 \(-a\)。</li>
               <li><strong>絕對值</strong>是點到原點的距離，必為非負值；負數的絕對值越大其值越小。</li>
             </ul>
           </div>
@@ -575,8 +577,8 @@
             <h4><i class="fa-solid fa-earth-asia"></i> 數學與生活情境連結</h4>
             <div class="context-story">
               <h5><i class="fa-solid fa-ice-cream"></i> 生活情境：冰淇淋的低溫魔法</h5>
-              <p>在日常生活中，我們經常用負數來記錄寒冷的溫度。例如課堂開始提到的<strong>義式冰淇淋 (Gelato)</strong>，為了維持最佳的綿密口感，展示櫃與存放溫度必須嚴格控制在 <strong>－25℃ ∼ －18℃</strong> 之間，而食用時最佳的溫度則在 <strong>－15℃ ∼ －12℃</strong>。</p>
-              <p>這裡的「－25℃」比「－15℃」更冷。如果我們用絕對值來看：｜－25｜＝ 25，｜－15｜＝ 15。25 ＞ 15 代表 －25 離 0 度更遙遠，所以其數值更小，也就是溫度更低！</p>
+              <p>在日常生活中，我們經常用負數來記錄寒冷的溫度。例如課堂開始提到的<strong>義式冰淇淋 (Gelato)</strong>，為了維持最佳的綿密口感，展示櫃與存放溫度必須嚴格控制在 <strong>\(-25^\circ\text{C} \sim -18^\circ\text{C}\)</strong> 之間，而食用時最佳的溫度則在 <strong>\(-15^\circ\text{C} \sim -12^\circ\text{C}\)</strong>。</p>
+              <p>這裡的「\(-25^\circ\text{C}\)」比「\(-15^\circ\text{C}\)」更冷。如果我們用絕對值來看：\(|-25| = 25\)，\(|-15| = 15\)。\(25 > 15\) 代表 \(-25\) 離 \(0\) 度更遙遠，所以其數值更小，也就是溫度更低！</p>
               <div class="illustration-container">
                 <img src="capybara_ice_cream.png" alt="水豚吃冰淇淋" class="illustration">
               </div>

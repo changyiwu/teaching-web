@@ -3,203 +3,613 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1-2 整數的加減 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-2 整數的加減 - 互動教學網頁</title>
+  
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary: #8b5cf6;
-      --primary-hover: #a78bfa;
-      --bg-dark: #0f172a;
-      --card-bg: rgba(30, 41, 59, 0.7);
-      --border-color: rgba(139, 92, 246, 0.2);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
-    }
-    
-    /* Animated Background Blobs */
-    .background-blobs {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-    
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.15;
-      animation: float 12s infinite alternate ease-in-out;
-    }
-    
-    .blob-1 {
-      top: 10%;
-      left: 15%;
-      width: 300px;
-      height: 300px;
-      background: #8b5cf6;
-    }
-    
-    .blob-2 {
-      bottom: 10%;
-      right: 15%;
-      width: 350px;
-      height: 350px;
-      background: #3b82f6;
-      animation-delay: -4s;
-    }
-    
-    @keyframes float {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(50px, 30px) scale(1.1); }
-    }
-    
-    /* Center Card */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 3rem 2rem;
-      width: 90%;
-      max-width: 550px;
-      text-align: center;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-      z-index: 10;
-      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .icon-container {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: rgba(139, 92, 246, 0.15);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0 auto 2rem;
-      color: var(--primary-hover);
-      font-size: 3rem;
-      animation: pulse 2s infinite ease-in-out;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
-      50% { transform: scale(1.05); box-shadow: 0 0 20px 10px rgba(139, 92, 246, 0.1); }
-    }
-    
-    .breadcrumb {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-    
-    h1 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #fff 0%, #c084fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    .badge {
-      display: inline-block;
-      padding: 6px 14px;
-      border-radius: 30px;
-      background: rgba(234, 179, 8, 0.15);
-      border: 1px solid rgba(234, 179, 8, 0.3);
-      color: #facc15;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-    
-    .desc {
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-    }
-    
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
-      color: white;
-      border: none;
-      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-    }
-    
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.5);
-      background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
-    }
-    
-    .btn:active {
-      transform: translateY(0);
-    }
-  </style>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第一冊 (1上) • 第1章 整數的運算</div>
-    <h1>1-2 整數的加減</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第一冊 • 第一章</span>
+        <h1>1-2 整數的加減</h1>
+        <p>掌握同號數與異號數的加法規則，探索「減去一數等於加上其相反數」的奧秘，並熟練去括號規則與數線距離計算。</p>
+      </div>
+      <!-- Progress navigation -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-calculator"></i> 整數的加法</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-temperature-arrow-down"></i> 整數的減法</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-brackets-curly"></i> 去括號規則</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-ruler-horizontal"></i> 兩點距離與中點</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Anime Style)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(168, 85, 247, 0.25);">
+        <h2 class="section-title" style="color: #c084fc; border-bottom-color: rgba(192, 132, 252, 0.2);">
+          <i class="fa-solid fa-face-smile-wink" aria-hidden="true" style="color: #c084fc; text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);"></i> 課前暖身漫畫：小希的冷凍櫃挑戰 (動漫風)
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            剛來到貓咪咖啡廳打工的可愛小希，正準備管理新購入的特製冷凍櫃溫度。讓我們一起來看看她是如何透過加加減減的魔法，調配出最佳的冰品冷凍度吧！
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="anime_motivation_comic.png" alt="小希調整冷凍櫃溫度對白四格漫畫" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 整數的加法運算
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> 重點 1：整數的加法運算
+        </h2>
+        
+        <div class="grid-content">
+          <!-- Text Explanation -->
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>同號數相加</strong>：
+                <ul>
+                  <li>兩個<strong>同正數</strong>相加，其和為正數，值等於兩數絕對值相加。例如：\(5 + 2 = 7\)。</li>
+                  <li>兩個<strong>同負數</strong>相加，其和為負數，值等於兩數絕對值相加後冠上負號。例如：\((-5) + (-2) = -(5 + 2) = -7\)。</li>
+                </ul>
+              </li>
+              <li><strong>異號數相加</strong>：
+                <ul>
+                  <li>兩個異號數相加時，結果的性質符號取自<strong>絕對值較大的那數</strong>，其值為絕對值較大者減去較小者。例如：\(5 + (-2) = 3\)；\((-5) + 2 = -3\)。</li>
+                </ul>
+              </li>
+              <li><strong>特別性質</strong>：
+                <ul>
+                  <li><strong>與 0 相加</strong>：任何數加 0 其值不變，即 \(a + 0 = a\)。</li>
+                  <li><strong>相反數相加</strong>：兩互為相反數的整數相加，其和恆為 0。即 \(a + (-a) = 0\)。</li>
+                </ul>
+              </li>
+              <li><strong>加法運算規律</strong>：
+                <ul>
+                  <li><strong>交換律</strong>：\(a + b = b + a\)。</li>
+                  <li><strong>結合律</strong>：\((a + b) + c = a + (b + c)\)。</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="illustration-container">
+              <img src="anime_addition.png" alt="美味多球冰淇淋" class="illustration">
+            </div>
+          </div>
+
+          <!-- Canvas Interaction -->
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-route"></i> 視覺互動探索：加法數線模擬器</h3>
+            <p class="interactive-instruction">調整下方滑桿改變加數 \(a\) 與 \(b\)，在數線上動態觀察「先走 \(a\) 步，再走 \(b\) 步」的位移累加過程：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-addition" width="520" height="220"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="addition-formula" style="font-weight:700; font-size:1.2rem;">a + b = ?</span>
+                </div>
+                
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="add-a-slider">加數 a: <span id="add-a-val" class="val-num">0</span></label>
+                    <input type="range" id="add-a-slider" min="-10" max="10" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="add-b-slider">加數 b: <span id="add-b-val" class="val-num">0</span></label>
+                    <input type="range" id="add-b-slider" min="-10" max="10" value="-5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="addition-feedback">
+                  載入中...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (觀念挑戰)</h3>
+          
+          <!-- Q1 -->
+          <div class="quiz-card" data-quiz="1-2-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 計算式子 \((-9) + (-7)\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label">
+                <input type="radio" name="q1-2-1-1" value="A">
+                <span class="option-text">A. \(-16\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-1-1" value="B">
+                <span class="option-text">B. \(16\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-1-1" value="C">
+                <span class="option-text">C. \(-2\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-1-1" value="D">
+                <span class="option-text">D. \(2\)</span>
+              </label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>這是兩個負數（同號數）相加。性質符號與原兩數相同為「－」，數值為兩數絕對值相加：\((-9) + (-7) = -(9 + 7) = -16\)。</p>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="quiz-card" data-quiz="1-2-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算式子 \((-12) + 7\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label">
+                <input type="radio" name="q1-2-1-2" value="A">
+                <span class="option-text">A. \(-19\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-1-2" value="B">
+                <span class="option-text">B. \(-5\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-1-2" value="C">
+                <span class="option-text">C. \(5\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-1-2" value="D">
+                <span class="option-text">D. \(19\)</span>
+              </label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>這是異號數相加。因為負數的絕對值較大（\(|-12| > |7|\)），所以結果的符號為「－」，其值等於大絕對值減小絕對值：\((-12) + 7 = -(12 - 7) = -5\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 整數的減法運算
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-temperature-arrow-down" aria-hidden="true"></i> 重點 2：整數的減法運算
+        </h2>
+        
+        <div class="grid-content">
+          <!-- Text Explanation -->
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>減法核心定義</strong>：
+                <ul>
+                  <li>減去一個數，等於<strong>加上這個數的相反數</strong>。即對任意整數 \(a, b\)，有：<br>
+                  \[a - b = a + (－b)\]</li>
+                </ul>
+              </li>
+              <li><strong>物理情境（溫度變化量）</strong>：
+                <ul>
+                  <li>溫度變化計算公式：\(\text{最後溫度} - \text{原來溫度} = \text{溫度變化}\)。</li>
+                  <li><strong>最後溫度高於原來溫度</strong>（大減小）：溫度上升，變化量為<strong>正數</strong>。例如：\(10 - 6 = 4\)（升高 4 度）。</li>
+                  <li><strong>最後溫度低於原來溫度</strong>（小減大）：溫度下降，變化量為<strong>負數</strong>。例如：\(2 - 5 = -3\)（降低 3 度）。</li>
+                </ul>
+              </li>
+              <li><strong>減去負整數</strong>：
+                <ul>
+                  <li>減去一個負數，等於<strong>加上該數的絕對值（正整數）</strong>。例如：\(8 - (-3) = 8 + 3 = 11\)。</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="illustration-container">
+              <img src="anime_subtraction.png" alt="Q版女孩在冷凍庫發抖" class="illustration">
+            </div>
+          </div>
+
+          <!-- Canvas Interaction -->
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-temperature-half"></i> 視覺互動探索：溫度計變化減法模擬器</h3>
+            <p class="interactive-instruction">調整「原來溫度」和「最後溫度」滑桿，觀察溫度計的升降變化，並檢視減法與其相反數加法的等價表示法：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-thermometer" width="220" height="320"></canvas>
+              <div class="control-panel">
+                <div class="value-display" style="flex-direction:column; gap:0.5rem; text-align:center;">
+                  <span id="subtraction-formula" style="font-weight:700; line-height:1.4;">End - Start = ?</span>
+                </div>
+                
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="temp-end">最後溫度: <span id="sub-end-val" class="val-num" style="color:#f87171;">5°C</span></label>
+                    <input type="range" id="temp-end" min="-20" max="20" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="temp-start">原來溫度: <span id="sub-start-val" class="val-num" style="color:#60a5fa;">-3°C</span></label>
+                    <input type="range" id="temp-start" min="-20" max="20" value="-3" step="1">
+                  </div>
+                </div>
+
+                <div class="value-display" style="border-top:1px solid rgba(255,255,255,0.06); padding-top:0.75rem; margin-bottom:0.75rem;">
+                  <span>總變化量 (最後-原來):</span>
+                  <span id="sub-diff-val" style="color: #10b981; font-weight:700;">+11°C</span>
+                </div>
+
+                <div class="visual-feedback" id="subtraction-feedback">
+                  載入中...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (減法挑戰)</h3>
+          
+          <!-- Q3 -->
+          <div class="quiz-card" data-quiz="1-2-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 計算式子 \(125 - (-25)\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label">
+                <input type="radio" name="q1-2-2-1" value="A">
+                <span class="option-text">A. \(150\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-2-1" value="B">
+                <span class="option-text">B. \(100\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-2-1" value="C">
+                <span class="option-text">C. \(-100\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-2-1" value="D">
+                <span class="option-text">D. \(-150\)</span>
+              </label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>減去一個負數等於「加上該數的相反數」，因此：\(125 - (-25) = 125 + 25 = 150\)。</p>
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="quiz-card" data-quiz="1-2-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算式子 \((-63) - 37\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label">
+                <input type="radio" name="q1-2-2-2" value="A">
+                <span class="option-text">A. \(-26\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-2-2" value="B">
+                <span class="option-text">B. \(26\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-2-2" value="C">
+                <span class="option-text">C. \(-90\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-2-2" value="D">
+                <span class="option-text">D. \(-100\)</span>
+              </label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>減去一個數等於加上它的相反數，所以：\((-63) - 37 = (-63) + (-37) = -(63 + 37) = -100\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 去括號規則與加減混合運算
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-brackets-curly" aria-hidden="true"></i> 重點 3：去括號規則與加減混合運算
+        </h2>
+        
+        <div class="grid-content">
+          <!-- Text Explanation -->
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>去括號基本規則</strong>：
+                <ul>
+                  <li><strong>括號前面是「＋」號</strong>：去括號後，原來括號內各項的性質符號<strong>保持不變</strong>！<br>
+                  \[a + (b - c) = a + b - c\]</li>
+                  <li><strong>括號前面是「－」號</strong>：去括號後，原來括號內各項性質符號<strong>必須變號</strong>（＋變－、－變＋）！<br>
+                  \[a - (b - c) = a - b + c\]</li>
+                </ul>
+              </li>
+              <li><strong>去括號的重要公式</strong>：
+                <ul>
+                  <li>\(-(a + b) = -a - b\)</li>
+                  <li>\(-(a - b) = -a + b\)</li>
+                </ul>
+              </li>
+              <li><strong>絕對值運算順序</strong>：
+                <ul>
+                  <li>如果算式中含有絕對值符號，應<strong>優先處理絕對值內部的運算</strong>，再求其絕對值，最後才做其它的運算。</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Canvas / Dynamic bracket component -->
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-sliders"></i> 視覺互動探索：去括號規則變號展示儀</h3>
+            <p class="interactive-instruction">點選下方不同的括號式子組合，親自體驗「去括號展開」時符號的改變：</p>
+            <div class="canvas-container">
+              <div class="interactive-bracket-box">
+                <div class="bracket-btn-grid">
+                  <button class="bracket-btn active" id="b-btn1">10 + (－5 ＋ 3)</button>
+                  <button class="bracket-btn" id="b-btn2">10 － (－5 ＋ 3)</button>
+                  <button class="bracket-btn" id="b-btn3">10 + (5 － 3)</button>
+                  <button class="bracket-btn" id="b-btn4">10 － (5 － 3)</button>
+                </div>
+                
+                <div class="bracket-formula-display" id="bracket-formula">
+                  加載中...
+                </div>
+
+                <div class="visual-feedback" id="bracket-canvas-feedback" style="min-height: 50px;">
+                  加載中...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (混合運算挑戰)</h3>
+          
+          <!-- Q5 -->
+          <div class="quiz-card" data-quiz="1-2-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 利用去括號規則，計算式子 \(299 - (396 + 299)\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label">
+                <input type="radio" name="q1-2-3-1" value="A">
+                <span class="option-text">A. \(-695\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-3-1" value="B">
+                <span class="option-text">B. \(396\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-3-1" value="C">
+                <span class="option-text">C. \(-396\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-3-1" value="D">
+                <span class="option-text">D. \(-96\)</span>
+              </label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>因為括號前面是「－」號，去括號展開後括號內的各項性質符號都要變號：<br>
+              \(299 - (396 + 299) = 299 - 396 - 299\)。<br>
+              利用加法交換律與結合律，先將同數相減：<br>
+              \(299 - 299 - 396 = 0 - 396 = -396\)。因此答案為 C。</p>
+            </div>
+          </div>
+
+          <!-- Q6 -->
+          <div class="quiz-card" data-quiz="1-2-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 若 \(a, b\) 為兩個整數，關於式子 \(-(a - b)\) 去括號的結果，下列何者完全正確？</p>
+            <div class="options-container">
+              <label class="option-label">
+                <input type="radio" name="q1-2-3-2" value="A">
+                <span class="option-text">A. 等於 \(-a - b\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-3-2" value="B">
+                <span class="option-text">B. 等於 \(-a + b\)，且與 \(b - a\) 不相等</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-3-2" value="C">
+                <span class="option-text">C. 等於 \(-a + b\)，且與 \(b - a\) 相等</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-3-2" value="D">
+                <span class="option-text">D. 等於 \(a - b\)</span>
+              </label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>括號前面是負號，展開後各項都必須變號：\(-(a - b) = -a + b\)。根據加法交換律，\(-a + b\) 調整順序後即等於 \(b - a\)。因此答案為 C。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 數線上兩點的距離
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-horizontal" aria-hidden="true"></i> 重點 4：數線上兩點的距離與中點
+        </h2>
+        
+        <div class="grid-content">
+          <!-- Text Explanation -->
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>數線兩點間距離 (線段長度)</strong>：
+                <ul>
+                  <li>若數線上有 \(A(a)\) 與 \(B(b)\) 兩點，則其距離（記為 \(AB\)）等於<strong>兩點座標差的絕對值</strong>：<br>
+                  \[AB = |a - b| = |b - a|\]</li>
+                  <li>白話說法：數線兩點的距離，就是「<strong>大數減去小數</strong>」的值。</li>
+                </ul>
+              </li>
+              <li><strong>中點座標 (Midpoint)</strong>：
+                <ul>
+                  <li>如果 \(C(c)\) 在 A、B 之間，且到 A、B 的距離相等（\(AC = BC\)），我們稱 C 為 \(AB\) 的<strong>中點</strong>。</li>
+                  <li>中點的座標為 A、B 兩數相加除以 2（即算術平均數）：<br>
+                  \[c = \frac{a + b}{2}\]</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Canvas Interaction -->
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-arrows-left-right"></i> 視覺互動探索：數線距離與中點探索器</h3>
+            <p class="interactive-instruction" id="distance-feedback">拖曳數線上的紅點 A 或藍點 B 觀察距離與中點變化：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-distance" width="520" height="220"></canvas>
+              <div class="control-panel">
+                <div class="value-display" style="flex-direction: column; gap: 0.6rem; align-items: flex-start;">
+                  <div id="distance-formula" style="font-weight:700;">AB = |a - b| = ?</div>
+                  <div id="midpoint-formula" style="font-weight:700; color:#34d399;">M = (a + b) / 2 = ?</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (幾何距離挑戰)</h3>
+          
+          <!-- Q7 -->
+          <div class="quiz-card" data-quiz="1-2-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 數線上有 \(C(-14)\)、\(D(-9)\) 兩點，則其距離 \(\overline{CD}\) 為何？</p>
+            <div class="options-container">
+              <label class="option-label">
+                <input type="radio" name="q1-2-4-1" value="A">
+                <span class="option-text">A. \(-5\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-4-1" value="B">
+                <span class="option-text">B. \(-23\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-4-1" value="C">
+                <span class="option-text">C. \(23\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-4-1" value="D">
+                <span class="option-text">D. \(5\)</span>
+              </label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>兩點的距離等於兩座標相減的絕對值：\(\overline{CD} = |-14 - (-9)| = |-14 + 9| = |-5| = 5\)。<br>
+              另外也可以直接用「大數減小數」：\(-9 - (-14) = -9 + 14 = 5\)。距離恆為正數，答案為 D。</p>
+            </div>
+          </div>
+
+          <!-- Q8 -->
+          <div class="quiz-card" data-quiz="1-2-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 數線上有 \(A(-3)\)、\(B(7)\) 兩點，若 \(C(c)\) 為 \(AB\) 的中點，則 \(c\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label">
+                <input type="radio" name="q1-2-4-2" value="A">
+                <span class="option-text">A. \(2\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-4-2" value="B">
+                <span class="option-text">B. \(-5\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-4-2" value="C">
+                <span class="option-text">C. \(5\)</span>
+              </label>
+              <label class="option-label">
+                <input type="radio" name="q1-2-4-2" value="D">
+                <span class="option-text">D. \(-2\)</span>
+              </label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>中點座標計算方式為兩點座標相加除以 2：<br>
+              \(c = \frac{-3 + 7}{2} = \frac{4}{2} = 2\)。<br>
+              也可以先算距離 \(AB = |7 - (-3)| = 10\)，一半距離為 \(10 / 2 = 5\)，故中點在 \(A(-3)\) 右邊 5 單位：\(-3 + 5 = 2\)。答案為 A。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結與核心回顧 (Summary)
+           ========================================== -->
+      <section class="summary-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> 1-2 整數的加減 課程核心回顧
+        </h2>
+        
+        <div class="summary-grid">
+          <!-- Card 1: Mint Green review card -->
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-swatchbook"></i> 加減法快速檢索卡</h4>
+            <ul class="bullet-list">
+              <li><strong>同號加法</strong>：同符號，數值相加。<br>\( (+a) + (+b) = +(a+b) \)<br>\( (-a) + (-b) = -(a+b) \)</li>
+              <li><strong>異號加法</strong>：取大絕對值符號，大減小。<br>\( (-5) + 2 = -(5-2) = -3 \)</li>
+              <li><strong>減法變加法</strong>：減一個數等於「加相反數」。<br>\( a - b = a + (-b) \)<br>\( a - (-b) = a + b \)</li>
+              <li><strong>去括號規則</strong>：<br>括號前是「＋」不變號：\( +(a-b) = a-b \)<br>括號前是「－」要變號：\( -(a-b) = -a+b \)</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Bright Blue life story card -->
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-lightbulb"></i> 生活中的加減故事</h4>
+              <h5><i class="fa-solid fa-mountain-sun"></i> 海拔與溫度計差</h5>
+              <p>臺灣玉山頂上在冬天出現低溫 \(-10^\circ\text{C}\)，而平地臺北出現了 \(15^\circ\text{C}\)。高溫比低溫高了幾度呢？我們可以用大數減去小數：</p>
+              <p style="text-align:center; font-size:1.15rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( 15 - (-10) = 15 + 10 = 25 \)
+              </p>
+              <p>哇！差了 \(25\) 度呢！「減去一個負數」就像是拉開兩個溫度計的垂直差距，等同於直接相加，學會整數加減後，日常生活中的計量、海拔、甚至是理財記帳都變得更容易掌控了！</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 課堂智慧教學整合門戶系統. 專為國中數學高效課堂設計.</p>
+    </footer>
   </div>
 
+  <!-- Main JavaScript Logic -->
+  <script src="canvas.js"></script>
 </body>
 </html>
