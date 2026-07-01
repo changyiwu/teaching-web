@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="shield-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444" />
+      <stop offset="70%" stop-color="#b91c1c" />
+      <stop offset="100%" stop-color="#7f1d1d" />
+    </linearGradient>
+    <linearGradient id="shield-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="70%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#1e3a8a" />
+    </linearGradient>
+    <linearGradient id="shield-silver" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f1f5f9" />
+      <stop offset="50%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#64748b" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Glow & Cyber Ring -->
+  <circle cx="100" cy="100" r="95" fill="#0f172a" stroke="#1e293b" stroke-width="2" />
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="10 15 2 5" opacity="0.6" filter="url(#glow)" />
+
+  <!-- Shield Rings -->
+  <!-- Outer Red Ring -->
+  <circle cx="100" cy="100" r="75" fill="url(#shield-red)" />
+  <!-- Middle Silver Ring -->
+  <circle cx="100" cy="100" r="62" fill="url(#shield-silver)" />
+  <!-- Inner Red Ring -->
+  <circle cx="100" cy="100" r="49" fill="url(#shield-red)" />
+  <!-- Blue Center Circle -->
+  <circle cx="100" cy="100" r="36" fill="url(#shield-blue)" />
+
+  <!-- White/Silver Star in the Center -->
+  <!-- Star path centered at 100, 100 with outer radius 24, inner radius 9 -->
+  <polygon points="100,76 107,91 123,92 110,103 115,119 100,109 85,119 90,103 77,92 93,91" fill="url(#shield-silver)" filter="url(#glow)" />
+
+  <!-- Dynamic Spinning / Bouncing Motion Trails (Commutative/Associative representation) -->
+  <path d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" stroke-dasharray="10 120" filter="url(#glow)" />
+  <path d="M 175 100 A 75 75 0 0 1 25 100" fill="none" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" stroke-dasharray="10 120" filter="url(#glow)" />
+  
+  <circle cx="170" cy="80" r="3" fill="#22d3ee" filter="url(#glow)" />
+  <circle cx="30" cy="120" r="3" fill="#f43f5e" filter="url(#glow)" />
+</svg>

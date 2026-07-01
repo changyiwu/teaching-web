@@ -27,7 +27,7 @@ function getCanvasMouseCoords(e, canvas) {
 }
 
 // ----------------------------------------------------
-// Focus 1: Arc Reactor Energy Jump Canvas
+// Focus 1: Arc Reactor Energy Jump Canvas (Concept 1)
 // ----------------------------------------------------
 const canvasReactor = document.getElementById('canvas-reactor');
 if (canvasReactor) {
@@ -42,11 +42,11 @@ if (canvasReactor) {
     const rate = parseInt(rateSlider.value);
     const time = parseInt(timeSlider.value);
     const result = rate * time;
-    
+
     // Update labels
-    rateVal.innerText = rate > 0 ? `+${rate}%` : `${rate}%`;
-    timeVal.innerText = time > 0 ? `+${time}秒` : `${time}秒`;
-    
+    rateVal.innerText = rate >= 0 ? `+${rate}%` : `${rate}%`;
+    timeVal.innerText = time >= 0 ? `+${time}秒` : `${time}秒`;
+
     // Update feedback text
     let rateText = rate >= 0 ? `每秒能量上升 \\(${rate}\\%\\)` : `每秒能量下降 \\(${Math.abs(rate)}\\%\\)（記為 \\(${rate}\\%\\)）`;
     let timeText = time >= 0 ? `在 \\(${time}\\) 秒後` : `在 \\(${Math.abs(time)}\\) 秒前（時間軸記為 \\(${time}\\) 秒）`;
@@ -141,55 +141,58 @@ if (canvasReactor) {
     ctx.strokeStyle = strokeColor;
     ctx.shadowColor = strokeColor;
     
-    // Draw jumps
     const stepsCount = Math.abs(time);
     const stepDirection = time >= 0 ? 1 : -1;
     const jumpVal = rate * stepDirection; // value jumped per step
     
-    let currentVal = 0;
-    for (let step = 0; step < stepsCount; step++) {
-      const startX = getX(currentVal);
-      const nextVal = currentVal + jumpVal;
-      const endX = getX(nextVal);
-      
-      // Draw jump arc
-      ctx.beginPath();
-      ctx.moveTo(startX, centerY);
-      const cpX = (startX + endX) / 2;
-      const cpY = centerY - 45 - (step * 5); // offset curves slightly to reduce overlap
-      ctx.quadraticCurveTo(cpX, cpY, endX, centerY);
-      ctx.stroke();
-      
-      // Draw jump direction arrow on arc
-      const midX = (startX + endX) / 2;
-      const midY = centerY - 22.5 - (step * 2.5);
-      ctx.save();
-      ctx.fillStyle = strokeColor;
-      ctx.beginPath();
-      ctx.arc(midX, midY, 3, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-      
-      currentVal = nextVal;
+    if (stepsCount > 0) {
+      for (let step = 0; step < stepsCount; step++) {
+        const startVal = step * jumpVal;
+        const endVal = (step + 1) * jumpVal;
+        
+        const startX = getX(startVal);
+        const endX = getX(endVal);
+        
+        const cpX = (startX + endX) / 2;
+        const cpY = centerY - 45 - (step * 5); // offset curves slightly to reduce overlap
+        
+        // Draw jump arc
+        ctx.beginPath();
+        ctx.moveTo(startX, centerY);
+        ctx.quadraticCurveTo(cpX, cpY, endX, centerY);
+        ctx.stroke();
+        
+        // Draw jump direction arrow on arc
+        ctx.save();
+        const midX = cpX;
+        const midY = centerY - 22.5 - (step * 2.5);
+        ctx.fillStyle = strokeColor;
+        ctx.beginPath();
+        ctx.arc(midX, midY - 1, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
     }
     ctx.restore();
-    
+
     // Draw Tony's reactor at final position
     ctx.save();
-    ctx.shadowBlur = 15;
+    ctx.shadowBlur = 12;
     ctx.shadowColor = strokeColor;
-    ctx.fillStyle = '#ffffff';
+    
+    // Outer glow ring
     ctx.strokeStyle = strokeColor;
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2.5;
+    ctx.fillStyle = '#0f172a';
     ctx.beginPath();
-    ctx.arc(finalX, centerY, 8, 0, Math.PI * 2);
+    ctx.arc(finalX, centerY, 12, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
     
     // Core details
-    ctx.fillStyle = strokeColor;
+    ctx.fillStyle = '#ffffff';
     ctx.beginPath();
-    ctx.arc(finalX, centerY, 3, 0, Math.PI * 2);
+    ctx.arc(finalX, centerY, 5, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
@@ -202,7 +205,228 @@ if (canvasReactor) {
 }
 
 // ----------------------------------------------------
-// Focus 2: Division Reverse Visualizer Canvas
+// Focus 2: Captain America Shield Matrix (Concept 2)
+// ----------------------------------------------------
+const canvasProperties = document.getElementById('canvas-properties');
+if (canvasProperties) {
+  const ctx = canvasProperties.getContext('2d');
+  const rowsSlider = document.getElementById('prop-rows');
+  const colsSlider = document.getElementById('prop-cols');
+  const rowsVal = document.getElementById('prop-rows-val');
+  const colsVal = document.getElementById('prop-cols-val');
+  const toggleCommutative = document.getElementById('btn-prop-commutative');
+  const toggleAssociative = document.getElementById('btn-prop-associative');
+  const feedback = document.getElementById('prop-feedback');
+
+  let currentLayout = 'commutative'; // 'commutative' or 'associative'
+  let isTransposed = false;
+
+  canvasProperties.addEventListener('click', (e) => {
+    if (currentLayout === 'commutative') {
+      isTransposed = !isTransposed;
+      drawPropertiesCanvas();
+    }
+  });
+
+  function drawPropertiesCanvas() {
+    const A = parseInt(rowsSlider.value);
+    const B = parseInt(colsSlider.value);
+    const total = A * B;
+
+    rowsVal.innerText = `${A} 列`;
+    colsVal.innerText = `${B} 行`;
+
+    if (currentLayout === 'commutative') {
+      const activeRows = isTransposed ? B : A;
+      const activeCols = isTransposed ? A : B;
+      feedback.innerHTML = `<div style="width:100%; text-align:center;">交換律：對稱旋轉。點擊畫布以旋轉方陣。<br><span style="font-size:1.15rem; color:#3b82f6; font-weight:bold;">\\(${activeRows} \\times ${activeCols} = ${total}\\)</span> 個盾牌</div>`;
+    } else {
+      feedback.innerHTML = `<div style="width:100%; text-align:center;">結合律：將分組相乘。二組方陣並置，象徵結合運算。<br><span style="font-size:1.15rem; color:#3b82f6; font-weight:bold;">\\((${A} \\times ${B}) \\times 2 = ${A} \\times (${B} \\times 2) = ${total * 2}\\)</span> 個盾牌</div>`;
+    }
+    triggerMathJax();
+
+    ctx.clearRect(0, 0, canvasProperties.width, canvasProperties.height);
+    const W = canvasProperties.width;
+    const H = canvasProperties.height;
+
+    // Draw background glow matrix lines
+    ctx.save();
+    ctx.strokeStyle = 'rgba(99, 102, 241, 0.05)';
+    ctx.lineWidth = 1;
+    for (let x = 20; x < W; x += 30) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, H);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.save();
+    if (currentLayout === 'commutative') {
+      const activeRows = isTransposed ? B : A;
+      const activeCols = isTransposed ? A : B;
+
+      const maxRadius = 13;
+      const spacingX = 42;
+      const spacingY = 26;
+
+      const gridW = (activeCols - 1) * spacingX;
+      const gridH = (activeRows - 1) * spacingY;
+
+      const startX = (W - gridW) / 2;
+      const startY = (H - gridH) / 2;
+
+      for (let r = 0; r < activeRows; r++) {
+        for (let c = 0; c < activeCols; c++) {
+          const sx = startX + c * spacingX;
+          const sy = startY + r * spacingY;
+          drawMiniShield(ctx, sx, sy, maxRadius);
+        }
+      }
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+      ctx.font = '10px Outfit, sans-serif, "Noto Sans TC"';
+      ctx.textAlign = 'center';
+      ctx.fillText('點擊畫布以旋轉方陣 (轉置行列)', W / 2, H - 8);
+
+    } else {
+      const maxRadius = 11;
+      const spacingX = 26;
+      const spacingY = 18;
+
+      const gridW = (B - 1) * spacingX;
+      const gridH = (A - 1) * spacingY;
+
+      const boxPadding = 12;
+      const boxW = gridW + boxPadding * 2;
+      const boxH = gridH + boxPadding * 2;
+
+      // Group 1
+      const leftStartX = W / 4 - boxW / 2;
+      const leftStartY = H / 2 - boxH / 2 + 10;
+
+      ctx.strokeStyle = 'rgba(59, 130, 246, 0.4)';
+      ctx.lineWidth = 1.5;
+      ctx.fillStyle = 'rgba(59, 130, 246, 0.05)';
+      ctx.beginPath();
+      if (ctx.roundRect) {
+        ctx.roundRect(leftStartX, leftStartY, boxW, boxH, 8);
+      } else {
+        ctx.rect(leftStartX, leftStartY, boxW, boxH);
+      }
+      ctx.fill();
+      ctx.stroke();
+
+      for (let r = 0; r < A; r++) {
+        for (let c = 0; c < B; c++) {
+          const sx = leftStartX + boxPadding + c * spacingX;
+          const sy = leftStartY + boxPadding + r * spacingY;
+          drawMiniShield(ctx, sx, sy, maxRadius);
+        }
+      }
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.font = '11px Outfit, sans-serif, "Noto Sans TC"';
+      ctx.textAlign = 'center';
+      ctx.fillText(`第 1 組: ${A} × ${B} = ${total}`, W / 4, leftStartY - 10);
+
+      // Group 2
+      const rightStartX = 3 * W / 4 - boxW / 2;
+      const rightStartY = leftStartY;
+
+      ctx.strokeStyle = 'rgba(99, 102, 241, 0.4)';
+      ctx.lineWidth = 1.5;
+      ctx.fillStyle = 'rgba(99, 102, 241, 0.05)';
+      ctx.beginPath();
+      if (ctx.roundRect) {
+        ctx.roundRect(rightStartX, rightStartY, boxW, boxH, 8);
+      } else {
+        ctx.rect(rightStartX, rightStartY, boxW, boxH);
+      }
+      ctx.fill();
+      ctx.stroke();
+
+      for (let r = 0; r < A; r++) {
+        for (let c = 0; c < B; c++) {
+          const sx = rightStartX + boxPadding + c * spacingX;
+          const sy = rightStartY + boxPadding + r * spacingY;
+          drawMiniShield(ctx, sx, sy, maxRadius);
+        }
+      }
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText(`第 2 組: ${A} × ${B} = ${total}`, 3 * W / 4, rightStartY - 10);
+    }
+    ctx.restore();
+  }
+
+  function drawMiniShield(ctx, x, y, r) {
+    ctx.save();
+    ctx.shadowBlur = 4;
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+
+    // Outer Red
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Silver
+    ctx.fillStyle = '#cbd5e1';
+    ctx.beginPath();
+    ctx.arc(x, y, r * 0.8, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Inner Red
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath();
+    ctx.arc(x, y, r * 0.6, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Blue Center
+    ctx.fillStyle = '#3b82f6';
+    ctx.beginPath();
+    ctx.arc(x, y, r * 0.42, 0, Math.PI * 2);
+    ctx.fill();
+
+    // White Star
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    const outer = r * 0.42;
+    const inner = r * 0.16;
+    for (let i = 0; i < 5; i++) {
+      const angleOuter = (i * 2 * Math.PI) / 5 - Math.PI / 2;
+      const angleInner = ((i * 2 + 1) * Math.PI) / 5 - Math.PI / 2;
+      ctx.lineTo(x + outer * Math.cos(angleOuter), y + outer * Math.sin(angleOuter));
+      ctx.lineTo(x + inner * Math.cos(angleInner), y + inner * Math.sin(angleInner));
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  rowsSlider.addEventListener('input', drawPropertiesCanvas);
+  colsSlider.addEventListener('input', drawPropertiesCanvas);
+
+  toggleCommutative.addEventListener('click', () => {
+    toggleCommutative.classList.add('active');
+    toggleAssociative.classList.remove('active');
+    currentLayout = 'commutative';
+    isTransposed = false;
+    drawPropertiesCanvas();
+  });
+
+  toggleAssociative.addEventListener('click', () => {
+    toggleAssociative.classList.add('active');
+    toggleCommutative.classList.remove('active');
+    currentLayout = 'associative';
+    drawPropertiesCanvas();
+  });
+
+  drawPropertiesCanvas();
+}
+
+// ----------------------------------------------------
+// Focus 3: Division Web-Fluid Splitter Canvas (Concept 3)
 // ----------------------------------------------------
 const canvasDivision = document.getElementById('canvas-division');
 if (canvasDivision) {
@@ -215,118 +439,136 @@ if (canvasDivision) {
 
   function drawDivisionCanvas() {
     const total = parseInt(dividendSlider.value);
-    let count = parseInt(divisorSlider.value);
+    const count = parseInt(divisorSlider.value);
     
-    // Prevent division by 0
+    // Safety check for divisor=0
     if (count === 0) {
-      count = 1;
-      divisorSlider.value = 1;
+      dividendVal.innerText = total >= 0 ? `+${total}%` : `${total}%`;
+      divisorVal.innerText = `0秒 (未定)`;
+      feedback.innerHTML = `<div style="width:100%; text-align:center; color:#f43f5e; font-weight:bold;">錯誤：除數不能為 0！\\(${total} \\div 0\\) 在數學上是無意義的。</div>`;
+      triggerMathJax();
+      ctx.clearRect(0, 0, canvasDivision.width, canvasDivision.height);
+      return;
     }
-    
-    const quotient = total / count;
-    
+
+    const result = total / count;
+
     // Update labels
     dividendVal.innerText = total >= 0 ? `+${total}%` : `${total}%`;
-    divisorVal.innerText = count > 0 ? `+${count}秒` : `${count}秒`;
+    divisorVal.innerText = count >= 0 ? `+${count}秒` : `${count}秒`;
+
+    let totalText = total >= 0 ? `總能量增加 \\(${total}\\%\\)` : `總能量下降 \\(${Math.abs(total)}\\%\\)（記為 \\(${total}\\%\\)）`;
+    let countText = count >= 0 ? `分作 \\(${count}\\) 秒進行` : `以逆向時間 \\(${count}\\) 秒推算`;
+    let resSignText = result >= 0 ? `平均每秒「增加」\\(${result.toFixed(1)}\\%\\) （結果為正）` : `平均每秒「減少」\\(${Math.abs(result).toFixed(1)}\\%\\) （結果為負）`;
     
-    let totalText = total >= 0 ? `總能量變化為上升 \\(${total}\\%\\)` : `總能量變化為下降 \\(${Math.abs(total)}\\%\\)（記為 \\(${total}\\%\\)）`;
-    let countText = count > 0 ? `在 \\(${count}\\) 秒內發生` : `在 \\(${Math.abs(count)}\\) 秒前逆向推算（時間變化 \\(${count}\\) 秒）`;
-    let quotientSignText = quotient >= 0 ? `平均每秒能量「上升」\\(${quotient.toFixed(1)}\\%\\)（同號得正）` : `平均每秒能量「下降」\\(${Math.abs(quotient).toFixed(1)}\\%\\)（異號得負）`;
-    
-    feedback.innerHTML = `<div style="width:100%; text-align:center;">${totalText}，${countText}，則：<br><span style="font-size:1.15rem; color:#06b6d4; font-weight:bold;">\\(${total} \\div (${count}) = ${quotient >= 0 ? '+' : ''}${quotient.toFixed(1)}\\%\\)</span>，${quotientSignText}</div>`;
+    feedback.innerHTML = `<div style="width:100%; text-align:center;">${totalText}，${countText}，運算結果為：<br><span style="font-size:1.15rem; color:#10b981; font-weight:bold;">\\(${total} \\div (${count}) = ${result >= 0 ? '+' : ''}${result.toFixed(1)}\\%\\)</span>，${resSignText}</div>`;
     triggerMathJax();
 
-    // Clear
+    // Clear Canvas
     ctx.clearRect(0, 0, canvasDivision.width, canvasDivision.height);
     
     const W = canvasDivision.width;
     const H = canvasDivision.height;
-    const centerY = H / 2 - 10;
-    const padding = 40;
+    const centerY = H / 2 + 10;
+    const padding = 45;
     const range = 25;
     
     const getX = (val) => padding + (val + range) * (W - 2 * padding) / (2 * range);
 
-    // Number Line (Standard)
+    // Draw background grid lines
+    ctx.save();
+    ctx.strokeStyle = 'rgba(16, 185, 129, 0.05)';
+    ctx.lineWidth = 1;
+    for(let i = -20; i <= 20; i += 5) {
+      ctx.beginPath();
+      ctx.moveTo(getX(i), 0);
+      ctx.lineTo(getX(i), H);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Draw Number Line
     ctx.save();
     ctx.strokeStyle = '#94a3b8';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(padding - 20, centerY);
     ctx.lineTo(W - padding + 20, centerY);
     ctx.stroke();
     
-    // Arrow (Right side only)
+    // Draw Arrow on the positive side (Right only)
     ctx.beginPath();
     ctx.moveTo(W - padding + 20, centerY);
-    ctx.lineTo(W - padding + 10, centerY - 6);
-    ctx.lineTo(W - padding + 10, centerY + 6);
+    ctx.lineTo(W - padding + 10, centerY - 5);
+    ctx.lineTo(W - padding + 10, centerY + 5);
     ctx.closePath();
     ctx.fillStyle = '#94a3b8';
     ctx.fill();
     ctx.restore();
     
-    // Ticks & Labels
+    // Draw ticks
     ctx.save();
     ctx.fillStyle = '#cbd5e1';
-    ctx.font = '12px Outfit, sans-serif';
+    ctx.font = '10px Outfit';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 1;
     ctx.strokeStyle = '#64748b';
-    
     for (let i = -25; i <= 25; i += 5) {
       const x = getX(i);
       ctx.beginPath();
-      ctx.moveTo(x, centerY - 5);
-      ctx.lineTo(x, centerY + 5);
+      ctx.moveTo(x, centerY - 4);
+      ctx.lineTo(x, centerY + 4);
       ctx.stroke();
-      ctx.fillText(i, x, centerY + 10);
+      ctx.fillText(i, x, centerY + 8);
     }
     ctx.restore();
 
-    // Draw total segment
+    // Draw origin
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(getX(0), centerY, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw Division block segment
+    ctx.save();
+    ctx.lineWidth = 4.5;
+    
+    let color = '#10b981'; // positive (mint green)
+    if (result < 0) {
+      color = '#f43f5e'; // negative (rose red)
+    }
+    ctx.strokeStyle = color;
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = color;
+
     const startX = getX(0);
     const endX = getX(total);
-    
+
+    // Draw total vector (a thick line with transparency)
     ctx.save();
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
     ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
     ctx.beginPath();
-    ctx.moveTo(startX, centerY);
-    ctx.lineTo(endX, centerY);
+    ctx.moveTo(startX, centerY - 15);
+    ctx.lineTo(endX, centerY - 15);
     ctx.stroke();
-    
-    // Draw subdivision arrows
-    ctx.lineWidth = 2;
-    ctx.shadowBlur = 8;
-    const color = quotient >= 0 ? '#10b981' : '#ef4444';
-    ctx.strokeStyle = color;
-    ctx.shadowColor = color;
-    ctx.fillStyle = color;
-    
+    ctx.restore();
+
+    // Draw division division marks
     const stepsCount = Math.abs(count);
     const stepSize = total / stepsCount;
     
-    for (let i = 0; i < stepsCount; i++) {
-      const segmentStart = getX(i * stepSize);
-      const segmentEnd = getX((i + 1) * stepSize);
-      
-      // Draw sub segment line
+    ctx.beginPath();
+    ctx.moveTo(startX, centerY - 15);
+    ctx.lineTo(endX, centerY - 15);
+    ctx.stroke();
+    
+    for (let i = 0; i <= stepsCount; i++) {
+      const segmentX = getX(i * stepSize);
+      ctx.fillStyle = '#ffffff';
       ctx.beginPath();
-      ctx.moveTo(segmentStart, centerY - 15);
-      ctx.lineTo(segmentEnd, centerY - 15);
-      ctx.stroke();
-      
-      // Arrow head on sub segment
-      const dx = segmentEnd - segmentStart;
-      const angle = Math.atan2(0, dx);
-      ctx.beginPath();
-      ctx.moveTo(segmentEnd, centerY - 15);
-      ctx.lineTo(segmentEnd - 8 * Math.cos(angle - Math.PI/6), centerY - 15 - 8 * Math.sin(angle - Math.PI/6));
-      ctx.lineTo(segmentEnd - 8 * Math.cos(angle + Math.PI/6), centerY - 15 - 8 * Math.sin(angle + Math.PI/6));
-      ctx.closePath();
+      ctx.arc(segmentX, centerY - 15, 3.5, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.restore();
@@ -348,7 +590,7 @@ if (canvasDivision) {
 }
 
 // ----------------------------------------------------
-// Focus 3: Order of Operations Dynamic Step Visualizer
+// Focus 4: Order of Operations Dynamic Step Visualizer (Concept 4)
 // ----------------------------------------------------
 const expressions = [
   {
@@ -419,7 +661,6 @@ if (canvasOps) {
     ctx.fillStyle = '#f8fafc';
     
     const cleanCodeStr = currentStep.code;
-    // Replace standard math symbols for display
     let displayStr = cleanCodeStr
       .replace(/\*/g, '×')
       .replace(/\//g, '÷')
@@ -447,11 +688,10 @@ if (canvasOps) {
       const widthActive = ctx.measureText(textActive).width;
       
       const startX = (W / 2) - (widthFull / 2) + widthBefore;
-      const activeCenterX = startX + (widthActive / 2);
       
       // Draw neon border around active calculation part
-      ctx.strokeStyle = '#f43f5e';
-      ctx.shadowColor = '#f43f5e';
+      ctx.strokeStyle = '#8b5cf6';
+      ctx.shadowColor = '#8b5cf6';
       ctx.shadowBlur = 12;
       ctx.lineWidth = 2.5;
       ctx.strokeRect(startX - 4, H / 2 - 25, widthActive + 8, 50);
@@ -507,7 +747,7 @@ if (canvasOps) {
 }
 
 // ----------------------------------------------------
-// Focus 4: Distributive Law Area & Grouping Visualizer
+// Focus 5: Distributive Law Area & Grouping Visualizer (Concept 5)
 // ----------------------------------------------------
 const canvasDistributor = document.getElementById('canvas-distributor');
 if (canvasDistributor) {
@@ -539,9 +779,9 @@ if (canvasDistributor) {
 
     // Formula feedback
     if (currentLayout === 'grouped') {
-      feedback.innerHTML = `<div style="width:100%; text-align:center;">結合式佈局：將每份打包好在一起算。<br><span style="font-size:1.15rem; color:#fbbf24; font-weight:bold;">\\(${C} \\times (${A} + ${B}) = ${C} \\times ${A + B} = ${total}\\)</span> 個裝備</div>`;
+      feedback.innerHTML = `<div style="width:100%; text-align:center;">結合式佈局：將每份打包好在一起算。<br><span style="font-size:1.15rem; color:#f59e0b; font-weight:bold;">\\(${C} \\times (${A} + ${B}) = ${C} \\times ${A + B} = ${total}\\)</span> 個裝備</div>`;
     } else {
-      feedback.innerHTML = `<div style="width:100%; text-align:center;">分配式佈局：分別把鋼鐵與蜘蛛裝備加總。<br><span style="font-size:1.15rem; color:#fbbf24; font-weight:bold;">\\(${C} \\times ${A} + ${C} \\times ${B} = ${C * A} + ${C * B} = ${total}\\)</span> 個裝備</div>`;
+      feedback.innerHTML = `<div style="width:100%; text-align:center;">分配式佈局：分別把鋼鐵與蜘蛛裝備加總。<br><span style="font-size:1.15rem; color:#f59e0b; font-weight:bold;">\\(${C} \\times ${A} + ${C} \\times ${B} = ${C * A} + ${C * B} = ${total}\\)</span> 個裝備</div>`;
     }
     triggerMathJax();
 
@@ -573,14 +813,14 @@ if (canvasDistributor) {
           const by = startY + r * (boxH + gapY);
           
           // Draw package box outline
-          ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+          ctx.strokeStyle = 'rgba(245, 158, 11, 0.4)';
           ctx.lineWidth = 2;
           ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
           ctx.strokeRect(bx, by, boxW, boxH);
           ctx.fillRect(bx, by, boxW, boxH);
           
-          // Draw label "Package i"
-          ctx.fillStyle = 'rgba(251, 191, 36, 0.6)';
+          // Draw label "BOX i"
+          ctx.fillStyle = 'rgba(245, 158, 11, 0.6)';
           ctx.font = '10px Outfit';
           ctx.fillText(`BOX ${index + 1}`, bx + 8, by + 16);
           
@@ -737,14 +977,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Check Answer logic
     checkBtn.addEventListener('click', () => {
-      // Find selected answer
       const selectedRadio = card.querySelector('input[type="radio"]:checked');
       if (!selectedRadio) return;
       
       const userAnswer = selectedRadio.value;
-      
-      // Read correct answer from attribute or custom definition
-      // We'll define the correct answer in the HTML data-correct attribute
       const correctAnswer = card.getAttribute('data-correct') || 'A';
       const isCorrect = userAnswer === correctAnswer;
       
