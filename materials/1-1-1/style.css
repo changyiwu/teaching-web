@@ -255,8 +255,9 @@ header {
 
 #concept1::before { background: linear-gradient(90deg, #f43f5e 0%, #ec4899 100%); }
 #concept2::before { background: linear-gradient(90deg, #06b6d4 0%, #0ea5e9 100%); }
-#concept3::before { background: linear-gradient(90deg, #8b5cf6 0%, #a855f7 100%); }
-#concept4::before { background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%); }
+#concept3::before { background: linear-gradient(90deg, #10b981 0%, #34d399 100%); }
+#concept4::before { background: linear-gradient(90deg, #8b5cf6 0%, #a855f7 100%); }
+#concept5::before { background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%); }
 
 .section-title {
   display: flex;
@@ -275,17 +276,21 @@ header {
 #concept2 .section-title { background: linear-gradient(135deg, #ffffff 40%, #cffafe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 #concept2 .section-title i { color: #06b6d4; -webkit-text-fill-color: initial; }
 
-#concept3 .section-title { background: linear-gradient(135deg, #ffffff 40%, #f3e8ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-#concept3 .section-title i { color: #8b5cf6; -webkit-text-fill-color: initial; }
+#concept3 .section-title { background: linear-gradient(135deg, #ffffff 40%, #d1fae5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept3 .section-title i { color: #10b981; -webkit-text-fill-color: initial; }
 
-#concept4 .section-title { background: linear-gradient(135deg, #ffffff 40%, #fef9c3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-#concept4 .section-title i { color: #f59e0b; -webkit-text-fill-color: initial; }
+#concept4 .section-title { background: linear-gradient(135deg, #ffffff 40%, #f3e8ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept4 .section-title i { color: #8b5cf6; -webkit-text-fill-color: initial; }
+
+#concept5 .section-title { background: linear-gradient(135deg, #ffffff 40%, #fef9c3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept5 .section-title i { color: #f59e0b; -webkit-text-fill-color: initial; }
 
 /* Themed strong keyword highlights */
 #concept1 strong { color: #fda4af; }
 #concept2 strong { color: #67e8f9; }
-#concept3 strong { color: #d8b4fe; }
-#concept4 strong { color: #fde047; }
+#concept3 strong { color: #6ee7b7; }
+#concept4 strong { color: #d8b4fe; }
+#concept5 strong { color: #fde047; }
 
 .grid-content {
   display: grid;
