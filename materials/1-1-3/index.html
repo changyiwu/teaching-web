@@ -3,792 +3,203 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1-3 整數的乘除與四則運算 - 互動教學網頁</title>
-  
-  <!-- FontAwesome for Premium Icons -->
+  <title>1-3 整數的乘除與四則運算 - 課堂教學資料庫</title>
+  <!-- FontAwesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Custom Stylesheet -->
-  <link rel="stylesheet" href="style.css">
-  
-  <!-- MathJax for rendering professional LaTeX equations -->
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <style>
+    :root {
+      --primary: #8b5cf6;
+      --primary-hover: #a78bfa;
+      --bg-dark: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --border-color: rgba(139, 92, 246, 0.2);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    /* Animated Background Blobs */
+    .background-blobs {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      animation: float 12s infinite alternate ease-in-out;
+    }
+    
+    .blob-1 {
+      top: 10%;
+      left: 15%;
+      width: 300px;
+      height: 300px;
+      background: #8b5cf6;
+    }
+    
+    .blob-2 {
+      bottom: 10%;
+      right: 15%;
+      width: 350px;
+      height: 350px;
+      background: #3b82f6;
+      animation-delay: -4s;
+    }
+    
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 30px) scale(1.1); }
+    }
+    
+    /* Center Card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      width: 90%;
+      max-width: 550px;
+      text-align: center;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      z-index: 10;
+      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .icon-container {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 2rem;
+      color: var(--primary-hover);
+      font-size: 3rem;
+      animation: pulse 2s infinite ease-in-out;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 20px 10px rgba(139, 92, 246, 0.1); }
+    }
+    
+    .breadcrumb {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 30px;
+      background: rgba(234, 179, 8, 0.15);
+      border: 1px solid rgba(234, 179, 8, 0.3);
+      color: #facc15;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    
+    .desc {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.5);
+      background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
   </div>
 
-  <div class="container">
-    <!-- Header Navigation -->
-    <header>
-      <div class="nav-back">
-        <a href="../../index.html" class="btn-back">
-          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
-        </a>
-      </div>
-      <div class="lesson-title">
-        <span class="badge">第一冊 • 第一章</span>
-        <h1>1-3 整數的乘除與四則運算</h1>
-        <p>探索同號與異號數的乘除法則、運算規律（交換律、結合律、分配律），以及含有括號與絕對值的四則混合運算</p>
-      </div>
-      <!-- Progress navigation -->
-      <nav class="lesson-nav">
-        <a href="#motivation-comic" class="nav-item active"><i class="fa-solid fa-face-smile"></i> 課前暖身</a>
-        <a href="#concept1" class="nav-item"><i class="fa-solid fa-xmark"></i> 1. 整數乘法</a>
-        <a href="#concept2" class="nav-item"><i class="fa-solid fa-layer-group"></i> 2. 乘法特性</a>
-        <a href="#concept3" class="nav-item"><i class="fa-solid fa-divide"></i> 3. 整數除法</a>
-        <a href="#concept4" class="nav-item"><i class="fa-solid fa-calculator"></i> 4. 四則運算</a>
-        <a href="#concept5" class="nav-item"><i class="fa-solid fa-arrows-split-up-and-left"></i> 5. 分配律</a>
-        <a href="#summary" class="nav-item"><i class="fa-solid fa-clipboard-check"></i> 核心回顧</a>
-      </nav>
-    </header>
-
-    <main>
-      <!-- ==========================================
-           引起動機: 四格漫畫 (漫威風格)
-           ========================================== -->
-      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(244, 63, 94, 0.25);">
-        <h2 class="section-title" style="color: #fda4af; border-bottom-color: rgba(244, 63, 94, 0.2);">
-          <i class="fa-solid fa-mask" aria-hidden="true" style="color: #f43f5e; text-shadow: 0 0 10px rgba(244, 63, 94, 0.4);"></i> 課前暖身漫畫：方舟反應爐的數值試驗
-        </h2>
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
-          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
-            在復仇者聯盟實驗室中，鋼鐵人（東尼）與蜘蛛人（彼得）正對全新方舟反應爐進行數值模擬。當東尼將每秒「上升」或「下降」的能量，與「秒數」結合時，發現了乘法正負號的奧秘！
-          </p>
-          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
-            <img src="marvel_motivation_comic.svg" alt="鋼鐵人與蜘蛛人反應爐數值對白四格漫畫" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           重點 1: 整數的乘法運算與性質符號
-           ========================================== -->
-      <section class="concept-section" id="concept1">
-        <h2 class="section-title">
-          <i class="fa-solid fa-xmark" aria-hidden="true"></i> 重點 1：整數的乘法運算與性質符號
-        </h2>
-        
-        <div class="grid-content">
-          <!-- Text Explanation -->
-          <div class="explanation-card">
-            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
-            <ul class="bullet-list">
-              <li><strong>同號兩數相乘，結果為正數</strong>：
-                <ul>
-                  <li>正數乘以正數：\(a \times b = \text{正數}\)，如：\(7 \times 6 = 42\)。</li>
-                  <li>負數乘以負數：\(-a \times (-b) = \text{正數}\)，如：\(-4 \times (-8) = 32\)。</li>
-                </ul>
-              </li>
-              <li><strong>異號兩數相乘，結果為負數</strong>：
-                <ul>
-                  <li>正數乘以負數：\(a \times (-b) = \text{負數}\)，如：\(8 \times (-9) = -72\)。</li>
-                  <li>負數乘以正數：\(-a \times b = \text{負數}\)，如：\(-6 \times 8 = -48\)。</li>
-                </ul>
-              </li>
-              <li><strong>乘數為 0、1 或 -1 狀況</strong>：
-                <ul>
-                  <li>任意整數與 \(0\) 的乘積皆為 \(0\)，即 \(a \times 0 = 0\)。</li>
-                  <li>任意整數與 \(1\) 的乘積等於其本身，即 \(a \times 1 = a\)。</li>
-                  <li>任意整數與 \(-1\) 的乘積等於該數的相反數，即 \(a \times (-1) = -a\)。</li>
-                </ul>
-              </li>
-            </ul>
-            <div class="illustration-container">
-              <img src="marvel_ironman_sticker.svg" alt="鋼鐵人反應爐" class="illustration">
-            </div>
-          </div>
-
-          <!-- Canvas Interaction -->
-          <div class="interactive-card">
-            <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：方舟反應爐數線跳躍</h3>
-            <p class="interactive-instruction">拖動下方滑桿，觀察能量每秒變化率與時間相乘後，在數線上的跳躍動畫與正負號變化：</p>
-            <div class="canvas-container">
-              <canvas id="canvas-reactor" width="460" height="200"></canvas>
-              <div class="control-panel">
-                <div class="slider-wrapper">
-                  <label for="reactor-rate">每秒能量變化 (速率): <span id="rate-val" style="color: #f43f5e; font-weight: bold;">+4%</span></label>
-                  <input type="range" id="reactor-rate" min="-5" max="5" value="4" step="1">
-                </div>
-                <div class="slider-wrapper">
-                  <label for="reactor-time">觀測時間 (秒數): <span id="time-val" style="color: #ec4899; font-weight: bold;">+2秒</span></label>
-                  <input type="range" id="reactor-time" min="-5" max="5" value="2" step="1">
-                </div>
-                <div class="visual-feedback" id="reactor-feedback">
-                  反應爐能量每秒穩定上升 +4%，2 秒後的水位變化。
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quiz Container -->
-        <div class="quiz-section">
-          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (觀念挑戰)</h3>
-          
-          <!-- Q1 -->
-          <div class="quiz-card" data-quiz="1-1" data-correct="B">
-            <p class="quiz-question"><strong>Q1.</strong> 計算算式 \(8 \times (-9)\) 的值為何？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q1-1" value="A">
-                <span class="option-text">A. \(72\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q1-1" value="B">
-                <span class="option-text">B. \(-72\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q1-1" value="C">
-                <span class="option-text">C. \(-17\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q1-1" value="D">
-                <span class="option-text">D. \(17\)</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>這是正數乘以負數（異號相乘），其乘積必定為負數。數字部分為兩數的絕對值相乘：\(8 \times 9 = 72\)，加上負號得到 \(-72\)。即 \(8 \times (-9) = -72\)。</p>
-            </div>
-          </div>
-
-          <!-- Q2 -->
-          <div class="quiz-card" data-quiz="1-2" data-correct="A">
-            <p class="quiz-question"><strong>Q2.</strong> 計算算式 \(-4 \times (-8)\) 的值為何？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q1-2" value="A">
-                <span class="option-text">A. \(32\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q1-2" value="B">
-                <span class="option-text">B. \(-32\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q1-2" value="C">
-                <span class="option-text">C. \(-12\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q1-2" value="D">
-                <span class="option-text">D. \(12\)</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>這是負數乘以負數（同號相乘），結果為正數。數字部分相乘：\(4 \times 8 = 32\)，所以 \(-4 \times (-8) = 32\)。</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           重點 2: 乘法運算的特性 (交換律與結合律)
-           ========================================== -->
-      <section class="concept-section" id="concept2">
-        <h2 class="section-title">
-          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 2：乘法運算的特性 (交換律與結合律)
-        </h2>
-        
-        <div class="grid-content">
-          <!-- Text Explanation -->
-          <div class="explanation-card">
-            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
-            <ul class="bullet-list">
-              <li><strong>乘法交換律</strong>：
-                <ul>
-                  <li>兩數相乘，交換乘數與被乘數的位置，其積不變。</li>
-                  <li>公式表示：\(a \times b = b \times a\)。如：\(7 \times (-2) = -2 \times 7 = -14\)。</li>
-                </ul>
-              </li>
-              <li><strong>乘法結合律</strong>：
-                <ul>
-                  <li>三數相乘，可以先把前兩數相乘，也可以先把後兩數相乘，其積皆相同。</li>
-                  <li>公式表示：\((a \times b) \times c = a \times (b \times c)\)。</li>
-                </ul>
-              </li>
-              <li><strong>負數連乘的正負號判斷</strong>：
-                <ul>
-                  <li>在多個不為零的整數連乘中：</li>
-                  <li>若<strong>負數個數為偶數個</strong>，乘積為<strong>正數</strong>。</li>
-                  <li>若<strong>負數個數為奇數個</strong>，乘積為<strong>負數</strong>。</li>
-                </ul>
-              </li>
-            </ul>
-            <div class="illustration-container">
-              <img src="marvel_cap_sticker.svg" alt="美國隊長盾牌" class="illustration">
-            </div>
-          </div>
-
-          <!-- Canvas Interaction -->
-          <div class="interactive-card">
-            <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：美國隊長盾牌方陣與結合律</h3>
-            <p class="interactive-instruction">拖動滑桿調整盾牌陣列的列數與行數，切換「交換律」或「結合律」觀察盾牌矩陣的翻轉與分組變化：</p>
-            <div class="canvas-container">
-              <canvas id="canvas-properties" width="460" height="200"></canvas>
-              <div class="control-panel">
-                <div class="slider-wrapper">
-                  <label for="prop-rows">方陣列數 (A): <span id="prop-rows-val" style="color: #3b82f6; font-weight: bold;">3 列</span></label>
-                  <input type="range" id="prop-rows" min="2" max="6" value="3" step="1">
-                </div>
-                <div class="slider-wrapper">
-                  <label for="prop-cols">方陣行數 (B): <span id="prop-cols-val" style="color: #6366f1; font-weight: bold;">4 行</span></label>
-                  <input type="range" id="prop-cols" min="2" max="6" value="4" step="1">
-                </div>
-                <div class="distributor-options" style="margin-top: 10px;">
-                  <button class="btn-toggle active" id="btn-prop-commutative">交換律 A × B = B × A</button>
-                  <button class="btn-toggle" id="btn-prop-associative">結合律 (A × B) × 2</button>
-                </div>
-                <div class="visual-feedback" id="prop-feedback" style="margin-top: 1rem;">
-                  3 列 4 行的盾牌方陣，總數為 3 × 4 = 12。
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quiz Container -->
-        <div class="quiz-section">
-          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (觀念挑戰)</h3>
-          
-          <!-- Q1 -->
-          <div class="quiz-card" data-quiz="2-1" data-correct="A">
-            <p class="quiz-question"><strong>Q1.</strong> 利用乘法結合律，計算算式 \((-5) \times (-129) \times (-2)\) 的值為何？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q2-1" value="A">
-                <span class="option-text">A. \(-1290\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q2-1" value="B">
-                <span class="option-text">B. \(1290\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q2-1" value="C">
-                <span class="option-text">C. \(-12900\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q2-1" value="D">
-                <span class="option-text">D. \(12900\)</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>原式 \(= (-5) \times (-2) \times (-129)\)（交換律）。<br>
-              再由結合律先計算 \((-5) \times (-2) = 10\)，最後 \(10 \times (-129) = -1290\)。<br>
-              由於算式中有三個負數（奇數個）相乘，結果必定為負數。</p>
-            </div>
-          </div>
-
-          <!-- Q2 -->
-          <div class="quiz-card" data-quiz="2-2" data-correct="B">
-            <p class="quiz-question"><strong>Q2.</strong> 判斷連乘算式 \((-2) \times (-4) \times (-6) \times \dots \times (-50)\) 的結果是正數還是負數？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q2-2" value="A">
-                <span class="option-text">A. 正數</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q2-2" value="B">
-                <span class="option-text">B. 負數</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q2-2" value="C">
-                <span class="option-text">C. 0</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q2-2" value="D">
-                <span class="option-text">D. 無法判斷</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>這是一個從 \(-2\) 到 \(-50\) 的連續偶數連乘算式。負數個數為 \(50 \div 2 = 25\) 個。因為有 25 個（奇數個）負整數連乘，所以結果必定為負數。</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           重點 3: 整數的除法運算與符號規則
-           ========================================== -->
-      <section class="concept-section" id="concept3">
-        <h2 class="section-title">
-          <i class="fa-solid fa-divide" aria-hidden="true"></i> 重點 3：整數的除法運算與符號規則
-        </h2>
-        
-        <div class="grid-content">
-          <!-- Text Explanation -->
-          <div class="explanation-card">
-            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
-            <ul class="bullet-list">
-              <li><strong>除法是乘法的逆運算</strong>：
-                <ul>
-                  <li>由 \(3 \times 4 = 12\) 可知 \(12 \div 4 = 3\)。</li>
-                  <li>由 \(-3 \times 4 = -12\) 可知 \(-12 \div 4 = -3\)。</li>
-                </ul>
-              </li>
-              <li><strong>除法的性質符號規則</strong>：
-                <ul>
-                  <li><strong>同號相除得正數</strong>：\((+) \div (+) = (+)\)；\((-) \div (-) = (+)\)。</li>
-                  <li><strong>異號相除得負數</strong>：\((-) \div (+) = (-)\)；\((+) \div (-) = (-)\)。</li>
-                </ul>
-              </li>
-              <li><strong>0 相關的除法規則</strong>：
-                <ul>
-                  <li>\(0\) 除以任何不為零的整數，結果皆為 \(0\)，即 \(0 \div a = 0\)（\(a \neq 0\)）。</li>
-                  <li><strong>注意</strong>：\(0\) 絕不能作為除數，因為除以 \(0\) 在數學上是無意義的。</li>
-                </ul>
-              </li>
-              <li><strong>除法的定律限制</strong>：
-                <ul>
-                  <li>除法<strong>不具備交換律</strong>，即 \(a \div b \neq b \div a\)。</li>
-                  <li>除法<strong>不具備結合律</strong>，即 \((a \div b) \div c \neq a \div (b \div c)\)。</li>
-                </ul>
-              </li>
-            </ul>
-            <div class="illustration-container">
-              <img src="marvel_spiderman_sticker.svg" alt="蜘蛛人標誌" class="illustration">
-            </div>
-          </div>
-
-          <!-- Canvas Interaction -->
-          <div class="interactive-card">
-            <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：除法逆向分割與定位</h3>
-            <p class="interactive-instruction">調整滑桿設定總量與秒數，觀察除法如何在數線上將負值或正值進行等分：</p>
-            <div class="canvas-container">
-              <canvas id="canvas-line" width="460" height="0" style="display:none;"></canvas>
-              <canvas id="canvas-division" width="460" height="150"></canvas>
-              <div class="control-panel">
-                <div class="slider-wrapper">
-                  <label for="div-dividend">總能量變化量 (被除數): <span id="dividend-val" style="color: #10b981; font-weight: bold;">-12%</span></label>
-                  <input type="range" id="div-dividend" min="-24" max="24" value="-12" step="1">
-                </div>
-                <div class="slider-wrapper">
-                  <label for="div-divisor">觀測時間長度 (除數): <span id="divisor-val" style="color: #059669; font-weight: bold;">+4秒</span></label>
-                  <input type="range" id="div-divisor" min="-6" max="6" value="4" step="1">
-                </div>
-                <div class="visual-feedback" id="division-feedback">
-                  總共下降 -12%，分作 4 秒進行，平均每秒。
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quiz Container -->
-        <div class="quiz-section">
-          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (觀念挑戰)</h3>
-          
-          <!-- Q1 -->
-          <div class="quiz-card" data-quiz="3-1" data-correct="A">
-            <p class="quiz-question"><strong>Q1.</strong> 計算 \(-63 \div 7\) 與 \(-72 \div (-6)\) 的值，結果依序為？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q3-1" value="A">
-                <span class="option-text">A. \(-9\) 與 \(12\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q3-1" value="B">
-                <span class="option-text">B. \(-9\) 與 \(-12\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q3-1" value="C">
-                <span class="option-text">C. \(9\) 與 \(12\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q3-1" value="D">
-                <span class="option-text">D. \(9\) 與 \(-12\)</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong><br>
-              1. \(-63 \div 7 = -(63 \div 7) = -9\)（異號相除得負數）。<br>
-              2. \(-72 \div (-6) = 72 \div 6 = 12\)（同號相除得正數）。<br>
-              所以結果依序為 \(-9\) 與 \(12\)。</p>
-            </div>
-          </div>
-
-          <!-- Q2 -->
-          <div class="quiz-card" data-quiz="3-2" data-correct="C">
-            <p class="quiz-question"><strong>Q2.</strong> 關於整數除法的運算，下列敘述何者**錯誤**？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q3-2" value="A">
-                <span class="option-text">A. \(0\) 除以任何一個不為零的整數，結果皆為 \(0\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q3-2" value="B">
-                <span class="option-text">B. \(0\) 不能當作除數，除以 \(0\) 在數學上無意義</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q3-2" value="C">
-                <span class="option-text">C. 整數除法運算與乘法相同，皆具備交換律與結合律</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q3-2" value="D">
-                <span class="option-text">D. 同號相除結果為正數，異號相除結果為負數</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>除法不滿足交換律（如：\(10 \div 2 = 5\)，但 \(2 \div 10 = 0.2\)，兩者不相等），亦不滿足結合律。所以 C 選項說「具備交換律與結合律」是錯誤的。</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           重點 4: 整數的四則混合運算
-           ========================================== -->
-      <section class="concept-section" id="concept4">
-        <h2 class="section-title">
-          <i class="fa-solid fa-calculator" aria-hidden="true"></i> 重點 4：整數的四則混合運算
-        </h2>
-        
-        <div class="grid-content">
-          <!-- Text Explanation -->
-          <div class="explanation-card">
-            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
-            <ul class="bullet-list">
-              <li><strong>四則混合運算順序法則</strong>：
-                <ul>
-                  <li><strong>先乘除，後加減</strong>：式子中同時有加減與乘除時，乘除須先計算。</li>
-                  <li><strong>由左至右</strong>：若只剩下加減或只剩下乘除，應依序由左而右計算。</li>
-                </ul>
-              </li>
-              <li><strong>括號的處理順序</strong>：
-                <ul>
-                  <li>式子中有括號時，必須先算括號內的值。</li>
-                  <li>括號計算順序：小括號 \(( \ )\) \(\rightarrow\) 中括號 \([ \ ]\) \(\rightarrow\) 大括號 \(\{ \ \}\)。</li>
-                </ul>
-              </li>
-              <li><strong>絕對值優先權</strong>：
-                <ul>
-                  <li>如果算式中含有絕對值 \(| \ |\)，應將其視為一個獨立的括號，<strong>優先算完絕對值內部的算式</strong>，取其絕對值後再做其餘運算。</li>
-                </ul>
-              </li>
-            </ul>
-            <div class="illustration-container">
-              <img src="marvel_strange_sticker.svg" alt="奇異博士傳送門" class="illustration">
-            </div>
-          </div>
-
-          <!-- Canvas Interaction -->
-          <div class="interactive-card">
-            <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：四則運算動態解題解鎖器</h3>
-            <p class="interactive-instruction">點擊下方按鈕切換算式，並利用「上一步」、「下一步」觀察數學運算樹的動態化簡與運算優先權：</p>
-            <div class="canvas-container">
-              <div class="expression-selector" style="display:flex; gap:10px; width:100%; margin-bottom:1rem;">
-                <button class="btn-toggle btn-select-expr active">算式 A</button>
-                <button class="btn-toggle btn-select-expr">算式 B</button>
-                <button class="btn-toggle btn-select-expr">算式 C</button>
-              </div>
-              <canvas id="canvas-ops" width="460" height="120" style="background: rgba(15,23,42,0.6); border-radius:12px; margin-bottom:1rem;"></canvas>
-              <div class="stepper-container" id="ops-steps-list">
-                <!-- Steps will be generated here dynamically -->
-              </div>
-              <div class="control-panel" style="display:flex; justify-content:space-between; gap:20px; border-top:none; margin-top:1rem; padding-top:0;">
-                <button class="btn" id="step-prev" style="flex:1; background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1); box-shadow:none; padding:10px;"><i class="fa-solid fa-chevron-left"></i> 上一步</button>
-                <button class="btn" id="step-next" style="flex:1; padding:10px;"><i class="fa-solid fa-chevron-right"></i> 下一步</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quiz Container -->
-        <div class="quiz-section">
-          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (觀念挑戰)</h3>
-          
-          <!-- Q1 -->
-          <div class="quiz-card" data-quiz="4-1" data-correct="A">
-            <p class="quiz-question"><strong>Q1.</strong> 計算算式 \(7 + 4 \times (-3)\) 的值為何？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q4-1" value="A">
-                <span class="option-text">A. \(-5\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q4-1" value="B">
-                <span class="option-text">B. \(-33\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q4-1" value="C">
-                <span class="option-text">C. \(-1\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q4-1" value="D">
-                <span class="option-text">D. \(19\)</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>同時含有加法與乘法時，應先算乘法再算加法：<br>
-              先算：\(4 \times (-3) = -12\)。<br>
-              再算加法：\(7 + (-12) = -5\)。<br>
-              <strong>注意：</strong>千萬不能先算 \(7 + 4 = 11\) 喔！</p>
-            </div>
-          </div>
-
-          <!-- Q2 -->
-          <div class="quiz-card" data-quiz="4-2" data-correct="B">
-            <p class="quiz-question"><strong>Q2.</strong> 計算算式 \(-60 \div [ (-7) \times 2 - 1 ]\) 的值為何？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q4-2" value="A">
-                <span class="option-text">A. \(-4\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q4-2" value="B">
-                <span class="option-text">B. \(4\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q4-2" value="C">
-                <span class="option-text">C. \(-5\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q4-2" value="D">
-                <span class="option-text">D. \(5\)</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>有括號時，中括號內部的算式應優先計算：<br>
-              中括號內為先乘除後加減：\(-7 \times 2 - 1 = -14 - 1 = -15\)。<br>
-              算式簡化為：\(-60 \div (-15) = 4\)（同號相除得正數）。</p>
-            </div>
-          </div>
-
-          <!-- Q3 -->
-          <div class="quiz-card" data-quiz="4-3" data-correct="A">
-            <p class="quiz-question"><strong>Q3.</strong> 計算算式 \(| 8 \times (-2) - 5 | \div 7 \times (-3)\) 的值為何？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q4-3" value="A">
-                <span class="option-text">A. \(-9\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q4-3" value="B">
-                <span class="option-text">B. \(9\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q4-3" value="C">
-                <span class="option-text">C. \(-21\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q4-3" value="D">
-                <span class="option-text">D. \(21\)</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong><br>
-              1. 優先算絕對值內：\(| 8 \times (-2) - 5 | = | -16 - 5 | = | -21 | = 21\)。<br>
-              2. 算式化為：\(21 \div 7 \times (-3)\)。<br>
-              3. 由於僅剩乘除，應依「由左至右」順序計算：\(21 \div 7 = 3\)，然後 \(3 \times (-3) = -9\)。<br>
-              <strong>注意：</strong>千萬不能先算後面的 \(7 \times (-3)\) 喔！同優先級運算必須由左而右。</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           重點 5: 乘法分配律的極速心算與應用
-           ========================================== -->
-      <section class="concept-section" id="concept5">
-        <h2 class="section-title">
-          <i class="fa-solid fa-arrows-split-up-and-left" aria-hidden="true"></i> 重點 5：乘法分配律的極速心算與應用
-        </h2>
-        
-        <div class="grid-content">
-          <!-- Text Explanation -->
-          <div class="explanation-card">
-            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
-            <ul class="bullet-list">
-              <li><strong>左分配律與右分配律</strong>：
-                <ul>
-                  <li>\(a \times (b + c) = a \times b + a \times c\)</li>
-                  <li>\((a + b) \times c = a \times c + b \times c\)</li>
-                  <li>減法也適用分配律：\(a \times (b - c) = a \times b - a \times c\)。</li>
-                </ul>
-              </li>
-              <li><strong>逆向應用分配律（提出相同的數）</strong>：
-                <ul>
-                  <li>在多項乘積相加減時，可提取公因數簡化計算：</li>
-                  <li>\(a \times c + b \times c = (a + b) \times c\)</li>
-                  <li>如：\(-102 \times 39 + (-102) \times 61 = -102 \times (39 + 61) = -102 \times 100 = -10200\)。</li>
-                </ul>
-              </li>
-              <li><strong>極速心算拆項應用</strong>：
-                <ul>
-                  <li>若乘數接近 \(1000\)、\(100\) 或方便計算的數字，可拆項計算：</li>
-                  <li>如：\(1002 \times (-175) = (1000 + 2) \times (-175) = -175000 + (-350) = -175350\)。</li>
-                  <li>如：\(-273 \times 999 = -273 \times (1000 - 1) = -273000 - (-273) = -273000 + 273 = -272727\)。</li>
-                </ul>
-              </li>
-              <li><strong>除法分配律的唯一方向性限制</strong>：
-                <ul>
-                  <li><strong>只有右分配律成立</strong>：\((a + b) \div c = a \div c + b \div c\)（其中 \(c \neq 0\)）。</li>
-                  <li><strong>左分配律不成立</strong>：\(a \div (b + c) \neq a \div b + a \div c\)。例如 \(60 \div (4 + 6) = 6\)，而 \(60 \div 4 + 60 \div 6 = 15 + 10 = 25\)，兩者完全不相等！</li>
-                </ul>
-              </li>
-            </ul>
-            <div class="illustration-container">
-              <img src="marvel_antman_sticker.svg" alt="蟻人裝備" class="illustration">
-            </div>
-          </div>
-
-          <!-- Canvas Interaction -->
-          <div class="interactive-card">
-            <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：蟻人皮姆粒子分配律模型</h3>
-            <p class="interactive-instruction">調整下方滑桿，選擇「結合」或「分配」佈局，觀察分配前後總能量方塊數量是否完全相等：</p>
-            <div class="canvas-container">
-              <div class="distributor-options">
-                <button class="btn-toggle active" id="btn-layout-grouped">結合佈局 C × (A + B)</button>
-                <button class="btn-toggle" id="btn-layout-distributed">分配佈局 C × A + C × B</button>
-              </div>
-              <canvas id="canvas-distributor" width="460" height="240" style="margin-top:1rem;"></canvas>
-              <div class="control-panel">
-                <div class="slider-wrapper">
-                  <label for="dist-packages">裝備箱數量 (C): <span id="packages-val" style="color: #f59e0b; font-weight: bold;">3 份</span></label>
-                  <input type="range" id="dist-packages" min="1" max="6" value="3" step="1">
-                </div>
-                <div class="slider-wrapper">
-                  <label for="dist-reactors">鋼鐵迷你反應爐 (A / 每個箱子): <span id="reactors-val" style="color: #ef4444; font-weight: bold;">2 個</span></label>
-                  <input type="range" id="dist-reactors" min="1" max="5" value="2" step="1">
-                </div>
-                <div class="slider-wrapper">
-                  <label for="dist-webs">蜘蛛網噴射器 (B / 每個箱子): <span id="webs-val" style="color: #3b82f6; font-weight: bold;">3 個</span></label>
-                  <input type="range" id="dist-webs" min="1" max="5" value="3" step="1">
-                </div>
-                <div class="visual-feedback" id="distributor-feedback">
-                  反應爐分配律面積模型。
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quiz Container -->
-        <div class="quiz-section">
-          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (觀念挑戰)</h3>
-          
-          <!-- Q1 -->
-          <div class="quiz-card" data-quiz="5-1" data-correct="A">
-            <p class="quiz-question"><strong>Q1.</strong> 利用分配律計算 \(-102 \times 39 + (-102) \times 61\) 的值為何？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q5-1" value="A">
-                <span class="option-text">A. \(-10200\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q5-1" value="B">
-                <span class="option-text">B. \(10200\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q5-1" value="C">
-                <span class="option-text">C. \(-1020\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q5-1" value="D">
-                <span class="option-text">D. \(1020\)</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>利用提取共同的乘數 \(-102\)：<br>
-              原式 \(= -102 \times (39 + 61) = -102 \times 100 = -10200\)。運用分配律可以大幅簡化連乘與相加的複雜度。</p>
-            </div>
-          </div>
-
-          <!-- Q2 -->
-          <div class="quiz-card" data-quiz="5-2" data-correct="A">
-            <p class="quiz-question"><strong>Q2.</strong> 利用分配律心算拆項計算 \(1002 \times (-175)\) 的值為何？</p>
-            <div class="options-container">
-              <label class="option-label">
-                <input type="radio" name="q5-2" value="A">
-                <span class="option-text">A. \(-175350\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q5-2" value="B">
-                <span class="option-text">B. \(175350\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q5-2" value="C">
-                <span class="option-text">C. \(-175002\)</span>
-              </label>
-              <label class="option-label">
-                <input type="radio" name="q5-2" value="D">
-                <span class="option-text">D. \(-175000\)</span>
-              </label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>將 \(1002\) 拆為 \(1000 + 2\)：<br>
-              原式 \(= (1000 + 2) \times (-175) = 1000 \times (-175) + 2 \times (-175) = -175000 + (-350) = -175350\)。</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           小節總結與核心回顧 (Summary & Context)
-           ========================================== -->
-      <section class="summary-section" id="summary">
-        <h2 class="summary-title">
-          <i class="fa-solid fa-clipboard-check"></i> 小節總結與核心回顧
-        </h2>
-        <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
-          <img src="marvel_avengers_sticker.svg" alt="復仇者聯盟標誌" class="illustration" style="width: 160px; height: 160px;">
-        </div>
-        <div class="summary-grid">
-          <!-- Recall Card -->
-          <div class="recall-card">
-            <h4><i class="fa-solid fa-bolt"></i> 核心性質快速回顧</h4>
-            <ul class="summary-list">
-              <li><strong>乘除性質符號：同號相乘除得正，異號相乘除得負</strong>。</li>
-              <li>任意整數與 0 相乘得 0；除法中，0 不能作除數。</li>
-              <li>乘法具備<strong>交換律</strong>與<strong>結合律</strong>，但除法不具備任何一個。</li>
-              <li>四則運算規則：有括號先算、有絕對值先算、先乘除後加減、同優先級由左至右。</li>
-              <li>分配律公式：\(a \times (b \pm c) = a \times b \pm a \times c\)。除法僅右分配律成立。</li>
-            </ul>
-          </div>
-
-          <!-- Story Card -->
-          <div class="story-card">
-            <h4><i class="fa-solid fa-star"></i> 生活情境：猜拳遊戲與數線移動</h4>
-            <p class="story-desc">
-              整數的四則運算常常融入生活計分。例如：<br>
-              <strong>猜拳遊戲中</strong>，贏了得 3 分（記作 +3），輸了扣 2 分（記作 -2），平手得 1 分。已知小妍與小美玩猜拳，共猜了 9 次。其中小妍贏了 4 次，小美贏了 3 次（意即小妍輸了 3 次），平手 2 次。求小妍最後的分數：<br>
-              <span style="display:block; text-align:center; padding: 6px 0; color: #60a5fa; font-weight: bold;">
-                \(3 \times 4 + (-2) \times 3 + 1 \times 2 = 12 + (-6) + 2 = 8\) 分。
-              </span>
-              這就是標準的整數乘法與四則混合運算的生活實踐！
-            </p>
-          </div>
-        </div>
-      </section>
-    </main>
+  <div class="card">
+    <div class="icon-container">
+      <i class="fa-solid fa-screwdriver-wrench"></i>
+    </div>
+    <div class="breadcrumb">第一冊 (1上) • 第1章 整數的運算</div>
+    <h1>1-3 整數的乘除與四則運算</h1>
+    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
+    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
+    <a href="../../index.html" class="btn">
+      <i class="fa-solid fa-house"></i> 返回主網頁
+    </a>
   </div>
 
-  <!-- External JS for canvases and interactives -->
-  <script src="canvas.js"></script>
 </body>
 </html>
