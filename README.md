@@ -41,7 +41,7 @@ c:\Users\chang\我的雲端硬碟\agents\teaching-web\
 │   ├── 1-1-1/          # 第一冊 1-1-1「負數與數線」互動網頁 (HTML/CSS/JS/水豚插圖)
 │   └── 1-1-2~6-3-1/    # 其餘小節「待施工」佔位網頁
 ├── .agents/            # 專案自訂技能設定（存放 math-interactive-material 技能）
-├── ANTIGRAVITY.md     # AI 開發規則與開收工指南
+├── agents.md          # 跨 Agent 開發規則與開收工指南
 ├── README.md           # 專案說明書
 └── .gitignore          # Git 忽略設定檔
 ```
@@ -53,4 +53,3 @@ c:\Users\chang\我的雲端硬碟\agents\teaching-web\
 
 ### 部署至 GitHub Pages（推薦）
 本專案已設定 GitHub Pages 自動部署。建立 GitHub 儲存庫並 Push 後，即可透過 GitHub Pages 網址線上開啟，在任何裝置上登入瀏覽器皆可同步使用您的自訂配置。
-
