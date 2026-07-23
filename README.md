@@ -67,5 +67,7 @@ c:\Users\chang\我的雲端硬碟\agents\teaching-web\
 ### 本地直接執行
 直接於瀏覽器中開啟 [index.html](index.html) 即可開始使用。
 
-### 部署至 GitHub Pages（推薦）
-本專案已設定 GitHub Pages 自動部署。建立 GitHub 儲存庫並 Push 後，即可透過 GitHub Pages 網址線上開啟，在任何裝置上登入瀏覽器皆可同步使用您的自訂配置。
+### 線上部署
+純靜態網站，可放在任何靜態主機。若要用 GitHub Pages，需自行到儲存庫的 Settings → Pages 選擇來源分支後才會發布（本專案未內建自動部署設定）。
+
+> 備忘錄與自訂連結存在瀏覽器的 `localStorage`，屬於「該裝置該瀏覽器」的資料，不會跨裝置同步。
