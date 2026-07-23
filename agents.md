@@ -24,6 +24,13 @@
 - 細節規範見 `.agents/skills/math-interactive-material/SKILL.md` 第 3.1 節；
   本專案不再自行實作漫畫生圖或加字流程。
 
+## 部署
+
+- GitHub Pages 分支部署（classic）：來源為 `main` 分支根目錄，**push 到 `main` 就會自動發布**。
+- 線上網址：<https://changyiwu.github.io/teaching-web/>
+- 沒有 `.github/workflows` 是正常的，設定在 repo Settings → Pages，不要因為找不到 workflow 就以為沒有自動部署。
+- push 前先確認資產路徑為相對路徑，避免在子路徑 `/teaching-web/` 下失效。
+
 ## 開發約束
 
 1. 網頁用於課堂智慧白板投影，需維持高對比、易讀、美觀及清楚的 hover 微動畫。
