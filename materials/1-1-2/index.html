@@ -11,7 +11,9 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Classroom Annotator (課堂畫筆) -->
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
+  <link rel="stylesheet" href="../../tools-sidebar.css">
+  <link rel="stylesheet" href="../../lesson-nav.css">
   <link rel="stylesheet" href="../../annotate.css">
 
   <!-- MathJax for rendering professional LaTeX equations -->
@@ -56,14 +58,14 @@
            ========================================== -->
       <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(168, 85, 247, 0.25);">
         <h2 class="section-title" style="color: #c084fc; border-bottom-color: rgba(192, 132, 252, 0.2);">
-          <i class="fa-solid fa-face-smile-wink" aria-hidden="true" style="color: #c084fc; text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);"></i> 課前暖身漫畫：小希的冷凍櫃挑戰 (動漫風)
+          <i class="fa-solid fa-face-smile-wink" aria-hidden="true" style="color: #c084fc; text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);"></i> 課前暖身漫畫：冷凍櫃的加減魔法
         </h2>
         <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
           <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
-            剛來到貓咪咖啡廳打工的可愛小希，正準備管理新購入的特製冷凍櫃溫度。讓我們一起來看看她是如何透過加加減減的魔法，調配出最佳的冰品冷凍度吧！
+            在咖啡廳打工的水豚店員，發現冰棒怎麼凍都軟趴趴。一起看看牠如何用整數的加加減減，把冷凍櫃調到剛剛好的溫度吧！
           </p>
           <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
-            <img src="anime_motivation_comic.png" alt="小希調整冷凍櫃溫度對白四格漫畫" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+            <img src="motivation_comic.webp" alt="水豚店員調整冷凍櫃溫度的四格漫畫" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
           </div>
         </div>
       </section>
@@ -100,7 +102,7 @@
               </li>
             </ul>
             <div class="illustration-container">
-              <img src="anime_addition.png" alt="加法運算概念圖 - 貓咪與美味點心" class="illustration">
+              <img src="anime_addition.webp" alt="加法運算概念圖 - 貓咪與美味點心" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -230,7 +232,7 @@
               </li>
             </ul>
             <div class="illustration-container">
-              <img src="anime_laws.png" alt="加法交換結合律概念圖 - 整理數字積木的學生" class="illustration">
+              <img src="anime_laws.webp" alt="加法交換結合律概念圖 - 整理數字積木的學生" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -351,7 +353,7 @@
               </li>
             </ul>
             <div class="illustration-container">
-              <img src="anime_subtraction.png" alt="減法運算概念圖 - 寒冷低溫下發抖的女孩" class="illustration">
+              <img src="anime_subtraction.webp" alt="減法運算概念圖 - 寒冷低溫下發抖的女孩" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -486,7 +488,7 @@
               </li>
             </ul>
             <div class="illustration-container">
-              <img src="anime_brackets.png" alt="去括號規則概念圖 - 擊碎括號魔法氣泡的學生" class="illustration">
+              <img src="anime_brackets.webp" alt="去括號規則概念圖 - 擊碎括號魔法氣泡的學生" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -612,7 +614,7 @@
               </li>
             </ul>
             <div class="illustration-container">
-              <img src="anime_absolute.png" alt="絕對值概念圖 - 使用科技雷射尺測量的學生" class="illustration">
+              <img src="anime_absolute.webp" alt="絕對值概念圖 - 使用科技雷射尺測量的學生" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -728,7 +730,7 @@
               </li>
             </ul>
             <div class="illustration-container">
-              <img src="anime_distance.png" alt="數線兩點距離與中點概念圖 - 點上揮手的 Chibi 人物" class="illustration">
+              <img src="anime_distance.webp" alt="數線兩點距離與中點概念圖 - 點上揮手的 Chibi 人物" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -857,7 +859,10 @@
   <!-- Main JavaScript Logic -->
   <script src="canvas.js"></script>
 
-  <!-- Classroom Annotator：課堂畫筆標註工具 -->
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
+  <script src="../../curriculum.js"></script>
+  <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
+  <script src="../../lesson-nav.js"></script>
   <script src="../../annotate.js"></script>
 </body>
 </html>

@@ -8,7 +8,13 @@
 - 視覺：以 HSL 色彩系統打造深色磨砂玻璃風格（Glassmorphic UI）。
 - 外部資源：Font Awesome 6 CDN、Google Fonts 的 `Outfit` 與 `Noto Sans TC`。
 - 本地功能：以瀏覽器 `localStorage` 保存隨堂備忘錄及各冊自訂快捷連結。
-- 課堂畫筆：`annotate.css` + `annotate.js`（Pointer Events 全螢幕標註，主網頁與教材頁共用）。
+- 共用元件（首頁與 58 個教材頁共用，皆自動注入 UI）：
+  - `curriculum.js`：6 冊 58 小節課程資料庫；**完成狀態一律只寫在這裡**（`"status": "completed"`），不要在 `script.js` 寫判斷式。
+  - `tools-sidebar.css/js`：課堂工具側邊欄；教材頁以 `data-home="../../index.html"` 附加「返回主網頁」卡片。
+  - `annotate.css/js`：課堂畫筆，筆跡以整頁座標保存並跟隨捲動。
+  - `lesson-nav.css/js`：教材頁上一節／下一節導覽。
+  - `materials/pending.css`：56 個「待施工」佔位頁共用樣式。
+- 圖片規範：教材圖片一律使用 WebP（漫畫寬 1080／品質 88，插圖寬 640／品質 85），並加 `loading="lazy"`。
 - Obsidian 筆記：`teaching-web/專案工作流程.md`。
 
 ## 跨專案依賴
@@ -51,3 +57,10 @@
 
 - 2026-07-22：將教學整合網規則統一為跨 Agent `agents.md`，移除舊規則檔並同步 README；本機 `.bak` 備份保留但不納入版控。
 - 2026-07-23：新增課堂畫筆 `annotate.css` / `annotate.js`，掛載於主網頁與 `1-1-1`、`1-1-2` 教材頁；教材技能改為固定調用 `teaching-comic` 的 `comic-generator` 產生課前漫畫。
+- 2026-07-23（第二輪）：
+  - 畫筆改為整頁座標並新增捲動模式；課堂工具側邊欄抽成共用元件，掛到首頁與全部 58 個教材頁。
+  - 課程資料抽出 `curriculum.js`，完成狀態改為資料驅動；首頁新增跨冊搜尋與狀態篩選。
+  - 修好原本無作用的「新增連結」視窗，各冊自訂連結可新增／刪除並存於 `localStorage`。
+  - 教材頁新增上一節／下一節導覽；56 個佔位頁改用共用 `materials/pending.css` 重新產生。
+  - `1-1-1`、`1-1-2` 課前漫畫依 `comic-generator` 重生（水豚風、1080x1350、JSON 對白框）。
+  - 教材圖片全面轉 WebP：11.4MB → 0.89MB。

@@ -5,11 +5,14 @@
    使用方式：在任一頁面的 </body> 前加入
      <link rel="stylesheet" href="annotate.css">
      <script src="annotate.js"></script>
-   即會自動注入浮動按鈕、工具列與全螢幕標註畫布。
+   即會自動注入浮動按鈕、工具列與標註畫布。
 
    設計重點：
+   - 筆跡座標以「整頁座標（含捲動位移）」保存，捲動頁面時標註跟著內容一起移動。
+   - 畫布本身維持視窗大小、繪製時位移 -scrollX/-scrollY，避免超長頁面產生
+     巨大畫布造成記憶體爆量。
+   - 「捲動模式」讓畫布暫時不吃事件，老師可邊捲動邊保留既有標註。
    - Pointer Events 統一處理滑鼠 / 觸控 / 觸控筆，支援智慧觸控白板。
-   - 以「向量筆畫陣列 + 已完成筆畫離屏畫布」保存內容，復原與縮放皆不失真。
    - devicePixelRatio 補償，避免 Retina / 高解析白板出現落筆偏移。
    ========================================================================== */
 (function () {
@@ -32,7 +35,7 @@
 
   // 各工具相對於基礎筆寬的倍率
   const WIDTH_SCALE = { pen: 1, highlighter: 4, eraser: 6 };
-  const MAX_STROKES = 500;
+  const MAX_STROKES = 800;
 
   const state = {
     active: false,
@@ -45,7 +48,7 @@
     dpr: 1
   };
 
-  let canvas, ctx, buffer, bctx, toolbar, toggleBtn, rafId = null;
+  let canvas, ctx, toolbar, toggleBtn, rafId = null;
 
   /* ------------------------------------------------------------------
      DOM 建立
@@ -58,9 +61,6 @@
     document.body.appendChild(canvas);
     ctx = canvas.getContext('2d');
 
-    buffer = document.createElement('canvas');
-    bctx = buffer.getContext('2d');
-
     toolbar = document.createElement('div');
     toolbar.className = 'annot-toolbar';
     toolbar.id = 'annot-toolbar';
@@ -68,6 +68,7 @@
     toolbar.setAttribute('aria-label', '課堂畫筆工具列');
     toolbar.innerHTML = `
       <div class="annot-group" data-group="tools">
+        <button type="button" class="annot-btn" data-tool="pan" title="捲動模式：保留標註並捲動頁面 (S)" aria-label="捲動模式"><i class="fa-solid fa-hand"></i></button>
         <button type="button" class="annot-btn active" data-tool="pen" title="畫筆 (P)" aria-label="畫筆"><i class="fa-solid fa-pen"></i></button>
         <button type="button" class="annot-btn" data-tool="highlighter" title="螢光筆 (H)" aria-label="螢光筆"><i class="fa-solid fa-highlighter"></i></button>
         <button type="button" class="annot-btn" data-tool="eraser" title="橡皮擦 (E)" aria-label="橡皮擦"><i class="fa-solid fa-eraser"></i></button>
@@ -81,7 +82,7 @@
       <div class="annot-group" data-group="actions">
         <button type="button" class="annot-btn" data-action="undo" title="復原 (Ctrl+Z)" aria-label="復原"><i class="fa-solid fa-rotate-left"></i></button>
         <button type="button" class="annot-btn danger" data-action="clear" title="全部清除 (C)" aria-label="全部清除"><i class="fa-solid fa-trash-can"></i></button>
-        <button type="button" class="annot-btn" data-action="save" title="下載標註圖片" aria-label="下載標註圖片"><i class="fa-solid fa-download"></i></button>
+        <button type="button" class="annot-btn" data-action="save" title="下載目前畫面的標註" aria-label="下載目前畫面的標註"><i class="fa-solid fa-download"></i></button>
         <button type="button" class="annot-btn danger" data-action="close" title="結束標註 (Esc)" aria-label="結束標註"><i class="fa-solid fa-xmark"></i></button>
       </div>
     `;
@@ -105,18 +106,23 @@
     const h = window.innerHeight;
     state.dpr = window.devicePixelRatio || 1;
 
-    [canvas, buffer].forEach(cv => {
-      cv.width = Math.round(w * state.dpr);
-      cv.height = Math.round(h * state.dpr);
-    });
+    canvas.width = Math.round(w * state.dpr);
+    canvas.height = Math.round(h * state.dpr);
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
 
-    ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
-    bctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
-
-    rebuildBuffer();
     render();
+  }
+
+  /* 取得目前捲動位移。
+     教材頁是由 <body> 自己捲動（body { overflow-y: auto }），首頁則是文件捲動，
+     兩種情況都要能取到正確位移，否則標註會跟內容分家。 */
+  function scrollOffsetX() {
+    return window.scrollX || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+  }
+
+  function scrollOffsetY() {
+    return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
   }
 
   function strokeStyleFor(target, stroke) {
@@ -160,21 +166,13 @@
     target.globalAlpha = 1;
   }
 
-  // 重播所有已完成筆畫到離屏畫布（復原、縮放時使用）
-  function rebuildBuffer() {
-    bctx.save();
-    bctx.setTransform(1, 0, 0, 1, 0, 0);
-    bctx.clearRect(0, 0, buffer.width, buffer.height);
-    bctx.restore();
-    state.strokes.forEach(s => drawStroke(bctx, s));
-  }
-
+  // 依序重播所有筆畫（含橡皮擦），並依目前捲動位置位移
   function render() {
-    ctx.save();
+    if (!ctx) return;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(buffer, 0, 0);
-    ctx.restore();
+    ctx.setTransform(state.dpr, 0, 0, state.dpr, -scrollOffsetX() * state.dpr, -scrollOffsetY() * state.dpr);
+    state.strokes.forEach(s => drawStroke(ctx, s));
     if (state.current) drawStroke(ctx, state.current);
   }
 
@@ -190,12 +188,12 @@
      繪圖事件（Pointer Events：滑鼠 / 觸控 / 觸控筆通用）
      ------------------------------------------------------------------ */
   function pointFrom(e) {
-    // 畫布為 fixed 全螢幕，client 座標即為畫布座標
-    return { x: e.clientX, y: e.clientY };
+    // 轉為整頁座標，捲動後筆跡仍黏在原本的內容上
+    return { x: e.clientX + scrollOffsetX(), y: e.clientY + scrollOffsetY() };
   }
 
   function onPointerDown(e) {
-    if (!state.active) return;
+    if (!state.active || state.tool === 'pan') return;
     if (e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
     e.preventDefault();
     canvas.setPointerCapture(e.pointerId);
@@ -223,12 +221,8 @@
     if (canvas.hasPointerCapture && canvas.hasPointerCapture(e.pointerId)) {
       canvas.releasePointerCapture(e.pointerId);
     }
-    drawStroke(bctx, state.current);
     state.strokes.push(state.current);
-    if (state.strokes.length > MAX_STROKES) {
-      state.strokes.shift();
-      rebuildBuffer();
-    }
+    if (state.strokes.length > MAX_STROKES) state.strokes.shift();
     state.current = null;
     state.drawing = false;
     render();
@@ -240,14 +234,12 @@
   function undo() {
     if (!state.strokes.length) return;
     state.strokes.pop();
-    rebuildBuffer();
     render();
   }
 
   function clearAll() {
     if (!state.strokes.length) return;
     state.strokes = [];
-    rebuildBuffer();
     render();
   }
 
@@ -275,6 +267,8 @@
     toolbar.querySelectorAll('[data-tool]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tool === tool);
     });
+    // 捲動模式時讓畫布不吃事件，頁面即可正常捲動
+    canvas.classList.toggle('drawable', state.active && tool !== 'pan');
   }
 
   function setColor(color) {
@@ -294,19 +288,20 @@
   function activate(on) {
     state.active = on;
     canvas.classList.toggle('visible', on);
-    canvas.classList.toggle('drawable', on);
+    canvas.classList.toggle('drawable', on && state.tool !== 'pan');
     toolbar.classList.toggle('open', on);
     toggleBtn.classList.toggle('active', on);
     toggleBtn.innerHTML = on
       ? '<i class="fa-solid fa-xmark"></i>'
       : '<i class="fa-solid fa-pen-nib"></i>';
     toggleBtn.setAttribute('aria-label', on ? '結束課堂畫筆' : '開啟課堂畫筆');
-    document.body.classList.toggle('annot-active', on);
+    // 供其他元件（如教材頁導覽列）避讓畫筆工具列
+    document.body.classList.toggle('annot-on', on);
     if (!on) {
       state.drawing = false;
       state.current = null;
-      render();
     }
+    render();
   }
 
   /* ------------------------------------------------------------------
@@ -336,6 +331,9 @@
     canvas.addEventListener('contextmenu', e => e.preventDefault());
 
     window.addEventListener('resize', resize);
+    // 用捕獲階段接住所有捲動來源（文件捲動或 body／內層容器捲動）
+    document.addEventListener('scroll', scheduleRender, { passive: true, capture: true });
+    window.addEventListener('scroll', scheduleRender, { passive: true });
 
     document.addEventListener('keydown', e => {
       const tag = (e.target && e.target.tagName || '').toLowerCase();
@@ -348,6 +346,7 @@
       }
       if (!state.active) return;
       switch (e.key.toLowerCase()) {
+        case 's': setTool('pan'); break;
         case 'p': setTool('pen'); break;
         case 'h': setTool('highlighter'); break;
         case 'e': setTool('eraser'); break;

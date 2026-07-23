@@ -1,0 +1,242 @@
+/* ==========================================================================
+   Classroom Tools Sidebar - 課堂工具側邊欄（主網頁與各小節教材頁共用）
+   自給自足的樣式，全部以 .tsb- 前綴命名，不依賴也不污染各頁既有樣式。
+   ========================================================================== */
+
+.tsb-sidebar {
+  position: fixed;
+  top: 0;
+  right: -340px;
+  width: 340px;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.78);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 1400;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 2.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.tsb-sidebar.open {
+  right: 0;
+}
+
+.tsb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1rem;
+}
+
+.tsb-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tsb-header h2 i {
+  color: #06b6d4;
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+}
+
+.tsb-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.tsb-close:hover {
+  color: #fff;
+}
+
+.tsb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 4px;
+}
+
+.tsb-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.tsb-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+/* 工具卡片 */
+.tsb-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.25rem;
+  min-height: 145px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: #f8fafc;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.tsb-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+.tsb-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.tsb-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  transition: all 0.4s ease;
+}
+
+.tsb-external {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.tsb-card:hover .tsb-external {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+.tsb-card-body {
+  margin-top: 1rem;
+}
+
+.tsb-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 0.35rem;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.tsb-card-desc {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.tsb-card:hover .tsb-card-title {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* 各工具主題色 */
+.tsb-card.tools .tsb-icon { background: rgba(6, 182, 212, 0.15); color: #06b6d4; }
+.tsb-card.tools .tsb-card-title { color: #cffafe; }
+.tsb-card.tools:hover { background: rgba(6, 182, 212, 0.08); }
+
+.tsb-card.score .tsb-icon { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+.tsb-card.score .tsb-card-title { color: #fbcfe8; }
+.tsb-card.score:hover { background: rgba(236, 72, 153, 0.08); }
+
+.tsb-card.wordcloud .tsb-icon { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+.tsb-card.wordcloud .tsb-card-title { color: #e9d5ff; }
+.tsb-card.wordcloud:hover { background: rgba(168, 85, 247, 0.08); }
+
+.tsb-card.home .tsb-icon { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+.tsb-card.home .tsb-card-title { color: #ddd6fe; }
+.tsb-card.home:hover { background: rgba(139, 92, 246, 0.08); }
+
+/* 浮動開關按鈕 */
+.tsb-toggle {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 90px;
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-right: none;
+  border-radius: 16px 0 0 16px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1401;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: -4px 0 15px rgba(6, 182, 212, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tsb-toggle.open {
+  right: 340px;
+}
+
+.tsb-toggle:hover {
+  background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+  box-shadow: -4px 0 20px rgba(34, 211, 238, 0.5);
+}
+
+.tsb-toggle i {
+  font-size: 1.1rem;
+  transition: transform 0.4s ease;
+}
+
+.tsb-toggle .tsb-arrow {
+  font-size: 0.8rem;
+}
+
+.tsb-toggle.open .tsb-arrow {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .tsb-sidebar {
+    width: 290px;
+    right: -290px;
+    padding: 2rem 1.25rem;
+  }
+  .tsb-toggle.open {
+    right: 290px;
+  }
+}
+
+@media print {
+  .tsb-sidebar,
+  .tsb-toggle {
+    display: none !important;
+  }
+}

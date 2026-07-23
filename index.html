@@ -12,7 +12,8 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Classroom Annotator (課堂畫筆) -->
+  <!-- Shared Classroom Components (課堂工具側邊欄 / 課堂畫筆) -->
+  <link rel="stylesheet" href="tools-sidebar.css">
   <link rel="stylesheet" href="annotate.css">
 </head>
 <body>
@@ -107,7 +108,24 @@
           <i class="fa-solid fa-book-open" aria-hidden="true"></i>各冊教學資料庫
         </h2>
         
-        <div class="tabs-container">
+        <!-- Search & Status Filter across all 6 volumes -->
+        <div class="curriculum-toolbar">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input type="search" id="curriculum-search" placeholder="搜尋小節：輸入單元名稱或代號（例如「畢氏」、「2-3」）" aria-label="搜尋小節">
+            <button type="button" class="search-clear" id="search-clear" aria-label="清除搜尋">&times;</button>
+          </div>
+          <div class="filter-chips" role="group" aria-label="完成狀態篩選">
+            <button type="button" class="filter-chip active" data-status="all">全部</button>
+            <button type="button" class="filter-chip" data-status="completed"><i class="fa-solid fa-circle-check"></i> 已完成</button>
+            <button type="button" class="filter-chip" data-status="pending"><i class="fa-solid fa-person-digging"></i> 待施工</button>
+          </div>
+        </div>
+
+        <!-- Search Results (顯示於搜尋或篩選時) -->
+        <div class="search-results" id="search-results"></div>
+
+        <div class="tabs-container" id="volume-tabs">
           <!-- Tab Buttons (Volume 1 to 6) -->
           <div class="tabs-navigation" role="tablist" aria-label="教學冊別分頁">
             <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-v1" id="tab-v1">
@@ -209,67 +227,16 @@
     </div>
   </div>
 
-  <!-- Sliding Sidebar for Classroom Tools -->
-  <div class="sidebar-tools" id="sidebar-tools">
-    <div class="sidebar-header">
-      <h2><i class="fa-solid fa-toolbox" aria-hidden="true"></i>課堂工具</h2>
-      <button class="sidebar-close-btn" id="sidebar-close-btn" aria-label="收起側邊欄">&times;</button>
-    </div>
-    <div class="portal-grid">
-      <!-- 4. Class Tools -->
-      <a href="https://changyiwu.github.io/class-tools-2" target="_blank" rel="noopener noreferrer" class="portal-card tools" id="portal-class-tools">
-        <div class="portal-card-header">
-          <div class="portal-icon-wrapper">
-            <i class="fa-solid fa-toolbox"></i>
-          </div>
-          <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
-        </div>
-        <div class="portal-card-body">
-          <h3 class="portal-card-title">班級工具</h3>
-          <p class="portal-card-desc">課堂計時器、隨機抽籤、搶答器等互動教學輔助工具箱。</p>
-        </div>
-      </a>
-
-      <!-- 5. Class Score -->
-      <a href="https://changyiwu.github.io/class-score" target="_blank" rel="noopener noreferrer" class="portal-card score" id="portal-class-score">
-        <div class="portal-card-header">
-          <div class="portal-icon-wrapper">
-            <i class="fa-solid fa-clipboard-list"></i>
-          </div>
-          <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
-        </div>
-        <div class="portal-card-body">
-          <h3 class="portal-card-title">課堂表現登記系統</h3>
-          <p class="portal-card-desc">即時記錄學生課堂表現與參與度。</p>
-        </div>
-      </a>
-
-      <!-- 6. Online Word Cloud -->
-      <a href="https://changyiwu.github.io/online-word-cloud" target="_blank" rel="noopener noreferrer" class="portal-card wordcloud" id="portal-online-word-cloud">
-        <div class="portal-card-header">
-          <div class="portal-icon-wrapper">
-            <i class="fa-solid fa-cloud"></i>
-          </div>
-          <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
-        </div>
-        <div class="portal-card-body">
-          <h3 class="portal-card-title">線上文字雲</h3>
-          <p class="portal-card-desc">老師，我想對您說。</p>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- Floating Toggle Button for Sidebar -->
-  <button class="sidebar-toggle-btn" id="sidebar-toggle" aria-label="開啟課堂工具" title="開啟課堂工具">
-    <i class="fa-solid fa-toolbox"></i>
-    <i class="fa-solid fa-chevron-left arrow-icon"></i>
-  </button>
+  <!-- Curriculum Database (shared with lesson pages) -->
+  <script src="curriculum.js"></script>
 
   <!-- Main Javascript Logic -->
   <script src="script.js"></script>
 
-  <!-- Classroom Annotator：自動注入畫筆按鈕、工具列與全螢幕標註畫布 -->
+  <!-- Classroom Tools Sidebar：自動注入課堂工具側邊欄 -->
+  <script src="tools-sidebar.js"></script>
+
+  <!-- Classroom Annotator：自動注入畫筆按鈕、工具列與標註畫布 -->
   <script src="annotate.js"></script>
 </body>
 </html>

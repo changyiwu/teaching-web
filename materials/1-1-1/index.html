@@ -11,7 +11,9 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Classroom Annotator (課堂畫筆) -->
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
+  <link rel="stylesheet" href="../../tools-sidebar.css">
+  <link rel="stylesheet" href="../../lesson-nav.css">
   <link rel="stylesheet" href="../../annotate.css">
   <!-- MathJax for rendering professional LaTeX equations -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
@@ -60,7 +62,7 @@
             水豚店長開了一家超人氣冰淇淋店，正興奮地調整著新冰箱。一起來看看牠在設定溫度時，發現了什麼神奇的數學符號奧秘呢？
           </p>
           <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
-            <img src="capybara_motivation_comic.png" alt="水豚店長與冰淇淋溫度對白四格漫畫" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+            <img src="motivation_comic.webp" alt="水豚店長與冰淇淋溫度對白四格漫畫" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
           </div>
         </div>
       </section>
@@ -90,7 +92,7 @@
               <li><strong>整數的分類</strong>：整數包含<strong>正整數</strong>（自然數，如 1, 2, 3...）、<strong>0</strong> 與<strong>負整數</strong>（如 -1, -2, -3...）。</li>
             </ul>
             <div class="illustration-container">
-              <img src="capybara_hot_spring.png" alt="水豚泡溫泉" class="illustration">
+              <img src="capybara_hot_spring.webp" alt="水豚泡溫泉" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -207,7 +209,7 @@
               </li>
             </ul>
             <div class="illustration-container">
-              <img src="capybara_math_ruler.png" alt="水豚與數線" class="illustration">
+              <img src="capybara_math_ruler.webp" alt="水豚與數線" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -329,7 +331,7 @@
               </li>
             </ul>
             <div class="illustration-container">
-              <img src="capybara_tug_of_war.png" alt="水豚拔河比較大小" class="illustration">
+              <img src="capybara_tug_of_war.webp" alt="水豚拔河比較大小" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -441,7 +443,7 @@
               <li><strong>特別規定</strong>：\(0\) 位於原點，與原點距離為 0。規定 <strong>\(0\) 的相反數是 \(0\)</strong>。</li>
             </ul>
             <div class="illustration-container">
-              <img src="capybara_mirror.png" alt="水豚照鏡子鏡像對稱" class="illustration">
+              <img src="capybara_mirror.webp" alt="水豚照鏡子鏡像對稱" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -562,7 +564,7 @@
               </li>
             </ul>
             <div class="illustration-container">
-              <img src="capybara_distance.png" alt="水豚跑步測量距離" class="illustration">
+              <img src="capybara_distance.webp" alt="水豚跑步測量距離" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -703,7 +705,7 @@
               <p>在日常生活中，我們經常用負數來記錄寒冷的溫度。例如課堂開始提到的<strong>義式冰淇淋 (Gelato)</strong>，為了維持最佳的綿密口感，展示櫃與存放溫度必須嚴格控制在 <strong>\(-25^\circ\text{C} \sim -18^\circ\text{C}\)</strong> 之間，而食用時最佳的溫度則在 <strong>\(-15^\circ\text{C} \sim -12^\circ\text{C}\)</strong>。</p>
               <p>這裡的「\(-25^\circ\text{C}\)」比「\(-15^\circ\text{C}\)」更冷。如果我們用絕對值來看：\(|-25| = 25\)，\(|-15| = 15\)。\(25 > 15\) 代表 \(-25\) 離 \(0\) 度更遙遠，所以其數值更小，也就是溫度更低！</p>
               <div class="illustration-container">
-                <img src="capybara_ice_cream.png" alt="水豚吃冰淇淋" class="illustration">
+                <img src="capybara_ice_cream.webp" alt="水豚吃冰淇淋" class="illustration" loading="lazy">
               </div>
             </div>
           </div>
@@ -720,7 +722,10 @@
   <!-- Custom Canvas & Quiz Logic JavaScript -->
   <script src="canvas.js"></script>
 
-  <!-- Classroom Annotator：課堂畫筆標註工具 -->
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
+  <script src="../../curriculum.js"></script>
+  <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
+  <script src="../../lesson-nav.js"></script>
   <script src="../../annotate.js"></script>
 </body>
 </html>

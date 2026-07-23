@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   initNotepad();
   initCurriculum();
-  initSidebar();
+  initSearch();
 });
 
 /* ==========================================================================
@@ -19,7 +19,7 @@ function initClock() {
 
   function updateTime() {
     const now = new Date();
-    
+
     // Formatting Time (HH:MM:SS)
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -98,426 +98,71 @@ function initNotepad() {
 
 /* ==========================================================================
    4. Curriculum Database Dynamically Rendered
+   課程資料與完成狀態統一放在 curriculum.js（window.CURRICULUM）
    ========================================================================== */
-const curriculumData = {
-  "1": [
-    {
-      "chapter": "第1章 整數的運算",
-      "sections": [
-        {
-          "code": "1-1",
-          "title": "負數與數線"
-        },
-        {
-          "code": "1-2",
-          "title": "整數的加減"
-        },
-        {
-          "code": "1-3",
-          "title": "整數的乘除與四則運算"
-        },
-        {
-          "code": "1-4",
-          "title": "指數記法與科學記號"
-        }
-      ]
-    },
-    {
-      "chapter": "第2章 分數的運算",
-      "sections": [
-        {
-          "code": "2-1",
-          "title": "因數與倍數"
-        },
-        {
-          "code": "2-2",
-          "title": "最大公因數與最小公倍數"
-        },
-        {
-          "code": "2-3",
-          "title": "分數的四則運算"
-        },
-        {
-          "code": "2-4",
-          "title": "指數律"
-        }
-      ]
-    },
-    {
-      "chapter": "第3章 一元一次方程式",
-      "sections": [
-        {
-          "code": "3-1",
-          "title": "代數式的化簡"
-        },
-        {
-          "code": "3-2",
-          "title": "一元一次方程式"
-        },
-        {
-          "code": "3-3",
-          "title": "應用問題"
-        }
-      ]
-    }
-  ],
-  "2": [
-    {
-      "chapter": "第1章 二元一次聯立方程式",
-      "sections": [
-        {
-          "code": "1-1",
-          "title": "二元一次方程式"
-        },
-        {
-          "code": "1-2",
-          "title": "解二元一次聯立方程式"
-        },
-        {
-          "code": "1-3",
-          "title": "應用問題"
-        }
-      ]
-    },
-    {
-      "chapter": "第2章 直角坐標與二元一次方程式的圖形",
-      "sections": [
-        {
-          "code": "2-1",
-          "title": "直角坐標平面"
-        },
-        {
-          "code": "2-2",
-          "title": "二元一次方程式的圖形"
-        }
-      ]
-    },
-    {
-      "chapter": "第3章 比與比例式",
-      "sections": [
-        {
-          "code": "3-1",
-          "title": "比例式"
-        },
-        {
-          "code": "3-2",
-          "title": "正比與反比"
-        }
-      ]
-    },
-    {
-      "chapter": "第4章 一元一次不等式",
-      "sections": [
-        {
-          "code": "4-1",
-          "title": "認識一元一次不等式"
-        },
-        {
-          "code": "4-2",
-          "title": "解一元一次不等式"
-        }
-      ]
-    },
-    {
-      "chapter": "第5章 統計",
-      "sections": [
-        {
-          "code": "5-1",
-          "title": "統計圖表與資料分析"
-        }
-      ]
-    },
-    {
-      "chapter": "第6章 生活中的幾何",
-      "sections": [
-        {
-          "code": "6-1",
-          "title": "垂直、線對稱與三視圖"
-        }
-      ]
-    }
-  ],
-  "3": [
-    {
-      "chapter": "第1章 乘法公式與多項式",
-      "sections": [
-        {
-          "code": "1-1",
-          "title": "乘法公式"
-        },
-        {
-          "code": "1-2",
-          "title": "多項式與其加減運算"
-        },
-        {
-          "code": "1-3",
-          "title": "多項式的乘除運算"
-        }
-      ]
-    },
-    {
-      "chapter": "第2章 平方根與畢氏定理",
-      "sections": [
-        {
-          "code": "2-1",
-          "title": "平方根與近似值"
-        },
-        {
-          "code": "2-2",
-          "title": "根式的運算"
-        },
-        {
-          "code": "2-3",
-          "title": "畢氏定理"
-        }
-      ]
-    },
-    {
-      "chapter": "第3章 因式分解",
-      "sections": [
-        {
-          "code": "3-1",
-          "title": "利用提公因式與乘法公式做因式分解"
-        },
-        {
-          "code": "3-2",
-          "title": "利用十字交乘法做因式分解"
-        }
-      ]
-    },
-    {
-      "chapter": "第4章 一元二次方程式",
-      "sections": [
-        {
-          "code": "4-1",
-          "title": "因式分解解一元二次方程式"
-        },
-        {
-          "code": "4-2",
-          "title": "配方法與公式解"
-        },
-        {
-          "code": "4-3",
-          "title": "應用問題"
-        }
-      ]
-    },
-    {
-      "chapter": "第5章 統計資料處理",
-      "sections": [
-        {
-          "code": "5-1",
-          "title": "資料整理與統計圖表"
-        }
-      ]
-    }
-  ],
-  "4": [
-    {
-      "chapter": "第1章 數列與級數",
-      "sections": [
-        {
-          "code": "1-1",
-          "title": "等差數列"
-        },
-        {
-          "code": "1-2",
-          "title": "等差級數"
-        },
-        {
-          "code": "1-3",
-          "title": "等比數列"
-        }
-      ]
-    },
-    {
-      "chapter": "第2章 函數",
-      "sections": [
-        {
-          "code": "2-1",
-          "title": "函數與函數圖形"
-        }
-      ]
-    },
-    {
-      "chapter": "第3章 三角形的基本性質",
-      "sections": [
-        {
-          "code": "3-1",
-          "title": "三角形與多邊形的內角與外角"
-        },
-        {
-          "code": "3-2",
-          "title": "尺規作圖"
-        },
-        {
-          "code": "3-3",
-          "title": "三角形的全等性質"
-        },
-        {
-          "code": "3-4",
-          "title": "中垂線與角平分線的性質"
-        },
-        {
-          "code": "3-5",
-          "title": "三角形的邊角關係"
-        }
-      ]
-    },
-    {
-      "chapter": "第4章 平行與四邊形",
-      "sections": [
-        {
-          "code": "4-1",
-          "title": "平行"
-        },
-        {
-          "code": "4-2",
-          "title": "平行四邊形"
-        },
-        {
-          "code": "4-3",
-          "title": "特殊四邊形的性質"
-        }
-      ]
-    }
-  ],
-  "5": [
-    {
-      "chapter": "第1章 相似形",
-      "sections": [
-        {
-          "code": "1-1",
-          "title": "連比例"
-        },
-        {
-          "code": "1-2",
-          "title": "比例線段"
-        },
-        {
-          "code": "1-3",
-          "title": "縮放與相似"
-        },
-        {
-          "code": "1-4",
-          "title": "相似三角形的應用"
-        }
-      ]
-    },
-    {
-      "chapter": "第2章 圓",
-      "sections": [
-        {
-          "code": "2-1",
-          "title": "點、直線與圓之間的位置關係"
-        },
-        {
-          "code": "2-2",
-          "title": "圓心角、圓周角與弧的關係"
-        }
-      ]
-    },
-    {
-      "chapter": "第3章 幾何與證明",
-      "sections": [
-        {
-          "code": "3-1",
-          "title": "證明與推理"
-        },
-        {
-          "code": "3-2",
-          "title": "三角形的外心、內心與重心"
-        }
-      ]
-    }
-  ],
-  "6": [
-    {
-      "chapter": "第1章 二次函數",
-      "sections": [
-        {
-          "code": "1-1",
-          "title": "二次函數的圖形與最大值、最小值"
-        }
-      ]
-    },
-    {
-      "chapter": "第2章 統計與機率",
-      "sections": [
-        {
-          "code": "2-1",
-          "title": "資料的分析"
-        },
-        {
-          "code": "2-2",
-          "title": "機率"
-        }
-      ]
-    },
-    {
-      "chapter": "第3章 生活中的立體圖形",
-      "sections": [
-        {
-          "code": "3-1",
-          "title": "空間中的線、平面與形體"
-        }
-      ]
-    }
-  ]
-};
+const VOLUME_LABELS = ['第一冊', '第二冊', '第三冊', '第四冊', '第五冊', '第六冊'];
+
+function statusBadgeHtml(status) {
+  return status === 'completed'
+    ? `<span class="status-badge completed"><i class="fa-solid fa-circle-check"></i> 已完成</span>`
+    : `<span class="status-badge pending"><i class="fa-solid fa-person-digging"></i> 待施工</span>`;
+}
+
+function sectionLinkHtml(sec, prefix) {
+  return `
+    <a href="${prefix}materials/${sec.folder}/index.html" class="section-link ${sec.status}">
+      <div class="section-info">
+        <span class="section-code">${escapeHtml(sec.code)}</span>
+        <span class="section-title-text">${escapeHtml(sec.title)}</span>
+      </div>
+      ${statusBadgeHtml(sec.status)}
+    </a>
+  `;
+}
 
 function initCurriculum() {
-  // Render each volume's curriculum
+  const curriculum = window.CURRICULUM;
+  if (!curriculum) {
+    console.error('找不到 curriculum.js，課程資料無法載入。');
+    return;
+  }
+
   for (let volId = 1; volId <= 6; volId++) {
     const container = document.getElementById(`chapters-v${volId}`);
     if (!container) continue;
-    
+
     container.innerHTML = '';
-    const chapters = curriculumData[volId] || [];
-    
-    chapters.forEach((ch, chIdx) => {
-      const chNum = chIdx + 1; // 1-indexed for C in V-C-S
+    const chapters = curriculum.data[volId] || [];
+
+    chapters.forEach(ch => {
       const card = document.createElement('div');
       card.className = 'chapter-card';
-      
-      // Header for the Chapter
+
       const header = document.createElement('div');
       header.className = 'chapter-header';
       header.innerHTML = `<i class="fa-solid fa-folder-open"></i> <span>${escapeHtml(ch.chapter)}</span>`;
       card.appendChild(header);
-      
-      // Sections List
+
       const list = document.createElement('div');
       list.className = 'sections-list';
-      
+
       ch.sections.forEach((sec, secIdx) => {
-        const sNum = secIdx + 1; // 1-indexed for S in V-C-S
-        const link = document.createElement('a');
         const match = ch.chapter.match(/第\s*(\d+)\s*章/);
-        const chNum = match ? match[1] : (chIdx + 1);
-        const folderName = `${volId}-${chNum}-${sNum}`;
-        link.href = `./materials/${folderName}/index.html`;
-        link.className = 'section-link';
-        
-        // Special case: Volume 1, Chapter 1, Section 1 (1-1-1) and Section 2 (1-1-2) are complete, others are pending
-        const isComplete = (volId === 1 && ch.chapter.includes('第1章') && (sNum === 1 || sNum === 2));
-        const statusBadge = isComplete 
-          ? `<span class="status-badge completed"><i class="fa-solid fa-circle-check"></i> 已完成</span>`
-          : `<span class="status-badge pending"><i class="fa-solid fa-person-digging"></i> 待施工</span>`;
-          
-        link.innerHTML = `
-          <div class="section-info">
-            <span class="section-code">${escapeHtml(sec.code)}</span>
-            <span class="section-title-text">${escapeHtml(sec.title)}</span>
-          </div>
-          ${statusBadge}
-        `;
-        list.appendChild(link);
+        const chNum = match ? match[1] : '1';
+        const folder = `${volId}-${chNum}-${secIdx + 1}`;
+        list.innerHTML += sectionLinkHtml({
+          folder: folder,
+          code: sec.code,
+          title: sec.title,
+          status: sec.status || 'pending'
+        }, './');
       });
-      
+
       card.appendChild(list);
       container.appendChild(card);
     });
+
+    renderCustomLinks(volId);
   }
 }
 
@@ -533,63 +178,214 @@ function escapeHtml(text) {
 }
 
 /* ==========================================================================
-   5. Sliding Sidebar drawer for Classroom Tools
+   5. Curriculum Search & Status Filter
+   跨 6 冊搜尋小節；有關鍵字或篩選時改顯示搜尋結果面板
    ========================================================================== */
-function initSidebar() {
-  const sidebar = document.getElementById('sidebar-tools');
-  const toggleBtn = document.getElementById('sidebar-toggle');
-  const closeBtn = document.getElementById('sidebar-close-btn');
+function initSearch() {
+  const input = document.getElementById('curriculum-search');
+  const clearBtn = document.getElementById('search-clear');
+  const chips = document.querySelectorAll('.filter-chip');
+  const resultsPanel = document.getElementById('search-results');
+  const tabsWrapper = document.getElementById('volume-tabs');
+  if (!input || !resultsPanel || !tabsWrapper) return;
 
-  if (!sidebar || !toggleBtn) return;
+  let statusFilter = 'all';
 
-  function toggleSidebar(state) {
-    if (state === undefined) {
-      sidebar.classList.toggle('open');
-      toggleBtn.classList.toggle('open');
-    } else if (state) {
-      sidebar.classList.add('open');
-      toggleBtn.classList.add('open');
-    } else {
-      sidebar.classList.remove('open');
-      toggleBtn.classList.remove('open');
-    }
-    
-    // Toggle arrow icon class
-    const arrowIcon = toggleBtn.querySelector('.arrow-icon');
-    if (arrowIcon) {
-      if (sidebar.classList.contains('open')) {
-        arrowIcon.className = 'fa-solid fa-chevron-right arrow-icon';
-      } else {
-        arrowIcon.className = 'fa-solid fa-chevron-left arrow-icon';
-      }
-    }
-  }
+  function apply() {
+    const query = input.value.trim().toLowerCase();
+    const filtering = query !== '' || statusFilter !== 'all';
 
-  // Toggle button click
-  toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleSidebar();
-  });
+    clearBtn.classList.toggle('visible', input.value !== '');
+    tabsWrapper.classList.toggle('hidden', filtering);
+    resultsPanel.classList.toggle('visible', filtering);
+    if (!filtering) return;
 
-  // Close button click if present
-  if (closeBtn) {
-    closeBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleSidebar(false);
+    const matches = window.CURRICULUM.sections.filter(sec => {
+      if (statusFilter !== 'all' && sec.status !== statusFilter) return false;
+      if (!query) return true;
+      const volLabel = VOLUME_LABELS[Number(sec.volId) - 1] || '';
+      const haystack = `${sec.code} ${sec.title} ${sec.chapter} ${sec.folder} ${volLabel}`.toLowerCase();
+      return haystack.includes(query);
     });
+
+    if (!matches.length) {
+      resultsPanel.innerHTML = `
+        <div class="search-empty">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <p>找不到符合「${escapeHtml(input.value)}」的小節，換個關鍵字試試。</p>
+        </div>`;
+      return;
+    }
+
+    resultsPanel.innerHTML = `
+      <div class="search-summary">找到 <strong>${matches.length}</strong> 個小節</div>
+      <div class="search-grid">
+        ${matches.map(sec => `
+          <a href="./materials/${sec.folder}/index.html" class="search-result ${sec.status}">
+            <div class="search-result-meta">
+              <span class="vol-badge">${VOLUME_LABELS[Number(sec.volId) - 1]}</span>
+              <span class="chapter-text">${escapeHtml(sec.chapter)}</span>
+            </div>
+            <div class="section-info">
+              <span class="section-code">${escapeHtml(sec.code)}</span>
+              <span class="section-title-text">${escapeHtml(sec.title)}</span>
+            </div>
+            ${statusBadgeHtml(sec.status)}
+          </a>`).join('')}
+      </div>`;
   }
 
-  // Click outside sidebar to close it
-  document.addEventListener('click', (e) => {
-    if (sidebar.classList.contains('open')) {
-      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-        toggleSidebar(false);
-      }
-    }
+  input.addEventListener('input', apply);
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    input.focus();
+    apply();
   });
-
-  // Prevent clicks inside sidebar from bubble up and closing it
-  sidebar.addEventListener('click', (e) => {
-    e.stopPropagation();
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      statusFilter = chip.dataset.status;
+      apply();
+    });
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      input.value = '';
+      apply();
+    }
   });
 }
+
+/* ==========================================================================
+   6. Custom Teaching Links per Volume (LocalStorage)
+   老師可自行新增各冊常用連結（雲端教材、教案、影片等）
+   ========================================================================== */
+const LINKS_STORAGE_KEY = 'teaching_portal_custom_links';
+
+function loadCustomLinks() {
+  try {
+    return JSON.parse(localStorage.getItem(LINKS_STORAGE_KEY)) || {};
+  } catch (err) {
+    console.warn('自訂連結資料損毀，已重置。', err);
+    return {};
+  }
+}
+
+function saveCustomLinks(all) {
+  localStorage.setItem(LINKS_STORAGE_KEY, JSON.stringify(all));
+}
+
+// 僅允許 http/https，避免存入 javascript: 之類的連結
+function isSafeUrl(url) {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch (err) {
+    return false;
+  }
+}
+
+function renderCustomLinks(volId) {
+  const panel = document.getElementById(`panel-v${volId}`);
+  if (!panel) return;
+
+  let wrapper = panel.querySelector('.custom-links');
+  if (!wrapper) {
+    wrapper = document.createElement('div');
+    wrapper.className = 'custom-links';
+    panel.appendChild(wrapper);
+  }
+
+  const links = loadCustomLinks()[volId] || [];
+  wrapper.innerHTML = `
+    <h3 class="custom-links-title">
+      <i class="fa-solid fa-bookmark" aria-hidden="true"></i>第 ${volId} 冊自訂連結
+    </h3>
+    <div class="custom-links-grid">
+      ${links.map(link => `
+        <div class="custom-link-card">
+          <a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer" class="custom-link-main">
+            <div class="custom-link-header">
+              <i class="fa-solid fa-link"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>
+            </div>
+            <h4>${escapeHtml(link.title)}</h4>
+            <p>${escapeHtml(link.desc || link.url)}</p>
+          </a>
+          <button type="button" class="custom-link-delete" data-vol="${volId}" data-id="${link.id}" title="刪除此連結" aria-label="刪除 ${escapeHtml(link.title)}">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>`).join('')}
+      <button type="button" class="add-link-card" data-vol="${volId}">
+        <i class="fa-solid fa-plus"></i>
+        <span>新增連結</span>
+      </button>
+    </div>`;
+
+  wrapper.querySelector('.add-link-card').addEventListener('click', () => openAddLinkModal(volId));
+  wrapper.querySelectorAll('.custom-link-delete').forEach(btn => {
+    btn.addEventListener('click', () => deleteCustomLink(Number(btn.dataset.vol), btn.dataset.id));
+  });
+}
+
+function deleteCustomLink(volId, id) {
+  const all = loadCustomLinks();
+  const links = all[volId] || [];
+  const target = links.find(l => String(l.id) === String(id));
+  if (!target) return;
+  if (!confirm(`確定要刪除「${target.title}」嗎？`)) return;
+  all[volId] = links.filter(l => String(l.id) !== String(id));
+  saveCustomLinks(all);
+  renderCustomLinks(volId);
+}
+
+function openAddLinkModal(volId) {
+  const modal = document.getElementById('add-link-modal');
+  if (!modal) return;
+  document.getElementById('modal-volume-index').value = volId;
+  document.getElementById('target-volume-num').textContent = volId;
+  document.getElementById('add-link-form').reset();
+  modal.classList.add('open');
+  setTimeout(() => document.getElementById('link-title').focus(), 100);
+}
+
+function closeAddLinkModal() {
+  const modal = document.getElementById('add-link-modal');
+  if (modal) modal.classList.remove('open');
+}
+
+function handleFormSubmit(event) {
+  event.preventDefault();
+  const volId = Number(document.getElementById('modal-volume-index').value);
+  const title = document.getElementById('link-title').value.trim();
+  const url = document.getElementById('link-url').value.trim();
+  const desc = document.getElementById('link-desc').value.trim();
+
+  if (!title || !url) return;
+  if (!isSafeUrl(url)) {
+    alert('連結網址必須以 http:// 或 https:// 開頭。');
+    return;
+  }
+
+  const all = loadCustomLinks();
+  if (!all[volId]) all[volId] = [];
+  all[volId].push({
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    title: title,
+    url: url,
+    desc: desc
+  });
+  saveCustomLinks(all);
+  renderCustomLinks(volId);
+  closeAddLinkModal();
+}
+
+// 點背景或按 Esc 關閉新增連結視窗
+document.addEventListener('click', e => {
+  const modal = document.getElementById('add-link-modal');
+  if (modal && modal.classList.contains('open') && e.target === modal) closeAddLinkModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAddLinkModal();
+});

@@ -67,12 +67,18 @@ description: 當使用者提供國中/高中數學教材、PDF、Word 檔，或�
   * 對白可讀性：智慧白板投影距離較遠，`font_size` 建議 `24`～`28`、`min_font_size` 不低於 `18`。
   * 對白框不得遮住主角臉部或數線、溫度計等核心數學元素。
 
+* **四格對齊前處理（重要）**：
+  * `add_captions_json.ps1` 是把畫面「等分成四個象限」來定位對話框，因此送進 `normalize_comic.ps1`
+    之前，必須先把原圖裁到**只剩四格本身**（去掉生圖模型留下的外圍白邊），並微調成精準 4:5。
+  * 建議由上緣對齊裁切（保留上排對話框留白），多餘的高度從下緣裁掉。
+  * 此前處理檔另存為 `_prepped.png`，不可覆寫 `_raw.png`。
+
 * **成品搬入教材資料夾**：
-  1. 於 `teaching-comic/output/` 完成 `_final.png` 後，複製一份到 `materials/V-C-S/`。
-  2. 檔名統一為 `motivation_comic.png`（既有的 `1-1-1`、`1-1-2` 沿用舊檔名，不強制改名）。
-  3. 網頁以相對路徑 `<img src="motivation_comic.png">` 引用，**不得**跨專案連到 `teaching-comic` 的絕對路徑。
-  4. 中介檔（`_raw`、`_normalized`、`_bubbles.json`）留在 `teaching-comic/output/`，不要複製進 `teaching-web`。
-  5. 圖片放入網頁前先壓縮（見第 6 節部署檢查），避免單張數 MB 拖慢課堂載入。
+  1. 於 `teaching-comic/output/` 完成 `_final.png` 後，壓成 WebP 複製到 `materials/V-C-S/`。
+  2. 檔名統一為 `motivation_comic.webp`（寬 1080、品質 88，約 120～150KB）。
+  3. 網頁以相對路徑 `<img src="motivation_comic.webp">` 引用，**不得**跨專案連到 `teaching-comic` 的絕對路徑。
+  4. 中介檔（`_raw`、`_prepped`、`_normalized`、`_bubbles.json`）留在 `teaching-comic/output/`，不要複製進 `teaching-web`。
+  5. 檔名可加上小節代號避免互相覆寫，例如 `comic_1-1-1_point_1_raw.png`。
 
 ## 4. UI 視覺設計與美學規範 (Aesthetics & Theme)
 * **主題風格**：與主入口網站風格保持一致，採用極致質感的暗黑科技感（Glassmorphism，磨砂玻璃風）。
@@ -121,14 +127,28 @@ description: 當使用者提供國中/高中數學教材、PDF、Word 檔，或�
 ## 6. 整合與部署
 * **資料夾配置**：將 HTML、CSS、JS 與插圖存放在 `/materials/V-C-S/` 子目錄下。
 * **更新主入口**：
-  * 在主入口的 `script.js` 中，將對應小節的狀態標記更新為「已完成」（`completed`），使首頁能順暢跳轉至該教材網頁。
-* **圖片最佳化**：
-  * 課前漫畫與插圖放入 `materials/V-C-S/` 前先壓縮，單張建議控制在 `600KB` 以內（漫畫可放寬到 `1MB`），避免課堂用行動網路載入過慢。
+  * 在根目錄的 `curriculum.js` 中，把該小節加上 `"status": "completed"`，首頁即會顯示「已完成」並可點入。
+  * 不要再去改 `script.js` 的判斷式；完成狀態一律只寫在 `curriculum.js` 的資料裡。
+* **教材頁必掛的共用元件**（相對路徑一律 `../../`）：
+  ```html
+  <link rel="stylesheet" href="../../tools-sidebar.css">
+  <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+  <script src="../../curriculum.js"></script>
+  <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
+  <script src="../../lesson-nav.js"></script>
+  <script src="../../annotate.js"></script>
+  ```
+  依序提供：課堂工具側邊欄、上一節／下一節導覽、課堂畫筆標註。
+* **圖片最佳化（一律使用 WebP）**：
+  * 課前漫畫：寬 `1080`、WebP 品質 `88`，檔名 `motivation_comic.webp`。
+  * 其餘插圖：網頁顯示寬度為 `220px`，存檔統一縮到寬 `640`、WebP 品質 `85`（單張約 30～100KB）。
+  * 不要把生圖模型輸出的原始 PNG（常常 0.5～2MB）直接放進教材資料夾。
   * 網頁內 `<img>` 一律加上 `loading="lazy"`（首屏的課前漫畫除外）與 `alt` 文字。
 * **驗證機制**：
   * 寫入檔案後，執行完整性檢查，確保相對路徑（如 `../../index.html`）正確，網頁跳轉順暢。
-  * 確認課前漫畫確實來自第 3.1 節的 `comic-generator` 流程（`teaching-comic/output/` 應留有對應的 `_raw`／`_normalized`／`_bubbles.json` 三階段檔案）。
-  * 在教材頁尾載入共用的課堂畫筆（`annotate.css` / `annotate.js`，相對路徑 `../../`），讓老師能直接在教材上標註。
+  * 確認課前漫畫確實來自第 3.1 節的 `comic-generator` 流程（`teaching-comic/output/` 應留有對應的 `_raw`／`_prepped`／`_normalized`／`_bubbles.json` 檔案）。
+  * 確認教材頁沒有殘留未轉檔的 `.png` 引用，且四格漫畫在 1080 寬下對白清晰可讀。
 
 ## 7. 數學符號與 LaTeX (MathJax) 格式規範
 * **MathJax 載入**：在 HTML `<head>` 中引入：
