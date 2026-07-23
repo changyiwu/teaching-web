@@ -91,6 +91,9 @@
   border-radius: 18px;
   padding: 1.25rem;
   min-height: 145px;
+  /* 卡片數量多時不可被 flex 壓縮，否則描述文字會被 overflow 切掉；
+     空間不足改由 .tsb-list 捲動 */
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
