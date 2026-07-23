@@ -26,12 +26,9 @@ description: 當使用者提供國中/高中數學教材、PDF、Word 檔，或�
 
 * **課前引起動機 (Pre-class Motivation Comic)**：
   - 於教材網頁的最上方（所有重點區塊之前）插入一個「課前暖身漫畫」區塊，用於引導與激發學生的學習興趣。
+  - **此漫畫一律改由 `teaching-comic` 專案的 `comic-generator` 技能產生，流程與規格見下方第 3.1 節，本技能不得自行另寫生圖或加字流程。**
   - **內容與情境**：以教材中的素養扉頁或生活情境為藍本（例如冰箱設定負溫度代表什麼意思、玉山最低溫等）。
-  - **角色與風格**：使用「可愛卡皮巴拉水豚風（Capybara Style）」，繪製與主題相關的 2x2 四格漫畫。
-  - **對白後製規格**：
-    - 生圖時加入 `no readable text, no speech bubbles` 以免亂碼。對白統一使用專案後製指令碼 `add_captions.ps1` 加上。
-    - 對白框規格：字體大小設為 `20`px Bold（粗體微軟正黑體），對白框高度設為 `75`px，底色為半透明柔和乳白，以利智慧板投影的高對比閱讀。
-    - **數學正確性**：若漫畫中繪有數線，必須嚴格確保**僅在右側（正向）有單向箭頭**，左側（負向）則為無箭頭的平直直線，符合國中數學數線三要素的標準定義。
+  - **數學正確性**：若漫畫中繪有數線，必須嚴格確保**僅在右側（正向）有單向箭頭**，左側（負向）則為無箭頭的平直直線，符合國中數學數線三要素的標準定義；此條在生圖提示與最終驗收皆須檢查。
 
 * **重點區塊拆解**：
   不限於 4 個重點，而是由 AI 根據教材內容的豐富度與邏輯結構，自主規劃與拆解適當的重點數量（例如 3、4 或 5 個重點區塊）。每個重點區塊必須包含以下三個要素：
@@ -45,6 +42,37 @@ description: 當使用者提供國中/高中數學教材、PDF、Word 檔，或�
      * **題目數字差異化規範（防止死記）**：評量題目的數字與數值必須與原始 PDF/Word 教材例題中的數字**有所區隔**（可對數值進行微調或使用同類型的不同數字），以防止學生藉由直接死記教科書解答來作答，強迫學生理解其運算原理。
      * 題目使用 `<label class="option-label">` 包裹 `radio` 按鈕。
      * 提供「提交答案」按鈕，並實作解鎖與反饋邏輯。作答完畢後顯示正確/錯誤狀態樣式，並平滑展開（`slideDown`）詳細的數學原理解析。
+
+## 3.1 課前暖身漫畫：固定調用 teaching-comic 技能（強制）
+
+製作任何小節教材時，最上方的四格漫畫**必須**依下列方式產生，不得以其他臨時做法取代。
+
+* **技能來源（唯一指定）**：
+  * 技能檔：`C:\Users\chang\我的雲端硬碟\agents\teaching-comic\skills\comic-generator\SKILL.md`
+  * 後製腳本：
+    * `C:\Users\chang\我的雲端硬碟\agents\teaching-comic\scripts\normalize_comic.ps1`
+    * `C:\Users\chang\我的雲端硬碟\agents\teaching-comic\scripts\add_captions_json.ps1`
+  * 開始製作前先確認上述路徑存在；若不存在，**停下來詢問使用者**，不可退回舊的自製加字流程（本專案已無 `add_captions.ps1`）。
+
+* **執行步驟**：
+  1. 讀取 `comic-generator` 的 `SKILL.md`，並完整遵循其「執行流程」第 1～7 步。
+  2. 重點數量：課前暖身漫畫固定取**該小節的 1 個核心引起動機重點**，只產出 1 張四格漫畫。
+  3. 風格固定選用**「卡皮巴拉水豚風」**，與本技能第 4 節的插圖風格一致。
+  4. 三階段檔案不可省略、不可互相覆寫：`_raw` → `_normalized` → `_final`。
+  5. 對白一律走 `*_bubbles.json` + `add_captions_json.ps1`，生圖階段必須加上
+     `no readable text, no speech bubbles, no captions, no labels, no watermark`。
+
+* **規格對齊（教室投影用）**：
+  * 版面：直式 4:5、`1080x1350`、2x2 四格，每格 `540x675`（由 `normalize_comic.ps1` 保證）。
+  * 對白可讀性：智慧白板投影距離較遠，`font_size` 建議 `24`～`28`、`min_font_size` 不低於 `18`。
+  * 對白框不得遮住主角臉部或數線、溫度計等核心數學元素。
+
+* **成品搬入教材資料夾**：
+  1. 於 `teaching-comic/output/` 完成 `_final.png` 後，複製一份到 `materials/V-C-S/`。
+  2. 檔名統一為 `motivation_comic.png`（既有的 `1-1-1`、`1-1-2` 沿用舊檔名，不強制改名）。
+  3. 網頁以相對路徑 `<img src="motivation_comic.png">` 引用，**不得**跨專案連到 `teaching-comic` 的絕對路徑。
+  4. 中介檔（`_raw`、`_normalized`、`_bubbles.json`）留在 `teaching-comic/output/`，不要複製進 `teaching-web`。
+  5. 圖片放入網頁前先壓縮（見第 6 節部署檢查），避免單張數 MB 拖慢課堂載入。
 
 ## 4. UI 視覺設計與美學規範 (Aesthetics & Theme)
 * **主題風格**：與主入口網站風格保持一致，採用極致質感的暗黑科技感（Glassmorphism，磨砂玻璃風）。
@@ -94,8 +122,13 @@ description: 當使用者提供國中/高中數學教材、PDF、Word 檔，或�
 * **資料夾配置**：將 HTML、CSS、JS 與插圖存放在 `/materials/V-C-S/` 子目錄下。
 * **更新主入口**：
   * 在主入口的 `script.js` 中，將對應小節的狀態標記更新為「已完成」（`completed`），使首頁能順暢跳轉至該教材網頁。
+* **圖片最佳化**：
+  * 課前漫畫與插圖放入 `materials/V-C-S/` 前先壓縮，單張建議控制在 `600KB` 以內（漫畫可放寬到 `1MB`），避免課堂用行動網路載入過慢。
+  * 網頁內 `<img>` 一律加上 `loading="lazy"`（首屏的課前漫畫除外）與 `alt` 文字。
 * **驗證機制**：
   * 寫入檔案後，執行完整性檢查，確保相對路徑（如 `../../index.html`）正確，網頁跳轉順暢。
+  * 確認課前漫畫確實來自第 3.1 節的 `comic-generator` 流程（`teaching-comic/output/` 應留有對應的 `_raw`／`_normalized`／`_bubbles.json` 三階段檔案）。
+  * 在教材頁尾載入共用的課堂畫筆（`annotate.css` / `annotate.js`，相對路徑 `../../`），讓老師能直接在教材上標註。
 
 ## 7. 數學符號與 LaTeX (MathJax) 格式規範
 * **MathJax 載入**：在 HTML `<head>` 中引入：

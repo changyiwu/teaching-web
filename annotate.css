@@ -1,0 +1,233 @@
+/* ==========================================================================
+   Classroom Annotator - 課堂畫筆標註工具
+   純 Vanilla CSS，磨砂玻璃風格，與主站設計系統一致
+   ========================================================================== */
+
+.annot-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1500;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.annot-canvas.visible {
+  opacity: 1;
+}
+
+.annot-canvas.drawable {
+  pointer-events: auto;
+}
+
+/* 開啟畫筆模式時，鎖住頁面捲動，避免標註與內容錯位 */
+body.annot-active {
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   浮動開關按鈕
+   -------------------------------------------------------------------------- */
+.annot-toggle-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 58px;
+  height: 58px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  color: #fff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  z-index: 1600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.45);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.annot-toggle-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.55);
+}
+
+.annot-toggle-btn.active {
+  background: linear-gradient(135deg, #f43f5e 0%, #f97316 100%);
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   工具列
+   -------------------------------------------------------------------------- */
+.annot-toolbar {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(140%);
+  z-index: 1601;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  max-width: min(920px, calc(100vw - 130px));
+  padding: 0.6rem 0.85rem;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, visibility 0.3s;
+}
+
+.annot-toolbar.open {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.annot-group {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0 0.4rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.annot-group:last-child {
+  border-right: none;
+}
+
+.annot-btn {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #cbd5e1;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.annot-btn:hover {
+  background: rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.6);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.annot-btn.active {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.5);
+}
+
+.annot-btn.danger:hover {
+  background: rgba(244, 63, 94, 0.28);
+  border-color: rgba(244, 63, 94, 0.65);
+}
+
+/* 顏色色票 */
+.annot-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.annot-swatch:hover {
+  transform: scale(1.15);
+}
+
+.annot-swatch.active {
+  border-color: #fff;
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+
+/* 筆寬 */
+.annot-size {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.annot-size:hover {
+  background: rgba(6, 182, 212, 0.22);
+  border-color: rgba(6, 182, 212, 0.6);
+}
+
+.annot-size.active {
+  background: rgba(6, 182, 212, 0.3);
+  border-color: #06b6d4;
+}
+
+.annot-size .dot {
+  display: block;
+  background: #f8fafc;
+  border-radius: 50%;
+}
+
+/* 響應式：平板與手機縮小按鈕 */
+@media (max-width: 768px) {
+  .annot-toolbar {
+    gap: 0.2rem;
+    padding: 0.5rem 0.5rem;
+    max-width: calc(100vw - 24px);
+    left: 12px;
+    right: 12px;
+    transform: translateX(0) translateY(140%);
+  }
+  .annot-toolbar.open {
+    transform: translateX(0) translateY(0);
+  }
+  .annot-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+  .annot-swatch {
+    width: 28px;
+    height: 28px;
+  }
+  .annot-size {
+    width: 34px;
+    height: 34px;
+  }
+  .annot-toggle-btn {
+    right: 16px;
+    bottom: 90px;
+  }
+}
+
+/* 列印時不顯示工具 UI */
+@media print {
+  .annot-toolbar,
+  .annot-toggle-btn {
+    display: none !important;
+  }
+}
