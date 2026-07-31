@@ -1,5 +1,5 @@
 ---
-name: Math Interactive Webpage Builder (互動數學教材網頁建置器)
+name: math-interactive-material
 description: 當使用者提供國中/高中數學教材、PDF、Word 檔，或要求針對特定章節/小節製作教學網頁、互動 Canvas 元件、隨堂評量時，觸發此技能。
 ---
 
