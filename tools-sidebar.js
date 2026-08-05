@@ -32,8 +32,8 @@
     {
       cls: 'wordcloud',
       icon: 'fa-cloud',
-      href: 'https://changyiwu.github.io/online-word-cloud',
-      title: '線上文字雲',
+      href: 'https://changyiwu.github.io/teaching-web/wordcloud.html',
+      title: '課堂即時文字雲',
       desc: '老師，我想對您說。'
     }
   ];
