@@ -4,7 +4,7 @@
 
 ## 專案簡介
 
-智慧課堂教學整合網：純靜態前端頁面（HTML5、CSS3、Vanilla JavaScript），以 HSL 色彩系統打造深色磨砂玻璃風格（Glassmorphic UI）。用於課堂智慧白板投影，涵蓋 6 冊 58 小節課程。外部資源為 Font Awesome 6 CDN 與 Google Fonts 的 `Outfit`、`Noto Sans TC`；隨堂備忘錄與各冊自訂快捷連結存於瀏覽器 `localStorage`。
+智慧課堂教學整合網：純靜態前端頁面（HTML5、CSS3、Vanilla JavaScript），以 HSL 色彩系統打造深色磨砂玻璃風格（Glassmorphic UI）。用於課堂智慧白板投影，涵蓋 6 冊 58 小節課程。外部資源為 Font Awesome 6 CDN 與 Google Fonts 的 `Outfit`、`Noto Sans TC`；隨堂備忘錄與各冊自訂快捷連結存於瀏覽器 `localStorage`。獨立的即時文字雲頁 `wordcloud.html` 例外使用 Firebase Firestore 同步課堂輸入。
 
 線上網址：<https://changyiwu.github.io/teaching-web/>
 
@@ -39,6 +39,7 @@ teaching-web/
 ├─ materials/              # 58 個教材頁
 │  └─ pending.css          # 56 個「待施工」佔位頁共用樣式
 ├─ background.png
+├─ wordcloud.html          # 即時協作文字雲（Firebase；全域技能模板產生）
 ├─ README.md
 ├─ agents.md               # 本檔：專案藍圖
 ├─ handoff.md              # 交接檔（每次收工必更新）
@@ -78,7 +79,7 @@ teaching-web/
 ## 開發約束
 
 1. 網頁用於課堂智慧白板投影，需維持高對比、易讀、美觀及清楚的 hover 微動畫
-2. 維持無伺服器架構，不使用後端資料庫或 API 伺服器；使用者自訂資料保存在客戶端 `localStorage`
+2. 首頁與教材頁維持無伺服器架構，使用者自訂資料保存在客戶端 `localStorage`；獨立即時互動頁可依全域技能規範使用 Firebase Firestore
 3. 除非使用者明確要求，不引入 Tailwind CSS 或其他 CSS 框架，維持 Vanilla CSS
 4. 不在程式碼中硬編碼帳密或 Token，也不把本機儲存資料上傳至分析平台
 5. 外部連結必須使用 `target="_blank" rel="noopener noreferrer"`，避免課堂使用時覆蓋目前分頁
@@ -95,9 +96,12 @@ teaching-web/
 - 漫畫只有 `_raw.png` 會呼叫生圖 API 計費，`_prepped`／`_normalized`／`_final` 都是本機處理，改對白重跑不用再花錢
 - 風格規則為依小節指定，不再全站固定水豚風
 - **對白座標一律從實際的 `_normalized.png` 量測**，不要從腳本參數或原圖推算
+- `wordcloud.html` **固定由全域 `word-cloud-page` 技能模板產生／同步**：`C:\Users\chang\.agents\skills\word-cloud-page\SKILL.md`
+- 文字雲固定使用 `CLOUD_ID = teaching_web`，資料位於 `clouds/teaching_web/words/`；同步新版模板時保留本專案的 `background.png` 背景客製化
 
 ## 部署
 
 - GitHub Pages 分支部署（classic）：來源為 `main` 分支根目錄，**push 到 `main` 就會自動發布**
 - 沒有 `.github/workflows` 是正常的，設定在 repo Settings → Pages，不要因為找不到 workflow 就以為沒有自動部署
 - push 前先確認資產路徑為相對路徑，避免在子路徑 `/teaching-web/` 下失效
+- 正式 Firebase 互動頁不要用自動化瀏覽器驗收；App Check 可能拒絕低可信用戶端，改由使用者本人用一般瀏覽器實測或查看 App Check Metrics
