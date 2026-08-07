@@ -95,7 +95,8 @@ teaching-web/
 - **漫畫前處理不要裁切四格內容**：比例不合改補白邊，否則會切掉邊緣角色
 - 漫畫只有 `_raw.png` 會呼叫生圖 API 計費，`_prepped`／`_normalized`／`_final` 都是本機處理，改對白重跑不用再花錢
 - 風格規則為依小節指定，不再全站固定水豚風
-- **對白座標一律從實際的 `_normalized.png` 量測**，不要從腳本參數或原圖推算
+- **對話泡一律由生圖階段畫出**（生圖提示要空白泡，不要再寫 `no speech bubbles`），後製腳本預設只排字；泡不堪用就重生原圖，不要用 `-DrawBubbles` 補框
+- **對白座標一律從實際的 `_normalized.png` 量測**泡的內緣，不要從腳本參數或原圖推算
 - `wordcloud.html` **固定由全域 `word-cloud-page` 技能模板產生／同步**：`C:\Users\chang\.agents\skills\word-cloud-page\SKILL.md`
 - 文字雲固定使用 `CLOUD_ID = teaching_web`，資料位於 `clouds/teaching_web/words/`；同步新版模板時保留本專案的 `background.png` 背景客製化
 

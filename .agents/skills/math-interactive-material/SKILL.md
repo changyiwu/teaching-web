@@ -49,33 +49,47 @@ description: 當使用者提供國中/高中數學教材、PDF、Word 檔，或�
 
 * **技能來源（唯一指定）**：
   * 技能檔：`C:\Users\chang\我的雲端硬碟\agents\teaching-comic\skills\comic-generator\SKILL.md`
-  * 後製腳本：
-    * `C:\Users\chang\我的雲端硬碟\agents\teaching-comic\scripts\normalize_comic.ps1`
-    * `C:\Users\chang\我的雲端硬碟\agents\teaching-comic\scripts\add_captions_json.ps1`
-  * 開始製作前先確認上述路徑存在；若不存在，**停下來詢問使用者**，不可退回舊的自製加字流程（本專案已無 `add_captions.ps1`）。
+  * 後製腳本與技能檔同目錄（技能已自足化，腳本不再放在 `teaching-comic\scripts\`）：
+    * `...\skills\comic-generator\scripts\normalize_comic.ps1`
+    * `...\skills\comic-generator\scripts\add_captions_json.ps1`
+  * 也可能是各 Agent 的全域副本（`~\.claude\skills\`、`~\.agents\skills\` 等）；一律照 `comic-generator`
+    的「第 0 步：定位技能目錄」自動找出 `<SKILL_DIR>`，不要在本專案硬寫腳本路徑。
+  * 開始製作前先確認找得到 `scripts\normalize_comic.ps1`；若找不到，**停下來詢問使用者**，不可退回舊的自製加字流程（本專案已無 `add_captions.ps1`）。
 
 * **執行步驟**：
-  1. 讀取 `comic-generator` 的 `SKILL.md`，並完整遵循其「執行流程」第 1～7 步。
+  1. 讀取 `comic-generator` 的 `SKILL.md`，並完整遵循其「執行流程」第 0～7 步。
   2. 重點數量：課前暖身漫畫固定取**該小節的 1 個核心引起動機重點**，只產出 1 張四格漫畫。
   3. 風格**依小節指定**（例如 1-1-1 為卡皮巴拉水豚風、1-1-2 為日式動漫風）：
      * 使用者已指定風格就直接照用；未指定時依 `comic-generator` 的做法提出風格選單，等使用者選定再生圖。
      * **同一小節內必須維持同一風格與同一主角設定**：課前漫畫與該頁所有插圖（第 4 節）要看起來像同一套教材。
      * 不同小節之間可以各自不同，不需要全站統一。
   4. 三階段檔案不可省略、不可互相覆寫：`_raw` → `_normalized` → `_final`。
-  5. 對白一律走 `*_bubbles.json` + `add_captions_json.ps1`，生圖階段必須加上
-     `no readable text, no speech bubbles, no captions, no labels, no watermark`。
+  5. **對話泡由生圖階段畫出，後製腳本只負責排字**（2026-08-07 起）：
+     * 生圖提示要求畫出**空白**對話泡並禁止文字：
+       `empty blank speech balloons with clean white interior, no text, no letters, no lettering, no captions, no labels, no watermark`。
+       **不要再寫 `no speech bubbles`**——那是舊規格，會讓底圖沒有泡可用。
+     * 逐格指定泡的型式（一般／思考／低語／大聲／旁白）、位置與尾巴指向，關鍵字照 `comic-generator`
+       〈對話泡由生圖階段畫出〉那張表。
+     * 中文對白仍一律走 `*_bubbles.json` + `add_captions_json.ps1`，**不加任何旗標**（預設就是只排字）。
+     * 泡太小、內部有雜訊或型式不對時**回去重生原圖**，不要用 `-DrawBubbles` 補框；補框會在底圖的泡外
+       再畫一層，變成「框中框」。
 
 * **規格對齊（教室投影用）**：
   * 版面：直式 4:5、`1080x1350`、2x2 四格，每格 `540x675`（由 `normalize_comic.ps1` 保證）。
   * 對白可讀性：智慧白板投影距離較遠，`font_size` 建議 `24`～`28`、`min_font_size` 不低於 `18`。
-  * 對白框不得遮住主角臉部或數線、溫度計等核心數學元素。
+  * 因為字級不得低於 18，生圖時要把泡畫得比 `comic-generator` 的通則更寬鬆：每個泡的內部空白
+    **至少 240×110 像素**（單格 540×675 為基準，`shout` 鋸齒泡再大一圈），否則後製會因為塞不下而報錯。
+  * 每格最多 2 個泡；泡不得遮住主角臉部或數線、溫度計等核心數學元素。
 
-* **四格對齊前處理（重要）**：
-  * `add_captions_json.ps1` 是把畫面「等分成四個象限」來定位對話框，所以四格的中線要落在畫布中線上，
+* **四格對齊與座標量測（重要）**：
+  * `add_captions_json.ps1` 是把畫面「等分成四個象限」來定位文字，所以四格的中線要落在畫布中線上，
     否則對白會跑到隔壁格。
-  * **不要為了湊比例去裁切四格內容**；比例不合時以補白邊（上下或左右等量）處理，四格中線自然仍在中線。
-  * 若有做前處理，另存為 `_prepped.png`，不可覆寫 `_raw.png`。
-  * 對白座標一律從**實際的 `_normalized.png` 量測**，不要憑假設的格線推算。
+  * **不要為了湊比例去裁切四格內容**；比例不合時走 `normalize_comic.ps1 -fit letterbox` 補等量白邊
+    （預設的置中裁切會切掉邊緣角色），四格中線自然仍在中線。
+  * 若另有前處理，另存為 `_prepped.png`，不可覆寫 `_raw.png`。
+  * 對白座標一律從**實際的 `_normalized.png` 量測泡的內緣**，不要憑假設的格線或生圖參數推算；
+    `x`、`y`、`w`、`h` 要略小於泡的內緣，避免文字壓到鋸齒或虛線邊。
+  * `position`、`speaker_x`、`speaker_y`、`draw_bubble` 這些欄位在本流程一律不使用。
 
 * **成品搬入教材資料夾**：
   1. 於 `teaching-comic/output/` 完成 `_final.png` 後，壓成 WebP 複製到 `materials/V-C-S/`。
@@ -156,6 +170,8 @@ description: 當使用者提供國中/高中數學教材、PDF、Word 檔，或�
   * 寫入檔案後，執行完整性檢查，確保相對路徑（如 `../../index.html`）正確，網頁跳轉順暢。
   * 確認課前漫畫確實來自第 3.1 節的 `comic-generator` 流程（`teaching-comic/output/` 應留有對應的 `_raw`／`_prepped`／`_normalized`／`_bubbles.json` 檔案）。
   * 確認教材頁沒有殘留未轉檔的 `.png` 引用，且四格漫畫在 1080 寬下對白清晰可讀。
+  * 檢查對話泡：文字都落在泡的內部沒有溢出或壓邊、泡的型式與語氣相符、沒有出現「框中框」
+    （出現框中框代表誤用了 `-DrawBubbles`）。
 
 ## 7. 數學符號與 LaTeX (MathJax) 格式規範
 * **MathJax 載入**：在 HTML `<head>` 中引入：
