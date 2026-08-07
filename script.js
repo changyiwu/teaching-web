@@ -389,3 +389,26 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeAddLinkModal();
 });
+
+/* ==========================================================================
+   本站網址 QR Code：點頁尾的小 QR 放大成投影用大圖
+   ========================================================================== */
+function closeSiteQrModal() {
+  const modal = document.getElementById('site-qr-modal');
+  if (modal) modal.classList.remove('open');
+}
+
+(function initSiteQrModal() {
+  const btn = document.getElementById('site-qr-btn');
+  const modal = document.getElementById('site-qr-modal');
+  if (!btn || !modal) return;
+
+  btn.addEventListener('click', () => modal.classList.add('open'));
+  document.getElementById('site-qr-close').addEventListener('click', closeSiteQrModal);
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeSiteQrModal();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeSiteQrModal();
+  });
+})();

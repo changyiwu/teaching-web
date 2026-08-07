@@ -196,6 +196,17 @@
 
     <!-- Footer Area -->
     <footer>
+      <!-- 本站網址 QR Code：投影時讓學生掃碼在自己的裝置開啟 -->
+      <div class="site-qr">
+        <button type="button" class="site-qr-frame" id="site-qr-btn" title="點一下放大 QR Code" aria-label="放大顯示本站 QR Code">
+          <img src="homepage-qr.svg" alt="本站網址 QR Code" width="150" height="150">
+        </button>
+        <div class="site-qr-text">
+          <h3><i class="fa-solid fa-qrcode" aria-hidden="true"></i>掃描開啟本站</h3>
+          <p>用手機相機掃描，即可在自己的裝置上開啟課堂教學整合網。點一下 QR Code 可放大投影。</p>
+          <a href="https://changyiwu.github.io/teaching-web/" target="_blank" rel="noopener noreferrer" class="site-qr-url">changyiwu.github.io/teaching-web</a>
+        </div>
+      </div>
       <p>© 2026 課堂智慧教學整合門戶系統. 專為高效課堂互動設計.</p>
     </footer>
   </div>
@@ -224,6 +235,18 @@
           <button type="submit" class="btn btn-primary">確認新增</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- 放大顯示本站 QR Code（投影用） -->
+  <div class="modal" id="site-qr-modal" role="dialog" aria-modal="true" aria-labelledby="site-qr-modal-title">
+    <div class="modal-content site-qr-modal-content">
+      <button class="modal-close" id="site-qr-close" aria-label="關閉視窗">&times;</button>
+      <h3 class="modal-header" id="site-qr-modal-title">掃描開啟課堂教學整合網</h3>
+      <div class="site-qr-modal-frame">
+        <img src="homepage-qr.svg" alt="本站網址 QR Code" width="360" height="360">
+      </div>
+      <p class="site-qr-modal-url">https://changyiwu.github.io/teaching-web/</p>
     </div>
   </div>
 
