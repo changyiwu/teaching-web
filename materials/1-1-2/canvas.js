@@ -649,7 +649,7 @@ function initDistanceCanvas() {
     const aStr = a; // first term does not need parentheses
     const bStr = b < 0 ? `(${b})` : `${b}`;
     
-    distanceFormulaDiv.innerHTML = `距離 \\( AB = |a - b| = | ${a} - ${bStr} | = | ${a-b} | = \\) <span style="color:#fbbf24; font-size:1.35rem; font-weight:700;">\\(${distance}\\)</span>`;
+    distanceFormulaDiv.innerHTML = `距離 \\( \\overline{AB} = |a - b| = | ${a} - ${bStr} | = | ${a-b} | = \\) <span style="color:#fbbf24; font-size:1.35rem; font-weight:700;">\\(${distance}\\)</span>`;
     midpointFormulaDiv.innerHTML = `中點 \\( M = \\frac{a + b}{2} = \\frac{${a} + ${bStr}}{2} = \\) <span style="color:#10b981; font-size:1.35rem; font-weight:700;">\\(${midpoint}\\)</span>`;
     
     const minVal = Math.min(a, b);
