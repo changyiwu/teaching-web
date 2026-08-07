@@ -182,40 +182,40 @@ function initAdditionCanvas() {
 
     const centerY = h - 60;
     const padding = 30;
-    const range = 24; // Draw from -12 to 12
+    const range = 40; // Draw from -20 to 20
     const scale = (w - padding * 2) / range;
-    
-    // Math scale function: maps math coordinates [-12, 12] to canvas X
+
+    // Math scale function: maps math coordinates [-20, 20] to canvas X
     function getCanvasX(val) {
-      return padding + (val + 12) * scale;
+      return padding + (val + 20) * scale;
     }
 
     // 1. Draw Number Line (Right arrow only, left is a flat end, per Taiwanese junior high definition)
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
     ctx.lineWidth = 2.5;
     ctx.beginPath();
-    ctx.moveTo(getCanvasX(-12.5), centerY);
-    ctx.lineTo(getCanvasX(12.2), centerY);
+    ctx.moveTo(getCanvasX(-20.5), centerY);
+    ctx.lineTo(getCanvasX(20.2), centerY);
     ctx.stroke();
 
     // Single right directional arrow
     ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
     ctx.beginPath();
-    ctx.moveTo(getCanvasX(12.5), centerY);
-    ctx.lineTo(getCanvasX(12.1), centerY - 6);
-    ctx.lineTo(getCanvasX(12.1), centerY + 6);
+    ctx.moveTo(getCanvasX(20.5), centerY);
+    ctx.lineTo(getCanvasX(20.1), centerY - 6);
+    ctx.lineTo(getCanvasX(20.1), centerY + 6);
     ctx.closePath();
     ctx.fill();
 
     // Label right arrow as positive direction (x-axis label "正向")
     ctx.font = '12px Outfit, Noto Sans TC, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-    ctx.fillText('+', getCanvasX(12.4), centerY + 18);
+    ctx.fillText('+', getCanvasX(20.4), centerY + 18);
 
     // 2. Draw Ticks & Numbers
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    for (let i = -12; i <= 12; i++) {
+    for (let i = -20; i <= 20; i++) {
       const cx = getCanvasX(i);
       ctx.strokeStyle = i === 0 ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.2)';
       ctx.lineWidth = i === 0 ? 2 : 1;
@@ -226,8 +226,8 @@ function initAdditionCanvas() {
       ctx.lineTo(cx, centerY + (i === 0 ? 8 : 4));
       ctx.stroke();
 
-      // Number Label
-      if (i % 2 === 0 || i === 0) {
+      // Number Label（-20～20 共 41 格，每 5 格標一次才不會擠在一起）
+      if (i % 5 === 0) {
         ctx.fillStyle = i === 0 ? '#fff' : 'rgba(255,255,255,0.5)';
         ctx.font = i === 0 ? 'bold 11px Outfit, sans-serif' : '11px Outfit, sans-serif';
         ctx.fillText(i, cx, centerY + 10);
