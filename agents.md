@@ -75,6 +75,7 @@ teaching-web/
 - Windows 指令優先使用 PowerShell
 - 收工前檢查程式碼是否含 API key、網址 Token、學生姓名等敏感資料
 - 只 stage 本次任務相關檔案，**不使用無差別的 `git add .`**；僅在使用者明確授權時 commit 與 push
+- 本機預覽窗格（Browser pane）會供快取的舊版 CSS/JS，改完在那裡看不到效果是正常的；驗收一律強制重載或以帶版本參數的方式重新載入資源
 
 ## 開發約束
 
@@ -97,6 +98,8 @@ teaching-web/
 - 風格規則為依小節指定，不再全站固定水豚風
 - **對話泡一律由生圖階段畫出**（生圖提示要空白泡，不要再寫 `no speech bubbles`），後製腳本預設只排字；泡不堪用就重生原圖，不要用 `-DrawBubbles` 補框
 - **對白座標一律從實際的 `_normalized.png` 量測**泡的內緣，不要從腳本參數或原圖推算
+- **`bubbles.json` 的 `w`／`h` 要給泡的完整內緣，不要預先內縮**：`add_captions_json.ps1` 自己會加 padding，先內縮會變成縮兩次，字級被壓到最小值仍排不下而報錯
+- **不要用 gpt-image-2 的遮罩改圖（`--mask`）做局部修圖**：實測會無視遮罩把整張重畫，四格結構全毀；要改一個小物件也一律整張重生，並在同一次呼叫多生幾張候選挑選
 - `wordcloud.html` **固定由全域 `word-cloud-page` 技能模板產生／同步**：`C:\Users\chang\.agents\skills\word-cloud-page\SKILL.md`
 - 文字雲固定使用 `CLOUD_ID = teaching_web`，資料位於 `clouds/teaching_web/words/`；同步新版模板時保留本專案的 `background.png` 背景客製化
 
