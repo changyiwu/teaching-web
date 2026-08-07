@@ -1374,19 +1374,25 @@ footer p {
 .site-qr-modal-content {
   max-width: 460px;
   text-align: center;
+  /* 手機（尤其橫放）畫面矮，超出時讓視窗內部自己捲，不要溢出頁面 */
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
 }
 
+/* 寬度取「360px／可用寬度／畫面高度」三者最小，直立與橫放都不會超出畫面 */
 .site-qr-modal-frame {
   background: #ffffff;
   border-radius: 16px;
-  display: inline-block;
+  display: block;
+  width: min(360px, 100%, 50vh);
+  margin: 0 auto;
   line-height: 0;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
 }
 
 .site-qr-modal-frame img {
   display: block;
-  width: min(360px, 62vh);
+  width: 100%;
   height: auto;
 }
 
@@ -1406,5 +1412,20 @@ footer p {
 
   .site-qr-text h3 {
     justify-content: center;
+  }
+}
+
+/* 手機橫放：收緊留白，讓整張 QR 與網址不用捲動就看得完 */
+@media (max-height: 480px) {
+  .site-qr-modal-content {
+    padding: 1.25rem;
+  }
+
+  .site-qr-modal-content .modal-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .site-qr-modal-url {
+    margin-top: 0.75rem;
   }
 }
