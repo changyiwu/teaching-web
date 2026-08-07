@@ -207,11 +207,6 @@ function initAdditionCanvas() {
     ctx.closePath();
     ctx.fill();
 
-    // Label right arrow as positive direction (x-axis label "正向")
-    ctx.font = '12px Outfit, Noto Sans TC, sans-serif';
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-    ctx.fillText('+', getCanvasX(20.4), centerY + 18);
-
     // 2. Draw Ticks & Numbers
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
@@ -228,9 +223,9 @@ function initAdditionCanvas() {
 
       // Number Label（-20～20 共 41 格，每 5 格標一次才不會擠在一起）
       if (i % 5 === 0) {
-        ctx.fillStyle = i === 0 ? '#fff' : 'rgba(255,255,255,0.5)';
-        ctx.font = i === 0 ? 'bold 11px Outfit, sans-serif' : '11px Outfit, sans-serif';
-        ctx.fillText(i, cx, centerY + 10);
+        ctx.fillStyle = i === 0 ? '#fff' : 'rgba(255,255,255,0.7)';
+        ctx.font = i === 0 ? 'bold 16px Outfit, sans-serif' : 'bold 15px Outfit, sans-serif';
+        ctx.fillText(i, cx, centerY + 12);
       }
     }
 
@@ -264,8 +259,8 @@ function initAdditionCanvas() {
       // Label A
       ctx.shadowBlur = 0;
       ctx.fillStyle = '#fff';
-      ctx.font = 'bold 12px Outfit, sans-serif';
-      ctx.fillText(`a: ${a > 0 ? '+' : ''}${a}`, (axStart + axEnd) / 2, arrowY - 18);
+      ctx.font = 'bold 16px Outfit, sans-serif';
+      ctx.fillText(`a: ${a > 0 ? '+' : ''}${a}`, (axStart + axEnd) / 2, arrowY - 22);
     }
 
     // 4. Draw Arrow B: a -> a + b
@@ -308,8 +303,8 @@ function initAdditionCanvas() {
       
       // Label B
       ctx.fillStyle = '#fff';
-      ctx.font = 'bold 12px Outfit, sans-serif';
-      ctx.fillText(`b: ${b > 0 ? '+' : ''}${b}`, (bxStart + bxEnd) / 2, arrowY - 18);
+      ctx.font = 'bold 16px Outfit, sans-serif';
+      ctx.fillText(`b: ${b > 0 ? '+' : ''}${b}`, (bxStart + bxEnd) / 2, arrowY - 22);
     }
 
     // 5. Draw final result projection line down to number line
