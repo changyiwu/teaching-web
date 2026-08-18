@@ -18,7 +18,7 @@
         "sections": [
           { "code": "1-1", "title": "負數與數線", "status": "completed" },
           { "code": "1-2", "title": "整數的加減", "status": "completed" },
-          { "code": "1-3", "title": "整數的乘除與四則運算" },
+          { "code": "1-3", "title": "整數的乘除與四則運算", "status": "completed" },
           { "code": "1-4", "title": "指數記法與科學記號" }
         ]
       },
