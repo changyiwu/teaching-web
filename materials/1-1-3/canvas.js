@@ -759,15 +759,16 @@ function initDistributeCanvas() {
     const h = canvas.height;
     ctx.clearRect(0, 0, w, h);
 
-    // 每單位的像素隨 a、b、c 自動調整，讓圖形盡量填滿又不會超出畫布
-    const availW = w - 100; // 左側留給高度標示、右側留邊
-    const availH = 140;     // 上方尺寸標示與下方三行結論所需空間之外的高度
-    const unit = Math.min(30, availW / (a + b), availH / c);
-    const originY = 40;
+    // 每單位的像素隨 a、b、c 自動調整，讓圖形盡量放大又不會超出畫布
+    const availW = w - 96;   // 左側留給高度標示、右側留邊
+    const availH = 190;      // 矩形區可用高度（下方三行結論固定貼齊底部）
+    const topPad = 44;       // 上方留給寬度標示
+    const unit = Math.min(44, availW / (a + b), availH / c);
     const wA = a * unit;
     const wB = b * unit;
     const hC = c * unit;
-    const originX = Math.max(56, (w - (wA + wB)) / 2); // 水平置中
+    const originX = Math.max(50, (w - (wA + wB)) / 2);   // 水平置中
+    const originY = topPad + (availH - hC) / 2;          // 於上方區塊垂直置中
 
     // 區塊 A（a x c）
     ctx.fillStyle = 'rgba(236, 72, 153, 0.28)';
@@ -801,7 +802,7 @@ function initDistributeCanvas() {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#fff';
-    ctx.font = 'bold 17px Outfit, sans-serif';
+    ctx.font = 'bold 20px Outfit, sans-serif';
     ctx.fillText(`${a * c}`, originX + wA / 2, originY + hC / 2);
     ctx.fillText(`${b * c}`, originX + wA + wB / 2, originY + hC / 2);
 
@@ -850,20 +851,20 @@ function initDistributeCanvas() {
     ctx.fillText(`c = ${c}`, 0, 0);
     ctx.restore();
 
-    // 下方結論
-    const noteY = originY + hC + 26;
+    // 下方結論：固定貼齊畫布底部，不隨矩形大小浮動
+    const noteY = h - 86;
     ctx.fillStyle = '#f472b6';
-    ctx.font = 'bold 15px Outfit, sans-serif';
+    ctx.font = 'bold 16px Outfit, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     ctx.fillText(`${a} × ${c} + ${b} × ${c} = ${a * c} + ${b * c} = ${right}`, w / 2, noteY);
 
     ctx.fillStyle = '#c4b5fd';
-    ctx.fillText(`(${a} + ${b}) × ${c} = ${a + b} × ${c} = ${left}`, w / 2, noteY + 24);
+    ctx.fillText(`(${a} + ${b}) × ${c} = ${a + b} × ${c} = ${left}`, w / 2, noteY + 25);
 
     ctx.fillStyle = '#34d399';
-    ctx.font = 'bold 14px "Noto Sans TC", sans-serif';
-    ctx.fillText('兩塊分開算 = 合起來一次算', w / 2, noteY + 50);
+    ctx.font = 'bold 15px "Noto Sans TC", sans-serif';
+    ctx.fillText('兩塊分開算 = 合起來一次算', w / 2, noteY + 52);
   }
 
   sliderA.addEventListener('input', draw);
