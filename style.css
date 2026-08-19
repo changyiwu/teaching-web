@@ -302,7 +302,9 @@ header {
 /* Portal Link Cards Grid */
 .portal-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  /* 全站的 grid 都包一層 min(Npx, 100%)：容器比 N 還窄時（小手機）改用 100%，
+     否則這個硬底線會把整排卡片撐出外框，而 body 是 overflow-x: hidden，直接被裁掉 */
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
   gap: 1.25rem;
 }
 
@@ -552,7 +554,7 @@ header {
 /* Grid layout for files/materials within each volume */
 .materials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 1.25rem;
 }
 
@@ -804,7 +806,7 @@ footer p {
    ========================================================================== */
 .chapters-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
   gap: 1.5rem;
   margin-top: 0.5rem;
 }
@@ -1094,7 +1096,7 @@ footer p {
 
 .search-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
   gap: 0.85rem;
 }
 
@@ -1173,7 +1175,7 @@ footer p {
 
 .custom-links-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
   gap: 1rem;
 }
 

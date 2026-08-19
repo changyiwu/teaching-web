@@ -107,17 +107,21 @@ function signColor(n) {
   return n >= 0 ? '#fbbf24' : '#38bdf8';
 }
 
+// 底數與上標之間的字距（投影時黏在一起會看不清楚）
+const POW_KERN = 0.17;
+
 // 在 canvas 上畫「底數 + 上標指數」，回傳整體寬度
 // align: 'left' | 'center'
 function drawPow(ctx, x, y, base, exp, size, color, align) {
   const expSize = Math.max(10, Math.round(size * 0.62));
+  const kern = exp === '' ? 0 : size * POW_KERN;
   ctx.save();
   ctx.textBaseline = 'alphabetic';
   ctx.font = `bold ${size}px Outfit, sans-serif`;
   const baseW = ctx.measureText(base).width;
   ctx.font = `bold ${expSize}px Outfit, sans-serif`;
   const expW = exp === '' ? 0 : ctx.measureText(exp).width;
-  const total = baseW + expW;
+  const total = baseW + kern + expW;
   let startX = x;
   if (align === 'center') startX = x - total / 2;
 
@@ -127,7 +131,7 @@ function drawPow(ctx, x, y, base, exp, size, color, align) {
   ctx.fillText(base, startX, y);
   if (exp !== '') {
     ctx.font = `bold ${expSize}px Outfit, sans-serif`;
-    ctx.fillText(exp, startX + baseW, y - size * 0.42);
+    ctx.fillText(exp, startX + baseW + kern, y - size * 0.42);
   }
   ctx.restore();
   return total;
@@ -142,7 +146,7 @@ function measurePow(ctx, base, exp, size) {
   ctx.font = `bold ${expSize}px Outfit, sans-serif`;
   const expW = exp === '' ? 0 : ctx.measureText(exp).width;
   ctx.restore();
-  return baseW + expW;
+  return baseW + (exp === '' ? 0 : size * POW_KERN) + expW;
 }
 
 // 以整數尾數與 10 的次方組出精確的十進位字串（避免浮點誤差）
@@ -282,56 +286,74 @@ function initPowerCanvas() {
     ctx.textBaseline = 'top';
     ctx.fillText(`${n} 個 ${a < 0 ? `(${a})` : a} 連乘`, (bx1 + bx2) / 2, braceY + 9);
 
-    // --- 第二列：逐次累乘的成長階梯（高度取對數，避免爆表） ---
-    const chartTop = 108;
-    const chartBottom = h - 34;
-    const chartH = chartBottom - chartTop;
-    const barW = Math.min(50, (usable - 16 * (n - 1)) / n);
-    const barGap = n > 1 ? (usable - barW * n) / (n - 1) : 0;
-
-    // 基準線
-    ctx.strokeStyle = 'rgba(255,255,255,0.22)';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(padding, chartBottom);
-    ctx.lineTo(w - padding, chartBottom);
-    ctx.stroke();
+    // --- 第二列：逐次累乘的長度尺 ---
+    // 線段長度＝數值的「真實大小」等比例（不是取對數），正數往右、負數往左，
+    // 讓「每多乘一次就長很多」與「負數的奇偶次方換邊」都直接看得到。
+    const axisX = Math.round(w / 2);
+    const chartTop = 112;
+    const chartBottom = h - 30;
+    const availH = chartBottom - chartTop;
+    const rowH = Math.min(30, availH / n);
+    const blockTop = chartTop + (availH - rowH * n) / 2;
+    const halfW = w / 2 - padding - 4;
 
     const values = [];
     for (let i = 1; i <= n; i++) values.push(Math.pow(a, i));
-    const maxLog = Math.max(...values.map(v => Math.log10(Math.abs(v) + 1)), 0.35);
+    const maxAbs = Math.max(...values.map(v => Math.abs(v)));
 
-    let bx = padding;
+    // 中軸（0 的位置）
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(axisX, blockTop - 2);
+    ctx.lineTo(axisX, blockTop + rowH * n + 4);
+    ctx.stroke();
+
     for (let i = 0; i < n; i++) {
       const v = values[i];
-      const mag = Math.log10(Math.abs(v) + 1) / maxLog;
-      const bh = Math.max(9, mag * (chartH - 26));
+      const dir = v < 0 ? -1 : 1;                       // 正的往右、負的往左
+      const len = maxAbs === 0 ? 0 : (Math.abs(v) / maxAbs) * halfW;
+      const lineY = Math.round(blockTop + rowH * i + rowH * 0.74);
       const color = v >= 0 ? '#fbbf24' : '#38bdf8';
+      const last = i === n - 1;
 
+      // 長度線段
       ctx.save();
-      roundRect(ctx, bx, chartBottom - bh, barW, bh, 6);
-      ctx.fillStyle = v >= 0 ? 'rgba(251,191,36,0.22)' : 'rgba(56,189,248,0.22)';
-      ctx.fill();
       ctx.strokeStyle = color;
-      ctx.lineWidth = 2;
-      ctx.shadowBlur = i === n - 1 ? 12 : 5;
+      ctx.lineWidth = last ? 5 : 3.5;
+      ctx.lineCap = 'round';
+      ctx.shadowBlur = last ? 12 : 5;
       ctx.shadowColor = color;
+      ctx.beginPath();
+      ctx.moveTo(axisX, lineY);
+      ctx.lineTo(axisX + dir * Math.max(len, 1.5), lineY);
       ctx.stroke();
       ctx.restore();
 
-      // 柱子上方的數值
-      ctx.fillStyle = i === n - 1 ? '#ffffff' : 'rgba(255,255,255,0.75)';
-      ctx.font = `bold ${i === n - 1 ? 14 : 12}px Outfit, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(`${v}`, bx + barW / 2, chartBottom - bh - 4);
+      // 標籤：a^i = 值（貼著中軸、放在線段上方，跟線段同一側）
+      const baseTxt = a < 0 ? `(${a})` : `${a}`;
+      const labelSize = last ? 14 : 12;
+      const powW = measurePow(ctx, baseTxt, `${i + 1}`, labelSize);
+      ctx.font = `bold ${labelSize}px Outfit, sans-serif`;
+      const restTxt = ` = ${v}`;
+      const restW = ctx.measureText(restTxt).width;
+      const startX = dir > 0 ? axisX + 6 : axisX - 6 - (powW + restW);
+      const labelColor = last ? '#ffffff' : 'rgba(255,255,255,0.7)';
 
-      // 柱子下方的乘方寫法
-      drawPow(ctx, bx + barW / 2, chartBottom + 17, a < 0 ? `(${a})` : `${a}`, `${i + 1}`, 13,
-        i === n - 1 ? color : 'rgba(255,255,255,0.5)', 'center');
-
-      bx += barW + barGap;
+      drawPow(ctx, startX, lineY - 6, baseTxt, `${i + 1}`, labelSize, labelColor, 'left');
+      ctx.fillStyle = labelColor;
+      ctx.font = `bold ${labelSize}px Outfit, sans-serif`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(restTxt, startX + powW, lineY - 6);
     }
+
+    // 尺規說明
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
+    ctx.font = '11px Outfit, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('線段長度 = 數值大小（同一把尺，正數向右、負數向左）', w / 2, h - 8);
   }
 
   sliderA.addEventListener('input', draw);
@@ -1009,12 +1031,16 @@ function initCompareCanvas() {
     const labelW = 118;              // 左側標籤區
     const barX = padding + labelW;
     const barMaxW = w - barX - padding - 34;
-    const MINE = -7, MAXE = 7;
-    const norm = e => (e - MINE) / (MAXE - MINE);
+    // 長條長度＝兩數的實際比例（以比較大的那個數為滿格），
+    // 所以「大幾倍」直接用長度看得出來；差距太大時小的那條會縮成一小段，這本身就是答案。
+    const valA = (ai / 10) * Math.pow(10, m);
+    const valB = (bi / 10) * Math.pow(10, n);
+    const vMax = Math.max(valA, valB);
+    const lenOf = v => Math.max(10, (v / vMax) * barMaxW);
 
     const rows = [
-      { txt: aTxt, e: m, dec: aDec, color: '#34d399', soft: 'rgba(52,211,153,0.22)', y: 44, win: cmp > 0 },
-      { txt: bTxt, e: n, dec: bDec, color: '#38bdf8', soft: 'rgba(56,189,248,0.22)', y: 118, win: cmp < 0 }
+      { txt: aTxt, e: m, val: valA, dec: aDec, color: '#34d399', soft: 'rgba(52,211,153,0.22)', y: 44, win: cmp > 0 },
+      { txt: bTxt, e: n, val: valB, dec: bDec, color: '#38bdf8', soft: 'rgba(56,189,248,0.22)', y: 118, win: cmp < 0 }
     ];
 
     rows.forEach(r => {
@@ -1031,8 +1057,8 @@ function initCompareCanvas() {
       const decTxt = r.dec.length > 15 ? r.dec.slice(0, 15) + '…' : r.dec;
       ctx.fillText(decTxt, padding, r.y + 26);
 
-      // 長條：長度由指數決定
-      const bw = Math.max(16, norm(r.e) * barMaxW);
+      // 長條：長度由「整個數值的大小」決定（a 與指數都算進去）
+      const bw = lenOf(r.val);
       ctx.save();
       roundRect(ctx, barX, r.y, bw, 34, 8);
       ctx.fillStyle = r.soft;
@@ -1072,12 +1098,32 @@ function initCompareCanvas() {
     ctx.fillText(reason, w / 2, h - 12);
     ctx.shadowBlur = 0;
 
-    // 指數尺的刻度提示
-    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    // 長度尺說明：長條長度就是兩數的實際倍率
+    const grey = 'rgba(255,255,255,0.4)';
+    ctx.fillStyle = grey;
     ctx.font = '11px Outfit, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText('長條長度代表指數大小（-7 ～ 7）', barX, 176);
+    if (cmp === 0) {
+      ctx.fillText('長條長度＝兩數的實際比例：兩數一樣大，所以一樣長', barX, 176);
+    } else {
+      const head = '長條長度＝兩數的實際比例：大的是小的 ';
+      ctx.fillText(head, barX, 176);
+      const x = barX + ctx.measureText(head).width;
+      const ratio = vMax / Math.min(valA, valB);
+      if (ratio < 10000) {
+        ctx.fillText(`${Math.round(ratio * 10) / 10} 倍`, x, 176);
+      } else {
+        const e10 = Math.floor(Math.log10(ratio) + 1e-9);
+        const mant = Math.round((ratio / Math.pow(10, e10)) * 10) / 10;
+        const pw = drawPow(ctx, x, 185, `約 ${mant} × 10`, `${e10}`, 11, grey, 'left');
+        ctx.fillStyle = grey;
+        ctx.font = '11px Outfit, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillText(' 倍', x + pw, 176);
+      }
+    }
   }
 
   [sA, sM, sB, sN].forEach(s => s.addEventListener('input', draw));

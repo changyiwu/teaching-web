@@ -294,14 +294,16 @@ header {
 
 .grid-content {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  /* minmax(0, ...) 而不是 1.1fr：預設的 1fr 最小值是 min-content，
+     卡片裡只要有一條不能斷行的長算式，整欄就會被撐得比外框還寬 */
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: 2rem;
   margin-bottom: 2.5rem;
 }
 
 @media (max-width: 992px) {
   .grid-content {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -311,6 +313,7 @@ header {
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 20px;
   padding: 1.75rem;
+  min-width: 0;
 }
 
 .explanation-card h3, .interactive-card h3 {
@@ -388,7 +391,9 @@ header {
 .canvas-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* 不用 center：子項比容器寬時 center 會往左右各溢出一半，
+     左邊那一半連橫向捲動都捲不到。改成 stretch，canvas 自己用 margin 置中 */
+  align-items: stretch;
   background: rgba(10, 8, 28, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
@@ -400,6 +405,7 @@ canvas {
   background: transparent;
   display: block;
   max-width: 100%;
+  margin-inline: auto;
 }
 
 .control-panel {
@@ -416,6 +422,9 @@ canvas {
   margin-bottom: 1rem;
   font-size: 1.05rem;
   font-weight: 600;
+  /* 公式是 MathJax 產生的 inline-block，不能斷行；欄位變窄時讓它自己捲，
+     而不是把整張互動卡片撐破 */
+  overflow-x: auto;
 }
 
 #temp-val.positive {
@@ -461,6 +470,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .visual-feedback {
+  /* 回饋文字裡的 MathJax 算式不能斷行，窄螢幕時讓這一塊自己捲 */
+  overflow-x: auto;
   font-size: 0.85rem;
   color: var(--text-muted);
   background: rgba(255, 255, 255, 0.03);
@@ -659,7 +670,9 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* min(300px, 100%)：容器比 300px 還窄時（小手機）改用 100%，
+     否則這個硬底線會讓整排卡片撐出外框被裁掉 */
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 2rem;
 }
 
@@ -668,6 +681,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 20px;
   padding: 1.75rem;
+  min-width: 0;
 }
 
 .summary-section .section-title {
@@ -751,6 +765,14 @@ footer {
   
   .section-title {
     font-size: 1.4rem;
+  }
+
+  /* 手機寬度下，MathJax 的行內算式與滑桿面板都不能斷行，
+     窄到一定程度時讓卡片自己橫向捲動，總比被外框裁掉好 */
+  .explanation-card,
+  .interactive-card,
+  .quiz-card {
+    overflow-x: auto;
   }
 }
 

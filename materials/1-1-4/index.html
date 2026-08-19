@@ -124,7 +124,7 @@
             <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：乘方展開器</h3>
             <p class="interactive-instruction">調整<strong>底數 \(a\)</strong> 與<strong>指數 \(n\)</strong>，看看 \(a^n\) 究竟展開成幾個 \(a\) 連乘，以及每多乘一次，數值成長得有多快：</p>
             <div class="canvas-container">
-              <canvas id="canvas-power" width="540" height="280"></canvas>
+              <canvas id="canvas-power" width="540" height="330"></canvas>
               <div class="control-panel">
                 <div class="value-display">
                   <span id="pow-formula" style="font-weight:700; font-size:1.2rem;">a^n = ?</span>
@@ -133,7 +133,7 @@
                 <div class="slider-wrapper">
                   <div class="slider-row">
                     <label for="pow-a-slider">底數 a: <span id="pow-a-val" class="val-num">0</span></label>
-                    <input type="range" id="pow-a-slider" min="-5" max="5" value="3" step="1">
+                    <input type="range" id="pow-a-slider" min="-3" max="3" value="3" step="1">
                   </div>
                   <div class="slider-row">
                     <label for="pow-n-slider">指數 n（連乘幾次）: <span id="pow-n-val" class="val-num">0</span></label>
@@ -555,7 +555,7 @@
 
           <div class="interactive-card">
             <h3><i class="fa-solid fa-arrows-left-right"></i> 視覺互動探索：小數點移動器</h3>
-            <p class="interactive-instruction">先選一個數，再拖動滑桿移動<strong>小數點</strong>的位置。只有當整數部分<strong>剛好一位不為 0 的數字</strong>（\(1 \le a < 10\)）時，才是合法的科學記號：</p>
+            <p class="interactive-instruction">先選一個數，再拖動滑桿移動<strong>小數點</strong>的位置。只有當整數部分<strong>剛好是一位不為 0 的數字</strong>（\(1 \le a < 10\)）時，才是合法的科學記號：</p>
             <div class="canvas-container">
               <canvas id="canvas-sci" width="540" height="270"></canvas>
               <div class="control-panel">

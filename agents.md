@@ -22,6 +22,7 @@
 - [x] 階段六：建置 `1-1-3`「整數的乘除與四則運算」（黏土定格動畫風，6 重點／6 互動／12 題）
 - [ ] 階段七：在課堂智慧板實測課堂畫筆（捲動模式、觸控筆跡、4K 解析度下的落筆位置）
 - [ ] 階段八：其餘佔位頁逐節建置（已完成 `1-1-4`「指數記法與科學記號」，復古太空探險風，6 重點／6 互動／12 題）
+- [x] 階段九：投影可讀性與窄螢幕版面修正——MathJax 上下標與數字字距（`1-1-4`）、CSS Grid／flex 溢出裁切（`1-1-1`～`1-1-4` 與首頁）；規則已收進〈開發約束〉9～11
 
 > 目前課程進度：58 節中 `1-1-1`、`1-1-2`、`1-1-3`、`1-1-4` 完成，其餘 54 節為佔位頁。
 
@@ -75,10 +76,13 @@ teaching-web/
 - Windows 指令優先使用 PowerShell
 - 收工前檢查程式碼是否含 API key、網址 Token、學生姓名等敏感資料
 - 只 stage 本次任務相關檔案，**不使用無差別的 `git add .`**；僅在使用者明確授權時 commit 與 push
-- 本機預覽窗格（Browser pane）會供快取的舊版 CSS/JS，改完在那裡看不到效果是正常的；驗收一律強制重載或以帶版本參數的方式重新載入資源
+- 本機預覽窗格（Browser pane）會供快取的舊版 CSS/JS，改完在那裡看不到效果是正常的；**`navigate` 帶 `force` 與加 query 參數都擋不住**，驗收一律改起一個會送 `Cache-Control: no-store` 的伺服器，不要用 `python -m http.server` 的預設行為
+- Browser pane 沒有顯示在畫面上時 `screenshot` 會逾時（頁面不合成畫格）；要看 canvas 就用 `toDataURL()` 把畫面 POST 到本機收圖伺服器存成 PNG 再讀檔，不必等使用者打開窗格
 - 教材頁的本機驗收要起一個 HTTP 伺服器（例：`python -m http.server`）；直接開 `file://` 在預覽窗格只會拿到靜態快照，`canvas.js` 不會執行、互動全部驗不到
 - 瀏覽器分頁未在前景時渲染會被節流，大量 canvas 迴圈驗證會逾時；先把分頁切到前景，且單批控制在 100 組參數以內
 - 驗收 Canvas 不要用 JS 硬撐 `canvas` 的 CSS 寬度來放大（會撐破版面、截圖全黑）；改為把視窗縮到 992px 以下讓版面轉單欄，或直接讀 canvas 像素判斷內容有無溢出邊界
+- 本機沒有安裝 `PyMuPDF`／`Pillow`；PDF 與圖片處理一律走 `file-toolkit` 技能建好的共用環境：`C:\Users\chang\AppData\Local\file-toolkit\.venv\Scripts\python.exe`
+- Bash 工具的 heredoc 會把反斜線減半，含正規表示式的腳本不要用 `cat <<'EOF'` 寫檔，改用 Write 工具
 
 ## 開發約束
 
@@ -90,6 +94,9 @@ teaching-web/
 6. 小節完成狀態**一律只寫在 `curriculum.js`**（`"status": "completed"`），不要在 `script.js` 寫判斷式
 7. **教材頁是 `<body>` 自己捲動**，不是文件捲動；跟捲動位置有關的功能要同時支援兩種來源（`annotate.js` 已處理）
 8. 教材圖片一律使用 WebP（漫畫寬 1080／品質 85，插圖寬 640／品質 85），並加 `loading="lazy"`；漫畫品質原為 88，2026-08-07 實測降到 85 可少 13～16% 體積且投影下看不出差異
+9. **CSS Grid 一律不要留 min-content 底線**：`1fr` 的最小值是 min-content，卡片裡只要有一段不能斷行的內容（MathJax 算式、長數字按鈕）整欄就會被撐破外框，而 `.concept-section`／`body` 是 `overflow: hidden`，超出的部分直接被裁掉。欄寬固定寫 `minmax(0, 1fr)`，有最小寬度需求就寫 `minmax(min(300px, 100%), 1fr)`
+10. **flex 容器不要用 `align-items: center` 裝比它寬的內容**：溢出會左右各分一半，左邊那一半連橫向捲動都捲不到，等於內容消失。改用 `align-items: stretch`，需要置中的元素自己加 `margin-inline: auto`
+11. **MathJax 預設字距在投影下不夠用，每個教材頁都要補這三條 kerning**：上下標 `mjx-msup > mjx-script { margin-left: 0.18em }`（實測預設 gap = 0，`0ⁿ` 的天然墨跡間距只有 0.03em）、數字內部 `mjx-mn > mjx-c + mjx-c { margin-left: 0.09em }`（`10000`、`0.001` 會黏成一團）、canvas 上自己畫的指數 `POW_KERN = 0.17`
 
 ## 跨專案依賴
 
@@ -102,6 +109,8 @@ teaching-web/
 - **對話泡一律由生圖階段畫出**（生圖提示要空白泡，不要再寫 `no speech bubbles`），後製腳本預設只排字；泡不堪用就重生原圖，不要用 `-DrawBubbles` 補框
 - **對白座標一律從實際的 `_normalized.png` 量測**泡的內緣，不要從腳本參數或原圖推算
 - **`bubbles.json` 的 `w`／`h` 要給泡的完整內緣，不要預先內縮**：`add_captions_json.ps1` 自己會加 padding，先內縮會變成縮兩次，字級被壓到最小值仍排不下而報錯
+- **挑生圖候選要看泡的內緣尺寸，不是只看畫面好不好看**：同一次呼叫產生的候選畫面品質往往相近，但泡的大小可能差很多（實測第 1 格旁白框 154×49 vs 180×55），小的那張排不進 18px 字級
+- **`add_captions_json.ps1` 的字級自動縮放只在「連折行都放不下」時才降級**，文字太寬時它預設是折行而不是縮小；長數字串想排成一行得自己把 `font_size` 試小
 - **不要用 gpt-image-2 的遮罩改圖（`--mask`）做局部修圖**：實測會無視遮罩把整張重畫，四格結構全毀；要改一個小物件也一律整張重生，並在同一次呼叫多生幾張候選挑選
 - `wordcloud.html` **固定由全域 `word-cloud-page` 技能模板產生／同步**：`C:\Users\chang\.agents\skills\word-cloud-page\SKILL.md`
 - 文字雲固定使用 `CLOUD_ID = teaching_web`，資料位於 `clouds/teaching_web/words/`；同步新版模板時保留本專案的 `background.png` 背景客製化
