@@ -4,39 +4,802 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/webp" href="../../header-logo.webp">
-  <title>1-4 指數記法與科學記號 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-4 指數記法與科學記號 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第一冊 (1上) • 第1章 整數的運算</div>
-    <h1>1-4 指數記法與科學記號</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第一冊 • 第一章</span>
+        <h1>1-4 指數記法與科學記號</h1>
+        <p>把相同的數連乘簡記成乘方，看懂底數與指數，分清 \((-3)^2\) 和 \(-3^2\) 的差別；再從 10 的次方一路推到科學記號，讓銀河的距離與病毒的大小都能寫得又短又好讀。</p>
+      </div>
+      <!-- Progress navigation (6 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-superscript"></i> 乘方的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> 負數的乘方</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-list-ol"></i> 含乘方的四則運算</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-layer-group"></i> 10 的次方</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-atom"></i> 科學記號</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 位數與比大小</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Retro Space Style)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(251, 191, 36, 0.25);">
+        <h2 class="section-title" style="color: #fde047; border-bottom-color: rgba(253, 224, 71, 0.2);">
+          <i class="fa-solid fa-rocket" aria-hidden="true" style="color: #fde047; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);"></i> 課前暖身漫畫：銀河兩端有多遠？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            傳說中的牛郎與織女隔著銀河遙遙相望，這段距離約 150000000000000 公里。這麼多個 <strong style="color:#fde047">0</strong>，光是數就快數暈了——跟著復古太空人一起，把它縮寫成一眼就讀得懂的樣子吧！
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古太空風四格漫畫：太空人測量牛郎織女的距離，最後用科學記號寫成 1.5 乘以 10 的 14 次方公里" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 乘方的意義（底數與指數）
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-superscript" aria-hidden="true"></i> 重點 1：乘方的意義——底數與指數
+        </h2>
+
+        <div class="grid-content">
+          <!-- Text Explanation -->
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>從連加到連乘</strong>：相同的數<strong>連加</strong>多次可以用乘法簡記，例如 \(5 + 5 + 5 + 5 + 5 + 5 = 5 \times 6\)；相同的數<strong>連乘</strong>多次則稱為<strong>乘方</strong>，用指數簡記。</li>
+              <li><strong>乘方的寫法</strong>：\(n\) 個 \(a\) 連乘，即 \(a \times a \times \cdots \times a\)，可簡記成 \(a^n\)，讀作「\(a\) 的 \(n\) 次方」。
+                <ul>
+                  <li><strong>底數（底）</strong>：被連乘的那個數，寫在左下方的大字。</li>
+                  <li><strong>指數</strong>：右上角字體較小的數，表示<strong>連乘的次數</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>特別的讀法</strong>：\(5^2\) 讀作「五的二次方」或「五的<strong>平方</strong>」；\(5^3\) 讀作「五的三次方」或「五的<strong>立方</strong>」。</li>
+              <li><strong>三個特別情形</strong>（設 \(n\) 為正整數）：
+                <ul>
+                  <li><strong>指數為 1</strong>：指數 1 通常<strong>省略不寫</strong>。例如 \(3^1\) 習慣寫成 \(3\)，\((-2)^1\) 寫成 \(-2\)。</li>
+                  <li><strong>0 的乘方</strong>：不管幾個 0 相乘值都是 0，即 \(0^n = 0\)。例如 \(0^5 = 0\)。</li>
+                  <li><strong>1 的乘方</strong>：不管幾個 1 相乘值都是 1，即 \(1^n = 1\)。例如 \(1^8 = 1\)。</li>
+                </ul>
+              </li>
+              <li><strong>最常見的錯誤</strong>：把 \(5^3\) 看成 \(5 \times 3 = 15\)。它其實是 \(5 \times 5 \times 5 = 125\)，<strong>指數是次數，不是乘數</strong>。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>意義</th><th>乘方</th><th>簡記</th><th>讀法</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>2 個 5 連乘</td><td>\(5 \times 5\)</td><td>\(5^2\)</td><td>五的平方</td></tr>
+                <tr><td>3 個 5 連乘</td><td>\(5 \times 5 \times 5\)</td><td>\(5^3\)</td><td>五的立方</td></tr>
+                <tr><td>4 個 5 連乘</td><td>\(5 \times 5 \times 5 \times 5\)</td><td>\(5^4\)</td><td>五的四次方</td></tr>
+                <tr><td>3 個 \(-2\) 連乘</td><td>\((-2) \times (-2) \times (-2)\)</td><td>\((-2)^3\)</td><td>負二的三次方</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="space_power.webp" alt="復古太空人用放大鏡觀察一座愈疊愈大的發光方塊塔" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Canvas Interaction -->
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：乘方展開器</h3>
+            <p class="interactive-instruction">調整<strong>底數 \(a\)</strong> 與<strong>指數 \(n\)</strong>，看看 \(a^n\) 究竟展開成幾個 \(a\) 連乘，以及每多乘一次，數值成長得有多快：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-power" width="540" height="280"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pow-formula" style="font-weight:700; font-size:1.2rem;">a^n = ?</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pow-a-slider">底數 a: <span id="pow-a-val" class="val-num">0</span></label>
+                    <input type="range" id="pow-a-slider" min="-5" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pow-n-slider">指數 n（連乘幾次）: <span id="pow-n-val" class="val-num">0</span></label>
+                    <input type="range" id="pow-n-slider" min="1" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pow-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (乘方的意義挑戰)</h3>
+
+          <!-- Q1 -->
+          <div class="quiz-card" data-quiz="1-4-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 將 \(7 \times 7 \times 7 \times 7 \times 7 \times 7\) 以指數的形式簡記，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-1-1" value="A"><span class="option-text">A. \(7^5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-1-1" value="B"><span class="option-text">B. \(6^7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-1-1" value="C"><span class="option-text">C. \(7^6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-1-1" value="D"><span class="option-text">D. \(7 \times 6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先數清楚有<strong>幾個 7</strong> 連乘：共 <strong>6 個</strong>。<br>
+              被連乘的數 \(7\) 是<strong>底數</strong>，連乘的次數 \(6\) 是<strong>指數</strong>，所以簡記為 \(7^6\)。<br>
+              選項 B 把底數與指數寫反了；選項 D 則是把「6 個 7 連乘」誤當成「7 乘以 6」。</p>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="quiz-card" data-quiz="1-4-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算 \(0^5 + 1^8 + 3^1\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-1-2" value="A"><span class="option-text">A. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-1-2" value="B"><span class="option-text">B. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-1-2" value="C"><span class="option-text">C. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-1-2" value="D"><span class="option-text">D. \(11\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>三個特別情形各出現一次：<br>
+              \(0^5 = 0\)（5 個 0 相乘還是 0）、\(1^8 = 1\)（8 個 1 相乘還是 1）、\(3^1 = 3\)（指數為 1，值就是底數本身）。<br>
+              相加得 \(0 + 1 + 3 = 4\)，答案為 A。<br>
+              選項 C 是把 \(0^5\) 誤算成 \(5\)；選項 D 是把 \(1^8\) 誤算成 \(8\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 負數的乘方與括號陷阱
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 重點 2：負數的乘方與括號陷阱
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>負號在括號內</strong>：\((-3)^2\) 的<strong>底數是 \(-3\)</strong>，表示 2 個 \(-3\) 連乘，即 \((-3) \times (-3) = 9\)。負號<strong>會參與連乘</strong>。</li>
+              <li><strong>負號在括號外</strong>：\(-3^2\) 的<strong>底數是 \(3\)</strong>，表示先算 \(3^2\) 再取相反數，即 \(-(3 \times 3) = -9\)。負號<strong>不參與連乘</strong>。</li>
+              <li><strong>指數是偶數時，兩者意義不同、值也不同</strong>：\((-3)^2 = 9\)，但 \(-3^2 = -9\)。</li>
+              <li><strong>指數是奇數時，兩者意義不同、值卻相同</strong>：\((-6)^3 = -216\)，\(-6^3 = -216\)。</li>
+              <li><strong>負數乘方的符號規則</strong>：
+                <ul>
+                  <li>負數的<strong>偶數</strong>次方是<strong>正數</strong>（負號兩兩配對抵消）。</li>
+                  <li>負數的<strong>奇數</strong>次方是<strong>負數</strong>（配對後剩下一個負號）。</li>
+                </ul>
+              </li>
+              <li><strong>好用的結論</strong>：\((-1)^n\) 在 \(n\) 為偶數時等於 \(1\)，在 \(n\) 為奇數時等於 \(-1\)。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>算式</th><th>底數</th><th>意義</th><th>結果</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\((-4)^2\)</td><td>\(-4\)</td><td>2 個 \(-4\) 連乘</td><td class="sign-pos">\(16\)</td></tr>
+                <tr><td>\(-4^2\)</td><td>\(4\)</td><td>\(4^2\) 的相反數</td><td class="sign-neg">\(-16\)</td></tr>
+                <tr><td>\((-2)^3\)</td><td>\(-2\)</td><td>3 個 \(-2\) 連乘</td><td class="sign-neg">\(-8\)</td></tr>
+                <tr><td>\(-2^3\)</td><td>\(2\)</td><td>\(2^3\) 的相反數</td><td class="sign-neg">\(-8\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="space_bracket.webp" alt="復古太空人在兩座外觀相同的艙門之間比對，思考負號在框內與框外的差別" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-code-compare"></i> 視覺互動探索：括號陷阱對照器</h3>
+            <p class="interactive-instruction">同時調整數字與指數，左右對照 \((-a)^n\) 與 \(-a^n\)。注意指數是<strong>奇數</strong>還是<strong>偶數</strong>時，兩者的值會不會一樣：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-bracket" width="540" height="245"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="brk-formula" style="font-weight:700; font-size:1.1rem;">對照中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="brk-a-slider">數字 a: <span id="brk-a-val" class="val-num">0</span></label>
+                    <input type="range" id="brk-a-slider" min="2" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="brk-n-slider">指數 n: <span id="brk-n-val" class="val-num">0</span></label>
+                    <input type="range" id="brk-n-slider" min="1" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="brk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (括號與符號挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列四個等式中，哪一個是<strong>正確</strong>的？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-2-1" value="A"><span class="option-text">A. \((-4)^2 = -16\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-2-1" value="B"><span class="option-text">B. \(-4^2 = 16\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-2-1" value="C"><span class="option-text">C. \((-4)^2 = -4^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-2-1" value="D"><span class="option-text">D. \(-4^2 = -16\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先把兩個算式各自算清楚：<br>
+              \((-4)^2 = (-4) \times (-4) = 16\)（負號在括號內，2 個負號配對抵消）。<br>
+              \(-4^2 = -(4 \times 4) = -16\)（負號在括號外，只在最後取相反數）。<br>
+              所以 A、B 都把符號寫反了；C 則說兩者相等，但 \(16 \neq -16\)。正確的只有 D。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知 \(n\) 為<strong>奇數</strong>，則 \((-1)^n + (-1)^{n+1}\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-2-2" value="A"><span class="option-text">A. \(-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-2-2" value="B"><span class="option-text">B. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-2-2" value="C"><span class="option-text">C. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-2-2" value="D"><span class="option-text">D. \(-1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>\(n\) 是奇數，所以 \((-1)^n = -1\)（負數的奇數次方為負）。<br>
+              而 \(n + 1\) 就變成<strong>偶數</strong>，所以 \((-1)^{n+1} = 1\)（負數的偶數次方為正）。<br>
+              兩者相加：\(-1 + 1 = 0\)，答案為 C。<br>
+              可以拿 \(n = 3\) 代入驗算：\((-1)^3 + (-1)^4 = -1 + 1 = 0\)，確實與 \(n\) 是哪個奇數無關。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 含乘方的四則運算
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-ol" aria-hidden="true"></i> 重點 3：含乘方的四則運算順序
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>運算順序總表</strong>（由先到後）：
+                <ul>
+                  <li>第 1 順位：<strong>括號</strong>（小括號 \(( \; )\) → 中括號 \([ \; ]\)），絕對值視同括號。</li>
+                  <li>第 2 順位：<strong>乘方</strong>。</li>
+                  <li>第 3 順位：<strong>乘、除</strong>，同級由左而右。</li>
+                  <li>第 4 順位：<strong>加、減</strong>，同級由左而右。</li>
+                </ul>
+              </li>
+              <li><strong>括號內也要照這個順序</strong>：先把括號內的乘方算掉，再算括號內的乘除與加減。</li>
+              <li><strong>最容易錯的三個地方</strong>：
+                <ul>
+                  <li>把 \(6^2\) 當成 \(6 \times 2 = 12\)（正確為 \(36\)）。</li>
+                  <li>忘記 \(-4^2\) 的負號不參與連乘（正確為 \(-16\)，不是 \(16\)）。</li>
+                  <li>乘方還沒算完就先做加減。</li>
+                </ul>
+              </li>
+              <li><strong>示範</strong>：\(-5^2 \div 5 - 3^3 = -25 \div 5 - 27 = -5 - 27 = -32\)。先乘方、再除法、最後減法。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="space_order.webp" alt="復古太空人在控制台前依序按下四顆圓形按鈕，箭頭標示先後順序" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-diagram-project"></i> 視覺互動探索：四則運算逐步拆解器</h3>
+            <p class="interactive-instruction">選一個算式，按「下一步」一行一行展開，看清楚<strong>每一步先動哪個部分</strong>、為什麼要照這個順序：</p>
+            <div class="canvas-container">
+              <div class="step-box">
+                <div class="step-btn-grid" id="step-choice-grid">
+                  <button type="button" class="step-choice-btn active" data-idx="0">算式 1</button>
+                  <button type="button" class="step-choice-btn" data-idx="1">算式 2</button>
+                  <button type="button" class="step-choice-btn" data-idx="2">算式 3</button>
+                </div>
+                <div class="step-stage" id="step-stage">載入中...</div>
+                <div class="step-controls">
+                  <button type="button" class="step-ctrl-btn" id="step-next">下一步</button>
+                  <button type="button" class="step-ctrl-btn secondary" id="step-reset">重新開始</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (運算順序挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 計算 \(-2^4 + (-3)^2 \times 2\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-3-1" value="A"><span class="option-text">A. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-3-1" value="B"><span class="option-text">B. \(34\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-3-1" value="C"><span class="option-text">C. \(-34\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-3-1" value="D"><span class="option-text">D. \(-2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先算兩個乘方，注意負號的位置：<br>
+              \(-2^4 = -(2 \times 2 \times 2 \times 2) = -16\)（負號在外，<strong>不</strong>參與連乘）。<br>
+              \((-3)^2 = (-3) \times (-3) = 9\)。<br>
+              接著算乘法：\(9 \times 2 = 18\)。最後加起來：\(-16 + 18 = 2\)，答案為 A。<br>
+              選項 B 是把 \(-2^4\) 誤算成 \(16\) 的結果。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算 \((-6)^2 \div [\,4 + (-1)^3\,] \times 2\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-3-2" value="A"><span class="option-text">A. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-3-2" value="B"><span class="option-text">B. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-3-2" value="C"><span class="option-text">C. \(-24\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-3-2" value="D"><span class="option-text">D. \(3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先處理中括號，而括號內的乘方要先算：<br>
+              \((-1)^3 = -1\)，所以 \([\,4 + (-1)\,] = 3\)。<br>
+              再算括號外的乘方：\((-6)^2 = 36\)。<br>
+              最後只剩乘除，<strong>由左而右</strong>：\(36 \div 3 = 12\)，\(12 \times 2 = 24\)，答案為 B。<br>
+              選項 A 是把 \(3 \times 2\) 先乘起來、變成 \(36 \div 6\) 的錯誤——乘除同級時<strong>不能跳著算</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 10 的次方
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 4：10 的次方與負指數
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>指數與數值的連動</strong>（以 10 為底）：數值變為 <strong>10 倍</strong>，指數就 <strong>\(+1\)</strong>；數值變為 \(\frac{1}{10}\) 倍，指數就 <strong>\(-1\)</strong>。</li>
+              <li><strong>這個規律在指數為 0 或負整數時同樣成立</strong>，順著往下推：
+                <ul>
+                  <li>\(10\) 的 \(\frac{1}{10}\) 倍是 \(1\)，記為 \(10^0\)。</li>
+                  <li>\(1\) 的 \(\frac{1}{10}\) 倍是 \(\frac{1}{10}\)，記為 \(10^{-1}\)。</li>
+                  <li>\(\frac{1}{10}\) 的 \(\frac{1}{10}\) 倍是 \(\frac{1}{100} = \frac{1}{10^2}\)，記為 \(10^{-2}\)，依此類推。</li>
+                </ul>
+              </li>
+              <li><strong>核心結論</strong>（\(n\) 為正整數）：\(10^{-n} = \dfrac{1}{10^{n}}\)，而 \(10^{0} = 1\)。</li>
+              <li><strong>最重要的迷思澄清</strong>：\(10^{-6}\) <strong>不是負數</strong>！它是 \(\dfrac{1}{10^6} = 0.000001\)，一個很小的<strong>正數</strong>。負指數代表的是「很小」，不是「負的」。</li>
+              <li><strong>快速判讀</strong>：\(10^{n}\)（\(n\) 為正整數）就是 1 後面接 \(n\) 個 0；\(10^{-n}\) 就是小數點後第 \(n\) 位是 1、前面都是 0。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>數值</th><th>10 的次方</th><th>指數</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(10000\)</td><td>\(10^4\)</td><td>\(4\)</td></tr>
+                <tr><td>\(100\)</td><td>\(10^2\)</td><td>\(2\)</td></tr>
+                <tr><td>\(1\)</td><td>\(10^0\)</td><td>\(0\)</td></tr>
+                <tr><td>\(\frac{1}{10} = 0.1\)</td><td>\(10^{-1}\)</td><td>\(-1\)</td></tr>
+                <tr><td>\(\frac{1}{1000} = 0.001\)</td><td>\(10^{-3}\)</td><td>\(-3\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="space_ten.webp" alt="復古太空人搭乘電梯往返於層層平台之間，每一層都比下一層寬十倍" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-elevator"></i> 視覺互動探索：10 的次方位值尺</h3>
+            <p class="interactive-instruction">拖動滑桿改變<strong>指數</strong>，觀察 \(10^n\) 的數值怎麼變：往右一格變 10 倍、往左一格變 \(\frac{1}{10}\) 倍，一路跨過 \(10^0\) 走進負指數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ten" width="540" height="270"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ten-formula" style="font-weight:700; font-size:1.2rem;">10^n = ?</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ten-n-slider">指數 n: <span id="ten-n-val" class="val-num">0</span></label>
+                    <input type="range" id="ten-n-slider" min="-6" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ten-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (10 的次方挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一個數與 \(10^{-4}\) 相等？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-4-1" value="A"><span class="option-text">A. \(-10000\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-4-1" value="B"><span class="option-text">B. \(-0.0001\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-4-1" value="C"><span class="option-text">C. \(0.0001\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-4-1" value="D"><span class="option-text">D. \(0.00001\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>依定義 \(10^{-4} = \dfrac{1}{10^4} = \dfrac{1}{10000} = 0.0001\)，答案為 C。<br>
+              選項 A、B 是最常見的誤解——以為「負指數」等於「負的數」。負指數代表的是<strong>倒數</strong>，結果仍然是<strong>正數</strong>。<br>
+              選項 D 是 \(10^{-5}\)，多數了一個 0。小技巧：\(10^{-n}\) 的小數點後<strong>第 \(n\) 位</strong>才是 1。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算 \(10^{0} + 10^{-2}\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-4-2" value="A"><span class="option-text">A. \(0.01\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-4-2" value="B"><span class="option-text">B. \(0.11\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-4-2" value="C"><span class="option-text">C. \(1.001\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-4-2" value="D"><span class="option-text">D. \(1.01\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>兩項分別處理：\(10^{0} = 1\)、\(10^{-2} = \dfrac{1}{10^2} = 0.01\)。<br>
+              相加得 \(1 + 0.01 = 1.01\)，答案為 D。<br>
+              選項 A 是把 \(10^0\) 誤當成 \(0\)；選項 C 則是把 \(10^{-2}\) 誤寫成 \(0.001\)（那是 \(10^{-3}\)）。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 科學記號的表示法
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-atom" aria-hidden="true"></i> 重點 5：科學記號的表示法
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>為什麼需要科學記號</strong>：科學上常遇到很大或很小的正數，例如地球質量約 \(5970000000000000000000\) 公噸、細胞大小約 \(0.00000014\) 公尺。這種數不但難讀，還很容易把 0 的個數寫錯。</li>
+              <li><strong>科學記號表示法</strong>：把一個正數寫成 \(a \times 10^{n}\) 的形式，其中 <strong>\(1 \le a < 10\)</strong>、\(n\) 為<strong>整數</strong>。上面兩個數就寫成 \(5.97 \times 10^{21}\) 公噸與 \(1.4 \times 10^{-7}\) 公尺。</li>
+              <li><strong>很大的數：小數點往左移</strong>。移了幾位，指數就是<strong>正的幾</strong>。
+                <ul>
+                  <li>\(930000000 = 9.3 \times 10^{8}\)（小數點左移 8 位）。</li>
+                </ul>
+              </li>
+              <li><strong>很小的數：小數點往右移</strong>。移了幾位，指數就是<strong>負的幾</strong>。
+                <ul>
+                  <li>\(0.00000431 = 4.31 \times 10^{-6}\)（小數點右移 6 位）。</li>
+                </ul>
+              </li>
+              <li><strong>分數形式</strong>：先把分母寫成 10 的次方，再改寫成負指數。
+                <ul>
+                  <li>\(\dfrac{8}{100000} = \dfrac{8}{10^{5}} = 8 \times 10^{-5}\)。</li>
+                </ul>
+              </li>
+              <li><strong>檢查 \(a\) 是否合法</strong>：\(0.64 \times 10^{10}\) 與 \(64 \times 10^{8}\) 雖然數值都對，但 \(a\) 不在 \(1\) 到 \(10\) 之間，<strong>都不是</strong>標準的科學記號。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>長度單位</th><th>簡記</th><th>單位換算</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>公里</td><td>km</td><td>\(1\) km \(= 1000\) m \(= 10^{3}\) m</td></tr>
+                <tr><td>毫米</td><td>mm</td><td>\(1\) mm \(= 0.001\) m \(= 10^{-3}\) m</td></tr>
+                <tr><td>微米</td><td>μm</td><td>\(1\) μm \(= 10^{-6}\) m</td></tr>
+                <tr><td>奈米</td><td>nm</td><td>\(1\) nm \(= 10^{-9}\) m</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="space_notation.webp" alt="復古太空人把長長的紙帶折成一張小卡片並高高舉起" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-arrows-left-right"></i> 視覺互動探索：小數點移動器</h3>
+            <p class="interactive-instruction">先選一個數，再拖動滑桿移動<strong>小數點</strong>的位置。只有當整數部分<strong>剛好一位不為 0 的數字</strong>（\(1 \le a < 10\)）時，才是合法的科學記號：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sci" width="540" height="270"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sci-formula" style="font-weight:700; font-size:1.1rem;">選一個數開始</span>
+                </div>
+
+                <div class="step-btn-grid" id="sci-choice-grid" style="margin-bottom: 0.9rem;">
+                  <button type="button" class="step-choice-btn active" data-idx="0">4300000000</button>
+                  <button type="button" class="step-choice-btn" data-idx="1">0.00000275</button>
+                  <button type="button" class="step-choice-btn" data-idx="2">0.000000027</button>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sci-pos-slider">小數點前保留幾位數字: <span id="sci-pos-val" class="val-num">0</span></label>
+                    <input type="range" id="sci-pos-slider" min="1" max="10" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sci-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (科學記號表示挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-5-1">
+            <p class="quiz-question"><strong>Q1.</strong> 以科學記號表示 \(6400000000\)，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-5-1" value="A"><span class="option-text">A. \(6.4 \times 10^{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-5-1" value="B"><span class="option-text">B. \(64 \times 10^{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-5-1" value="C"><span class="option-text">C. \(6.4 \times 10^{10}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-5-1" value="D"><span class="option-text">D. \(0.64 \times 10^{10}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>\(6400000000\) 共 10 位數，把小數點從最右邊往左移到 6 與 4 之間，共移了 <strong>9 位</strong>，所以 \(6400000000 = 6.4 \times 10^{9}\)，答案為 A。<br>
+              選項 B、D 的<strong>數值其實都對</strong>，但 \(64\) 與 \(0.64\) 都不滿足 \(1 \le a < 10\)，不是標準的科學記號寫法。<br>
+              選項 C 的指數多算了一位（那會是 \(64000000000\)，11 位數）。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-5-2">
+            <p class="quiz-question"><strong>Q2.</strong> 以科學記號表示 \(\dfrac{9}{100000}\)，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-5-2" value="A"><span class="option-text">A. \(9 \times 10^{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-5-2" value="B"><span class="option-text">B. \(9 \times 10^{-5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-5-2" value="C"><span class="option-text">C. \(9 \times 10^{-6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-5-2" value="D"><span class="option-text">D. \(0.9 \times 10^{-4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先把分母寫成 10 的次方：\(100000 = 10^{5}\)，所以<br>
+              \(\dfrac{9}{100000} = \dfrac{9}{10^{5}} = 9 \times \dfrac{1}{10^{5}} = 9 \times 10^{-5}\)，答案為 B。<br>
+              選項 A 漏掉了負號（那是 \(900000\)，差了 10 個數量級）。<br>
+              選項 D 的數值雖然相等，但 \(0.9 < 1\)，\(a\) 不合法。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 位數判斷與比較大小
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> 重點 6：位數判斷與比較大小
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>大數的位數</strong>：若 \(1 \le a < 10\)、\(n\) 為正整數，則 \(a \times 10^{n}\) 乘開後，整數部分是 <strong>\(n + 1\) 位數</strong>。
+                <ul>
+                  <li>例：\(6.03 \times 10^{7} = 60300000\)，是 \(7 + 1 = 8\) 位數。</li>
+                </ul>
+              </li>
+              <li><strong>小數的第一個有效位</strong>：\(a \times 10^{-n}\) 乘開後，<strong>小數點後第 \(n\) 位</strong>開始出現不為 0 的數字。
+                <ul>
+                  <li>例：\(4.2 \times 10^{-4} = 0.00042\)，小數點後第 4 位開始不為 0。</li>
+                </ul>
+              </li>
+              <li><strong>比較大小的兩步驟</strong>（設 \(A = a \times 10^{m}\)、\(B = b \times 10^{n}\)，且 \(1 \le a < 10\)、\(1 \le b < 10\)）：
+                <ul>
+                  <li><strong>先比指數</strong>：若 \(m > n\)，則 \(A > B\)。<strong>指數愈大，數值愈大</strong>，連 \(a\)、\(b\) 都不必看。</li>
+                  <li><strong>指數相同再比 \(a\)</strong>：若 \(m = n\) 且 \(a > b\)，則 \(A > B\)。</li>
+                </ul>
+              </li>
+              <li><strong>負指數也一樣看指數大小</strong>：\(-5 > -6\)，所以 \(5.6 \times 10^{-5} > 9.2 \times 10^{-6}\)，即使 \(5.6 < 9.2\)。</li>
+              <li><strong>為什麼可以只看指數</strong>：因為 \(a\) 一定在 1 到 10 之間，\(a\) 再大也追不上一整個 10 倍的差距。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>兩數</th><th>怎麼判斷</th><th>結論</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(2.5 \times 10^{6}\) 與 \(3.4 \times 10^{6}\)</td><td>指數相同，比 \(a\)</td><td class="sign-neg">\(<\)</td></tr>
+                <tr><td>\(1.5 \times 10^{9}\) 與 \(4.8 \times 10^{8}\)</td><td>\(9 > 8\)</td><td class="sign-pos">\(>\)</td></tr>
+                <tr><td>\(8.2 \times 10^{-7}\) 與 \(2.97 \times 10^{-6}\)</td><td>\(-7 < -6\)</td><td class="sign-neg">\(<\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="space_compare.webp" alt="復古太空人看著太空中的天秤，一端是巨大的環形行星、另一端是小衛星" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-ranking-star"></i> 視覺互動探索：科學記號比大小擂台</h3>
+            <p class="interactive-instruction">分別調整兩個數的 \(a\) 與指數，長條的長度代表指數的大小。試試看：<strong>把 \(a\) 調到最大，能不能贏過指數比較大的那一方？</strong></p>
+            <div class="canvas-container">
+              <canvas id="canvas-compare" width="540" height="215"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cmp-formula" style="font-weight:700; font-size:1.1rem;">比較中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cmp-a-slider">上方數的 a: <span id="cmp-a-val" class="val-num">0</span></label>
+                    <input type="range" id="cmp-a-slider" min="10" max="99" value="12" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cmp-m-slider">上方數的指數 m: <span id="cmp-m-val" class="val-num">0</span></label>
+                    <input type="range" id="cmp-m-slider" min="-7" max="7" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cmp-b-slider">下方數的 b: <span id="cmp-b-val" class="val-num">0</span></label>
+                    <input type="range" id="cmp-b-slider" min="10" max="99" value="23" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cmp-n-slider">下方數的指數 n: <span id="cmp-n-val" class="val-num">0</span></label>
+                    <input type="range" id="cmp-n-slider" min="-7" max="7" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cmp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (位數與比大小挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-6-1">
+            <p class="quiz-question"><strong>Q1.</strong> 若將 \(5.2 \times 10^{7}\) 乘開，則這個數是幾位數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-6-1" value="A"><span class="option-text">A. \(7\) 位數</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-6-1" value="B"><span class="option-text">B. \(9\) 位數</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-6-1" value="C"><span class="option-text">C. \(52\) 位數</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-6-1" value="D"><span class="option-text">D. \(8\) 位數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>直接乘開檢查：\(5.2 \times 10^{7} = 5.2 \times 10000000 = 52000000\)，數一數是 <strong>8 位數</strong>，答案為 D。<br>
+              也可以直接套結論：\(a \times 10^{n}\) 乘開後是 \(n + 1\) 位數，這裡 \(n = 7\)，所以是 \(7 + 1 = 8\) 位數。<br>
+              選項 A 是誤把指數當成位數（漏掉了 \(+1\)）。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-6-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列四個數中，哪一個<strong>最大</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-6-2" value="A"><span class="option-text">A. \(3.9 \times 10^{-5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-6-2" value="B"><span class="option-text">B. \(1.1 \times 10^{-4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-6-2" value="C"><span class="option-text">C. \(7.2 \times 10^{-6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-6-2" value="D"><span class="option-text">D. \(9.8 \times 10^{-7}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>四個數都是科學記號，且 \(a\) 都在 \(1\) 到 \(10\) 之間，所以<strong>只要比指數</strong>：<br>
+              \(-4 > -5 > -6 > -7\)，指數最大的是 B 的 \(-4\)，所以 \(1.1 \times 10^{-4}\) 最大，答案為 B。<br>
+              這題的陷阱是 D 的 \(9.8\) 看起來最大，但它的指數最小，實際上 \(9.8 \times 10^{-7} = 0.00000098\)，是四個數中<strong>最小</strong>的。<br>
+              驗算：\(1.1 \times 10^{-4} = 0.00011\)，確實比 \(3.9 \times 10^{-5} = 0.000039\) 大。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結與核心回顧 (Summary)
+           ========================================== -->
+      <section class="summary-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> 1-4 指數記法與科學記號 課程核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <!-- Card 1: Mint Green review card -->
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-swatchbook"></i> 指數與科學記號快速檢索卡</h4>
+            <ul class="bullet-list">
+              <li><strong>乘方的意義</strong>：\(n\) 個 \(a\) 連乘記為 \(a^n\)，\(a\) 是底數、\(n\) 是指數。<br>特別情形：\(a^1 = a\)、\(0^n = 0\)、\(1^n = 1\)。</li>
+              <li><strong>括號陷阱</strong>：\((-3)^2 = 9\)，但 \(-3^2 = -9\)。<br>負號在括號內才參與連乘。</li>
+              <li><strong>負數的乘方</strong>：偶數次方為正、奇數次方為負。</li>
+              <li><strong>運算順序</strong>：括號 \(\rightarrow\) 乘方 \(\rightarrow\) 乘除 \(\rightarrow\) 加減，同級由左而右。</li>
+              <li><strong>10 的次方</strong>：\(10^{0} = 1\)、\(10^{-n} = \dfrac{1}{10^{n}}\)。負指數是很小的<strong>正數</strong>。</li>
+              <li><strong>科學記號</strong>：\(a \times 10^{n}\)，\(1 \le a < 10\)、\(n\) 為整數。<br>乘開後是 \(n + 1\) 位數（\(n > 0\)）；比較大小<strong>先比指數</strong>。</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Bright Blue life story card -->
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-lightbulb"></i> 生活中的科學記號</h4>
+              <h5><i class="fa-solid fa-star"></i> 從銀河到病毒，一種寫法通吃</h5>
+              <p>牛郎星與織女星相隔約 \(150000000000000\) 公里。要數清楚有幾個 0 很痛苦，但寫成科學記號就只剩下：</p>
+              <p style="text-align:center; font-size:1.15rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( 1.5 \times 10^{14} \) 公里
+              </p>
+              <p>反過來，最小的那一端也一樣好用。諾羅病毒的直徑約 27 奈米，也就是 \(0.000000027\) 公尺，寫成科學記號是：</p>
+              <p style="text-align:center; font-size:1.15rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( 2.7 \times 10^{-8} \) 公尺
+              </p>
+              <p>一個大得跨越銀河、一個小得看不見，卻能用<strong>同一種寫法</strong>清楚表達，而且一眼就能比出大小——這就是科學記號真正厲害的地方。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 課堂智慧教學整合門戶系統. 專為國中數學高效課堂設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
