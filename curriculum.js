@@ -25,7 +25,7 @@
       {
         "chapter": "第2章 分數的運算",
         "sections": [
-          { "code": "2-1", "title": "因數與倍數" },
+          { "code": "2-1", "title": "因數與倍數", "status": "completed" },
           { "code": "2-2", "title": "最大公因數與最小公倍數" },
           { "code": "2-3", "title": "分數的四則運算" },
           { "code": "2-4", "title": "指數律" }

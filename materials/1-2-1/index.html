@@ -4,39 +4,831 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/webp" href="../../header-logo.webp">
-  <title>2-1 因數與倍數 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-1 因數與倍數 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第一冊 (1上) • 第2章 分數的運算</div>
-    <h1>2-1 因數與倍數</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第一冊 • 第二章</span>
+        <h1>2-1 因數與倍數</h1>
+        <p>把一個數拆成兩個數相乘，就同時看見了因數與倍數；再學會 2、5、4、3、9、11 的倍數判別法，不必真的去除也能一眼判斷。最後認識質數與合數，用短除法把任何一個數拆成質因數的連乘積。</p>
+      </div>
+      <!-- Progress navigation (6 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-link"></i> 因數與倍數</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-receipt"></i> 2、5、4 的倍數</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-layer-group"></i> 3、9 的倍數</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-right-left"></i> 11 的倍數</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-filter"></i> 質數與合數</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-sitemap"></i> 質因數分解</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Night Market Watercolor Style)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(251, 146, 60, 0.25);">
+        <h2 class="section-title" style="color: #fdba74; border-bottom-color: rgba(253, 186, 116, 0.2);">
+          <i class="fa-solid fa-bowl-food" aria-hidden="true" style="color: #fdba74; text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);"></i> 課前暖身漫畫：老闆，你算錯了！
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            夜市買 4 份套餐，老闆說總共 <strong style="color:#fdba74">726</strong> 元。這位同學連乘法都還沒算，就知道老闆按錯了——因為 4 份的總價一定是 <strong style="color:#fdba74">4 的倍數</strong>，而 726 的末兩位 26 除不盡。跟著她一起，把「不用真的除也能判斷」的本事學起來吧！
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="夜市水彩風四格漫畫：學生用 4 的倍數判別法，發現老闆把 4 份 179 元的套餐算成 726 元，正確答案是 716 元" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 因數與倍數
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> 重點 1：因數與倍數——一個乘式，兩種身分
+        </h2>
+
+        <div class="grid-content">
+          <!-- Text Explanation -->
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>核心定義</strong>：對於 \(a\)、\(b\)、\(c\) 三個<strong>非零整數</strong>，若滿足 \(a \div b = c\)，也就是 \(a = b \times c\)，則：
+                <ul>
+                  <li>\(b\)、\(c\) 是 \(a\) 的<strong>因數</strong>。</li>
+                  <li>\(a\) 是 \(b\)、\(c\) 的<strong>倍數</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>一個乘式同時說兩件事</strong>：由 \(360 \div 9 = 40\) 可寫成 \(360 = 9 \times 40\)，於是 \(9\) 和 \(40\) 都是 \(360\) 的因數，而 \(360\) 是 \(9\) 和 \(40\) 的倍數。<strong>因數與倍數永遠成對出現</strong>，不能單獨說「9 是因數」，要說「9 是 360 的因數」。</li>
+              <li><strong>怎麼把因數找齊</strong>：把這個數寫成 \(a \times b\)，讓 \(a\) 從 \(1\) 開始<strong>由小到大</strong>試，配對到 \(a \ge b\) 就停。例如 \(54 = 1 \times 54 = 2 \times 27 = 3 \times 18 = 6 \times 9\)，所以 \(54\) 的因數有 \(1, 2, 3, 6, 9, 18, 27, 54\)。</li>
+              <li><strong>推廣到負整數</strong>：\(6 = 1 \times 6 = 2 \times 3 = (-1) \times (-6) = (-2) \times (-3)\)，所以 \(1, 2, 3, 6\) 與 \(-1, -2, -3, -6\) 都是 \(6\) 的因數，也都是 \(-6\) 的因數。可知 \(a\) 與 \(-a\) 的<strong>因數完全相同</strong>。</li>
+              <li><strong>國中的默契</strong>：沒有特別指明時，<strong>因數是指正因數、倍數是指正倍數</strong>。</li>
+              <li><strong>1 與 0 兩個特別的數</strong>：
+                <ul>
+                  <li>任何整數 \(n\) 都可以寫成 \(n = 1 \times n\)，所以 <strong>1 是任何整數的因數</strong>，任何整數都是 1 的倍數。</li>
+                  <li>0 不能當除數，所以 <strong>0 不是任何整數的因數</strong>；而 \(0 = 1 \times 0 = 2 \times 0 = \cdots\)，所以 <strong>0 是任何非零整數的倍數</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>配對的小訣竅</strong>：把因數由小到大排好後，<strong>頭尾相乘都等於原來的數</strong>。以 \(54\) 為例：\(1 \times 54 = 2 \times 27 = 3 \times 18 = 6 \times 9 = 54\)。題目給了殘缺的因數表，就靠這個關係補回來。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>乘式</th><th>誰是因數</th><th>誰是倍數</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(12 = 3 \times 4\)</td><td>\(3\)、\(4\)</td><td>\(12\)</td></tr>
+                <tr><td>\(56 = 7 \times 8\)</td><td>\(7\)、\(8\)</td><td>\(56\)</td></tr>
+                <tr><td>\(n = 1 \times n\)</td><td>\(1\)、\(n\)</td><td>\(n\)</td></tr>
+                <tr><td>\(0 = 5 \times 0\)</td><td>\(5\)、\(0\)（0 不算因數）</td><td>\(0\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="night_factors.webp" alt="夜市水彩插圖：學生與老闆把相同數量的鹹酥雞排成一長排、兩排與方塊三種不同形狀的盤子" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Canvas Interaction -->
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-diagram-project"></i> 視覺互動探索：因數配對探索器</h3>
+            <p class="interactive-instruction">拖動滑桿換一個數，看看它能拆出<strong>幾組 \(a \times b\)</strong>，這些配對又如何在數線上留下<strong>成對的因數</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-factor" width="540" height="340"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fac-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fac-n-slider">選一個數 n: <span id="fac-n-val" class="val-num">0</span></label>
+                    <input type="range" id="fac-n-slider" min="2" max="60" value="54" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fac-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (因數與倍數挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列四個數中，哪一個的<strong>正因數恰好有 8 個</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-1-1" value="A"><span class="option-text">A. \(36\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-1" value="B"><span class="option-text">B. \(45\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-1" value="C"><span class="option-text">C. \(40\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-1" value="D"><span class="option-text">D. \(49\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>把每個數都做<strong>因數配對</strong>就一目了然：<br>
+              \(40 = 1 \times 40 = 2 \times 20 = 4 \times 10 = 5 \times 8\)，4 組配對共 <strong>8 個</strong>因數 → 答案為 C。<br>
+              \(36 = 1 \times 36 = 2 \times 18 = 3 \times 12 = 4 \times 9 = 6 \times 6\)，最後一組是 \(6 \times 6\)，<strong>只算 1 個</strong>，所以是 9 個因數。<br>
+              \(45 = 1 \times 45 = 3 \times 15 = 5 \times 9\)，6 個；\(49 = 1 \times 49 = 7 \times 7\)，只有 3 個。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 有一正整數 \(M\)，它的所有正因數由小到大排列恰為 \(1\)、\(2\)、\(a\)、\(b\)、\(10\)、\(M\)，則 \(a + b\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-1-2" value="A"><span class="option-text">A. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-2" value="B"><span class="option-text">B. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-2" value="C"><span class="option-text">C. \(11\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-2" value="D"><span class="option-text">D. \(14\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>因數由小到大排好後，<strong>頭尾成對相乘都等於 \(M\)</strong>。<br>
+              第 2 個是 \(2\)、倒數第 2 個是 \(10\)，這兩個正好是一組，所以 \(M = 2 \times 10 = 20\)。<br>
+              再把 \(20\) 的因數列出來：\(20 = 1 \times 20 = 2 \times 10 = 4 \times 5\)，得到 \(1, 2, 4, 5, 10, 20\)。<br>
+              對照可知 \(a = 4\)、\(b = 5\)，所以 \(a + b = 9\)，答案為 B。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 2、5、4 的倍數判別法
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-receipt" aria-hidden="true"></i> 重點 2：2、5、4 的倍數判別法——只看末幾位
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>2 的倍數</strong>：個位數字是 \(0, 2, 4, 6, 8\) 就是 2 的倍數，否則就不是。整數中 2 的倍數稱為<strong>偶數</strong>，不是 2 的倍數的稱為<strong>奇數</strong>。</li>
+              <li><strong>5 的倍數</strong>：個位數字是 \(0\) 或 \(5\) 就是 5 的倍數，否則就不是。</li>
+              <li><strong>同時是 2 與 5 的倍數</strong>：個位必須同時滿足兩邊，只剩 \(0\)——也就是 <strong>10 的倍數</strong>。反過來，一個數是 10 的倍數時，個位一定是 0，所以它一定同時是 2 和 5 的倍數。</li>
+              <li><strong>4 的倍數</strong>：末兩位數是「\(00\)」或<strong> 4 的倍數</strong>，這個整數就是 4 的倍數；否則就不是。</li>
+              <li><strong>4 的倍數為什麼只看末兩位</strong>：因為 \(100 = 25 \times 4\)，<strong>整百的部分每 4 個一數一定剛好分完</strong>。以 \(216\) 為例：
+                <ul>
+                  <li>\(216 = 200 + 16 = 2 \times 100 + 16 = 2 \times 25 \times 4 + 16\)。</li>
+                  <li>前面那一段必定是 4 的倍數，所以只要看 \(16 \div 4 = 4\) 除不除得盡 → \(216\) 是 4 的倍數。</li>
+                  <li>換成 \(238 = 200 + 38\)，\(38 \div 4 = 9 \cdots 2\) 除不盡 → \(238\) 不是 4 的倍數。</li>
+                </ul>
+              </li>
+              <li><strong>背後的原理</strong>：若甲是 \(c\) 的倍數、乙也是 \(c\) 的倍數，則<strong>甲 \(+\) 乙也是 \(c\) 的倍數</strong>，因為 \(a \times c + b \times c = (a + b) \times c\)。這正是乘法對加法的<strong>分配律</strong>。</li>
+              <li><strong>課堂上的用法</strong>：買 \(4\) 份同價的東西，總價一定是 4 的倍數。老闆報 \(726\) 元時，末兩位 \(26 \div 4 = 6 \cdots 2\) 除不盡，不用乘也知道按錯了。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>要判斷</th><th>只看哪裡</th><th>條件</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>2 的倍數</td><td>個位</td><td>\(0, 2, 4, 6, 8\)</td></tr>
+                <tr><td>5 的倍數</td><td>個位</td><td>\(0\) 或 \(5\)</td></tr>
+                <tr><td>10 的倍數</td><td>個位</td><td>\(0\)</td></tr>
+                <tr><td>4 的倍數</td><td>末兩位</td><td>\(00\) 或 4 的倍數</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="night_lastdigits.webp" alt="夜市水彩插圖：學生拿放大鏡盯著收據上的末兩位數字，老闆在旁邊緊張地看著" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-magnifying-glass-dollar"></i> 視覺互動探索：末兩位放大鏡</h3>
+            <p class="interactive-instruction">左邊滑桿決定<strong>整百的部分</strong>、右邊滑桿決定<strong>末兩位</strong>。試著只動左邊滑桿，看看三個判定結果會不會變：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tail" width="540" height="275"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tail-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tail-front-slider">整百的部分（幾個 100）: <span id="tail-front-val" class="val-num">0</span></label>
+                    <input type="range" id="tail-front-slider" min="1" max="99" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tail-last-slider">末兩位: <span id="tail-last-val" class="val-num">0</span></label>
+                    <input type="range" id="tail-last-slider" min="0" max="99" value="26" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tail-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (2、5、4 的倍數挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 已知五位數 \(4372\square\) 是 2 的倍數，也是 5 的倍數，則 \(\square\) 中可填入的數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-2-1" value="A"><span class="option-text">A. \(0\) 或 \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-1" value="B"><span class="option-text">B. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-1" value="C"><span class="option-text">C. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-1" value="D"><span class="option-text">D. \(0\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>兩個條件要<strong>同時</strong>成立，先各自列出可能：<br>
+              是 2 的倍數 → \(\square\) 可填 \(0, 2, 4, 6, 8\)。<br>
+              是 5 的倍數 → \(\square\) 可填 \(0\) 或 \(5\)。<br>
+              兩邊都出現的只有 \(0\)，所以答案為 D。<br>
+              選項 A 只考慮了 5 的倍數，漏掉 2 的條件；換句話說，同時是 2 和 5 的倍數，就是<strong> 10 的倍數</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知六位數 \(7218\square4\) 是 4 的倍數，則 \(\square\) 中可填入的數共有<strong>幾個</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-2-2" value="A"><span class="option-text">A. \(3\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-2" value="B"><span class="option-text">B. \(5\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-2" value="C"><span class="option-text">C. \(4\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-2" value="D"><span class="option-text">D. \(10\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>4 的倍數<strong>只看末兩位</strong>，前面的 \(7218\) 完全不用管，只要 \(\square4\) 是 4 的倍數即可。<br>
+              把 \(\square\) 從 0 試到 9：\(04, 14, 24, 34, 44, 54, 64, 74, 84, 94\)。<br>
+              其中除得盡的是 \(04, 24, 44, 64, 84\)，也就是 \(\square = 0, 2, 4, 6, 8\)，共 <strong>5 個</strong>，答案為 B。<br>
+              可以發現規律：個位是 4 時，十位必須是<strong>偶數</strong>才會被 4 整除。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 3、9 的倍數判別法
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 3：3、9 的倍數判別法——把數字加起來
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>9 的倍數</strong>：如果一個整數的<strong>各個數字和</strong>是 9 的倍數，那麼這個整數就是 9 的倍數；否則就不是。</li>
+              <li><strong>3 的倍數</strong>：如果一個整數的<strong>各個數字和</strong>是 3 的倍數，那麼這個整數就是 3 的倍數；否則就不是。</li>
+              <li><strong>為什麼可以只看數字和</strong>：以 \(234\) 為例，把它拆成「一定分得完的部分」與「剩下的部分」：
+                <ul>
+                  <li>\(234 = 200 + 30 + 4 = (2 \times 99 + 2) + (3 \times 9 + 3) + 4\)</li>
+                  <li>\(= \underbrace{(2 \times 99 + 3 \times 9)}_{\text{一定是 9 的倍數}} + \underbrace{(2 + 3 + 4)}_{\text{剩下的就是數字和}}\)</li>
+                  <li>因為 \(99\)、\(9\) 都是 9 的倍數，前面那一大堆每 9 個一數一定剛好分完，所以只要看剩下的 \(2 + 3 + 4 = 9\) 夠不夠再分一組。</li>
+                </ul>
+              </li>
+              <li><strong>3 的判別法同理</strong>：\(99\)、\(9\) 也都是 3 的倍數，所以同一個拆法對 3 一樣有效。例如 \(231\) 的數字和是 \(2 + 3 + 1 = 6\)，是 3 的倍數 → \(231\) 是 3 的倍數。</li>
+              <li><strong>兩者的關係（很常考）</strong>：
+                <ul>
+                  <li>一個數是 <strong>9 的倍數，就一定是 3 的倍數</strong>（因為 9 是 3 的倍數）。</li>
+                  <li>一個數是 <strong>3 的倍數，不一定是 9 的倍數</strong>。例如 \(12\) 是 3 的倍數，但 \(12\) 不是 9 的倍數。</li>
+                </ul>
+              </li>
+              <li><strong>好用的性質</strong>：只要數字<strong>順序打亂</strong>，數字和都不變，所以 \(528\)、\(825\)、\(852\)、\(258\)、\(582\)、\(285\) 的數字和都是 \(15\)，全部都是 3 的倍數。</li>
+              <li><strong>解「填空」型題目</strong>：把 \(\square\) 當成未知數加進數字和，再找出讓總和變成 3（或 9）的倍數的值。例如 \(24\square005\) 的數字和是 \(11 + \square\)，要是 9 的倍數 → \(11 + \square = 18\) → \(\square = 7\)。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>數</th><th>各個數字和</th><th>3 的倍數</th><th>9 的倍數</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(234\)</td><td>\(9\)</td><td class="sign-pos">是</td><td class="sign-pos">是</td></tr>
+                <tr><td>\(318\)</td><td>\(12\)</td><td class="sign-pos">是</td><td class="sign-neg">否</td></tr>
+                <tr><td>\(412\)</td><td>\(7\)</td><td class="sign-neg">否</td><td class="sign-neg">否</td></tr>
+                <tr><td>\(111111111\)</td><td>\(9\)</td><td class="sign-pos">是</td><td class="sign-pos">是</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="night_digitsum.webp" alt="夜市水彩插圖：老闆把丸子串成一支支數量相同的串，旁邊碗裡剩下幾顆沒串完，學生用手指數剩下的數量" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-calculator"></i> 視覺互動探索：數字和分堆器</h3>
+            <p class="interactive-instruction">調整三位數的<strong>百位、十位、個位</strong>，看看它如何被拆成「一定分得完的整除堆」與「剩下的數字和」：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-digitsum" width="540" height="290"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ds-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ds-h-slider">百位: <span id="ds-h-val" class="val-num">0</span></label>
+                    <input type="range" id="ds-h-slider" min="1" max="9" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-t-slider">十位: <span id="ds-t-val" class="val-num">0</span></label>
+                    <input type="range" id="ds-t-slider" min="0" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-u-slider">個位: <span id="ds-u-val" class="val-num">0</span></label>
+                    <input type="range" id="ds-u-slider" min="0" max="9" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ds-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (3、9 的倍數挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列四個數中，哪一個<strong>同時</strong>是 3 的倍數與 9 的倍數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="A"><span class="option-text">A. \(4653\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="B"><span class="option-text">B. \(2571\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="C"><span class="option-text">C. \(8134\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="D"><span class="option-text">D. \(7412\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>把四個數的<strong>各個數字和</strong>都算出來：<br>
+              A：\(4 + 6 + 5 + 3 = 18\)，是 9 的倍數（也一定是 3 的倍數）→ <strong>兩者皆是</strong>。<br>
+              B：\(2 + 5 + 7 + 1 = 15\)，是 3 的倍數但不是 9 的倍數。<br>
+              C：\(8 + 1 + 3 + 4 = 16\)；D：\(7 + 4 + 1 + 2 = 14\)，兩個都不是 3 的倍數。<br>
+              所以答案為 A。順帶記住：<strong>是 9 的倍數必是 3 的倍數，反過來不一定成立</strong>（B 就是反例）。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知六位數 \(5\square2073\) 是 9 的倍數，則 \(\square\) 中可填入的數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="A"><span class="option-text">A. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="B"><span class="option-text">B. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="C"><span class="option-text">C. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="D"><span class="option-text">D. \(4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先把 \(\square\) 一起加進數字和：<br>
+              \(5 + \square + 2 + 0 + 7 + 3 = 17 + \square\)。<br>
+              因為 \(5\square2073\) 是 9 的倍數，所以 \(17 + \square\) 也必須是 9 的倍數。<br>
+              \(\square\) 只能是 \(0 \sim 9\)，所以 \(17 + \square\) 落在 \(17 \sim 26\) 之間，這個範圍內的 9 的倍數只有 \(18\)。<br>
+              於是 \(17 + \square = 18\)，得 \(\square = 1\)，答案為 C。（驗算：\(512073 \div 9 = 56897\)。）</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 11 的倍數判別法
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> 重點 4：11 的倍數判別法——奇偶位一減
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>判別法</strong>：如果一個整數的<strong>奇數位數字和</strong>與<strong>偶數位數字和</strong>的差是 \(0\) 或 11 的倍數，那麼這個整數就是 11 的倍數；否則就不是。</li>
+              <li><strong>位次怎麼數</strong>：一律<strong>從個位開始往左數</strong>。個位是第 1 位（奇數位）、十位是第 2 位（偶數位）、百位是第 3 位（奇數位），依此類推。</li>
+              <li><strong>實際操作（以 \(25718\) 為例）</strong>：
+                <ul>
+                  <li>奇數位（第 1、3、5 位）的數字和 \(= 8 + 7 + 2 = 17\)。</li>
+                  <li>偶數位（第 2、4 位）的數字和 \(= 1 + 5 = 6\)。</li>
+                  <li>\(17 - 6 = 11\) 是 11 的倍數 → \(25718\) <strong>是</strong> 11 的倍數。</li>
+                </ul>
+              </li>
+              <li><strong>差是 0 也算</strong>：例如 \(345345\)，\((5 + 3 + 4) - (4 + 5 + 3) = 12 - 12 = 0\)，所以 \(345345\) 是 11 的倍數。</li>
+              <li><strong>背後的原理</strong>：把每個位值都湊到 11 的倍數旁邊，剩下的正好交錯出現 \(+\) 與 \(-\)：
+                <ul>
+                  <li>\(10 = 11 - 1\)、\(100 = 99 + 1\)、\(1000 = 1001 - 1\)、\(10000 = 9999 + 1\)。</li>
+                  <li>\(11\)、\(99\)、\(1001\)、\(9999\) 全都是 11 的倍數，剩下的 \(+1\)、\(-1\) 交錯，就變成「奇數位和減偶數位和」。</li>
+                </ul>
+              </li>
+              <li><strong>常見錯誤</strong>：從<strong>最左邊</strong>開始數位次。位數是奇數時剛好一樣，位數是偶數時正負會整組相反——雖然差只差一個負號，判斷結果仍相同，但寫解題過程時務必照課本從個位數起。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>數</th><th>奇數位和</th><th>偶數位和</th><th>差</th><th>11 的倍數</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(25718\)</td><td>\(17\)</td><td>\(6\)</td><td>\(11\)</td><td class="sign-pos">是</td></tr>
+                <tr><td>\(345345\)</td><td>\(12\)</td><td>\(12\)</td><td>\(0\)</td><td class="sign-pos">是</td></tr>
+                <tr><td>\(37195\)</td><td>\(16\)</td><td>\(9\)</td><td>\(7\)</td><td class="sign-neg">否</td></tr>
+                <tr><td>\(2519\)</td><td>\(14\)</td><td>\(3\)</td><td>\(11\)</td><td class="sign-pos">是</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="night_alternating.webp" alt="夜市水彩插圖：學生站在一長排紅黃交錯的燈籠下，指著每隔一盞的燈籠" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-scale-unbalanced"></i> 視覺互動探索：奇偶位交錯分組器</h3>
+            <p class="interactive-instruction">組出一個四位數，看看它的四個數字如何被分成<strong>奇數位</strong>與<strong>偶數位</strong>兩組，兩組的和一減就見真章：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-eleven" width="540" height="285"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="el-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="el-front-slider">前兩位: <span id="el-front-val" class="val-num">0</span></label>
+                    <input type="range" id="el-front-slider" min="10" max="99" value="25" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="el-back-slider">後兩位: <span id="el-back-val" class="val-num">0</span></label>
+                    <input type="range" id="el-back-slider" min="0" max="99" value="19" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="el-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (11 的倍數挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列四個數中，哪一個是 11 的倍數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-4-1" value="A"><span class="option-text">A. \(4571\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-1" value="B"><span class="option-text">B. \(8129\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-1" value="C"><span class="option-text">C. \(6382\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-1" value="D"><span class="option-text">D. \(9145\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>從<strong>個位</strong>開始數位次，把奇數位和偶數位分兩堆相加後相減：<br>
+              A：\((1 + 5) - (7 + 4) = 6 - 11 = -5\)，不是 11 的倍數。<br>
+              B：\((9 + 1) - (2 + 8) = 10 - 10 = 0\)，<strong>差為 0</strong> → 是 11 的倍數。<br>
+              C：\((2 + 3) - (8 + 6) = 5 - 14 = -9\)；D：\((5 + 1) - (4 + 9) = 6 - 13 = -7\)，都不是。<br>
+              所以答案為 B。驗算：\(8129 \div 11 = 739\)，確實整除。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知六位數 \(8\square3157\) 是 11 的倍數，則 \(\square\) 中可填入的數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-4-2" value="A"><span class="option-text">A. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-2" value="B"><span class="option-text">B. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-2" value="C"><span class="option-text">C. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-2" value="D"><span class="option-text">D. \(8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>從個位往左標位次：\(7\) 是第 1 位、\(5\) 第 2 位、\(1\) 第 3 位、\(3\) 第 4 位、\(\square\) 第 5 位、\(8\) 第 6 位。<br>
+              奇數位（第 1、3、5 位）數字和 \(= 7 + 1 + \square = 8 + \square\)。<br>
+              偶數位（第 2、4、6 位）數字和 \(= 5 + 3 + 8 = 16\)。<br>
+              差 \(= (8 + \square) - 16 = \square - 8\)，要是 \(0\) 或 11 的倍數。因為 \(\square\) 只能是 \(0 \sim 9\)，差落在 \(-8 \sim 1\) 之間，唯一可行的是 \(0\)。<br>
+              於是 \(\square = 8\)，答案為 D。（驗算：\(883157 \div 11 = 80287\)。）</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 質數與合數
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-filter" aria-hidden="true"></i> 重點 5：質數與合數——篩出數字的原子
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>質數</strong>：一個大於 1 的整數，除了 \(1\) 和<strong>本身</strong>以外沒有其他因數，稱為質數。例如 \(2, 11, 17\)。</li>
+              <li><strong>合數</strong>：一個大於 1 的整數，除了 \(1\) 和本身以外<strong>還有</strong>其他因數，稱為合數。例如 \(4, 15, 51\)。</li>
+              <li><strong>兩個必背的例外</strong>：
+                <ul>
+                  <li><strong>1 既不是質數也不是合數</strong>（它只有一個因數）。</li>
+                  <li><strong>2 是最小的質數，也是質數中唯一的偶數</strong>；其他偶數都被 2 整除，全是合數。</li>
+                </ul>
+              </li>
+              <li><strong>最小的合數是 4</strong>，不是 1，也不是 2。</li>
+              <li><strong>怎麼判斷一個數是不是質數</strong>：只要看<strong>比它小的質數</strong>是不是它的因數就好，不必把所有整數都試一遍。例如判斷 \(23\)：\(2, 3, 5, 7, 11, 13, 17, 19\) 都不能整除 \(23\)，所以 \(23\) 是質數。</li>
+              <li><strong>埃拉托賽尼篩檢法</strong>（約兩千多年前的古希臘方法）：把 \(1\) 到 \(100\) 排成百數表，先刪去 \(1\)，再依序圈出 \(2, 3, 5, 7\) 並刪去它們的其他倍數，<strong>剩下的就全是質數</strong>。
+                <ul>
+                  <li>做到 \(11\) 時會發現：\(11\) 的倍數早就在刪 \(2, 3, 5, 7\) 的倍數時被刪光了，\(13\) 也一樣。</li>
+                  <li>\(1\) 到 \(100\) 之間共有 <strong>25 個質數</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>質數的幾何意義</strong>：用 \(n\) 個邊長為 1 的小正方形拼成矩形，<strong>拼法的種數就是因數配對的組數</strong>。\(n = 12\) 時有 \(1 \times 12\)、\(2 \times 6\)、\(3 \times 4\) 三種；\(n = 13\) 是質數，只能拼成 \(1 \times 13\) 一種<strong>細長條</strong>。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>數</th><th>因數</th><th>身分</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(1\)</td><td>\(1\)</td><td>兩者皆非</td></tr>
+                <tr><td>\(2\)</td><td>\(1, 2\)</td><td class="sign-pos">質數（最小）</td></tr>
+                <tr><td>\(4\)</td><td>\(1, 2, 4\)</td><td class="sign-neg">合數（最小）</td></tr>
+                <tr><td>\(23\)</td><td>\(1, 23\)</td><td class="sign-pos">質數</td></tr>
+                <tr><td>\(51\)</td><td>\(1, 3, 17, 51\)</td><td class="sign-neg">合數</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="night_sieve.webp" alt="夜市水彩插圖：學生站在小凳子上，在整片方格狀的木製價目板上劃掉一些格子、圈起另一些格子" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-hand-sparkles"></i> 視覺互動探索：埃拉托賽尼篩子</h3>
+            <p class="interactive-instruction">一步一步操作百數表：先刪 \(1\)，再依序圈 \(2, 3, 5, 7\) 並刪去它們的倍數，看看最後<strong>剩下哪些數</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sieve" width="540" height="570"></canvas>
+              <div class="control-panel">
+                <div class="step-box">
+                  <div class="step-btn-grid">
+                    <button class="step-choice-btn" data-sieve-step="0">起點</button>
+                    <button class="step-choice-btn" data-sieve-step="1">① 刪 1</button>
+                    <button class="step-choice-btn" data-sieve-step="2">② 圈 2</button>
+                    <button class="step-choice-btn" data-sieve-step="3">③ 圈 3</button>
+                    <button class="step-choice-btn" data-sieve-step="4">④ 圈 5</button>
+                    <button class="step-choice-btn" data-sieve-step="5">⑤ 圈 7</button>
+                    <button class="step-choice-btn" data-sieve-step="6">完成</button>
+                  </div>
+                  <div class="step-stage" id="sieve-stage"></div>
+                  <div class="step-controls">
+                    <button class="step-ctrl-btn secondary" id="sieve-prev"><i class="fa-solid fa-chevron-left"></i> 上一步</button>
+                    <button class="step-ctrl-btn" id="sieve-next">下一步 <i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="step-ctrl-btn secondary" id="sieve-reset"><i class="fa-solid fa-rotate-left"></i> 重設</button>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sieve-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (質數與合數挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-5-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列四個數中，哪一個是<strong>合數</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-5-1" value="A"><span class="option-text">A. \(37\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-1" value="B"><span class="option-text">B. \(43\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-1" value="C"><span class="option-text">C. \(51\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-1" value="D"><span class="option-text">D. \(61\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>逐一用<strong>比它小的質數</strong>去試除：<br>
+              \(51\) 的數字和是 \(5 + 1 = 6\)，是 3 的倍數，所以 \(51 = 3 \times 17\)，除了 1 和本身還有因數 → <strong>合數</strong>，答案為 C。<br>
+              \(37\)、\(43\)、\(61\) 都不是 \(2, 3, 5, 7\) 的倍數（個位不是偶數也不是 5，數字和 \(10, 7, 7\) 都不是 3 的倍數），因此都是質數。<br>
+              這題的陷阱是 \(51\) 看起來很像質數，但只要用 3 的倍數判別法一算就露餡了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-5-2">
+            <p class="quiz-question"><strong>Q2.</strong> 關於質數與合數的敘述，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-5-2" value="A"><span class="option-text">A. \(1\) 到 \(100\) 的整數中，質數共有 \(25\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-2" value="B"><span class="option-text">B. \(1\) 是最小的質數</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-2" value="C"><span class="option-text">C. 所有的質數都是奇數</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-2" value="D"><span class="option-text">D. 最小的合數是 \(2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>逐項檢查：<br>
+              A：用篩檢法刪去 \(1\) 與 \(2, 3, 5, 7\) 的倍數後，剩下 \(25\) 個數，全部都是質數 → <strong>正確</strong>。<br>
+              B：\(1\) 只有一個因數，<strong>既不是質數也不是合數</strong>；最小的質數是 \(2\)。<br>
+              C：\(2\) 就是偶數，而且是<strong>唯一</strong>的偶質數。<br>
+              D：\(2\) 是質數；最小的合數是 \(4\)。<br>
+              所以答案為 A。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 質因數分解與標準分解式
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-sitemap" aria-hidden="true"></i> 重點 6：質因數分解與標準分解式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>質因數</strong>：如果一個整數的因數<strong>本身也是質數</strong>，就稱它為這個整數的質因數。例如 \(18\) 的因數有 \(1, 2, 3, 6, 9, 18\)，其中只有 \(2\)、\(3\) 是質數，所以 \(18\) 的質因數是 \(2\) 和 \(3\)。</li>
+              <li><strong>質因數分解</strong>：把一個合數分解成<strong>質因數的連乘積</strong>，這個過程稱為質因數分解。每一個合數都做得到。</li>
+              <li><strong>用短除法</strong>：從<strong>最小的質數</strong>開始一路往下除，除到商是質數為止，左邊那一排除數與最下面的商相乘就是答案。例如 \(72 = 2 \times 2 \times 2 \times 3 \times 3\)。</li>
+              <li><strong>標準分解式</strong>：把質因數分解的結果寫成<strong>指數形式</strong>，並把相異質因數<strong>由小排到大</strong>，就稱為標準分解式。
+                <ul>
+                  <li>\(72 = 2 \times 2 \times 2 \times 3 \times 3 = 2^3 \times 3^2\)。</li>
+                  <li>\(180 = 2 \times 2 \times 3 \times 3 \times 5 = 2^2 \times 3^2 \times 5\)，質因數為 \(2, 3, 5\)。</li>
+                </ul>
+              </li>
+              <li><strong>指數為 1 不用寫</strong>：\(105 = 3 \times 5 \times 7\) 就是它的標準分解式，不必寫成 \(3^1 \times 5^1 \times 7^1\)。</li>
+              <li><strong>常見錯誤</strong>：分解沒有做到底。例如寫成 \(72 = 8 \times 9\) 不算質因數分解，因為 \(8\) 和 \(9\) 都<strong>不是質數</strong>，還要繼續拆。</li>
+              <li><strong>好用的延伸</strong>：把標準分解式中<strong>每個指數加 1 再相乘</strong>，就是這個數的<strong>正因數個數</strong>。例如 \(72 = 2^3 \times 3^2\)，正因數共有 \((3+1) \times (2+1) = 12\) 個。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>數</th><th>質因數分解</th><th>標準分解式</th><th>質因數</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(72\)</td><td>\(2 \times 2 \times 2 \times 3 \times 3\)</td><td>\(2^3 \times 3^2\)</td><td>\(2, 3\)</td></tr>
+                <tr><td>\(180\)</td><td>\(2 \times 2 \times 3 \times 3 \times 5\)</td><td>\(2^2 \times 3^2 \times 5\)</td><td>\(2, 3, 5\)</td></tr>
+                <tr><td>\(105\)</td><td>\(3 \times 5 \times 7\)</td><td>\(3 \times 5 \times 7\)</td><td>\(3, 5, 7\)</td></tr>
+                <tr><td>\(150\)</td><td>\(2 \times 3 \times 5 \times 5\)</td><td>\(2 \times 3 \times 5^2\)</td><td>\(2, 3, 5\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="night_factorize.webp" alt="夜市水彩插圖：老闆把一大袋鹹酥雞分裝進好幾個一樣大的小紙袋，後方掛著空白黑板" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-divide"></i> 視覺互動探索：短除法分解器</h3>
+            <p class="interactive-instruction">換一個數，看短除法如何<strong>一層一層</strong>把它除到只剩質數，再收斂成一行<strong>標準分解式</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fact" width="540" height="400"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pf-formula" style="font-weight:700; font-size:1.15rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pf-n-slider">選一個數 n: <span id="pf-n-val" class="val-num">0</span></label>
+                    <input type="range" id="pf-n-slider" min="4" max="200" value="180" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pf-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (質因數分解挑戰)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-6-1">
+            <p class="quiz-question"><strong>Q1.</strong> \(264\) 的<strong>標準分解式</strong>為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-6-1" value="A"><span class="option-text">A. \(2^2 \times 3 \times 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-1" value="B"><span class="option-text">B. \(2^3 \times 3 \times 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-1" value="C"><span class="option-text">C. \(2^3 \times 33\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-1" value="D"><span class="option-text">D. \(2 \times 3 \times 44\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>用短除法從最小的質數開始除：<br>
+              \(264 \div 2 = 132\)，\(132 \div 2 = 66\)，\(66 \div 2 = 33\)，\(33 \div 3 = 11\)，而 \(11\) 是質數，停。<br>
+              所以 \(264 = 2 \times 2 \times 2 \times 3 \times 11 = 2^3 \times 3 \times 11\)，答案為 B。<br>
+              選項 A 少除了一次 2（\(2^2 \times 3 \times 11 = 132\)）；C、D 裡的 \(33\) 與 \(44\) <strong>都不是質數</strong>，代表還沒分解到底，不能算標準分解式。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-6-2">
+            <p class="quiz-question"><strong>Q2.</strong> 若某正整數的標準分解式為 \(2^2 \times 3^2 \times 5\)，則它的<strong>正因數</strong>共有幾個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="A"><span class="option-text">A. \(5\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="B"><span class="option-text">B. \(9\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="C"><span class="option-text">C. \(12\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="D"><span class="option-text">D. \(18\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>這個數就是 \(2^2 \times 3^2 \times 5 = 4 \times 9 \times 5 = 180\)。<br>
+              組一個因數時，質因數 \(2\) 可以取 \(0, 1, 2\) 個（3 種選法），\(3\) 也可以取 \(0, 1, 2\) 個（3 種），\(5\) 可以取 \(0\) 或 \(1\) 個（2 種）。<br>
+              所以正因數共有 \((2+1) \times (2+1) \times (1+1) = 3 \times 3 \times 2 = 18\) 個，答案為 D。<br>
+              口訣就是<strong>「每個指數加 1 再相乘」</strong>。實際列出來驗算：\(1, 2, 3, 4, 5, 6, 9, 10, 12, 15, 18, 20, 30, 36, 45, 60, 90, 180\)，正好 18 個。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結與核心回顧 (Summary)
+           ========================================== -->
+      <section class="summary-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> 2-1 因數與倍數 課程核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <!-- Card 1: Mint Green review card -->
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-swatchbook"></i> 倍數判別法快速檢索卡</h4>
+            <ul class="bullet-list">
+              <li><strong>因數與倍數</strong>：\(a = b \times c\) \(\Rightarrow\) \(b\)、\(c\) 是 \(a\) 的因數，\(a\) 是 \(b\)、\(c\) 的倍數。<br>1 是任何整數的因數；0 不是任何整數的因數，卻是任何非零整數的倍數。</li>
+              <li><strong>2 的倍數</strong>：個位是 \(0, 2, 4, 6, 8\)。</li>
+              <li><strong>5 的倍數</strong>：個位是 \(0\) 或 \(5\)。</li>
+              <li><strong>4 的倍數</strong>：末兩位是 \(00\) 或 4 的倍數。</li>
+              <li><strong>3 的倍數</strong>：各個數字和是 3 的倍數。</li>
+              <li><strong>9 的倍數</strong>：各個數字和是 9 的倍數。<br>（9 的倍數必是 3 的倍數，反之不一定。）</li>
+              <li><strong>11 的倍數</strong>：奇數位數字和 \(-\) 偶數位數字和 \(= 0\) 或 11 的倍數。</li>
+              <li><strong>質數與合數</strong>：1 兩者皆非，2 是最小的質數也是唯一的偶質數，4 是最小的合數；\(1 \sim 100\) 共有 25 個質數。</li>
+              <li><strong>標準分解式</strong>：相異質因數由小到大、重複的寫成指數，如 \(180 = 2^2 \times 3^2 \times 5\)。<br>正因數個數 \(=\) 各指數 \(+1\) 相乘。</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Bright Blue life story card -->
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-lightbulb"></i> 生活中的因數與倍數</h4>
+              <h5><i class="fa-solid fa-star"></i> 夜市帳單的三秒驗算術</h5>
+              <p>買 \(4\) 份同價的套餐，總價一定是 <strong>4 的倍數</strong>。老闆報 \(726\) 元時，根本不必知道單價，只要看末兩位：</p>
+              <p style="text-align:center; font-size:1.15rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( 26 \div 4 = 6 \cdots 2 \)　除不盡
+              </p>
+              <p>就知道一定按錯了。正確答案是 \(179 \times 4 = 716\)，末兩位 \(16\) 除得盡，這才對得上。<strong>倍數判別法就是這樣一種「不用真的算，也能先擋下錯誤」的本事。</strong></p>
+              <h5><i class="fa-solid fa-infinity"></i> 數學史：完美數</h5>
+              <p>古希臘的畢達哥拉斯訂下一個標準：一個數<strong>除了自己以外的所有因數，加起來剛好等於自己</strong>，就叫做完美數。</p>
+              <p style="text-align:center; font-size:1.1rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( 6 = 1 + 2 + 3 \)　　\( 28 = 1 + 2 + 4 + 7 + 14 \)
+              </p>
+              <p>\(6\) 是最小的完美數，接下來是 \(28\)、\(496\)、\(8128\)——愈往後愈稀少。畢達哥拉斯因此相信上帝用 6 天創造世界，而月亮繞行地球一圈正好是 28 天。<strong>把因數找齊、加起來，就能親手驗證兩千年前的浪漫。</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 課堂智慧教學整合門戶系統. 專為國中數學高效課堂設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
