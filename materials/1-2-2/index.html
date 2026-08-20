@@ -4,39 +4,867 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/webp" href="../../header-logo.webp">
-  <title>2-2 最大公因數與最小公倍數 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-2 最大公因數與最小公倍數 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第一冊 (1上) • 第2章 分數的運算</div>
-    <h1>2-2 最大公因數與最小公倍數</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第一冊 • 第二章</span>
+        <h1>2-2 最大公因數與最小公倍數</h1>
+        <p>兩個數共同的因數叫公因數，最大的那一個記作 \((a , b)\)；共同的倍數叫公倍數，最小的那一個記作 \([a , b]\)。求法有短除法與標準分解式兩套，最後用它們解開分裝、週期、拼合、間隔四種生活問題。</p>
+      </div>
+      <!-- Progress navigation (6 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-circle-nodes"></i> 公因數與 \((a,b)\)</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-stairs"></i> 短除法求 \((a,b)\)</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-repeat"></i> 公倍數與 \([a,b]\)</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-layer-group"></i> 短除法求 \([a,b]\)</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-chart-simple"></i> 標準分解式</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-box-open"></i> 應用問題</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (8-bit Pixel Game Style)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(52, 211, 153, 0.25);">
+        <h2 class="section-title" style="color: #6ee7b7; border-bottom-color: rgba(110, 231, 183, 0.2);">
+          <i class="fa-solid fa-bug" aria-hidden="true" style="color: #6ee7b7; text-shadow: 0 0 10px rgba(52, 211, 153, 0.4);"></i> 課前暖身漫畫：質數蟬的 17 年賭局
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            北美有一種蟬，幼蟲要在地底待滿 <strong style="color:#6ee7b7">17</strong> 年才鑽出地面，被稱為「十七年蟬」。如果牠的天敵每 <strong style="color:#6ee7b7">3</strong> 年出現一次，兩邊要隔多久才會再撞在一起？答案就是兩個週期的<strong style="color:#6ee7b7">最小公倍數</strong>——週期選 6 年，每 6 年就要碰面一次；選 17 年這個質數，卻要等 51 年。生物學家認為，這正是「質數蟬」活下來的祕密。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="8-bit 像素電玩風四格漫畫：十七年蟬在地底等待，六年蟬一出土就被每 3 年出現的天敵抓住，而 17 與 3 互質，最小公倍數 51，要 51 年才會相遇一次" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 公因數與最大公因數
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-circle-nodes" aria-hidden="true"></i> 重點 1：公因數與最大公因數——兩邊都有的才算
+        </h2>
+
+        <div class="grid-content">
+          <!-- Text Explanation -->
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>公因數</strong>：幾個整數<strong>共同的因數</strong>，就叫做這幾個整數的公因數。</li>
+              <li><strong>最大公因數</strong>：所有公因數中<strong>最大</strong>的那一個，記作 \(( \; , \; )\)。例如 \(12\) 和 \(18\) 的最大公因數是 \(6\)，寫成 \(( 12 , 18 ) = 6\)。</li>
+              <li><strong>怎麼找</strong>：把兩數的因數分別列出來，圈出兩邊都有的。
+                <ul>
+                  <li>\(12\) 的因數：\(1, 2, 3, 4, 6, 12\)</li>
+                  <li>\(18\) 的因數：\(1, 2, 3, 6, 9, 18\)</li>
+                  <li>公因數：\(1, 2, 3, 6\) \(\Rightarrow\) \(( 12 , 18 ) = 6\)</li>
+                </ul>
+              </li>
+              <li><strong>關鍵性質</strong>：<strong>所有的公因數，都是最大公因數的因數</strong>。上例中 \(1, 2, 3, 6\) 正好就是 \(6\) 的全部因數——所以只要求出最大公因數，公因數有哪些就一次全知道了。</li>
+              <li><strong>三個數也一樣</strong>：\(( 36 , 48 , 92 ) = 4\)，而公因數 \(1, 2, 4\) 也剛好是 \(4\) 的因數。</li>
+              <li><strong>互質</strong>：如果兩個整數的<strong>最大公因數是 1</strong>，就稱這兩個整數互質。例如 \(16\) 的因數是 \(1, 2, 4, 8, 16\)、\(35\) 的因數是 \(1, 5, 7, 35\)，只共用 \(1\)，所以 \(( 16 , 35 ) = 1\)，兩數互質。</li>
+              <li><strong>常見誤解</strong>：互質<strong>不代表兩個都是質數</strong>。\(( 8 , 9 ) = 1\) 所以 8 和 9 互質，但兩個都是合數。另外 \(1\) 和任何整數都互質。</li>
+              <li><strong>還有一個誤解</strong>：兩數<strong>沒有共同的質因數</strong>時，不是「沒有最大公因數」，而是最大公因數為 <strong>1</strong>——因為 1 是任何整數的因數，公因數至少一定有 1。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>兩個數</th><th>公因數</th><th>最大公因數</th><th>互質？</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(12\)、\(18\)</td><td>\(1, 2, 3, 6\)</td><td>\(6\)</td><td>否</td></tr>
+                <tr><td>\(16\)、\(35\)</td><td>\(1\)</td><td>\(1\)</td><td>是</td></tr>
+                <tr><td>\(8\)、\(9\)</td><td>\(1\)</td><td>\(1\)</td><td>是（都是合數）</td></tr>
+                <tr><td>\(12\)、\(33\)</td><td>\(1, 3\)</td><td>\(3\)</td><td>否</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="pixel_gems.webp" alt="像素風插圖：像素蟬把兩堆不同顏色的寶石分成一樣大小的小堆" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Canvas Interaction -->
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：公因數探照燈</h3>
+            <p class="interactive-instruction">兩支滑桿各選一個數，看看哪些因數<strong>兩排同時亮起來</strong>，最大的那一個就是 \((a , b)\)：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-common" width="540" height="350"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cf-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cf-a-slider">第一個數 a: <span id="cf-a-val" class="val-num">0</span></label>
+                    <input type="range" id="cf-a-slider" min="2" max="60" value="36" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cf-b-slider">第二個數 b: <span id="cf-b-val" class="val-num">0</span></label>
+                    <input type="range" id="cf-b-slider" min="2" max="60" value="48" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cf-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (公因數與最大公因數)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> \(54\) 與 \(72\) 的<strong>公因數</strong>共有幾個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-1" value="A"><span class="option-text">A. \(4\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-1" value="B"><span class="option-text">B. \(5\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-1" value="C"><span class="option-text">C. \(6\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-1" value="D"><span class="option-text">D. \(9\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>不必把兩串因數都列出來，先求最大公因數就好。<br>
+              \(54 = 2 \times 27\)、\(72 = 2 \times 36\)，用短除法可得 \(( 54 , 72 ) = 2 \times 3 \times 3 = 18\)。<br>
+              再套用「<strong>所有公因數都是最大公因數的因數</strong>」：公因數就是 \(18\) 的因數 \(1, 2, 3, 6, 9, 18\)，共 <strong>6 個</strong>，答案為 C。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列哪一組的兩個數<strong>互質</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-2" value="A"><span class="option-text">A. \(15\)、\(35\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-2" value="B"><span class="option-text">B. \(14\)、\(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-2" value="C"><span class="option-text">C. \(18\)、\(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-2" value="D"><span class="option-text">D. \(26\)、\(39\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>互質的定義是<strong>最大公因數為 1</strong>，跟是不是質數無關。<br>
+              A：\(( 15 , 35 ) = 5\)；C：\(( 18 , 24 ) = 6\)；D：\(( 26 , 39 ) = 13\)，三組都不互質。<br>
+              B：\(14 = 2 \times 7\)、\(15 = 3 \times 5\)，<strong>沒有共同的質因數</strong>，所以 \(( 14 , 15 ) = 1\)，兩數互質，答案為 B。<br>
+              注意 \(14\) 和 \(15\) 都是<strong>合數</strong>——互質的兩數不必是質數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 短除法求最大公因數
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-stairs" aria-hidden="true"></i> 重點 2：短除法求最大公因數——把共同的質因數一層層拆下來
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>做法</strong>：把兩（或三）個數並排寫好，每一層都<strong>除以它們共同的質因數</strong>，一直除到<strong>沒有共同質因數</strong>為止；把左側除過的因數<strong>全部相乘</strong>，就是最大公因數。</li>
+              <li><strong>範例：求 \(( 36 , 84 )\)</strong>
+                <ul>
+                  <li>\(36\)、\(84\) 有公因數 \(2\) \(\Rightarrow\) \(18\)、\(42\)</li>
+                  <li>\(18\)、\(42\) 有公因數 \(2\) \(\Rightarrow\) \(9\)、\(21\)</li>
+                  <li>\(9\)、\(21\) 有公因數 \(3\) \(\Rightarrow\) \(3\)、\(7\)</li>
+                  <li>\(3\)、\(7\) 沒有共同質因數，停。\(( 36 , 84 ) = 2 \times 2 \times 3 = 2^2 \times 3 = 12\)</li>
+                </ul>
+              </li>
+              <li><strong>可以一次除掉大一點的公因數</strong>：上例若第一層直接除以 \(4\)，會得到 \(9\)、\(21\)，再除以 \(3\) 得 \(3\)、\(7\)，最大公因數同樣是 \(4 \times 3 = 12\)。層數變少，答案不變。</li>
+              <li><strong>三個數的兩種做法</strong>：求 \(( 54 , 72 , 84 )\)
+                <ul>
+                  <li>〈方法一〉三個數<strong>同時</strong>做短除法：先除 \(2\) 得 \(27, 36, 42\)，再除 \(3\) 得 \(9, 12, 14\)，沒有共同質因數了 \(\Rightarrow\) \(( 54 , 72 , 84 ) = 2 \times 3 = 6\)。</li>
+                  <li>〈方法二〉<strong>兩個兩個來</strong>：\(( 54 , 72 ) = 18\)，再算 \(( 18 , 84 ) = 6\)，即 \(( 54 , 72 , 84 ) = ( ( 54 , 72 ) , 84 ) = 6\)。</li>
+                </ul>
+              </li>
+              <li><strong>停手的時機</strong>：只要還找得到<strong>三個數共同</strong>的質因數就繼續；三個數裡只有兩個有共同質因數時，對<strong>最大公因數</strong>來說已經該停了（那是最小公倍數才要繼續的情況，見重點 4）。</li>
+              <li><strong>沒得除怎麼辦</strong>：第一層就找不到共同質因數，表示兩數互質，\(( a , b ) = 1\)。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>層</th><th>除以</th><th>剩下</th><th>說明</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>\(2\)</td><td>\(18\)、\(42\)</td><td>\(36\)、\(84\) 有公因數 2</td></tr>
+                <tr><td>2</td><td>\(2\)</td><td>\(9\)、\(21\)</td><td>\(18\)、\(42\) 有公因數 2</td></tr>
+                <tr><td>3</td><td>\(3\)</td><td>\(3\)、\(7\)</td><td>\(9\)、\(21\) 有公因數 3</td></tr>
+                <tr><td>—</td><td>停</td><td>\(3\)、\(7\)</td><td>沒有共同質因數了</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="pixel_ladder.webp" alt="像素風插圖：像素蟬沿著礦坑裡一層層的階梯往下走" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-arrow-down-1-9"></i> 視覺互動探索：最大公因數短除機</h3>
+            <p class="interactive-instruction">換兩個數看看短除法會<strong>停在哪一層</strong>，左側除過的因數乘起來就是 \((a , b)\)：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-gcd" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="gl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="gl-a-slider">第一個數 a: <span id="gl-a-val" class="val-num">0</span></label>
+                    <input type="range" id="gl-a-slider" min="4" max="180" value="36" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="gl-b-slider">第二個數 b: <span id="gl-b-val" class="val-num">0</span></label>
+                    <input type="range" id="gl-b-slider" min="4" max="180" value="84" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="gl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (短除法求最大公因數)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> \(( 140 , 210 , 350 )\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-1" value="A"><span class="option-text">A. \(35\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-1" value="B"><span class="option-text">B. \(42\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-1" value="C"><span class="option-text">C. \(50\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-1" value="D"><span class="option-text">D. \(70\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>三個數同時做短除法：<br>
+              除以 \(2\)：\(70\)、\(105\)、\(175\)？——\(105\) 是奇數，所以 <strong>2 不是三數的公因數</strong>，不能除。<br>
+              改看 \(5\)：\(140, 210, 350\) 個位都是 \(0\)，除以 \(5\) 得 \(28\)、\(42\)、\(70\)。<br>
+              再除以 \(2\) 得 \(14\)、\(21\)、\(35\)；再除以 \(7\) 得 \(2\)、\(3\)、\(5\)，沒有共同質因數了。<br>
+              所以 \(( 140 , 210 , 350 ) = 5 \times 2 \times 7 = 70\)，答案為 D。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 用短除法求兩個數的最大公因數，左側除過的公因數由上而下依序是 \(2\)、\(2\)、\(3\)，最下面一列剩下 \(5\) 和 \(7\)。則這兩個數分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-2" value="A"><span class="option-text">A. \(30\)、\(42\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-2" value="B"><span class="option-text">B. \(60\)、\(84\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-2" value="C"><span class="option-text">C. \(20\)、\(28\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-2" value="D"><span class="option-text">D. \(12\)、\(35\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>短除法是把原數一層層<strong>除掉</strong>公因數，所以反過來要<strong>乘回去</strong>。<br>
+              最大公因數為 \(2 \times 2 \times 3 = 12\)。<br>
+              第一個數 \(= 12 \times 5 = 60\)，第二個數 \(= 12 \times 7 = 84\)，答案為 B。<br>
+              驗算：\(( 60 , 84 ) = 12\)，而 \(60 \div 12 = 5\)、\(84 \div 12 = 7\)，\(5\) 與 \(7\) 確實<strong>互質</strong>——短除法停下來時，最下面一列一定互質。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 公倍數與最小公倍數
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-repeat" aria-hidden="true"></i> 重點 3：公倍數與最小公倍數——兩條節拍第一次對上
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>公倍數</strong>：幾個整數<strong>共同的倍數</strong>，就叫做這幾個整數的公倍數。</li>
+              <li><strong>最小公倍數</strong>：所有公倍數中<strong>最小</strong>的那一個，記作 \([ \; , \; ]\)。例如 \([ 4 , 6 ] = 12\)。</li>
+              <li><strong>怎麼找</strong>：
+                <ul>
+                  <li>\(4\) 的倍數：\(4, 8, 12, 16, 20, 24, 28, 32, 36, \cdots\)</li>
+                  <li>\(6\) 的倍數：\(6, 12, 18, 24, 30, 36, 42, \cdots\)</li>
+                  <li>公倍數：\(12, 24, 36, \cdots\) \(\Rightarrow\) \([ 4 , 6 ] = 12\)</li>
+                </ul>
+              </li>
+              <li><strong>關鍵性質</strong>：<strong>所有的公倍數，都是最小公倍數的倍數</strong>。上例的 \(12, 24, 36, \cdots\) 全是 \(12\) 的倍數。</li>
+              <li><strong>和公因數的對照</strong>：公因數<strong>個數有限</strong>（最大的那個是最大公因數，最小的一定是 1）；公倍數<strong>有無限多個</strong>（沒有「最大公倍數」，只有最小公倍數）。</li>
+              <li><strong>三個數也一樣</strong>：\(9\)、\(12\)、\(18\) 在 \(1 \sim 100\) 中的公倍數是 \(36\)、\(72\)，所以 \([ 9 , 12 , 18 ] = 36\)，而 \(72\) 正是 \(36\) 的倍數。</li>
+              <li><strong>兩個特例</strong>：
+                <ul>
+                  <li>若 \(a\) 是 \(b\) 的倍數，則 \([ a , b ] = a\)，例如 \([ 12 , 4 ] = 12\)。</li>
+                  <li>若 \(a\)、\(b\) <strong>互質</strong>，則 \([ a , b ] = a \times b\)，例如 \([ 4 , 9 ] = 36\)。</li>
+                </ul>
+              </li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th></th><th>公因數</th><th>公倍數</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>符號</td><td>\(( a , b )\) 取最大</td><td>\([ a , b ]\) 取最小</td></tr>
+                <tr><td>個數</td><td>有限個</td><td>無限多個</td></tr>
+                <tr><td>性質</td><td>都是 \(( a , b )\) 的<strong>因數</strong></td><td>都是 \([ a , b ]\) 的<strong>倍數</strong></td></tr>
+                <tr><td>一定有</td><td>\(1\)</td><td>\(a \times b\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="pixel_track.webp" alt="像素風插圖：兩隻像素蟬用不同的步伐沿著方格軌道前進，最後同時落在同一格發光的磚塊上" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-wave-square"></i> 視覺互動探索：倍數數線交會器</h3>
+            <p class="interactive-instruction">兩條數線各自跳自己的步伐，<strong>第一次對齊</strong>的位置就是最小公倍數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-multiple" width="540" height="300"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mu-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mu-a-slider">第一個數 a: <span id="mu-a-val" class="val-num">0</span></label>
+                    <input type="range" id="mu-a-slider" min="2" max="12" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mu-b-slider">第二個數 b: <span id="mu-b-val" class="val-num">0</span></label>
+                    <input type="range" id="mu-b-slider" min="2" max="12" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mu-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (公倍數與最小公倍數)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> \(1\) 到 \(200\) 的整數中，同時是 \(8\) 的倍數也是 \(12\) 的倍數的數共有幾個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-3-1" value="A"><span class="option-text">A. \(6\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3-1" value="B"><span class="option-text">B. \(7\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3-1" value="C"><span class="option-text">C. \(8\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3-1" value="D"><span class="option-text">D. \(16\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>同時是 \(8\) 和 \(12\) 的倍數，就是 \(8\)、\(12\) 的<strong>公倍數</strong>。<br>
+              先求 \([ 8 , 12 ] = 24\)，再套用「<strong>公倍數都是最小公倍數的倍數</strong>」：只要數出 \(1 \sim 200\) 中 \(24\) 的倍數即可。<br>
+              \(200 \div 24 = 8 \cdots 8\)，所以有 \(24, 48, 72, 96, 120, 144, 168, 192\) 共 <strong>8 個</strong>，答案為 C。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知兩個正整數的最小公倍數是 \(36\)，則下列哪一個數<strong>不可能</strong>是這兩數的公倍數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-3-2" value="A"><span class="option-text">A. \(72\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3-2" value="B"><span class="option-text">B. \(90\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3-2" value="C"><span class="option-text">C. \(144\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3-2" value="D"><span class="option-text">D. \(180\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>關鍵性質：<strong>所有的公倍數都是最小公倍數的倍數</strong>，所以每個選項都必須是 \(36\) 的倍數。<br>
+              A：\(72 = 36 \times 2\) ✓　C：\(144 = 36 \times 4\) ✓　D：\(180 = 36 \times 5\) ✓<br>
+              B：\(90 \div 36 = 2 \cdots 18\)，<strong>除不盡</strong>，所以 \(90\) 不可能是它們的公倍數，答案為 B。<br>
+              （\(90\) 雖然是 \(36\) 的「一部分因數」的倍數，但不是 \(36\) 的倍數，就不算。）</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 短除法求最小公倍數
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 4：短除法求最小公倍數——L 形上的數字全部相乘
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>兩個數的做法</strong>：一路除到沒有共同質因數，然後把<strong>左側除過的因數</strong>與<strong>最下面一列</strong>全部乘起來。以 \(( 36 , 84 )\) 的那張短除法為例，左側是 \(2, 2, 3\)、最下一列是 \(3, 7\)：
+                <ul>
+                  <li>\([ 36 , 84 ] = 2 \times 2 \times 3 \times 3 \times 7 = 2^2 \times 3^2 \times 7 = 252\)</li>
+                </ul>
+              </li>
+              <li><strong>和最大公因數的差別（超重要）</strong>：同一張短除法，<strong>最大公因數只乘左邊那一直行</strong>，<strong>最小公倍數要乘左邊那一直行加上最下面那一橫列</strong>——形狀像一個 <strong>L</strong>。</li>
+              <li><strong>三個數的做法不一樣</strong>：先除三數的公因數；三數沒有共同質因數後，<strong>只要還有任兩個數有共同質因數就要繼續除</strong>，除不到的那個數<strong>原封不動抄下來</strong>，直到<strong>任兩數都沒有共同質因數</strong>為止。</li>
+              <li><strong>範例：求 \([ 54 , 72 , 84 ]\)</strong>
+                <ul>
+                  <li>除 \(2\)：\(27, 36, 42\)（三數都可以除）</li>
+                  <li>除 \(3\)：\(9, 12, 14\)（三數都可以除）</li>
+                  <li>除 \(2\)：\(9, 6, 7\)（\(12, 14\) 可以除，\(9\) 抄下來）</li>
+                  <li>除 \(3\)：\(3, 2, 7\)（\(9, 6\) 可以除，\(7\) 抄下來）</li>
+                  <li>\(3, 2, 7\) 任兩個都沒有共同質因數，停。</li>
+                  <li>\([ 54 , 72 , 84 ] = 2 \times 3 \times 2 \times 3 \times 3 \times 2 \times 7 = 2^3 \times 3^3 \times 7 = 1512\)</li>
+                </ul>
+              </li>
+              <li><strong>方法二（兩個兩個來）</strong>：\([ 54 , 72 ] = 216\)，再求 \([ 216 , 84 ] = 1512\)，即 \([ 54 , 72 , 84 ] = [ [ 54 , 72 ] , 84 ]\)。</li>
+              <li><strong>最容易錯的地方</strong>：三個數求<strong>最大</strong>公因數時，只有兩個數有共同質因數就<strong>不能</strong>再除了；求<strong>最小</strong>公倍數時卻<strong>必須</strong>繼續除。兩者停手的條件完全不同。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th></th><th>最大公因數 \(( \; )\)</th><th>最小公倍數 \([ \; ]\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>除到何時停</td><td>沒有<strong>三數共同</strong>的質因數</td><td>任<strong>兩數</strong>都沒有共同質因數</td></tr>
+                <tr><td>除不盡的數</td><td>不能除，直接停</td><td>原封不動抄下來</td></tr>
+                <tr><td>要乘哪些</td><td>只乘左邊直行</td><td>左邊直行 \(+\) 最下橫列（L 形）</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="pixel_gears.webp" alt="像素風插圖：像素蟬轉動一大一小兩個互相咬合的齒輪，兩個齒輪上做記號的齒剛好對在一起" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-cubes-stacked"></i> 視覺互動探索：最小公倍數短除機（三個數）</h3>
+            <p class="interactive-instruction">留意除不盡的數會<strong>原封不動抄到下一列</strong>；虛線 L 形上的數字全部相乘就是 \([a , b , c]\)：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-lcm" width="540" height="390"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ll-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ll-a-slider">第一個數 a: <span id="ll-a-val" class="val-num">0</span></label>
+                    <input type="range" id="ll-a-slider" min="2" max="90" value="48" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ll-b-slider">第二個數 b: <span id="ll-b-val" class="val-num">0</span></label>
+                    <input type="range" id="ll-b-slider" min="2" max="90" value="60" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ll-c-slider">第三個數 c: <span id="ll-c-val" class="val-num">0</span></label>
+                    <input type="range" id="ll-c-slider" min="2" max="90" value="72" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ll-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (短除法求最小公倍數)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> \([ 18 , 24 , 30 ]\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-4-1" value="A"><span class="option-text">A. \(90\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4-1" value="B"><span class="option-text">B. \(120\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4-1" value="C"><span class="option-text">C. \(180\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4-1" value="D"><span class="option-text">D. \(360\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>三數同時做短除法：<br>
+              除 \(2\)：\(9\)、\(12\)、\(15\)；再除 \(3\)：\(3\)、\(4\)、\(5\)。三數已無共同質因數，但<strong>還要看任兩數</strong>——\(3\)、\(4\)、\(5\) 兩兩都互質，所以停。<br>
+              \([ 18 , 24 , 30 ] = 2 \times 3 \times 3 \times 4 \times 5 = 360\)，答案為 D。<br>
+              常見錯誤是只乘左側得到 \(2 \times 3 = 6\)（那是最大公因數），或漏掉最下面一列。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> \([ 12 , 18 , 27 ]\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-4-2" value="A"><span class="option-text">A. \(54\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4-2" value="B"><span class="option-text">B. \(72\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4-2" value="C"><span class="option-text">C. \(108\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4-2" value="D"><span class="option-text">D. \(216\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>這題正好練到「除不盡就抄下來」：<br>
+              三數共同的質因數是 \(3\)：除 \(3\) 得 \(4\)、\(6\)、\(9\)。<br>
+              三數已沒有共同質因數，但 \(4\)、\(6\) 還有共同質因數 \(2\)：除 \(2\) 得 \(2\)、\(3\)、\(9\)（\(9\) 抄下來）。<br>
+              \(3\)、\(9\) 還有共同質因數 \(3\)：除 \(3\) 得 \(2\)、\(1\)、\(3\)（\(2\) 抄下來）。任兩數都互質了，停。<br>
+              \([ 12 , 18 , 27 ] = 3 \times 2 \times 3 \times 2 \times 1 \times 3 = 108\)，答案為 C。<br>
+              驗算：\(108 \div 12 = 9\)、\(108 \div 18 = 6\)、\(108 \div 27 = 4\)，三個都除得盡。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 標準分解式求 GCD 與 LCM
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-simple" aria-hidden="true"></i> 重點 5：標準分解式——共同的取小，全部的取大
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先學會用指數判別因數</strong>：\(A\)、\(B\) 都寫成標準分解式時，若 \(A\) 的質因數<strong>都是</strong> \(B\) 的質因數，且每個質因數的<strong>次方都小於或等於</strong> \(B\) 的相同質因數，則 \(A\) 是 \(B\) 的因數。
+                <ul>
+                  <li>\(2^2 \times 3^2\) 是 \(2^3 \times 3^2\) 的因數（\(2 \le 3\)、\(2 \le 2\)）。</li>
+                  <li>\(2^4\) 不是 \(2^3 \times 3^2\) 的因數（\(4 &gt; 3\)）。</li>
+                  <li>\(2 \times 5\) 不是 \(2^3 \times 3^2\) 的因數（多了一個 \(B\) 沒有的質因數 \(5\)）。</li>
+                </ul>
+              </li>
+              <li><strong>倍數的判別剛好相反</strong>：若 \(B\) 的質因數<strong>包含</strong> \(A\) 的所有質因數，且次方<strong>都大於或等於</strong> \(A\)，則 \(B\) 是 \(A\) 的倍數。例如 \(2^3 \times 5^2\) 與 \(2^3 \times 5 \times 7\) 都是 \(2^3 \times 5\) 的倍數。</li>
+              <li><strong>求最大公因數</strong>：先列出<strong>共同</strong>的質因數，每一個取<strong>次方最小</strong>者，再相乘。沒有共同質因數的<strong>不取</strong>。</li>
+              <li><strong>求最小公倍數</strong>：列出<strong>所有</strong>出現過的質因數，每一個取<strong>次方最大</strong>者，再相乘。</li>
+              <li><strong>範例</strong>：\(a = 2^4 \times 3^2\)、\(b = 2^3 \times 3 \times 5\)
+                <ul>
+                  <li>\(( a , b )\)：共同質因數 \(2\)、\(3\)，取小 \(\Rightarrow 2^3 \times 3\)。\(5\) 只有 \(b\) 有，不取。</li>
+                  <li>\([ a , b ]\)：所有質因數 \(2\)、\(3\)、\(5\)，取大 \(\Rightarrow 2^4 \times 3^2 \times 5\)。</li>
+                </ul>
+              </li>
+              <li><strong>兩者的乘積</strong>：任意兩個正整數的最大公因數與最小公倍數，乘積等於這兩數的乘積：
+                <ul>
+                  <li>\(( a , b ) \times [ a , b ] = a \times b\)</li>
+                  <li>道理很簡單：每個質因數<strong>取小的那次</strong>加上<strong>取大的那次</strong>，剛好就是 \(a\) 和 \(b\) 各出一次。</li>
+                  <li>用法：已知 \(a \times b = 120\)、\([ a , b ] = 60\)，則 \(( a , b ) \times 60 = 120\)，得 \(( a , b ) = 2\)。</li>
+                </ul>
+              </li>
+              <li><strong>注意</strong>：這條乘積公式<strong>只對兩個數成立</strong>，三個數不能直接套。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>質因數</th><th>\(a = 2^4 \times 3^2\)</th><th>\(b = 2^3 \times 3 \times 5\)</th><th>取小 \(\to (a,b)\)</th><th>取大 \(\to [a,b]\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(2\)</td><td>\(4\) 次</td><td>\(3\) 次</td><td>\(2^3\)</td><td>\(2^4\)</td></tr>
+                <tr><td>\(3\)</td><td>\(2\) 次</td><td>\(1\) 次</td><td>\(3\)</td><td>\(3^2\)</td></tr>
+                <tr><td>\(5\)</td><td>\(0\) 次</td><td>\(1\) 次</td><td>不取</td><td>\(5\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="pixel_tower.webp" alt="像素風插圖：像素蟬站在一高一矮兩座方塊堆成的積木塔中間比較高度" class="illustration" loading="lazy">
+            </div>
+
+            <div class="illustration-container">
+              <img src="pixel_balance.webp" alt="像素風插圖：像素蟬旁邊有一座金色天秤，兩端各放著一疊彩色方塊而保持水平" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-ranking-star"></i> 視覺互動探索：質因數指數塔</h3>
+            <p class="interactive-instruction">同一個質因數比兩座塔的高度：<strong>實線</strong>取矮的（最大公因數）、<strong>虛線</strong>取高的（最小公倍數）：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tower" width="540" height="400"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tw-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tw-a-slider">第一個數 a: <span id="tw-a-val" class="val-num">0</span></label>
+                    <input type="range" id="tw-a-slider" min="2" max="200" value="72" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tw-b-slider">第二個數 b: <span id="tw-b-val" class="val-num">0</span></label>
+                    <input type="range" id="tw-b-slider" min="2" max="200" value="120" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tw-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (標準分解式與乘積關係)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-5-1">
+            <p class="quiz-question"><strong>Q1.</strong> 已知 \(a = 2^3 \times 3^2 \times 5\)、\(b = 2 \times 3^2 \times 7\)，則 \(( a , b )\) 以標準分解式表示為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-5-1" value="A"><span class="option-text">A. \(2^3 \times 3^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5-1" value="B"><span class="option-text">B. \(2 \times 3^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5-1" value="C"><span class="option-text">C. \(2 \times 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5-1" value="D"><span class="option-text">D. \(2^3 \times 3^2 \times 5 \times 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>求最大公因數：<strong>共同</strong>的質因數取<strong>次方最小</strong>者。<br>
+              質因數 \(2\)：\(a\) 有 \(3\) 次、\(b\) 有 \(1\) 次 \(\Rightarrow\) 取 \(2^1\)。<br>
+              質因數 \(3\)：\(a\) 有 \(2\) 次、\(b\) 有 \(2\) 次 \(\Rightarrow\) 取 \(3^2\)。<br>
+              質因數 \(5\) 只有 \(a\) 有、\(7\) 只有 \(b\) 有，<strong>都不取</strong>。<br>
+              所以 \(( a , b ) = 2 \times 3^2 = 18\)，答案為 B。（選 D 的是把「取大」的最小公倍數規則用錯了。）</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-5-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知兩正整數 \(a\)、\(b\) 滿足 \(( a , b ) = 8\)、\([ a , b ] = 120\)，則 \(a \times b\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-5-2" value="A"><span class="option-text">A. \(960\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5-2" value="B"><span class="option-text">B. \(128\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5-2" value="C"><span class="option-text">C. \(480\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5-2" value="D"><span class="option-text">D. \(1920\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>直接套用兩正整數的乘積關係：<br>
+              \(( a , b ) \times [ a , b ] = a \times b\)<br>
+              \(8 \times 120 = 960\)，所以 \(a \times b = 960\)，答案為 A。<br>
+              實際上這樣的 \(a\)、\(b\) 確實存在，例如 \(a = 24\)、\(b = 40\)：\(( 24 , 40 ) = 8\)、\([ 24 , 40 ] = 120\)，而 \(24 \times 40 = 960\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 應用問題
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-box-open" aria-hidden="true"></i> 重點 6：應用問題——先判斷是「分」還是「合」
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>一句話判斷</strong>：題目在<strong>把整體切小</strong>（分裝、平分、切割、最大的間隔）→ 求<strong>最大公因數</strong>；題目在<strong>把小的湊成整體</strong>（再相遇、拼成正方形、再度同時發生）→ 求<strong>最小公倍數</strong>。</li>
+              <li><strong>① 分裝問題</strong>：\(36\) 個梨子和 \(60\) 個蘋果分裝成禮盒，每盒個數一樣多且全部裝完，一盒最多幾個？
+                <ul>
+                  <li>每盒個數必須同時整除 \(36\) 與 \(60\)，是兩數的公因數；「最多」就取最大公因數。</li>
+                  <li>\(( 36 , 60 ) = 12\)，一盒最多放 \(12\) 個。</li>
+                </ul>
+              </li>
+              <li><strong>② 週期問題</strong>：小翊每 \(8\) 天、小妍每 \(10\) 天、小靖每 \(14\) 天到公園跑步，今天三人都到，最少再幾天會再度同一天？
+                <ul>
+                  <li>經過的天數要同時是 \(8\)、\(10\)、\(14\) 的倍數；「最少」就取最小公倍數。</li>
+                  <li>\([ 8 , 10 , 14 ] = 280\)，最少再 \(280\) 天。</li>
+                </ul>
+              </li>
+              <li><strong>③ 圖形拼合問題</strong>：長 \(60\)、寬 \(50\) 的長方形磁磚拼成正方形，最小邊長？
+                <ul>
+                  <li>正方形邊長要同時是 \(60\) 與 \(50\) 的倍數；「最小」就取最小公倍數。</li>
+                  <li>\([ 60 , 50 ] = 300\)，最小邊長 \(300\) 公分，面積 \(300 \times 300 = 90000\) 平方公分。</li>
+                </ul>
+              </li>
+              <li><strong>④ 間隔問題</strong>：長 \(315\)、寬 \(135\) 的長方形土地周圍種樹，四個頂點都種、間距相等且最大，樹距與棵數？
+                <ul>
+                  <li>樹距要同時整除 \(315\) 與 \(135\)；「最大」就取最大公因數，\(( 315 , 135 ) = 45\) 公尺。</li>
+                  <li><strong>繞一圈的關鍵</strong>：四個頂點都種，可看成每邊一端種、一端不種，所以<strong>棵數 = 間隔數</strong>。</li>
+                  <li>周長 \(( 315 + 135 ) \times 2 = 900\)，\(900 \div 45 = 20\)，共種 \(20\) 棵。</li>
+                </ul>
+              </li>
+              <li><strong>最常見的陷阱</strong>：算出最大公因數之後，要看清楚題目問的是「<strong>每一份多少</strong>」還是「<strong>分成幾份</strong>」。營隊男 \(105\) 人、女 \(75\) 人分組，\(( 105 , 75 ) = 15\) 指的是<strong>每組最多 15 人</strong>，不是分成 15 組；組數是 \(105 \div 15 + 75 \div 15 = 7 + 5 = 12\) 組。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>題目關鍵字</th><th>要求什麼</th><th>例子</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>最多、最大、平分、分裝</td><td>最大公因數</td><td>一盒最多幾個、樹距最大幾公尺</td></tr>
+                <tr><td>最少、最小、再相遇、拼成</td><td>最小公倍數</td><td>最少再幾天、正方形最小邊長</td></tr>
+                <tr><td>繞一圈、四頂點都種</td><td>棵數 \(=\) 間隔數</td><td>周長 \(\div\) 樹距</td></tr>
+                <tr><td>一端種、一端不種</td><td>棵數 \(=\) 間隔數</td><td>直線種樹要另外加 1</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="pixel_field.webp" alt="像素風插圖：戴草帽的像素蟬沿著方形田地的四周等距種下一排像素小樹" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-shuffle"></i> 視覺互動探索：四型應用情境模擬器</h3>
+            <p class="interactive-instruction">切換四種情境，觀察題目要的到底是<strong>最大公因數</strong>還是<strong>最小公倍數</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-apply" width="540" height="340"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ap-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="step-btn-grid" style="margin-bottom: 0.25rem;">
+                  <button class="step-choice-btn active" data-apply-mode="pack">① 分裝禮盒</button>
+                  <button class="step-choice-btn" data-apply-mode="cycle">② 週期相遇</button>
+                  <button class="step-choice-btn" data-apply-mode="tile">③ 磁磚拼合</button>
+                  <button class="step-choice-btn" data-apply-mode="tree">④ 繞邊種樹</button>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ap-a-slider"><span id="ap-a-label">梨子（個）</span>: <span id="ap-a-val" class="val-num">0</span></label>
+                    <input type="range" id="ap-a-slider" min="2" max="60" value="36" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ap-b-slider"><span id="ap-b-label">蘋果（個）</span>: <span id="ap-b-val" class="val-num">0</span></label>
+                    <input type="range" id="ap-b-slider" min="2" max="60" value="60" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ap-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (應用問題)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-6-1">
+            <p class="quiz-question"><strong>Q1.</strong> 老師把 \(48\) 顆糖果和 \(72\) 片餅乾分裝成小袋，每袋糖果一樣多、每袋餅乾也一樣多，且全部分完。則<strong>最多可以分成幾袋</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-6-1" value="A"><span class="option-text">A. \(8\) 袋</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-1" value="B"><span class="option-text">B. \(12\) 袋</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-1" value="C"><span class="option-text">C. \(24\) 袋</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-1" value="D"><span class="option-text">D. \(5\) 袋</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>這題問的是<strong>袋數</strong>，不是每袋幾顆——袋數要能同時把 \(48\) 與 \(72\) 分完，所以袋數是兩數的<strong>公因數</strong>。<br>
+              要「最多」袋，就取最大公因數：\(( 48 , 72 ) = 2 \times 2 \times 2 \times 3 = 24\)，答案為 C。<br>
+              此時每袋有糖果 \(48 \div 24 = 2\) 顆、餅乾 \(72 \div 24 = 3\) 片。<br>
+              提醒：如果題目改問「每袋最多幾顆糖果」，答案就不是 24 了——同一個 \(( 48 , 72 ) = 24\)，<strong>要看清楚問的是哪一邊</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-6-2">
+            <p class="quiz-question"><strong>Q2.</strong> 甲路線公車每 \(12\) 分鐘發車一班，乙路線每 \(16\) 分鐘發車一班。若兩線剛剛同時發車，則<strong>最少再幾分鐘</strong>後會再度同時發車？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-6-2" value="A"><span class="option-text">A. \(24\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-2" value="B"><span class="option-text">B. \(32\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-2" value="C"><span class="option-text">C. \(36\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-2" value="D"><span class="option-text">D. \(48\) 分鐘</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>「再度同時發車」屬於<strong>週期問題</strong>，經過的分鐘數必須同時是 \(12\) 與 \(16\) 的倍數，也就是公倍數；要「最少」就取<strong>最小公倍數</strong>。<br>
+              短除法：\(12\)、\(16\) 除以 \(2\) 得 \(6\)、\(8\)，再除以 \(2\) 得 \(3\)、\(4\)，沒有共同質因數了。<br>
+              \([ 12 , 16 ] = 2 \times 2 \times 3 \times 4 = 48\)，答案為 D。<br>
+              驗算：\(48 \div 12 = 4\) 班、\(48 \div 16 = 3\) 班，兩邊剛好都在第 \(48\) 分鐘發車。<br>
+              （選 A 的是誤算成最大公因數的相關數字；\(( 12 , 16 ) = 4\) 在這題用不上。）</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結與核心回顧 (Summary)
+           ========================================== -->
+      <section class="summary-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> 2-2 最大公因數與最小公倍數 課程核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <!-- Card 1: Mint Green review card -->
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-swatchbook"></i> 求法與性質快速檢索卡</h4>
+            <ul class="bullet-list">
+              <li><strong>公因數與 \(( a , b )\)</strong>：共同的因數叫公因數，最大的記作 \(( a , b )\)。<br>所有公因數都是 \(( a , b )\) 的<strong>因數</strong>。</li>
+              <li><strong>互質</strong>：\(( a , b ) = 1\) 就稱兩數互質。互質<strong>不代表兩數都是質數</strong>（\(( 8 , 9 ) = 1\)）。</li>
+              <li><strong>公倍數與 \([ a , b ]\)</strong>：共同的倍數叫公倍數，最小的記作 \([ a , b ]\)。<br>所有公倍數都是 \([ a , b ]\) 的<strong>倍數</strong>，且公倍數有無限多個。</li>
+              <li><strong>短除法求 \(( a , b )\)</strong>：除到沒有共同質因數，<strong>只乘左邊那一直行</strong>。</li>
+              <li><strong>短除法求 \([ a , b ]\)</strong>：除到任兩數都沒有共同質因數（除不盡的抄下來），<strong>左邊直行 \(+\) 最下橫列</strong>全部相乘（L 形）。</li>
+              <li><strong>標準分解式求 \(( a , b )\)</strong>：<strong>共同</strong>的質因數，取次方<strong>最小</strong>者相乘。</li>
+              <li><strong>標準分解式求 \([ a , b ]\)</strong>：<strong>所有</strong>質因數，取次方<strong>最大</strong>者相乘。</li>
+              <li><strong>乘積關係（只限兩數）</strong>：\(( a , b ) \times [ a , b ] = a \times b\)。</li>
+              <li><strong>兩個特例</strong>：\(a\) 是 \(b\) 的倍數 \(\Rightarrow ( a , b ) = b\)、\([ a , b ] = a\)；\(a\)、\(b\) 互質 \(\Rightarrow ( a , b ) = 1\)、\([ a , b ] = a \times b\)。</li>
+              <li><strong>應用怎麼分辨</strong>：分裝、平分、最大間隔 \(\to\) 最大公因數；再相遇、拼合、最小整體 \(\to\) 最小公倍數。</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Bright Blue life story card -->
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-lightbulb"></i> 生活中的公因數與公倍數</h4>
+              <h5><i class="fa-solid fa-bug"></i> 質數蟬：把相遇拖到最久的演化策略</h5>
+              <p>北美的十七年蟬要在地底待滿 \(17\) 年才出土，另有一種十三年蟬。生物學家發現，這兩個週期都是<strong>質數</strong>絕非巧合——因為天敵每次相遇的間隔，正是兩邊週期的<strong>最小公倍數</strong>。</p>
+              <p style="text-align:center; font-size:1.1rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( [ 6 , 3 ] = 6 \)　　\( [ 17 , 3 ] = 51 \)
+              </p>
+              <p>週期若是 \(6\) 年，跟每 \(3\) 年出現的天敵每次都撞在一起；換成 \(17\) 年這個質數，因為和 \(3\) <strong>互質</strong>，最小公倍數直接變成 \(17 \times 3 = 51\) 年。<strong>質數週期讓最小公倍數變到最大，這就是牠們活下來的祕密。</strong></p>
+              <h5><i class="fa-solid fa-calendar-days"></i> 天干地支：一花甲為什麼是 60 年</h5>
+              <p>中國古代用天干（甲乙丙丁戊己庚辛壬癸，共 \(10\) 個）配地支（子丑寅卯辰巳午未申酉戌亥，共 \(12\) 個）記年，從甲子、乙丑、丙寅一路排下去，要多久才會轉回甲子？</p>
+              <p style="text-align:center; font-size:1.15rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( [ 10 , 12 ] = 60 \)
+              </p>
+              <p>答案是 \(60\) 年，也就是「一花甲」——所以華人說「六十大壽」是走完了一整個干支循環。<strong>兩個齒輪要重新對上，等的就是最小公倍數。</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 課堂智慧教學整合門戶系統. 專為國中數學高效課堂設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
