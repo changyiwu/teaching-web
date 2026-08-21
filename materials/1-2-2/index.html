@@ -100,7 +100,8 @@
               <li><strong>還有一個誤解</strong>：兩數<strong>沒有共同的質因數</strong>時，不是「沒有最大公因數」，而是最大公因數為 <strong>1</strong>——因為 1 是任何整數的因數，公因數至少一定有 1。</li>
             </ul>
 
-            <table class="sign-table">
+            <div class="table-scroll">
+              <table class="sign-table">
               <thead>
                 <tr><th>兩個數</th><th>公因數</th><th>最大公因數</th><th>互質？</th></tr>
               </thead>
@@ -110,7 +111,8 @@
                 <tr><td>\(8\)、\(9\)</td><td>\(1\)</td><td>\(1\)</td><td>是（都是合數）</td></tr>
                 <tr><td>\(12\)、\(33\)</td><td>\(1, 3\)</td><td>\(3\)</td><td>否</td></tr>
               </tbody>
-            </table>
+              </table>
+            </div>
 
             <div class="illustration-container">
               <img src="pixel_gems.webp" alt="像素風插圖：像素蟬把兩堆不同顏色的寶石分成一樣大小的小堆" class="illustration" loading="lazy">
@@ -218,7 +220,8 @@
               <li><strong>沒得除怎麼辦</strong>：第一層就找不到共同質因數，表示兩數互質，\(( a , b ) = 1\)。</li>
             </ul>
 
-            <table class="sign-table">
+            <div class="table-scroll">
+              <table class="sign-table">
               <thead>
                 <tr><th>層</th><th>除以</th><th>剩下</th><th>說明</th></tr>
               </thead>
@@ -228,7 +231,8 @@
                 <tr><td>3</td><td>\(3\)</td><td>\(3\)、\(7\)</td><td>\(9\)、\(21\) 有公因數 3</td></tr>
                 <tr><td>—</td><td>停</td><td>\(3\)、\(7\)</td><td>沒有共同質因數了</td></tr>
               </tbody>
-            </table>
+              </table>
+            </div>
 
             <div class="illustration-container">
               <img src="pixel_ladder.webp" alt="像素風插圖：像素蟬沿著礦坑裡一層層的階梯往下走" class="illustration" loading="lazy">
@@ -336,7 +340,8 @@
               </li>
             </ul>
 
-            <table class="sign-table">
+            <div class="table-scroll">
+              <table class="sign-table">
               <thead>
                 <tr><th></th><th>公因數</th><th>公倍數</th></tr>
               </thead>
@@ -346,7 +351,8 @@
                 <tr><td>性質</td><td>都是 \(( a , b )\) 的<strong>因數</strong></td><td>都是 \([ a , b ]\) 的<strong>倍數</strong></td></tr>
                 <tr><td>一定有</td><td>\(1\)</td><td>\(a \times b\)</td></tr>
               </tbody>
-            </table>
+              </table>
+            </div>
 
             <div class="illustration-container">
               <img src="pixel_track.webp" alt="像素風插圖：兩隻像素蟬用不同的步伐沿著方格軌道前進，最後同時落在同一格發光的磚塊上" class="illustration" loading="lazy">
@@ -453,7 +459,8 @@
               <li><strong>最容易錯的地方</strong>：三個數求<strong>最大</strong>公因數時，只有兩個數有共同質因數就<strong>不能</strong>再除了；求<strong>最小</strong>公倍數時卻<strong>必須</strong>繼續除。兩者停手的條件完全不同。</li>
             </ul>
 
-            <table class="sign-table">
+            <div class="table-scroll">
+              <table class="sign-table">
               <thead>
                 <tr><th></th><th>最大公因數 \(( \; )\)</th><th>最小公倍數 \([ \; ]\)</th></tr>
               </thead>
@@ -462,7 +469,8 @@
                 <tr><td>除不盡的數</td><td>不能除，直接停</td><td>原封不動抄下來</td></tr>
                 <tr><td>要乘哪些</td><td>只乘左邊直行</td><td>左邊直行 \(+\) 最下橫列（L 形）</td></tr>
               </tbody>
-            </table>
+              </table>
+            </div>
 
             <div class="illustration-container">
               <img src="pixel_gears.webp" alt="像素風插圖：像素蟬轉動一大一小兩個互相咬合的齒輪，兩個齒輪上做記號的齒剛好對在一起" class="illustration" loading="lazy">
@@ -581,7 +589,8 @@
               <li><strong>注意</strong>：這條乘積公式<strong>只對兩個數成立</strong>，三個數不能直接套。</li>
             </ul>
 
-            <table class="sign-table">
+            <div class="table-scroll">
+              <table class="sign-table">
               <thead>
                 <tr><th>質因數</th><th>\(a = 2^4 \times 3^2\)</th><th>\(b = 2^3 \times 3 \times 5\)</th><th>取小 \(\to (a,b)\)</th><th>取大 \(\to [a,b]\)</th></tr>
               </thead>
@@ -590,7 +599,8 @@
                 <tr><td>\(3\)</td><td>\(2\) 次</td><td>\(1\) 次</td><td>\(3\)</td><td>\(3^2\)</td></tr>
                 <tr><td>\(5\)</td><td>\(0\) 次</td><td>\(1\) 次</td><td>不取</td><td>\(5\)</td></tr>
               </tbody>
-            </table>
+              </table>
+            </div>
 
             <div class="illustration-container">
               <img src="pixel_tower.webp" alt="像素風插圖：像素蟬站在一高一矮兩座方塊堆成的積木塔中間比較高度" class="illustration" loading="lazy">
@@ -711,7 +721,8 @@
               <li><strong>最常見的陷阱</strong>：算出最大公因數之後，要看清楚題目問的是「<strong>每一份多少</strong>」還是「<strong>分成幾份</strong>」。營隊男 \(105\) 人、女 \(75\) 人分組，男、女分開編組，\(( 105 , 75 ) = 15\) 指的是<strong>每組最多 15 人</strong>，不是分成 15 組；組數是 \(105 \div 15 + 75 \div 15 = 7 + 5 = 12\) 組。</li>
             </ul>
 
-            <table class="sign-table">
+            <div class="table-scroll">
+              <table class="sign-table">
               <thead>
                 <tr><th>題目關鍵字</th><th>要求什麼</th><th>例子</th></tr>
               </thead>
@@ -721,7 +732,8 @@
                 <tr><td>繞一圈、四頂點都種</td><td>棵數 \(=\) 間隔數</td><td>周長 \(\div\) 樹距</td></tr>
                 <tr><td>一端種、一端不種</td><td>棵數 \(=\) 間隔數</td><td>直線種樹要另外加 1</td></tr>
               </tbody>
-            </table>
+              </table>
+            </div>
 
             <div class="illustration-container">
               <img src="pixel_field.webp" alt="像素風插圖：戴草帽的像素蟬沿著方形田地的四周等距種下一排像素小樹" class="illustration" loading="lazy">

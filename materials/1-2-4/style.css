@@ -1170,19 +1170,24 @@ mjx-msup > mjx-TeXAtom + mjx-script {
   line-height: 2.05;
 }
 
-/* 表格在窄螢幕（約 500px 以下）會比卡片寬，而 .concept-section 是 overflow: hidden，
-   超出的欄位會被直接裁掉、連捲都捲不到。改成包一層可橫向捲動的外框。
-   不能直接在 <table> 上寫 overflow-x——那需要 display: block，一旦不是 table
-   就失去欄寬同步，thead 與 tbody 的欄位會對不齊。 */
+/* ==========================================================================
+   表格在窄螢幕的橫向捲動
+   .concept-section 是 overflow: hidden，表格一旦比卡片寬，超出的欄位會被
+   直接裁掉、連捲都捲不到。包一層可捲動的外框解決。
+   不能直接在 <table> 上寫 overflow-x——那需要 display: block，一旦不是
+   table 就失去欄寬同步，thead 與 tbody 的欄位會對不齊。
+   刻意不給 min-width：.sign-table 本身是 width: 100%，欄位擠得下時就跟著
+   卡片寬度、不會多出一條捲軸；擠不下時（MathJax 是 inline-block 不折行）
+   表格自己會撐到 min-content，這時才由外框接手捲動。
+   ========================================================================== */
 .table-scroll {
   max-width: 100%;
   overflow-x: auto;
-  margin: 1.2rem 0;
+  margin-top: 1rem;
 }
 
 .table-scroll .sign-table {
-  margin: 0;
-  min-width: 380px;
+  margin-top: 0;
 }
 
 /* 顯示型算式（顯示型定界符）遇到比卡片還寬的長算式時，預設會直接往右溢出，
