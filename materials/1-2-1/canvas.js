@@ -30,7 +30,7 @@ function initQuizSystem() {
     '2-1-5-1': 'C', // 51 = 3x17 是合數
     '2-1-5-2': 'A', // 1 到 100 的質數共 25 個
     '2-1-6-1': 'B', // 264 = 2^3 x 3 x 11
-    '2-1-6-2': 'D'  // 2^2 x 3^2 x 5 的正因數個數 = 3x3x2 = 18
+    '2-1-6-2': 'C'  // 2268 = 2^2 x 3^4 x 7 -> a+b+c = 2+3+4 = 9
   };
 
   quizCards.forEach(card => {
@@ -965,12 +965,11 @@ function initFactorizeCanvas() {
 
     // --- 面板文字 ---
     const uniq = [...new Set(chain)];
-    const divisorCount = grouped.reduce((acc, g) => acc * (g.e + 1), 1);
     nVal.textContent = n;
     formula.innerHTML = `\\( ${n} = ${grouped.map(g => (g.e > 1 ? `${g.p}^{${g.e}}` : `${g.p}`)).join(' \\times ')} \\)`;
     feedback.innerHTML = wrapFeedback(
       `\\( ${n} \\) 的質因數為 <strong>${uniq.join('、')}</strong>；` +
-        `把每個指數 \\(+1\\) 再相乘 \\( (${grouped.map(g => g.e + 1).join(' \\times ')}) \\)，可知它共有 <strong>${divisorCount}</strong> 個正因數。`
+        `短除法一路除到商是質數為止，左邊的除數與最後的商相乘就是 \\( ${n} \\)。`
     );
     typeset([formula, feedback]);
   }

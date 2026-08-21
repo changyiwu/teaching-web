@@ -111,7 +111,6 @@
                 <tr><td>\(12 = 3 \times 4\)</td><td>\(3\)、\(4\)</td><td>\(12\)</td></tr>
                 <tr><td>\(56 = 7 \times 8\)</td><td>\(7\)、\(8\)</td><td>\(56\)</td></tr>
                 <tr><td>\(n = 1 \times n\)</td><td>\(1\)、\(n\)</td><td>\(n\)</td></tr>
-                <tr><td>\(0 = 5 \times 0\)</td><td>\(5\)、\(0\)（0 不算因數）</td><td>\(0\)</td></tr>
               </tbody>
             </table>
 
@@ -226,7 +225,7 @@
             </table>
 
             <div class="illustration-container">
-              <img src="night_lastdigits.webp" alt="夜市水彩插圖：學生拿放大鏡盯著收據上的末兩位數字，老闆在旁邊緊張地看著" class="illustration" loading="lazy">
+              <img src="night_lastdigits.webp" alt="夜市水彩插圖：老闆舉著鹹酥雞攤的收據，學生指著最下面的總價 238，看末兩位就知道不是 4 的倍數" class="illustration" loading="lazy">
             </div>
           </div>
 
@@ -317,7 +316,7 @@
                 <ul>
                   <li>\(234 = 200 + 30 + 4 = (2 \times 99 + 2) + (3 \times 9 + 3) + 4\)</li>
                   <li>\(= \underbrace{(2 \times 99 + 3 \times 9)}_{\text{一定是 9 的倍數}} + \underbrace{(2 + 3 + 4)}_{\text{剩下的就是數字和}}\)</li>
-                  <li>因為 \(99\)、\(9\) 都是 9 的倍數，前面那一大堆每 9 個一數一定剛好分完，所以只要看剩下的 \(2 + 3 + 4 = 9\) 夠不夠再分一組。</li>
+                  <li>因為 \(99\)、\(9\) 都是 9 的倍數，前面那一大堆每 9 個一數一定剛好分完，所以只要看剩下的 \(2 + 3 + 4 = 9\) 是不是 9 的倍數。</li>
                 </ul>
               </li>
               <li><strong>3 的判別法同理</strong>：\(99\)、\(9\) 也都是 3 的倍數，所以同一個拆法對 3 一樣有效。例如 \(231\) 的數字和是 \(2 + 3 + 1 = 6\)，是 3 的倍數 → \(231\) 是 3 的倍數。</li>
@@ -427,7 +426,7 @@
            ========================================== -->
       <section class="concept-section" id="concept4">
         <h2 class="section-title">
-          <i class="fa-solid fa-right-left" aria-hidden="true"></i> 重點 4：11 的倍數判別法——奇偶位一減
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> 重點 4：11 的倍數判別法——奇、偶數位數字和相減
         </h2>
 
         <div class="grid-content">
@@ -450,7 +449,6 @@
                   <li>\(11\)、\(99\)、\(1001\)、\(9999\) 全都是 11 的倍數，剩下的 \(+1\)、\(-1\) 交錯，就變成「奇數位和減偶數位和」。</li>
                 </ul>
               </li>
-              <li><strong>常見錯誤</strong>：從<strong>最左邊</strong>開始數位次。位數是奇數時剛好一樣，位數是偶數時正負會整組相反——雖然差只差一個負號，判斷結果仍相同，但寫解題過程時務必照課本從個位數起。</li>
             </ul>
 
             <table class="sign-table">
@@ -685,7 +683,6 @@
               </li>
               <li><strong>指數為 1 不用寫</strong>：\(105 = 3 \times 5 \times 7\) 就是它的標準分解式，不必寫成 \(3^1 \times 5^1 \times 7^1\)。</li>
               <li><strong>常見錯誤</strong>：分解沒有做到底。例如寫成 \(72 = 8 \times 9\) 不算質因數分解，因為 \(8\) 和 \(9\) 都<strong>不是質數</strong>，還要繼續拆。</li>
-              <li><strong>好用的延伸</strong>：把標準分解式中<strong>每個指數加 1 再相乘</strong>，就是這個數的<strong>正因數個數</strong>。例如 \(72 = 2^3 \times 3^2\)，正因數共有 \((3+1) \times (2+1) = 12\) 個。</li>
             </ul>
 
             <table class="sign-table">
@@ -750,20 +747,20 @@
           </div>
 
           <div class="quiz-card" data-quiz="2-1-6-2">
-            <p class="quiz-question"><strong>Q2.</strong> 若某正整數的標準分解式為 \(2^2 \times 3^2 \times 5\)，則它的<strong>正因數</strong>共有幾個？</p>
+            <p class="quiz-question"><strong>Q2.</strong> 已知 \(2268\) 的標準分解式可寫成 \(2^a \times b^c \times 7\)（\(b\) 為質數），則 \(a + b + c\) 的值為何？</p>
             <div class="options-container">
-              <label class="option-label"><input type="radio" name="q2-1-6-2" value="A"><span class="option-text">A. \(5\) 個</span></label>
-              <label class="option-label"><input type="radio" name="q2-1-6-2" value="B"><span class="option-text">B. \(9\) 個</span></label>
-              <label class="option-label"><input type="radio" name="q2-1-6-2" value="C"><span class="option-text">C. \(12\) 個</span></label>
-              <label class="option-label"><input type="radio" name="q2-1-6-2" value="D"><span class="option-text">D. \(18\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="A"><span class="option-text">A. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="B"><span class="option-text">B. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="C"><span class="option-text">C. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="D"><span class="option-text">D. \(13\)</span></label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
               <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>這個數就是 \(2^2 \times 3^2 \times 5 = 4 \times 9 \times 5 = 180\)。<br>
-              組一個因數時，質因數 \(2\) 可以取 \(0, 1, 2\) 個（3 種選法），\(3\) 也可以取 \(0, 1, 2\) 個（3 種），\(5\) 可以取 \(0\) 或 \(1\) 個（2 種）。<br>
-              所以正因數共有 \((2+1) \times (2+1) \times (1+1) = 3 \times 3 \times 2 = 18\) 個，答案為 D。<br>
-              口訣就是<strong>「每個指數加 1 再相乘」</strong>。實際列出來驗算：\(1, 2, 3, 4, 5, 6, 9, 10, 12, 15, 18, 20, 30, 36, 45, 60, 90, 180\)，正好 18 個。</p>
+              <p class="explanation-desc"><strong>解析：</strong>用短除法從最小的質數開始除：<br>
+              \(2268 \div 2 = 1134\)，\(1134 \div 2 = 567\)，\(567 \div 3 = 189\)，\(189 \div 3 = 63\)，\(63 \div 3 = 21\)，\(21 \div 3 = 7\)，而 \(7\) 是質數，停。<br>
+              所以 \(2268 = 2^2 \times 3^4 \times 7\)，對照 \(2^a \times b^c \times 7\) 可知 \(a = 2\)、\(b = 3\)、\(c = 4\)，\(a + b + c = 9\)，答案為 C。<br>
+              選項 D 是把 \(2268\) 寫成 \(2^2 \times 9^2 \times 7\) 才會得到的答案——但 \(9\) <strong>不是質數</strong>，代表還沒分解到底，不能算標準分解式。</p>
             </div>
           </div>
         </div>
@@ -790,7 +787,7 @@
               <li><strong>9 的倍數</strong>：各個數字和是 9 的倍數。<br>（9 的倍數必是 3 的倍數，反之不一定。）</li>
               <li><strong>11 的倍數</strong>：奇數位數字和 \(-\) 偶數位數字和 \(= 0\) 或 11 的倍數。</li>
               <li><strong>質數與合數</strong>：1 兩者皆非，2 是最小的質數也是唯一的偶質數，4 是最小的合數；\(1 \sim 100\) 共有 25 個質數。</li>
-              <li><strong>標準分解式</strong>：相異質因數由小到大、重複的寫成指數，如 \(180 = 2^2 \times 3^2 \times 5\)。<br>正因數個數 \(=\) 各指數 \(+1\) 相乘。</li>
+              <li><strong>標準分解式</strong>：相異質因數由小到大、重複的寫成指數，如 \(180 = 2^2 \times 3^2 \times 5\)。<br>指數為 1 不用寫，如 \(105 = 3 \times 5 \times 7\)。</li>
             </ul>
           </div>
 
