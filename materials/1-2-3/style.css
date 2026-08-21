@@ -1058,10 +1058,35 @@ mjx-mn > mjx-c + mjx-c {
    2-3 專屬：分數在投影下的可讀性
    ========================================================================== */
 
-/* MathJax 的 \frac 預設偏小，投影到智慧板時分子分母都難讀；
-   只放大分數本身，不動周圍的內文字級。 */
-mjx-mfrac {
+/* MathJax 的 \frac 預設偏小，投影到智慧板時分子分母都難讀，要整體放大。
+
+   放大的對象是「整個算式」而不是只有 mjx-mfrac：MathJax 先算好整份版面
+   才輸出 HTML，事後單獨把分數撐大 1.1 倍，等於在它算完之後才改尺寸，
+   周圍符號的相對位置就對不上了。改成放大 mjx-container，所有子元素的
+   em 一起等比例縮放，MathJax 算好的相對關係完全不動。
+   分數維持原本 1.1 倍大小，其餘符號一起放大，投影更好讀。
+   這條只影響本頁（style.css 是 2-3 專用）。 */
+mjx-container {
   font-size: 1.1em;
+}
+
+/* 絕對值直槓（\left| ... \right|）框住分數時的高度修正。
+
+   MathJax 的 CHTML 輸出把延伸型直槓的「底部」用 vertical-align 釘在基線下方，
+   高度只會往上長。框住 \frac{2}{3} 這種分數時它給的高度偏小（1.23em），
+   結果上緣剛好、下緣卻短了約 0.45em，看起來像沒把分母框進去；
+   而換成 \bigl／\bigg 這類固定尺寸只會讓直槓往上長得更多，上緣爆出、
+   下緣依舊搆不到，治不了本。
+
+   這裡直接指定高度與垂直位置：把底部再往下放 0.46em、高度補上同樣的量，
+   上緣維持原位，量出來上下各多 1.8px，剛好對稱。
+   只作用在 mjx-c7C（直槓 | 這個字元），不影響括號等其他延伸符號。
+   本頁的絕對值都是 \left| -\frac{a}{b} \right| 這種單層分數，高度一致；
+   若日後改放帶分數或多層分數，這兩個數字要重新量。
+   MathJax 是寫成 inline style，所以必須用 !important 才蓋得掉。 */
+mjx-stretchy-v.mjx-c7C {
+  height: 1.69em !important;
+  vertical-align: -0.825em !important;
 }
 
 /* 分數會把行高撐高，清單與表格要留出額外的行距，否則上下兩行會咬在一起。 */
@@ -1069,4 +1094,14 @@ mjx-mfrac {
 .sign-table td,
 .sign-table th {
   line-height: 2;
+}
+
+/* 顯示型算式（\[ ... \]）遇到比卡片還寬的長算式時，預設會直接往右溢出，
+   蓋到右欄的互動卡上。改成在卡片內橫向捲動，並留上下 padding
+   避免 overflow-y 把分數的上下緣切掉。 */
+.explanation-card mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.35rem;
 }
