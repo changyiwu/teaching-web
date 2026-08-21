@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initPowerCanvas();
   initTrendCanvas();
   initOrderCanvas();
-  initStackCanvas();
-  initNestCanvas();
+  initExpandCanvas();
+  initDeriveCanvas();
   initZeroCanvas();
 });
 
@@ -387,29 +387,6 @@ function drawArrow(ctx, x1, y1, x2, y2, color, width) {
   ctx.restore();
 }
 
-// 一張和紙（用來畫紙疊）
-function drawSheet(ctx, x, y, w, h, color, alpha, crossed) {
-  ctx.save();
-  ctx.globalAlpha = alpha == null ? 1 : alpha;
-  ctx.fillStyle = 'rgba(255,255,255,0.06)';
-  roundRect(ctx, x, y, w, h, 3);
-  ctx.fill();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 1.6;
-  ctx.stroke();
-  if (crossed) {
-    ctx.strokeStyle = NO_COLOR;
-    ctx.lineWidth = 1.6;
-    ctx.beginPath();
-    ctx.moveTo(x + 4, y + 2);
-    ctx.lineTo(x + w - 4, y + h - 2);
-    ctx.moveTo(x + w - 4, y + 2);
-    ctx.lineTo(x + 4, y + h - 2);
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
 // 連乘字串：n 個 s 用 × 串起來，太長時省略中間
 function repeatStr(s, n) {
   if (n <= 4) return Array(n).fill(s).join('×');
@@ -574,87 +551,90 @@ function initTrendCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawTitle(ctx, `底數 a = ${a.toFixed(2)} 的乘方走勢`, C_ORANGE);
 
-    // 繪圖區
-    const left = 44, right = canvas.width - 20;
-    const top = 56, bottom = 292;
-    // 柱子只會往一個方向長，所以把「1」這條線貼到反方向的邊上，
-    // 整個高度都留給柱子；a = 1 時沒有方向，才放中間。
     const same0 = Math.abs(a - 1) < 1e-9;
-    const midY = same0 ? (top + bottom) / 2 : (a > 1 ? bottom - 30 : top + 26);
+    const grow = a > 1;
 
-    // y = 1 的分界線
+    /* 柱高與數值成「正比例」：柱底一律是 0，柱高 = 值 / 縱軸上限。
+       先前用的是對數尺度，等距的階梯看起來漂亮，但柱子的長度比例是錯的
+       （a^2 看起來只比 a^1 長一點，實際上是它的 a 倍）。比大小是這一節的
+       主題，長度比例必須誠實。 */
+    const left = 46, right = canvas.width - 18;
+    const top = 62, base = 296;              // base = 數值 0 的位置
+    const vmax = Math.max(1, Math.pow(a, N)) * 1.14;
+    const yOf = v => base - (v / vmax) * (base - top);
+
+    // 縱軸
+    ctx.strokeStyle = 'rgba(255,255,255,0.16)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(left - 14, top - 6);
+    ctx.lineTo(left - 14, base);
+    ctx.lineTo(right, base);
+    ctx.stroke();
+    ctx.fillStyle = MUTED;
+    ctx.font = f(700, 12);
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('0', left - 20, base);
+
+    // y = 1 的參考線
+    const y1 = yOf(1);
     ctx.save();
-    ctx.strokeStyle = 'rgba(253,224,71,0.55)';
+    ctx.strokeStyle = 'rgba(253,224,71,0.6)';
     ctx.lineWidth = 2;
     ctx.setLineDash([7, 5]);
     ctx.beginPath();
-    ctx.moveTo(left - 12, midY);
-    ctx.lineTo(right, midY);
+    ctx.moveTo(left - 14, y1);
+    ctx.lineTo(right, y1);
     ctx.stroke();
     ctx.restore();
     ctx.fillStyle = C_GOLD;
     ctx.font = f(800, 14);
     ctx.textAlign = 'right';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('1', left - 18, midY);
+    ctx.fillText('1', left - 20, y1);
     ctx.textAlign = 'left';
 
-    // 用對數尺度：每多乘一次 a，柱子就等距地再往同一個方向走一格
-    const unit = Math.abs(Math.log(a));
-    const maxSpan = same0 ? 0 : (a > 1 ? midY - top - 22 : bottom - midY - 22);
-    const per = unit < 1e-9 ? 0 : maxSpan / (N * unit);
-
     const slotW = (right - left) / N;
-    const barW = Math.min(40, slotW * 0.56);
+    const barW = Math.min(42, slotW * 0.58);
 
     for (let k = 1; k <= N; k++) {
       const v = Math.pow(a, k);
       const cx = left + slotW * (k - 0.5);
-      const h = per * unit * k;
-      const up = a > 1;
-      const color = a > 1 ? C_ORANGE : (a < 1 ? C_INDIGO : MUTED);
+      const yTop = yOf(v);
+      const h = Math.max(base - yTop, 1.5);   // 值極小時仍留 1.5px，才看得出它還在
+      const color = same0 ? MUTED : (grow ? C_ORANGE : C_INDIGO);
 
-      const y0 = midY;
-      const y1 = up ? midY - h : midY + h;
-      const ry = Math.min(y0, y1);
-      const rh = Math.max(Math.abs(h), 3);
-
-      // 染色深淺：越靠近極端顏色越飽和
       ctx.save();
-      ctx.globalAlpha = 0.22 + 0.55 * (k / N);
+      ctx.globalAlpha = 0.24 + 0.5 * (k / N);
       ctx.fillStyle = color;
-      roundRect(ctx, cx - barW / 2, ry, barW, rh, 5);
+      roundRect(ctx, cx - barW / 2, base - h, barW, h, 4);
       ctx.fill();
       ctx.restore();
       ctx.strokeStyle = color;
-      ctx.lineWidth = 1.8;
-      roundRect(ctx, cx - barW / 2, ry, barW, rh, 5);
+      ctx.lineWidth = 1.6;
+      roundRect(ctx, cx - barW / 2, base - h, barW, h, 4);
       ctx.stroke();
 
-      // 數值
+      // 數值標在柱頂上方
       ctx.fillStyle = color;
-      ctx.font = f(800, 13);
+      ctx.font = f(800, 12);
       ctx.textAlign = 'center';
-      ctx.textBaseline = up ? 'bottom' : 'top';
-      ctx.fillText(fmt(v), cx, up ? y1 - 5 : y1 + 6);
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(fmt(v), cx, base - h - 5);
 
-      // a^k 標籤（畫在圖區下方）
+      // a^k 標在軸下
       ctx.fillStyle = INK;
-      ctx.font = f(800, 14);
       ctx.textBaseline = 'middle';
-      ctx.fillText('a', cx - 5, bottom + 20);
-      ctx.font = f(800, 11);
-      ctx.fillText(String(k), cx + 5 + 14 * POW_KERN, bottom + 13);
+      drawExpr(ctx, [PW(T('a', INK), k, false, INK)], cx, base + 20, 15, INK, { maxW: slotW });
       ctx.textAlign = 'left';
     }
 
     // 結論條
-    const grow = a > 1, same = Math.abs(a - 1) < 1e-9;
-    const label = same ? 'a = 1：每一次方都是 1'
+    const label = same0 ? 'a = 1：每一次方都是 1'
       : (grow ? 'a > 1：越乘越大，全部大於 1' : 'a < 1：越乘越小，全部小於 1');
-    drawChip(ctx, 70, 330, 400, 36, label,
-      same ? MUTED : (grow ? C_ORANGE : C_INDIGO),
-      same ? 'rgba(148,163,184,0.10)' : (grow ? 'rgba(253,186,116,0.12)' : 'rgba(165,180,252,0.12)'));
+    drawChip(ctx, 70, 334, 400, 36, label,
+      same0 ? MUTED : (grow ? C_ORANGE : C_INDIGO),
+      same0 ? 'rgba(148,163,184,0.10)' : (grow ? 'rgba(253,186,116,0.12)' : 'rgba(165,180,252,0.12)'));
 
     // 面板
     const [fn, fd] = reduce(ai, 100);
@@ -662,7 +642,7 @@ function initTrendCanvas() {
     formula.innerHTML = `\\( a = ${a.toFixed(2)} = ${fracTex} \\)，\\( a^{${N}} = ${fmt(Math.pow(a, N))} \\)`;
 
     let msg;
-    if (same) {
+    if (same0) {
       msg = `\\(1\\) 乘幾次都還是 \\(1\\)，這是唯一不會變的底數。`;
     } else if (grow) {
       msg = `因為 \\(a > 1\\)，每多乘一次 \\(a\\) 就會<strong style="color:${C_ORANGE}">變大</strong>，所以 \\(a^{1} < a^{2} < \\cdots < a^{${N}}\\)，而且每一項都大於 \\(1\\)。`;
@@ -670,7 +650,7 @@ function initTrendCanvas() {
       msg = `因為 \\(a < 1\\)，每多乘一次 \\(a\\) 就會<strong style="color:${C_INDIGO}">變小</strong>，所以 \\(a^{1} > a^{2} > \\cdots > a^{${N}}\\)，而且每一項都小於 \\(1\\)。`;
     }
     feedback.innerHTML = wrapFeedback(
-      `${msg}<br>比大小時<strong>不必真的算出來</strong>，只要看底數落在 \\(1\\) 的哪一邊。`
+      `${msg}<br>柱子的<strong>長度與數值成正比</strong>，所以 \\(a\\) 稍微離開 \\(1\\)，乘幾次之後差距就拉得很開。`
     );
     typeset([formula, feedback]);
   }
@@ -683,16 +663,17 @@ function initTrendCanvas() {
 }
 
 /* ==========================================================================
-   重點 3：運算順序工作檯
+   重點 3：運算順序工作檯（點選題目 + 上一步／下一步）
    ========================================================================== */
 function initOrderCanvas() {
   const canvas = document.getElementById('canvas-order');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const qS = document.getElementById('od-q-slider');
-  const sS = document.getElementById('od-s-slider');
-  const qV = document.getElementById('od-q-val');
+  const qGroup = document.getElementById('od-q-group');
+  const prevBtn = document.getElementById('od-prev');
+  const nextBtn = document.getElementById('od-next');
+  const resetBtn = document.getElementById('od-reset');
   const sV = document.getElementById('od-s-val');
   const formula = document.getElementById('od-formula');
   const feedback = document.getElementById('od-feedback');
@@ -711,7 +692,7 @@ function initOrderCanvas() {
           ]
         },
         {
-          note: '第 1 步：各自算乘方。奇次方留負號、偶次方變正',
+          note: '第 1 步：先算乘方。奇次方留負號、偶次方變正',
           items: () => [
             T('=', MUTED), GRP([T('-', NO_COLOR), FR(1, 8, NO_COLOR)], '()', NO_COLOR),
             T('×', MUTED), FR(4, 9, OK_COLOR)
@@ -738,7 +719,7 @@ function initOrderCanvas() {
           ]
         },
         {
-          note: '第 1 步：各自算乘方。4 是偶數，負號全部抵銷',
+          note: '第 1 步：先算乘方。4 是偶數，負號全部抵銷',
           items: () => [T('=', MUTED), FR(81, 16, OK_COLOR), T('÷', MUTED), FR(9, 16, C_CYAN)]
         },
         {
@@ -756,7 +737,7 @@ function initOrderCanvas() {
       tex: '\\left[ 4 \\times \\left(-\\frac{1}{2}\\right)^{2} + \\frac{3}{2} \\right] \\div \\left(-\\frac{1}{2}\\right)^{3}',
       steps: [
         {
-          note: '原式：括號要整個算完，才能去除外面那一項',
+          note: '原式：括號內外各有一個乘方',
           items: () => [
             GRP([T('4', INK), T('×', MUTED), PW(VF(T('-1'), T('2')), 2, true),
               T('+', MUTED), FR(3, 2)], '[]', INK),
@@ -764,7 +745,7 @@ function initOrderCanvas() {
           ]
         },
         {
-          note: '第 1 步：算掉所有乘方（括號內外都算）',
+          note: '第 1 步：先算乘方——括號內外的一起算掉',
           items: () => [
             T('=', MUTED),
             GRP([T('4', INK), T('×', MUTED), FR(1, 4, OK_COLOR), T('+', MUTED), FR(3, 2)], '()', INK),
@@ -794,13 +775,20 @@ function initOrderCanvas() {
     }
   ];
 
+  let qi = 0;
+  let step = 1;
+
   function draw() {
-    const qi = clamp(parseInt(qS.value, 10), 1, QUESTIONS.length) - 1;
     const q = QUESTIONS[qi];
     const maxStep = q.steps.length;
-    let step = clamp(parseInt(sS.value, 10), 1, maxStep);
-    qV.textContent = `${qi + 1} / ${QUESTIONS.length}`;
+    step = clamp(step, 1, maxStep);
+
     sV.textContent = `${step} / ${maxStep}`;
+    prevBtn.disabled = step <= 1;
+    nextBtn.disabled = step >= maxStep;
+    [...qGroup.querySelectorAll('.pick-btn')].forEach((b, i) => {
+      b.classList.toggle('active', i === qi);
+    });
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawTitle(ctx, q.title, H);
@@ -823,10 +811,12 @@ function initOrderCanvas() {
         ctx.restore();
       }
 
+      /* 已走過的步驟要留得住：先前用 globalAlpha 0.42 + DIM 兩層一起壓暗，
+         投影下幾乎讀不到。改成只降一點透明度，顏色仍用 INK。 */
       ctx.save();
-      if (!isCur) ctx.globalAlpha = 0.42;
-      drawExpr(ctx, q.steps[i].items(), canvas.width / 2, cy, isCur ? 21 : 18,
-        isCur ? INK : DIM, { maxW: canvas.width - 44 });
+      if (!isCur) ctx.globalAlpha = 0.78;
+      drawExpr(ctx, q.steps[i].items(), canvas.width / 2, cy, isCur ? 21 : 19,
+        INK, { maxW: canvas.width - 44 });
       ctx.restore();
     }
 
@@ -839,17 +829,25 @@ function initOrderCanvas() {
     ctx.restore();
     drawNote(ctx, q.steps[step - 1].note, noteY + 17, H, 14);
 
-    // 面板
     formula.innerHTML = `\\( ${q.tex} \\)`;
     feedback.innerHTML = wrapFeedback(
       `目前在<strong style="color:${H}">第 ${step} / ${maxStep} 步</strong>：${q.steps[step - 1].note.replace(/^第 \d+ 步：|^原式：/, '')}<br>` +
-      `運算順序：括號 \\(\\to\\) <strong>乘方</strong> \\(\\to\\) 乘除 \\(\\to\\) 加減。`
+      `運算順序：<strong>乘方</strong> \\(\\to\\) 括號 \\(\\to\\) 乘除 \\(\\to\\) 加減。`
     );
     typeset([formula, feedback]);
   }
 
-  qS.addEventListener('input', () => { sS.value = 1; draw(); });
-  sS.addEventListener('input', draw);
+  qGroup.addEventListener('click', e => {
+    const btn = e.target.closest('.pick-btn');
+    if (!btn) return;
+    qi = parseInt(btn.dataset.q, 10) - 1;
+    step = 1;
+    draw();
+  });
+  prevBtn.addEventListener('click', () => { step -= 1; draw(); });
+  nextBtn.addEventListener('click', () => { step += 1; draw(); });
+  resetBtn.addEventListener('click', () => { step = 1; draw(); });
+
   draw();
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);
@@ -857,135 +855,191 @@ function initOrderCanvas() {
 }
 
 /* ==========================================================================
-   重點 4：紙疊合併器（同底數相乘除）
+   重點 4：連乘展開對照器（同底數相乘除）
    ========================================================================== */
-function initStackCanvas() {
-  const canvas = document.getElementById('canvas-stack');
+function initExpandCanvas() {
+  const canvas = document.getElementById('canvas-expand');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const modeS = document.getElementById('st-mode-slider');
-  const aS = document.getElementById('st-a-slider');
-  const mS = document.getElementById('st-m-slider');
-  const nS = document.getElementById('st-n-slider');
-  const modeV = document.getElementById('st-mode-val');
-  const aV = document.getElementById('st-a-val');
-  const mV = document.getElementById('st-m-val');
-  const nV = document.getElementById('st-n-val');
-  const formula = document.getElementById('st-formula');
-  const feedback = document.getElementById('st-feedback');
+  const opGroup = document.getElementById('ex-op-group');
+  const aS = document.getElementById('ex-a-slider');
+  const mS = document.getElementById('ex-m-slider');
+  const nS = document.getElementById('ex-n-slider');
+  const aV = document.getElementById('ex-a-val');
+  const mV = document.getElementById('ex-m-val');
+  const nV = document.getElementById('ex-n-val');
+  const formula = document.getElementById('ex-formula');
+  const feedback = document.getElementById('ex-feedback');
 
-  const SH_W = 62, SH_H = 13, SH_GAP = 3;
+  let op = 'mul';
 
-  function stack(cx, baseY, count, color, alpha, crossFrom) {
-    for (let i = 0; i < count; i++) {
-      const y = baseY - (i + 1) * (SH_H + SH_GAP);
-      const x = cx - SH_W / 2 + (i % 2 === 0 ? -2 : 2);
-      drawSheet(ctx, x, y, SH_W, SH_H, color, alpha, crossFrom != null && i >= crossFrom);
+  // 一格「底數磚」
+  function tile(x, y, w, h, label, color, struck) {
+    ctx.save();
+    ctx.fillStyle = struck ? 'rgba(148,163,184,0.10)' : 'rgba(255,255,255,0.06)';
+    roundRect(ctx, x, y, w, h, 5);
+    ctx.fill();
+    ctx.strokeStyle = struck ? DIM : color;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = struck ? DIM : color;
+    ctx.font = f(800, Math.min(15, w * 0.42));
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, x + w / 2, y + h / 2);
+    if (struck) {
+      ctx.strokeStyle = NO_COLOR;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(x + 3, y + h - 3);
+      ctx.lineTo(x + w - 3, y + 3);
+      ctx.stroke();
     }
+    ctx.restore();
+    ctx.textAlign = 'left';
+  }
+
+  // 畫一排磚，回傳 [起點x, 終點x]
+  function tileRow(cx, cy, count, label, color, tw, gap, struckFrom) {
+    const total = count * tw + (count - 1) * gap;
+    let x = cx - total / 2;
+    const x0 = x;
+    for (let i = 0; i < count; i++) {
+      tile(x, cy - 14, tw, 28, label, color, struckFrom != null && i < struckFrom);
+      x += tw + gap;
+    }
+    return [x0, x0 + total];
   }
 
   function draw() {
-    const mode = parseInt(modeS.value, 10);
     const a = parseInt(aS.value, 10);
     const m = parseInt(mS.value, 10);
     const n = parseInt(nS.value, 10);
-    modeV.textContent = mode === 1 ? '1（乘）' : '2（除）';
     aV.textContent = a;
     mV.textContent = m;
     nV.textContent = n;
+    [...opGroup.querySelectorAll('.pick-btn')].forEach(b => {
+      b.classList.toggle('active', b.dataset.op === op);
+    });
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const isMul = mode === 1;
-    drawTitle(ctx, isMul ? '兩疊紙合併：指數相加' : '從一疊紙抽走：指數相減',
+    const isMul = op === 'mul';
+    drawTitle(ctx, isMul ? '兩排接起來，數總共有幾個' : '上下一對一約掉，數剩下幾個',
       isMul ? C_PURPLE : C_CYAN);
 
+    if (a === 0) {
+      drawNote(ctx, '底數不可以是 0', 170, NO_COLOR, 22);
+      drawNote(ctx, '指數律的前提是 a ≠ 0，否則除法會出現除以 0', 208, MUTED, 15);
+      formula.innerHTML = `底數必須不為 \\(0\\)`;
+      feedback.innerHTML = wrapFeedback(`四條指數律都要求<strong style="color:${NO_COLOR}">底數不為 \\(0\\)</strong>。把底數調成其他值再看一次。`);
+      typeset([formula, feedback]);
+      return;
+    }
+
     const aStr = a < 0 ? `(${a})` : String(a);
-    const baseY = 244;
+    const resExp = isMul ? m + n : m - n;
+
+    // 第 1 行：符號式
+    drawExpr(ctx, [
+      PW(T(aStr, C_PURPLE), m, false, C_PURPLE),
+      T(isMul ? '×' : '÷', MUTED),
+      PW(T(aStr, C_CYAN), n, false, C_CYAN)
+    ], canvas.width / 2, 62, 24, INK);
+
+    const tw = Math.min(40, (canvas.width - 90) / Math.max(m + n, 1) - 5);
+    const gap = 5;
 
     if (isMul) {
-      stack(96, baseY, m, C_PURPLE, 1);
+      // 第 2 行：兩排分開
+      const totalM = m * tw + (m - 1) * gap;
+      const totalN = n * tw + (n - 1) * gap;
+      const midGap = 26;
+      const all = totalM + midGap + totalN;
+      let x = (canvas.width - all) / 2;
+      for (let i = 0; i < m; i++) { tile(x, 108, tw, 28, aStr, C_PURPLE, false); x += tw + gap; }
       ctx.fillStyle = MUTED;
-      ctx.font = f(800, 22);
+      ctx.font = f(800, 18);
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('+', 176, baseY - 60);
-      stack(256, baseY, n, C_CYAN, 1);
-      drawArrow(ctx, 306, baseY - 60, 358, baseY - 60, MUTED, 2.2);
-      // 合併後：下半段紫、上半段青
-      for (let i = 0; i < m + n; i++) {
-        const y = baseY - (i + 1) * (SH_H + SH_GAP);
-        const x = 452 - SH_W / 2 + (i % 2 === 0 ? -2 : 2);
-        drawSheet(ctx, x, y, SH_W, SH_H, i < m ? C_PURPLE : C_CYAN, 1);
-      }
-      ctx.fillStyle = DIM;
-      ctx.font = f(700, 13);
-      ctx.textAlign = 'center';
-      ctx.fillText(`${m} 張`, 96, baseY + 16);
-      ctx.fillText(`${n} 張`, 256, baseY + 16);
-      ctx.fillStyle = C_GOLD;
-      ctx.fillText(`${m} + ${n} = ${m + n} 張`, 452, baseY + 16);
+      ctx.fillText('×', x - gap + midGap / 2, 122);
+      x += midGap - gap;
+      for (let i = 0; i < n; i++) { tile(x, 108, tw, 28, aStr, C_CYAN, false); x += tw + gap; }
       ctx.textAlign = 'left';
+
+      ctx.fillStyle = DIM;
+      ctx.font = f(700, 12);
+      ctx.textAlign = 'center';
+      ctx.fillText(`${m} 個`, (canvas.width - all) / 2 + totalM / 2, 154);
+      ctx.fillText(`${n} 個`, (canvas.width + all) / 2 - totalN / 2, 154);
+      ctx.textAlign = 'left';
+
+      drawArrow(ctx, canvas.width / 2, 168, canvas.width / 2, 190, MUTED, 2);
+
+      // 第 3 行：接成一排
+      const [x0, x1] = tileRow(canvas.width / 2, 218, m + n, aStr, C_GOLD, tw, gap);
+      ctx.strokeStyle = 'rgba(253,224,71,0.5)';
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(x0 - 6, 240); ctx.lineTo(x0 - 6, 246);
+      ctx.lineTo(x1 + 6, 246); ctx.lineTo(x1 + 6, 240);
+      ctx.stroke();
+      drawNote(ctx, `一共 ${m} + ${n} = ${m + n} 個 ${aStr} 相乘`, 262, C_GOLD, 14);
+
+      drawExpr(ctx, [
+        T('=', MUTED), PW(T(aStr, INK), `${m}+${n}`, false, INK),
+        T('=', MUTED), PW(T(aStr, C_GOLD), resExp, false, C_GOLD)
+      ], canvas.width / 2, 300, 23, INK);
     } else {
-      stack(150, baseY, m, C_PURPLE, 1);
-      // 抽走最上面 n 張
-      const keep = Math.max(m - n, 0);
-      for (let i = 0; i < m; i++) {
-        if (i < keep) continue;
-        const y = baseY - (i + 1) * (SH_H + SH_GAP);
-        const x = 150 - SH_W / 2 + (i % 2 === 0 ? -2 : 2);
-        drawSheet(ctx, x, y, SH_W, SH_H, NO_COLOR, 0.85, true);
-      }
-      drawArrow(ctx, 214, baseY - 60, 300, baseY - 60, MUTED, 2.2);
+      // 除法：畫成上下兩排的分數，成對約掉
+      const pair = Math.min(m, n);
+      const cx = canvas.width / 2;
+      tileRow(cx, 116, m, aStr, C_PURPLE, tw, gap, pair);
+      const barW = Math.max(m, n) * tw + (Math.max(m, n) - 1) * gap + 20;
+      ctx.strokeStyle = INK;
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(cx - barW / 2, 150);
+      ctx.lineTo(cx + barW / 2, 150);
+      ctx.stroke();
+      tileRow(cx, 184, n, aStr, C_CYAN, tw, gap, pair);
+
       ctx.fillStyle = NO_COLOR;
       ctx.font = f(700, 13);
       ctx.textAlign = 'center';
-      ctx.fillText(`抽走 ${Math.min(n, m)} 張`, 257, baseY - 80);
-      stack(390, baseY, keep, C_GOLD, 1);
-      ctx.fillStyle = DIM;
-      ctx.fillText(`原有 ${m} 張`, 150, baseY + 16);
-      ctx.fillStyle = C_GOLD;
-      ctx.fillText(keep > 0 ? `剩下 ${keep} 張` : '一張不剩', 390, baseY + 16);
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`約掉 ${pair} 對`, cx, 216);
       ctx.textAlign = 'left';
-    }
 
-    // 算式列
-    const resExp = isMul ? m + n : m - n;
-    const row = [
-      PW(T(aStr, C_PURPLE), m, false, C_PURPLE),
-      T(isMul ? '×' : '÷', MUTED),
-      PW(T(aStr, C_CYAN), n, false, C_CYAN),
-      T('=', MUTED),
-      PW(T(aStr, INK), isMul ? `${m}+${n}` : `${m}-${n}`, false, INK),
-      T('=', MUTED),
-      PW(T(aStr, C_GOLD), resExp, false, C_GOLD)
-    ];
-    drawExpr(ctx, row, canvas.width / 2, 292, 22, INK);
+      drawArrow(ctx, cx, 228, cx, 248, MUTED, 2);
 
-    // 提醒列
-    let note, noteColor = MUTED;
-    if (a === 0) {
-      note = '底數不可以是 0：指數律的前提是 a ≠ 0';
-      noteColor = NO_COLOR;
-    } else if (!isMul && m === n) {
-      note = 'm = n 時會得到 a⁰，這正是重點 6 要處理的情況';
-      noteColor = C_GOLD;
-    } else if (!isMul && m < n) {
-      note = '這一節的除法規定 m > n，指數不夠減就先不討論';
-      noteColor = NO_COLOR;
-    } else if (isMul) {
-      note = `${m} 個 ${aStr} 再接上 ${n} 個 ${aStr}，一共 ${m + n} 個相乘`;
-    } else {
-      note = `${m} 個 ${aStr} 約掉 ${n} 個，剩下 ${m - n} 個相乘`;
+      if (resExp > 0) {
+        tileRow(cx, 274, resExp, aStr, C_GOLD, tw, gap);
+        drawNote(ctx, `剩下 ${m} - ${n} = ${resExp} 個 ${aStr} 相乘`, 306, C_GOLD, 14);
+        drawExpr(ctx, [
+          T('=', MUTED), PW(T(aStr, INK), `${m}-${n}`, false, INK),
+          T('=', MUTED), PW(T(aStr, C_GOLD), resExp, false, C_GOLD)
+        ], cx, 342, 22, INK);
+      } else if (resExp === 0) {
+        drawNote(ctx, '上下剛好全部約光，結果是 1', 276, C_GOLD, 16);
+        drawExpr(ctx, [
+          T('=', MUTED), PW(T(aStr, INK), `${m}-${n}`, false, INK),
+          T('=', MUTED), PW(T(aStr, C_GOLD), 0, false, C_GOLD),
+          T('=', MUTED), T('1', OK_COLOR)
+        ], cx, 312, 22, INK);
+        drawNote(ctx, '這正是重點 6 要處理的情況', 346, MUTED, 13);
+      } else {
+        drawNote(ctx, `分母還多出 ${n - m} 個約不掉`, 276, NO_COLOR, 16);
+        drawNote(ctx, '這一節的除法規定 m > n，指數不夠減就先不討論', 306, MUTED, 14);
+      }
     }
-    drawNote(ctx, note, 336, noteColor, 14);
 
     // 值（太大就不顯示）
-    if (a !== 0 && resExp >= 0 && resExp <= 12) {
+    if (resExp > 0 && resExp <= 12) {
       const val = ipow(a, resExp);
-      if (Math.abs(val) <= 1e7) {
+      if (Math.abs(val) <= 1e7 && isMul) {
         drawExpr(ctx, [PW(T(aStr, DIM), resExp, false, DIM), T('=', DIM), T(val, DIM)],
-          canvas.width / 2, 362, 15, DIM);
+          canvas.width / 2, 340, 15, DIM);
       }
     }
 
@@ -995,24 +1049,28 @@ function initStackCanvas() {
       : `\\( ${aStr}^{${m}} \\div ${aStr}^{${n}} = ${aStr}^{${m}-${n}} = ${aStr}^{${m - n}} \\)`;
 
     let msg;
-    if (a === 0) {
-      msg = `底數是 \\(0\\) 時 \\(0^m \\div 0^n\\) 會出現除以 \\(0\\)，所以指數律一律要求<strong style="color:${NO_COLOR}">底數不為 \\(0\\)</strong>。`;
-    } else if (isMul) {
-      msg = `\\(a^m \\times a^n = a^{m+n}\\)：兩疊紙合起來，<strong>張數相加</strong>，也就是指數相加。`;
+    if (isMul) {
+      msg = `左邊 \\(${m}\\) 個、右邊 \\(${n}\\) 個，接成一排就是 \\(${m + n}\\) 個 \\(${aStr}\\) 相乘，所以<strong>指數相加</strong>。`;
     } else if (m > n) {
-      msg = `\\(a^m \\div a^n = a^{m-n}\\)：約掉 \\(${n}\\) 個之後剩 \\(${m - n}\\) 個，也就是<strong>指數相減</strong>。`;
+      msg = `上下各約掉 \\(${n}\\) 個之後，分子還剩 \\(${m - n}\\) 個，所以<strong>指數相減</strong>。`;
     } else if (m === n) {
-      msg = `指數相同，兩種算法一個得 \\(1\\)、一個得 \\(a^0\\)——這就是 \\(a^0 = 1\\) 的由來，見重點 6。`;
+      msg = `上下數量相同，全部約光得到 \\(1\\)；但照指數律算是 \\(${aStr}^{0}\\)——這就是 \\(a^0 = 1\\) 的由來。`;
     } else {
-      msg = `目前 \\(m < n\\)，超出這一節「\\(m > n\\)」的範圍，指數不夠減。`;
+      msg = `目前 \\(m < n\\)，約完之後多出來的在分母，超出這一節「\\(m > n\\)」的範圍。`;
     }
     feedback.innerHTML = wrapFeedback(
-      `${msg}<br><strong>底數必須完全相同</strong>，指數才可以相加減。`
+      `${msg}<br><strong>底數必須完全相同</strong>，才數得成同一種磚，指數也才可以相加減。`
     );
     typeset([formula, feedback]);
   }
 
-  [modeS, aS, mS, nS].forEach(s => s.addEventListener('input', draw));
+  opGroup.addEventListener('click', e => {
+    const btn = e.target.closest('.pick-btn');
+    if (!btn) return;
+    op = btn.dataset.op;
+    draw();
+  });
+  [aS, mS, nS].forEach(s => s.addEventListener('input', draw));
   draw();
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);
@@ -1020,198 +1078,202 @@ function initStackCanvas() {
 }
 
 /* ==========================================================================
-   重點 5：盒中盒與兩色紙
+   重點 5：展開推導器（乘方的乘方 / 兩數相乘 / 兩數相除）
    ========================================================================== */
-function initNestCanvas() {
-  const canvas = document.getElementById('canvas-nest');
+function initDeriveCanvas() {
+  const canvas = document.getElementById('canvas-derive');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const modeS = document.getElementById('ne-mode-slider');
-  const mS = document.getElementById('ne-m-slider');
-  const nS = document.getElementById('ne-n-slider');
-  const modeV = document.getElementById('ne-mode-val');
-  const mV = document.getElementById('ne-m-val');
-  const nV = document.getElementById('ne-n-val');
-  const formula = document.getElementById('ne-formula');
-  const feedback = document.getElementById('ne-feedback');
+  const modeGroup = document.getElementById('dv-mode-group');
+  const mS = document.getElementById('dv-m-slider');
+  const nS = document.getElementById('dv-n-slider');
+  const mV = document.getElementById('dv-m-val');
+  const nV = document.getElementById('dv-n-val');
+  const formula = document.getElementById('dv-formula');
+  const feedback = document.getElementById('dv-feedback');
+
+  let mode = 'pow';
+
+  // 把 count 個 label 用 × 串成一列元件
+  function chain(count, label, color, max) {
+    const out = [];
+    const shown = Math.min(count, max || 5);
+    for (let i = 0; i < shown; i++) {
+      if (i) out.push(T('×', MUTED));
+      out.push(T(label, color));
+    }
+    if (count > shown) { out.push(T('×', MUTED)); out.push(T('…', MUTED)); }
+    return out;
+  }
 
   function draw() {
-    const mode = parseInt(modeS.value, 10);
     const m = parseInt(mS.value, 10);
     const n = parseInt(nS.value, 10);
-    modeV.textContent = mode === 1 ? '1（盒中盒）' : '2（兩色紙）';
-    mV.textContent = mode === 1 ? m : `${m}（本模式只用 m）`;
-    nV.textContent = mode === 1 ? n : '—';
+    mV.textContent = m;
+    nV.textContent = mode === 'pow' ? n : '—（本模式不用）';
+    nS.disabled = mode !== 'pow';
+    [...modeGroup.querySelectorAll('.pick-btn')].forEach(b => {
+      b.classList.toggle('active', b.dataset.mode === mode);
+    });
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (mode === 1) {
-      drawTitle(ctx, `${n} 個盒子，每個盒子裡有 ${m} 個 a`, C_GOLD);
+    const rowY = [70, 132, 200, 268];
+    const stepLabel = ['原式', '第 1 層：展開外層', '第 2 層：再展開內層', '收攏'];
 
-      const boxW = Math.min(88, (canvas.width - 60) / n - 10);
-      const totalW = n * boxW + (n - 1) * 10;
-      const x0 = (canvas.width - totalW) / 2;
-      const cellH = 26;
-      const boxH = m * cellH + 16;
-      const boxY = 62 + (5 * cellH + 16 - boxH) / 2;
+    function labelRow(i, text) {
+      ctx.fillStyle = DIM;
+      ctx.font = f(700, 11);
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, 16, rowY[i] - 26);
+      ctx.textAlign = 'left';
+    }
 
-      for (let j = 0; j < n; j++) {
-        const bx = x0 + j * (boxW + 10);
-        ctx.save();
-        ctx.fillStyle = 'rgba(253,224,71,0.07)';
-        roundRect(ctx, bx, boxY, boxW, boxH, 10);
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(253,224,71,0.65)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        ctx.restore();
+    if (mode === 'pow') {
+      drawTitle(ctx, `把 a 的 ${m} 次方當成一個整體，連乘 ${n} 次`, C_GOLD);
 
-        for (let i = 0; i < m; i++) {
-          const cy = boxY + 8 + i * cellH;
-          ctx.save();
-          ctx.fillStyle = 'rgba(165,180,252,0.16)';
-          roundRect(ctx, bx + 8, cy, boxW - 16, cellH - 6, 5);
-          ctx.fill();
-          ctx.strokeStyle = C_INDIGO;
-          ctx.lineWidth = 1.4;
-          ctx.stroke();
-          ctx.restore();
-          ctx.fillStyle = C_INDIGO;
-          ctx.font = f(800, 14);
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('a', bx + boxW / 2, cy + (cellH - 6) / 2);
-          ctx.textAlign = 'left';
-        }
+      labelRow(0, stepLabel[0]);
+      drawExpr(ctx, [PW(PW(T('a', C_INDIGO), m, false, C_INDIGO), n, true, C_GOLD)],
+        canvas.width / 2, rowY[0], 24, INK);
 
-        ctx.fillStyle = DIM;
-        ctx.font = f(700, 12);
-        ctx.textAlign = 'center';
-        ctx.fillText(`${m} 個`, bx + boxW / 2, boxY + boxH + 14);
-        ctx.textAlign = 'left';
+      labelRow(1, stepLabel[1]);
+      const outer = [];
+      const shownN = Math.min(n, 4);
+      for (let i = 0; i < shownN; i++) {
+        if (i) outer.push(T('×', MUTED));
+        outer.push(PW(T('a', C_INDIGO), m, false, C_INDIGO));
       }
+      if (n > shownN) { outer.push(T('×', MUTED)); outer.push(T('…', MUTED)); }
+      drawExpr(ctx, [T('=', MUTED)].concat(outer), canvas.width / 2, rowY[1], 21, INK);
+      ctx.fillStyle = DIM;
+      ctx.font = f(600, 12);
+      ctx.textAlign = 'center';
+      ctx.fillText(`${n} 個 a 的 ${m} 次方`, canvas.width / 2, rowY[1] + 30);
+      ctx.textAlign = 'left';
 
+      labelRow(2, stepLabel[2]);
+      const inner = [T('=', MUTED)];
+      const shownN2 = Math.min(n, 3);
+      for (let i = 0; i < shownN2; i++) {
+        if (i) inner.push(T('×', MUTED));
+        inner.push(GRP(chain(m, 'a', C_INDIGO, 3), '()', C_GOLD));
+      }
+      if (n > shownN2) { inner.push(T('×', MUTED)); inner.push(T('…', MUTED)); }
+      drawExpr(ctx, inner, canvas.width / 2, rowY[2], 18, INK);
+      ctx.fillStyle = C_GOLD;
+      ctx.font = f(700, 13);
+      ctx.textAlign = 'center';
+      ctx.fillText(`每一組 ${m} 個，共 ${n} 組 → ${m} × ${n} = ${m * n} 個 a`, canvas.width / 2, rowY[2] + 34);
+      ctx.textAlign = 'left';
+
+      labelRow(3, stepLabel[3]);
       drawExpr(ctx, [
-        PW(PW(T('a', C_INDIGO), m, false, C_INDIGO), n, true, C_GOLD),
-        T('=', MUTED),
-        PW(T('a', INK), `${m}×${n}`, false, INK),
-        T('=', MUTED),
-        PW(T('a', C_GOLD), m * n, false, C_GOLD)
-      ], canvas.width / 2, 268, 23, INK);
+        T('=', MUTED), PW(T('a', INK), `${m}×${n}`, false, INK),
+        T('=', MUTED), PW(T('a', C_GOLD), m * n, false, C_GOLD)
+      ], canvas.width / 2, rowY[3] + 8, 24, INK);
 
-      drawNote(ctx, `總共 ${m} × ${n} = ${m * n} 個 a 相乘 → 指數相乘`, 306, C_GOLD, 14);
       drawExpr(ctx, [
         T('對照：', MUTED),
         PW(T('a', MUTED), m, false, MUTED), T('×', MUTED), PW(T('a', MUTED), n, false, MUTED),
         T('=', MUTED), PW(T('a', MUTED), m + n, false, MUTED),
-        T('（指數相加，跟這一條不同）', MUTED)
-      ], canvas.width / 2, 334, 14, MUTED);
-      drawExpr(ctx, [
-        T('例：', DIM),
-        PW(PW(T('2', DIM), m, false, DIM), n, true, DIM),
-        T('=', DIM), PW(T('2', DIM), m * n, false, DIM),
-        T('=', DIM), T(ipow(2, m * n), DIM)
-      ], canvas.width / 2, 362, 14, DIM);
+        T('是指數相加，不一樣', MUTED)
+      ], canvas.width / 2, 350, 14, MUTED);
 
       formula.innerHTML = `\\( \\left(a^{${m}}\\right)^{${n}} = a^{${m} \\times ${n}} = a^{${m * n}} \\)`;
       feedback.innerHTML = wrapFeedback(
-        `\\(\\left(a^m\\right)^n\\) 是把 \\(a^{${m}}\\) 連乘 \\(${n}\\) 次，展開後是 ` +
-        `\\(${Array(Math.min(n, 4)).fill(m).join(' + ')}${n > 4 ? ' + \\cdots' : ''} = ${m} \\times ${n} = ${m * n}\\) 個 \\(a\\)。<br>` +
-        `<strong>指數相乘</strong>，不要和 \\(a^m \\times a^n\\)（指數相加）搞混。`
+        `外層的 \\(${n}\\) 次方是把整個 \\(a^{${m}}\\) 連乘 \\(${n}\\) 次，` +
+        `每一組裡有 \\(${m}\\) 個 \\(a\\)，全部攤開就是 \\(${m} \\times ${n} = ${m * n}\\) 個。<br>` +
+        `所以是<strong style="color:${C_GOLD}">指數相乘</strong>，不要和 \\(a^m \\times a^n\\)（指數相加）搞混。`
       );
     } else {
-      drawTitle(ctx, `${m} 組「a 配 b」，重排成 ${m} 個 a 和 ${m} 個 b`, C_GOLD);
+      const isMul = mode === 'mul';
+      const opTxt = isMul ? '×' : '÷';
+      drawTitle(ctx, isMul ? `${m} 組「a 乘 b」，重排成 a 一堆、b 一堆`
+        : `${m} 組「a 除以 b」，分子分母各自收攏`, C_GOLD);
 
-      const pairW = Math.min(66, (canvas.width - 80) / m - 8);
-      const totalW = m * pairW + (m - 1) * 8;
-      const x0 = (canvas.width - totalW) / 2;
+      labelRow(0, stepLabel[0]);
+      drawExpr(ctx, [PW(T(`a ${opTxt} b`, C_GOLD), m, true, C_GOLD)],
+        canvas.width / 2, rowY[0], 24, INK);
 
-      // 上排：m 組配對
-      for (let i = 0; i < m; i++) {
-        const bx = x0 + i * (pairW + 8);
-        ctx.save();
-        ctx.fillStyle = 'rgba(253,224,71,0.06)';
-        roundRect(ctx, bx, 58, pairW, 54, 9);
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(253,224,71,0.5)';
-        ctx.lineWidth = 1.6;
-        ctx.stroke();
-        ctx.restore();
-        cell(bx + 6, 64, pairW - 12, 20, 'a', C_INDIGO);
-        cell(bx + 6, 88, pairW - 12, 20, 'b', C_ORANGE);
+      labelRow(1, '第 1 層：展開成 m 組');
+      const grp = [T('=', MUTED)];
+      const shown = Math.min(m, 4);
+      for (let i = 0; i < shown; i++) {
+        if (i) grp.push(T('×', MUTED));
+        grp.push(GRP([T('a', C_INDIGO), T(opTxt, MUTED), T('b', C_ORANGE)], '()', C_GOLD));
       }
-      drawExpr(ctx, [
-        PW(T('a × b', DIM), m, true, DIM),
-        T(`：${m} 組同時摺`, DIM)
-      ], canvas.width / 2, 128, 14, DIM);
-
-      drawArrow(ctx, canvas.width / 2, 138, canvas.width / 2, 164, MUTED, 2.2);
-
-      // 下排：同色收在一起
-      for (let i = 0; i < m; i++) {
-        const bx = x0 + i * (pairW + 8);
-        cell(bx + 6, 176, pairW - 12, 22, 'a', C_INDIGO);
-        cell(bx + 6, 206, pairW - 12, 22, 'b', C_ORANGE);
-      }
-      ctx.fillStyle = C_INDIGO;
-      ctx.font = f(700, 12);
+      if (m > shown) { grp.push(T('×', MUTED)); grp.push(T('…', MUTED)); }
+      drawExpr(ctx, grp, canvas.width / 2, rowY[1], 19, INK);
+      ctx.fillStyle = DIM;
+      ctx.font = f(600, 12);
+      ctx.textAlign = 'center';
+      ctx.fillText(`${m} 組`, canvas.width / 2, rowY[1] + 30);
       ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(`${m} 個 a`, 12, 187);
-      ctx.fillStyle = C_ORANGE;
-      ctx.fillText(`${m} 個 b`, 12, 217);
 
-      drawExpr(ctx, [
-        PW(T('a × b', C_GOLD), m, true, C_GOLD),
-        T('=', MUTED),
-        PW(T('a', C_INDIGO), m, false, C_INDIGO),
-        T('×', MUTED),
-        PW(T('b', C_ORANGE), m, false, C_ORANGE)
-      ], canvas.width / 2, 268, 23, INK);
+      labelRow(2, '第 2 層：把同一個字母收在一起');
+      if (isMul) {
+        drawExpr(ctx, [T('=', MUTED)]
+          .concat(chain(m, 'a', C_INDIGO, 4))
+          .concat([T('×', MUTED)])
+          .concat(chain(m, 'b', C_ORANGE, 4)),
+          canvas.width / 2, rowY[2], 18, INK);
+      } else {
+        drawExpr(ctx, [
+          T('=', MUTED),
+          VF(chainToTxt(m, 'a'), chainToTxt(m, 'b'))
+        ], canvas.width / 2, rowY[2] + 4, 17, INK);
+      }
+      ctx.fillStyle = C_GOLD;
+      ctx.font = f(700, 13);
+      ctx.textAlign = 'center';
+      ctx.fillText(`a 有 ${m} 個、b 也有 ${m} 個`, canvas.width / 2, rowY[2] + 40);
+      ctx.textAlign = 'left';
 
-      drawNote(ctx, '指數相同時反過來用：先把底數乘起來再乘方，常常能先約分', 306, C_GOLD, 14);
+      labelRow(3, stepLabel[3]);
       drawExpr(ctx, [
-        T('例：', MUTED),
-        PW(T('2 × 3', MUTED), m, true, MUTED),
-        T('=', MUTED), PW(T('2', MUTED), m, false, MUTED), T('×', MUTED), PW(T('3', MUTED), m, false, MUTED),
-        T('=', MUTED), T(ipow(6, m), MUTED)
-      ], canvas.width / 2, 334, 14, MUTED);
-      drawExpr(ctx, [
-        T('注意：加法沒有這條性質，', NO_COLOR),
-        PW(T('a + b', NO_COLOR), 'm', true, NO_COLOR),
-        T('≠', NO_COLOR),
-        PW(T('a', NO_COLOR), 'm', false, NO_COLOR), T('+', NO_COLOR), PW(T('b', NO_COLOR), 'm', false, NO_COLOR)
-      ], canvas.width / 2, 362, 14, NO_COLOR);
+        T('=', MUTED), PW(T('a', C_INDIGO), m, false, C_INDIGO),
+        T(opTxt, MUTED), PW(T('b', C_ORANGE), m, false, C_ORANGE)
+      ], canvas.width / 2, rowY[3] + 8, 24, INK);
 
-      formula.innerHTML = `\\( (a \\times b)^{${m}} = a^{${m}} \\times b^{${m}} \\)`;
+      const ex = isMul
+        ? [T('例：', MUTED), PW(T('2 × 3', MUTED), m, true, MUTED), T('=', MUTED),
+           PW(T('2', MUTED), m, false, MUTED), T('×', MUTED), PW(T('3', MUTED), m, false, MUTED),
+           T('=', MUTED), T(ipow(6, m), MUTED)]
+        : [T('例：', MUTED), PW(T('6 ÷ 3', MUTED), m, true, MUTED), T('=', MUTED),
+           PW(T('6', MUTED), m, false, MUTED), T('÷', MUTED), PW(T('3', MUTED), m, false, MUTED),
+           T('=', MUTED), T(ipow(2, m), MUTED)];
+      drawExpr(ctx, ex, canvas.width / 2, 350, 14, MUTED);
+
+      formula.innerHTML = isMul
+        ? `\\( (a \\times b)^{${m}} = a^{${m}} \\times b^{${m}} \\)`
+        : `\\( (a \\div b)^{${m}} = a^{${m}} \\div b^{${m}} \\)`;
       feedback.innerHTML = wrapFeedback(
-        `\\((a \\times b)^{${m}}\\) 展開後有 \\(${m}\\) 個 \\(a\\) 和 \\(${m}\\) 個 \\(b\\)，把同樣的收在一起就是 \\(a^{${m}} \\times b^{${m}}\\)。<br>` +
-        `反過來用最好用：看到<strong>指數相同</strong>的兩個乘方相乘，先把底數乘起來。`
+        `展開後 \\(a\\) 和 \\(b\\) 各出現 \\(${m}\\) 次，把同一個字母收在一起就得到 ` +
+        (isMul ? `\\(a^{${m}} \\times b^{${m}}\\)` : `\\(a^{${m}} \\div b^{${m}}\\)`) + `。<br>` +
+        `<strong>乘法與除法都成立</strong>；但<strong style="color:${NO_COLOR}">加減不成立</strong>：\\((a+b)^m \\neq a^m + b^m\\)。`
       );
     }
 
     typeset([formula, feedback]);
   }
 
-  function cell(x, y, w, h, label, color) {
-    ctx.save();
-    ctx.fillStyle = color === C_INDIGO ? 'rgba(165,180,252,0.16)' : 'rgba(253,186,116,0.16)';
-    roundRect(ctx, x, y, w, h, 5);
-    ctx.fill();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 1.4;
-    ctx.stroke();
-    ctx.restore();
-    ctx.fillStyle = color;
-    ctx.font = f(800, 14);
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(label, x + w / 2, y + h / 2);
-    ctx.textAlign = 'left';
+  // 除法模式的分子分母要當成單一字串畫，才排得進分數線
+  function chainToTxt(count, label) {
+    const shown = Math.min(count, 4);
+    let s = Array(shown).fill(label).join('×');
+    if (count > shown) s += '×…×' + label;
+    return T(s, label === 'a' ? C_INDIGO : C_ORANGE);
   }
 
-  [modeS, mS, nS].forEach(s => s.addEventListener('input', draw));
+  modeGroup.addEventListener('click', e => {
+    const btn = e.target.closest('.pick-btn');
+    if (!btn) return;
+    mode = btn.dataset.mode;
+    draw();
+  });
+  [mS, nS].forEach(s => s.addEventListener('input', draw));
   draw();
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);

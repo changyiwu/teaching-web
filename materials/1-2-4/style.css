@@ -439,6 +439,87 @@ canvas {
   margin-bottom: 1rem;
 }
 
+/* ==========================================================================
+   點選式控制項（取代部分滑桿）
+   滑桿適合連續量（底數、指數），但「選第幾題」「切換模式」是離散選擇，
+   在智慧板上用手指拉滑桿反而容易選錯格，改成直接點按鈕。
+   ========================================================================== */
+.btn-group-wrapper {
+  margin-bottom: 1.1rem;
+}
+
+.btn-group-row {
+  margin-bottom: 0.9rem;
+}
+
+.btn-group-row:last-child {
+  margin-bottom: 0;
+}
+
+.btn-group-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 0.45rem;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.pick-btn {
+  flex: 0 1 auto;
+  padding: 0.5rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-base);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+  /* 智慧板是觸控操作，按鈕要夠大才點得準 */
+  min-height: 40px;
+}
+
+.pick-btn:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(129, 140, 248, 0.55);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.pick-btn.active {
+  background: rgba(99, 102, 241, 0.28);
+  border-color: var(--primary-hover);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(99, 102, 241, 0.28);
+}
+
+.pick-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* MathJax 會把按鈕裡的算式包成 inline-block，行高要壓住否則按鈕會忽高忽低 */
+.pick-btn mjx-container {
+  font-size: 1em !important;
+  margin: 0 !important;
+}
+
+.step-counter {
+  min-width: 3.6rem;
+  text-align: center;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
 .slider-row {
   margin-bottom: 1.25rem;
 }

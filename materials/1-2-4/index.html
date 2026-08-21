@@ -40,7 +40,7 @@
       <div class="lesson-title">
         <span class="badge">第一冊 • 第二章</span>
         <h1>2-4 指數律</h1>
-        <p>相同的分數或小數連乘，一樣可以用乘方來簡記。這一節先把乘方從整數推廣到分數與小數，看清楚「底數大於 1 就越乘越大、小於 1 就越乘越小」，再整理出四條指數律：同底數相乘指數相加、相除指數相減、乘方的乘方指數相乘、兩數相乘的乘方各自乘方。最後補上 \(a^0 = 1\) 這個規定，讓四條律在指數為 \(0\) 時依然成立。</p>
+        <p>相同的分數或小數連乘，一樣可以用乘方來簡記。這一節先把乘方從整數推廣到分數與小數，看清楚「<strong>底數是正數時</strong>，大於 1 就越乘越大、小於 1 就越乘越小」，再整理出四條指數律：同底數相乘指數相加、相除指數相減、乘方的乘方指數相乘、兩數相乘的乘方各自乘方。最後補上 \(a^0 = 1\) 這個規定，讓四條律在指數為 \(0\) 時依然成立。</p>
       </div>
       <!-- Progress navigation (6 points) -->
       <nav class="lesson-nav">
@@ -215,7 +215,7 @@
                   <li>當 \(a > 1\) 時，\(a^n > 1\)，且 \(n\) 愈大，\(a^n\) 愈<strong>大</strong>。例如 \(1.2^3 < 1.2^4 < 1.2^5\)。</li>
                 </ul>
               </li>
-              <li><strong>底數不同時，拿 \(1\) 當中間人</strong>：要比 \(1.01^{10}\) 與 \(0.99^{30}\)，因為 \(1.01 > 1\) 所以 \(1.01^{10} > 1\)；又因為 \(0.99 < 1\) 所以 \(0.99^{30} < 1\)。<strong>一個在 \(1\) 的右邊、一個在左邊</strong>，所以 \(1.01^{10} > 0.99^{30}\)。</li>
+              <li><strong>特殊的技巧</strong>：底數不同時，可以各自先跟 \(1\) 比。要比 \(1.01^{10}\) 與 \(0.99^{30}\)，因為 \(1.01 > 1\) 所以 \(1.01^{10} > 1\)；又因為 \(0.99 < 1\) 所以 \(0.99^{30} < 1\)。<strong>一個在 \(1\) 的右邊、一個在左邊</strong>，所以 \(1.01^{10} > 0.99^{30}\)。</li>
               <li><strong>注意條件是「正數」</strong>：底數為負時這條規則不適用，要先照重點 1 判斷符號。例如 \((-2)^3 = -8\) 反而比 \((-2)^2 = 4\) 小。</li>
             </ul>
 
@@ -298,7 +298,7 @@
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
               <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>底數不同時不必硬算，<strong>用 \(1\) 當中間人</strong>。<br>
+              <p class="explanation-desc"><strong>解析：</strong>底數不同時不必硬算，<strong>兩個各自先跟 \(1\) 比</strong>。<br>
               \(0.98 < 1\)，所以不論乘幾次都小於 \(1\)，即 \(0.98^{40} < 1\)。<br>
               \(1.02 > 1\)，所以不論乘幾次都大於 \(1\)，即 \(1.02^{15} > 1\)。<br>
               合起來就是 \(0.98^{40} < 1 < 1.02^{15}\)，答案為 A。<br>
@@ -320,7 +320,7 @@
           <div class="explanation-card">
             <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
             <ul class="bullet-list">
-              <li><strong>運算順序</strong>：有括號<strong>先算括號</strong>，接著<strong>算乘方</strong>，再算乘除，最後算加減；同一級由左到右。乘方排在乘除之前，這是這一節新加進來的一層。</li>
+              <li><strong>運算順序</strong>：<strong>先算乘方</strong>，再算括號，接著乘除，最後加減；同一級由左到右。<strong>乘方排在最前面</strong>，這是這一節新加進來的一層。</li>
               <li><strong>先化成分數再乘方</strong>：帶分數化假分數、小數化分數，都要在乘方之前完成。</li>
               <li><strong>範例（乘除）</strong>：
                 \[ \begin{aligned} \left(-\frac{1}{2}\right)^3 \times \left(-\frac{2}{3}\right)^2 &= \left(-\frac{1}{8}\right) \times \frac{4}{9} \\ &= -\frac{1}{18} \end{aligned} \]
@@ -330,7 +330,7 @@
                 <strong>先各自乘方，再把除法變成乘以倒數</strong>。</li>
               <li><strong>範例（含括號的綜合式）</strong>：
                 \[ \begin{aligned} \left[ 4 \times \left(-\frac{1}{2}\right)^2 + \frac{3}{2} \right] \div \left(-\frac{1}{2}\right)^3 &= \left( 4 \times \frac{1}{4} + \frac{3}{2} \right) \div \left(-\frac{1}{8}\right) \\ &= \left( 1 + \frac{3}{2} \right) \div \left(-\frac{1}{8}\right) \\ &= \frac{5}{2} \times (-8) = -20 \end{aligned} \]
-                中括號<strong>裡面</strong>的乘方要先算，但整個中括號要算完才能去除外面那一項。</li>
+                <strong>括號內外的乘方一起先算掉</strong>（\(\left(-\frac{1}{2}\right)^2\) 和 \(\left(-\frac{1}{2}\right)^3\) 都是），接著才算括號裡的乘除與加減，最後才處理外面那個除法。</li>
               <li><strong>最常見的錯誤</strong>：把 \(4 \times \left(-\frac{1}{2}\right)^2\) 算成 \(\left(4 \times \left(-\frac{1}{2}\right)\right)^2 = 4\)。<strong>乘方只黏著它正下方的那個底數</strong>，前面的係數不會被一起平方。</li>
             </ul>
 
@@ -340,8 +340,8 @@
                 <tr><th>順位</th><th>做什麼</th><th>提醒</th></tr>
               </thead>
               <tbody>
-                <tr><td>1</td><td>括號（小括號 \(\to\) 中括號）</td><td>括號內同樣照這張表的順序</td></tr>
-                <tr><td>2</td><td>乘方</td><td>先判斷符號：偶正奇負</td></tr>
+                <tr><td>1</td><td><strong>乘方</strong></td><td>先判斷符號：偶正奇負</td></tr>
+                <tr><td>2</td><td>括號（小括號 \(\to\) 中括號）</td><td>括號內同樣照這張表的順序</td></tr>
                 <tr><td>3</td><td>乘、除</td><td>由左到右；除法改乘倒數</td></tr>
                 <tr><td>4</td><td>加、減</td><td>由左到右</td></tr>
               </tbody>
@@ -355,7 +355,7 @@
 
           <div class="interactive-card">
             <h3><i class="fa-solid fa-forward-step"></i> 視覺互動探索：運算順序工作檯</h3>
-            <p class="interactive-instruction">選一道題目，再拉「步驟」滑桿一步一步往下走。<strong>當前正在處理的部分會被框起來</strong>：</p>
+            <p class="interactive-instruction">點選一道題目，再按「下一步」一路走下去。<strong>當前這一步會被框起來</strong>，已經走過的步驟留在上面對照：</p>
             <div class="canvas-container">
               <canvas id="canvas-order" width="540" height="380"></canvas>
               <div class="control-panel">
@@ -363,14 +363,23 @@
                   <span id="od-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
                 </div>
 
-                <div class="slider-wrapper">
-                  <div class="slider-row">
-                    <label for="od-q-slider">題目: <span id="od-q-val" class="val-num">0</span></label>
-                    <input type="range" id="od-q-slider" min="1" max="3" value="1" step="1">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">選題目</span>
+                    <div class="btn-group" id="od-q-group">
+                      <button type="button" class="pick-btn active" data-q="1">題目一</button>
+                      <button type="button" class="pick-btn" data-q="2">題目二</button>
+                      <button type="button" class="pick-btn" data-q="3">題目三</button>
+                    </div>
                   </div>
-                  <div class="slider-row">
-                    <label for="od-s-slider">步驟: <span id="od-s-val" class="val-num">0</span></label>
-                    <input type="range" id="od-s-slider" min="1" max="5" value="1" step="1">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">走步驟</span>
+                    <div class="btn-group">
+                      <button type="button" class="pick-btn" id="od-prev"><i class="fa-solid fa-chevron-left"></i> 上一步</button>
+                      <span class="step-counter" id="od-s-val">1 / 4</span>
+                      <button type="button" class="pick-btn" id="od-next">下一步 <i class="fa-solid fa-chevron-right"></i></button>
+                      <button type="button" class="pick-btn" id="od-reset"><i class="fa-solid fa-rotate-left"></i> 重來</button>
+                    </div>
                   </div>
                 </div>
 
@@ -413,12 +422,11 @@
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
               <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>照順序做：中括號內先算乘方，再乘除，再加減，最後才處理外面的除法。<br>
-              第一步（括號內的乘方）：\(\left(-\frac{1}{3}\right)^2 = \frac{1}{9}\)。<br>
+              <p class="explanation-desc"><strong>解析：</strong>照順序做：<strong>先把括號內外的乘方都算掉</strong>，再算括號裡的乘除與加減，最後才處理外面的除法。<br>
+              第一步（兩個乘方）：\(\left(-\frac{1}{3}\right)^2 = \frac{1}{9}\)、\(\left(-\frac{1}{2}\right)^2 = \frac{1}{4}\)，都是偶次方，符號為<strong>正</strong>。<br>
               第二步（括號內的乘法）：\(9 \times \frac{1}{9} = 1\)。<br>
               第三步（括號內的減法）：\(1 - \frac{1}{2} = \frac{1}{2}\)。<br>
-              第四步（外面的乘方）：\(\left(-\frac{1}{2}\right)^2 = \frac{1}{4}\)，偶次方為<strong>正</strong>。<br>
-              第五步：\(\frac{1}{2} \div \frac{1}{4} = \frac{1}{2} \times 4 = 2\)，答案為 A。<br>
+              第四步：\(\frac{1}{2} \div \frac{1}{4} = \frac{1}{2} \times 4 = 2\)，答案為 A。<br>
               選 B 的人是把 \(\left(-\frac{1}{2}\right)^2\) 的負號留了下來——<strong>偶數次方的負號會全部抵銷</strong>。</p>
             </div>
           </div>
@@ -439,11 +447,11 @@
             <ul class="bullet-list">
               <li><strong>從連乘看起</strong>：
                 \[ 5^2 \times 5^4 = (5 \times 5) \times (5 \times 5 \times 5 \times 5) \]
-                一共是 \(2 + 4 = 6\) 個 \(5\) 相乘，所以等於 \(5^6\)。<strong>兩疊紙合起來，張數相加</strong>。</li>
+                一共是 \(2 + 4 = 6\) 個 \(5\) 相乘，所以等於 \(5^6\)。</li>
               <li><strong>指數律（一）同底數相乘</strong>。若 \(a\) 是不為 \(0\) 的數，且 \(m\)、\(n\) 為正整數，則
                 \[ a^m \times a^n = a^{m+n} \]
                 例如 \(\left(\frac{1}{2}\right)^3 \times \left(\frac{1}{2}\right)^5 = \left(\frac{1}{2}\right)^{3+5} = \left(\frac{1}{2}\right)^8\)。</li>
-              <li><strong>從約分看除法</strong>：\((-2)^5 \div (-2)^2\) 是 \(5\) 個 \((-2)\) 除以 \(2\) 個 \((-2)\)，約掉 \(2\) 個之後剩下 \(5 - 2 = 3\) 個，所以等於 \((-2)^3\)。<strong>從一疊紙裡抽走幾張，張數相減</strong>。</li>
+              <li><strong>從約分看除法</strong>：\((-2)^5 \div (-2)^2\) 是 \(5\) 個 \((-2)\) 除以 \(2\) 個 \((-2)\)，約掉 \(2\) 個之後剩下 \(5 - 2 = 3\) 個，所以等於 \((-2)^3\)。</li>
               <li><strong>指數律（二）同底數相除</strong>。若 \(a\) 是不為 \(0\) 的數，且 \(m\)、\(n\) 為正整數且 \(m > n\)，則
                 \[ a^m \div a^n = a^{m-n} \]
                 例如 \(\left(\frac{3}{4}\right)^6 \div \left(\frac{3}{4}\right)^2 = \left(\frac{3}{4}\right)^{6-2} = \left(\frac{3}{4}\right)^4\)。</li>
@@ -474,35 +482,41 @@
           </div>
 
           <div class="interactive-card">
-            <h3><i class="fa-solid fa-arrows-to-dot"></i> 視覺互動探索：紙疊合併器</h3>
-            <p class="interactive-instruction">兩疊紙分別有 \(m\) 張與 \(n\) 張，切換<strong>合併（乘）</strong>或<strong>抽走（除）</strong>，看指數是相加還是相減：</p>
+            <h3><i class="fa-solid fa-grip"></i> 視覺互動探索：連乘展開對照器</h3>
+            <p class="interactive-instruction">把兩個乘方都<strong>攤開成一個一個的底數</strong>：乘法是把兩排接起來數總數，除法是上下<strong>一對一約掉</strong>再數剩幾個。</p>
             <div class="canvas-container">
-              <canvas id="canvas-stack" width="540" height="380"></canvas>
+              <canvas id="canvas-expand" width="540" height="380"></canvas>
               <div class="control-panel">
                 <div class="value-display">
-                  <span id="st-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                  <span id="ex-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">運算</span>
+                    <div class="btn-group" id="ex-op-group">
+                      <button type="button" class="pick-btn active" data-op="mul">相乘 \(a^m \times a^n\)</button>
+                      <button type="button" class="pick-btn" data-op="div">相除 \(a^m \div a^n\)</button>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="slider-wrapper">
                   <div class="slider-row">
-                    <label for="st-mode-slider">模式（1 乘 / 2 除）: <span id="st-mode-val" class="val-num">0</span></label>
-                    <input type="range" id="st-mode-slider" min="1" max="2" value="1" step="1">
+                    <label for="ex-a-slider">底數 a: <span id="ex-a-val" class="val-num">0</span></label>
+                    <input type="range" id="ex-a-slider" min="-5" max="5" value="2" step="1">
                   </div>
                   <div class="slider-row">
-                    <label for="st-a-slider">底數 a: <span id="st-a-val" class="val-num">0</span></label>
-                    <input type="range" id="st-a-slider" min="-5" max="5" value="2" step="1">
+                    <label for="ex-m-slider">指數 m: <span id="ex-m-val" class="val-num">0</span></label>
+                    <input type="range" id="ex-m-slider" min="1" max="7" value="5" step="1">
                   </div>
                   <div class="slider-row">
-                    <label for="st-m-slider">指數 m: <span id="st-m-val" class="val-num">0</span></label>
-                    <input type="range" id="st-m-slider" min="1" max="7" value="5" step="1">
-                  </div>
-                  <div class="slider-row">
-                    <label for="st-n-slider">指數 n: <span id="st-n-val" class="val-num">0</span></label>
-                    <input type="range" id="st-n-slider" min="1" max="7" value="2" step="1">
+                    <label for="ex-n-slider">指數 n: <span id="ex-n-val" class="val-num">0</span></label>
+                    <input type="range" id="ex-n-slider" min="1" max="7" value="2" step="1">
                   </div>
                 </div>
 
-                <div class="visual-feedback" id="st-feedback">載入中...</div>
+                <div class="visual-feedback" id="ex-feedback">載入中...</div>
               </div>
             </div>
           </div>
@@ -565,20 +579,24 @@
             <ul class="bullet-list">
               <li><strong>從連乘看起</strong>：
                 \[ \left(5^4\right)^2 = 5^4 \times 5^4 = 5^{4+4} = 5^{4 \times 2} = 5^8 \]
-                <strong>\(2\) 個盒子，每個盒子裡裝 \(4\) 個 \(5\)</strong>，總共 \(4 \times 2 = 8\) 個。</li>
+                把 \(5^4\) 當成一個整體連乘 \(2\) 次，展開後總共有 \(4 \times 2 = 8\) 個 \(5\)。</li>
               <li><strong>指數律（三）乘方的乘方</strong>。若 \(a\) 是不為 \(0\) 的數，且 \(m\)、\(n\) 為正整數，則
                 \[ \left(a^m\right)^n = a^{m \times n} \]
                 例如 \(\left[ \left(\frac{5}{3}\right)^2 \right]^3 = \left(\frac{5}{3}\right)^{2 \times 3} = \left(\frac{5}{3}\right)^6\)。</li>
               <li><strong>和指數律（一）的差別</strong>：\(a^m \times a^n\) 是指數<strong>相加</strong>，\(\left(a^m\right)^n\) 是指數<strong>相乘</strong>。\(5^4 \times 5^2 = 5^6\)，但 \(\left(5^4\right)^2 = 5^8\)，兩者<strong>不一樣</strong>。</li>
-              <li><strong>從重排看兩數相乘</strong>：\((7 \times 11)^4\) 展開後有 \(4\) 個 \(7\) 和 \(4\) 個 \(11\)，把同樣的數收在一起就是 \(7^4 \times 11^4\)。<strong>兩色紙一起摺 \(m\) 次，等於各自摺 \(m\) 次再配對</strong>。</li>
+              <li><strong>從重排看兩數相乘</strong>：\((7 \times 11)^4\) 展開後有 \(4\) 個 \(7\) 和 \(4\) 個 \(11\)，把同樣的數收在一起就是 \(7^4 \times 11^4\)。</li>
               <li><strong>指數律（四）兩數相乘的乘方</strong>。若 \(a\)、\(b\) 是不為 \(0\) 的數，且 \(m\) 為正整數，則
                 \[ (a \times b)^m = a^m \times b^m \]
                 例如 \(\left(\frac{1}{2} \times \frac{1}{3}\right)^5 = \left(\frac{1}{2}\right)^5 \times \left(\frac{1}{3}\right)^5\)。</li>
               <li><strong>反過來用最好用</strong>：看到 \(a^m \times b^m\)（<strong>指數相同</strong>）就把底數先乘起來。例如
                 \[ \left(-\frac{10}{7}\right)^8 \times \left(\frac{7}{5}\right)^8 = \left(-\frac{10}{7} \times \frac{7}{5}\right)^8 = (-2)^8 \]
                 本來很難算的兩個大分數，先約分之後只剩一個小整數。</li>
-              <li><strong>括號位置決定一切</strong>：\(\left(-3^4\right)^3 = -3^{12} < 0\)，但 \(\left(-3^3\right)^4 = 3^{12} > 0\)。負號沒有被括進乘方裡時，它只是最外層的一個負號，會被外面的偶次方抵銷或被奇次方留下。</li>
-              <li><strong>只對乘法成立</strong>：\((a \times b)^m = a^m \times b^m\) 是乘法的性質，<strong>\((a + b)^m \neq a^m + b^m\)</strong>。例如 \((2 + 3)^2 = 25\)，但 \(2^2 + 3^2 = 13\)。</li>
+              <li><strong>括號位置決定一切</strong>：兩個式子的內層都是 \(-3^k\)——負號<strong>沒有</strong>被內層乘方括進去，所以內層算完仍帶著一個負號。差別只在<strong>外層指數的奇偶</strong>：
+                \[ \begin{aligned} \left(-3^4\right)^3 &= (-81)^3 = -3^{12} < 0 \quad \text{（外層 } 3 \text{ 是奇數，負號留下）} \\ \left(-3^3\right)^4 &= (-27)^4 = 3^{12} > 0 \quad \text{（外層 } 4 \text{ 是偶數，負號抵銷）} \end{aligned} \]</li>
+              <li><strong>乘法與除法都成立，加減不成立</strong>：除法可以看成乘以倒數，所以
+                \[ (a \div b)^m = a^m \div b^m \]
+                例如 \(\left(6 \div 3\right)^3 = 2^3 = 8\)，而 \(6^3 \div 3^3 = \frac{216}{27} = 8\)，兩邊相等。<br>
+                但<strong>加減沒有這條性質</strong>：\((a + b)^m \neq a^m + b^m\)。例如 \((2 + 3)^2 = 25\)，但 \(2^2 + 3^2 = 13\)。</li>
             </ul>
 
             <div class="table-scroll">
@@ -601,31 +619,38 @@
           </div>
 
           <div class="interactive-card">
-            <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：盒中盒與兩色紙</h3>
-            <p class="interactive-instruction">模式 1 是<strong>盒中盒</strong>（\(\left(a^m\right)^n\)），模式 2 是<strong>兩色紙</strong>（\((a \times b)^m\)）。數一數畫面上總共有幾個底數：</p>
+            <h3><i class="fa-solid fa-diagram-project"></i> 視覺互動探索：展開推導器</h3>
+            <p class="interactive-instruction">選一條規律，畫面會把它<strong>一層一層展開到最底</strong>，最後再收攏回去。跟著中間那兩行看，就知道指數為什麼是<strong>相乘</strong>而不是相加：</p>
             <div class="canvas-container">
-              <canvas id="canvas-nest" width="540" height="380"></canvas>
+              <canvas id="canvas-derive" width="540" height="380"></canvas>
               <div class="control-panel">
                 <div class="value-display">
-                  <span id="ne-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                  <span id="dv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">規律</span>
+                    <div class="btn-group" id="dv-mode-group">
+                      <button type="button" class="pick-btn active" data-mode="pow">乘方的乘方</button>
+                      <button type="button" class="pick-btn" data-mode="mul">兩數相乘</button>
+                      <button type="button" class="pick-btn" data-mode="div">兩數相除</button>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="slider-wrapper">
                   <div class="slider-row">
-                    <label for="ne-mode-slider">模式（1 盒中盒 / 2 兩色紙）: <span id="ne-mode-val" class="val-num">0</span></label>
-                    <input type="range" id="ne-mode-slider" min="1" max="2" value="1" step="1">
+                    <label for="dv-m-slider">內層指數 m: <span id="dv-m-val" class="val-num">0</span></label>
+                    <input type="range" id="dv-m-slider" min="1" max="5" value="3" step="1">
                   </div>
                   <div class="slider-row">
-                    <label for="ne-m-slider">內層指數 m: <span id="ne-m-val" class="val-num">0</span></label>
-                    <input type="range" id="ne-m-slider" min="1" max="5" value="3" step="1">
-                  </div>
-                  <div class="slider-row">
-                    <label for="ne-n-slider">外層指數 n: <span id="ne-n-val" class="val-num">0</span></label>
-                    <input type="range" id="ne-n-slider" min="1" max="5" value="2" step="1">
+                    <label for="dv-n-slider">外層指數 n: <span id="dv-n-val" class="val-num">0</span></label>
+                    <input type="range" id="dv-n-slider" min="1" max="5" value="2" step="1">
                   </div>
                 </div>
 
-                <div class="visual-feedback" id="ne-feedback">載入中...</div>
+                <div class="visual-feedback" id="dv-feedback">載入中...</div>
               </div>
             </div>
           </div>
@@ -690,13 +715,13 @@
                 \[ 7^3 \div 7^3 = \frac{7^3}{7^3} = \frac{7 \times 7 \times 7}{7 \times 7 \times 7} = 1 \]
                 但若照指數律來看，\(7^3 \div 7^3 = 7^{3-3} = 7^0\)。<strong>兩個算法要一致，所以規定 \(7^0 = 1\)</strong>。</li>
               <li><strong>零次方的規定</strong>：若 \(a\) 是<strong>不為 \(0\)</strong> 的數，則 \(a^0 = 1\)。例如 \(10^0 = 1\)、\((-3)^0 = 1\)、\(\left(-\frac{5}{3}\right)^0 = 1\)。</li>
-              <li><strong>這是「規定」不是「證明」</strong>：它是為了讓指數律在 \(m = n\) 時也成立而做的約定。有了它，前面四條律在指數為 \(0\) 時全部通用：
+              <li><strong>指數為 0</strong>：它是為了讓指數律在 \(m = n\) 時也成立而做的約定。有了它，前面四條律在指數為 \(0\) 時全部通用：
                 \[ \begin{aligned} 3^5 \times 3^0 &= 3^5 \times 1 = 3^5 = 3^{5+0} \\ (-10)^8 \div (-10)^0 &= (-10)^8 \div 1 = (-10)^{8-0} \\ \left[ \left(-\frac{5}{3}\right)^3 \right]^0 &= 1 = \left(-\frac{5}{3}\right)^{3 \times 0} \end{aligned} \]</li>
               <li><strong>四條指數律總表</strong>。若 \(a\)、\(b\) 都是不為 \(0\) 的數，且 \(m\)、\(n\) 為正整數或 \(0\)：
                 \[ \begin{aligned} &(1)\ a^m \times a^n = a^{m+n} &&(2)\ a^m \div a^n = a^{m-n}\ (m > n) \\ &(3)\ \left(a^m\right)^n = a^{m \times n} &&(4)\ (a \times b)^m = a^m \times b^m \end{aligned} \]</li>
-              <li><strong>綜合應用的路線</strong>：先用（三）（四）把括號拆開或收攏 \(\to\) 再用（一）（二）合併同底數 \(\to\) 最後算出值。例如
+              <li><strong>綜合應用場景 1</strong>：先用（三）（四）把括號拆開或收攏 \(\to\) 再用（一）（二）合併同底數 \(\to\) 最後算出值。例如
                 \[ \begin{aligned} \left(2^2 \times 5\right)^4 \div \left(5^2\right)^2 &= 2^{2 \times 4} \times 5^4 \div 5^{2 \times 2} \\ &= 2^8 \times 5^{4-4} = 2^8 \times 5^0 \\ &= 256 \times 1 = 256 \end{aligned} \]</li>
-              <li><strong>指數相同就先約分</strong>：
+              <li><strong>綜合應用場景 2</strong>：指數相同就先約分。
                 \[ \begin{aligned} \left(-\frac{10}{7}\right)^8 \times \left(\frac{7}{5}\right)^8 \div (-2)^5 &= (-2)^8 \div (-2)^5 \\ &= (-2)^3 = -8 \end{aligned} \]</li>
               <li><strong>挑錯題的經典陷阱</strong>：\((-5)^6 \times \left(-2^6\right)\) 中，第二個括號裡的負號<strong>沒有被乘方括進去</strong>，所以 \(-2^6\) 是負的。正確做法是先把負號提到最外面：
                 \[ \begin{aligned} (-5)^6 \times \left(-2^6\right) &= 5^6 \times \left(-2^6\right) \\ &= -\left(5^6 \times 2^6\right) \\ &= -(5 \times 2)^6 = -10^6 \end{aligned} \]
@@ -810,15 +835,15 @@
               <li><strong>分數的乘方</strong>：\(\left(\frac{b}{a}\right)^n = \frac{b^n}{a^n}\)，分子分母<strong>各自</strong>乘方（\(a \neq 0\)）。</li>
               <li><strong>符號：偶正奇負</strong>。底數為負時，偶數次方為正、奇數次方為負。</li>
               <li><strong>括號決定負號</strong>：\((-2)^4 = 16\)，但 \(-2^4 = -16\)。沒有括號時負號不參與乘方。</li>
-              <li><strong>比大小</strong>（\(a\) 為正數）：\(a < 1\) 時 \(a^n < 1\) 且 \(n\) 愈大愈<strong>小</strong>；\(a > 1\) 時 \(a^n > 1\) 且 \(n\) 愈大愈<strong>大</strong>。底數不同就<strong>拿 \(1\) 當中間人</strong>。</li>
-              <li><strong>運算順序</strong>：括號 \(\to\) <strong>乘方</strong> \(\to\) 乘除 \(\to\) 加減，同級由左到右。</li>
+              <li><strong>比大小</strong>（\(a\) 為正數）：\(a < 1\) 時 \(a^n < 1\) 且 \(n\) 愈大愈<strong>小</strong>；\(a > 1\) 時 \(a^n > 1\) 且 \(n\) 愈大愈<strong>大</strong>。</li>
+              <li><strong>運算順序</strong>：<strong>乘方</strong> \(\to\) 括號 \(\to\) 乘除 \(\to\) 加減，同級由左到右。</li>
               <li><strong>指數律（一）</strong>：\(a^m \times a^n = a^{m+n}\)，同底數相乘<strong>指數相加</strong>。</li>
               <li><strong>指數律（二）</strong>：\(a^m \div a^n = a^{m-n}\)（\(m > n\)），同底數相除<strong>指數相減</strong>。</li>
               <li><strong>指數律（三）</strong>：\(\left(a^m\right)^n = a^{m \times n}\)，乘方的乘方<strong>指數相乘</strong>。</li>
-              <li><strong>指數律（四）</strong>：\((a \times b)^m = a^m \times b^m\)，兩數相乘的乘方<strong>各自乘方</strong>；反過來用可以先約分。</li>
+              <li><strong>指數律（四）</strong>：\((a \times b)^m = a^m \times b^m\)，兩數相乘的乘方<strong>各自乘方</strong>；<strong>除法同樣成立</strong>（\((a \div b)^m = a^m \div b^m\)），反過來用可以先約分。</li>
               <li><strong>前提</strong>：底數相同才能加減指數，指數相同才能合併底數；<strong>兩個都不同就只能硬算</strong>。</li>
               <li><strong>零次方</strong>：\(a \neq 0\) 時 \(a^0 = 1\)。這是為了讓 \(a^m \div a^n = a^{m-n}\) 在 \(m = n\) 時也成立而<strong>規定</strong>的。</li>
-              <li><strong>加法沒有指數律</strong>：\((a + b)^m \neq a^m + b^m\)。\((2+3)^2 = 25\)，而 \(2^2 + 3^2 = 13\)。</li>
+              <li><strong>加減沒有指數律</strong>：\((a + b)^m \neq a^m + b^m\)。\((2+3)^2 = 25\)，而 \(2^2 + 3^2 = 13\)。</li>
             </ul>
           </div>
 
