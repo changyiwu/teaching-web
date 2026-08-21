@@ -4,39 +4,903 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/webp" href="../../header-logo.webp">
-  <title>2-3 分數的四則運算 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-3 分數的四則運算 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第一冊 (1上) • 第2章 分數的運算</div>
-    <h1>2-3 分數的四則運算</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第一冊 • 第二章</span>
+        <h1>2-3 分數的四則運算</h1>
+        <p>分數的分子與分母互質時叫最簡分數；比大小要先通分，加減要先通分，乘法直接分子乘分子、分母乘分母，除法則是乘以除數的倒數。最後把整數學過的運算順序與分配律，一起搬到分數上使用。</p>
+      </div>
+      <!-- Progress navigation (6 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-cake-candles"></i> 最簡分數與等值分數</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-scale-unbalanced"></i> 分數的比較大小</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-plus-minus"></i> 分數的加減</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-xmark"></i> 分數的乘法</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-rotate"></i> 倒數與除法</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-list-ol"></i> 四則運算與應用</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Hand-drawn Bakery Recipe Style)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(251, 191, 36, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-cookie-bite" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);"></i> 課前暖身漫畫：烘焙教室裡的兩種答案
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小妍和小翊在算同一張配方單上的分量：\( \frac{7}{2} - \frac{4}{5} \div [ ( -\frac{8}{5} ) + \frac{7}{5} ] \)。一個算出 \( \frac{113}{30} \)，一個算出 \( \frac{24}{7} \)，兩個人都很有把握，答案卻不一樣。<strong style="color:#fcd34d">錯的地方都在「括號」</strong>——一個把除法也拿去用分配律拆開，一個是括號裡的分數加錯了。這一節就從最簡分數開始，一路把加、減、乘、除的規則補齊，最後回來算出這題的正解 \( \frac{15}{2} \)。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="手繪甜點烘焙食譜風四格漫畫：小妍算出 113/30、小翊算出 24/7，師傅大喊除法不能用分配律拆開，小妍發現自己括號也加錯了，最後三人算出正解 15/2" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 最簡分數與等值分數
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-cake-candles" aria-hidden="true"></i> 重點 1：最簡分數與等值分數——切得再細，還是同一塊
+        </h2>
+
+        <div class="grid-content">
+          <!-- Text Explanation -->
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>負分數的三種寫法</strong>：分數線本來就是除法，所以負號放在分子、分母或整個分數前面，值都一樣。設 \(a\)、\(b\) 為正整數，則
+                \[ \frac{-b}{a} = \frac{b}{-a} = -\frac{b}{a} \]
+                例如 \((-7) \div 4 = -( 7 \div 4 )\)，所以 \(\frac{-7}{4} = -\frac{7}{4}\)；\(7 \div (-4) = -( 7 \div 4 )\)，所以 \(\frac{7}{-4} = -\frac{7}{4}\)。<strong>習慣上把負號寫在分數前面</strong>。</li>
+              <li><strong>擴分</strong>：分子與分母<strong>同乘</strong>一個不為 \(0\) 的整數。例如 \(-\frac{3}{4} = \frac{-3 \times 2}{4 \times 2} = -\frac{6}{8}\)。</li>
+              <li><strong>約分</strong>：分子與分母<strong>同除以</strong>它們的公因數。例如 \(\frac{45}{60} = \frac{45 \div 15}{60 \div 15} = \frac{3}{4}\)。</li>
+              <li><strong>等值分數</strong>：擴分或約分後的分數，值與原分數相等，這些分數彼此稱為等值分數。<strong>格子變多變少，塗色的那一塊大小沒變</strong>。</li>
+              <li><strong>最簡分數</strong>：分子與分母<strong>互質</strong>（最大公因數為 \(1\)）的分數。例如 \(\frac{3}{4}\) 中 \(( 3 , 4 ) = 1\)，所以 \(\frac{3}{4}\) 是最簡分數。</li>
+              <li><strong>一次化到最簡</strong>：分子與分母同除以它們的<strong>最大公因數</strong>，一步就到位；除完之後兩者的公因數只剩 \(1\)，再也約不動了。</li>
+              <li><strong>負分數也一樣化</strong>：先把負號提到分數前面，再約分子與分母。例如 \(\frac{16}{-81} = -\frac{16}{81}\)，而 \(( 16 , 81 ) = 1\)，所以它已經是最簡分數。</li>
+              <li><strong>帶分數要先化假分數</strong>：判斷最簡、做乘除運算前，先把 \(4\frac{1}{3}\) 寫成 \(\frac{13}{3}\)，負帶分數則是 \(-2\frac{3}{4} = -\frac{11}{4}\)（<strong>整數與分數部分都要變號</strong>）。</li>
+              <li><strong>常見錯誤</strong>：約分只能<strong>同乘同除</strong>，不可以「同加同減」。\(\frac{3}{4}\) 的分子分母同加 \(1\) 會變成 \(\frac{4}{5}\)，兩者<strong>並不相等</strong>。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>原分數</th><th>\(\text{(分子, 分母)}\)</th><th>最簡分數</th><th>本來就最簡？</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(\frac{45}{60}\)</td><td>\(15\)</td><td>\(\frac{3}{4}\)</td><td>否</td></tr>
+                <tr><td>\(-\frac{36}{96}\)</td><td>\(12\)</td><td>\(-\frac{3}{8}\)</td><td>否</td></tr>
+                <tr><td>\(\frac{16}{-81}\)</td><td>\(1\)</td><td>\(-\frac{16}{81}\)</td><td>是（只需搬負號）</td></tr>
+                <tr><td>\(-\frac{21}{9}\)</td><td>\(3\)</td><td>\(-\frac{7}{3}\)</td><td>否</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="bake_cake.webp" alt="手繪烘焙風插圖：小妍舉起兩個一樣大的水果塔，一個切成 4 份取 3 份，另一個切成 8 份取 6 份" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Canvas Interaction -->
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：等值分數縮放器</h3>
+            <p class="interactive-instruction">調整分數與倍率，看看擴分、約分之後<strong>塗色的長度有沒有變</strong>，最下面一條是化到最簡的樣子：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-equiv" width="540" height="360"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="eq-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="eq-a-slider">分子 a: <span id="eq-a-val" class="val-num">0</span></label>
+                    <input type="range" id="eq-a-slider" min="-12" max="12" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eq-b-slider">分母 b: <span id="eq-b-val" class="val-num">0</span></label>
+                    <input type="range" id="eq-b-slider" min="2" max="12" value="12" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eq-k-slider">擴分倍率 k: <span id="eq-k-val" class="val-num">0</span></label>
+                    <input type="range" id="eq-k-slider" min="1" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="eq-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (最簡分數與等值分數)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一個分數<strong>已經是最簡分數</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-1-1" value="A"><span class="option-text">A. \(\frac{26}{39}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-1-1" value="B"><span class="option-text">B. \(\frac{15}{28}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-1-1" value="C"><span class="option-text">C. \(-\frac{18}{24}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-1-1" value="D"><span class="option-text">D. \(\frac{34}{51}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>最簡分數的判斷條件只有一個——<strong>分子與分母互質</strong>。<br>
+              A：\(26 = 2 \times 13\)、\(39 = 3 \times 13\)，\(( 26 , 39 ) = 13\)，可約成 \(\frac{2}{3}\)。<br>
+              C：\(( 18 , 24 ) = 6\)，可約成 \(-\frac{3}{4}\)。<br>
+              D：\(34 = 2 \times 17\)、\(51 = 3 \times 17\)，\(( 34 , 51 ) = 17\)，可約成 \(\frac{2}{3}\)。<br>
+              B：\(15 = 3 \times 5\)、\(28 = 2^2 \times 7\)，<strong>沒有共同的質因數</strong>，\(( 15 , 28 ) = 1\)，所以 \(\frac{15}{28}\) 是最簡分數，答案為 B。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 如果 \(\frac{5}{8}\) 的<strong>分母加上 \(24\)</strong>，那麼分子要加上多少，分數的值才不會改變？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-1-2" value="A"><span class="option-text">A. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-1-2" value="B"><span class="option-text">B. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-1-2" value="C"><span class="option-text">C. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-1-2" value="D"><span class="option-text">D. \(24\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>值不變＝<strong>擴分</strong>，所以分子分母要<strong>同乘同一個倍數</strong>，不是同加同一個數。<br>
+              新分母 \(= 8 + 24 = 32\)，而 \(32 \div 8 = 4\)，所以是擴分 \(4\) 倍。<br>
+              新分子 \(= 5 \times 4 = 20\)，也就是分子要<strong>加上</strong> \(20 - 5 = 15\)，答案為 C。<br>
+              驗算：\(\frac{5 + 15}{8 + 24} = \frac{20}{32} = \frac{5}{8}\)，確實相等。<br>
+              選 D 的人是把「分母加 \(24\)」直接搬到分子——那會變成 \(\frac{29}{32} \neq \frac{5}{8}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 分數的比較大小
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-unbalanced" aria-hidden="true"></i> 重點 2：分數的比較大小——先切成一樣的份數再比
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>通分</strong>：把幾個分數化成<strong>同分母</strong>的過程。分母取原本各分母的<strong>最小公倍數</strong> \([ b_1 , b_2 ]\)（就是 2-2 學過的那個）。</li>
+              <li><strong>同分母比分子</strong>：分母相同時，<strong>分子愈大的正分數愈大</strong>。</li>
+              <li><strong>同分子比分母</strong>：分子相同時，<strong>分母愈大的正分數反而愈小</strong>（同樣一塊蛋糕，切愈多份每份愈小）。</li>
+              <li><strong>範例（通分）</strong>：比較 \(\frac{2}{3}\)、\(\frac{3}{4}\)、\(\frac{5}{6}\)。<br>
+                \([ 3 , 4 , 6 ] = 12\)，通分得 \(\frac{8}{12}\)、\(\frac{9}{12}\)、\(\frac{10}{12}\)，<br>
+                所以 \(\frac{2}{3} < \frac{3}{4} < \frac{5}{6}\)。</li>
+              <li><strong>範例（同分子）</strong>：比較 \(\frac{2}{7}\)、\(\frac{3}{13}\)、\(\frac{5}{23}\)。<br>
+                \([ 2 , 3 , 5 ] = 30\)，把分子都化成 \(30\)：\(\frac{30}{105}\)、\(\frac{30}{130}\)、\(\frac{30}{138}\)，<br>
+                分母愈大愈小，所以 \(\frac{2}{7} > \frac{3}{13} > \frac{5}{23}\)。</li>
+              <li><strong>負分數：絕對值愈大，值愈小</strong>。跟整數一樣——先比絕對值，再<strong>把不等號反過來</strong>。</li>
+              <li><strong>範例（負分數）</strong>：比較 \(-\frac{2}{3}\) 與 \(-\frac{3}{5}\)。<br>
+                \(\left| -\frac{2}{3} \right| = \frac{10}{15}\)、\(\left| -\frac{3}{5} \right| = \frac{9}{15}\)，<br>
+                因為 \(\frac{10}{15} > \frac{9}{15}\)，所以 \(-\frac{2}{3} < -\frac{3}{5}\)。</li>
+              <li><strong>負帶分數</strong>：\(-1\frac{1}{2}\)、\(-1\frac{2}{3}\)、\(-1\frac{3}{4}\) 的絕對值分別是 \(1\frac{6}{12}\)、\(1\frac{8}{12}\)、\(1\frac{9}{12}\)，所以 \(-1\frac{1}{2} > -1\frac{2}{3} > -1\frac{3}{4}\)。<strong>整數部分相同時，只要比分數部分</strong>。</li>
+              <li><strong>正負一起比</strong>：不必通分——<strong>負分數一定小於 \(0\)，\(0\) 一定小於正分數</strong>。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>情況</th><th>怎麼比</th><th>例子</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>同分母</td><td>分子大的大</td><td>\(\frac{8}{12} < \frac{9}{12}\)</td></tr>
+                <tr><td>同分子（正）</td><td>分母大的小</td><td>\(\frac{5}{11} > \frac{5}{13}\)</td></tr>
+                <tr><td>都是負分數</td><td>絕對值大的小</td><td>\(-\frac{2}{3} < -\frac{3}{5}\)</td></tr>
+                <tr><td>一正一負</td><td>負的直接比較小</td><td>\(-\frac{1}{9} < \frac{1}{100}\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="bake_scale.webp" alt="手繪烘焙風插圖：小翊蹲在冷凍櫃前比較兩個量杯裡的巧克力醬，門上的溫度計指在零下" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-ruler-horizontal"></i> 視覺互動探索：通分比大小台</h3>
+            <p class="interactive-instruction">兩個分數會自動通分成同分母，並標在數線上，看看<strong>誰在右邊誰就大</strong>；把分子調成負的試試看：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-compare" width="540" height="370"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cp-a1-slider">第一個分數的分子: <span id="cp-a1-val" class="val-num">0</span></label>
+                    <input type="range" id="cp-a1-slider" min="-11" max="11" value="-2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cp-b1-slider">第一個分數的分母: <span id="cp-b1-val" class="val-num">0</span></label>
+                    <input type="range" id="cp-b1-slider" min="2" max="12" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cp-a2-slider">第二個分數的分子: <span id="cp-a2-val" class="val-num">0</span></label>
+                    <input type="range" id="cp-a2-slider" min="-11" max="11" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cp-b2-slider">第二個分數的分母: <span id="cp-b2-val" class="val-num">0</span></label>
+                    <input type="range" id="cp-b2-slider" min="2" max="12" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分數的比較大小)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 將 \(-\frac{5}{8}\)、\(-\frac{7}{12}\)、\(-\frac{2}{3}\) 由<strong>小到大</strong>排列，下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-2-1" value="A"><span class="option-text">A. \(-\frac{7}{12} < -\frac{5}{8} < -\frac{2}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-2-1" value="B"><span class="option-text">B. \(-\frac{2}{3} < -\frac{7}{12} < -\frac{5}{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-2-1" value="C"><span class="option-text">C. \(-\frac{5}{8} < -\frac{2}{3} < -\frac{7}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-2-1" value="D"><span class="option-text">D. \(-\frac{2}{3} < -\frac{5}{8} < -\frac{7}{12}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>三個都是負分數，先比<strong>絕對值</strong>，再把結果反過來。<br>
+              \([ 8 , 12 , 3 ] = 24\)，通分絕對值：\(\frac{5}{8} = \frac{15}{24}\)、\(\frac{7}{12} = \frac{14}{24}\)、\(\frac{2}{3} = \frac{16}{24}\)。<br>
+              絕對值由大到小為 \(\frac{16}{24} > \frac{15}{24} > \frac{14}{24}\)，也就是 \(\left| -\frac{2}{3} \right| > \left| -\frac{5}{8} \right| > \left| -\frac{7}{12} \right|\)。<br>
+              <strong>絕對值愈大的負數愈小</strong>，所以 \(-\frac{2}{3} < -\frac{5}{8} < -\frac{7}{12}\)，答案為 D。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 將 \(\frac{5}{11}\)、\(\frac{5}{12}\)、\(\frac{5}{13}\) 由<strong>大到小</strong>排列，下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-2-2" value="A"><span class="option-text">A. \(\frac{5}{11} > \frac{5}{12} > \frac{5}{13}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-2-2" value="B"><span class="option-text">B. \(\frac{5}{13} > \frac{5}{12} > \frac{5}{11}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-2-2" value="C"><span class="option-text">C. \(\frac{5}{12} > \frac{5}{11} > \frac{5}{13}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-2-2" value="D"><span class="option-text">D. 三個分數一樣大</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>三個分數的<strong>分子都是 \(5\)</strong>，不必通分，直接用「同分子比分母」。<br>
+              同樣要分 \(5\) 份出來，蛋糕切成 \(11\) 份時每份最大，切成 \(13\) 份時每份最小。<br>
+              所以<strong>分母愈小的正分數愈大</strong>：\(\frac{5}{11} > \frac{5}{12} > \frac{5}{13}\)，答案為 A。<br>
+              不放心可以通分驗算：\([ 11 , 12 , 13 ] = 1716\)，得 \(\frac{780}{1716} > \frac{715}{1716} > \frac{660}{1716}\)，結論相同。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 分數的加減
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-plus-minus" aria-hidden="true"></i> 重點 3：分數的加減——分母先對齊，分子才能算
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>同分母</strong>：<strong>分母不變</strong>，分子直接加減。
+                \[ \frac{-7}{5} + \frac{-9}{5} = \frac{(-7) + (-9)}{5} = -\frac{16}{5} \]</li>
+              <li><strong>異分母</strong>：先<strong>通分</strong>（分母取最小公倍數），再加減分子。
+                \[ ( -\frac{5}{6} ) - \frac{11}{8} = -\frac{20}{24} - \frac{33}{24} = -\frac{53}{24} \]
+                （這裡 \([ 6 , 8 ] = 24\)）</li>
+              <li><strong>減負數就是加正數</strong>：\(( -\frac{7}{8} ) - ( -\frac{3}{8} ) = -\frac{7}{8} + \frac{3}{8} = -\frac{4}{8} = -\frac{1}{2}\)。</li>
+              <li><strong>去括號規則</strong>（跟第 1 章整數完全一樣）：
+                \[ -( a + b ) = -a - b \qquad -( a - b ) = -a + b \]
+                括號前面是減號時，<strong>括號裡每一項都要變號</strong>。</li>
+              <li><strong>交換律與結合律</strong>：\(a + b = b + a\)、\(a + b + c = ( a + b ) + c = a + ( b + c )\)。<strong>把同分母的先湊在一起算，可以少通分一次</strong>。</li>
+              <li><strong>範例（先湊同分母）</strong>：
+                \[ ( -\frac{28}{29} ) - ( -\frac{32}{31} + \frac{1}{29} ) = -\frac{28}{29} - \frac{1}{29} + \frac{32}{31} = -1 + \frac{32}{31} = \frac{1}{31} \]
+                如果硬把 \(29\) 和 \(31\) 通分成 \(899\)，計算量會大很多。</li>
+              <li><strong>帶分數的加減兩種做法</strong>：計算 \(( -2\frac{3}{4} ) + 1\frac{2}{7}\)
+                <ul>
+                  <li>〈解法一〉全化假分數：\(-\frac{11}{4} + \frac{9}{7} = \frac{-77 + 36}{28} = -\frac{41}{28}\)</li>
+                  <li>〈解法二〉整數、分數分開算：\(( -2 + 1 ) + ( -\frac{3}{4} + \frac{2}{7} ) = -1 - \frac{13}{28} = -1\frac{13}{28}\)</li>
+                </ul>
+                兩個答案相同：\(-\frac{41}{28} = -1\frac{13}{28}\)。</li>
+              <li><strong>負帶分數拆開要小心</strong>：\(-7\frac{2}{3} = -( 7 + \frac{2}{3} ) = -7 - \frac{2}{3}\)，<strong>不是</strong> \(-7 + \frac{2}{3}\)。</li>
+              <li><strong>算完記得約分</strong>：答案一律化成<strong>最簡分數</strong>（假分數或帶分數都可以）。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>步驟</th><th>做什麼</th><th>示範</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>去括號</td><td>\(\frac{2}{3} - ( -\frac{3}{4} ) + ( -\frac{1}{6} ) = \frac{2}{3} + \frac{3}{4} - \frac{1}{6}\)</td></tr>
+                <tr><td>2</td><td>通分</td><td>\([ 3 , 4 , 6 ] = 12 \Rightarrow \frac{8}{12} + \frac{9}{12} - \frac{2}{12}\)</td></tr>
+                <tr><td>3</td><td>算分子</td><td>\(\frac{8 + 9 - 2}{12} = \frac{15}{12}\)</td></tr>
+                <tr><td>4</td><td>約分</td><td>\(\frac{15}{12} = \frac{5}{4} = 1\frac{1}{4}\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="bake_mix.webp" alt="手繪烘焙風插圖：小翊與小妍把切成 3 塊與 4 塊的兩個派，用滾輪切刀重新切成一樣的份數" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-layer-group"></i> 視覺互動探索：通分拼接器</h3>
+            <p class="interactive-instruction">兩個分數會先各自切成 \(b_1\)、\(b_2\) 格，通分後<strong>切成一樣細的格子</strong>再拼起來（往右是正、往左是負）：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-addsub" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="as-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="step-btn-grid" style="margin-bottom: 0.25rem;">
+                  <button class="step-choice-btn active" data-addsub-op="add">① 相加 \(+\)</button>
+                  <button class="step-choice-btn" data-addsub-op="sub">② 相減 \(-\)</button>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="as-a1-slider">第一個分數的分子: <span id="as-a1-val" class="val-num">0</span></label>
+                    <input type="range" id="as-a1-slider" min="-8" max="8" value="-5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="as-b1-slider">第一個分數的分母: <span id="as-b1-val" class="val-num">0</span></label>
+                    <input type="range" id="as-b1-slider" min="2" max="10" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="as-a2-slider">第二個分數的分子: <span id="as-a2-val" class="val-num">0</span></label>
+                    <input type="range" id="as-a2-slider" min="-8" max="8" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="as-b2-slider">第二個分數的分母: <span id="as-b2-val" class="val-num">0</span></label>
+                    <input type="range" id="as-b2-slider" min="2" max="10" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="as-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分數的加減)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 計算 \(( -\frac{7}{10} ) - ( -\frac{3}{4} )\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-3-1" value="A"><span class="option-text">A. \(-\frac{1}{20}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-3-1" value="B"><span class="option-text">B. \(\frac{1}{20}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-3-1" value="C"><span class="option-text">C. \(-\frac{29}{20}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-3-1" value="D"><span class="option-text">D. \(\frac{29}{20}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先把「減負數」改成「加正數」：\(( -\frac{7}{10} ) - ( -\frac{3}{4} ) = -\frac{7}{10} + \frac{3}{4}\)。<br>
+              通分，\([ 10 , 4 ] = 20\)：\(-\frac{14}{20} + \frac{15}{20} = \frac{-14 + 15}{20} = \frac{1}{20}\)，答案為 B。<br>
+              選 C 的人是<strong>忘了把括號前的負號作用在負分數上</strong>，變成 \(-\frac{14}{20} - \frac{15}{20}\)。<strong>減去一個負數等於加上它的相反數</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算 \(\frac{3}{8} + ( -\frac{5}{6} - \frac{1}{8} )\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-3-2" value="A"><span class="option-text">A. \(\frac{7}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-3-2" value="B"><span class="option-text">B. \(-\frac{13}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-3-2" value="C"><span class="option-text">C. \(-\frac{7}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-3-2" value="D"><span class="option-text">D. \(\frac{13}{12}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>括號前面是加號，去括號時<strong>裡面的符號都不變</strong>：<br>
+              \(\frac{3}{8} + ( -\frac{5}{6} - \frac{1}{8} ) = \frac{3}{8} - \frac{5}{6} - \frac{1}{8}\)。<br>
+              用交換律先把<strong>同分母的兩項湊在一起</strong>：\(( \frac{3}{8} - \frac{1}{8} ) - \frac{5}{6} = \frac{2}{8} - \frac{5}{6} = \frac{1}{4} - \frac{5}{6}\)。<br>
+              通分，\([ 4 , 6 ] = 12\)：\(\frac{3}{12} - \frac{10}{12} = -\frac{7}{12}\)，答案為 C。<br>
+              若一開始就把 \(8\)、\(6\)、\(8\) 全部通分成 \(24\) 也做得出來，只是數字大得多——<strong>先湊同分母是省力的關鍵</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 分數的乘法
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i> 重點 4：分數的乘法——分子乘分子，分母乘分母
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>基本規則</strong>：分子相乘當新分子，分母相乘當新分母，<strong>不用通分</strong>。
+                \[ \frac{b}{a} \times \frac{d}{c} = \frac{b \times d}{a \times c} \]
+                例如 \(\frac{9}{5} \times \frac{4}{7} = \frac{36}{35}\)。</li>
+              <li><strong>帶分數先化假分數</strong>：\(\frac{1}{3} \times 2\frac{1}{2} = \frac{1}{3} \times \frac{5}{2} = \frac{5}{6}\)。<strong>千萬不要整數乘整數、分數乘分數</strong>。</li>
+              <li><strong>符號規則（跟整數一樣）</strong>：
+                <ul>
+                  <li><strong>同號</strong>兩分數相乘，結果為<strong>正</strong>。</li>
+                  <li><strong>異號</strong>兩分數相乘，結果為<strong>負</strong>。</li>
+                </ul>
+                先決定符號、再算絕對值，最不容易錯。</li>
+              <li><strong>先約分再乘</strong>：跟先乘再約分結果一樣，但先約分數字小很多。
+                \[ ( -\frac{3}{7} ) \times ( -\frac{14}{15} ) = +( \frac{3}{7} \times \frac{14}{15} ) = \frac{2}{5} \]
+                （\(3\) 與 \(15\) 約掉 \(3\)、\(14\) 與 \(7\) 約掉 \(7\)）</li>
+              <li><strong>交叉約分</strong>：可以拿<strong>任一個分子</strong>和<strong>任一個分母</strong>約，不必是同一個分數裡的。</li>
+              <li><strong>連乘看負號個數</strong>：
+                <ul>
+                  <li><strong>偶數個</strong>負數相乘 \(\Rightarrow\) 乘積為<strong>正</strong>。</li>
+                  <li><strong>奇數個</strong>負數相乘 \(\Rightarrow\) 乘積為<strong>負</strong>。</li>
+                </ul>
+                例如 \(( -\frac{2}{3} ) \times ( -\frac{2}{3} ) \times ( -\frac{2}{3} ) \times ( -\frac{2}{3} ) = \frac{16}{81}\)（4 個負號，正）。</li>
+              <li><strong>乘法交換律與結合律</strong>：\(a \times b = b \times a\)、\(a \times b \times c = ( a \times b ) \times c = a \times ( b \times c )\)。連乘時可以<strong>挑好約的先乘</strong>。</li>
+              <li><strong>乘出來不一定變大</strong>：乘以一個<strong>小於 \(1\) 的正分數</strong>會讓結果變小，例如 \(6 \times \frac{1}{3} = 2\)。這跟整數乘法的直覺不同。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>算式</th><th>先判符號</th><th>再算絕對值</th><th>結果</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(( -\frac{3}{2} ) \times \frac{1}{4}\)</td><td>異號 \(\Rightarrow\) 負</td><td>\(\frac{3}{2} \times \frac{1}{4} = \frac{3}{8}\)</td><td>\(-\frac{3}{8}\)</td></tr>
+                <tr><td>\(( -\frac{3}{7} ) \times ( -\frac{14}{15} )\)</td><td>同號 \(\Rightarrow\) 正</td><td>\(\frac{3}{7} \times \frac{14}{15} = \frac{2}{5}\)</td><td>\(\frac{2}{5}\)</td></tr>
+                <tr><td>\(( -2\frac{1}{3} ) \times ( -\frac{5}{21} ) \times ( -1\frac{1}{5} )\)</td><td>3 個負 \(\Rightarrow\) 負</td><td>\(\frac{7}{3} \times \frac{5}{21} \times \frac{6}{5} = \frac{2}{3}\)</td><td>\(-\frac{2}{3}\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="bake_tray.webp" alt="手繪烘焙風插圖：長方形烤盤蛋糕上，粉紅色直條與薄荷綠橫條交叉成格子，交疊處顏色更深" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-table-cells-large"></i> 視覺互動探索：面積乘法器</h3>
+            <p class="interactive-instruction">把整塊烤盤看成 \(1\)，粉紅直條是第一個分數、薄荷橫條是第二個分數，<strong>交疊的格子就是乘積</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mul" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ml-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ml-a1-slider">第一個分數的分子: <span id="ml-a1-val" class="val-num">0</span></label>
+                    <input type="range" id="ml-a1-slider" min="-8" max="8" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ml-b1-slider">第一個分數的分母: <span id="ml-b1-val" class="val-num">0</span></label>
+                    <input type="range" id="ml-b1-slider" min="2" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ml-a2-slider">第二個分數的分子: <span id="ml-a2-val" class="val-num">0</span></label>
+                    <input type="range" id="ml-a2-slider" min="-8" max="8" value="-2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ml-b2-slider">第二個分數的分母: <span id="ml-b2-val" class="val-num">0</span></label>
+                    <input type="range" id="ml-b2-slider" min="2" max="8" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ml-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分數的乘法)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 計算 \(( -\frac{8}{15} ) \times ( -\frac{25}{12} )\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-4-1" value="A"><span class="option-text">A. \(\frac{10}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-4-1" value="B"><span class="option-text">B. \(-\frac{10}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-4-1" value="C"><span class="option-text">C. \(\frac{9}{10}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-4-1" value="D"><span class="option-text">D. \(\frac{40}{9}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>兩個都是負分數，<strong>同號相乘得正</strong>，先把符號決定好：<br>
+              \(( -\frac{8}{15} ) \times ( -\frac{25}{12} ) = +( \frac{8}{15} \times \frac{25}{12} )\)。<br>
+              交叉約分：\(8\) 與 \(12\) 同除以 \(4\) 得 \(2\) 與 \(3\)；\(25\) 與 \(15\) 同除以 \(5\) 得 \(5\) 與 \(3\)。<br>
+              所以原式 \(= \frac{2 \times 5}{3 \times 3} = \frac{10}{9}\)，答案為 A。<br>
+              選 B 的人是<strong>把符號規則記反了</strong>——負負得正。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算 \(( -\frac{3}{4} ) \times ( -\frac{8}{9} ) \times ( -\frac{3}{2} )\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-4-2" value="A"><span class="option-text">A. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-4-2" value="B"><span class="option-text">B. \(-\frac{9}{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-4-2" value="C"><span class="option-text">C. \(\frac{9}{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-4-2" value="D"><span class="option-text">D. \(-1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>連乘先數負號：這裡有 <strong>3 個負號（奇數個）</strong>，所以乘積為<strong>負</strong>。<br>
+              再算絕對值：\(\frac{3}{4} \times \frac{8}{9} \times \frac{3}{2}\)。<br>
+              \(3\) 與 \(9\) 約成 \(1\) 與 \(3\)；\(8\) 與 \(4\) 約成 \(2\) 與 \(1\)：得 \(\frac{1 \times 2}{1 \times 3} \times \frac{3}{2} = \frac{2}{3} \times \frac{3}{2} = 1\)。<br>
+              補上負號，原式 \(= -1\)，答案為 D。<br>
+              先數負號再算絕對值，可以完全避開「一路追著負號跑」的計算錯誤。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 倒數與分數的除法
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-rotate" aria-hidden="true"></i> 重點 5：倒數與分數的除法——把除數翻過來再相乘
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>倒數的定義</strong>：把分數 \(\frac{b}{a}\)（\(a\)、\(b\) 皆不為 \(0\)）的<strong>分子與分母對調</strong>，得到的 \(\frac{a}{b}\) 就是它的倒數，兩數互為倒數。</li>
+              <li><strong>核心性質</strong>：互為倒數的兩數<strong>相乘等於 \(1\)</strong>。
+                \[ \frac{b}{a} \times \frac{a}{b} = 1 \]</li>
+              <li><strong>負數的倒數還是負數</strong>：\(-\frac{7}{2}\) 的倒數為 \(\frac{2}{-7} = -\frac{2}{7}\)。<strong>負號不會因為翻轉而消失</strong>。</li>
+              <li><strong>整數的倒數</strong>：先寫成分母為 \(1\) 的分數。\(-2 = -\frac{2}{1}\)，倒數為 \(-\frac{1}{2}\)。</li>
+              <li><strong>帶分數先化假分數</strong>：\(4\frac{1}{3} = \frac{13}{3}\)，所以倒數是 \(\frac{3}{13}\)，<strong>不是</strong> \(4\frac{3}{1}\)。</li>
+              <li><strong>兩個特例</strong>：\(1\) 的倒數是 \(1\)、\(-1\) 的倒數是 \(-1\)；而<strong>\(0\) 沒有倒數</strong>（分母不能為 \(0\)）。</li>
+              <li><strong>除法規則</strong>：除以一個不為 \(0\) 的分數，等於<strong>乘以這個分數的倒數</strong>。
+                \[ \frac{3}{5} \div 2\frac{1}{2} = \frac{3}{5} \div \frac{5}{2} = \frac{3}{5} \times \frac{2}{5} = \frac{6}{25} \]</li>
+              <li><strong>符號規則（跟乘法一樣）</strong>：<strong>同號</strong>兩分數相除結果為<strong>正</strong>，<strong>異號</strong>相除結果為<strong>負</strong>。</li>
+              <li><strong>連除要一個一個翻</strong>：\(( -\frac{9}{8} ) \div ( -\frac{3}{4} ) \div \frac{1}{3} = \frac{9}{8} \times \frac{4}{3} \times \frac{3}{1} = \frac{9}{2}\)。<strong>只有除號後面的分數要翻</strong>，被除數不動。</li>
+              <li><strong>除以小於 \(1\) 的數會變大</strong>：\(\frac{1}{2} \div \frac{1}{4} = \frac{1}{2} \times 4 = 2\)。這也和整數除法的直覺不同。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>原數</th><th>先化成</th><th>倒數</th><th>驗算</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(3\frac{2}{5}\)</td><td>\(\frac{17}{5}\)</td><td>\(\frac{5}{17}\)</td><td>\(\frac{17}{5} \times \frac{5}{17} = 1\)</td></tr>
+                <tr><td>\(-\frac{4}{7}\)</td><td>\(-\frac{4}{7}\)</td><td>\(-\frac{7}{4}\)</td><td>\(( -\frac{4}{7} ) \times ( -\frac{7}{4} ) = 1\)</td></tr>
+                <tr><td>\(-1\)</td><td>\(-\frac{1}{1}\)</td><td>\(-1\)</td><td>\(( -1 ) \times ( -1 ) = 1\)</td></tr>
+                <tr><td>\(0\)</td><td>—</td><td>沒有倒數</td><td>分母不能為 \(0\)</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="bake_flip.webp" alt="手繪烘焙風插圖：師傅把玻璃量杯倒過來，旁邊的銅製天平上高瘦罐與矮胖罐剛好平衡" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-repeat"></i> 視覺互動探索：倒數翻轉機</h3>
+            <p class="interactive-instruction">下面的除數卡會<strong>翻面變成它的倒數</strong>，除法就變成乘法；右邊隨時驗證兩數相乘是否為 \(1\)：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-recip" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rc-p-slider">被除數的分子 p: <span id="rc-p-val" class="val-num">0</span></label>
+                    <input type="range" id="rc-p-slider" min="-9" max="9" value="-5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rc-q-slider">被除數的分母 q: <span id="rc-q-val" class="val-num">0</span></label>
+                    <input type="range" id="rc-q-slider" min="2" max="12" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rc-a-slider">除數的分子 a: <span id="rc-a-val" class="val-num">0</span></label>
+                    <input type="range" id="rc-a-slider" min="-12" max="12" value="-10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rc-b-slider">除數的分母 b: <span id="rc-b-val" class="val-num">0</span></label>
+                    <input type="range" id="rc-b-slider" min="2" max="12" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (倒數與分數的除法)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-5-1">
+            <p class="quiz-question"><strong>Q1.</strong> \(-2\frac{1}{4}\) 的<strong>倒數</strong>是下列哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-5-1" value="A"><span class="option-text">A. \(\frac{4}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-5-1" value="B"><span class="option-text">B. \(-\frac{4}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-5-1" value="C"><span class="option-text">C. \(-\frac{9}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-5-1" value="D"><span class="option-text">D. \(-2\frac{4}{1}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>帶分數<strong>一定要先化成假分數</strong>才能取倒數。<br>
+              \(-2\frac{1}{4} = -\frac{2 \times 4 + 1}{4} = -\frac{9}{4}\)。<br>
+              分子分母對調，得倒數 \(-\frac{4}{9}\)，答案為 B。<br>
+              驗算：\(( -\frac{9}{4} ) \times ( -\frac{4}{9} ) = 1\)，符合「互為倒數的兩數相乘為 \(1\)」。<br>
+              選 D 的人是直接把帶分數的分子分母對調——那樣算出來乘積不是 \(1\)。選 C 的人是<strong>把原數抄成倒數</strong>了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-5-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算 \(( -\frac{5}{6} ) \div ( -\frac{10}{9} ) \div \frac{3}{4}\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-5-2" value="A"><span class="option-text">A. \(-1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-5-2" value="B"><span class="option-text">B. \(\frac{3}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-5-2" value="C"><span class="option-text">C. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-5-2" value="D"><span class="option-text">D. \(\frac{9}{16}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先看符號：負號有 <strong>2 個（偶數個）</strong>，所以結果為<strong>正</strong>。<br>
+              再把<strong>每一個除號後面</strong>的分數翻成倒數：<br>
+              \(\frac{5}{6} \div \frac{10}{9} \div \frac{3}{4} = \frac{5}{6} \times \frac{9}{10} \times \frac{4}{3}\)。<br>
+              約分：\(5\) 與 \(10\) 約成 \(1\) 與 \(2\)；\(9\) 與 \(6\) 約成 \(3\) 與 \(2\)；再與 \(\frac{4}{3}\) 相乘，\(4\) 與 \(4\) 約掉、\(3\) 與 \(3\) 約掉。<br>
+              得 \(\frac{1 \times 3}{2 \times 2} \times \frac{4}{3} = \frac{3}{4} \times \frac{4}{3} = 1\)，答案為 C。<br>
+              選 B 的人是<strong>只翻了第一個除數</strong>，把最後一步的 \(\div \frac{3}{4}\) 當成乘法算了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 數的四則運算與應用
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-ol" aria-hidden="true"></i> 重點 6：數的四則運算與應用——順序對了，分配律才好用
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>運算順序（跟整數完全一樣）</strong>：
+                <ul>
+                  <li>① 先算<strong>括號</strong>（小括號 → 中括號）。</li>
+                  <li>② 再算<strong>乘除</strong>，同一級由<strong>左到右</strong>。</li>
+                  <li>③ 最後算<strong>加減</strong>，同一級由<strong>左到右</strong>。</li>
+                </ul></li>
+              <li><strong>小數與分數混在一起時，統一化成分數</strong>：\(-0.6 = -\frac{6}{10} = -\frac{3}{5}\)、\(1.5 = \frac{3}{2}\)。分數比小數好約分。</li>
+              <li><strong>範例（順序 + 化分數）</strong>：
+                \[ \frac{3}{2} \div ( -0.6 ) \times ( -\frac{3}{5} ) - \frac{1}{2} = \frac{3}{2} \times ( -\frac{5}{3} ) \times ( -\frac{3}{5} ) - \frac{1}{2} = \frac{3}{2} - \frac{1}{2} = 1 \]
+                注意 \(\div\) 和 \(\times\) <strong>同一級，必須由左到右</strong>，不可以先算後面的乘法。</li>
+              <li><strong>乘法對加減的分配律</strong>：
+                \[ a \times b + a \times c = a \times ( b + c ) \qquad a \times b - a \times c = a \times ( b - c ) \]
+                看到<strong>相同的因數</strong>就把它提出來，可以少算很多。</li>
+              <li><strong>範例（提公因數）</strong>：
+                \[ 3\frac{9}{11} \times ( -57 ) - 1\frac{9}{11} \times ( -57 ) = ( 3\frac{9}{11} - 1\frac{9}{11} ) \times ( -57 ) = 2 \times ( -57 ) = -114 \]</li>
+              <li><strong>除法沒有分配律</strong>（漫畫裡小翊踩到的坑）：
+                \[ a \div ( b + c ) \neq a \div b + a \div c \]
+                括號在<strong>除號後面</strong>時，一定要<strong>先把括號裡算完</strong>，再拿去除。</li>
+              <li><strong>應用問題的通用解法</strong>：
+                <ul>
+                  <li>① 找出<strong>「變化量」</strong>（前後相減）。</li>
+                  <li>② 找出這個變化量<strong>占全體的幾分之幾</strong>。</li>
+                  <li>③ 用<strong>除法</strong>還原全體：\(\text{全體} = \text{變化量} \div \text{所占的分率}\)。</li>
+                </ul></li>
+              <li><strong>範例（無人機）</strong>：滿載 \(45\) 公斤，飛 \(50\) 分鐘可噴完；飛 \(20\) 分鐘後機加藥重 \(37\) 公斤，求機身重。<br>
+                用掉 \(45 - 37 = 8\) 公斤，占滿載的 \(\frac{20}{50} = \frac{2}{5}\)，<br>
+                滿載農藥 \(= 8 \div \frac{2}{5} = 20\) 公斤，故機身 \(= 45 - 20 = 25\) 公斤。</li>
+            </ul>
+
+            <table class="sign-table">
+              <thead>
+                <tr><th>寫法</th><th>正確嗎</th><th>原因</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(\frac{4}{5} \times ( \frac{1}{2} + \frac{1}{3} ) = \frac{4}{5} \times \frac{1}{2} + \frac{4}{5} \times \frac{1}{3}\)</td><td>✅ 正確</td><td>乘法對加法有分配律</td></tr>
+                <tr><td>\(\frac{4}{5} \div ( \frac{1}{2} + \frac{1}{3} ) = \frac{4}{5} \div \frac{1}{2} + \frac{4}{5} \div \frac{1}{3}\)</td><td>❌ 錯誤</td><td>除法<strong>沒有</strong>分配律，括號要先算</td></tr>
+                <tr><td>\(\frac{3}{2} \div \frac{3}{5} \times \frac{3}{5} = \frac{3}{2} \div ( \frac{3}{5} \times \frac{3}{5} )\)</td><td>❌ 錯誤</td><td>乘除同級要由左到右</td></tr>
+              </tbody>
+            </table>
+
+            <div class="illustration-container">
+              <img src="bake_recipe.webp" alt="手繪烘焙風插圖：小翊一手拿著長長的配方單，一手把麵粉從大袋子倒進三個一樣的玻璃罐" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-flask"></i> 視覺互動探索：分配律拼圖與情境模擬器</h3>
+            <p class="interactive-instruction">切換下面四種模式：第一種看<strong>分配律怎麼把兩塊面積併成一塊</strong>，另外三種是課本的應用情境：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-apply" width="540" height="360"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ap-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="step-btn-grid" style="margin-bottom: 0.25rem;">
+                  <button class="step-choice-btn active" data-apply-mode="dist">① 分配律拼圖</button>
+                  <button class="step-choice-btn" data-apply-mode="drone">② 無人機噴藥</button>
+                  <button class="step-choice-btn" data-apply-mode="bottle">③ 果汁與空瓶</button>
+                  <button class="step-choice-btn" data-apply-mode="books">④ 圖書館新書</button>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ap-a-slider"><span id="ap-a-label">共同因數 a 的分子</span>: <span id="ap-a-val" class="val-num">0</span></label>
+                    <input type="range" id="ap-a-slider" min="1" max="60" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ap-b-slider"><span id="ap-b-label">第一項 b</span>: <span id="ap-b-val" class="val-num">0</span></label>
+                    <input type="range" id="ap-b-slider" min="1" max="60" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ap-c-slider"><span id="ap-c-label">第二項 c</span>: <span id="ap-c-val" class="val-num">0</span></label>
+                    <input type="range" id="ap-c-slider" min="1" max="60" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ap-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (四則運算與應用)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-6-1">
+            <p class="quiz-question"><strong>Q1.</strong> 計算 \(\frac{5}{3} \div ( -0.4 ) \times ( -\frac{2}{5} ) + \frac{1}{3}\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-6-1" value="A"><span class="option-text">A. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-6-1" value="B"><span class="option-text">B. \(-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-6-1" value="C"><span class="option-text">C. \(\frac{4}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-6-1" value="D"><span class="option-text">D. \(-\frac{4}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先把小數化成分數：\(-0.4 = -\frac{4}{10} = -\frac{2}{5}\)。<br>
+              乘除<strong>由左到右</strong>，先算除法：\(\frac{5}{3} \div ( -\frac{2}{5} ) = \frac{5}{3} \times ( -\frac{5}{2} ) = -\frac{25}{6}\)。<br>
+              再乘：\(( -\frac{25}{6} ) \times ( -\frac{2}{5} ) = +\frac{25 \times 2}{6 \times 5} = \frac{5}{3}\)。<br>
+              最後做加法：\(\frac{5}{3} + \frac{1}{3} = \frac{6}{3} = 2\)，答案為 A。<br>
+              如果先把後面的 \(( -\frac{2}{5} ) \times\) 併進去算，就違反了「<strong>乘除同級由左到右</strong>」，會得到錯誤答案。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-6-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算 \(4\frac{2}{7} \times ( -63 ) - 1\frac{2}{7} \times ( -63 )\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-6-2" value="A"><span class="option-text">A. \(189\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-6-2" value="B"><span class="option-text">B. \(-63\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-6-2" value="C"><span class="option-text">C. \(-126\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-6-2" value="D"><span class="option-text">D. \(-189\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>兩項都乘以 \(( -63 )\)，這是<strong>相同的因數</strong>，用分配律提出來：<br>
+              \(4\frac{2}{7} \times ( -63 ) - 1\frac{2}{7} \times ( -63 ) = ( 4\frac{2}{7} - 1\frac{2}{7} ) \times ( -63 )\)。<br>
+              括號內的<strong>分數部分剛好抵消</strong>：\(4\frac{2}{7} - 1\frac{2}{7} = 3\)。<br>
+              所以原式 \(= 3 \times ( -63 ) = -189\)，答案為 D。<br>
+              硬算也可以（\(\frac{30}{7} \times ( -63 ) = -270\)、\(\frac{9}{7} \times ( -63 ) = -81\)，\(-270 - ( -81 ) = -189\)），但分配律讓兩個大數乘法變成一個小數乘法。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結與核心回顧 (Summary)
+           ========================================== -->
+      <section class="summary-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> 2-3 分數的四則運算 課程核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <!-- Card 1: Mint Green review card -->
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-swatchbook"></i> 分數運算快速檢索卡</h4>
+            <ul class="bullet-list">
+              <li><strong>負分數三寫法</strong>：\(\frac{-b}{a} = \frac{b}{-a} = -\frac{b}{a}\)，習慣把負號寫在最前面。</li>
+              <li><strong>最簡分數</strong>：分子分母互質。化最簡＝同除以<strong>最大公因數</strong>；只能同乘同除，<strong>不能同加同減</strong>。</li>
+              <li><strong>比大小</strong>：同分母比分子（大的大）、同分子比分母（大的小）、都是負的比絕對值（<strong>大的反而小</strong>）。</li>
+              <li><strong>加減</strong>：先去括號 \(\to\) 通分（分母取 \([ b_1 , b_2 ]\)）\(\to\) 算分子 \(\to\) 約分。</li>
+              <li><strong>去括號</strong>：\(-( a + b ) = -a - b\)、\(-( a - b ) = -a + b\)；負帶分數 \(-7\frac{2}{3} = -7 - \frac{2}{3}\)。</li>
+              <li><strong>乘法</strong>：分子乘分子、分母乘分母，<strong>不通分</strong>；帶分數先化假分數；先約分再乘。</li>
+              <li><strong>符號</strong>：同號得正、異號得負；連乘連除數負號，<strong>偶正奇負</strong>。</li>
+              <li><strong>倒數</strong>：分子分母對調，兩數相乘為 \(1\)；負數的倒數仍為負；<strong>\(0\) 沒有倒數</strong>。</li>
+              <li><strong>除法</strong>：除以一個數＝乘以它的倒數；連除要<strong>每一個除數都翻</strong>。</li>
+              <li><strong>四則順序</strong>：括號 \(\to\) 乘除 \(\to\) 加減，同級<strong>由左到右</strong>；小數先化成分數。</li>
+              <li><strong>分配律</strong>：\(a \times b \pm a \times c = a \times ( b \pm c )\)。<strong>只對乘法成立，除法沒有分配律</strong>。</li>
+              <li><strong>應用三步</strong>：算變化量 \(\to\) 找它占全體的分率 \(\to\) 變化量 \(\div\) 分率 \(=\) 全體。</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Bright Blue life story card -->
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-lightbulb"></i> 回到烘焙教室：那題的正解</h4>
+              <h5><i class="fa-solid fa-triangle-exclamation"></i> 兩個人錯在哪裡</h5>
+              <p>漫畫裡那一題是 \( \frac{7}{2} - \frac{4}{5} \div [ ( -\frac{8}{5} ) + \frac{7}{5} ] \)。小翊把除法也拿去用分配律拆成 \(\frac{4}{5} \div ( -\frac{8}{5} ) - \frac{4}{5} \div \frac{7}{5}\)——<strong>除法沒有分配律</strong>，第一步就錯了。小妍記得要先算括號，卻把 \(( -\frac{8}{5} ) + \frac{7}{5}\) 算成 \(-\frac{15}{5}\)：<strong>同分母相加是分子相加，分母不變</strong>，不是連分母一起加。</p>
+              <p style="text-align:center; font-size:1.1rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( ( -\frac{8}{5} ) + \frac{7}{5} = \frac{-8 + 7}{5} = -\frac{1}{5} \)
+              </p>
+              <p>括號算對了，後面就順了：\(\frac{4}{5} \div ( -\frac{1}{5} ) = \frac{4}{5} \times ( -5 ) = -4\)，所以</p>
+              <p style="text-align:center; font-size:1.15rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( \frac{7}{2} - ( -4 ) = \frac{7}{2} + 4 = \frac{15}{2} \)
+              </p>
+              <h5><i class="fa-solid fa-kitchen-set"></i> 分數為什麼從廚房長出來</h5>
+              <p>人類最早需要分數，就是因為要<strong>分東西</strong>：一塊麵包分給三個人、一杯麵粉只用四分之三。<strong>通分</strong>其實就是「把兩種切法改成同一種切法」，這樣才數得出來誰多誰少；而<strong>除以一個分數</strong>，就是在問「這麼多的材料，可以做出幾份食譜」——\(2 \div \frac{1}{4} = 8\)，兩杯麵粉可以做 \(8\) 份四分之一杯的餅乾。</p>
+              <p><strong>先切成一樣的份數再比、再加減；要問「裝得下幾份」就用除法。</strong>這兩句話，就是這一節所有規則的來源。</p>
+              <div class="illustration-container" style="margin-top: 1rem;">
+                <img src="bake_finish.webp" alt="手繪烘焙風插圖：小翊、小妍與師傅站在擺滿水果塔與杯子蛋糕的櫃台後歡呼" class="illustration" loading="lazy">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 課堂智慧教學整合門戶系統. 專為國中數學高效課堂設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
