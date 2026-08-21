@@ -40,6 +40,9 @@ teaching-web/
 ├─ materials/              # 58 個教材頁
 │  └─ pending.css          # 56 個「待施工」佔位頁共用樣式
 ├─ background.png
+├─ tools/                  # 驗收用小工具（不是網站的一部分）
+│  ├─ nostore.py           # 送 Cache-Control: no-store 的靜態伺服器（預設埠 8765）
+│  └─ shots.py             # 收 canvas toDataURL 存成 PNG（預設埠 8766，輸出 tools/_shots/）
 ├─ wordcloud.html          # 即時協作文字雲（Firebase；全域技能模板產生）
 ├─ README.md
 ├─ agents.md               # 本檔：專案藍圖
@@ -76,10 +79,10 @@ teaching-web/
 - Windows 指令優先使用 PowerShell
 - 收工前檢查程式碼是否含 API key、網址 Token、學生姓名等敏感資料
 - 只 stage 本次任務相關檔案，**不使用無差別的 `git add .`**；僅在使用者明確授權時 commit 與 push
-- 本機預覽窗格（Browser pane）會供快取的舊版 CSS/JS，改完在那裡看不到效果是正常的；**`navigate` 帶 `force` 與加 query 參數都擋不住**，驗收一律改起一個會送 `Cache-Control: no-store` 的伺服器，不要用 `python -m http.server` 的預設行為
-- Browser pane 沒有顯示在畫面上時 `screenshot` 會逾時（頁面不合成畫格）；要看 canvas 就用 `toDataURL()` 把畫面 POST 到本機收圖伺服器存成 PNG 再讀檔，不必等使用者打開窗格
+- 本機預覽窗格（Browser pane）會供快取的舊版 CSS/JS，改完在那裡看不到效果是正常的；**`navigate` 帶 `force` 與加 query 參數都擋不住**，驗收一律用 **`python tools/nostore.py`**（會送 `Cache-Control: no-store`），不要用 `python -m http.server` 的預設行為
+- Browser pane 沒有顯示在畫面上時 `screenshot` 會逾時（頁面不合成畫格）；要看 canvas 就起 **`python tools/shots.py`**，用 `toDataURL()` 把畫面 POST 過去存成 PNG 再讀檔，不必等使用者打開窗格
 - **收回來的 canvas PNG 是透明底，判讀外觀前一定要先用卡片底色 `alpha_composite` 疊過**；直接 `convert('RGB')` 會把半透明填色變成全彩（`rgba(52,211,153,0.18)` 變成亮綠），文字跟底色同色就整片消失，看起來像 bug 其實是截圖流程的錯
-- 教材頁的本機驗收要起一個 HTTP 伺服器（例：`python -m http.server`）；直接開 `file://` 在預覽窗格只會拿到靜態快照，`canvas.js` 不會執行、互動全部驗不到
+- 教材頁的本機驗收一定要走 HTTP（`python tools/nostore.py`）；直接開 `file://` 在預覽窗格只會拿到靜態快照，`canvas.js` 不會執行、互動全部驗不到
 - 瀏覽器分頁未在前景時渲染會被節流，大量 canvas 迴圈驗證會逾時；先把分頁切到前景，且單批控制在 100 組參數以內
 - 驗收 Canvas 不要用 JS 硬撐 `canvas` 的 CSS 寬度來放大（會撐破版面、截圖全黑）；改為把視窗縮到 992px 以下讓版面轉單欄，或直接讀 canvas 像素判斷內容有無溢出邊界
 - 本機沒有安裝 `PyMuPDF`／`Pillow`；PDF 與圖片處理一律走 `file-toolkit` 技能建好的共用環境：`C:\Users\chang\AppData\Local\file-toolkit\.venv\Scripts\python.exe`

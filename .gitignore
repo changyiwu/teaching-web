@@ -30,3 +30,6 @@ $RECYCLE.BIN/
 
 # 交接檔含真實電腦名與本機路徑，只走雲端硬碟同步，不進公開 repo
 handoff.md
+
+# 驗收時收回來的 canvas 畫面，只是暫存
+tools/_shots/
