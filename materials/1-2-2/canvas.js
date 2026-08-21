@@ -932,7 +932,7 @@ function initTowerCanvas() {
       `\\( ${a} = ${stdLatex(fa)} \\)、\\( ${b} = ${stdLatex(fb)} \\)。<br>` +
       `<strong>共同</strong>的質因數取<strong>次方小的</strong>相乘 \\( \\Rightarrow ( ${a} , ${b} ) = ${g} \\)；` +
       `<strong>所有</strong>質因數取<strong>次方大的</strong>相乘 \\( \\Rightarrow [ ${a} , ${b} ] = ${L} \\)。<br>` +
-      `一小一大剛好把每個質因數的次方都用完，所以 \\( ${g} \\times ${L} = ${a} \\times ${b} = ${g * L} \\)。`
+      `每個質因數取小的那次加上取大的那次，剛好就是兩者各出一次，所以 \\( ${g} \\times ${L} = ${a} \\times ${b} = ${g * L} \\)。`
     );
     typeset([formula, feedback]);
   }
