@@ -642,11 +642,11 @@
                 <div class="slider-wrapper">
                   <div class="slider-row">
                     <label for="dv-m-slider">內層指數 m: <span id="dv-m-val" class="val-num">0</span></label>
-                    <input type="range" id="dv-m-slider" min="1" max="5" value="3" step="1">
+                    <input type="range" id="dv-m-slider" min="1" max="3" value="3" step="1">
                   </div>
                   <div class="slider-row">
                     <label for="dv-n-slider">外層指數 n: <span id="dv-n-val" class="val-num">0</span></label>
-                    <input type="range" id="dv-n-slider" min="1" max="5" value="2" step="1">
+                    <input type="range" id="dv-n-slider" min="1" max="3" value="2" step="1">
                   </div>
                 </div>
 
@@ -721,7 +721,7 @@
                 \[ \begin{aligned} &(1)\ a^m \times a^n = a^{m+n} &&(2)\ a^m \div a^n = a^{m-n}\ (m > n) \\ &(3)\ \left(a^m\right)^n = a^{m \times n} &&(4)\ (a \times b)^m = a^m \times b^m \end{aligned} \]</li>
               <li><strong>綜合應用場景 1</strong>：先用（三）（四）把括號拆開或收攏 \(\to\) 再用（一）（二）合併同底數 \(\to\) 最後算出值。例如
                 \[ \begin{aligned} \left(2^2 \times 5\right)^4 \div \left(5^2\right)^2 &= 2^{2 \times 4} \times 5^4 \div 5^{2 \times 2} \\ &= 2^8 \times 5^{4-4} = 2^8 \times 5^0 \\ &= 256 \times 1 = 256 \end{aligned} \]</li>
-              <li><strong>綜合應用場景 2</strong>：指數相同就先約分。
+              <li><strong>綜合應用場景 2</strong>：指數相同先提出指數。
                 \[ \begin{aligned} \left(-\frac{10}{7}\right)^8 \times \left(\frac{7}{5}\right)^8 \div (-2)^5 &= (-2)^8 \div (-2)^5 \\ &= (-2)^3 = -8 \end{aligned} \]</li>
               <li><strong>挑錯題的經典陷阱</strong>：\((-5)^6 \times \left(-2^6\right)\) 中，第二個括號裡的負號<strong>沒有被乘方括進去</strong>，所以 \(-2^6\) 是負的。正確做法是先把負號提到最外面：
                 \[ \begin{aligned} (-5)^6 \times \left(-2^6\right) &= 5^6 \times \left(-2^6\right) \\ &= -\left(5^6 \times 2^6\right) \\ &= -(5 \times 2)^6 = -10^6 \end{aligned} \]
