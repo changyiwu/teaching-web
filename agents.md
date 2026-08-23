@@ -83,10 +83,12 @@ teaching-web/
 - Browser pane 沒有顯示在畫面上時 `screenshot` 會逾時（頁面不合成畫格）；要看 canvas 就起 **`python tools/shots.py`**，用 `toDataURL()` 把畫面 POST 過去存成 PNG 再讀檔，不必等使用者打開窗格
 - **收回來的 canvas PNG 是透明底，判讀外觀前一定要先用卡片底色 `alpha_composite` 疊過**；直接 `convert('RGB')` 會把半透明填色變成全彩（`rgba(52,211,153,0.18)` 變成亮綠），文字跟底色同色就整片消失，看起來像 bug 其實是截圖流程的錯
 - 教材頁的本機驗收一定要走 HTTP（`python tools/nostore.py`）；直接開 `file://` 在預覽窗格只會拿到靜態快照，`canvas.js` 不會執行、互動全部驗不到
+- **量版面時「顯示型」與「行內」算式要分兩輪量**：顯示型量 `mjx-container[display="true"]` 的 `scrollWidth - clientWidth`，行內量 `mjx-container:not([display="true"])` 相對於 `.explanation-card` **內容區**（要扣掉 padding）的左右緣，並排除 `.table-scroll` 裡的。只量顯示型會漏掉開發約束 16 那一半——`1-3-1` 第一輪就這樣漏掉兩條溢出 139px／114px 的行內算式
+- **`curl ... | python` 在 Windows 會用 cp950 讀 stdin**，中文一律比對失敗（報 substring not found）。要檢查檔案內容就用 `io.open(..., encoding='utf-8')` 直接讀檔，不要走管線
 - 瀏覽器分頁未在前景時渲染會被節流，大量 canvas 迴圈驗證會逾時；先把分頁切到前景，且單批控制在 100 組參數以內
 - 驗收 Canvas 不要用 JS 硬撐 `canvas` 的 CSS 寬度來放大（會撐破版面、截圖全黑）；改為把視窗縮到 992px 以下讓版面轉單欄，或直接讀 canvas 像素判斷內容有無溢出邊界
 - 本機沒有安裝 `PyMuPDF`／`Pillow`；PDF 與圖片處理一律走 `file-toolkit` 技能建好的共用環境：`C:\Users\chang\AppData\Local\file-toolkit\.venv\Scripts\python.exe`
-- **Bash 工具的 heredoc 會把反斜線減半**——不只正規表示式，**LaTeX（`\frac`、`\left`）、CSS 註解、Windows 路徑一律中招**：`\frac` 會變成換頁字元＋`rac` 寫進檔案裡，而且 Python 只會發 SyntaxWarning 不會擋下來。任何含反斜線的內容都不要用 `cat <<'EOF'` 寫檔，改用 Write 工具落檔再執行
+- **Bash 工具的 heredoc 會把反斜線減半**——不只正規表示式，**LaTeX（`\frac`、`\left`）、CSS 註解、Windows 路徑一律中招**：`\frac` 會變成換頁字元＋`rac` 寫進檔案裡，而且 Python 只會發 SyntaxWarning 不會擋下來。任何含反斜線的內容都不要用 `cat <<'EOF'` 寫檔，也不要塞進 `python -c '...'` 的單行指令（**同樣會減半**），一律改用 Write 工具落檔再執行
 - **量版面溢出前先確認 `innerWidth` 不是 0**：預覽窗格尚未配置版面時所有 `getBoundingClientRect()` 都會回 0，掃描程式會回報幾千個假溢出。先 `resize_window` 指定寬度、確認 `innerWidth` 正確再量
 - **量 MathJax 的幾何尺寸前一定要 `await document.fonts.ready`**：MathJax 的網頁字型是非同步載入的，`MathJax.startup.promise` resolve 時字型往往還沒到，此時量到的是替代字型的尺寸——分數的框會比實際高出 5 成，看起來像括號框不住分數。2026-08-21 就因為漏了這一步，連續兩輪誤判 `1-2-3` 絕對值括號的成因。量完最好再 `setTimeout` 一小段等重排完成。另注意 `1-2-3` 的 `mjx-stretchy-v.mjx-c7C` 高度是**量出來的固定值**，前提是絕對值裡放單層分數；該頁若改放帶分數或多層分數，那兩個數字要照這條重量
 
