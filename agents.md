@@ -1,10 +1,10 @@
-# teaching-web（智慧課堂教學整合網）（專案藍圖）
+# teaching-web（國中數學教學整合網）（專案藍圖）
 
 > 本檔為跨 Agent 通用的專案藍圖（AGENTS.md 開放標準）。任何 Agent 的每個 session 都應先讀本檔＋`handoff.md`。
 
 ## 專案簡介
 
-智慧課堂教學整合網：純靜態前端頁面（HTML5、CSS3、Vanilla JavaScript），以 HSL 色彩系統打造深色磨砂玻璃風格（Glassmorphic UI）。用於課堂智慧白板投影，涵蓋 6 冊 58 小節課程。外部資源為 Font Awesome 6 CDN 與 Google Fonts 的 `Outfit`、`Noto Sans TC`；隨堂備忘錄與各冊自訂快捷連結存於瀏覽器 `localStorage`。獨立的即時文字雲頁 `wordcloud.html` 例外使用 Firebase Firestore 同步課堂輸入。
+國中數學教學整合網：純靜態前端頁面（HTML5、CSS3、Vanilla JavaScript），以 HSL 色彩系統打造深色磨砂玻璃風格（Glassmorphic UI）。用於課堂智慧白板投影，涵蓋 6 冊 58 小節課程。外部資源為 Font Awesome 6 CDN 與 Google Fonts 的 `Outfit`、`Noto Sans TC`；隨堂備忘錄與各冊自訂快捷連結存於瀏覽器 `localStorage`。獨立的即時文字雲頁 `wordcloud.html` 例外使用 Firebase Firestore 同步課堂輸入。
 
 線上網址：<https://changyiwu.github.io/teaching-web/>
 

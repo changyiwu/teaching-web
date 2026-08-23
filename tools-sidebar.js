@@ -68,7 +68,7 @@
         icon: 'fa-house',
         href: homeHref,
         title: '返回主網頁',
-        desc: '回到課堂教學整合網首頁，切換其他小節教材。',
+        desc: '回到國中數學教學整合網首頁，切換其他小節教材。',
         internal: true
       });
     }
