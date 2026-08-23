@@ -102,9 +102,11 @@ function initNotepad() {
    ========================================================================== */
 const VOLUME_LABELS = ['第一冊', '第二冊', '第三冊', '第四冊', '第五冊', '第六冊'];
 
+// 已完成的小節不掛徽章——整份課表大多會走到已完成，標記反而變成雜訊；
+// 只有還沒建置的「待施工」需要一眼看出來。
 function statusBadgeHtml(status) {
   return status === 'completed'
-    ? `<span class="status-badge completed"><i class="fa-solid fa-circle-check"></i> 已完成</span>`
+    ? ''
     : `<span class="status-badge pending"><i class="fa-solid fa-person-digging"></i> 待施工</span>`;
 }
 

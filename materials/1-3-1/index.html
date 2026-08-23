@@ -203,7 +203,9 @@
             <ul class="bullet-list">
               <li><strong>為什麼要簡記</strong>：乘號 \(\times\) 和英文字母 \(x\) 長得太像，\(3 \times x\) 寫快一點就分不出哪個是乘號。所以約定把數字與文字符號之間的乘號改寫成一點 \(\cdot\)，或者<strong>乾脆省略不寫</strong>。</li>
               <li><strong>乘法簡記（一）數字寫前面</strong>：\(3 \times x = 3 \cdot x = 3x\)。又因為 \(x \times 3 = 3 \times x\)，所以 \(x \times 3\) 也記為 \(3x\)；<strong>習慣上不寫成 \(x3\)</strong>。</li>
-              <li><strong>乘法簡記（二）分數與負數一樣做</strong>：\(\frac{5}{8} \times x = \frac{5}{8} \cdot x = \frac{5}{8}x\)；\((-7) \times x = (-7) \cdot x = (-7)x\)。因為 \(x\) 代表一個數，仿照數的運算規則可得 \((-7)x = -(7x)\)，兩者都記為 \(-7x\)。</li>
+              <li><strong>乘法簡記（二）分數與負數一樣做</strong>：
+                \[ \begin{aligned} & \frac{5}{8} \times x = \frac{5}{8} \cdot x = \frac{5}{8}x \\ & (-7) \times x = (-7) \cdot x \\ &= (-7)x \end{aligned} \]
+                因為 \(x\) 代表一個數，仿照數的運算規則可得 \((-7)x = -(7x)\)，兩者都記為 \(-7x\)。</li>
               <li><strong>乘法簡記（三）係數 \(1\) 不用寫</strong>：\(1\) 乘任何數都等於該數，所以 \(1 \times x = x \times 1 = x\)；同理 \((-1)x = -(1x) = -x\)。<strong>看到 \(x\) 就要想到它的係數是 \(1\)</strong>，這在後面合併同類項時很關鍵。</li>
               <li><strong>加減號絕對不能省略</strong>：\(x \times (-8) - 9\) 只能簡記成 \(-8x - 9\)，中間那個減號是<strong>運算符號</strong>，省掉式子就變了。</li>
               <li><strong>除法簡記：除以一個不為 \(0\) 的數，就是乘以它的倒數</strong>。所以 \(x \div 5 = x \times \frac{1}{5} = \frac{x}{5}\)。</li>
@@ -452,9 +454,9 @@
             <ul class="bullet-list">
               <li><strong>什麼是代數式的值</strong>：當代數式中的文字符號都代表數時，這個代數式也代表一個數，這個數就稱為<strong>代數式的值</strong>。求值的動作就是<strong>把符號所代表的數代入式子裡計算</strong>。</li>
               <li><strong>課本的手掌長</strong>：跳遠距離是 \(40 \times x\) 公分。量出一個手掌長 \(x = 15\) 公分後代入，得 \(40 \times 15 = 600\) 公分。<strong>先列式、後代入</strong>是解題的固定順序。</li>
-              <li><strong>代入負數或分數時，一定要加括號</strong>。這是本重點最容易失分的地方：
+              <li><strong>代入負數時，一定要加括號</strong>。這是本重點最容易失分的地方：
                 \[ \begin{aligned} & x = -0.6 \text{ 時，} \\ & -4x = (-4) \times (-0.6) \\ &= 2.4 \end{aligned} \]
-                如果不加括號寫成 \(-4 \times -0.6\)，兩個運算符號黏在一起，很容易看錯符號。</li>
+                如果不加括號寫成 \(-4 \times -0.6\)，乘號後面直接接上一個負號——前者是<strong>運算符號</strong>、後者是表示正負的<strong>性質符號</strong>。<strong>兩個運算符號或性質符號靠在一起時，規則上就要用括號隔開</strong>，所以要寫成 \((-4) \times (-0.6)\)。代入的是正數（含正分數）時沒有這個問題，例如 \(15 - \frac{2}{3} \times \frac{1}{2}\) 就不必加括號。</li>
               <li><strong>代入之後就是純粹的數的運算</strong>，照舊<strong>先乘除後加減、有括號先算括號</strong>。例如 \(x = \frac{1}{2}\) 時：
                 \[ \begin{aligned} & 15 - \frac{2}{3}x \\ &= 15 - \frac{2}{3} \times \frac{1}{2} \\ &= 15 - \frac{1}{3} = 14\frac{2}{3} \end{aligned} \]</li>
               <li><strong>同一個式子，不同的 \(x\) 給出不同的值</strong>。這正是代數式的用途：一條式子可以回答一整排問題。\(x = -2\) 時 \(15 - \frac{2}{3}x = 15 + \frac{4}{3} = 16\frac{1}{3}\)，<strong>減去一個負數會變大</strong>。</li>
@@ -482,7 +484,7 @@
 
           <div class="interactive-card">
             <h3><i class="fa-solid fa-magnifying-glass-dollar"></i> 視覺互動探索：代入結帳機</h3>
-            <p class="interactive-instruction">選一個式子，再拉動 \(x\) 的值，看代入的<strong>每一步</strong>怎麼算出來。負數與分數請特別注意<strong>括號</strong>：</p>
+            <p class="interactive-instruction">選一個式子，再拉動 \(x\) 的值，看代入的<strong>每一步</strong>怎麼算出來。代入<strong>負數</strong>時特別注意<strong>括號</strong>：</p>
             <div class="canvas-container">
               <canvas id="canvas-sub" width="540" height="380"></canvas>
               <div class="control-panel">
@@ -700,7 +702,7 @@
                 \[ \begin{aligned} & 6y - 8 - 4y - 5 \\ &= 6y - 4y - 8 - 5 \\ &= 2y - 13 \end{aligned} \]</li>
               <li><strong>去括號規則</strong>（與數的運算完全相同）：
                 \[ \begin{aligned} -(a+b) &= -a-b \\ -(a-b) &= -a+b \\ -(-a+b) &= a-b \\ -(-a-b) &= a+b \end{aligned} \]
-                口訣：<strong>括號前面是減號，去括號後裡面每一項都要變號</strong>。例如 \(-(-3x+1) = 3x-1\)。</li>
+                口訣：<strong>括號前面是減號或負號時，去括號後裡面每一項都要變號</strong>。\(5 - (3x+1)\) 的括號前是<strong>減號</strong>（運算符號），\(-(3x+1)\) 的括號前是<strong>負號</strong>（性質符號），兩種情形去括號的做法相同。例如 \(-(-3x+1) = 3x-1\)。</li>
               <li><strong>括號前面有數字時，用分配律乘進去</strong>，而且<strong>每一項都要乘到</strong>：
                 \[ \begin{aligned} & (x+4) \times (-4) \\ &= x \times (-4) + 4 \times (-4) \\ &= -4x - 16 \end{aligned} \]
                 \[ \begin{aligned} & -3(-12x-5) \\ &= (-3)(-12x) - (-3)(5) \\ &= 36x + 15 \end{aligned} \]</li>
@@ -708,7 +710,7 @@
                 \[ \begin{aligned} & 11x - 2[3x - (5x - 4)] \\ &= 11x - 2[3x - 5x + 4] \\ &= 11x - 2[-2x + 4] \\ &= 11x + 4x - 8 \\ &= 15x - 8 \end{aligned} \]</li>
               <li><strong>分數形式先通分，分子記得加括號</strong>。分數線有括號的效果，通分後<strong>整個分子都要乘</strong>：
                 \[ \begin{aligned} & \frac{x-3}{6} - \frac{x-1}{10} \\ &= \frac{5(x-3) - 3(x-1)}{30} \\ &= \frac{5x-15-3x+3}{30} \\ &= \frac{2x-12}{30} = \frac{x-6}{15} \end{aligned} \]
-                第二個分數前面是減號，展開後 \(-3(x-1) = -3x+3\)，<strong>那個 \(+3\) 最容易漏</strong>。</li>
+                第二個分數前面是減號，展開後 \(-3(x-1) = -3x+3\)，<strong>那個 \(+3\) 最容易錯</strong>。</li>
               <li><strong>答案長得不一樣不代表錯</strong>：\(\frac{x-6}{15}\) 與 \(\frac{x}{15} - \frac{2}{5}\) 其實是同一個式子，通分就看得出來。</li>
             </ul>
 
@@ -829,17 +831,17 @@
           <div class="summary-card">
             <h4><i class="fa-solid fa-swatchbook"></i> 代數式快速檢索卡</h4>
             <ul class="bullet-list">
-              <li><strong>代數式</strong>：由文字符號與數字組成的算式。文字符號代表一個數，<strong>正負分小數都可以</strong>。</li>
+              <li><strong>代數式</strong>：由文字符號與數字組成的算式。文字符號代表一個數，<strong>正、負、分、小、整數都可以</strong>。</li>
               <li><strong>乘法簡記</strong>：\(3 \times x = 3 \cdot x = 3x\)，數字寫前面；\(1x = x\)、\((-1)x = -x\)。<strong>加減號不可省略</strong>。</li>
               <li><strong>除法簡記</strong>：\(x \div 5 = \frac{x}{5}\)；\(x \div \frac{2}{3} = \frac{3}{2}x\)。<strong>除以一個數就是乘它的倒數</strong>。</li>
               <li><strong>列式關鍵字</strong>：多／大用加、少／小用減、倍用乘、等分用除。<strong>「每一份都…」要先用括號把一份包起來</strong>。</li>
-              <li><strong>代數式的值</strong>：把符號代表的數<strong>加括號</strong>代進去算。\(x = -0.6\) 時 \(-4x = (-4) \times (-0.6) = 2.4\)。</li>
+              <li><strong>代數式的值</strong>：把符號代表的數代進去算，<strong>代入負數時要加括號</strong>（兩個運算符號或性質符號不能相鄰）。\(x = -0.6\) 時 \(-4x = (-4) \times (-0.6) = 2.4\)。</li>
               <li><strong>一元一次式</strong>：只含一種文字符號，且次數為 \(1\)。</li>
               <li><strong>項與係數</strong>：加號隔開的每一部分是<strong>項</strong>；\(x\) 前面的數是<strong>係數</strong>（<strong>負號算在係數裡</strong>），沒有文字符號的是<strong>常數項</strong>。</li>
               <li><strong>同類項</strong>：文字符號與次數都相同的項；常數項彼此也是同類項。</li>
               <li><strong>與數的乘除</strong>：用結合律把數字先算完，\(2 \cdot (6x) = (2 \cdot 6)x = 12x\)。<strong>文字符號不變</strong>。</li>
               <li><strong>合併同類項</strong>：\(3x + 2x = (3+2)x = 5x\)。<strong>不同類項不能合併</strong>，\(3x + 2\) 已是最簡。</li>
-              <li><strong>去括號</strong>：括號前是減號，裡面<strong>每一項都變號</strong>；前面有數字就用分配律<strong>每一項都乘到</strong>。</li>
+              <li><strong>去括號</strong>：括號前是<strong>減號或負號</strong>時，裡面<strong>每一項都變號</strong>；前面有數字就用分配律<strong>每一項都乘到</strong>。</li>
               <li><strong>多層括號由內而外</strong>；<strong>分數形式先通分，分子要加括號</strong>。</li>
             </ul>
           </div>

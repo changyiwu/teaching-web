@@ -1076,7 +1076,7 @@ function initSubCanvas() {
     drawNote(ctx, '代數式', 50, DIM, 13);
     drawExpr(ctx, cs.items(), W / 2, 88, 28, INK, { gap: 8 });
 
-    drawNote(ctx, `x = ${numStr(x)} 代入（負數與分數要加括號）`, 128, MUTED, 13);
+    drawNote(ctx, `x = ${numStr(x)} 代入（負數要加括號）`, 128, MUTED, 13);
     drawPanel(ctx, 40, 144, W - 80, 50, C_SKY, 0.08);
     drawExpr(ctx, r.sub, W / 2, 169, 26, C_SKY, { gap: 8, maxW: W - 100 });
 
@@ -1091,8 +1091,8 @@ function initSubCanvas() {
     drawExpr(ctx, [T('=', MUTED)].concat(valItem), W / 2, y + 31, 30, OK_COLOR, { gap: 10 });
 
     const tip = x < 0
-      ? 'x 是負數，代入時一定要加括號，才看得清楚符號'
-      : (Math.abs(x * 2) % 2 === 1 ? 'x 是小數，代入後照樣先乘除、後加減' : '代入之後就是單純的數的運算');
+      ? 'x 是負數，要加括號隔開——運算符號與性質符號不能相鄰'
+      : (Math.abs(x * 2) % 2 === 1 ? 'x 是正的小數，不必加括號，照樣先乘除後加減' : '代入之後就是單純的數的運算');
     wrapText(ctx, tip, W / 2, 352, W - 60, 17, MUTED, 13.5);
   }
 
@@ -1108,7 +1108,7 @@ function initSubCanvas() {
       `把 \\( x = ${numStr(x)} \\) 代入 \\( ${cs.tex} \\)：<br>` +
       `\\( ${cs.tex} = ${r.subTex} ${r.midTex ? '= ' + r.midTex : ''} = ${r.valTex} \\)<br>` +
       (x < 0
-        ? `<strong style="color:${C_SKY}">代入負數要加括號</strong>，否則兩個運算符號黏在一起很容易看錯。`
+        ? `<strong style="color:${C_SKY}">代入負數要加括號</strong>——乘號是運算符號、負號是性質符號，兩者不能直接相鄰。`
         : `同一條式子，換一個 \\(x\\) 就換一個值——這正是代數式好用的地方。`)
     );
     typeset([formulaEl, feedbackEl]);
