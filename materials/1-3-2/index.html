@@ -4,39 +4,795 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/webp" href="../../header-logo.webp">
-  <title>3-2 一元一次方程式 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-2 一元一次方程式 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第一冊 (1上) • 第3章 一元一次方程式</div>
-    <h1>3-2 一元一次方程式</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第一冊 • 第三章</span>
+        <h1>3-2 一元一次方程式</h1>
+        <p>上一節我們把生活中的關係寫成<strong>代數式</strong>，這一節要再加上一個等號，變成<strong>方程式</strong>——然後把那個藏起來的數<strong>解出來</strong>。方法只有一個核心：<strong>天平兩邊做一樣的事，天平不會歪</strong>。這句話寫成數學就是<strong>等量公理</strong>，寫得再快一點就是<strong>移項法則</strong>。最後我們處理帶括號與帶分數的方程式，並看一個很多人都會犯的錯。</p>
+      </div>
+      <!-- Progress navigation (6 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-equals"></i> 方程式的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-language"></i> 用文字符號列式</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-flask"></i> 方程式的解</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 等量公理</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-right-left"></i> 移項法則</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-layer-group"></i> 括號與分數</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Steampunk Brass Balance Workshop)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(245, 158, 11, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);"></i> 課前暖身漫畫：不打開盒子，也知道裡面有多重
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            工房裡的黃銅天平已經平了：左盤放著<strong style="color:#fcd34d">三個上鎖的鐵盒</strong>和 \(5\) 個砝碼，右盤是 \(14\) 個砝碼。鐵盒鎖著，一個盒子有多重<strong style="color:#fcd34d">沒有人知道</strong>——那就先叫它 \(x\)。機械貓想拿撬棒把盒子撬開，小發明家攔住了牠：<strong style="color:#fcd34d">「不用拆，兩邊同時拿走 \(5\) 個就好。」</strong>兩邊各少 \(5\) 個，天平還是平的，剩下三個盒子對九個砝碼；再把九個砝碼分成三堆，一個盒子正好對三個。盒子從頭到尾沒打開，答案卻出來了：\(x = 3\)。這一節要學的，就是這台天平背後的規則。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="蒸汽龐克黃銅天平工房風四格漫畫：天平左盤是三個上鎖鐵盒加五個砝碼、右盤十四個砝碼；機械貓想撬開盒子被小發明家攔下，改成兩邊同時拿走五個砝碼，天平仍然平衡，最後九個砝碼分成三堆，得出一個盒子等於三公克" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 一元一次方程式的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> 重點 1：一元一次方程式的意義——三個條件缺一不可
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>從代數式到方程式，差的就是一個等號</strong>。哥哥有 \(14\) 顆糖果，且哥哥的糖果數是妹妹的 \(3\) 倍多 \(5\) 顆。設妹妹有 \(x\) 顆，哥哥就有 \(3x+5\) 顆；而哥哥實際上有 \(14\) 顆，兩個式子講的是同一個數量，所以 \(3x+5=14\)。</li>
+              <li><strong>未知數</strong>：式子裡代表一個數、但暫時還不知道是多少的文字符號，例如上面的 \(x\)。<strong>含有未知數的等式</strong>，就稱為<strong>方程式</strong>。</li>
+              <li><strong>一元一次方程式的三個條件</strong>：
+                <ul>
+                  <li><strong>是等式</strong>——一定要有等號。\(3x+5\) 沒有等號，只是代數式。</li>
+                  <li><strong>一元</strong>——只含<strong>一種</strong>未知數。\(2x+3y=7\) 有兩種，不算。</li>
+                  <li><strong>一次</strong>——未知數的次數是 \(1\)。\(x^2+1=5\) 是二次，不算。</li>
+                </ul>
+              </li>
+              <li><strong>用哪個字母無所謂</strong>：\(4x-5=17\)、\(2y+8=0\) 都是一元一次方程式。看的是「幾種」和「幾次」，不是「用什麼字母」。</li>
+              <li><strong>分母有未知數要小心</strong>：\(\frac{x}{6}=2\) 就是 \(x \div 6=\frac{1}{6}x\)，\(x\) 仍是一次，<strong>是</strong>一元一次方程式。</li>
+              <li><strong>沒有未知數的等式不是方程式</strong>：\(5+3=8\) 只是一個算完的算式，沒有東西可以解。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>式子</th><th>有等號</th><th>未知數</th><th>次數</th><th>是一元一次方程式嗎</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(3x+5=14\)</td><td>✓</td><td>只有 \(x\)</td><td>\(1\)</td><td class="sign-pos">是</td></tr>
+                <tr><td>\(4-x\)</td><td>✗</td><td>只有 \(x\)</td><td>\(1\)</td><td class="sign-neg">不是（沒等號）</td></tr>
+                <tr><td>\(x^2+1=5\)</td><td>✓</td><td>只有 \(x\)</td><td>\(2\)</td><td class="sign-neg">不是（次數太高）</td></tr>
+                <tr><td>\(2x+3y=7\)</td><td>✓</td><td>\(x\)、\(y\)</td><td>\(1\)</td><td class="sign-neg">不是（兩種未知數）</td></tr>
+                <tr><td>\(\frac{x}{6}=2\)</td><td>✓</td><td>只有 \(x\)</td><td>\(1\)</td><td class="sign-pos">是</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="brass_tester.webp" alt="蒸汽龐克插圖：小發明家展示一台黃銅等式檢查機，兩個托盤等高、中間一條粗橫桿，旁邊躺著兩台歪掉的失敗裝置" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：方程式身分檢查台</h3>
+            <p class="interactive-instruction">點一個式子送上檢查台，三盞燈分別檢查<strong>有沒有等號</strong>、<strong>是不是只有一種未知數</strong>、<strong>次數是不是 1</strong>。<strong>三盞全亮才過關</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-identity" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">送上檢查台的式子</span>
+                    <div class="btn-group" id="id-eq-group">
+                      <button class="pick-btn active" data-eq="0">\(3x+5=14\)</button>
+                      <button class="pick-btn" data-eq="1">\(4-x\)</button>
+                      <button class="pick-btn" data-eq="2">\(2y+8=0\)</button>
+                      <button class="pick-btn" data-eq="3">\(x^2+1=5\)</button>
+                      <button class="pick-btn" data-eq="4">\(2x+3y=7\)</button>
+                      <button class="pick-btn" data-eq="5">\(5+3=8\)</button>
+                      <button class="pick-btn" data-eq="6">\(\frac{x}{6}=2\)</button>
+                      <button class="pick-btn" data-eq="7">\(xy=6\)</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="visual-feedback" id="id-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (一元一次方程式的意義)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列何者<strong>是</strong>一元一次方程式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-1-1" value="A"><span class="option-text">A. \(5x-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1-1" value="B"><span class="option-text">B. \(2x+3y=7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1-1" value="C"><span class="option-text">C. \(x^2-4=0\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1-1" value="D"><span class="option-text">D. \(7-4x=9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(7-4x=9\) 有等號、只含一種未知數 \(x\)、\(x\) 的次數是 \(1\)，三個條件都符合。<br>
+              A 錯在<strong>沒有等號</strong>，那是代數式不是方程式。<br>
+              B 錯在同時含有 \(x\) 與 \(y\)，是<strong>二元</strong>一次方程式。<br>
+              C 錯在 \(x\) 的次數是 \(2\)，是一元<strong>二次</strong>方程式。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 關於方程式，下列敘述何者<strong>錯誤</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-1-2" value="A"><span class="option-text">A. 方程式一定含有等號</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1-2" value="B"><span class="option-text">B. \(2y-9=1\) 是一元一次方程式</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1-2" value="C"><span class="option-text">C. \(3x+5\) 是一元一次方程式</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1-2" value="D"><span class="option-text">D. \(\frac{x}{4}=-2\) 是一元一次方程式</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(3x+5\) <strong>沒有等號</strong>，它是一元一次<strong>式</strong>（上一節的內容），不是方程式。<br>
+              A 正確：方程式的定義就是「含有未知數的<strong>等式</strong>」。<br>
+              B 正確：未知數用 \(y\) 也可以，只要是一種、一次就好。<br>
+              D 正確：\(\frac{x}{4}=x \div 4=\frac{1}{4}x\)，\(x\) 的次數仍是 \(1\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 用文字符號列一元一次方程式
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-language" aria-hidden="true"></i> 重點 2：用文字符號列式——把一句話翻成一條方程式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>列式三步驟</strong>：
+                <ul>
+                  <li><strong>設未知數</strong>：把題目問的、或還不知道的那個數設成 \(x\)（或 \(y\)、\(a\)）。</li>
+                  <li><strong>照文字的順序寫左半邊</strong>：一個詞一個動作，不要跳著寫。</li>
+                  <li><strong>把「是」「共」「等於」寫成等號</strong>，右半邊補上去。</li>
+                </ul>
+              </li>
+              <li><strong>關鍵字對照</strong>：大／多 → 加；小／少 → 減；倍 → 乘；分成 \(n\) 等分 → 除以 \(n\)。</li>
+              <li><strong>課本例題</strong>：媽媽買了 \(6\) 盒牛奶，每盒 \(x\) 元，另外買了 \(120\) 元的麵包，結帳共付 \(300\) 元。\(6\) 盒牛奶是 \(6x\) 元，加上麵包 \(120\) 元，總共 \(300\) 元，得 \(6x+120=300\)。</li>
+              <li><strong>先乘後加要看清楚</strong>：「比 \(c\) 的 \(2\) 倍多 \(10\) 的數是 \(6\)」是 \(2c+10=6\)；如果寫成 \(2(c+10)=6\) 就變成「比 \(c\) 多 \(10\) 之後再取 \(2\) 倍」，意思完全不同。</li>
+              <li><strong>「每一份都…」要用括號包起來</strong>。這是上一節列式的老規矩，到了方程式一樣適用。</li>
+              <li><strong>年齡問題的小陷阱</strong>：\(n\) 年前（後），<strong>每個人都要一起加減</strong>。媽媽今年 \(36\) 歲、意紋今年 \(x\) 歲，三年前媽媽的年齡是意紋的 \(3\) 倍，要寫成 \(36-3=3(x-3)\)，不是 \(36-3=3x-3\)。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>文字敘述</th><th>一元一次方程式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>比 \(x\) 大 \(7\) 的數是 \(-5\)</td><td>\(x+7=-5\)</td></tr>
+                <tr><td>比 \(y\) 小 \(4\) 的數是 \(21\)</td><td>\(y-4=21\)</td></tr>
+                <tr><td>\(18\) 是 \(x\) 的 \(\frac{3}{4}\) 倍</td><td>\(18=\frac{3}{4}x\)</td></tr>
+                <tr><td>把 \(a\) 分成 \(5\) 等分，每份都是 \(6\)</td><td>\(\frac{a}{5}=6\)</td></tr>
+                <tr><td>比 \(c\) 的 \(3\) 倍多 \(8\) 的數是 \(2\)</td><td>\(3c+8=2\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="brass_order.webp" alt="蒸汽龐克插圖：小發明家把六瓶牛奶和一條麵包放上黃銅天平左盤，右盤堆著一疊銅幣，機械貓拿著一張空白訂單" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：文字敘述翻譯機</h3>
+            <p class="interactive-instruction">選一句敘述，再按「下一步」：機器會<strong>先認出未知數</strong>、<strong>再翻左半邊</strong>、<strong>最後補上等號與右半邊</strong>。看清楚每個詞變成了什麼：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-translate" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">選一句文字敘述</span>
+                    <div class="btn-group" id="tr-item-group">
+                      <button class="pick-btn active" data-item="0">敘述 1</button>
+                      <button class="pick-btn" data-item="1">敘述 2</button>
+                      <button class="pick-btn" data-item="2">敘述 3</button>
+                      <button class="pick-btn" data-item="3">敘述 4</button>
+                      <button class="pick-btn" data-item="4">敘述 5</button>
+                      <button class="pick-btn" data-item="5">敘述 6</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-controls">
+                  <button class="step-ctrl-btn secondary" id="tr-prev">上一步</button>
+                  <span class="step-counter" id="tr-step">1 / 4</span>
+                  <button class="step-ctrl-btn" id="tr-next">下一步</button>
+                </div>
+                <div class="visual-feedback" id="tr-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (用文字符號列式)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 今年姊姊的年齡恰好是弟弟年齡的 \(3\) 倍少 \(4\) 歲。若弟弟今年 \(y\) 歲、姊姊今年 \(29\) 歲，依題意可列出的方程式為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-2-1" value="A"><span class="option-text">A. \(3y+4=29\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2-1" value="B"><span class="option-text">B. \(3y-4=29\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2-1" value="C"><span class="option-text">C. \(3(y-4)=29\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2-1" value="D"><span class="option-text">D. \(y-3 \times 4=29\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。「\(3\) 倍少 \(4\) 歲」是<strong>先取 3 倍，再減 4</strong>：姊姊的年齡是 \(3y-4\)，而姊姊是 \(29\) 歲，所以 \(3y-4=29\)。<br>
+              A 錯在把「少 \(4\)」寫成加法。<br>
+              C 錯在括號的位置：\(3(y-4)\) 的意思是「弟弟先少 \(4\) 歲，再取 \(3\) 倍」。<br>
+              D 錯在完全沒有取 \(3\) 倍。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 「比 \(x\) 的 \(\frac{3}{4}\) 倍小 \(6\) 的數是 \(-2\)」，列成一元一次方程式為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-2-2" value="A"><span class="option-text">A. \(\frac{3}{4}x-6=-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2-2" value="B"><span class="option-text">B. \(\frac{3}{4}(x-6)=-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2-2" value="C"><span class="option-text">C. \(6-\frac{3}{4}x=-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2-2" value="D"><span class="option-text">D. \(\frac{4}{3}x-6=-2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。照文字順序：先取 \(x\) 的 \(\frac{3}{4}\) 倍得 \(\frac{3}{4}x\)，再「小 \(6\)」就是減 \(6\)，最後「是 \(-2\)」寫成等號，得 \(\frac{3}{4}x-6=-2\)。<br>
+              B 錯在括號把順序弄反了。<br>
+              C 錯在把「比 A 小 6」寫成「6 減 A」——<strong>比 A 小 6 是 \(A-6\)</strong>。<br>
+              D 錯在把 \(\frac{3}{4}\) 倒過來寫成 \(\frac{4}{3}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 方程式的解
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flask" aria-hidden="true"></i> 重點 3：方程式的解——哪一個數能讓天平真的平起來
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>什麼是解</strong>：方程式中，未知數所代表的數，若能<strong>使等號兩邊的值相等</strong>，就稱此數為這個方程式的<strong>解</strong>，也叫做<strong>根</strong>。</li>
+              <li><strong>什麼是解方程式</strong>：求出未知數所代表的數的<strong>過程</strong>，稱為解方程式。</li>
+              <li><strong>檢驗的方法就是代入</strong>。以 \(3x+5=14\) 為例，把 \(x\) 逐一代進去算左邊的值：\(x=1\) 得 \(8\)，\(x=2\) 得 \(11\)，\(x=3\) 得 \(14\)。只有 \(x=3\) 讓左右兩邊都是 \(14\)，所以 \(3\) 是解，\(1\) 和 \(2\) 都不是。</li>
+              <li><strong>代入負數一定要加括號</strong>：檢驗 \(x=-2\) 是不是 \(-2x+3=-19\) 的解，要寫成 \((-2) \times (-2)+3=7\)，<strong>兩個運算符號或性質符號不可以相鄰</strong>。</li>
+              <li><strong>算完要下結論</strong>：\(7 \neq -19\)，所以 \(-2\) 不是解。檢驗的結果只有「是」或「不是」兩種。</li>
+              <li><strong>為什麼不能一直用代入法</strong>：課本的 \(75x+84(30-x)=1980\)，光靠一個一個試，過程繁瑣又不容易試中。<strong>我們需要一套一定找得到解的方法</strong>——那就是下一個重點的等量公理。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>代入的 \(x\)</th><th>\(3x+5\) 的值</th><th>是否等於 \(14\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(1\)</td><td>\(3 \times 1+5=8\)</td><td class="sign-neg">否</td></tr>
+                <tr><td>\(2\)</td><td>\(3 \times 2+5=11\)</td><td class="sign-neg">否</td></tr>
+                <tr><td>\(3\)</td><td>\(3 \times 3+5=14\)</td><td class="sign-pos">是（\(x=3\) 是解）</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="brass_check.webp" alt="蒸汽龐克插圖：三個大小不同的鐵盒排隊等待檢驗，小發明家把中間那個放上黃銅天平，指針正對中央發出綠光" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：代入檢驗天平</h3>
+            <p class="interactive-instruction">拉滑桿把 \(x\) 一個一個代進去，看左盤的重量怎麼跟著變。<strong>只有一個值能讓天平真的平起來</strong>，那個值就是解：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-substitute" width="540" height="390"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要檢驗的方程式</span>
+                    <div class="btn-group" id="sub-eq-group">
+                      <button class="pick-btn active" data-eq="0">\(3x+5=14\)</button>
+                      <button class="pick-btn" data-eq="1">\(-2x+3=-7\)</button>
+                      <button class="pick-btn" data-eq="2">\(\frac{x}{2}-1=3\)</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sub-x-slider">代入的 \(x\)：<span id="sub-x-val" class="val-num">1</span></label>
+                    <input type="range" id="sub-x-slider" min="-4" max="8" value="1" step="1">
+                  </div>
+                </div>
+                <div class="visual-feedback" id="sub-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (方程式的解)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一個數是方程式 \(-3x+4=-11\) 的解？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-3-1" value="A"><span class="option-text">A. \(-5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3-1" value="B"><span class="option-text">B. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3-1" value="C"><span class="option-text">C. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3-1" value="D"><span class="option-text">D. \(-3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。把 \(x=5\) 代入左邊：\((-3) \times 5+4=-15+4=-11\)，與右邊相等，所以 \(5\) 是解。<br>
+              A：\((-3) \times (-5)+4=19 \neq -11\)。<br>
+              B：\((-3) \times 3+4=-5 \neq -11\)。<br>
+              D：\((-3) \times (-3)+4=13 \neq -11\)。<strong>代入負數時記得加括號</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> \(x=-2\) 是下列哪一個方程式的解？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-3-2" value="A"><span class="option-text">A. \(5x+3=-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3-2" value="B"><span class="option-text">B. \(4-x=x\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3-2" value="C"><span class="option-text">C. \(x+6=2x-1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3-2" value="D"><span class="option-text">D. \(3x-2=x+5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。代入得左邊 \(5 \times (-2)+3=-10+3=-7\)，右邊 \(-7\)，兩邊相等。<br>
+              B：左邊 \(4-(-2)=6\)，右邊 \(-2\)，\(6 \neq -2\)。<br>
+              C：左邊 \(-2+6=4\)，右邊 \(2 \times (-2)-1=-5\)，不相等。<br>
+              D：左邊 \(3 \times (-2)-2=-8\)，右邊 \(-2+5=3\)，不相等。<strong>兩邊都有未知數時，兩邊都要代</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 等量公理
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> 重點 4：等量公理——兩邊做一樣的事，天平不會歪
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>等量公理</strong>：在等號的兩邊<strong>同加、同減、同乘、同除以一個數</strong>（除數不可為 \(0\)），等號兩邊仍會維持相等。</li>
+              <li><strong>等量加法公理</strong>：天平左邊 \(2x\) 公克、右邊 \(4\) 公克時 \(2x=4\)。兩邊<strong>同時</strong>放上 \(10\) 公克，天平仍然平衡，得 \(2x+10=4+10\)。</li>
+              <li><strong>等量減法公理</strong>：天平左邊 \(2x+5\)、右邊 \(9\) 時 \(2x+5=9\)。兩邊<strong>同時</strong>拿走 \(5\) 公克，天平仍然平衡，得 \(2x+5-5=9-5\)。</li>
+              <li><strong>等量乘法公理</strong>：\(2x=4\) 的兩邊重量同時變成 \(3\) 倍，天平仍然平衡，得 \(2x \times 3=4 \times 3\)。</li>
+              <li><strong>等量除法公理</strong>：\(2x=4\) 的兩邊同時只留下一半，天平仍然平衡，得 \(\frac{2x}{2}=\frac{4}{2}\)。</li>
+              <li><strong>加減負數也成立</strong>：加上負數等於減去正數（\(3x+(-5)=3x-5\)），減去負數等於加上正數（\(3x-(-5)=3x+5\)），所以兩邊<strong>同加或同減一個負數</strong>，等式一樣成立；同乘、同除以一個負數也一樣。</li>
+              <li><strong>唯一的限制：除數不可為 \(0\)</strong>。所以「若 \(a \times c=b \times c\)，則 \(a=b\)」<strong>是錯的</strong>——當 \(c=0\) 時，\(a\)、\(b\) 是什麼都成立，不能同除以 \(c\)。</li>
+              <li><strong>解方程式的策略</strong>：用等量公理<strong>先把常數項清掉</strong>，再<strong>把係數變成 1</strong>，左邊只剩一個 \(x\) 時，右邊就是答案。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>公理</th><th>天平的動作</th><th>算式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>等量加法</td><td>兩邊同時放上 \(10\) 公克</td><td>\(2x=4 \Rightarrow 2x+10=4+10\)</td></tr>
+                <tr><td>等量減法</td><td>兩邊同時拿走 \(5\) 公克</td><td>\(2x+5=9 \Rightarrow 2x+5-5=9-5\)</td></tr>
+                <tr><td>等量乘法</td><td>兩邊同時變成 \(3\) 倍</td><td>\(2x=4 \Rightarrow 2x \times 3=4 \times 3\)</td></tr>
+                <tr><td>等量除法</td><td>兩邊同時只留一半</td><td>\(2x=4 \Rightarrow \frac{2x}{2}=\frac{4}{2}\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="brass_balance.webp" alt="蒸汽龐克插圖：小發明家左右手同時把一模一樣的砝碼放上黃銅天平兩端，橫樑保持完全水平，兩側蒸汽閥各噴出一樣的白煙" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：等量公理操作台</h3>
+            <p class="interactive-instruction">自己選<strong>動作</strong>與<strong>數字</strong>，按下「兩邊一起做」。不管你怎麼做，<strong>天平永遠是平的</strong>；目標是把左盤清到<strong>只剩一個鐵盒</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-axiom" width="540" height="430"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要解的方程式</span>
+                    <div class="btn-group" id="ax-eq-group">
+                      <button class="pick-btn active" data-eq="0">\(2x+5=9\)</button>
+                      <button class="pick-btn" data-eq="1">\(3x=12\)</button>
+                      <button class="pick-btn" data-eq="2">\(x-4=-6\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">動作</span>
+                    <div class="btn-group" id="ax-op-group">
+                      <button class="pick-btn" data-op="add">兩邊同加</button>
+                      <button class="pick-btn active" data-op="sub">兩邊同減</button>
+                      <button class="pick-btn" data-op="mul">兩邊同乘</button>
+                      <button class="pick-btn" data-op="div">兩邊同除以</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">數字</span>
+                    <div class="btn-group" id="ax-num-group">
+                      <button class="pick-btn" data-num="1">1</button>
+                      <button class="pick-btn" data-num="2">2</button>
+                      <button class="pick-btn" data-num="3">3</button>
+                      <button class="pick-btn active" data-num="5">5</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="axiom-controls">
+                  <button class="step-ctrl-btn primary" id="ax-apply">兩邊一起做</button>
+                  <button class="step-ctrl-btn secondary" id="ax-undo">上一步</button>
+                  <button class="step-ctrl-btn secondary" id="ax-reset">重設</button>
+                </div>
+                <div class="visual-feedback" id="ax-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等量公理)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 關於等量公理，下列敘述何者<strong>錯誤</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-4-1" value="A"><span class="option-text">A. 若 \(a=b\)，則 \(a-7=b-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4-1" value="B"><span class="option-text">B. 若 \(a=b\)，則 \(a \times (-3)=b \times (-3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4-1" value="C"><span class="option-text">C. 若 \(a=b\)，則 \(\frac{a}{4}=\frac{b}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4-1" value="D"><span class="option-text">D. 若 \(a \times c=b \times c\)，則 \(a=b\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。要從 \(a \times c=b \times c\) 推到 \(a=b\)，必須<strong>兩邊同除以 \(c\)</strong>，但等量除法公理規定<strong>除數不可為 \(0\)</strong>。當 \(c=0\) 時，\(3 \times 0=5 \times 0\) 也成立，可是 \(3 \neq 5\)。<br>
+              A、B、C 都是等量公理的正確使用：同減一個數、同乘一個負數、同除以一個不為 \(0\) 的數，等式都仍然成立。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 要把 \(5x+3=18\) 化簡成 \(5x=15\)，用到的是下列哪一個公理？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-4-2" value="A"><span class="option-text">A. 等量加法公理</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4-2" value="B"><span class="option-text">B. 等量減法公理</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4-2" value="C"><span class="option-text">C. 等量乘法公理</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4-2" value="D"><span class="option-text">D. 等量除法公理</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。兩邊<strong>同減 \(3\)</strong>：\(5x+3-3=18-3\)，左邊的 \(+3-3=0\) 可以省略不寫，得 \(5x=15\)，用的是<strong>等量減法公理</strong>。<br>
+              接下來若要解出 \(x\)，還要再用<strong>等量除法公理</strong>兩邊同除以 \(5\)，得 \(x=3\)。<strong>解一題方程式常常會用到不只一個公理</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 移項法則
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> 重點 5：移項法則——等量公理的快速寫法
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>移項法則</strong>：把某一項移到等號的另一邊，且<strong>加變減、減變加、乘變除、除變乘</strong>，這種解方程式的方法稱為移項法則。</li>
+              <li><strong>移項不是新規則，是等量公理的簡寫</strong>。解 \(x-7=15\) 時，兩邊同加 \(7\) 得 \(x-7+7=15+7\)；因為 \(-7+7=0\)，這一段可以省略不寫，直接寫成 \(x=15+7\)。<strong>看起來像「搬過去」，其實是兩邊同時加了 7</strong>。</li>
+              <li><strong>四種移項一次看</strong>：
+                <ul>
+                  <li>\(x-7=15 \Rightarrow x=15+7\)（<strong>減號移項變加號</strong>）</li>
+                  <li>\(23=x+17 \Rightarrow 23-17=x\)（<strong>加號移項變減號</strong>）</li>
+                  <li>\(\frac{x}{7}=-3 \Rightarrow x=(-3) \times 7\)（<strong>除號移項變乘號</strong>）</li>
+                  <li>\(x \times 3=12 \Rightarrow x=\frac{12}{3}\)（<strong>乘號移項變除號</strong>）</li>
+                </ul>
+              </li>
+              <li><strong>習慣把未知數寫在左邊</strong>：算出 \(6=x\) 時，寫成 \(x=6\)。</li>
+              <li><strong>兩邊都有未知數時</strong>：先把<strong>含 \(x\) 的項集中到等號一邊、常數項集中到另一邊</strong>。例如 \(5x=2x+6\)，把 \(2x\) 移到左邊變 \(-2x\)，得 \(5x-2x=6\)，即 \(3x=6\)，再把 \(\times 3\) 移過去變 \(\div 3\)，得 \(x=2\)。</li>
+              <li><strong>最常見的兩個錯誤</strong>：一是<strong>移項忘了變號</strong>；二是<strong>把除法反過來寫</strong>——由 \(6x=3\) 只能得 \(x=\frac{3}{6}=\frac{1}{2}\)，<strong>不是 \(6 \div 3\)</strong>。</li>
+              <li><strong>驗算</strong>：把答案代回<strong>原方程式</strong>（不是代回中間某一行），確認等號兩邊的值相等。小心計算的話可以省略，但考試時多花十秒很值得。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="brass_flip.webp" alt="蒸汽龐克插圖：黃銅傳送帶把一枚砝碼送過中央的拱門，兩隻機械夾爪在半空中把砝碼翻面，另一面是凹陷的" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：移項傳送帶</h3>
+            <p class="interactive-instruction">選一題，按「下一步」看那一項<strong>跨過等號的瞬間</strong>。注意它<strong>過去之後變成什麼符號</strong>——這就是移項法則：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-move" width="540" height="400"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要解的方程式</span>
+                    <div class="btn-group" id="mv-eq-group">
+                      <button class="pick-btn active" data-eq="0">\(x-9=13\)</button>
+                      <button class="pick-btn" data-eq="1">\(27=x+15\)</button>
+                      <button class="pick-btn" data-eq="2">\(\frac{x}{6}=-4\)</button>
+                      <button class="pick-btn" data-eq="3">\(x \times 5=-35\)</button>
+                      <button class="pick-btn" data-eq="4">\(6x=4x+10\)</button>
+                      <button class="pick-btn" data-eq="5">\(5x+7=8x-5\)</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-controls">
+                  <button class="step-ctrl-btn secondary" id="mv-prev">上一步</button>
+                  <span class="step-counter" id="mv-step">1 / 3</span>
+                  <button class="step-ctrl-btn" id="mv-next">下一步</button>
+                </div>
+                <div class="visual-feedback" id="mv-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (移項法則)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-5-1">
+            <p class="quiz-question"><strong>Q1.</strong> 解方程式 \(7x-4=5x-10\)，得 \(x=\) ？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-5-1" value="A"><span class="option-text">A. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5-1" value="B"><span class="option-text">B. \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5-1" value="C"><span class="option-text">C. \(-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5-1" value="D"><span class="option-text">D. \(3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。含 \(x\) 的移到左邊、常數移到右邊，<strong>跨過等號的每一項都要變號</strong>：
+              \[ \begin{aligned} & 7x-5x = -10+4 \\ & 2x = -6 \\ & x = -3 \end{aligned} \]
+              驗算：左邊 \(7 \times (-3)-4=-25\)，右邊 \(5 \times (-3)-10=-25\)，兩邊相等。<br>
+              常見錯誤是把 \(-10\) 移過去忘了變號，得到 \(2x=-14\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-5-2">
+            <p class="quiz-question"><strong>Q2.</strong> 關於移項，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-5-2" value="A"><span class="option-text">A. 由 \(x+5=2\) 可得 \(x=2+5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5-2" value="B"><span class="option-text">B. 由 \(6x=3\) 可得 \(x=6 \div 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5-2" value="C"><span class="option-text">C. 由 \(\frac{x}{4}=8\) 可得 \(x=8 \div 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5-2" value="D"><span class="option-text">D. 由 \(x-6=-1\) 可得 \(x=-1+6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(-6\) 移到等號右邊要<strong>變成 \(+6\)</strong>，得 \(x=-1+6=5\)。<br>
+              A 錯在 \(+5\) 移過去應該<strong>變成 \(-5\)</strong>，正確是 \(x=2-5=-3\)。<br>
+              B 錯在把除法寫反了：\(\times 6\) 移過去變 \(\div 6\)，正確是 \(x=\frac{3}{6}=\frac{1}{2}\)。<br>
+              C 錯在 \(\div 4\) 移過去應該<strong>變成 \(\times 4\)</strong>，正確是 \(x=8 \times 4=32\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 括號與分數的方程式
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 6：括號與分數——先整理，再移項
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>有括號就先去括號</strong>。括號前面是數字時用<strong>分配律，每一項都要乘到</strong>；括號前面是減號或負號時，<strong>裡面每一項都要變號</strong>。</li>
+              <li><strong>多層括號由內而外</strong>：先小括號，再中括號。例如 \(3[2(1-x)+4x]=8\)，先把小括號拆成 \(3[2-2x+4x]\)，合併成 \(3[2+2x]\)，再去中括號得 \(6+6x=8\)。</li>
+              <li><strong>有分數就先清分母</strong>：兩邊<strong>同乘所有分母的最小公倍數</strong>（等量乘法公理）。例如 \(\frac{1}{3}x=\frac{7}{6}-\frac{1}{4}x\) 兩邊同乘 \(12\)，得 \(4x=14-3x\)。</li>
+              <li><strong>最容易錯的一步：常數項也要乘</strong>。\(\frac{7x}{5}-\frac{4x-5}{3}=1\) 兩邊同乘 \(15\) 時，右邊的 \(1\) 也要變成 \(15\)，不是還留著 \(1\)。<strong>「兩邊同乘」是整條式子的每一項都乘，不是只乘有分母的那幾項</strong>。</li>
+              <li><strong>分子是多項式時要加括號</strong>：\(\frac{x-3}{2} \times 6=3(x-3)=3x-9\)，如果漏了括號寫成 \(3x-3\) 就錯了。</li>
+              <li><strong>整理好之後，剩下的就是移項</strong>：含 \(x\) 的往一邊、常數往另一邊，合併同類項，最後把係數變成 \(1\)。</li>
+              <li><strong>解的檢查</strong>：答案代回<strong>原來那條有括號、有分數的方程式</strong>，才算真的驗算過。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="brass_press.webp" alt="蒸汽龐克插圖：桌上左邊是層層打開的三層黃銅套盒，最裡面放著一枚砝碼；右邊一台齒輪驅動的滾壓機把扇形的薄銅片壓成完整的圓片" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：括號與分數推導器＋挑錯台</h3>
+            <p class="interactive-instruction">「逐行推導」模式一行一行拆給你看；切到<strong>「挑錯題」</strong>模式，會出現別人的解法——<strong>直接在畫面上點出從哪一行開始錯</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-expand" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="ex-mode-group">
+                      <button class="pick-btn active" data-mode="steps">逐行推導</button>
+                      <button class="pick-btn" data-mode="error">挑錯題</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="ex-item-row">
+                    <span class="btn-group-label">要推導的方程式</span>
+                    <div class="btn-group" id="ex-item-group">
+                      <button class="pick-btn active" data-item="0">\(3(x-2)=-2(x+3)+10\)</button>
+                      <button class="pick-btn" data-item="1">\(2[3(x+1)-x]=14\)</button>
+                      <button class="pick-btn" data-item="2">\(\frac{x}{2}-\frac{1}{3}=\frac{x}{6}+1\)</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-controls" id="ex-step-row">
+                  <button class="step-ctrl-btn secondary" id="ex-prev">上一步</button>
+                  <span class="step-counter" id="ex-step">1 / 5</span>
+                  <button class="step-ctrl-btn" id="ex-next">下一步</button>
+                </div>
+                <div class="visual-feedback" id="ex-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (括號與分數的方程式)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-6-1">
+            <p class="quiz-question"><strong>Q1.</strong> 解方程式 \(-3[2(x-1)-x]=9\)，得 \(x=\) ？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-6-1" value="A"><span class="option-text">A. \(-1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6-1" value="B"><span class="option-text">B. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6-1" value="C"><span class="option-text">C. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6-1" value="D"><span class="option-text">D. \(-5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。<strong>由內而外</strong>拆括號：
+              \[ \begin{aligned} & -3[2x-2-x] = 9 \\ & -3[x-2] = 9 \\ & -3x+6 = 9 \\ & -3x = 3 \\ & x = -1 \end{aligned} \]
+              去中括號時 \(-3\) 要<strong>乘到裡面每一項</strong>：\(-3 \times x=-3x\)、\(-3 \times (-2)=+6\)。漏乘或忘了變號是這題最常見的錯誤。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-6-2">
+            <p class="quiz-question"><strong>Q2.</strong> 解 \(\frac{x+5}{2}=\frac{x-1}{3}+1\) 時，兩邊同乘 \(6\)，正確的下一行應該是？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-6-2" value="A"><span class="option-text">A. \(3(x+5)=2(x-1)+1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6-2" value="B"><span class="option-text">B. \(3(x+5)=2(x-1)+6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6-2" value="C"><span class="option-text">C. \(2(x+5)=3(x-1)+6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6-2" value="D"><span class="option-text">D. \(3x+5=2x-1+6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。兩邊同乘 \(6\)：左邊 \(\frac{x+5}{2} \times 6=3(x+5)\)，右邊<strong>兩項都要乘</strong>——\(\frac{x-1}{3} \times 6=2(x-1)\)，而常數 \(1 \times 6=6\)。<br>
+              A 錯在<strong>常數項 \(1\) 忘了乘 \(6\)</strong>，這正是課本挑錯題裡小翊犯的錯，答案會整個跑掉。<br>
+              C 錯在把兩個分母的倍數對調了。<br>
+              D 錯在<strong>分子是多項式卻沒有加括號</strong>，\((x+5)\) 整包都要乘 \(3\)。<br>
+              正確解下去：\(3x+15=2x-2+6\)，得 \(x=-11\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-swatchbook"></i> 一元一次方程式快速檢索卡</h4>
+            <ul class="bullet-list">
+              <li><strong>方程式</strong>：含有未知數的<strong>等式</strong>。沒有等號的只是代數式。</li>
+              <li><strong>一元一次方程式</strong>：只含<strong>一種</strong>未知數（一元）、未知數的次數是 \(1\)（一次）的等式。</li>
+              <li><strong>列式三步驟</strong>：設未知數 → 照文字順序寫左邊 → 「是／共」寫成等號。<strong>多用加、少用減、倍用乘、等分用除</strong>。</li>
+              <li><strong>解（根）</strong>：能使等號<strong>兩邊的值相等</strong>的那個數。求解的過程叫<strong>解方程式</strong>。</li>
+              <li><strong>檢驗</strong>：代回原方程式算兩邊。<strong>代入負數要加括號</strong>。</li>
+              <li><strong>等量公理</strong>：兩邊<strong>同加、同減、同乘、同除以一個數</strong>（除數 \(\neq 0\)），等號仍成立。</li>
+              <li><strong>移項法則</strong>：把某項移到另一邊，<strong>加變減、減變加、乘變除、除變乘</strong>——它就是等量公理的簡寫。</li>
+              <li><strong>兩邊都有未知數</strong>：含 \(x\) 的集中一邊、常數集中另一邊，再合併同類項。</li>
+              <li><strong>有括號</strong>：先去括號，括號前是負號時<strong>裡面每一項都變號</strong>；多層括號<strong>由內而外</strong>。</li>
+              <li><strong>有分數</strong>：兩邊同乘分母的<strong>最小公倍數</strong>，<strong>每一項都要乘到</strong>，分子是多項式時<strong>要加括號</strong>。</li>
+              <li><strong>兩個經典錯誤</strong>：移項忘了變號；由 \(6x=3\) 誤寫成 \(x=6 \div 3\)（正確是 \(x=\frac{3}{6}=\frac{1}{2}\)）。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-lightbulb"></i> 回到工房：那三個沒有打開的盒子</h4>
+              <h5><i class="fa-solid fa-scale-balanced"></i> 從一台天平到一條規則</h5>
+              <p>漫畫裡的天平左盤是三個鐵盒加五個砝碼、右盤十四個砝碼，寫成數學就是 \(3x+5=14\)。小發明家做的第一件事是<strong>兩邊同時拿走五個砝碼</strong>——這就是<strong>等量減法公理</strong>，得到 \(3x=9\)；第二件事是<strong>把兩邊都分成三等分</strong>，這是<strong>等量除法公理</strong>，得到 \(x=3\)。</p>
+              <p>整個過程只做了兩個動作，而且<strong>兩個動作都是「兩邊一起做」</strong>。天平從頭到尾沒有歪過，這正是解方程式一定會成功的理由：每一行式子的解都和上一行完全一樣，只是長得越來越簡單。</p>
+              <h5><i class="fa-solid fa-bolt"></i> 為什麼還要學移項</h5>
+              <p>寫熟之後，\(3x+5=14\) 的中間那行 \(3x+5-5=14-5\) 每次都要寫實在太慢，於是我們直接寫成 \(3x=14-5\)——這就是<strong>移項</strong>。移項不是另一套規則，<strong>它只是等量公理省略了中間一行的寫法</strong>。所以當你移項移到懷疑人生時，隨時可以退回去問自己一句：「我剛才對兩邊做了同一件事嗎？」</p>
+              <h5><i class="fa-solid fa-clock-rotate-left"></i> 等號是誰發明的</h5>
+              <p>方程式的核心是等號，但等號 \(=\) 其實很年輕。西元 \(1557\) 年，威爾斯數學家雷科德在著作裡首次使用兩條平行線代表相等，理由很單純：<strong>沒有兩樣東西比兩條等長的平行線更相等</strong>。在那之前，人們得用一整句拉丁文寫「等於」。至於解方程式本身則老得多——中國《九章算術》的第八章就叫〈方程〉，古埃及的紙草書裡也有「某數加上它的七分之一等於十九」這類題目，用的方法叫「試位法」，其實就是課本裡那張代入表格的祖先。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
