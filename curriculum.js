@@ -34,7 +34,7 @@
       {
         "chapter": "第3章 一元一次方程式",
         "sections": [
-          { "code": "3-1", "title": "代數式的化簡" },
+          { "code": "3-1", "title": "代數式的化簡", "status": "completed" },
           { "code": "3-2", "title": "一元一次方程式" },
           { "code": "3-3", "title": "應用問題" }
         ]

@@ -4,39 +4,880 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/webp" href="../../header-logo.webp">
-  <title>3-1 代數式的化簡 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-1 代數式的化簡 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第一冊 (1上) • 第3章 一元一次方程式</div>
-    <h1>3-1 代數式的化簡</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第一冊 • 第三章</span>
+        <h1>3-1 代數式的化簡</h1>
+        <p>當數量還不知道、或者會變動時，我們用一個文字符號把它先<strong>記下來</strong>，再把題目的關係寫成算式——這就是<strong>代數式</strong>。這一節要學四件事：怎麼用符號列式、怎麼把式子簡記成 \(3x\) 這種乾淨的寫法、怎麼把數代回去求值，以及怎麼把一長串式子<strong>合併同類項</strong>化簡成最短的樣子。這些都是下一節解一元一次方程式的基本功。</p>
+      </div>
+      <!-- Progress navigation (6 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-tag"></i> 以文字符號代表數</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-compress"></i> 代數式的簡記</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-receipt"></i> 以文字符號列式</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-cash-register"></i> 求代數式的值</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-boxes-stacked"></i> 一元一次式與同類項</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-calculator"></i> 加減與去括號</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Boba Chalkboard Menu Style)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(245, 158, 11, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-mug-hot" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);"></i> 課前暖身漫畫：今天的價錢還沒寫上去
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小翊放學跑到常去的手搖飲店，黑板菜單上今天的紅茶價錢<strong style="color:#fcd34d">還是一片空白</strong>——老闆說物價在調，中午才會寫上去。可是小翊已經答應要幫三個同學一起買，還要自備環保杯每杯折 \(5\) 元。他乾脆拿起粉筆，在黑板角落寫下一個 \(x\)：<strong style="color:#fcd34d">「一杯 \(x\) 元」</strong>。價錢雖然還不知道，但關係已經定下來了——三杯自備杯，就是 \(3(x-5)\) 元。中午價錢公布是 \(30\) 元，把 \(30\) 代進去，馬上就知道要付 \(75\) 元。這一節就從這塊寫著 \(x\) 的黑板開始。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="手搖飲黑板菜單風四格漫畫：小翊發現黑板上今天的紅茶價錢還沒寫，他用粉筆寫下一杯 x 元，把三杯自備環保杯每杯折 5 元列成 3(x-5)，中午價錢公布是 30 元，代入後算出要付 75 元" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 以文字符號代表數
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-tag" aria-hidden="true"></i> 重點 1：以文字符號代表數——先把不知道的數記下來
+        </h2>
+
+        <div class="grid-content">
+          <!-- Text Explanation -->
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>遇到不知道的數，就用文字符號代表它</strong>。生活中常常有「還沒公布」或「會變動」的數量，例如今天這杯紅茶的價錢。我們可以用一個文字符號先把它記下來，習慣上使用英文字母 \(a\)、\(b\)、\(c\)、\(x\)、\(y\)、\(z\)（國小時也用過甲、乙）。</li>
+              <li><strong>什麼是代數式</strong>：由<strong>文字符號</strong>和<strong>數字</strong>透過運算符號組成的算式，稱為<strong>代數式</strong>。例如 \(3 \times x\)、\(x - 5\)、\(40 \times x\) 都是代數式。</li>
+              <li><strong>代數式記的是「關係」，不是「答案」</strong>。一杯 \(x\) 元、買 \(3\) 杯要 \(3 \times x\) 元——不管 \(x\) 是 \(30\) 還是 \(45\)，這個關係都成立。這正是代數比算術強大的地方：<strong>一條式子，涵蓋所有情況</strong>。</li>
+              <li><strong>文字符號可以代表任何數</strong>：正數、負數、分數、小數都可以，不是只有正整數。例如溫度變化用 \(x\) 表示時，\(x\) 就可能是 \(-3.5\)。</li>
+              <li><strong>同一題裡，同一個符號代表同一個數</strong>；<strong>不同的量要用不同的符號</strong>。若紅茶一杯 \(x\) 元、布丁一份 \(y\) 元，那麼一杯加布丁的紅茶就是 \(x + y\) 元，不能兩個都寫成 \(x\)。</li>
+              <li><strong>沒有尺也量得到</strong>：課本裡小翊跳遠後沒有捲尺，就用自己的<strong>手掌長</strong>當單位去量。設一個手掌長為 \(x\) 公分，量出來共 \(40\) 個手掌長，跳遠距離就是 \(40 \times x\) 公分。<strong>單位量未知，總量照樣寫得出來</strong>。</li>
+              <li><strong>符號代表數之後，整個代數式也代表一個數</strong>。所以代數式可以繼續參與加減乘除的運算，數的運算規則（交換律、結合律、分配律）對它一樣適用——這是後面幾個重點的根據。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>吧檯上的情境</th><th>設定的符號</th><th>代數式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>一杯紅茶 \(x\) 元，買 \(4\) 杯</td><td>一杯的價錢 \(x\)</td><td>\(4 \times x\) 元</td></tr>
+                <tr><td>一杯 \(x\) 元，自備環保杯折 \(5\) 元</td><td>一杯的價錢 \(x\)</td><td>\(x - 5\) 元</td></tr>
+                <tr><td>紅茶 \(x\) 元、布丁 \(y\) 元，加在一起</td><td>兩種價錢 \(x\)、\(y\)</td><td>\(x + y\) 元</td></tr>
+                <tr><td>一大杯 \(a\) 毫升，平分成 \(3\) 小杯</td><td>大杯容量 \(a\)</td><td>\(a \div 3\) 毫升</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="boba_menu.webp" alt="手搖飲黑板菜單風插圖：黑板菜單上的紅茶價錢欄空著，小翊踮腳用粉筆在上面寫下一個大大的 x" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Canvas Interaction -->
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：牌價未定的價目板</h3>
+            <p class="interactive-instruction">拉動杯數，看看<strong>連加</strong>怎麼收成 \(n \times x\)。再按下方的按鈕換掉今天的牌價——<strong>式子不變，值才變</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-board" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bd-n-slider">杯數 n: <span id="bd-n-val" class="val-num">0</span></label>
+                    <input type="range" id="bd-n-slider" min="1" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">今天的牌價</span>
+                    <div class="btn-group" id="bd-price-group">
+                  <button class="pick-btn active" data-price="0">牌價未公布</button>
+                  <button class="pick-btn" data-price="30">今天 30 元</button>
+                  <button class="pick-btn" data-price="45">今天 45 元</button>
+                </div>
+              </div>
+            </div>
+
+                <div class="visual-feedback" id="bd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (以文字符號代表數)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 一杯紅茶 \(x\) 元，一杯奶茶比一杯紅茶貴 \(12\) 元。下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-1-1" value="A"><span class="option-text">A. 一杯奶茶要 \(12x\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1-1" value="B"><span class="option-text">B. 一杯奶茶要 \(x + 12\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1-1" value="C"><span class="option-text">C. 因為是價錢，所以 \(x\) 一定是整數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1-1" value="D"><span class="option-text">D. 買 \(2\) 杯奶茶要 \(2x + 12\) 元</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>「比 \(x\) 貴 \(12\) 元」是<strong>多 \(12\)</strong>，用加法，所以一杯奶茶是 \(x + 12\) 元，答案為 B。<br>
+              A 錯在把「貴 \(12\) 元」看成「\(12\) 倍」——<strong>多與倍是兩件事</strong>，多用加、倍用乘。<br>
+              C 錯在 \(x\) 只是「一杯的價錢」這個數的代號，它可以是 \(35.5\) 這種小數；文字符號能代表的數<strong>不限於整數</strong>。<br>
+              D 錯在只把一杯多的 \(12\) 元算一次。兩杯奶茶是 \(2 \times (x + 12) = 2x + 24\) 元，<strong>每一杯都貴 \(12\) 元</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 關於文字符號的使用，下列敘述何者<strong>錯誤</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-1-2" value="A"><span class="option-text">A. 同一個題目中，同一個符號代表同一個數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1-2" value="B"><span class="option-text">B. 文字符號可以代表負數或分數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1-2" value="C"><span class="option-text">C. 若 \(a = 0\)，則代數式 \(3 \times a\) 的值是 \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1-2" value="D"><span class="option-text">D. 因為 \(x\) 表示未知數，所以 \(x\) 不可能等於 \(5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。「未知」的意思是<strong>我們還不知道它是多少</strong>，不是「它不能是某個數」。今天牌價公布是 \(5\) 元，\(x\) 就等於 \(5\)。<br>
+              A 正確：如果同一題裡 \(x\) 一下代表紅茶價、一下代表奶茶價，式子就沒有意義了。<br>
+              B 正確：文字符號代表的是<strong>一個數</strong>，正、負、分數、小數都可以。<br>
+              C 正確：符號代表 \(0\) 時照樣可以代入，\(3 \times 0 = 0\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 代數式的簡記
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compress" aria-hidden="true"></i> 重點 2：代數式的簡記——把乘號與除號收乾淨
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>為什麼要簡記</strong>：乘號 \(\times\) 和英文字母 \(x\) 長得太像，\(3 \times x\) 寫快一點就分不出哪個是乘號。所以約定把數字與文字符號之間的乘號改寫成一點 \(\cdot\)，或者<strong>乾脆省略不寫</strong>。</li>
+              <li><strong>乘法簡記（一）數字寫前面</strong>：\(3 \times x = 3 \cdot x = 3x\)。又因為 \(x \times 3 = 3 \times x\)，所以 \(x \times 3\) 也記為 \(3x\)；<strong>習慣上不寫成 \(x3\)</strong>。</li>
+              <li><strong>乘法簡記（二）分數與負數一樣做</strong>：\(\frac{5}{8} \times x = \frac{5}{8} \cdot x = \frac{5}{8}x\)；\((-7) \times x = (-7) \cdot x = (-7)x\)。因為 \(x\) 代表一個數，仿照數的運算規則可得 \((-7)x = -(7x)\)，兩者都記為 \(-7x\)。</li>
+              <li><strong>乘法簡記（三）係數 \(1\) 不用寫</strong>：\(1\) 乘任何數都等於該數，所以 \(1 \times x = x \times 1 = x\)；同理 \((-1)x = -(1x) = -x\)。<strong>看到 \(x\) 就要想到它的係數是 \(1\)</strong>，這在後面合併同類項時很關鍵。</li>
+              <li><strong>加減號絕對不能省略</strong>：\(x \times (-8) - 9\) 只能簡記成 \(-8x - 9\)，中間那個減號是<strong>運算符號</strong>，省掉式子就變了。</li>
+              <li><strong>除法簡記：除以一個不為 \(0\) 的數，就是乘以它的倒數</strong>。所以 \(x \div 5 = x \times \frac{1}{5} = \frac{x}{5}\)。</li>
+              <li><strong>除以負數時負號可以往外提</strong>：\(x \div (-5) = x \times \frac{1}{-5} = \frac{x}{-5}\)。由 \(\frac{b}{-a} = \frac{-b}{a} = -\frac{b}{a}\) 可知，它也可以寫成 \(\frac{-x}{5}\)、\(-\frac{x}{5}\) 或 \(-\frac{1}{5}x\)——<strong>四種寫法是同一個式子</strong>。</li>
+              <li><strong>除以分數：翻過來乘</strong>。\(\frac{b}{a}\) 的倒數是 \(\frac{a}{b}\)（\(a\)、\(b\) 皆不為 \(0\)），所以
+                \[ \begin{aligned} & x \div \frac{2}{3} = x \cdot \frac{3}{2} \\ &= \frac{3}{2}x = \frac{3x}{2} \end{aligned} \]</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>原式</th><th>中間步驟</th><th>簡記</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(18 \times x\)</td><td>\(18 \cdot x\)</td><td class="sign-pos">\(18x\)</td></tr>
+                <tr><td>\(y \times (-23)\)</td><td>\((-23) \cdot y\)</td><td class="sign-neg">\(-23y\)</td></tr>
+                <tr><td>\((-1) \times y\)</td><td>\(-(1y)\)</td><td class="sign-neg">\(-y\)</td></tr>
+                <tr><td>\(a \times \frac{5}{9}\)</td><td>\(\frac{5}{9} \cdot a\)</td><td class="sign-pos">\(\frac{5}{9}a\)</td></tr>
+                <tr><td>\(x \div (-3)\)</td><td>\(x \cdot \frac{1}{-3}\)</td><td class="sign-neg">\(-\frac{x}{3}\)</td></tr>
+                <tr><td>\(x \div \left(-\frac{5}{3}\right)\)</td><td>\(x \cdot \left(-\frac{3}{5}\right)\)</td><td class="sign-neg">\(-\frac{3}{5}x\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="boba_chalk.webp" alt="手搖飲黑板菜單風插圖：店員把黑板上寫的 3 乘以 x 用板擦擦掉乘號，改寫成乾淨的 3x" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-eraser"></i> 視覺互動探索：簡記工作台</h3>
+            <p class="interactive-instruction">選一個式子，再按<strong>下一步</strong>看它一步一步被簡記成最乾淨的樣子。注意每一步<strong>改變的是寫法，不是值</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-short" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sh-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">選一個式子</span>
+                    <div class="btn-group" id="sh-case-group">
+                  <button class="pick-btn active" data-case="0">3 × x</button>
+                  <button class="pick-btn" data-case="1">x × 3</button>
+                  <button class="pick-btn" data-case="2">(−1) × y</button>
+                  <button class="pick-btn" data-case="3">x ÷ 5</button>
+                  <button class="pick-btn" data-case="4">x ÷ (−5)</button>
+                  <button class="pick-btn" data-case="5">x ÷ (2/3)</button>
+                </div>
+              </div>
+            </div>
+
+                <div class="step-controls">
+                  <button class="step-ctrl-btn" id="sh-prev"><i class="fa-solid fa-chevron-left"></i> 上一步</button>
+                  <span class="step-counter" id="sh-step">1 / 1</span>
+                  <button class="step-ctrl-btn" id="sh-next">下一步 <i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="visual-feedback" id="sh-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (代數式的簡記)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 把 \(b \times (-9) + 4.5\) 簡記，正確的是哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-2-1" value="A"><span class="option-text">A. \(-9(b + 4.5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2-1" value="B"><span class="option-text">B. \(-9b \cdot 4.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2-1" value="C"><span class="option-text">C. \(-9b + 4.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2-1" value="D"><span class="option-text">D. \(-9b4.5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>簡記只處理<strong>數字與文字符號之間的乘號</strong>。<br>
+              \(b \times (-9) = (-9) \cdot b = -9b\)，後面的 \(+\,4.5\) 原封不動，所以答案是 \(-9b + 4.5\)，選 C。<br>
+              A 錯在多加了括號，把 \(4.5\) 也乘進去了，值完全不同。<br>
+              B 把加號改成了乘號。<strong>可以省略的只有乘號，加號與減號絕對不能省</strong>。<br>
+              D 把加號直接刪掉，變成兩個數字黏在一起，式子已經沒有意義。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> \(z \div \left(-\frac{7}{4}\right)\) 簡記後等於下列哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-2-2" value="A"><span class="option-text">A. \(-\frac{7}{4}z\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2-2" value="B"><span class="option-text">B. \(\frac{4}{7}z\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2-2" value="C"><span class="option-text">C. \(-\frac{4}{7z}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2-2" value="D"><span class="option-text">D. \(-\frac{4}{7}z\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>除以一個數就是<strong>乘以它的倒數</strong>。\(-\frac{7}{4}\) 的倒數是 \(-\frac{4}{7}\)，所以
+              \[ \begin{aligned} & z \div \left(-\frac{7}{4}\right) \\ &= z \cdot \left(-\frac{4}{7}\right) = -\frac{4}{7}z \end{aligned} \]
+              答案為 D（也可以寫成 \(-\frac{4z}{7}\)，是同一個式子）。<br>
+              A 是忘了把分數<strong>翻過來</strong>，直接把除數搬下來當係數。<br>
+              B 翻對了但<strong>漏掉負號</strong>：負數的倒數仍然是負數。<br>
+              C 把 \(z\) 寫到了分母，那是 \(-\frac{4}{7} \div z\)，與原式差很多——原式的 \(z\) 是被除數，簡記後應該留在<strong>分子</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 以文字符號列式
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-receipt" aria-hidden="true"></i> 重點 3：以文字符號列式——把中文翻譯成算式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>列式就是翻譯</strong>。解題的第一步，是根據題目的文字敘述寫出對應的代數式。掌握幾個關鍵字就能翻得又快又準。</li>
+              <li><strong>大／多 \(\to\) 加，小／少 \(\to\) 減</strong>：比 \(x\) 大 \(5\) 的數是 \(x + 5\)；比 \(y\) 小 \(3\) 的數是 \(y - 3\)。</li>
+              <li><strong>倍 \(\to\) 乘，等分 \(\to\) 除</strong>：\(x\) 的 \(\frac{2}{3}\) 倍是 \(x \cdot \frac{2}{3} = \frac{2}{3}x\)；把 \(a\) 分成 \(3\) 等分，每份是 \(a \div 3 = \frac{a}{3}\)。</li>
+              <li><strong>「倍」和「多」同時出現時，先算倍再加減</strong>：比 \(c\) 的 \(2\) 倍多 \(10\) 是 \(2c + 10\)；比 \(y\) 的 \(3\) 倍少 \(18\) 是 \(3y - 18\)。<strong>不要寫成 \(2(c + 10)\)</strong>，那是「比 \(c\) 多 \(10\) 之後再 \(2\) 倍」，意思不一樣。</li>
+              <li><strong>括號的用途：先把「一份」包起來，再乘份數</strong>。一杯 \(c\) 元、自備環保杯折 \(5\) 元，那麼一杯實付 \((c - 5)\) 元；\(7\) 個人各一杯就是 \(7 \times (c - 5) = 7(c - 5)\) 元。<strong>沒有括號的 \(7c - 5\) 只折了一次</strong>，是完全不同的意思。</li>
+              <li><strong>不會一步到位時，先列中間量</strong>。例如：套圈遊戲每次有 \(y\) 個套圈，再增加 \(4\) 個後平分給 \(5\) 人。先寫出總數 \((y + 4)\) 個，再平分：
+                \[ (y + 4) \div 5 = \frac{y+4}{5} \]
+                注意這裡的括號在寫成分數後由<strong>分數線</strong>接手，因為分數線本身就有括號的效果。</li>
+              <li><strong>反過來讀也要通</strong>：看到 \(\frac{x}{12} + 5\) 要能說出「\(x\) 元平分成 \(12\) 份之後再多 \(5\) 元」。列式與讀式雙向都熟練，應用問題才不會卡住。</li>
+              <li><strong>列完式子順手簡記</strong>：\(x \cdot 3 + 2\) 寫成 \(3x + 2\)，這是課本裡列式題答案的標準寫法。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>文字敘述</th><th>代數式</th><th>常見錯誤</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>比 \(x\) 大 \(5\) 的數</td><td class="sign-pos">\(x + 5\)</td><td>\(5x\)</td></tr>
+                <tr><td>比 \(c\) 的 \(2\) 倍多 \(10\)</td><td class="sign-pos">\(2c + 10\)</td><td>\(2(c+10)\)</td></tr>
+                <tr><td>把 \(a\) 分成 \(3\) 等分</td><td class="sign-pos">\(\frac{a}{3}\)</td><td>\(3a\)</td></tr>
+                <tr><td>每杯折 \(5\) 元，買 \(7\) 杯</td><td class="sign-pos">\(7(c-5)\)</td><td>\(7c-5\)</td></tr>
+                <tr><td>\(y\) 個再加 \(4\) 個後平分 \(5\) 份</td><td class="sign-pos">\(\frac{y+4}{5}\)</td><td>\(y + \frac{4}{5}\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="boba_order.webp" alt="手搖飲黑板菜單風插圖：吧檯上一張長長的訂單小票，旁邊擺著加料的珍珠杓與自備環保杯折價印章" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-pen-ruler"></i> 視覺互動探索：點單列式器</h3>
+            <p class="interactive-instruction">調整杯數與加料，看看小票右邊的<strong>代數式</strong>跟著長出來。特別注意<strong>括號</strong>是怎麼冒出來的：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-order" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="od-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="od-n-slider">杯數 n: <span id="od-n-val" class="val-num">0</span></label>
+                    <input type="range" id="od-n-slider" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="od-m-slider">每杯加料 m 元: <span id="od-m-val" class="val-num">0</span></label>
+                    <input type="range" id="od-m-slider" min="0" max="20" value="10" step="5">
+                  </div>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">杯子</span>
+                    <div class="btn-group" id="od-cup-group">
+                  <button class="pick-btn active" data-cup="0">用店家的杯子</button>
+                  <button class="pick-btn" data-cup="1">自備杯每杯折 5 元</button>
+                </div>
+              </div>
+            </div>
+
+                <div class="visual-feedback" id="od-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (以文字符號列式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 一杯多多綠 \(c\) 元，自備環保杯每杯可折 \(5\) 元。若 \(9\) 個同學各點一杯且都自備環保杯，合計應付多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-3-1" value="A"><span class="option-text">A. \(9c - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3-1" value="B"><span class="option-text">B. \(9c + 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3-1" value="C"><span class="option-text">C. \(\frac{c-5}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3-1" value="D"><span class="option-text">D. \(9(c - 5)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先想<strong>一個人</strong>付多少：一杯 \(c\) 元、自備杯折 \(5\) 元，實付 \((c - 5)\) 元。<br>
+              \(9\) 個人都這樣，所以合計 \(9 \times (c - 5) = 9(c - 5)\) 元，答案為 D。<br>
+              A 是最常見的錯誤：\(9c - 5\) 表示<strong>只折了一次</strong>，等於九個人共用一個環保杯的折扣。<br>
+              B 把折價寫成了加價。<br>
+              C 用了除法，變成「一杯的實付價再平分給 \(9\) 人」，方向相反。<br>
+              小技巧：<strong>「每人都…」就要用括號把一人份包起來再乘人數</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 一份薯條 \(y\) 元，一份雞排的價錢是薯條的 \(3\) 倍還少 \(18\) 元。一份雞排是多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-3-2" value="A"><span class="option-text">A. \(3y - 18\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3-2" value="B"><span class="option-text">B. \(3(y - 18)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3-2" value="C"><span class="option-text">C. \(18 - 3y\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3-2" value="D"><span class="option-text">D. \(\frac{y}{3} - 18\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>照著中文的順序翻譯：「薯條的 \(3\) 倍」是 \(3y\)，「還少 \(18\) 元」就是再減 \(18\)，所以雞排是 \(3y - 18\) 元，答案為 A。<br>
+              B 是「先少 \(18\) 再乘 \(3\) 倍」，把 \(18\) 也乘了 \(3\) 次，變成少 \(54\) 元。<br>
+              C 把兩個數的位置對調了。<strong>減法沒有交換律</strong>，\(3y - 18\) 與 \(18 - 3y\) 是相反數。<br>
+              D 把「\(3\) 倍」看成了「\(3\) 等分」——<strong>倍用乘、等分用除</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 求代數式的值
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-cash-register" aria-hidden="true"></i> 重點 4：求代數式的值——牌價公布了，代進去算
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>什麼是代數式的值</strong>：當代數式中的文字符號都代表數時，這個代數式也代表一個數，這個數就稱為<strong>代數式的值</strong>。求值的動作就是<strong>把符號所代表的數代入式子裡計算</strong>。</li>
+              <li><strong>課本的手掌長</strong>：跳遠距離是 \(40 \times x\) 公分。量出一個手掌長 \(x = 15\) 公分後代入，得 \(40 \times 15 = 600\) 公分。<strong>先列式、後代入</strong>是解題的固定順序。</li>
+              <li><strong>代入負數或分數時，一定要加括號</strong>。這是本重點最容易失分的地方：
+                \[ \begin{aligned} & x = -0.6 \text{ 時，} \\ & -4x = (-4) \times (-0.6) = 2.4 \end{aligned} \]
+                如果不加括號寫成 \(-4 \times -0.6\)，兩個運算符號黏在一起，很容易看錯符號。</li>
+              <li><strong>代入之後就是純粹的數的運算</strong>，照舊<strong>先乘除後加減、有括號先算括號</strong>。例如 \(x = \frac{1}{2}\) 時：
+                \[ \begin{aligned} & 15 - \frac{2}{3}x \\ &= 15 - \frac{2}{3} \times \frac{1}{2} \\ &= 15 - \frac{1}{3} = 14\frac{2}{3} \end{aligned} \]</li>
+              <li><strong>同一個式子，不同的 \(x\) 給出不同的值</strong>。這正是代數式的用途：一條式子可以回答一整排問題。\(x = -2\) 時 \(15 - \frac{2}{3}x = 15 + \frac{4}{3} = 16\frac{1}{3}\)，<strong>減去一個負數會變大</strong>。</li>
+              <li><strong>公式就是代數式</strong>。世界衛生組織算男性標準體重的公式是 \((x - 80) \times 0.7\) 公斤，\(x\) 是身高（公分）。身高 \(170\) 公分的人代入得 \((170 - 80) \times 0.7 = 63\) 公斤。<strong>一條公式，全世界的身高都能算</strong>。</li>
+              <li><strong>先化簡再代入會更輕鬆</strong>。如果式子還可以合併（重點 5、6 要學的），先化簡再代入可以少算很多步，答案完全一樣。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>代數式</th><th>\(x = 4\)</th><th>\(x = -2\)</th><th>\(x = 1.4\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(2x - 1\)</td><td class="sign-pos">\(7\)</td><td class="sign-neg">\(-5\)</td><td class="sign-pos">\(1.8\)</td></tr>
+                <tr><td>\(-4x\)</td><td class="sign-neg">\(-16\)</td><td class="sign-pos">\(8\)</td><td class="sign-neg">\(-5.6\)</td></tr>
+                <tr><td>\(3 + \left(-\frac{5}{7}x\right)\)</td><td class="sign-pos">\(\frac{1}{7}\)</td><td class="sign-pos">\(4\frac{3}{7}\)</td><td class="sign-pos">\(2\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="boba_register.webp" alt="手搖飲黑板菜單風插圖：老闆把今日紅茶價錢的牌子掛上黑板，收銀機同時吐出一張印著總金額的收據" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-magnifying-glass-dollar"></i> 視覺互動探索：代入結帳機</h3>
+            <p class="interactive-instruction">選一個式子，再拉動 \(x\) 的值，看代入的<strong>每一步</strong>怎麼算出來。負數與分數請特別注意<strong>括號</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sub" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sb-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">選一個代數式</span>
+                    <div class="btn-group" id="sb-case-group">
+                  <button class="pick-btn active" data-case="0">−4x</button>
+                  <button class="pick-btn" data-case="1">2x − 7</button>
+                  <button class="pick-btn" data-case="2">15 − (2/3)x</button>
+                </div>
+              </div>
+            </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sb-x-slider">代入的 x: <span id="sb-x-val" class="val-num">0</span></label>
+                    <input type="range" id="sb-x-slider" min="-12" max="12" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sb-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求代數式的值)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 當 \(x = -0.4\) 時，\(-5x\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-4-1" value="A"><span class="option-text">A. \(-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4-1" value="B"><span class="option-text">B. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4-1" value="C"><span class="option-text">C. \(-0.2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4-1" value="D"><span class="option-text">D. \(0.2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>\(-5x\) 的意思是 \((-5) \times x\)。把 \(x = -0.4\) <strong>加上括號</strong>代進去：
+              \[ -5x = (-5) \times (-0.4) = 2 \]
+              <strong>負負得正</strong>，答案為 B。<br>
+              A 是只算了 \(5 \times 0.4\) 卻把負號抄下來，漏掉了「兩個負號相乘會抵銷」。<br>
+              C、D 是把乘法算成了除法（\(0.4 \div 5 = 0.08\) 也不對，這裡連數值都跑掉了）。<br>
+              提醒：\(-5x\) 中的 \(-5\) 是<strong>係數</strong>，代入時整個 \(-5\) 都要拿去乘。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 當 \(x = \frac{3}{4}\) 時，\(20 - \frac{8}{3}x\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-4-2" value="A"><span class="option-text">A. \(22\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4-2" value="B"><span class="option-text">B. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4-2" value="C"><span class="option-text">C. \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4-2" value="D"><span class="option-text">D. \(\frac{53}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先代入，再照<strong>先乘除後加減</strong>的順序算：
+              \[ \begin{aligned} & 20 - \frac{8}{3}x \\ &= 20 - \frac{8}{3} \times \frac{3}{4} \\ &= 20 - 2 \\ &= 18 \end{aligned} \]
+              答案為 C。中間的 \(\frac{8}{3} \times \frac{3}{4} = \frac{24}{12} = 2\)，約分後剛好是整數。<br>
+              A 是把減號看成加號。<br>
+              B 是只算了 \(\frac{8}{3}x\) 那一項就交卷，忘了前面還有 \(20\) 要減。<br>
+              D 是<strong>先減後乘</strong>算成 \((20 - \frac{8}{3}) \times \frac{3}{4}\)，違反了運算順序——<strong>\(\frac{8}{3}x\) 是一整項，要先乘完才能拿去減</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 一元一次式與同類項
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i> 重點 5：一元一次式——項、係數與同類項
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>一元一次式的定義</strong>：像 \(-4x\)、\(15 - \frac{2}{3}x\)、\(3(y + 25)\) 這種<strong>只含一種文字符號（一元）</strong>，而且<strong>該文字符號的次數是 \(1\)（一次）</strong>的代數式，稱為<strong>一元一次式</strong>。</li>
+              <li><strong>項</strong>：在一元一次式中，用<strong>加號隔開</strong>的每一部分都叫做這個式子的<strong>項</strong>。例如 \(3x + 2\) 有 \(3x\) 與 \(2\) 兩項。</li>
+              <li><strong>係數與常數項</strong>：\(3x\) 稱為 \(x\) 項，前面的 \(3\) 是 \(x\) 項的<strong>係數</strong>；\(2\) 沒有文字符號，稱為<strong>常數項</strong>。</li>
+              <li><strong>有減號時，先改寫成加法再看</strong>：\(x - 14\) 可以寫成 \(x + (-14)\)，所以它的 \(x\) 項係數是 \(1\)（不是 \(0\)！），常數項是 \(-14\)（<strong>負號要一起帶走</strong>）。</li>
+              <li><strong>同類項</strong>：<strong>文字符號與次數都相同</strong>的項互稱同類項。在 \(3x + 2 - 4x - 1\) 中，\(3x\) 與 \(-4x\) 是同類項；\(2\) 與 \(-1\) 也是同類項（常數項彼此互為同類項）；但 \(3x\) 和 \(2\) <strong>不是</strong>同類項。</li>
+              <li><strong>一元一次式與數的乘法：用結合律把數先乘起來</strong>。一瓶可樂 \(x\) 元，一組 \(6\) 瓶就是 \(6x\) 元，\(2\) 組共 \(12\) 瓶：
+                \[ \begin{aligned} & 2 \cdot (6x) = 2 \cdot (6 \cdot x) \\ &= (2 \cdot 6) \cdot x = 12x \end{aligned} \]
+                <strong>數字歸數字先算，文字符號留在後面</strong>。</li>
+              <li><strong>一元一次式與數的除法：先改成乘倒數，再用結合律</strong>：
+                \[ \begin{aligned} & (-6x) \div \frac{3}{5} \\ &= (-6x) \cdot \frac{5}{3} \\ &= \left[ (-6) \cdot \frac{5}{3} \right] \cdot x = -10x \end{aligned} \]</li>
+              <li><strong>乘除只改變係數，不改變文字符號</strong>。這是因為 \(x\) 代表一個數，乘法交換律與結合律對它一樣成立。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>一元一次式</th><th>各項</th><th>\(x\) 項係數</th><th>常數項</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(3x + 2\)</td><td>\(3x\)、\(2\)</td><td class="sign-pos">\(3\)</td><td class="sign-pos">\(2\)</td></tr>
+                <tr><td>\(x - 14\)</td><td>\(x\)、\(-14\)</td><td class="sign-pos">\(1\)</td><td class="sign-neg">\(-14\)</td></tr>
+                <tr><td>\(-\frac{5}{2}x + 7\)</td><td>\(-\frac{5}{2}x\)、\(7\)</td><td class="sign-neg">\(-\frac{5}{2}\)</td><td class="sign-pos">\(7\)</td></tr>
+                <tr><td>\(-x\)</td><td>\(-x\)</td><td class="sign-neg">\(-1\)</td><td>\(0\)（沒有）</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="boba_shelf.webp" alt="手搖飲黑板菜單風插圖：吧檯層架上珍奶排一排、紅茶排一排，旁邊零錢盤裡放著散裝的銅板" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-arrows-turn-to-dots"></i> 視覺互動探索：同類項分類吧檯</h3>
+            <p class="interactive-instruction"><strong>點一下</strong>上排的每一項，把它送進正確的籃子：帶 \(x\) 的進<strong>\(x\) 項籃</strong>，純數字進<strong>常數籃</strong>。全部分完就看得到合併結果：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sort" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="st-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">選一題</span>
+                    <div class="btn-group" id="st-case-group">
+                  <button class="pick-btn active" data-case="0">第 1 題</button>
+                  <button class="pick-btn" data-case="1">第 2 題</button>
+                  <button class="pick-btn" data-case="2">第 3 題</button>
+                </div>
+              </div>
+            </div>
+
+                <div class="step-controls">
+                  <button class="step-ctrl-btn" id="st-reset"><i class="fa-solid fa-rotate-left"></i> 重新分類</button>
+                  <button class="step-ctrl-btn" id="st-auto">全部歸位 <i class="fa-solid fa-wand-magic-sparkles"></i></button>
+                </div>
+
+                <div class="visual-feedback" id="st-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (一元一次式與同類項)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-5-1">
+            <p class="quiz-question"><strong>Q1.</strong> 在一元一次式 \(-\frac{5}{2}x + 7\) 中，\(x\) 項的係數與常數項分別是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-5-1" value="A"><span class="option-text">A. \(\frac{5}{2}\) 與 \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5-1" value="B"><span class="option-text">B. \(-\frac{5}{2}\) 與 \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5-1" value="C"><span class="option-text">C. \(-\frac{5}{2}\) 與 \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5-1" value="D"><span class="option-text">D. \(-5\) 與 \(7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>把式子看成加法：\(-\frac{5}{2}x + 7\) 的兩項是 \(-\frac{5}{2}x\) 與 \(7\)。<br>
+              \(x\) 項是 \(-\frac{5}{2}x\)，它的係數是 \(-\frac{5}{2}\)——<strong>負號屬於係數的一部分</strong>；常數項是 \(7\)，答案為 B。<br>
+              A 漏掉了負號。<br>
+              C 多給常數項一個負號，但式子中間是<strong>加號</strong>，\(7\) 就是正的。<br>
+              D 只把分子當成係數，分母 \(2\) 也是係數的一部分。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-5-2">
+            <p class="quiz-question"><strong>Q2.</strong> 化簡 \((-8x) \div \left(-\frac{4}{5}\right)\)，結果是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-5-2" value="A"><span class="option-text">A. \(-10x\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5-2" value="B"><span class="option-text">B. \(\frac{32}{5}x\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5-2" value="C"><span class="option-text">C. \(-\frac{32}{5}x\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5-2" value="D"><span class="option-text">D. \(10x\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>除以一個數就是乘以它的倒數，再用<strong>結合律</strong>把數字先算完：
+              \[ \begin{aligned} & (-8x) \div \left(-\frac{4}{5}\right) \\ &= (-8x) \cdot \left(-\frac{5}{4}\right) \\ &= \left[ (-8) \cdot \left(-\frac{5}{4}\right) \right] \cdot x \\ &= 10x \end{aligned} \]
+              答案為 D。\((-8) \times (-\frac{5}{4}) = \frac{40}{4} = 10\)，<strong>兩個負號相乘變正</strong>。<br>
+              A 是算對了數值卻留著負號。<br>
+              B、C 是<strong>沒有把分數翻過來</strong>，直接乘上 \(\frac{4}{5}\) 得到 \(\frac{32}{5}\)。除以 \(\frac{4}{5}\) 應該<strong>變大</strong>（因為 \(\frac{4}{5} < 1\)），得到 \(\frac{32}{5}\) 反而變小，一看就知道方向錯了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 加減與去括號
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> 重點 6：加減與去括號——把一長串併成最短的樣子
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>合併同類項靠的是分配律</strong>。一瓶牛奶 \(x\) 元，先買 \(3\) 瓶付 \(3x\) 元，又買 \(2\) 瓶付 \(2x\) 元，總共買了 \(3 + 2 = 5\) 瓶：
+                \[ 3x + 2x = (3 + 2) \cdot x = 5x \]
+                退掉 \(2\) 瓶也一樣：\(3x - 2x = (3 - 2) \cdot x = x\)。<strong>係數相加減，文字符號原封不動</strong>。</li>
+              <li><strong>Key point：只有同類項才能合併</strong>。\(3x\) 與 \(2\) 不同類，\(3x + 2\) 已經是最簡，<strong>不可以寫成 \(5x\)</strong>。這是本節最常見的錯誤。</li>
+              <li><strong>有常數項時，兩類各自合併</strong>。集點卡每張 \(x\) 點，把式子按類重排再併：
+                \[ \begin{aligned} & 3x + 5 + 2x + 7 \\ &= 3x + 2x + 5 + 7 \\ &= 5x + 12 \end{aligned} \]
+                搬動項的時候，<strong>每一項的正負號要跟著一起搬</strong>：\(6y - 8 - 4y - 5 = 6y - 4y - 8 - 5 = 2y - 13\)。</li>
+              <li><strong>去括號規則</strong>（與數的運算完全相同）：
+                \[ \begin{aligned} -(a+b) &= -a-b \\ -(a-b) &= -a+b \\ -(-a+b) &= a-b \\ -(-a-b) &= a+b \end{aligned} \]
+                口訣：<strong>括號前面是減號，去括號後裡面每一項都要變號</strong>。例如 \(-(-3x+1) = 3x-1\)。</li>
+              <li><strong>括號前面有數字時，用分配律乘進去</strong>，而且<strong>每一項都要乘到</strong>：
+                \[ \begin{aligned} & (x+4) \times (-4) \\ &= x \times (-4) + 4 \times (-4) \\ &= -4x - 16 \end{aligned} \]
+                \[ \begin{aligned} & -3(-12x-5) \\ &= (-3)(-12x) - (-3)(5) \\ &= 36x + 15 \end{aligned} \]</li>
+              <li><strong>多層括號由內而外拆</strong>：\(11x - 2[3x-(5x-4)]\) 先拆小括號得 \(11x-2[3x-5x+4] = 11x-2[-2x+4]\)，再拆中括號得 \(11x+4x-8 = 15x-8\)。</li>
+              <li><strong>分數形式先通分，分子記得加括號</strong>。分數線有括號的效果，通分後<strong>整個分子都要乘</strong>：
+                \[ \begin{aligned} & \frac{x-3}{6} - \frac{x-1}{10} \\ &= \frac{5(x-3) - 3(x-1)}{30} \\ &= \frac{5x-15-3x+3}{30} \\ &= \frac{2x-12}{30} = \frac{x-6}{15} \end{aligned} \]
+                第二個分數前面是減號，展開後 \(-3(x-1) = -3x+3\)，<strong>那個 \(+3\) 最容易漏</strong>。</li>
+              <li><strong>答案長得不一樣不代表錯</strong>：\(\frac{x-6}{15}\) 與 \(\frac{x}{15} - \frac{2}{5}\) 其實是同一個式子，通分就看得出來。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>原式</th><th>去括號後</th><th>裡面每一項</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(-(3x+7)\)</td><td class="sign-neg">\(-3x-7\)</td><td>都變號</td></tr>
+                <tr><td>\(-(5x-11)\)</td><td class="sign-neg">\(-5x+11\)</td><td>都變號</td></tr>
+                <tr><td>\(-(-4x+9)\)</td><td class="sign-pos">\(4x-9\)</td><td>都變號</td></tr>
+                <tr><td>\(+(2x-5)\)</td><td class="sign-pos">\(2x-5\)</td><td>都不變</td></tr>
+                <tr><td>\(-2(x-20)\)</td><td class="sign-neg">\(-2x+40\)</td><td>各乘 \(-2\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="boba_bag.webp" alt="手搖飲黑板菜單風插圖：外帶袋裡裝著併單後的幾杯飲料，封口機旁的收據上寫著化簡後的總額" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-wand-magic-sparkles"></i> 視覺互動探索：化簡推導器</h3>
+            <p class="interactive-instruction">選一題，用<strong>下一步</strong>把它一行一行化簡到底。留意<strong>括號一拆開，裡面每一項的符號怎麼變</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-simplify" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">選一題</span>
+                    <div class="btn-group" id="sp-case-group">
+                  <button class="pick-btn active" data-case="0">3x+5+2x+7</button>
+                  <button class="pick-btn" data-case="1">−2(3x−5)+3(−x−1)</button>
+                  <button class="pick-btn" data-case="2">11x−2[3x−(5x−4)]</button>
+                  <button class="pick-btn" data-case="3">分數形式</button>
+                </div>
+              </div>
+            </div>
+
+                <div class="step-controls">
+                  <button class="step-ctrl-btn" id="sp-prev"><i class="fa-solid fa-chevron-left"></i> 上一步</button>
+                  <span class="step-counter" id="sp-step">1 / 1</span>
+                  <button class="step-ctrl-btn" id="sp-next">下一步 <i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="visual-feedback" id="sp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (加減與去括號)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-6-1">
+            <p class="quiz-question"><strong>Q1.</strong> 化簡 \(-4(2x-3) + 5(-x+1)\)，結果是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-6-1" value="A"><span class="option-text">A. \(-13x + 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-1" value="B"><span class="option-text">B. \(-3x + 17\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-1" value="C"><span class="option-text">C. \(-13x + 17\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-1" value="D"><span class="option-text">D. \(-8x + 17\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>先用分配律把兩個括號都拆開，<strong>括號裡每一項都要乘到</strong>：
+              \[ \begin{aligned} & -4(2x-3) + 5(-x+1) \\ &= -8x + 12 - 5x + 5 \\ &= -8x - 5x + 12 + 5 \\ &= -13x + 17 \end{aligned} \]
+              答案為 C。<br>
+              第一個括號：\(-4 \times 2x = -8x\)、\(-4 \times (-3) = +12\)。<br>
+              第二個括號：\(5 \times (-x) = -5x\)、\(5 \times 1 = +5\)。<br>
+              A 是把 \(+12\) 算成了 \(-12\)——<strong>負號乘負號要變正</strong>。<br>
+              B 是把 \(-8x\) 與 \(-5x\) 相減成 \(-3x\)，但兩者都是負的，應該相加成 \(-13x\)。<br>
+              D 是只乘了括號裡的第一項，第二個括號的 \(-5x\) 整個漏掉。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-6-2">
+            <p class="quiz-question"><strong>Q2.</strong> 化簡 \(9x - 3[2x - (4x-5)]\)，結果是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-6-2" value="A"><span class="option-text">A. \(3x - 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-2" value="B"><span class="option-text">B. \(15x - 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-2" value="C"><span class="option-text">C. \(15x + 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-2" value="D"><span class="option-text">D. \(-15x + 15\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>多層括號要<strong>由內而外</strong>拆：
+              \[ \begin{aligned} & 9x - 3[2x - (4x-5)] \\ &= 9x - 3[2x - 4x + 5] \\ &= 9x - 3[-2x + 5] \\ &= 9x + 6x - 15 \\ &= 15x - 15 \end{aligned} \]
+              答案為 B。<br>
+              第一步拆小括號：前面是減號，所以 \(4x\) 變 \(-4x\)、\(-5\) 變 \(+5\)。<br>
+              第二步先把中括號裡的同類項併起來：\(2x - 4x = -2x\)。<br>
+              第三步 \(-3 \times (-2x) = +6x\)、\(-3 \times 5 = -15\)。<br>
+              C 錯在 \(-3 \times 5\) 算成 \(+15\)。<br>
+              A 是漏了中括號裡的 \(-4x\) 沒有變號，只把 \(-5\) 變號。<br>
+              D 是把最後的 \(9x + 6x\) 誤算成 \(-15x\)——這裡兩項<strong>都是正的</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結與核心回顧 (Summary)
+           ========================================== -->
+      <section class="summary-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> 3-1 代數式的化簡 課程核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <!-- Card 1: Mint Green review card -->
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-swatchbook"></i> 代數式快速檢索卡</h4>
+            <ul class="bullet-list">
+              <li><strong>代數式</strong>：由文字符號與數字組成的算式。文字符號代表一個數，<strong>正負分小數都可以</strong>。</li>
+              <li><strong>乘法簡記</strong>：\(3 \times x = 3 \cdot x = 3x\)，數字寫前面；\(1x = x\)、\((-1)x = -x\)。<strong>加減號不可省略</strong>。</li>
+              <li><strong>除法簡記</strong>：\(x \div 5 = \frac{x}{5}\)；\(x \div \frac{2}{3} = \frac{3}{2}x\)。<strong>除以一個數就是乘它的倒數</strong>。</li>
+              <li><strong>列式關鍵字</strong>：多／大用加、少／小用減、倍用乘、等分用除。<strong>「每一份都…」要先用括號把一份包起來</strong>。</li>
+              <li><strong>代數式的值</strong>：把符號代表的數<strong>加括號</strong>代進去算。\(x = -0.6\) 時 \(-4x = (-4) \times (-0.6) = 2.4\)。</li>
+              <li><strong>一元一次式</strong>：只含一種文字符號，且次數為 \(1\)。</li>
+              <li><strong>項與係數</strong>：加號隔開的每一部分是<strong>項</strong>；\(x\) 前面的數是<strong>係數</strong>（<strong>負號算在係數裡</strong>），沒有文字符號的是<strong>常數項</strong>。</li>
+              <li><strong>同類項</strong>：文字符號與次數都相同的項；常數項彼此也是同類項。</li>
+              <li><strong>與數的乘除</strong>：用結合律把數字先算完，\(2 \cdot (6x) = (2 \cdot 6)x = 12x\)。<strong>文字符號不變</strong>。</li>
+              <li><strong>合併同類項</strong>：\(3x + 2x = (3+2)x = 5x\)。<strong>不同類項不能合併</strong>，\(3x + 2\) 已是最簡。</li>
+              <li><strong>去括號</strong>：括號前是減號，裡面<strong>每一項都變號</strong>；前面有數字就用分配律<strong>每一項都乘到</strong>。</li>
+              <li><strong>多層括號由內而外</strong>；<strong>分數形式先通分，分子要加括號</strong>。</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Bright Blue life story card -->
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-lightbulb"></i> 回到吧檯：那塊寫著 x 的黑板</h4>
+              <h5><i class="fa-solid fa-mug-hot"></i> 從一個 x 到一張帳單</h5>
+              <p>小翊在黑板角落寫下的那個 \(x\)，撐起了整節課。牌價還沒公布時，他一樣把訂單寫得清清楚楚：\(4\) 個同學各一杯、都自備環保杯每杯折 \(5\) 元、其中 \(2\) 杯要加珍珠 \(10\) 元。<strong>列式</strong>是這樣長出來的：</p>
+              <p style="text-align:center; font-size:1.1rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( 4(x-5) + 2 \times 10 \)
+              </p>
+              <p>接著<strong>化簡</strong>：括號用分配律拆開得 \(4x - 20 + 20\)，兩個常數項剛好抵銷，整張帳單化成一句話——</p>
+              <p style="text-align:center; font-size:1.1rem; font-weight:700; background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:8px; margin: 0.5rem 0;">
+                \( 4(x-5) + 20 = 4x - 20 + 20 = 4x \)
+              </p>
+              <p>原來加的珍珠錢和折的環保杯錢正好打平，付的就是<strong>四杯原價</strong>。中午價錢公布 \(x = 30\)，<strong>代入</strong>得 \(4 \times 30 = 120\) 元。列式、化簡、代入，三個動作走完，整件事就結束了。</p>
+              <h5><i class="fa-solid fa-scale-balanced"></i> 為什麼要先化簡再代入</h5>
+              <p>如果不化簡，代入後要算 \(4 \times (30-5) + 20 = 4 \times 25 + 20 = 120\)，步驟多了兩步。式子越長，<strong>先化簡省下的力氣越多</strong>；而且化簡後的 \(4x\) 一眼就看出「加料費和折扣互相抵銷」，這是硬算數字看不出來的事。</p>
+              <h5><i class="fa-solid fa-clock-rotate-left"></i> 代數的名字從哪裡來</h5>
+              <p>「代數」的英文 <em>algebra</em> 來自阿拉伯文 <em>al-jabr</em>，意思是「還原」，出自阿拉伯數學家花拉子米的著作；\(1859\) 年李善蘭與偉烈亞力合譯《代數學》，才第一次把它翻成中文的「代數學」。至於為什麼偏偏用 \(x\)？西元 \(1637\) 年笛卡兒在《幾何學》裡開始用 \(x\)、\(y\)、\(z\) 代表未知數，一種說法是排版時 \(x\) 這個字母最少用到，印刷機裡剩下的 \(x\) 字模最多——<strong>一個排版上的巧合，成了全世界通用的未知數符號</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 課堂智慧教學整合門戶系統. 專為國中數學高效課堂設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
