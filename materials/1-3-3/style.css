@@ -1,0 +1,1116 @@
+/* Import Google Fonts: Outfit and Noto Sans TC */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary-gradient: linear-gradient(135deg, #b45309 0%, #f59e0b 50%, #ef4444 100%);
+  --background-gradient: radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 1) 0%, rgba(20, 15, 50, 1) 50%, rgba(10, 8, 28, 1) 100%);
+  
+  --primary: #b45309;
+  --primary-hover: #fbbf24;
+  --secondary: #ef4444;
+  --accent: #14b8a6;
+  --success: #10b981;
+  --warning: #fbbf24;
+  
+  /* Glassmorphism styling */
+  --glass-bg: rgba(30, 41, 59, 0.45);
+  --glass-bg-hover: rgba(30, 41, 59, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  --glow-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+  
+  /* Text colors */
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  
+  --font-base: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background-gradient);
+  background-image: linear-gradient(rgba(10, 8, 28, 0.8), rgba(10, 8, 28, 0.8)), url('../../background.png');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: var(--text-main);
+  min-height: 100vh;
+  padding-bottom: 5rem;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(245, 158, 11, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 158, 11, 0.6);
+}
+
+/* Animated Background Blobs */
+.background-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  animation: blob-float 22s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+  top: -10%;
+  left: -5%;
+  width: 50vw;
+  height: 50vw;
+  background: var(--primary);
+}
+
+.blob-2 {
+  bottom: -15%;
+  right: -5%;
+  width: 45vw;
+  height: 45vw;
+  background: var(--secondary);
+  animation-delay: -6s;
+}
+
+.blob-3 {
+  top: 35%;
+  left: 45%;
+  width: 35vw;
+  height: 35vw;
+  background: var(--accent);
+  animation-delay: -11s;
+}
+
+@keyframes blob-float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(6%, 10%) scale(1.15); }
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Header */
+header {
+  margin: 2rem 0;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 2rem;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+  transform: translateX(-4px);
+}
+
+.lesson-title {
+  margin-bottom: 2rem;
+}
+
+.lesson-title .badge {
+  display: inline-block;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--primary-hover);
+  padding: 4px 12px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.lesson-title h1 {
+  font-size: 2.5rem;
+  font-weight: 850;
+  background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.lesson-title p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Horizontal Lesson Navigation */
+.lesson-nav {
+  display: flex;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.lesson-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.nav-item.active {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+}
+
+/* Concept Section Layout */
+.concept-section {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 2.5rem;
+  margin-bottom: 3.5rem;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.concept-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+#concept1::before { background: linear-gradient(90deg, #f59e0b 0%, #fcd34d 100%); }
+#concept2::before { background: linear-gradient(90deg, #14b8a6 0%, #5eead4 100%); }
+#concept3::before { background: linear-gradient(90deg, #0ea5e9 0%, #7dd3fc 100%); }
+#concept4::before { background: linear-gradient(90deg, #a855f7 0%, #d8b4fe 100%); }
+#concept5::before { background: linear-gradient(90deg, #10b981 0%, #6ee7b7 100%); }
+#concept6::before { background: linear-gradient(90deg, #fb7185 0%, #fda4af 100%); }
+#concept7::before { background: linear-gradient(90deg, #f97316 0%, #fdba74 100%); }
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1rem;
+}
+
+#concept1 .section-title { background: linear-gradient(135deg, #ffffff 40%, #fef3c7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept1 .section-title i { color: #f59e0b; -webkit-text-fill-color: initial; }
+
+#concept2 .section-title { background: linear-gradient(135deg, #ffffff 40%, #ccfbf1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept2 .section-title i { color: #14b8a6; -webkit-text-fill-color: initial; }
+
+#concept3 .section-title { background: linear-gradient(135deg, #ffffff 40%, #e0f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept3 .section-title i { color: #0ea5e9; -webkit-text-fill-color: initial; }
+
+#concept4 .section-title { background: linear-gradient(135deg, #ffffff 40%, #f3e8ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept4 .section-title i { color: #a855f7; -webkit-text-fill-color: initial; }
+
+#concept5 .section-title { background: linear-gradient(135deg, #ffffff 40%, #d1fae5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept5 .section-title i { color: #10b981; -webkit-text-fill-color: initial; }
+
+#concept6 .section-title { background: linear-gradient(135deg, #ffffff 40%, #ffe4e6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept6 .section-title i { color: #fb7185; -webkit-text-fill-color: initial; }
+
+#concept7 .section-title { background: linear-gradient(135deg, #ffffff 40%, #ffedd5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept7 .section-title i { color: #f97316; -webkit-text-fill-color: initial; }
+
+/* Themed strong keyword highlights */
+#concept1 strong { color: #fcd34d; }
+#concept2 strong { color: #5eead4; }
+#concept3 strong { color: #7dd3fc; }
+#concept4 strong { color: #d8b4fe; }
+#concept5 strong { color: #6ee7b7; }
+#concept6 strong { color: #fda4af; }
+#concept7 strong { color: #fdba74; }
+
+.grid-content {
+  display: grid;
+  /* minmax(0, ...) 而不是 1.1fr：預設的 1fr 最小值是 min-content，
+     卡片裡只要有一條不能斷行的長算式，整欄就會被撐得比外框還寬 */
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 992px) {
+  .grid-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Card Stylings */
+.explanation-card, .interactive-card {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 20px;
+  padding: 1.75rem;
+  min-width: 0;
+}
+
+.explanation-card h3, .interactive-card h3 {
+  font-size: 1.15rem;
+  font-weight: 750;
+  color: white;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.explanation-card h3 i {
+  color: var(--secondary);
+}
+
+.interactive-card h3 i {
+  color: var(--primary-hover);
+}
+
+.interactive-instruction {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+/* Bullet List */
+.bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.bullet-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+.bullet-list li strong {
+  color: white;
+  font-weight: 600;
+}
+
+.bullet-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
+}
+
+.bullet-list li ul {
+  list-style: none;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bullet-list li ul li {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  padding-left: 1rem;
+}
+
+.bullet-list li ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primary-hover);
+}
+
+/* Interactive Canvas Styles */
+.canvas-container {
+  display: flex;
+  flex-direction: column;
+  /* 不用 center：子項比容器寬時 center 會往左右各溢出一半，
+     左邊那一半連橫向捲動都捲不到。改成 stretch，canvas 自己用 margin 置中 */
+  align-items: stretch;
+  background: rgba(10, 8, 28, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+canvas {
+  background: transparent;
+  display: block;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.control-panel {
+  width: 100%;
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+}
+
+.value-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  /* 公式是 MathJax 產生的 inline-block，不能斷行；欄位變窄時讓它自己捲，
+     而不是把整張互動卡片撐破 */
+  overflow-x: auto;
+}
+
+.slider-wrapper {
+  margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   點選式控制項（取代部分滑桿）
+   滑桿適合連續量（底數、指數），但「選第幾題」「切換模式」是離散選擇，
+   在智慧板上用手指拉滑桿反而容易選錯格，改成直接點按鈕。
+   ========================================================================== */
+.btn-group-wrapper {
+  margin-bottom: 1.1rem;
+}
+
+.btn-group-row {
+  margin-bottom: 0.9rem;
+}
+
+.btn-group-row:last-child {
+  margin-bottom: 0;
+}
+
+.btn-group-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 0.45rem;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.pick-btn {
+  flex: 0 1 auto;
+  padding: 0.5rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-base);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+  /* 智慧板是觸控操作，按鈕要夠大才點得準 */
+  min-height: 40px;
+}
+
+.pick-btn:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(129, 140, 248, 0.55);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.pick-btn.active {
+  background: rgba(99, 102, 241, 0.28);
+  border-color: var(--primary-hover);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(99, 102, 241, 0.28);
+}
+
+.pick-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* MathJax 會把按鈕裡的算式包成 inline-block，行高要壓住否則按鈕會忽高忽低 */
+.pick-btn mjx-container {
+  font-size: 1em !important;
+  margin: 0 !important;
+}
+
+.step-counter {
+  min-width: 3.6rem;
+  text-align: center;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.slider-row {
+  margin-bottom: 1.25rem;
+}
+
+.slider-row:last-child {
+  margin-bottom: 0.5rem;
+}
+
+.slider-row label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.slider-row label span.val-num {
+  font-weight: 700;
+  color: white;
+}
+
+/* Custom Range Input Style */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-hover);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.7);
+}
+
+.visual-feedback {
+  /* 回饋文字裡的 MathJax 算式不能斷行，窄螢幕時讓這一塊自己捲 */
+  overflow-x: auto;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  line-height: 1.4;
+  text-align: center;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Formative Assessment Quiz Styles */
+.quiz-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 2rem;
+}
+
+.quiz-section > h3 {
+  font-size: 1.25rem;
+  font-weight: 750;
+  color: white;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quiz-section > h3 i {
+  color: var(--warning);
+}
+
+.quiz-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.quiz-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.quiz-question {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: white;
+  margin-bottom: 1.25rem;
+}
+
+.options-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .options-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 0.9rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.95rem;
+}
+
+.option-label input[type="radio"] {
+  accent-color: var(--primary);
+  width: 18px;
+  height: 18px;
+  margin-right: 2px;
+}
+
+/* Checked styling via CSS */
+.option-label.selected {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.1);
+}
+
+.options-container .option-label:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.04);
+}
+
+.options-container .option-label.selected .option-text {
+  color: #ffffff;
+}
+
+.options-container .option-label .option-text {
+  color: #cbd5e1;
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+
+.options-container .option-label:hover .option-text {
+  color: #ffffff;
+}
+
+/* Answers state colors */
+.option-label.correct {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+}
+
+.option-label.incorrect {
+  background: rgba(244, 63, 94, 0.12) !important;
+  border-color: rgba(244, 63, 94, 0.4) !important;
+}
+
+.btn-check-ans {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary) 0%, #b91c1c 100%);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-check-ans:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(245, 158, 11, 0.45);
+}
+
+.btn-check-ans:disabled {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.3);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Explanation Panel */
+.explanation-box {
+  display: none;
+  background: rgba(15, 23, 42, 0.5);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 12px 12px 0;
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.explanation-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.explanation-box.correct-feedback { border-left-color: var(--success); }
+.explanation-box.incorrect-feedback { border-left-color: var(--accent); }
+
+.explanation-box.correct-feedback .explanation-title { color: #34d399; }
+.explanation-box.incorrect-feedback .explanation-title { color: #f87171; }
+
+.explanation-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.explanation-desc span {
+  font-family: Arial, sans-serif;
+}
+
+/* Summary Section */
+.summary-section {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+}
+
+.summary-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+}
+
+.summary-grid {
+  display: grid;
+  /* min(300px, 100%)：容器比 300px 還窄時（小手機）改用 100%，
+     否則這個硬底線會讓整排卡片撐出外框被裁掉 */
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 2rem;
+}
+
+.summary-card {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 20px;
+  padding: 1.75rem;
+  min-width: 0;
+}
+
+.summary-section .section-title {
+  background: linear-gradient(135deg, #ffffff 40%, #a7f3d0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.summary-section .section-title i {
+  color: #10b981;
+  -webkit-text-fill-color: initial;
+}
+
+.summary-card h4 {
+  font-size: 1.15rem;
+  font-weight: 750;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summary-card:nth-child(1) h4 {
+  color: #34d399;
+}
+.summary-card:nth-child(1) h4 i {
+  color: #34d399;
+}
+.summary-card:nth-child(1) strong {
+  color: #a7f3d0;
+}
+
+.summary-card:nth-child(2) h4 {
+  color: #06b6d4;
+}
+.summary-card:nth-child(2) h4 i {
+  color: #06b6d4;
+}
+.summary-card:nth-child(2) strong {
+  color: #a5f3fc;
+}
+
+.context-story h5 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #22d3ee;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.context-story p {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.context-story p:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 3rem;
+  opacity: 0.7;
+}
+
+/* Responsive adjust */
+@media (max-width: 768px) {
+  .lesson-title h1 {
+    font-size: 2rem;
+  }
+  
+  .concept-section, .summary-section {
+    padding: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  /* 手機寬度下，MathJax 的行內算式與滑桿面板都不能斷行，
+     窄到一定程度時讓卡片自己橫向捲動，總比被外框裁掉好 */
+  .explanation-card,
+  .interactive-card,
+  .quiz-card {
+    overflow-x: auto;
+  }
+}
+
+/* Anime Illustration Card Styling */
+.illustration-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.illustration {
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.illustration:hover {
+  transform: scale(1.04);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Comic Image Hover micro-animation */
+.comic-img:hover {
+  transform: scale(1.02);
+}
+
+/* ==========================================================================
+   3-2 專屬互動元件樣式
+   ========================================================================== */
+
+/* 逐步推導的控制列 */
+.step-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.step-ctrl-btn {
+  flex: 1;
+  background: linear-gradient(135deg, var(--primary) 0%, #b91c1c 100%);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+  transition: all 0.3s ease;
+}
+
+.step-ctrl-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(245, 158, 11, 0.45);
+}
+
+.step-ctrl-btn:disabled {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.3);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.step-ctrl-btn.secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+.step-ctrl-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+
+/* 規則速查表（乘除符號） */
+.sign-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.sign-table th,
+.sign-table td {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.55rem 0.5rem;
+  text-align: center;
+}
+
+.sign-table th {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-weight: 700;
+}
+
+.sign-table td {
+  color: #e2e8f0;
+}
+
+.sign-pos { color: #34d399; font-weight: 700; }
+.sign-neg { color: #f87171; font-weight: 700; }
+
+/* ==========================================================================
+   MathJax 上標／下標的字距微調
+   投影時 0^n、10^0 這類「底數與指數黏在一起」會看不清楚，
+   MathJax 預設不留任何間隙（實測 gap = 0），這裡統一補一點 kerning。
+   ========================================================================== */
+mjx-msup > mjx-script,
+mjx-msubsup > mjx-script {
+  margin-left: 0.18em;
+}
+
+mjx-msub > mjx-script {
+  margin-left: 0.06em;
+}
+
+/* 多位數字內部的字距：10000、100、0.001 這種連續的 1 與 0 在投影下會黏成一團。
+   只加在字元「之間」（相鄰兄弟），不動頭尾，所以不影響 MathJax 算好的整體寬度對齊。 */
+mjx-mn > mjx-c + mjx-c {
+  margin-left: 0.09em;
+}
+
+/* ==========================================================================
+   3-2：分數與括號在投影下的可讀性
+   ========================================================================== */
+
+/* MathJax 的 分數 與上標預設偏小，投影到智慧板時分子分母、指數都難讀，
+   要整體放大。放大的對象是「整個算式」而不是只有 mjx-mfrac：MathJax 先算好
+   整份版面才輸出 HTML，事後單獨把分數撐大 1.1 倍，等於在它算完之後才改尺寸，
+   周圍符號的相對位置就對不上了。改成放大 mjx-container，所有子元素的
+   em 一起等比例縮放，MathJax 算好的相對關係完全不動。
+   這條只影響本頁（style.css 是 3-2 專用）。 */
+mjx-container {
+  font-size: 1.12em;
+}
+
+/* 本節整頁都是上標，指數的字級要比通用規則再大一點才讀得到。
+   MathJax 預設 mjx-script 是 0.71em，投影下 (-2/5)^7 的 7 會小到看不出來。 */
+mjx-script {
+  font-size: 0.78em;
+}
+
+/* 括號框住分數時（帶上標的括號分數）括號要夠高才包得住，
+   MathJax 自己會算，但外面的指數會被推得太遠，這裡把上標往回收一點。 */
+mjx-msup > mjx-mrow + mjx-script,
+mjx-msup > mjx-TeXAtom + mjx-script {
+  margin-left: 0.1em;
+}
+
+/* 分數與帶上標的括號會把行高撐高，清單與表格要留出額外的行距，
+   否則上下兩行會咬在一起。 */
+.bullet-list li,
+.sign-table td,
+.sign-table th {
+  line-height: 2.05;
+}
+
+/* ==========================================================================
+   表格在窄螢幕的橫向捲動
+   .concept-section 是 overflow: hidden，表格一旦比卡片寬，超出的欄位會被
+   直接裁掉、連捲都捲不到。包一層可捲動的外框解決。
+   不能直接在 <table> 上寫 overflow-x——那需要 display: block，一旦不是
+   table 就失去欄寬同步，thead 與 tbody 的欄位會對不齊。
+   刻意不給 min-width：.sign-table 本身是 width: 100%，欄位擠得下時就跟著
+   卡片寬度、不會多出一條捲軸；擠不下時（MathJax 是 inline-block 不折行）
+   表格自己會撐到 min-content，這時才由外框接手捲動。
+   ========================================================================== */
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.table-scroll .sign-table {
+  margin-top: 0;
+}
+
+/* 顯示型算式（顯示型定界符）遇到比卡片還寬的長算式時，預設會直接往右溢出，
+   蓋到右欄的互動卡上。改成在卡片內橫向捲動，並留上下 padding
+   避免 overflow-y 把分數與指數的上下緣切掉。 */
+.explanation-card mjx-container[display="true"],
+.summary-card mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.4rem;
+}
+
+/* ==========================================================================
+   流程控制列：下一步 / 上一步 / 重來、以及結案審查台的兩個蓋章鈕
+   主要動作（下一步、蓋「結案」章）用 .primary 加粗一級，其餘為 .secondary。
+   ========================================================================== */
+.axiom-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.axiom-controls .step-ctrl-btn {
+  flex: 1;
+}
+
+.axiom-controls .step-ctrl-btn.primary {
+  background: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.35);
+  flex: 1.4;
+}
+
+/* 挑錯模式的 canvas 要讓學生知道可以點 */
+#canvas-expand {
+  cursor: pointer;
+}

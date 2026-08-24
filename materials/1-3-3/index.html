@@ -4,39 +4,1012 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/webp" href="../../header-logo.webp">
-  <title>3-3 應用問題 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-3 應用問題 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第一冊 (1上) • 第3章 一元一次方程式</div>
-    <h1>3-3 應用問題</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第一冊 • 第三章</span>
+        <h1>3-3 應用問題</h1>
+        <p>上一節我們把方程式<strong>解</strong>了出來。這一節的難處不在解，而在<strong>列</strong>——題目給你的是一段中文，你要把它變成一條方程式。做法很像辦案：把不知道的那個數當成<strong>嫌犯</strong>，先給它一個代號 \(x\)；再從敘述裡找出<strong>相等的關係</strong>當作線索，串成方程式；解出來之後還要<strong>回頭核對</strong>——算出「\(3.75\) 張票」的答案，數學沒有錯，但世界上沒有 \(3.75\) 張票。</p>
+      </div>
+      <!-- Progress navigation (7 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-list-check"></i> 辦案四步驟</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-receipt"></i> 數字與費用</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-boxes-stacked"></i> 分配問題</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-tags"></i> 折扣問題</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-draw-polygon"></i> 圖形問題</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-hourglass-half"></i> 年齡問題</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-stamp"></i> 速率與合理性</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Vintage Detective Agency)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(245, 158, 11, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);"></i> 課前暖身漫畫：一瓶汽水的原價是多少？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            雜貨店門口貼著一張促銷海報：<strong style="color:#fcd34d">買 \(2\) 瓶打 \(9\) 折，只比買 \(1\) 瓶多 \(16\) 元</strong>。助手看著海報想了半天——海報上<strong style="color:#fcd34d">從頭到尾沒有寫原價</strong>。老偵探把海報揭下來釘上線索板，說了一句話：<strong style="color:#fcd34d">「不知道的東西，先給它一個代號。」</strong>於是原價變成 \(x\)：買 \(2\) 瓶要付 \(2x \times 0.9\)，買 \(1\) 瓶要付 \(x\)，兩者相差 \(16\) 元，線索板上就浮出一條方程式 \(2x \times 0.9 - x = 16\)。整理後 \(0.8x = 16\)，紅線的另一端落在 \(x = 20\)。沒有問店員、沒有翻價目表，一瓶汽水的原價就這樣<strong style="color:#fcd34d">被推理出來</strong>——這一節要學的，就是這套把生活敘述變成方程式的辦案手法。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古偵探事務所風四格漫畫：雜貨店促銷海報寫著買兩瓶打九折只比買一瓶多十六元，助手問一瓶原價多少，老偵探把海報釘上軟木線索板並把原價命名為 x，紅線串起線索後在板上寫出方程式，最後蓋上結案章寫著一瓶二十元" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 解應用問題的四步驟
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> 重點 1：辦案四步驟——設、列、解、答
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>什麼是應用問題</strong>：日常生活中<strong>不能一眼看出答案</strong>的問題。既然看不出來，就用學過的方程式把它解出來。</li>
+              <li><strong>解應用問題的四個步驟</strong>：
+                <ul>
+                  <li><strong>設未知數</strong>：依題意假設適當的未知數，<strong>連單位一起寫清楚</strong>（設每瓶汽水的原價為 \(x\) <strong>元</strong>）。</li>
+                  <li><strong>列方程式</strong>：根據題目找出<strong>相等的關係</strong>，列出一元一次方程式。</li>
+                  <li><strong>解方程式</strong>：利用等量公理或移項法則，解出未知數。</li>
+                  <li><strong>寫答案</strong>：依題意寫出正確答案；<strong>若求出的解不符合情境的要求，則此題無解</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>汽水促銷的完整推理</strong>：買 \(2\) 瓶打 \(9\) 折，只比買 \(1\) 瓶多 \(16\) 元。設每瓶原價 \(x\) 元，則
+                \[\begin{aligned}
+                & 2x \times 0.9 - x = 16 \\
+                &\qquad 1.8x - x = 16 \\
+                &\qquad\quad\ \ 0.8x = 16 \\
+                &\qquad\qquad\ \ x = 20
+                \end{aligned}\]
+                所以一瓶汽水的原價為 \(20\) 元。</li>
+              <li><strong>列方程式的關鍵，是找出「同一個量的兩種說法」</strong>。汽水題裡那個量是「差額」：一邊是 \(2x \times 0.9 - x\)，另一邊是 \(16\)。兩種說法講的是同一件事，中間就可以畫上等號。</li>
+              <li><strong>未知數要設誰</strong>：通常直接設<strong>題目問的那個數</strong>；但如果設另一個數會比較好列式，也可以先設它，<strong>最後再回推</strong>成題目要的答案。</li>
+              <li><strong>第四步不是抄 \(x\) 的值</strong>：題目問「兩人相差幾歲」，你算出來的卻是「弟弟幾歲」，那還沒答完。<strong>永遠回頭看題目最後那個問號</strong>。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>步驟</th><th>要做的事</th><th>汽水題的實際內容</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1 設未知數</td><td>取代號、寫單位</td><td>設每瓶原價 \(x\) 元</td></tr>
+                <tr><td>2 列方程式</td><td>找相等關係</td><td>\(2x \times 0.9 - x = 16\)</td></tr>
+                <tr><td>3 解方程式</td><td>等量公理／移項</td><td>\(0.8x = 16\)，得 \(x = 20\)</td></tr>
+                <tr><td>4 寫答案</td><td>回答問題並檢查情境</td><td class="sign-pos">一瓶原價 \(20\) 元</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="detective_steps.webp" alt="復古偵探事務所插圖：老偵探與助手貓站在軟木線索板前，板上四張空白卡片由一條紅線依序串成一列，偵探用放大鏡指著最上面那張" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：辦案流程線索板</h3>
+            <p class="interactive-instruction">選一樁案件，按<strong>下一步</strong>把四張卡片依序釘上線索板。紅線串到最後一張，案子就破了：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-steps" width="540" height="430"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要偵辦的案件</span>
+                    <div class="btn-group" id="st-case-group">
+                      <button class="pick-btn active" data-case="0">汽水促銷</button>
+                      <button class="pick-btn" data-case="1">甲數之謎</button>
+                      <button class="pick-btn" data-case="2">超市帳單</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="axiom-controls">
+                  <button class="step-ctrl-btn primary" id="st-next">下一步</button>
+                  <button class="step-ctrl-btn secondary" id="st-prev">上一步</button>
+                  <button class="step-ctrl-btn secondary" id="st-reset">重來</button>
+                </div>
+                <div class="visual-feedback" id="st-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (辦案四步驟)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 某飲料店促銷：買 \(3\) 瓶打 \(8\) 折，比買 \(1\) 瓶多付 \(42\) 元。則一瓶的原價是多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-1-1" value="A"><span class="option-text">A. \(25\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-1-1" value="B"><span class="option-text">B. \(30\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-1-1" value="C"><span class="option-text">C. \(35\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-1-1" value="D"><span class="option-text">D. \(42\) 元</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設一瓶原價 \(x\) 元。買 \(3\) 瓶打 \(8\) 折要付 \(3x \times 0.8 = 2.4x\) 元，買 \(1\) 瓶要付 \(x\) 元，兩者相差 \(42\) 元：<br>
+              \[\begin{aligned}
+              & 3x \times 0.8 - x = 42 \\
+              &\qquad\ \ 2.4x - x = 42 \\
+              &\qquad\qquad 1.4x = 42 \\
+              &\qquad\qquad\ \ \ x = 30
+              \end{aligned}\]
+              所以一瓶原價 \(30\) 元。<strong>檢驗</strong>：買 \(3\) 瓶付 \(90 \times 0.8 = 72\) 元，買 \(1\) 瓶付 \(30\) 元，\(72 - 30 = 42\)，符合。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 關於用一元一次方程式解應用問題，下列敘述何者<strong>錯誤</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-1-2" value="A"><span class="option-text">A. 設未知數時要把單位寫清楚</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-1-2" value="B"><span class="option-text">B. 列方程式的關鍵是找出題目中相等的關係</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-1-2" value="C"><span class="option-text">C. 只要方程式解得出來，那個解一定就是答案</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-1-2" value="D"><span class="option-text">D. 若求出的解不符合情境的要求，則此題無解</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。方程式解得出來，<strong>只代表計算沒錯</strong>，不代表符合情境。例如票數算出 \(3.75\) 張、人數算出 \(-2\) 人，計算無誤但與事實不符，這種情況該題<strong>無解</strong>。<br>
+              A 正確：\(x\) 是「\(30\) 元」還是「\(30\) 人」差很多，單位必須寫。<br>
+              B 正確：沒有相等關係就寫不出等號。<br>
+              D 正確：這正是第四步「寫答案」要一併檢查的事。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 數字問題與費用問題
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-receipt" aria-hidden="true"></i> 重點 2：數字與費用問題——把中文逐句翻成算式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>翻譯是逐詞進行的</strong>，不要整句用猜的。把句子切成一小段一小段，每一段換成一個符號，接起來就是算式。</li>
+              <li><strong>數字問題（例）</strong>：已知甲數的 \(3\) 倍加 \(1\) 等於甲數加 \(9\)，求甲數。設甲數為 \(x\)，照句子順序翻譯：「甲數的 \(3\) 倍」是 \(3x\)、「加 \(1\)」是 \(+1\)、「等於」是 \(=\)、「甲數加 \(9\)」是 \(x+9\)，於是
+                \[\begin{aligned}
+                & 3x + 1 = x + 9 \\
+                &\quad 3x - x = 9 - 1 \\
+                &\qquad\ \ 2x = 8 \\
+                &\qquad\ \ \ x = 4
+                \end{aligned}\]
+                甲數為 \(4\)。</li>
+              <li><strong>費用問題（例）</strong>：\(1\) 盒蛋比 \(1\) 盒豆腐貴 \(60\) 元，\(1\) 盒蛋和 \(4\) 盒豆腐共付 \(210\) 元，求兩者價錢。<strong>設比較基準（比較便宜的豆腐）為 \(x\) 元</strong>，蛋就是 \((x+60)\) 元：
+                \[\begin{aligned}
+                & (x+60) + 4x = 210 \\
+                &\qquad\ \ 5x + 60 = 210 \\
+                &\qquad\qquad\ 5x = 150 \\
+                &\qquad\qquad\ \ \ x = 30
+                \end{aligned}\]
+                豆腐 \(30\) 元、蛋 \(30+60=90\) 元。</li>
+              <li><strong>兩個量互相比較時，設哪一個都可以</strong>：上題設豆腐為 \(x\)，蛋就是 \(x+60\)；反過來設蛋為 \(x\)，豆腐就是 \(x-60\)，列出的方程式是 \(x+4(x-60)=210\)，解出 \(x=90\)，答案完全一樣。<strong>兩種設法都對，挑你覺得比較好寫的那一個就好</strong>。</li>
+              <li><strong>先看清楚題目給了什麼相等關係</strong>：上題給的是「總金額」——每一項的<strong>單價 \(\times\) 數量</strong>加起來等於實付的錢。但費用問題也可能是別的關係，例如「甲付的錢和乙一樣多」「找回的錢是 \(50\) 元」。<strong>等號要從題目那句話來，不是從題型來</strong>。</li>
+              <li><strong>問兩個答案就要寫兩個</strong>：上題問的是蛋和豆腐<strong>各</strong>多少錢，只寫 \(x=30\) 只答了一半。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>中文說法</th><th>翻成算式</th><th>中文說法</th><th>翻成算式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>甲數的 \(3\) 倍</td><td>\(3x\)</td><td>比 \(x\) 貴 \(60\)</td><td>\(x+60\)</td></tr>
+                <tr><td>加 \(1\)／多 \(1\)</td><td>\(+1\)</td><td>比 \(x\) 少 \(4\)</td><td>\(x-4\)</td></tr>
+                <tr><td>減 \(16\)／少 \(16\)</td><td>\(-16\)</td><td>\(x\) 的一半</td><td>\(\frac{x}{2}\)</td></tr>
+                <tr><td>等於／是／共</td><td class="sign-pos">\(=\)</td><td>\(4\) 倍少 \(1\)</td><td>\(4x-1\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="detective_receipt.webp" alt="復古偵探事務所插圖：助手貓與老偵探各拿一支放大鏡，檢視攤在雜貨店櫃台上一張長長的收據，收據旁夾著幾張空白小標籤，桌上放著一盒蛋與一塊豆腐" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：敘述翻譯線索卡</h3>
+            <p class="interactive-instruction">按<strong>下一段</strong>，中文句子會一段一段變亮，下方同步拼出對應的算式。看清楚<strong>哪個詞變成哪個符號</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-translate" width="540" height="410"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要翻譯的句子</span>
+                    <div class="btn-group" id="tr-sent-group">
+                      <button class="pick-btn active" data-s="0">甲數的 3 倍加 1</button>
+                      <button class="pick-btn" data-s="1">乙數減 16</button>
+                      <button class="pick-btn" data-s="2">蛋比豆腐貴 60</button>
+                      <button class="pick-btn" data-s="3">1 蛋 4 豆腐共 210</button>
+                      <button class="pick-btn" data-s="4">全票比學生票貴 150</button>
+                      <button class="pick-btn" data-s="5">2 全票 3 學生票共 3550</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="axiom-controls">
+                  <button class="step-ctrl-btn primary" id="tr-next">下一段</button>
+                  <button class="step-ctrl-btn secondary" id="tr-reset">重來</button>
+                </div>
+                <div class="visual-feedback" id="tr-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (數字與費用問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 已知乙數減 \(12\) 等於乙數的 \(5\) 倍加 \(4\)，則乙數是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-2-1" value="A"><span class="option-text">A. \(-4\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-2-1" value="B"><span class="option-text">B. \(-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-2-1" value="C"><span class="option-text">C. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-2-1" value="D"><span class="option-text">D. \(4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設乙數為 \(x\)。「乙數減 \(12\)」是 \(x-12\)，「乙數的 \(5\) 倍加 \(4\)」是 \(5x+4\)：<br>
+              \[\begin{aligned}
+              & x - 12 = 5x + 4 \\
+              &\quad x - 5x = 4 + 12 \\
+              &\qquad\ -4x = 16 \\
+              &\qquad\quad x = -4
+              \end{aligned}\]
+              所以乙數為 \(-4\)。<strong>檢驗</strong>：左邊 \(-4-12=-16\)，右邊 \(5 \times (-4)+4=-16\)，兩邊相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 一支筆比一本筆記本便宜 \(25\) 元，買 \(3\) 支筆和 \(2\) 本筆記本共付 \(275\) 元，則一本筆記本多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-2-2" value="A"><span class="option-text">A. \(65\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-2-2" value="B"><span class="option-text">B. \(70\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-2-2" value="C"><span class="option-text">C. \(75\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-2-2" value="D"><span class="option-text">D. \(80\) 元</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。筆比筆記本便宜，所以<strong>設比較基準（筆記本）為 \(x\) 元</strong>，一支筆就是 \((x-25)\) 元：<br>
+              \[\begin{aligned}
+              & 3(x-25) + 2x = 275 \\
+              &\quad 3x - 75 + 2x = 275 \\
+              &\qquad\qquad\ \ 5x = 350 \\
+              &\qquad\qquad\ \ \ x = 70
+              \end{aligned}\]
+              一本筆記本 \(70\) 元（一支筆 \(45\) 元）。<strong>檢驗</strong>：\(3 \times 45 + 2 \times 70 = 135 + 140 = 275\)，符合。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 分配問題
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i> 重點 3：分配問題——同一個總數，兩種算法
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>怎麼認出分配問題</strong>：同一批東西被分了<strong>兩次</strong>，一次<strong>多出</strong>幾個、另一次<strong>不足</strong>幾個（或剛好分完）。</li>
+              <li><strong>解法只有一句話</strong>：把<strong>總數</strong>用兩種分法各表示一次，因為講的是同一批東西，兩個式子就相等。</li>
+              <li><strong>多出就加、不足就減</strong>：
+                <ul>
+                  <li>每班 \(25\) 人<strong>多出 \(10\) 人</strong> → 排完 \(25x\) 人之後還剩 \(10\) 人，總數 \(=25x+10\)。</li>
+                  <li>每班 \(27\) 人<strong>不足 \(20\) 人</strong> → 要排滿 \(27x\) 人還差 \(20\) 人，總數 \(=27x-20\)。</li>
+                </ul>
+              </li>
+              <li><strong>編班例</strong>：班級數固定，每班 \(25\) 人多出 \(10\) 人，每班 \(27\) 人不足 \(20\) 人，求班級數。設班級數為 \(x\) 班，兩種算法算的都是新生人數：
+                \[\begin{aligned}
+                & 25x + 10 = 27x - 20 \\
+                &\quad 10 + 20 = 27x - 25x \\
+                &\qquad\quad\ 30 = 2x \\
+                &\qquad\qquad x = 15
+                \end{aligned}\]
+                班級數為 \(15\) 班。</li>
+              <li><strong>糖果例（總數不變）</strong>：一包糖果平分給全班，每人 \(7\) 顆多出 \(4\) 顆；再加 \(44\) 顆後每人 \(9\) 顆恰好分完。設全班 \(x\) 人，<strong>原本的糖果數</strong>有兩種寫法：\(7x+4\)，以及 \(9x-44\)（每人 \(9\) 顆共 \(9x\) 顆，其中 \(44\) 顆是後來加的）。故 \(7x+4=9x-44\)，得 \(x=24\) 人。</li>
+              <li><strong>\(x\) 設「份數」通常最好寫</strong>：分配問題裡兩個式子都是「每份幾個 \(\times\) 份數」，所以設<strong>份數</strong>（班級數、學生數、袋數）當 \(x\)，兩邊都很容易寫出來。<strong>但 \(x\) 不一定要是題目問的那個數</strong>——若改設總數為 \(x\)，糖果題就變成 \(\frac{x-4}{7}=\frac{x+44}{9}\)，一樣解得出來，只是式子難寫一點。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>份數</th><th>分法</th><th>結果</th><th>總數怎麼寫</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(x\) 份</td><td>每份 \(a\) 個</td><td>多出 \(m\) 個</td><td class="sign-pos">\(ax+m\)</td></tr>
+                <tr><td>\(x\) 份</td><td>每份 \(b\) 個</td><td>不足 \(n\) 個</td><td class="sign-neg">\(bx-n\)</td></tr>
+                <tr><td>\(x\) 份</td><td>每份 \(c\) 個</td><td>恰好分完</td><td>\(cx\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="detective_crates.webp" alt="復古偵探事務所插圖：倉庫裡兩排等長的木箱並列，左排旁邊的地上平放著三顆多出來的蘋果，右排有一個箱子還空著一格，老偵探蹲在兩排之間拿放大鏡比對，助手貓坐在木箱上" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩種分法盤點台</h3>
+            <p class="interactive-instruction">拉滑桿改變份數，兩條長條分別是兩種分法算出的<strong>總數</strong>。<strong>只有一個份數能讓兩條一樣長</strong>，那就是答案：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-alloc" width="540" height="400"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">案件</span>
+                    <div class="btn-group" id="al-case-group">
+                      <button class="pick-btn active" data-case="0">新生編班</button>
+                      <button class="pick-btn" data-case="1">糖果平分</button>
+                      <button class="pick-btn" data-case="2">餅乾分裝</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="al-x-slider"><span id="al-x-label">班級數</span> \(x\)：<span id="al-x-val" class="val-num">10</span></label>
+                    <input type="range" id="al-x-slider" min="1" max="30" value="10" step="1">
+                  </div>
+                </div>
+                <div class="visual-feedback" id="al-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分配問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 把一批餅乾分裝成數袋，每袋裝 \(8\) 片會多出 \(5\) 片，每袋裝 \(9\) 片則不足 \(7\) 片。則共有幾袋？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-3-1" value="A"><span class="option-text">A. \(10\) 袋</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-3-1" value="B"><span class="option-text">B. \(11\) 袋</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-3-1" value="C"><span class="option-text">C. \(12\) 袋</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-3-1" value="D"><span class="option-text">D. \(13\) 袋</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設共有 \(x\) 袋。每袋 \(8\) 片多出 \(5\) 片，餅乾共 \((8x+5)\) 片；每袋 \(9\) 片不足 \(7\) 片，餅乾共 \((9x-7)\) 片。兩者都是同一批餅乾：<br>
+              \[\begin{aligned}
+              & 8x + 5 = 9x - 7 \\
+              &\quad 5 + 7 = 9x - 8x \\
+              &\qquad\ \ 12 = x
+              \end{aligned}\]
+              共 \(12\) 袋。<strong>檢驗</strong>：\(8 \times 12+5=101\)，\(9 \times 12-7=101\)，餅乾共 \(101\) 片，兩種分法一致。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 某活動原本安排每組 \(7\) 人，會多出 \(3\) 人；後來多開 \(2\) 組並改為每組 \(6\) 人，恰好分完。則原本安排幾組？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-3-2" value="A"><span class="option-text">A. \(8\) 組</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-3-2" value="B"><span class="option-text">B. \(9\) 組</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-3-2" value="C"><span class="option-text">C. \(10\) 組</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-3-2" value="D"><span class="option-text">D. \(11\) 組</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設原本安排 \(x\) 組。第一種分法：每組 \(7\) 人多出 \(3\) 人，總人數 \(=7x+3\)；第二種分法：組數變成 \((x+2)\) 組、每組 \(6\) 人且恰好分完，總人數 \(=6(x+2)\)。<strong>兩次分的是同一批人</strong>：<br>
+              \[\begin{aligned}
+              & 7x + 3 = 6(x+2) \\
+              &\quad 7x + 3 = 6x + 12 \\
+              &\quad 7x - 6x = 12 - 3 \\
+              &\qquad\qquad x = 9
+              \end{aligned}\]
+              原本安排 \(9\) 組。<strong>檢驗</strong>：總人數 \(7 \times 9+3=66\)；改成 \(11\) 組每組 \(6\) 人，\(6 \times 11=66\)，恰好分完。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 折扣問題
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-tags" aria-hidden="true"></i> 重點 4：折扣問題——把每一句話串成一條關係鏈
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>打幾折就乘以零點幾</strong>：打 \(9\) 折是 \(\times 0.9\)、打 \(8\) 折是 \(\times 0.8\)、打 \(75\) 折是 \(\times 0.75\)。折後價 \(=\) 原售價 \(\times\) 折數。</li>
+              <li><strong>省下的錢 \(=\) 原售價 \(\times (1 -\) 折數\()\)</strong>：打 \(8\) 折省下 \(0.2\) 倍的原售價，打 \(75\) 折省下 \(0.25\) 倍。</li>
+              <li><strong>折扣問題通常是一條關係鏈</strong>，把每一句話各翻成一個等式，再串起來：
+                <ul>
+                  <li>「原售價比預算多 \(1500\) 元」→ 原售價 \(=x+1500\)</li>
+                  <li>「變成 \(8\) 折出售」→ 新售價 \(=(x+1500) \times 0.8\)</li>
+                  <li>「新售價比預算少 \(200\) 元」→ 新售價 \(=x-200\)</li>
+                </ul>
+              </li>
+              <li><strong>籃球鞋例</strong>：設阿樂的預算為 \(x\) 元，由上面三句可列出
+                \[\begin{aligned}
+                & (x+1500) \times 0.8 = x - 200 \\
+                &\qquad\ \ 0.8x + 1200 = x - 200 \\
+                &\qquad\qquad\quad\ 1400 = 0.2x \\
+                &\qquad\qquad\qquad\ \ x = 7000
+                \end{aligned}\]
+                阿樂的預算是 \(7000\) 元。</li>
+              <li><strong>「比⋯⋯多／少」一定要看清楚是誰比誰</strong>：「原售價比預算多 \(1500\)」是<strong>原售價比較大</strong>，所以原售價 \(=\) 預算 \(+1500\)；寫成預算 \(=\) 原售價 \(+1500\) 就完全相反了。</li>
+              <li><strong>算完務必用原句檢驗</strong>：把 \(x=7000\) 代回去，原售價 \(8500\)、\(8\) 折後 \(6800\)，比預算 \(7000\) 少 \(200\)，三句話全部對上才算完成。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>中文</th><th>算式</th><th>常見的相反寫法</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>打 \(8\) 折</td><td class="sign-pos">\(\times 0.8\)</td><td class="sign-neg">\(\times 8\)</td></tr>
+                <tr><td>打 \(75\) 折</td><td class="sign-pos">\(\times 0.75\)</td><td class="sign-neg">\(\times 7.5\)</td></tr>
+                <tr><td>\(A\) 比 \(B\) 多 \(k\)</td><td class="sign-pos">\(A=B+k\)</td><td class="sign-neg">\(B=A+k\)</td></tr>
+                <tr><td>\(A\) 比 \(B\) 少 \(k\)</td><td class="sign-pos">\(A=B-k\)</td><td class="sign-neg">\(A=k-B\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="detective_pricetag.webp" alt="復古偵探事務所插圖：櫥窗裡的手錶架上垂著上下兩張空白價格吊牌，上面那張被紅筆斜線劃掉、下面那張被紅筆圈起，助手貓踮腳拿放大鏡比對兩張吊牌" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：價目吊牌推演器</h3>
+            <p class="interactive-instruction">拉滑桿假設一個預算，三張吊牌會自動算出原售價與折後價。<strong>當折後價正好落在「預算 \(-\) 差額」那條線上</strong>，就是正確的預算：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-discount" width="540" height="410"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">案件</span>
+                    <div class="btn-group" id="di-case-group">
+                      <button class="pick-btn active" data-case="0">籃球鞋 8 折</button>
+                      <button class="pick-btn" data-case="1">遊戲機 75 折</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="di-x-slider">假設的預算 \(x\)：<span id="di-x-val" class="val-num">4000</span> 元</label>
+                    <input type="range" id="di-x-slider" min="2000" max="10000" value="4000" step="100">
+                  </div>
+                </div>
+                <div class="visual-feedback" id="di-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (折扣問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 一件外套打 \(7\) 折後，比原售價便宜了 \(450\) 元。則這件外套的原售價是多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-4-1" value="A"><span class="option-text">A. \(1200\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-4-1" value="B"><span class="option-text">B. \(1500\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-4-1" value="C"><span class="option-text">C. \(1800\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-4-1" value="D"><span class="option-text">D. \(2100\) 元</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設原售價為 \(x\) 元，打 \(7\) 折後為 \(0.7x\) 元，它比原售價少 \(450\) 元：<br>
+              \[\begin{aligned}
+              & 0.7x = x - 450 \\
+              &\quad\ 450 = x - 0.7x \\
+              &\quad\ 450 = 0.3x \\
+              &\qquad x = 1500
+              \end{aligned}\]
+              原售價 \(1500\) 元。<strong>另一個想法</strong>：打 \(7\) 折省下的正是原售價的 \(1-0.7=0.3\) 倍，所以 \(0.3x=450\)，同樣得 \(x=1500\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 一個書包打 \(8\) 折後的價錢，恰好比原售價的一半多 \(90\) 元。則這個書包的原售價是多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-4-2" value="A"><span class="option-text">A. \(250\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-4-2" value="B"><span class="option-text">B. \(300\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-4-2" value="C"><span class="option-text">C. \(350\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-4-2" value="D"><span class="option-text">D. \(400\) 元</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設原售價為 \(x\) 元。打 \(8\) 折後是 \(0.8x\) 元，原售價的一半是 \(0.5x\) 元，「多 \(90\) 元」表示 \(0.8x\) 比 \(0.5x\) 大 \(90\)：<br>
+              \[\begin{aligned}
+              & 0.8x = 0.5x + 90 \\
+              &\quad 0.8x - 0.5x = 90 \\
+              &\qquad\qquad 0.3x = 90 \\
+              &\qquad\qquad\ \ \ x = 300
+              \end{aligned}\]
+              原售價 \(300\) 元。<strong>檢驗</strong>：\(8\) 折後 \(240\) 元，原售價的一半是 \(150\) 元，\(240-150=90\)，符合。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 圖形問題
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-draw-polygon" aria-hidden="true"></i> 重點 5：圖形問題——同一塊面積，算兩次
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>會用到的三個公式</strong>：長方形面積 \(=\) 長 \(\times\) 寬；三角形面積 \(=\frac{1}{2} \times\) 底 \(\times\) 高；梯形面積 \(=\frac{(\text{上底}+\text{下底}) \times \text{高}}{2}\)。</li>
+              <li><strong>圖形問題的相等關係，通常是「同一塊面積用兩種方式算」</strong>：一次用整體公式，一次把它拆成好幾塊加起來，兩個結果必須相等。</li>
+              <li><strong>邊長由幾段組成時，先寫成和</strong>：\(\overline{AC}=\overline{AB}+\overline{BC}\)。設 \(\overline{BC}=x\)、已知 \(\overline{AB}=5\)，就得到 \(\overline{AC}=5+x\)。</li>
+              <li><strong>課本例</strong>：長方形 \(ACEF\) 中 \(\overline{AF}=8\)、\(\overline{AB}=5\)、\(\overline{BC}=x\)、\(\overline{CD}=4\)、\(\overline{DE}=4\)，已知 \(\triangle BDF\) 面積為 \(18\)。整體面積 \(=8 \times (5+x)\)，拆開來是四塊三角形的和：
+                \[\begin{aligned}
+                & 8(5+x) \\
+                &= \tfrac{1}{2} \cdot 8 \cdot 5 + \tfrac{1}{2} \cdot x \cdot 4 \\
+                &\quad + \tfrac{1}{2} \cdot 4 \cdot (5+x) + 18 \\
+                & 40 + 8x \\
+                &= 20 + 2x + 10 + 2x + 18 \\
+                & 8x - 4x = 48 - 40 \\
+                &\qquad\ \ 4x = 8 \\
+                &\qquad\quad x = 2
+                \end{aligned}\]
+                所以 \(\overline{BC}\) 的長度為 \(2\)。</li>
+              <li><strong>梯形例</strong>：下底比上底的 \(3\) 倍少 \(4\) 公分，高 \(7\) 公分，面積 \(70\) 平方公分。設上底 \(x\) 公分，下底 \((3x-4)\) 公分：\(\frac{x+(3x-4)}{2} \times 7=70\)，得 \((2x-2) \times 7=70\)，\(14x-14=70\)，\(x=6\)。上底 \(6\) 公分。</li>
+              <li><strong>算出來的長度不能是負的或零</strong>：如果解出 \(x=-3\)，代表題目給的條件湊不出這個圖形，該題<strong>無解</strong>。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>圖形</th><th>面積公式</th><th>題目若說</th><th>就可以這樣設</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>長方形</td><td>長 \(\times\) 寬</td><td>長比寬多 \(6\)</td><td>設寬為 \(x\)，長為 \(x+6\)</td></tr>
+                <tr><td>三角形</td><td>\(\frac{1}{2} \times\) 底 \(\times\) 高</td><td>高是底的 \(2\) 倍</td><td>設底為 \(x\)，高為 \(2x\)</td></tr>
+                <tr><td>梯形</td><td>\(\frac{(\text{上底}+\text{下底}) \times \text{高}}{2}\)</td><td>下底比上底的 \(3\) 倍少 \(4\)</td><td>設上底為 \(x\)，下底為 \(3x-4\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="detective_blueprint.webp" alt="復古偵探事務所插圖：桌上攤開一張藍圖，圖上一個長方形被直線分成四塊不同顏色的三角形，老偵探一手拿三角尺、一手拿放大鏡俯身比對，助手貓坐在桌角" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：藍圖面積比對台</h3>
+            <p class="interactive-instruction">拉滑桿改變 \(\overline{BC}\) 的長度。左邊是<strong>整塊長方形</strong>的面積，右邊是<strong>拆成四塊</strong>相加的面積。<strong>兩邊相等的那一刻</strong>，\(x\) 就找到了：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-figure" width="540" height="430"></canvas>
+              <div class="control-panel">
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fg-x-slider">\(\overline{BC}=x\)：<span id="fg-x-val" class="val-num">1</span></label>
+                    <input type="range" id="fg-x-slider" min="0.5" max="6" value="1" step="0.5">
+                  </div>
+                </div>
+                <div class="visual-feedback" id="fg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圖形問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-5-1">
+            <p class="quiz-question"><strong>Q1.</strong> 一個梯形的上底比下底少 \(5\) 公分，高為 \(8\) 公分，面積為 \(60\) 平方公分，則下底為多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-5-1" value="A"><span class="option-text">A. \(8\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-5-1" value="B"><span class="option-text">B. \(9\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-5-1" value="C"><span class="option-text">C. \(10\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-5-1" value="D"><span class="option-text">D. \(12\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。題目問下底，就<strong>設下底為 \(x\) 公分</strong>，則上底為 \((x-5)\) 公分：<br>
+              \[\begin{aligned}
+              & \frac{(x-5)+x}{2} \times 8 = 60 \\
+              &\qquad (2x-5) \times 4 = 60 \\
+              &\qquad\qquad 2x - 5 = 15 \\
+              &\qquad\qquad\qquad x = 10
+              \end{aligned}\]
+              下底 \(10\) 公分（上底 \(5\) 公分）。<strong>檢驗</strong>：\(\frac{(5+10) \times 8}{2}=60\)，符合。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-5-2">
+            <p class="quiz-question"><strong>Q2.</strong> 一個長方形的長比寬多 \(6\) 公分，周長為 \(44\) 公分，則寬為多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-5-2" value="A"><span class="option-text">A. \(6\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-5-2" value="B"><span class="option-text">B. \(8\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-5-2" value="C"><span class="option-text">C. \(10\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-5-2" value="D"><span class="option-text">D. \(12\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。長比寬多，所以<strong>設較小的寬為 \(x\) 公分</strong>，長為 \((x+6)\) 公分。長方形周長 \(=\) （長 \(+\) 寬） \(\times 2\)：<br>
+              \[\begin{aligned}
+              & \big[x + (x+6)\big] \times 2 = 44 \\
+              &\qquad\quad (2x+6) \times 2 = 44 \\
+              &\qquad\qquad\ \ 4x + 12 = 44 \\
+              &\qquad\qquad\qquad\ \ 4x = 32 \\
+              &\qquad\qquad\qquad\quad x = 8
+              \end{aligned}\]
+              寬為 \(8\) 公分（長為 \(14\) 公分）。<strong>檢驗</strong>：\((8+14) \times 2=44\)，符合。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 年齡問題
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> 重點 6：年齡問題——大家一起變老，年齡差永遠不變
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>兩個一定要記住的事實</strong>：
+                <ul>
+                  <li><strong>每過 \(n\) 年，每個人都增加 \(n\) 歲</strong>——不是只有小孩變大，媽媽也一起加 \(n\)。</li>
+                  <li><strong>兩人的年齡差永遠不變</strong>——今年差 \(30\) 歲，\(10\) 年後、\(5\) 年前都還是差 \(30\) 歲。</li>
+                </ul>
+              </li>
+              <li><strong>列表法最不容易出錯</strong>：畫一張表，「今年」一欄、「\(n\) 年後（或前）」一欄，把每個人各填一格再列式。</li>
+              <li><strong>年齡和的例子</strong>：今年小妍和媽媽年齡和是 \(56\) 歲，\(7\) 年後媽媽的年齡是小妍的 \(2\) 倍多 \(10\) 歲，求兩人相差幾歲。設小妍今年 \(x\) 歲，媽媽今年 \((56-x)\) 歲：
+                \[\begin{aligned}
+                & (56-x) + 7 = 2(x+7) + 10 \\
+                &\qquad\ \ 63 - x = 2x + 24 \\
+                &\qquad\qquad\ 39 = 3x \\
+                &\qquad\qquad\ \ x = 13
+                \end{aligned}\]
+                小妍 \(13\) 歲、媽媽 \(56-13=43\) 歲，<strong>相差 \(30\) 歲</strong>。</li>
+              <li><strong>年齡差的例子</strong>：小翔與爸爸相差 \(35\) 歲，\(5\) 年前爸爸的年齡恰好是小翔的 \(8\) 倍。設小翔今年 \(x\) 歲，爸爸 \((x+35)\) 歲，\(5\) 年前兩人各減 \(5\)：\((x+35)-5=8(x-5)\)，得 \(x+30=8x-40\)，\(-7x=-70\)，\(x=10\)。小翔今年 \(10\) 歲。</li>
+              <li><strong>最常見的錯誤</strong>：\(7\) 年後只把小孩加了 \(7\)，卻忘了媽媽也要加 \(7\)。<strong>時間對每個人都一樣公平</strong>。</li>
+              <li><strong>注意題目問的是誰</strong>：上面第一題問的是「相差多少歲」，算出 \(x=13\) 只是中途站，還要再算媽媽的年齡並相減。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>人物</th><th>今年</th><th>\(7\) 年後</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>小妍</td><td>\(x\)</td><td>\(x+7\)</td></tr>
+                <tr><td>媽媽</td><td>\(56-x\)</td><td>\((56-x)+7\)</td></tr>
+                <tr><td>年齡差</td><td>\(56-2x\)</td><td class="sign-pos">\(56-2x\)（不變）</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="detective_timeline.webp" alt="復古偵探事務所插圖：牆上的軟木板橫拉著一條紅線，兩張空白人物相框各釘在紅線的左右兩端，老偵探指著右邊那張，助手貓坐在矮凳上做筆記" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：年齡時間軸</h3>
+            <p class="interactive-instruction">拉滑桿假設小妍今年的年齡，兩條年齡棒會一起往前推 \(7\) 年。<strong>只有一個假設能讓「媽媽」正好等於「小妍的 \(2\) 倍多 \(10\)」</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-age" width="540" height="410"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">案件</span>
+                    <div class="btn-group" id="ag-case-group">
+                      <button class="pick-btn active" data-case="0">年齡和 56</button>
+                      <button class="pick-btn" data-case="1">相差 35 歲</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ag-x-slider"><span id="ag-x-label">小妍今年</span> \(x\)：<span id="ag-x-val" class="val-num">8</span> 歲</label>
+                    <input type="range" id="ag-x-slider" min="5" max="25" value="8" step="1">
+                  </div>
+                </div>
+                <div class="visual-feedback" id="ag-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (年齡問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-6-1">
+            <p class="quiz-question"><strong>Q1.</strong> 今年姊姊比弟弟大 \(14\) 歲，\(2\) 年後姊姊的年齡恰好是弟弟的 \(3\) 倍。則弟弟今年幾歲？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-6-1" value="A"><span class="option-text">A. \(4\) 歲</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-6-1" value="B"><span class="option-text">B. \(5\) 歲</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-6-1" value="C"><span class="option-text">C. \(6\) 歲</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-6-1" value="D"><span class="option-text">D. \(7\) 歲</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設弟弟今年 \(x\) 歲，則姊姊今年 \((x+14)\) 歲。\(2\) 年後<strong>兩人都要加 \(2\)</strong>：弟弟 \((x+2)\) 歲、姊姊 \((x+16)\) 歲。<br>
+              \[\begin{aligned}
+              & x + 16 = 3(x+2) \\
+              &\quad x + 16 = 3x + 6 \\
+              &\quad 16 - 6 = 3x - x \\
+              &\qquad\ \ 10 = 2x \\
+              &\qquad\quad x = 5
+              \end{aligned}\]
+              弟弟今年 \(5\) 歲（姊姊 \(19\) 歲）。<strong>檢驗</strong>：\(2\) 年後弟弟 \(7\) 歲、姊姊 \(21\) 歲，\(21=3 \times 7\)，符合。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-6-2">
+            <p class="quiz-question"><strong>Q2.</strong> 今年父子兩人的年齡和是 \(60\) 歲，\(6\) 年後父親的年齡恰好是兒子的 \(3\) 倍。則兒子今年幾歲？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-6-2" value="A"><span class="option-text">A. \(10\) 歲</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-6-2" value="B"><span class="option-text">B. \(12\) 歲</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-6-2" value="C"><span class="option-text">C. \(14\) 歲</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-6-2" value="D"><span class="option-text">D. \(15\) 歲</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設兒子今年 \(x\) 歲，由年齡和可知父親今年 \((60-x)\) 歲。\(6\) 年後兒子 \((x+6)\) 歲、父親 \((60-x)+6=(66-x)\) 歲：<br>
+              \[\begin{aligned}
+              & 66 - x = 3(x+6) \\
+              &\quad 66 - x = 3x + 18 \\
+              &\quad 66 - 18 = 3x + x \\
+              &\qquad\ \ 48 = 4x \\
+              &\qquad\quad x = 12
+              \end{aligned}\]
+              兒子今年 \(12\) 歲（父親 \(48\) 歲）。<strong>檢驗</strong>：\(6\) 年後兒子 \(18\) 歲、父親 \(54\) 歲，\(54=3 \times 18\)，符合。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 速率問題與解的合理性
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-stamp" aria-hidden="true"></i> 重點 7：速率問題與結案前的最後一步——這個答案合理嗎？
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>速率三式</strong>：距離 \(=\) 速率 \(\times\) 時間、時間 \(=\) 距離 \(\div\) 速率、速率 \(=\) 距離 \(\div\) 時間。</li>
+              <li><strong>速率問題的相等關係，通常是「時間相同」或「距離相同」</strong>。先想清楚題目裡哪一個是一樣的，等號就從那裡來。</li>
+              <li><strong>時間相同（環島路跑）</strong>：小翊時速 \(10\) 公里、小妍時速 \(8\) 公里，小翊跑回終點時小妍還離終點 \(7.4\) 公里，求全長。設全長 \(x\) 公里，兩人跑的時間一樣：
+                \[\begin{aligned}
+                & \frac{x}{10} = \frac{x-7.4}{8} \\
+                &\qquad 8x = 10x - 74 \\
+                &\qquad 2x = 74 \\
+                &\qquad\ \ x = 37
+                \end{aligned}\]
+                環島公路全長 \(37\) 公里。</li>
+              <li><strong>來回同一條路（距離相同）</strong>：上山時速 \(3\)、下山時速 \(4\)，來回共 \(2\) 小時。設山路長 \(x\) 公里，上山花 \(\frac{x}{3}\) 小時、下山花 \(\frac{x}{4}\) 小時：\(\frac{x}{3}+\frac{x}{4}=2\)，兩邊同乘 \(12\) 得 \(4x+3x=24\)，\(x=\frac{24}{7}\) 公里。</li>
+              <li><strong>結案前的最後一步：檢查解合不合情境</strong>。方程式算對，<strong>不代表答案成立</strong>。</li>
+              <li><strong>哪些數一定是正整數</strong>：張數、人數、個數、枚數、袋數、班級數。長度、面積、年齡則<strong>不能是負數</strong>。算出來不符合，就表示題目的情境本身有問題。</li>
+              <li><strong>游泳池的例子</strong>：一張全票 \(120\) 元，比一張優待票貴 \(40\) 元（優待票 \(80\) 元）。買 \(4\) 張全票和若干張優待票，若付 \(780\) 元是否合理？設買了 \(x\) 張優待票：\(120 \times 4+80x=780\)，\(480+80x=780\)，\(80x=300\)，\(x=3.75\)。<strong>票的張數一定是正整數，雖然計算無誤但與事實不符，所以付費 \(780\) 元不合理</strong>。</li>
+              <li><strong>「無解」有兩種樣子</strong>：一種是方程式本身解不出來；另一種是<strong>解得出來但不符合情境</strong>——在應用問題裡，後者才是常客。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>算出來的解</th><th>問的是什麼</th><th>合理嗎</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(x=3.75\)</td><td>票的張數</td><td class="sign-neg">不合理（不是整數）</td></tr>
+                <tr><td>\(x=-2\)</td><td>人數</td><td class="sign-neg">不合理（不能是負的）</td></tr>
+                <tr><td>\(x=\frac{24}{7}\)</td><td>山路長度</td><td class="sign-pos">合理（長度可以是分數）</td></tr>
+                <tr><td>\(x=12\)</td><td>袋數</td><td class="sign-pos">合理</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="detective_stamp.webp" alt="復古偵探事務所插圖：老偵探手持印章正要蓋在案件卷宗上，桌面一側放著蓋了結案綠章的卷宗、另一側放著被畫上紅色大叉的卷宗" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：結案審查台</h3>
+            <p class="interactive-instruction">每樁案件的方程式都已經<strong>算完而且沒有算錯</strong>。你的工作是看那個解<strong>在現實裡站不站得住</strong>，再決定蓋哪一個章：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-verdict" width="540" height="430"></canvas>
+              <div class="control-panel">
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">待審案件</span>
+                    <div class="btn-group" id="vd-case-group">
+                      <button class="pick-btn active" data-case="0">游泳池票</button>
+                      <button class="pick-btn" data-case="1">環島路跑</button>
+                      <button class="pick-btn" data-case="2">水族館帳單</button>
+                      <button class="pick-btn" data-case="3">上山下山</button>
+                      <button class="pick-btn" data-case="4">撲滿硬幣</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="axiom-controls">
+                  <button class="step-ctrl-btn primary" id="vd-ok">蓋「結案」章</button>
+                  <button class="step-ctrl-btn secondary" id="vd-no">蓋「不合理」章</button>
+                  <button class="step-ctrl-btn secondary" id="vd-reset">重來</button>
+                </div>
+                <div class="visual-feedback" id="vd-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (速率與合理性)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-7-1">
+            <p class="quiz-question"><strong>Q1.</strong> 甲、乙兩人同時從同一地點出發，沿同一條路走到終點。甲每分鐘走 \(60\) 公尺，乙每分鐘走 \(80\) 公尺。當乙走到終點時，甲還離終點 \(100\) 公尺。則這條路全長多少公尺？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-7-1" value="A"><span class="option-text">A. \(300\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-1" value="B"><span class="option-text">B. \(400\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-1" value="C"><span class="option-text">C. \(500\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-1" value="D"><span class="option-text">D. \(600\) 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設全長 \(x\) 公尺。乙走了 \(x\) 公尺，甲走了 \((x-100)\) 公尺，<strong>兩人所花的時間相同</strong>：<br>
+              \[\begin{aligned}
+              & \frac{x}{80} = \frac{x-100}{60} \\
+              &\qquad 60x = 80x - 8000 \\
+              &\qquad 20x = 8000 \\
+              &\qquad\ \ \ x = 400
+              \end{aligned}\]
+              全長 \(400\) 公尺。<strong>檢驗</strong>：乙走 \(400 \div 80=5\) 分鐘，甲同樣 \(5\) 分鐘走了 \(60 \times 5=300\) 公尺，離終點正好 \(100\) 公尺。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-7-2">
+            <p class="quiz-question"><strong>Q2.</strong> 一盒餅乾 \(150\) 元、一杯飲料 \(45\) 元。小明買了 \(2\) 盒餅乾和若干杯飲料，店員跟他收 \(412\) 元。下列判斷何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-7-2" value="A"><span class="option-text">A. 合理，他買了 \(2\) 杯飲料</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-2" value="B"><span class="option-text">B. 合理，他買了 \(3\) 杯飲料</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-2" value="C"><span class="option-text">C. 不合理，因為算出的杯數不是正整數</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-2" value="D"><span class="option-text">D. 不合理，因為 \(412\) 元不夠付 \(2\) 盒餅乾</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設買了 \(x\) 杯飲料：<br>
+              \[\begin{aligned}
+              & 150 \times 2 + 45x = 412 \\
+              &\qquad\quad 300 + 45x = 412 \\
+              &\qquad\qquad\quad 45x = 112 \\
+              &\qquad\qquad\qquad\ x = \frac{112}{45}
+              \end{aligned}\]
+              計算完全正確，但<strong>飲料的杯數一定是正整數</strong>，\(\frac{112}{45}\) 不是整數，與事實不符，所以收費 \(412\) 元<strong>不合理</strong>。<br>
+              A、B 錯：\(2\) 杯是 \(390\) 元、\(3\) 杯是 \(435\) 元，都不是 \(412\) 元。<br>
+              D 錯：\(2\) 盒餅乾 \(300\) 元，\(412\) 元付得起，問題不在這裡。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-folder-open"></i> 應用問題結案手冊</h4>
+            <ul class="bullet-list">
+              <li><strong>四步驟</strong>：設未知數（含單位）→ 列方程式（找相等關係）→ 解方程式 → 寫答案（並檢查情境）。</li>
+              <li><strong>數字問題</strong>：逐詞翻譯。「的 \(a\) 倍」\(\to \times a\)、「多／加」\(\to +\)、「少／減」\(\to -\)、「是／共／等於」\(\to =\)。</li>
+              <li><strong>費用問題</strong>：先讀出題目給的是哪一個相等關係（常見是<strong>總金額</strong>，但不一定）。兩個量互相比較時，設誰當 \(x\) 都可以，另一個用 \(x\) 表示出來即可。</li>
+              <li><strong>分配問題</strong>：把<strong>總數</strong>用兩種分法各寫一次再相等。<strong>多出就 \(+\)、不足就 \(-\)</strong>。</li>
+              <li><strong>折扣問題</strong>：打 \(a\) 折 \(=\times 0.a\)。把每一句翻成一個等式串成關係鏈；「\(A\) 比 \(B\) 多 \(k\)」是 \(A=B+k\)。</li>
+              <li><strong>圖形問題</strong>：同一塊面積<strong>整體算一次、拆開算一次</strong>；邊長由幾段組成時先寫成和。</li>
+              <li><strong>年齡問題</strong>：<strong>每個人都加 \(n\)</strong>、<strong>年齡差永遠不變</strong>。用「今年／\(n\) 年後」的表格列式。</li>
+              <li><strong>速率問題</strong>：時間 \(=\) 距離 \(\div\) 速率。相等關係通常是<strong>時間相同</strong>或<strong>距離相同</strong>。</li>
+              <li><strong>合理性</strong>：張數、人數、個數、枚數<strong>一定是正整數</strong>；長度、年齡<strong>不能是負數</strong>。算出 \(3.75\) 張票就是<strong>此題無解</strong>。</li>
+              <li><strong>三個最常見的失分點</strong>：一、<strong>算完沒回答問題</strong>（問「相差幾歲」卻只寫 \(x=13\)）；二、<strong>「誰比誰多」寫反</strong>；三、<strong>年齡題只讓一個人變老</strong>。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-magnifying-glass"></i> 回到事務所：那瓶沒有標價的汽水</h4>
+              <h5><i class="fa-solid fa-thumbtack"></i> 為什麼要先給它一個代號</h5>
+              <p>漫畫裡的海報只寫「買 \(2\) 瓶打 \(9\) 折，只比買 \(1\) 瓶多 \(16\) 元」，原價從頭到尾沒出現。一般人到這裡就卡住了，因為<strong>不知道的東西沒辦法拿來計算</strong>。老偵探做的第一件事，是把那個不知道的數<strong>先當成已經知道</strong>，給它一個代號 \(x\)——這一步看起來像作弊，卻是整套方法的關鍵：一旦它有了名字，就可以跟其他數字一起被加、被乘、被寫進式子裡。</p>
+              <p>接下來只要找到<strong>一句同時說到兩件事的話</strong>：「\(2\) 瓶的九折價」和「\(1\) 瓶的價錢」差了 \(16\) 元。左邊 \(2x \times 0.9\)、右邊 \(x\)，差是 \(16\)——方程式就成立了。<strong>列方程式不是靈感，是找出那句把兩個量綁在一起的話。</strong></p>
+              <h5><i class="fa-solid fa-triangle-exclamation"></i> 為什麼還要多一步核對</h5>
+              <p>課本第 \(211\) 頁那題很值得記住：買 \(4\) 張全票和若干張優待票付 \(780\) 元，方程式解出 \(x=3.75\)。<strong>計算一個步驟都沒錯</strong>，但票不能買 \(0.75\) 張。這時正確的結論不是「答案是 \(3.75\) 張」，而是「<strong>付費 \(780\) 元不合理</strong>」。數學能保證你算得對，但只有你自己能判斷答案在現實裡站不站得住——這一步永遠不能交給計算。</p>
+              <h5><i class="fa-solid fa-clock-rotate-left"></i> 這套方法有多老</h5>
+              <p>把未知數取個名字再列式，這個想法比代數符號本身還要老。九世紀的數學家<strong>花拉子米</strong>寫了一本《還原與對消的計算》，書名裡的「還原」（al-jabr）後來變成英文的 <strong>algebra</strong>（代數）；他處理的正是這一節的問題——把生活裡的分家產、量土地寫成等式再解開。更早的中國《九章算術》第七章〈盈不足〉，整章談的就是我們今天叫「分配問題」的那一類：<strong>盈就是多出、不足就是不夠</strong>，一千八百年前的書名，跟你今天寫的 \(25x+10=27x-20\) 講的是同一件事。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
