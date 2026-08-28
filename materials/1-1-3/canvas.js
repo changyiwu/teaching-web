@@ -85,21 +85,11 @@ function initQuizSystem() {
 }
 
 /* ==========================================================================
-   2. Helper functions
+   2. 本節專屬工具（通用繪圖工具在 ../math-canvas.js）
    ========================================================================== */
-function wrapFeedback(html) {
-  return `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">${html}</div>`;
-}
-
 // 負數要加括號（避免出現 4 x -2 這種相鄰運算子的寫法）；首項與結果不加括號
 function paren(n) {
   return n < 0 ? `(${n})` : `${n}`;
-}
-
-function typeset(nodes) {
-  if (window.MathJax && MathJax.typesetPromise) {
-    MathJax.typesetPromise(nodes).catch(err => console.log(err));
-  }
 }
 
 // 依正負回傳配色（正：玫瑰紅系；負：天藍系）

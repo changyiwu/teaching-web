@@ -83,44 +83,8 @@ function initQuizSystem() {
 }
 
 /* ==========================================================================
-   2. Helper functions
+   2. 本節專屬工具（通用繪圖工具在 ../math-canvas.js）
    ========================================================================== */
-const FONT = '"Outfit", "Noto Sans TC", sans-serif';
-
-function f(weight, size) {
-  return `${weight} ${size}px ${FONT}`;
-}
-
-function wrapFeedback(html) {
-  return `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">${html}</div>`;
-}
-
-function typeset(nodes) {
-  if (window.MathJax && MathJax.typesetPromise) {
-    MathJax.typesetPromise(nodes).catch(err => console.log(err));
-  }
-}
-
-// 圓角矩形（部分舊版瀏覽器沒有 ctx.roundRect）
-function roundRect(ctx, x, y, w, h, r) {
-  const rad = Math.min(r, w / 2, h / 2);
-  ctx.beginPath();
-  ctx.moveTo(x + rad, y);
-  ctx.lineTo(x + w - rad, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + rad);
-  ctx.lineTo(x + w, y + h - rad);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - rad, y + h);
-  ctx.lineTo(x + rad, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - rad);
-  ctx.lineTo(x, y + rad);
-  ctx.quadraticCurveTo(x, y, x + rad, y);
-  ctx.closePath();
-}
-
-// 判定結果的配色：成立＝薄荷綠，不成立＝珊瑚紅
-const OK_COLOR = '#34d399';
-const NO_COLOR = '#fb7185';
-
 function divisorsOf(n) {
   const out = [];
   for (let i = 1; i <= n; i++) {

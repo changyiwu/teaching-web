@@ -83,85 +83,27 @@ function initQuizSystem() {
 }
 
 /* ==========================================================================
-   2. Helper functions
+   2. 本節配色（通用繪圖工具在 ../math-canvas.js）
    ========================================================================== */
-const FONT = '"Outfit", "Noto Sans TC", sans-serif';
-
-// 判定結果的配色：成立＝薄荷綠，不成立＝珊瑚紅
-const OK_COLOR = '#34d399';
-const NO_COLOR = '#fb7185';
-
 // 正值＝薄荷綠、負值＝珊瑚紅；兩個主角分數＝天青與洋紅
 const POS_COLOR = '#34d399';
 const NEG_COLOR = '#fb7185';
 const COLOR_A = '#67e8f9';
 const COLOR_B = '#f9a8d4';
 const COLOR_C = '#fde047';
-const MUTED = '#94a3b8';
-const INK = '#cbd5e1';
-
-function f(weight, size) {
-  return `${weight} ${size}px ${FONT}`;
-}
-
-function wrapFeedback(html) {
-  return `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">${html}</div>`;
-}
-
-function typeset(nodes) {
-  if (window.MathJax && MathJax.typesetPromise) {
-    MathJax.typesetPromise(nodes).catch(err => console.log(err));
-  }
-}
-
-// 圓角矩形（部分舊版瀏覽器沒有 ctx.roundRect）
-function roundRect(ctx, x, y, w, h, r) {
-  const rad = Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2);
-  ctx.beginPath();
-  ctx.moveTo(x + rad, y);
-  ctx.lineTo(x + w - rad, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + rad);
-  ctx.lineTo(x + w, y + h - rad);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - rad, y + h);
-  ctx.lineTo(x + rad, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - rad);
-  ctx.lineTo(x, y + rad);
-  ctx.quadraticCurveTo(x, y, x + rad, y);
-  ctx.closePath();
-}
-
-function gcd(a, b) {
-  a = Math.abs(a); b = Math.abs(b);
-  while (b) { const t = a % b; a = b; b = t; }
-  return a || 1;
-}
 
 function lcm2(a, b) {
   return Math.abs(a * b) / gcd(a, b);
 }
 
-function clamp(v, lo, hi) {
-  return Math.max(lo, Math.min(hi, v));
-}
-
-// 化成最簡分數，並把負號固定放到分子上
-function reduce(n, d) {
-  if (d < 0) { n = -n; d = -d; }
-  const g = gcd(n, d);
-  return [n / g, d / g];
-}
-
-// 產生 MathJax 用的分數字串；分母為 1 時直接寫整數
-function texFrac(n, d) {
-  if (d < 0) { n = -n; d = -d; }
-  if (d === 1) return String(n);
-  if (n < 0) return `-\\frac{${-n}}{${d}}`;
-  return `\\frac{${n}}{${d}}`;
-}
-
 /* --------------------------------------------------------------------------
    Canvas 上的分數與算式：把整條式子當成一串「項」置中畫出
    item = { frac: [分子, 分母], color } 或 { txt: '=', color }
+
+   本頁的項是平面的 { frac }／{ txt }，跟 ../math-canvas.js 的遞迴元件
+   （T／VF／FR…）不同，所以保留一套本頁專用的排版：
+     itemWidth／drawItem（單一項）、termsWidth／drawTerms（整條式子）。
+   共用檔的 measure／drawIt／exprWidth／drawExpr 在本頁不適用，不要呼叫。
    -------------------------------------------------------------------------- */
 function itemWidth(ctx, it, size) {
   if (it.frac) {
@@ -221,7 +163,7 @@ function drawItem(ctx, it, x, cy, size, fallback) {
   return w;
 }
 
-function exprWidth(ctx, items, size, gap) {
+function termsWidth(ctx, items, size, gap) {
   let w = 0;
   items.forEach((it, i) => {
     if (i) w += gap;
@@ -231,15 +173,15 @@ function exprWidth(ctx, items, size, gap) {
 }
 
 // 置中畫出一整條算式；太寬時自動縮小字級，確保不會超出畫布
-function drawExpr(ctx, items, cx, cy, size, fallback, opts) {
+function drawTerms(ctx, items, cx, cy, size, fallback, opts) {
   const o = opts || {};
   const gap = o.gap == null ? 9 : o.gap;
   const maxW = o.maxW == null ? ctx.canvas.width - 24 : o.maxW;
   let s = size;
-  let total = exprWidth(ctx, items, s, gap);
+  let total = termsWidth(ctx, items, s, gap);
   while (total > maxW && s > 10) {
     s -= 1;
-    total = exprWidth(ctx, items, s, gap);
+    total = termsWidth(ctx, items, s, gap);
   }
   let x = cx - total / 2;
   items.forEach((it, i) => {
@@ -339,7 +281,7 @@ function initEquivCanvas() {
     ctx.font = f(600, 14);
     ctx.fillText(label, 14, cy - 30);
 
-    drawExpr(ctx, [{ frac: [n, d] }], 62, cy, 26, color, { maxW: 108 });
+    drawTerms(ctx, [{ frac: [n, d] }], 62, cy, 26, color, { maxW: 108 });
 
     const cells = d * unitCount;
     const filled = Math.abs(n);
@@ -388,7 +330,7 @@ function initEquivCanvas() {
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { frac: [a, b], color: COLOR_A },
       { txt: '=' },
       { frac: [en, ed], color: COLOR_B },
@@ -461,10 +403,10 @@ function initCompareCanvas() {
     ctx.fillText(`先通分成同分母 [ ${b1} , ${b2} ] = ${L}，再比分子`, canvas.width / 2, 20);
 
     // 兩條通分算式
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { frac: [a1, b1], color: COLOR_A }, { txt: '=' }, { frac: [n1, L], color: COLOR_A }
     ], 150, 66, 25, INK, { maxW: 250 });
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { frac: [a2, b2], color: COLOR_B }, { txt: '=' }, { frac: [n2, L], color: COLOR_B }
     ], 390, 66, 25, INK, { maxW: 250 });
 
@@ -558,7 +500,7 @@ function initCompareCanvas() {
     ctx.fillText(same ? '兩個分數是等值分數，在數線上是同一點'
       : '數線上比較右邊的那一個比較大', canvas.width / 2, 262);
 
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { frac: [a1, b1], color: COLOR_A },
       { txt: sign, color: '#e2e8f0' },
       { frac: [a2, b2], color: COLOR_B }
@@ -741,7 +683,7 @@ function initAddSubCanvas() {
     });
 
     // 算式
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { frac: [a1, b1], color: COLOR_A },
       { txt: op === 'add' ? '+' : '-' },
       { frac: [a2raw, b2], color: COLOR_B },
@@ -752,7 +694,7 @@ function initAddSubCanvas() {
     ], canvas.width / 2, 300, 24, INK);
 
     const already = (sd === L);
-    drawExpr(ctx, already ? [
+    drawTerms(ctx, already ? [
       { txt: '=' },
       { frac: [rn, L], color: rn < 0 ? NEG_COLOR : POS_COLOR },
       { txt: '（已是最簡）', color: MUTED }
@@ -908,13 +850,13 @@ function initMulCanvas() {
     ctx.font = f(600, 14);
     ctx.fillText('分子乘分子、分母乘分母', rx + rw / 2, 128);
 
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { frac: [a1, b1], color: COLOR_B },
       { txt: '×' },
       { frac: [a2, b2], color: OK_COLOR }
     ], rx + rw / 2, 172, 25, INK, { maxW: rw });
 
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { txt: '=' },
       { frac: [pn, pd], color: positive ? OK_COLOR : NEG_COLOR }
     ], rx + rw / 2, 232, 25, INK, { maxW: rw });
@@ -924,7 +866,7 @@ function initMulCanvas() {
     ctx.fillText(pd === sd ? '已經是最簡分數' : `同除以 ${gcd(pn, pd)} 化到最簡`,
       rx + rw / 2, 274);
 
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { txt: '=' },
       { frac: [sn, sd], color: positive ? OK_COLOR : NEG_COLOR }
     ], rx + rw / 2, 320, 30, INK, { maxW: rw });
@@ -975,7 +917,7 @@ function initRecipCanvas() {
     ctx.strokeStyle = color;
     ctx.lineWidth = 2;
     ctx.stroke();
-    drawExpr(ctx, [{ frac: [n, d] }], cx, cy, 27, color, { maxW: w - 16 });
+    drawTerms(ctx, [{ frac: [n, d] }], cx, cy, 27, color, { maxW: w - 16 });
     if (caption) {
       ctx.fillStyle = MUTED;
       ctx.font = f(600, 13);
@@ -1056,7 +998,7 @@ function initRecipCanvas() {
     ctx.font = f(600, 14);
     ctx.textAlign = 'center';
     ctx.fillText('互為倒數的兩數相乘', 450, 62);
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { frac: [a, b], color: COLOR_B },
       { txt: '×' },
       { frac: [b, a], color: COLOR_C },
@@ -1066,7 +1008,7 @@ function initRecipCanvas() {
 
     // 結果
     const alreadyLowest = Math.abs(rd) === sd;
-    drawExpr(ctx, [
+    drawTerms(ctx, [
       { frac: [p, q], color: COLOR_A },
       { txt: '÷' },
       { frac: [a, b], color: COLOR_B },

@@ -83,17 +83,8 @@ function initQuizSystem() {
 }
 
 /* ==========================================================================
-   2. Helper functions
+   2. 本節配色與數論工具（通用繪圖工具在 ../math-canvas.js）
    ========================================================================== */
-const FONT = '"Outfit", "Noto Sans TC", sans-serif';
-
-// 指數字距（投影下底數與指數不能黏在一起）
-const POW_KERN = 0.17;
-
-// 判定結果的配色：成立＝薄荷綠，不成立＝珊瑚紅
-const OK_COLOR = '#34d399';
-const NO_COLOR = '#fb7185';
-
 // 兩個主角的固定配色：甲＝天青、乙＝洋紅、丙＝香檳金
 const COLOR_A = '#67e8f9';
 const COLOR_B = '#f9a8d4';
@@ -102,42 +93,6 @@ const COLOR_C = '#fde047';
 const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
   53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
   127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199];
-
-function f(weight, size) {
-  return `${weight} ${size}px ${FONT}`;
-}
-
-function wrapFeedback(html) {
-  return `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">${html}</div>`;
-}
-
-function typeset(nodes) {
-  if (window.MathJax && MathJax.typesetPromise) {
-    MathJax.typesetPromise(nodes).catch(err => console.log(err));
-  }
-}
-
-// 圓角矩形（部分舊版瀏覽器沒有 ctx.roundRect）
-function roundRect(ctx, x, y, w, h, r) {
-  const rad = Math.min(r, w / 2, h / 2);
-  ctx.beginPath();
-  ctx.moveTo(x + rad, y);
-  ctx.lineTo(x + w - rad, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + rad);
-  ctx.lineTo(x + w, y + h - rad);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - rad, y + h);
-  ctx.lineTo(x + rad, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - rad);
-  ctx.lineTo(x, y + rad);
-  ctx.quadraticCurveTo(x, y, x + rad, y);
-  ctx.closePath();
-}
-
-function gcd(a, b) {
-  a = Math.abs(a); b = Math.abs(b);
-  while (b) { const t = a % b; a = b; b = t; }
-  return a;
-}
 
 function gcdAll(list) {
   return list.reduce((acc, v) => gcd(acc, v));

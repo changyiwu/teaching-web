@@ -85,30 +85,17 @@ function initQuizSystem() {
 }
 
 /* ==========================================================================
-   2. Helper functions
+   2. 本節專屬工具（通用繪圖工具在 ../math-canvas.js）
    ========================================================================== */
-function wrapFeedback(html) {
-  return `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">${html}</div>`;
-}
-
 // 負數要加括號（避免出現 4 x -2 這種相鄰運算子的寫法）；首項與結果不加括號
 function paren(n) {
   return n < 0 ? `(${n})` : `${n}`;
-}
-
-function typeset(nodes) {
-  if (window.MathJax && MathJax.typesetPromise) {
-    MathJax.typesetPromise(nodes).catch(err => console.log(err));
-  }
 }
 
 // 依正負回傳配色（正：琥珀金；負：天青藍）
 function signColor(n) {
   return n >= 0 ? '#fbbf24' : '#38bdf8';
 }
-
-// 底數與上標之間的字距（投影時黏在一起會看不清楚）
-const POW_KERN = 0.17;
 
 // 在 canvas 上畫「底數 + 上標指數」，回傳整體寬度
 // align: 'left' | 'center'
@@ -158,22 +145,6 @@ function buildDecimal(digits, exp10) {
     return digits.slice(0, digits.length - k) + '.' + digits.slice(digits.length - k);
   }
   return '0.' + '0'.repeat(k - digits.length) + digits;
-}
-
-// 圓角矩形路徑
-function roundRect(ctx, x, y, w, h, r) {
-  const rr = Math.min(r, w / 2, h / 2);
-  ctx.beginPath();
-  ctx.moveTo(x + rr, y);
-  ctx.lineTo(x + w - rr, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + rr);
-  ctx.lineTo(x + w, y + h - rr);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - rr, y + h);
-  ctx.lineTo(x + rr, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - rr);
-  ctx.lineTo(x, y + rr);
-  ctx.quadraticCurveTo(x, y, x + rr, y);
-  ctx.closePath();
 }
 
 /* ==========================================================================
