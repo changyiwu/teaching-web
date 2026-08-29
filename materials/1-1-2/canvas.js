@@ -644,8 +644,11 @@ function initDistanceCanvas() {
     const aStr = a; // first term does not need parentheses
     const bStr = b < 0 ? `(${b})` : `${b}`;
     
-    distanceFormulaDiv.innerHTML = `距離 \\( \\overline{AB} = |a - b| = | ${a} - ${bStr} | = | ${a-b} | = \\) <span style="color:#fbbf24; font-size:1.35rem; font-weight:700;">\\(${distance}\\)</span>`;
-    midpointFormulaDiv.innerHTML = `中點 \\( M = \\frac{a + b}{2} = \\frac{${a} + ${bStr}}{2} = \\) <span style="color:#10b981; font-size:1.35rem; font-weight:700;">\\(${midpoint}\\)</span>`;
+    // 每一個等號各自起一段 \( \)（`{}` 讓等號維持關係運算子的字距），中間用零寬的 <wbr> 接起來，
+    // 讓窄螢幕可以在等號前換行；整條包成一段時 mjx-container 不折行，414px 下會溢出上百 px。
+    // 接合用 <wbr> 而不是空白，寬螢幕的排版才跟原本逐像素相同
+    distanceFormulaDiv.innerHTML = `距離 \\( \\overline{AB} = |a - b| \\)<wbr>\\({}= | ${a} - ${bStr} | \\)<wbr>\\({}= | ${a-b} | \\)<wbr>\\({}= \\) <span style="color:#fbbf24; font-size:1.35rem; font-weight:700;">\\(${distance}\\)</span>`;
+    midpointFormulaDiv.innerHTML = `中點 \\( M = \\frac{a + b}{2} \\)<wbr>\\({}= \\frac{${a} + ${bStr}}{2} \\)<wbr>\\({}= \\) <span style="color:#10b981; font-size:1.35rem; font-weight:700;">\\(${midpoint}\\)</span>`;
     
     const minVal = Math.min(a, b);
     const minStr = minVal < 0 ? `(${minVal})` : minVal;

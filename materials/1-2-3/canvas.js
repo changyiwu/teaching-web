@@ -1190,7 +1190,10 @@ function initApplyCanvas() {
     ctx.fillText(`${a * b} + ${a * c} = ${a * (b + c)}`, canvas.width / 2, 328);
 
     vA.textContent = a; vB.textContent = b; vC.textContent = c;
-    formula.innerHTML = `\\( ${a} \\times ${b} + ${a} \\times ${c} = ${a} \\times ( ${b} + ${c} ) = ${a * (b + c)} \\)`;
+    // 每一個等號各自起一段 \( \)（`{}` 維持關係運算子的字距），中間用零寬的 <wbr> 接起來，
+    // 讓窄螢幕可以在等號前換行，而寬螢幕的排版跟原本逐像素相同
+    formula.innerHTML = `\\( ${a} \\times ${b} + ${a} \\times ${c} \\)<wbr>` +
+      `\\( {}= ${a} \\times ( ${b} + ${c} ) \\)<wbr>\\( {}= ${a * (b + c)} \\)`;
     feedback.innerHTML = wrapFeedback(
       `兩塊長方形的<strong>高都是 \\( ${a} \\)</strong>，所以可以直接把底邊接起來：` +
       `底變成 \\( ${b} + ${c} = ${b + c} \\)，面積 \\( = ${a} \\times ${b + c} = ${a * (b + c)} \\)。<br>` +
@@ -1259,7 +1262,8 @@ function initApplyCanvas() {
     ctx.fillText(`機身重 = ${W} - ${round2(full)} = ${round2(body)} 公斤`, canvas.width / 2, 328);
 
     vA.textContent = W; vB.textContent = t; vC.textContent = M;
-    formula.innerHTML = `\\( ${W} - ( ${used} \\div \\frac{${rn}}{${rd}} ) = ${round2(body)} \\) 公斤`;
+    formula.innerHTML = `\\( ${W} - ( ${used} \\div \\frac{${rn}}{${rd}} ) \\)<wbr>` +
+      `\\( {}= ${round2(body)} \\) 公斤`;
     feedback.innerHTML = wrapFeedback(
       `① 這次用掉的農藥：\\( ${W} - ${M} = ${used} \\) 公斤。<br>` +
       `② 它占滿載農藥的 \\( \\frac{${t}}{${T}} = \\frac{${rn}}{${rd}} \\)。<br>` +
@@ -1327,7 +1331,8 @@ function initApplyCanvas() {
 
     vA.textContent = W; vB.textContent = R;
     vC.textContent = `${rn}/${rd}`;
-    formula.innerHTML = `\\( ${W} - ( ${drunk} \\div \\frac{${rn}}{${rd}} ) = ${round2(bottle)} \\) 公克`;
+    formula.innerHTML = `\\( ${W} - ( ${drunk} \\div \\frac{${rn}}{${rd}} ) \\)<wbr>` +
+      `\\( {}= ${round2(bottle)} \\) 公克`;
     feedback.innerHTML = wrapFeedback(
       `① 喝掉的果汁：\\( ${W} - ${R} = ${drunk} \\) 公克。<br>` +
       `② 它占果汁原重的 \\( \\frac{${rn}}{${rd}} \\)。<br>` +
@@ -1385,7 +1390,8 @@ function initApplyCanvas() {
     ctx.fillText(`添購前 = ${round2(after)} - ${add} = ${round2(before)} 本`, canvas.width / 2, 312);
 
     vA.textContent = add; vB.textContent = n; vC.textContent = d;
-    formula.innerHTML = `\\( ( ${add} \\div \\frac{${rn}}{${rd}} ) - ${add} = ${round2(before)} \\) 本`;
+    formula.innerHTML = `\\( ( ${add} \\div \\frac{${rn}}{${rd}} ) - ${add} \\)<wbr>` +
+      `\\( {}= ${round2(before)} \\) 本`;
     feedback.innerHTML = wrapFeedback(
       `① 添購前占添購後的 \\( \\frac{${n}}{${d}} \\)，所以<strong>新書</strong>占添購後的 ` +
       `\\( 1 - \\frac{${n}}{${d}} = \\frac{${rn}}{${rd}} \\)。<br>` +

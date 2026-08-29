@@ -765,9 +765,13 @@ function initSciCanvas() {
     const aText = `${a}`;
     valPos.textContent = `${pos}`;
 
+    // 等號兩邊各自包一段 \( \)（`{}` 讓等號維持關係運算子的字距），用零寬的 <wbr> 接起來，
+    // 讓窄螢幕可以在等號前換行；整條包成一段時 mjx-container 不折行，
+    // 10 位數的原數配上長尾數在 414px 下會溢出近 100px
+    const eq = `\\(${num.label}\\)<wbr>\\({}= ${aText} \\times 10^{${n}}\\)`;
     formulaDiv.innerHTML = legal
-      ? `<span style="color:#f472b6">\\(${num.label} = ${aText} \\times 10^{${n}}\\)</span>`
-      : `<span style="color:#94a3b8">\\(${num.label} = ${aText} \\times 10^{${n}}\\)</span>`;
+      ? `<span style="color:#f472b6">${eq}</span>`
+      : `<span style="color:#94a3b8">${eq}</span>`;
     typeset([formulaDiv]);
 
     let note;

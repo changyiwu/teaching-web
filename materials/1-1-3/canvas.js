@@ -298,16 +298,19 @@ function initSignsCanvas() {
     const isNegative = negCount % 2 === 1;
     const pairCount = Math.floor(negCount / 2);
 
-    // 公式
+    // 公式：每個因數各自包一段 \( \)，用零寬的 <wbr> 接起來，讓窄螢幕可以在因數之間換行
+    // （整串包成一段時 mjx-container 是不折行的 inline-block，414px 下會溢出 92px；
+    //   接合用 <wbr> 而不是空白，寬螢幕的排版才跟原本逐像素相同）
     const terms = values.map((v, i) => {
       const n = negs[i] ? -v : v;
-      return i === 0 ? `${n}` : paren(n); // 首項不加括號
-    }).join(' \\times ');
+      // 首項不加括號；後面的因數把 \times 帶在自己前面，{} 讓它維持二元運算子的字距
+      return i === 0 ? `\\(${n}\\)` : `\\({}\\times ${paren(n)}\\)`;
+    }).join('<wbr>');
     const resultSign = isNegative ? '負數' : '正數';
     const color = isNegative ? '#60a5fa' : '#fda4af';
 
     formulaDiv.innerHTML =
-      `\\(${terms}\\) 的乘積是 ` +
+      `${terms} 的乘積是 ` +
       `<span style="color:${color}; font-size:1.35rem; text-shadow: 0 0 10px rgba(255,255,255,0.2)">${resultSign}</span>`;
     typeset([formulaDiv]);
 
@@ -732,8 +735,12 @@ function initDistributeCanvas() {
     const left = (a + b) * c;
     const right = a * c + b * c;
 
+    // 等號與加號各自起一段 \( \)，用零寬的 <wbr> 接起來，讓窄螢幕可以在運算子前換行
+    // （整串一段時 414px 下溢出 46px）
     formulaDiv.innerHTML =
-      `\\((${a} + ${b}) \\times ${c} = ${a} \\times ${c} + ${b} \\times ${c}\\) ` +
+      `\\((${a} + ${b}) \\times ${c}\\)<wbr>` +
+      `\\({}= ${a} \\times ${c}\\)<wbr>` +
+      `\\({}+ ${b} \\times ${c}\\) ` +
       `\\(\\Rightarrow\\) <span style="color:#f472b6; font-size:1.35rem; text-shadow: 0 0 10px rgba(255,255,255,0.2)">\\(${left}\\)</span>`;
     typeset([formulaDiv]);
 
