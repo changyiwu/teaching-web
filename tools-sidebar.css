@@ -176,6 +176,10 @@
 .tsb-card.wordcloud .tsb-card-title { color: #e9d5ff; }
 .tsb-card.wordcloud:hover { background: rgba(168, 85, 247, 0.08); }
 
+.tsb-card.exam .tsb-icon { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+.tsb-card.exam .tsb-card-title { color: #fed7aa; }
+.tsb-card.exam:hover { background: rgba(249, 115, 22, 0.08); }
+
 .tsb-card.home .tsb-icon { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
 .tsb-card.home .tsb-card-title { color: #ddd6fe; }
 .tsb-card.home:hover { background: rgba(139, 92, 246, 0.08); }

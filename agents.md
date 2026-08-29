@@ -166,6 +166,7 @@ teaching-web/
 - **天平盤內有立體物件時，生圖提示指定「檯面式上皿天平（Roberval balance）」**：避免模型畫吊鍊時與立體物件碰撞而產生歪斜、單鍊或力學不平衡的瑕疵
 - **四格後期物件數量減少時，提示需強調「維持原小尺寸、盤面留白、絕不放大」**：如第 4 格由 2 盒變 1 盒時，模型容易自動放大單一物件填滿畫面，須明確寫死 miniature 並保留周圍大面積留白
 - **生圖提示應簡化背景與微小機件，避免密集小齒輪或複雜鐘錶機構**：模型在微小尺度（如天平轉軸、背景遠景）繪製密集齒輪容易產生破圖與金屬熔接雜訊；指定實心立柱幾何與簡潔木質背景能讓畫面乾淨、焦點明確
+- **「考卷檢討」是獨立專案，不在本 repo**：`C:\Users\chang\我的雲端硬碟\agents\exam-review`（線上 <https://changyiwu.github.io/exam-review/>）。本站只在 `tools-sidebar.js` 留一張卡連過去。2026-08-30 拆出，因為它需要 GAS 後端做密碼驗證，與本站「無伺服器」的架構不同。**不要把它搬回來**，也不要在本 repo 放任何考卷資料夾的 ID
 - `wordcloud.html` **固定由全域 `word-cloud-page` 技能模板產生／同步**：`C:\Users\chang\.agents\skills\word-cloud-page\SKILL.md`
 - 文字雲固定使用 `CLOUD_ID = teaching_web`，資料位於 `clouds/teaching_web/words/`；同步新版模板時保留本專案的 `background.png` 背景客製化
 

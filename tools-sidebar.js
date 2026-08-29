@@ -35,6 +35,13 @@
       href: 'https://changyiwu.github.io/teaching-web/wordcloud.html',
       title: '課堂即時文字雲',
       desc: '老師，我想對您說。'
+    },
+    {
+      cls: 'exam',
+      icon: 'fa-file-powerpoint',
+      href: 'https://changyiwu.github.io/exam-review/',
+      title: '考卷檢討',
+      desc: '段考試卷檢討簡報，需解鎖後檢視。'
     }
   ];
 
