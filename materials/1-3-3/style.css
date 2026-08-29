@@ -57,6 +57,9 @@ body {
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
+  /* 沒有指定 height 時，橫向捲軸會用系統預設厚度（約 15px），
+     在互動卡裡看起來像一條色條，比它要捲的內容還顯眼 */
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: rgba(15, 23, 42, 0.8);
@@ -432,12 +435,19 @@ canvas {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* 公式是 MathJax 產生的 inline-block，不能斷行；欄位變窄時先讓整組換行，
+     真的還是放不下才由 overflow-x 接手，而不是把整張互動卡片撐破 */
+  flex-wrap: wrap;
+  row-gap: 6px;
   margin-bottom: 1rem;
   font-size: 1.05rem;
   font-weight: 600;
-  /* 公式是 MathJax 產生的 inline-block，不能斷行；欄位變窄時讓它自己捲，
-     而不是把整張互動卡片撐破 */
   overflow-x: auto;
+  /* overflow-x 一旦不是 visible，overflow-y 會自動變成 auto；MathJax 的
+     inline-block 只要多出 1px 就會冒出一條直向捲軸（畫面上是一根短色條）。
+     這裡明確關掉直向捲動，並補 padding 讓那 1px 有地方放 */
+  overflow-y: hidden;
+  padding-block: 2px;
 }
 
 .slider-wrapper {
