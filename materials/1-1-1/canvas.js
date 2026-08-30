@@ -409,20 +409,29 @@ function initConcept2Canvas() {
   }
 
   function updateTexts() {
-    const valString = valA.toFixed(1);
-    
+    const wrap = (html) => `<div style="width: 100%; text-align: center; line-height: 1.6;">${html}</div>`;
+
     if (gridMode === 'int') {
-      coordA.innerHTML = `\\(A(${Math.round(valA)})\\)`;
-      feedback.innerHTML = `<div style="width: 100%; text-align: center; line-height: 1.6;">點 \\(A\\) 位於原點右邊的整數 \\(${Math.round(valA)}\\) 處，代表 \\(A\\) 的坐標為 \\(${Math.round(valA)}\\)。</div>`;
+      const intVal = Math.round(valA);
+      coordA.innerHTML = `\\(A(${intVal})\\)`;
+      if (intVal === 0) {
+        feedback.innerHTML = wrap(`點 \\(A\\) 就落在原點 \\(O\\) 上，代表 \\(A\\) 的坐標為 \\(0\\)。`);
+      } else {
+        const side = intVal > 0 ? '右' : '左';
+        feedback.innerHTML = wrap(`點 \\(A\\) 位於原點${side}邊 \\(${Math.abs(intVal)}\\) 個單位長處，代表 \\(A\\) 的坐標為 \\(${intVal}\\)。`);
+      }
     } else {
       const fracRepresentation = getMixedFraction(valA);
       coordA.innerHTML = `\\(A(${fracRepresentation})\\)`;
-      
-      const posString = valA >= 0 
-        ? `右邊 \\(${fracRepresentation}\\) (即 \\(${valString}\\))`
-        : `左邊 \\(${Math.abs(valA).toFixed(1)}\\) (即 \\(${fracRepresentation}\\))`;
-        
-      feedback.innerHTML = `<div style="width: 100%; text-align: center; line-height: 1.6;">點 \\(A\\) 位於原點的${posString} 處，代表小數/分數的坐標標記。</div>`;
+
+      if (Math.abs(valA) < 0.01) {
+        feedback.innerHTML = wrap(`點 \\(A\\) 就落在原點 \\(O\\) 上，代表 \\(A\\) 的坐標為 \\(0\\)。`);
+      } else {
+        const side = valA > 0 ? '右' : '左';
+        const absFrac = getMixedFraction(Math.abs(valA));
+        const absDecimal = Math.abs(valA).toFixed(1);
+        feedback.innerHTML = wrap(`點 \\(A\\) 位於原點${side}邊 \\(${absFrac}\\) (即 \\(${absDecimal}\\)) 個單位長處，代表小數/分數的坐標標記。`);
+      }
     }
 
     if (window.MathJax) {
