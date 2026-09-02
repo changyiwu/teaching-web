@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="國中數學教學整合網">
+  <defs>
+    <clipPath id="tile"><rect width="256" height="256" rx="52"/></clipPath>
+    <radialGradient id="bg" cx="50%" cy="33%" r="84%">
+      <stop offset="0" stop-color="#4a2fc0"/>
+      <stop offset=".5" stop-color="#1d1076"/>
+      <stop offset="1" stop-color="#080630"/>
+    </radialGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity=".8"/>
+      <stop offset=".45" stop-color="#38bdf8" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="soft">
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="node" cx="33%" cy="25%" r="88%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".28" stop-color="#67e8f9"/>
+      <stop offset=".72" stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#075985"/>
+    </radialGradient>
+    <linearGradient id="arc" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#93b4ff"/>
+      <stop offset=".5" stop-color="#f0f4ff"/>
+      <stop offset="1" stop-color="#93b4ff"/>
+    </linearGradient>
+    <linearGradient id="coverOut" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="coverIn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c4b5fd"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffaec"/>
+      <stop offset=".5" stop-color="#fde2a8"/>
+      <stop offset="1" stop-color="#eeae5c"/>
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#tile)">
+    <rect width="256" height="256" fill="url(#bg)"/>
+    <ellipse cx="128" cy="104" rx="132" ry="112" fill="url(#soft)"/>
+
+    <!-- 連結弧線 -->
+    <path d="M63 101A67 67 0 0 1 193 101" fill="none" stroke="#38bdf8" stroke-width="22" stroke-linecap="round" opacity=".3"/>
+    <path d="M63 101A67 67 0 0 1 193 101" fill="none" stroke="url(#arc)" stroke-width="8.5" stroke-linecap="round"/>
+
+    <!-- 知識流線：由書脊湧向兩側節點 -->
+    <g fill="none" stroke="#cfe4ff" stroke-linecap="round">
+      <path d="M126 182C114 158 96 132 70 110" stroke-width="5" opacity=".5"/>
+      <path d="M130 182C142 158 160 132 186 110" stroke-width="5" opacity=".5"/>
+      <path d="M127 184C122 158 116 132 108 108" stroke-width="3.4" opacity=".3"/>
+      <path d="M129 184C134 158 140 132 148 108" stroke-width="3.4" opacity=".3"/>
+    </g>
+
+    <!-- 中央星芒 -->
+    <ellipse cx="128" cy="112" rx="38" ry="44" fill="url(#glow)" opacity=".65"/>
+    <path d="M128 74C130 100 135 106 152 110C135 114 130 120 128 150C126 120 121 114 104 110C121 106 126 100 128 74Z" fill="#f4fbff"/>
+
+    <!-- 節點 -->
+    <circle cx="128" cy="51" r="36" fill="url(#glow)"/>
+    <circle cx="63" cy="101" r="36" fill="url(#glow)"/>
+    <circle cx="193" cy="101" r="36" fill="url(#glow)"/>
+    <circle cx="128" cy="51" r="18.5" fill="url(#node)"/>
+    <circle cx="63" cy="101" r="18.5" fill="url(#node)"/>
+    <circle cx="193" cy="101" r="18.5" fill="url(#node)"/>
+    <g fill="#ffffff" opacity=".85">
+      <ellipse cx="122" cy="44.5" rx="5.2" ry="3.4"/>
+      <ellipse cx="57" cy="94.5" rx="5.2" ry="3.4"/>
+      <ellipse cx="187" cy="94.5" rx="5.2" ry="3.4"/>
+    </g>
+
+    <!-- 書本：外層書衣 -->
+    <path d="M36 152L128 170L220 152L220 200L128 224L36 200Z" fill="url(#coverOut)" stroke="url(#coverOut)" stroke-width="14" stroke-linejoin="round"/>
+    <!-- 書本：內層書衣 -->
+    <path d="M50 155L128 171L206 155L206 193L128 215L50 193Z" fill="url(#coverIn)" stroke="url(#coverIn)" stroke-width="9" stroke-linejoin="round"/>
+    <!-- 書頁底部厚度 -->
+    <path d="M128 210C104 200 76 192 56 191C52 191 50 188 50 185L50 191C50 195 52 198 56 199C76 200 104 208 128 217Z" fill="#dfae70"/>
+    <path d="M128 210C152 200 180 192 200 191C204 191 206 188 206 185L206 191C206 195 204 198 200 199C180 200 152 208 128 217Z" fill="#dfae70"/>
+    <!-- 書頁 -->
+    <path d="M126 166C104 151 76 140 55 141C51 141 49 144 49 148L49 187C49 191 51 194 55 195C76 196 104 203 126 213Z" fill="url(#page)"/>
+    <path d="M130 166C152 151 180 140 201 141C205 141 207 144 207 148L207 187C207 191 205 194 201 195C180 196 152 203 130 213Z" fill="url(#page)"/>
+    <!-- 頁面翻痕 -->
+    <g fill="none" stroke="#dda45f" stroke-width="2.8" stroke-linecap="round" opacity=".5">
+      <path d="M118 176C100 167 78 161 59 160"/>
+      <path d="M138 176C156 167 178 161 197 160"/>
+      <path d="M116 191C99 183 78 178 59 177" opacity=".7"/>
+      <path d="M140 191C157 183 178 178 197 177" opacity=".7"/>
+    </g>
+    <!-- 書脊 -->
+    <path d="M128 167L128 214" stroke="#5b21b6" stroke-width="5.5" stroke-linecap="round"/>
+  </g>
+</svg>

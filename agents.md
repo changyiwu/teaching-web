@@ -25,6 +25,7 @@
 - [x] 階段十：教材頁算式繪圖引擎抽成 `materials/math-canvas.js`；已完成的 9 個教材頁全部接上（`1-1-3`、`1-1-4`、`1-2-1`～`1-2-4`、`1-3-1`～`1-3-3`）。`1-1-1`、`1-1-2` 沒有用到任何共用工具，維持不載入
 - [x] 階段九：投影可讀性與窄螢幕版面修正——MathJax 上下標與數字字距（`1-1-4`）、CSS Grid／flex 溢出裁切（`1-1-1`～`1-1-4` 與首頁）；規則已收進〈開發約束〉9～11
 - [x] 階段十一：`.value-display` 假捲軸修正——11 個已完成教材頁的互動卡數值列不再冒出多餘捲軸；規則已收進〈開發約束〉23
+- [x] 階段十三：全站 logo 與 favicon 改用手寫 SVG——本站 `header-logo.svg`、`wordcloud.html` 內嵌 SVG，以及側邊欄三個外部專案（`exam-review`、`class-tools-2`、`class-score`）各自的標誌；規則已收進〈開發約束〉25
 - [x] 階段十二：`.value-display` 在 414px 下的 5 處 MathJax 算式真溢出全部消除（`1-1-2`、`1-1-3`、`1-1-4`、`1-2-3` 四頁的 `canvas.js`）；作法是把長算式拆成多段 `\( \)` 並以 `<wbr>` 接合，規則已收進〈開發約束〉24
 
 > 目前課程進度：58 節中 `1-1-1`、`1-1-2`、`1-1-3`、`1-1-4`、`1-2-1`、`1-2-2`、`1-2-3`、`1-2-4`、`1-3-1`、`1-3-2`、`1-3-3` 完成（第一冊全冊完成），其餘 47 節為佔位頁。
@@ -44,6 +45,7 @@ teaching-web/
 │  ├─ math-canvas.js       # 教材頁共用的 Canvas 算式繪圖引擎（新頁一律載入，不要再複製）
 │  └─ pending.css          # 56 個「待施工」佔位頁共用樣式
 ├─ background.png
+├─ header-logo.svg         # 站台標誌與分頁圖標（手寫向量；見〈開發約束〉25）
 ├─ tools/                  # 驗收用小工具（不是網站的一部分）
 │  ├─ nostore.py           # 送 Cache-Control: no-store 的靜態伺服器（預設埠 8765）
 │  └─ shots.py             # 收 canvas toDataURL 存成 PNG（預設埠 8766，輸出 tools/_shots/）
@@ -84,6 +86,7 @@ teaching-web/
 - 收工前檢查程式碼是否含 API key、網址 Token、學生姓名等敏感資料
 - 只 stage 本次任務相關檔案，**不使用無差別的 `git add .`**；僅在使用者明確授權時 commit 與 push
 - 本機預覽窗格（Browser pane）會供快取的舊版 CSS/JS，改完在那裡看不到效果是正常的；**`navigate` 帶 `force` 與加 query 參數都擋不住**，驗收一律用 **`python tools/nostore.py`**（會送 `Cache-Control: no-store`），不要用 `python -m http.server` 的預設行為
+- **`tools/nostore.py` 的服務根目錄寫死成 teaching-web**（`ROOT` 由腳本位置回推），`cd` 到別的資料夾再啟動它是沒有用的——它會照樣服務本站，於是「檔案明明在、卻回 404」，而且本站剛好也有 `index.html`，看起來像伺服器正常、只有資產壞掉。要預覽別的專案一律用 `python -m http.server <port> --directory <path>`
 - Browser pane 沒有顯示在畫面上時 `screenshot` 會逾時（頁面不合成畫格）；要看 canvas 就起 **`python tools/shots.py`**，用 `toDataURL()` 把畫面 POST 過去存成 PNG 再讀檔，不必等使用者打開窗格
 - **收回來的 canvas PNG 是透明底，判讀外觀前一定要先用卡片底色 `alpha_composite` 疊過**；直接 `convert('RGB')` 會把半透明填色變成全彩（`rgba(52,211,153,0.18)` 變成亮綠），文字跟底色同色就整片消失，看起來像 bug 其實是截圖流程的錯
 - 教材頁的本機驗收一定要走 HTTP（`python tools/nostore.py`）；直接開 `file://` 在預覽窗格只會拿到靜態快照，`canvas.js` 不會執行、互動全部驗不到
@@ -140,6 +143,7 @@ teaching-web/
 22. **互動探索要能單獨讀懂**：問題型的互動必須在畫面上寫明**求什麼**，用到未知數 \(x\) 之前一定要有「設⋯⋯為 \(x\)」那一步。不可以因為左欄的重點整理已經講過就在 canvas 上省略——課堂投影時學生看的是右邊那張圖
 23. **`.value-display` 這類數值列不要只寫 `overflow-x: auto` 就收工**：依 CSS 規範 `overflow-x` 一旦不是 `visible`，`overflow-y` 會自動變成 `auto`，MathJax 的 inline-block 只要比容器高 1px 就冒出一根直向捲軸；它吃掉的 8px 又把同列內容擠到放不下，再引出一條橫向捲軸。而 `::-webkit-scrollbar` 若只設 `width` 沒設 `height`，橫向捲軸會用系統預設約 15px，在互動卡上看起來像一條紫色長條——比它要捲的內容還顯眼。四件事要一起做：`::-webkit-scrollbar` 補 `height: 8px`、容器加 `flex-wrap: wrap` 讓它先換行、明確 `overflow-y: hidden`、補 `padding-block: 2px` 讓那 1px 有地方放。**不可以改用 `scrollbar-width: none` 把捲軸藏掉了事**——手機寬度下有幾處是真的溢出，藏掉捲軸等於把「這裡還有東西沒顯示」的線索一起藏掉，是遮不是修
 24. **互動卡數值列（`.value-display`）的長算式要拆成多段 `\( \)`，用 `<wbr>` 接合**：`mjx-container` 是不折行的 inline-block，一整條 `A = B = C` 包成一段時，窄螢幕下整塊都放不下（實測 414px 溢出 42～104px）。作法是**在每個關係／運算子前斷開**，後段以 `{}` 開頭維持該運算子的字距——`\(A\)<wbr>\({}= B\)<wbr>\({}= C\)`；連乘則是 `\(-3\)<wbr>\({}\times (-5)\)…`。接合一定要用零寬的 `<wbr>` 而不是空白：空白會多塞一個字距，`<wbr>` 則讓寬螢幕的排版與原本**逐像素相同**（`1-1-2`／`1-1-3`／`1-1-4`／`1-2-3` 四頁 A/B 實測差 0.00px），只有真的放不下時才斷行。這是開發約束 16 在互動卡裡的具體作法：那裡的欄位比解析卡窄得多（1280px 下只有 356px、414px 下只有 215px），改成顯示型 `\[ \]` 並不適用
+25. **Logo 與 favicon 一律手寫 SVG，不要用生圖技能產生**：logo 要在 16px（分頁圖標）到 64px（頁首）之間都清楚，還要精確吃住本站的 HSL 色票。生成式模型給的是點陣圖：縮到 16px 糊成一團、色彩只能「接近」、透明底要另外去背，改一個色或挪 2px 只能整張重生（見〈跨專案依賴〉那條「不要用遮罩改圖」），而且每次 `_raw` 都計費。手寫 SVG 是向量、色票逐字精確、可吃 CSS 變數跟著深色主題走、`git diff` 讀得懂，體積通常只有點陣圖的 5%～25%（實測 11.7 KB → 5.0 KB、96.2 KB → 3.6 KB）。**發光效果用 `radialGradient` 疊在底下做，不要靠 `feGaussianBlur` 濾鏡**——favicon 的渲染路徑對濾鏡支援不一，而徑向漸層到哪都畫得出來。重畫前先把原圖疊卡片底色看過，改完要在 16/32/64/180px 四檔做 A/B，因為 16px 下好不好讀跟 180px 完全是兩回事。**單檔部署的互動頁**（`wordcloud.html`）把 SVG 直接內嵌，favicon 用 `data:image/svg+xml,` 百分比編碼（比 base64 PNG 小很多），並把 SVG 內部的 `id` 加頁面前綴（例：`wc-`），否則會跟頁面既有的 `id` 相撞。生圖技能留給教材插圖、四格漫畫、簡報底圖這類大尺寸、有機紋理、不要求精確幾何的用途。早期 Safari 對 SVG favicon 支援不完整，課堂用 Chrome／Edge 不受影響；真要保險再補 `rel="mask-icon"`
 
 ## 跨專案依賴
 
