@@ -811,7 +811,9 @@ function initFactorizeCanvas() {
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#a7f3d0';
     ctx.font = f(700, 15);
-    ctx.fillText('用短除法一路除以最小的質數，直到商是質數為止', canvas.width / 2, 20);
+    ctx.fillText(steps.length === 1
+      ? `${n} 本身就是質數，短除法一層也除不下去`
+      : '用短除法一路除以最小的質數，直到商是質數為止', canvas.width / 2, 20);
 
     // --- 短除法梯形 ---
     // 課本的短除法「除到商是質數為止」，所以最後一次除法不畫出來，
@@ -937,9 +939,13 @@ function initFactorizeCanvas() {
     const uniq = [...new Set(chain)];
     nVal.textContent = n;
     formula.innerHTML = `\\( ${n} = ${grouped.map(g => (g.e > 1 ? `${g.p}^{${g.e}}` : `${g.p}`)).join(' \\times ')} \\)`;
+    // n 本身是質數時短除法一次也除不下去，左邊沒有除數可乘（開發約束 27）
     feedback.innerHTML = wrapFeedback(
-      `\\( ${n} \\) 的質因數為 <strong>${uniq.join('、')}</strong>；` +
-        `短除法一路除到商是質數為止，左邊的除數與最後的商相乘就是 \\( ${n} \\)。`
+      (steps.length === 1)
+        ? `\\( ${n} \\) <strong>本身就是質數</strong>，除了 \\( 1 \\) 和它自己以外沒有別的因數，` +
+            `短除法<strong>一層也除不下去</strong>；這種數的標準分解式就是它自己，\\( ${n} = ${n} \\)。`
+        : `\\( ${n} \\) 的質因數為 <strong>${uniq.join('、')}</strong>；` +
+            `短除法一路除到商是質數為止，左邊的除數與最後的商相乘就是 \\( ${n} \\)。`
     );
     typeset([formula, feedback]);
   }

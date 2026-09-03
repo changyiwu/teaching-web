@@ -567,6 +567,11 @@ function initSubCanvas() {
   const formulaEl = document.getElementById('sb-formula');
   const feedbackEl = document.getElementById('sb-feedback');
 
+  // 括號只在 x 為負時才加——那正是本卡要教的理由（運算符號與性質符號不能相鄰）。
+  // 一律加括號會讓畫面在 x 為正時與下方「不必加括號」的提示自相矛盾（開發約束 27）
+  const xBox = (x) => (x < 0 ? GRP([T(numStr(x))], '()', C_SKY) : T(numStr(x), C_SKY));
+  const xTex = (x) => (x < 0 ? `(${numStr(x)})` : `${numStr(x)}`);
+
   // 滑桿走半格，讓 x 可以是 −6 到 6 的 0.5 倍數
   const CASES = [
     {
@@ -576,8 +581,8 @@ function initSubCanvas() {
       calc: (x) => {
         const v = -4 * x;
         return {
-          sub: [T('-4'), T('×', MUTED), GRP([T(numStr(x))], '()', C_SKY)],
-          subTex: `(-4) \\times (${numStr(x)})`,
+          sub: [T('-4'), T('×', MUTED), xBox(x)],
+          subTex: `(-4) \\times ${xTex(x)}`,
           mid: null,
           val: numStr(v),
           valTex: numStr(v)
@@ -591,8 +596,8 @@ function initSubCanvas() {
         const p = 2 * x;
         const v = p - 7;
         return {
-          sub: [T('2'), T('×', MUTED), GRP([T(numStr(x))], '()', C_SKY), T('-', MUTED), T('7')],
-          subTex: `2 \\times (${numStr(x)}) - 7`,
+          sub: [T('2'), T('×', MUTED), xBox(x), T('-', MUTED), T('7')],
+          subTex: `2 \\times ${xTex(x)} - 7`,
           mid: [T(numStr(p)), T('-', MUTED), T('7')],
           midTex: `${numStr(p)} - 7`,
           val: numStr(v),
@@ -617,8 +622,8 @@ function initSubCanvas() {
         const pItem = (pn < 0) ? GRP([SEQ([T('-'), pAbs], null, 2)], '()') : pAbs;
         const vItem = (vd === 1) ? T(String(vn)) : (vn < 0 ? SEQ([T('-'), FR(-vn, vd)], null, 2) : FR(vn, vd));
         return {
-          sub: [T('15'), T('-', MUTED), FR(2, 3), T('×', MUTED), GRP([T(numStr(x))], '()', C_SKY)],
-          subTex: `15 - \\frac{2}{3} \\times (${numStr(x)})`,
+          sub: [T('15'), T('-', MUTED), FR(2, 3), T('×', MUTED), xBox(x)],
+          subTex: `15 - \\frac{2}{3} \\times ${xTex(x)}`,
           mid: [T('15'), T('-', MUTED), pItem],
           midTex: (pn < 0) ? `15 - \\left(${texFrac(pn, pd)}\\right)` : `15 - ${texFrac(pn, pd)}`,
           val: null,

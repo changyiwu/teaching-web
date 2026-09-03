@@ -1207,13 +1207,16 @@ function initApplyCanvas() {
     const T = 50; // 滿載可噴灑的總時間（分）
     const W = parseInt(sA.value, 10);
     const t = parseInt(sB.value, 10);
-    let M = parseInt(sC.value, 10);
-    M = clamp(M, 1, W - 1);
+    // 機身至少 1 公斤，所以滿載農藥 (W - M) * T / t 不能超過 W - 1，
+    // 換算成「目前總重」的下界。夾的是輸入不是算出來的結果——
+    // 夾結果會讓畫面照樣印出 20 ÷ 1/10 = 20 × 10/1 = 30 這種假等式（開發約束 27）
+    const mMin = Math.max(+sC.min, Math.ceil(W - (W - 1) * t / T));
+    const M = clamp(parseInt(sC.value, 10), mMin, W - 1);
+    if (+sC.value !== M) sC.value = M;
 
     const used = W - M;                  // 這次用掉的農藥
     const [rn, rd] = reduce(t, T);       // 用掉的比例
-    let full = used * T / t;             // 滿載的農藥重
-    full = Math.min(full, W);            // 農藥不可能比滿載總重還重
+    const full = used * T / t;           // 滿載的農藥重
     const body = W - full;               // 機身重
 
     ctx.fillStyle = '#a7f3d0';
@@ -1275,13 +1278,15 @@ function initApplyCanvas() {
 
   function drawBottle() {
     const W = parseInt(sA.value, 10);
-    let R = parseInt(sB.value, 10);
-    R = clamp(R, 50, W - 10);
     const [rn, rd] = RATES[parseInt(sC.value, 10)];
+    // 空瓶至少 1 公克，所以果汁原重 (W - R) * rd / rn 不能超過 W - 1，
+    // 換算成「剩下連瓶重」的下界（同 drawDrone：夾輸入，不夾結果）
+    const rMin = Math.max(+sB.min, Math.ceil(W - (W - 1) * rn / rd));
+    const R = clamp(parseInt(sB.value, 10), rMin, W - 10);
+    if (+sB.value !== R) sB.value = R;
 
     const drunk = W - R;               // 喝掉的果汁重
-    let juice = drunk * rd / rn;       // 果汁原重
-    juice = Math.min(juice, W - 1);
+    const juice = drunk * rd / rn;     // 果汁原重
     const bottle = W - juice;          // 空瓶重
 
     ctx.fillStyle = '#a7f3d0';
