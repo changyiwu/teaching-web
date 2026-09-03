@@ -885,7 +885,7 @@ function initTowerCanvas() {
 
     valA.textContent = a;
     valB.textContent = b;
-    formula.innerHTML = `\\( ( ${a} , ${b} ) = ${stdLatex(gcdList)} = ${g} \\)`;
+    formula.innerHTML = wbrEq(`( ${a} , ${b} ) = ${stdLatex(gcdList)} = ${g}`);
     feedback.innerHTML = wrapFeedback(
       `\\( ${a} = ${stdLatex(fa)} \\)、\\( ${b} = ${stdLatex(fb)} \\)。<br>` +
       `<strong>共同</strong>的質因數取<strong>次方小的</strong>相乘 \\( \\Rightarrow ( ${a} , ${b} ) = ${g} \\)；` +

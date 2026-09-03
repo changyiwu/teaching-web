@@ -335,7 +335,8 @@ function initTrendCanvas() {
     // 面板
     const [fn, fd] = reduce(ai, 100);
     const fracTex = fd === 1 ? String(fn) : `\\frac{${fn}}{${fd}}`;
-    formula.innerHTML = `\\( a = ${a.toFixed(2)} = ${fracTex} \\)，\\( a^{${N}} = ${fmt(Math.pow(a, N))} \\)`;
+    formula.innerHTML = wbrEq(`a = ${a.toFixed(2)} = ${fracTex}`) + '，<wbr>' +
+      wbrEq(`a^{${N}} = ${fmt(Math.pow(a, N))}`);
 
     let msg;
     if (same0) {
@@ -741,8 +742,8 @@ function initExpandCanvas() {
 
     // 面板
     formula.innerHTML = isMul
-      ? `\\( ${aStr}^{${m}} \\times ${aStr}^{${n}} = ${aStr}^{${m}+${n}} = ${aStr}^{${m + n}} \\)`
-      : `\\( ${aStr}^{${m}} \\div ${aStr}^{${n}} = ${aStr}^{${m}-${n}} = ${aStr}^{${m - n}} \\)`;
+      ? wbrEq(`${aStr}^{${m}} \\times ${aStr}^{${n}} = ${aStr}^{${m}+${n}} = ${aStr}^{${m + n}}`)
+      : wbrEq(`${aStr}^{${m}} \\div ${aStr}^{${n}} = ${aStr}^{${m}-${n}} = ${aStr}^{${m - n}}`);
 
     let msg;
     if (isMul) {

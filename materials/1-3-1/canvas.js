@@ -351,7 +351,7 @@ function initShorthandCanvas() {
     nextBtn.disabled = (si === cs.steps.length - 1);
     draw();
 
-    formulaEl.innerHTML = `\\( ${cs.steps[si].tex} \\)`;
+    formulaEl.innerHTML = wbrEq(cs.steps[si].tex);
     const last = cs.steps[cs.steps.length - 1];
     feedbackEl.innerHTML = wrapFeedback(
       `${cs.steps[si].note}<br>` +
@@ -936,8 +936,8 @@ function initSortCanvas() {
     const resTex = `${coefTex(xSum)}x${cSum === 0 ? '' : (cSum > 0 ? ' + ' + cSum : ' - ' + (-cSum))}`;
 
     formulaEl.innerHTML = allPlaced
-      ? `\\( ${cs.tex} = ${resTex} \\)`
-      : `\\( ${cs.tex} \\)`;
+      ? wbrEq(`${cs.tex} = ${resTex}`)
+      : wbrEq(cs.tex);
 
     if (wrongBin) {
       const term = CASES[ci].terms[selected];
@@ -1092,7 +1092,7 @@ function initSimplifyCanvas(opts) {
     nextBtn.disabled = (si === cs.steps.length - 1);
     draw();
 
-    formulaEl.innerHTML = `\\( ${cs.steps[si].tex} \\)`;
+    formulaEl.innerHTML = wbrEq(cs.steps[si].tex);
     const last = cs.steps[cs.steps.length - 1];
     feedbackEl.innerHTML = wrapFeedback(
       `${cs.steps[si].note}<br>` +

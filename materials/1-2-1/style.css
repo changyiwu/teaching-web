@@ -442,7 +442,11 @@ canvas {
      inline-block 只要多出 1px 就會冒出一條直向捲軸（畫面上是一根短色條）。
      這裡明確關掉直向捲動，並補 padding 讓那 1px 有地方放 */
   overflow-y: hidden;
+  /* 橫向同理：mjx-c 的字符盒有幾 px 的墨跡外溢（實測 offsetWidth 9 /
+     scrollWidth 12），被算進 scrollWidth 就冒出一條捲不出東西的假捲軸。
+     補一點左右 padding 讓它有地方放；真的放不下的算式則照常換行。 */
   padding-block: 2px;
+  padding-inline: 2px;
 }
 
 .slider-wrapper {
@@ -1092,4 +1096,12 @@ mjx-mn > mjx-c + mjx-c {
 
 .table-scroll .sign-table {
   margin-top: 0;
+}
+
+/* MathJax 的無障礙 MathML 是 position:absolute 且被 clip 成 1px，畫面上看不見，
+   但它的 width:auto 仍會撐大 .value-display 的捲動範圍，冒出一條沒有東西可捲的
+   假捲軸。夾成 1px 即可，clip 本來就只留 1px，螢幕閱讀器讀的是內容而不是
+   這個盒子的尺寸。（開發約束 23 的同一類毛病，成因在 MathJax 而不在版面。） */
+.value-display mjx-assistive-mml {
+  width: 1px !important;
 }

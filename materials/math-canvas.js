@@ -466,3 +466,30 @@ function drawEqPanel(ctx, items, cy, color, opts) {
 function eqLine(leftItems, rightItems, color) {
   return leftItems.concat([T('=', color)], rightItems);
 }
+
+// 把一整條算式在每個「頂層等號」前斷開，接成多段 \( \)，中間用零寬的 <wbr>
+// （agents.md 開發約束 24）。mjx-container 是不折行的 inline-block，整條包成
+// 一段時窄螢幕會直接溢出互動卡；斷成多段之後才換得了行。
+//   - 後段以 {} 開頭，等號才維持關係運算子的字距
+//   - 接合用 <wbr> 而不是空白，寬螢幕的排版與整條包成一段時逐像素相同
+//   - 只在大括號深度 0 的等號斷開，a^{m-n}、\frac{}{} 裡面的不算
+//   - 反斜線後面那個字元直接跳過，\{ \} 才不會被算成括號層次
+function wbrEq(tex) {
+  const parts = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < tex.length; i++) {
+    const ch = tex[i];
+    if (ch === '\\') { i++; continue; }
+    if (ch === '{') depth++;
+    else if (ch === '}') depth--;
+    else if (ch === '=' && depth === 0 && i > start) {
+      parts.push(tex.slice(start, i));
+      start = i;
+    }
+  }
+  parts.push(tex.slice(start));
+  return parts
+    .map((p, i) => `\\( ${i === 0 ? '' : '{}'}${p.trim()} \\)`)
+    .join('<wbr>');
+}
