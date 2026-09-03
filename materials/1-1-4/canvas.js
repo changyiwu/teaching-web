@@ -603,15 +603,19 @@ function initTenCanvas() {
 
     valN.textContent = `${n}`;
 
-    let latex;
+    // 每個等號各自起一段 \( \)（`{}` 讓等號維持關係運算子的字距），用零寬的 <wbr>
+    // 接起來，讓窄螢幕可以在等號前換行；整條包成一段時 mjx-container 不折行，
+    // n = -6 的 10^{-6} = 1/10^6 = 0.000001 在 414px 下會溢出 8px
+    let parts;
     if (n > 0) {
-      latex = `10^{${n}} = ${decimal}`;
+      parts = [`10^{${n}}`, `{}= ${decimal}`];
     } else if (n === 0) {
-      latex = `10^{0} = 1`;
+      parts = [`10^{0}`, `{}= 1`];
     } else {
-      latex = `10^{${n}} = \\frac{1}{10^{${-n}}} = ${decimal}`;
+      parts = [`10^{${n}}`, `{}= \\frac{1}{10^{${-n}}}`, `{}= ${decimal}`];
     }
-    formulaDiv.innerHTML = `<span style="color:#fde047">\\(${latex}\\)</span>`;
+    const latex = parts.map(p => `\\(${p}\\)`).join('<wbr>');
+    formulaDiv.innerHTML = `<span style="color:#fde047">${latex}</span>`;
     typeset([formulaDiv]);
 
     let note;

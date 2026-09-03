@@ -201,11 +201,23 @@
             <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
             <ul class="bullet-list">
               <li><strong>乘法交換律</strong>：若 \(a\)、\(b\) 為整數，則 \(a \times b = b \times a\)。含負整數時同樣成立，例如 \(7 \times (-2) = (-2) \times 7\)。</li>
-              <li><strong>乘法結合律</strong>：若 \(a\)、\(b\)、\(c\) 為整數，則 \(a \times b \times c = (a \times b) \times c = a \times (b \times c)\)。</li>
+              <li><strong>乘法結合律</strong>：若 \(a\)、\(b\)、\(c\) 為整數，則
+                \[ \begin{aligned}
+                & a \times b \times c \\
+                &= (a \times b) \times c \\
+                &= a \times (b \times c)
+                \end{aligned} \]
+              </li>
               <li><strong>湊整數技巧</strong>：善用交換律與結合律調整相乘順序，先湊出整十、整百、整千再乘，計算最快：
                 <ul>
                   <li>\(5 \times 2 = 10\)、\(25 \times 4 = 100\)、\(125 \times 8 = 1000\)</li>
-                  <li>例：\((-231) \times (-125) \times 8 = (-231) \times (-1000) = 231000\)</li>
+                  <li>例：
+                    \[ \begin{aligned}
+                    & (-231) \times (-125) \times 8 \\
+                    &= (-231) \times (-1000) \\
+                    &= 231000
+                    \end{aligned} \]
+                  </li>
                 </ul>
               </li>
               <li><strong>連乘的正負號判斷</strong>（各因數皆不為 0）：
@@ -397,8 +409,18 @@
           <div class="explanation-card">
             <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
             <ul class="bullet-list">
-              <li><strong>只有加減，或只有乘除</strong>：由<strong>左而右</strong>依序計算。例如 \(72 \div (-8) \times 3 = -9 \times 3 = -27\)。</li>
-              <li><strong>加減乘除同時出現</strong>：<strong>先算乘除，再算加減</strong>。例如 \(7 + 4 \times (-3) = 7 + (-12) = -5\)。</li>
+              <li><strong>只有加減，或只有乘除</strong>：由<strong>左而右</strong>依序計算。例如
+                \[ \begin{aligned}
+                & 72 \div (-8) \times 3 \\
+                &= -9 \times 3 = -27
+                \end{aligned} \]
+              </li>
+              <li><strong>加減乘除同時出現</strong>：<strong>先算乘除，再算加減</strong>。例如
+                \[ \begin{aligned}
+                & 7 + 4 \times (-3) \\
+                &= 7 + (-12) = -5
+                \end{aligned} \]
+              </li>
               <li><strong>有括號</strong>：<strong>括號內先算</strong>，或先利用去括號規則拆掉括號再算。括號由內而外：小括號 \(( \; )\) \(\rightarrow\) 中括號 \([ \; ]\)。</li>
               <li><strong>有絕對值</strong>：把絕對值符號當成一種括號，<strong>先處理絕對值內部的運算</strong>，取出絕對值後再做其他運算。例如 \(|8 \times (-2) - 5| = |-21| = 21\)。</li>
               <li><strong>常見陷阱</strong>：\(60 - (-6)\) 要先把「減一個負數」轉成加法，寫成 \(60 + 6 = 66\)，不可直接寫成 \(60 - 6\)。</li>
@@ -491,9 +513,20 @@
                 </ul>
               </li>
               <li><strong>正用（拆開）</strong>：遇到接近整十、整百的數就<strong>拆成兩項</strong>再分配，例如
-                \(1002 \times (-175) = (1000 + 2) \times (-175) = -175000 + (-350) = -175350\)。</li>
+                \[ \begin{aligned}
+                & 1002 \times (-175) \\
+                &= (1000 + 2) \times (-175) \\
+                &= -175000 + (-350) \\
+                &= -175350
+                \end{aligned} \]
+              </li>
               <li><strong>反用（提出公因數）</strong>：看到兩項有<strong>相同因數</strong>就把它提出來，例如
-                \(983 \times (-5) + 17 \times (-5) = (983 + 17) \times (-5) = 1000 \times (-5) = -5000\)。</li>
+                \[ \begin{aligned}
+                & 983 \times (-5) + 17 \times (-5) \\
+                &= (983 + 17) \times (-5) \\
+                &= 1000 \times (-5) = -5000
+                \end{aligned} \]
+              </li>
               <li><strong>除法的分配要小心</strong>：
                 <ul>
                   <li>\((a + b) \div c = a \div c + b \div c\) <strong>成立</strong>（\(c \neq 0\)）。例：\((20 + 10) \div 5 = 4 + 2 = 6\) ✓</li>
@@ -600,8 +633,12 @@
               </li>
               <li><strong>次數要算清楚</strong>：題目常只給部分次數，剩下的要用<strong>總數相減</strong>推出來。例如共 9 次、贏 4 次、平手 2 次，則輸了 \(9 - 4 - 2 = 3\) 次。</li>
               <li><strong>倒扣型計分</strong>：答錯倒扣要記成<strong>負數</strong>，未作答記為 \(0\)。<br>
-                例：答對 1 題得 4 分、答錯倒扣 2 分，若答對 18 題、答錯 5 題、未作答 2 題，得分為<br>
-                \(4 \times 18 + (-2) \times 5 + 0 \times 2 = 72 - 10 = 62\) 分。</li>
+                例：答對 1 題得 4 分、答錯倒扣 2 分，若答對 18 題、答錯 5 題、未作答 2 題，得分為
+                \[ \begin{aligned}
+                & 4 \times 18 + (-2) \times 5 + 0 \times 2 \\
+                &= 72 - 10 = 62
+                \end{aligned} \]
+                所以這次共得 \(62\) 分。</li>
               <li><strong>數線移動型</strong>：棋子從原點出發，右移記正、左移記負，最後的<strong>坐標</strong>就是所有位移量的總和。</li>
             </ul>
             <div class="illustration-container">

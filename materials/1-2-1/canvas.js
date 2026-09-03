@@ -261,7 +261,13 @@ function initFactorCanvas() {
 
     // --- 面板文字 ---
     nVal.textContent = n;
-    formula.innerHTML = `\\( ${n} \\) 的因數：\\( ${divs.join(',\\; ')} \\)`;
+    // 因數清單：每個因數各自包一段 \( \)，用零寬的 <wbr> 接起來，讓窄螢幕可以在因數之間換行
+    // （整串包成一段時 mjx-container 是不折行的 inline-block，414px 下 n=60 會溢出 103px；
+    //   接合用 <wbr> 而不是空白，寬螢幕的排版才跟原本逐像素相同）
+    const facTerms = divs
+      .map((d, i) => (i === 0 ? `\\(${d}\\)` : `\\({},\\; ${d}\\)`))
+      .join('<wbr>');
+    formula.innerHTML = `\\( ${n} \\) 的因數：<wbr>` + facTerms;
     feedback.innerHTML = wrapFeedback(
       `每一組 \\( a \\times b = ${n} \\) 都同時生出<strong>兩個</strong>因數，所以因數總是<strong>成對</strong>出現` +
         `${pairs.length && pairs[pairs.length - 1][0] === pairs[pairs.length - 1][1] ? `（${n} 是完全平方數，中間那組 \\( ${pairs[pairs.length - 1][0]} \\times ${pairs[pairs.length - 1][0]} \\) 只算一個）` : ''}。`

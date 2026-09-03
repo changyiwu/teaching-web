@@ -910,3 +910,21 @@ footer {
 .term-neg {
   color: #f43f5e;
 }
+
+/* 顯示型算式（\[ ... \]）遇到比卡片還寬的長算式時，預設會直接往右溢出，
+   蓋到右欄的互動卡上。改成在卡片內橫向捲動，並留上下 padding
+   避免 overflow-y 把分數的上下緣切掉。 */
+.explanation-card mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.35rem;
+}
+
+/* MathJax 的無障礙 MathML 是 position:absolute 且被 clip 成 1px，畫面上看不見，
+   但它的 width:auto 仍會撐大 .value-display 的捲動範圍，冒出一條沒有東西可捲的
+   假捲軸（實測 concept3 在兩支滑桿都推到底時多出 3px）。夾成 1px 即可，
+   clip 本來就只留 1px，螢幕閱讀器讀的是內容而不是這個盒子的尺寸。 */
+.value-display mjx-assistive-mml {
+  width: 1px !important;
+}
