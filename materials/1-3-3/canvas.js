@@ -1367,6 +1367,17 @@ function initRateCanvas() {
   function drawRound(vu, vd, T2) {
     drawTitle(ctx, '同一條山路來回一趟，上山慢、下山快', C);
 
+    if (vd <= vu) {
+      drawNote(ctx, '同一條山路，下山會比上山快', 150, NO_COLOR, 15);
+      drawNote(ctx, '請把「下山時速」調得比「上山時速」大', 176, MUTED, 13);
+      return {
+        ok: false,
+        tex: '\\text{（下山沒有比上山快，情境不成立）}',
+        note: `目前上山時速 \\(${vu}\\)、下山時速 \\(${vd}\\)，下山<strong>沒有比上山快</strong>，` +
+          `爬同一條山路不會有這種情形。把下山時速調大再看一次。`
+      };
+    }
+
     // 課本這一題的答案就是 24/7，一律保留精確分數（開發約束 19）
     const [xn, xd] = reduce(T2 * vu * vd, vu + vd);
     const [un, ud] = reduce(T2 * vd, vu + vd);   // 上山時間 = x / vu
