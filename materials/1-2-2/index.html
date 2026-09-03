@@ -207,7 +207,12 @@
                   <li>\(36\)、\(84\) 有公因數 \(2\) \(\Rightarrow\) \(18\)、\(42\)</li>
                   <li>\(18\)、\(42\) 有公因數 \(2\) \(\Rightarrow\) \(9\)、\(21\)</li>
                   <li>\(9\)、\(21\) 有公因數 \(3\) \(\Rightarrow\) \(3\)、\(7\)</li>
-                  <li>\(3\)、\(7\) 沒有共同質因數，停。\(( 36 , 84 ) = 2 \times 2 \times 3 = 2^2 \times 3 = 12\)</li>
+                  <li>\(3\)、\(7\) 沒有共同質因數，停。
+                    \[ \begin{aligned}
+                    & ( 36 , 84 ) = 2 \times 2 \times 3 \\
+                    &= 2^2 \times 3 = 12
+                    \end{aligned} \]
+                  </li>
                 </ul>
               </li>
               <li><strong>可以一次除掉大一點的公因數</strong>：上例若第一層直接除以 \(4\)，會得到 \(9\)、\(21\)，再除以 \(3\) 得 \(3\)、\(7\)，最大公因數同樣是 \(4 \times 3 = 12\)。層數變少，答案不變。</li>
@@ -441,7 +446,13 @@
             <ul class="bullet-list">
               <li><strong>兩個數的做法</strong>：一路除到沒有共同質因數，然後把<strong>左側除過的因數</strong>與<strong>最下面一列</strong>全部乘起來。以 \(( 36 , 84 )\) 的那張短除法為例，左側是 \(2, 2, 3\)、最下一列是 \(3, 7\)：
                 <ul>
-                  <li>\([ 36 , 84 ] = 2 \times 2 \times 3 \times 3 \times 7 = 2^2 \times 3^2 \times 7 = 252\)</li>
+                  <li>
+                    \[ \begin{aligned}
+                    & [ 36 , 84 ] \\
+                    &= 2 \times 2 \times 3 \times 3 \times 7 \\
+                    &= 2^2 \times 3^2 \times 7 = 252
+                    \end{aligned} \]
+                  </li>
                 </ul>
               </li>
               <li><strong>和最大公因數的差別（超重要）</strong>：同一張短除法，<strong>最大公因數只乘左邊那一直行</strong>，<strong>最小公倍數要乘左邊那一直行加上最下面那一橫列</strong>——形狀像一個 <strong>L</strong>。</li>
@@ -453,7 +464,13 @@
                   <li>除 \(2\)：\(9, 6, 7\)（\(12, 14\) 可以除，\(9\) 抄下來）</li>
                   <li>除 \(3\)：\(3, 2, 7\)（\(9, 6\) 可以除，\(7\) 抄下來）</li>
                   <li>\(3, 2, 7\) 任兩個都沒有共同質因數，停。</li>
-                  <li>\([ 54 , 72 , 84 ] = 2 \times 3 \times 2 \times 3 \times 3 \times 2 \times 7 = 2^3 \times 3^3 \times 7 = 1512\)</li>
+                  <li>
+                    \[ \begin{aligned}
+                    & [ 54 , 72 , 84 ] \\
+                    &= 2 \times 3 \times 2 \times 3 \times 3 \times 2 \times 7 \\
+                    &= 2^3 \times 3^3 \times 7 = 1512
+                    \end{aligned} \]
+                  </li>
                 </ul>
               </li>
               <li><strong>方法二（兩個兩個來）</strong>：\([ 54 , 72 ] = 216\)，再求 \([ 216 , 84 ] = 1512\)，即 \([ 54 , 72 , 84 ] = [ [ 54 , 72 ] , 84 ]\)。</li>
