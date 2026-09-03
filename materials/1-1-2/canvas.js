@@ -366,6 +366,8 @@ function initThermometerCanvas() {
     labelDiff.textContent = diff > 0 ? `+${diff}°C` : `${diff}°C`;
 
     // Sign formatted string
+    // 括號只在負數時才加：那是為了隔開運算符號與性質符號，
+    // 正數包括號會跟本節要教的規則對不上（開發約束 27）
     const startStr = start < 0 ? `(${start})` : `${start}`;
     const endStr = end; // first term does not need parentheses
     const diffStr = diff; // final result never needs parentheses
@@ -379,9 +381,9 @@ function initThermometerCanvas() {
 
     // Interactive feedback context
     if (diff > 0) {
-      feedbackDiv.innerHTML = `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">溫度從 ${start}°C 上升到 ${end}°C，一共<strong>升高 ${diff}°C</strong>。減法算式為 \\(${end} - (${start}) = ${diff}\\)，等同於 \\(${end} + (${-start}) = ${diff}\\)。</div>`;
+      feedbackDiv.innerHTML = `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">溫度從 ${start}°C 上升到 ${end}°C，一共<strong>升高 ${diff}°C</strong>。減法算式為 \\(${end} - ${startStr} = ${diff}\\)，等同於 \\(${end} + ${oppStr} = ${diff}\\)。</div>`;
     } else if (diff < 0) {
-      feedbackDiv.innerHTML = `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">溫度從 ${start}°C 下降到 ${end}°C，一共<strong>降低 ${Math.abs(diff)}°C</strong>。減法算式為 \\(${end} - (${start}) = ${diff}\\)，等同於 \\(${end} + (${-start}) = ${diff}\\)。</div>`;
+      feedbackDiv.innerHTML = `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">溫度從 ${start}°C 下降到 ${end}°C，一共<strong>降低 ${Math.abs(diff)}°C</strong>。減法算式為 \\(${end} - ${startStr} = ${diff}\\)，等同於 \\(${end} + ${oppStr} = ${diff}\\)。</div>`;
     } else {
       feedbackDiv.innerHTML = `<div style="width: 100%; text-align: center; line-height: 1.6; font-size: 0.95rem;">溫度未改變。變化量為 0°C。</div>`;
     }

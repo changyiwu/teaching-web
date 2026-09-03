@@ -208,7 +208,7 @@ function initBoardCanvas() {
       drawNote(ctx, `把 x = ${price} 代進去`, 310, MUTED, 13);
       drawExpr(ctx, [
         xItems(n, C_MATCHA), T('=', MUTED),
-        T(String(n), C_MATCHA), T('×', MUTED), GRP([T(String(price), C_MATCHA)], '()', C_MATCHA),
+        T(String(n), C_MATCHA), T('×', MUTED), T(String(price), C_MATCHA),
         T('=', MUTED), T(String(total), OK_COLOR)
       ], W / 2, 340, 24, C_MATCHA, { gap: 8 });
     }
