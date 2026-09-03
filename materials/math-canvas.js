@@ -467,12 +467,16 @@ function eqLine(leftItems, rightItems, color) {
   return leftItems.concat([T('=', color)], rightItems);
 }
 
-// 把一整條算式在每個「頂層等號」前斷開，接成多段 \( \)，中間用零寬的 <wbr>
-// （agents.md 開發約束 24）。mjx-container 是不折行的 inline-block，整條包成
-// 一段時窄螢幕會直接溢出互動卡；斷成多段之後才換得了行。
-//   - 後段以 {} 開頭，等號才維持關係運算子的字距
+// 把一整條算式在每個「頂層關係／加減運算子」前斷開，接成多段 \( \)，
+// 中間用零寬的 <wbr>（agents.md 開發約束 24）。mjx-container 是不折行的
+// inline-block，整條包成一段時窄螢幕會直接溢出互動卡；斷成多段才換得了行。
+//   - 後段以 {} 開頭，運算子才維持二元運算子的字距
 //   - 接合用 <wbr> 而不是空白，寬螢幕的排版與整條包成一段時逐像素相同
-//   - 只在大括號深度 0 的等號斷開，a^{m-n}、\frac{}{} 裡面的不算
+//   - 斷點是深度 0 的 =、+、-。深度同時算 {}、()、[]，所以 a^{m-n}、
+//     \frac{}{}、2[3x-(5x-4)] 裡面的運算子都不算——沒有等號的算式
+//     （例：11x - 2[3x-(5x-4)]）也因此有了斷點
+//   - 只斷「二元」運算子：前一個非空白字元若是運算子或開括號，那個 +/-
+//     是正負號不是運算子（例：-2(3x-5) 開頭的負號、= -6 的負號）
 //   - 反斜線後面那個字元直接跳過，\{ \} 才不會被算成括號層次
 function wbrEq(tex) {
   const parts = [];
@@ -481,11 +485,14 @@ function wbrEq(tex) {
   for (let i = 0; i < tex.length; i++) {
     const ch = tex[i];
     if (ch === '\\') { i++; continue; }
-    if (ch === '{') depth++;
-    else if (ch === '}') depth--;
-    else if (ch === '=' && depth === 0 && i > start) {
-      parts.push(tex.slice(start, i));
-      start = i;
+    if (ch === '{' || ch === '(' || ch === '[') depth++;
+    else if (ch === '}' || ch === ')' || ch === ']') depth--;
+    else if (depth === 0 && i > start && (ch === '=' || ch === '+' || ch === '-')) {
+      const prev = tex.slice(start, i).replace(/\s+$/, '').slice(-1);
+      if (prev && '=+-*/([{,'.indexOf(prev) === -1) {
+        parts.push(tex.slice(start, i));
+        start = i;
+      }
     }
   }
   parts.push(tex.slice(start));
