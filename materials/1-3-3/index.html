@@ -50,7 +50,8 @@
         <a href="#concept4" class="nav-item"><i class="fa-solid fa-tags"></i> 折扣問題</a>
         <a href="#concept5" class="nav-item"><i class="fa-solid fa-draw-polygon"></i> 圖形問題</a>
         <a href="#concept6" class="nav-item"><i class="fa-solid fa-hourglass-half"></i> 年齡問題</a>
-        <a href="#concept7" class="nav-item"><i class="fa-solid fa-stamp"></i> 速率與合理性</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-route"></i> 速率問題</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-stamp"></i> 解的合理性</a>
       </nav>
     </header>
 
@@ -829,32 +830,169 @@
       </section>
 
       <!-- ==========================================
-           重點 7: 速率問題與解的合理性
+           重點 7: 速率問題
            ========================================== -->
       <section class="concept-section" id="concept7">
         <h2 class="section-title">
-          <i class="fa-solid fa-stamp" aria-hidden="true"></i> 重點 7：速率問題與結案前的最後一步——這個答案合理嗎？
+          <i class="fa-solid fa-route" aria-hidden="true"></i> 重點 7：速率問題——先問「哪一個是一樣的」
         </h2>
 
         <div class="grid-content">
           <div class="explanation-card">
             <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
             <ul class="bullet-list">
-              <li><strong>速率三式</strong>：距離 \(=\) 速率 \(\times\) 時間、時間 \(=\) 距離 \(\div\) 速率、速率 \(=\) 距離 \(\div\) 時間。</li>
-              <li><strong>速率問題的相等關係，通常是「時間相同」或「距離相同」</strong>。先想清楚題目裡哪一個是一樣的，等號就從那裡來。</li>
-              <li><strong>時間相同（環島路跑）</strong>：小翊時速 \(10\) 公里、小妍時速 \(8\) 公里，小翊跑回終點時小妍還離終點 \(7.4\) 公里，求全長。設全長 \(x\) 公里，兩人跑的時間一樣：
+              <li><strong>速率三式</strong>：距離 \(=\) 速率 \(\times\) 時間、時間 \(=\) 距離 \(\div\) 速率、速率 \(=\) 距離 \(\div\) 時間。三個式子是同一件事，看題目要什麼就用哪一個。</li>
+              <li><strong>相等關係只會從兩個地方來：「時間相同」或「距離相同」</strong>。動筆之前先把這一句問完——等號從哪裡來決定了整條方程式，這一步錯了後面全白算。</li>
+              <li><strong>時間相同（誰先到終點）</strong>：小翊時速 \(10\) 公里、小妍時速 \(8\) 公里，小翊跑回終點時小妍還離終點 \(7.4\) 公里，求全長。設全長 \(x\) 公里，兩人<strong>同時出發、同時停錶</strong>，所以時間一樣：
                 \[\begin{aligned}
                 & \frac{x}{10} = \frac{x-7.4}{8} \\
                 &\qquad 8x = 10x - 74 \\
                 &\qquad 2x = 74 \\
                 &\qquad\ \ x = 37
                 \end{aligned}\]
-                環島公路全長 \(37\) 公里。</li>
-              <li><strong>來回同一條路（距離相同）</strong>：上山時速 \(3\)、下山時速 \(4\)，來回共 \(2\) 小時。設山路長 \(x\) 公里，上山花 \(\frac{x}{3}\) 小時、下山花 \(\frac{x}{4}\) 小時：\(\frac{x}{3}+\frac{x}{4}=2\)，兩邊同乘 \(12\) 得 \(4x+3x=24\)，\(x=\frac{24}{7}\) 公里。</li>
-              <li><strong>結案前的最後一步：檢查解合不合情境</strong>。方程式算對，<strong>不代表答案成立</strong>。</li>
-              <li><strong>哪些數一定是正整數</strong>：張數、人數、個數、枚數、袋數、班級數。長度、面積、年齡則<strong>不能是負數</strong>。算出來不符合，就表示題目的情境本身有問題。</li>
-              <li><strong>游泳池的例子</strong>：一張全票 \(120\) 元，比一張優待票貴 \(40\) 元（優待票 \(80\) 元）。買 \(4\) 張全票和若干張優待票，若付 \(780\) 元是否合理？設買了 \(x\) 張優待票：\(120 \times 4+80x=780\)，\(480+80x=780\)，\(80x=300\)，\(x=3.75\)。<strong>票的張數一定是正整數，雖然計算無誤但與事實不符，所以付費 \(780\) 元不合理</strong>。</li>
+                環島公路全長 \(37\) 公里。<strong>誰跑得快，誰的距離就是 \(x\)</strong>；跑得慢的那個是 \(x\) 減掉還差的那一段。</li>
+              <li><strong>距離相同（來回同一條路）</strong>：上山時速 \(3\) 公里、下山時速 \(4\) 公里，來回共 \(2\) 小時。設山路長 \(x\) 公里，上山花 \(\frac{x}{3}\) 小時、下山花 \(\frac{x}{4}\) 小時：
+                \[\begin{aligned}
+                & \frac{x}{3}+\frac{x}{4}=2 \\
+                &\qquad 4x+3x=24 \\
+                &\qquad\quad\ \ x=\frac{24}{7}
+                \end{aligned}\]
+                山路長 \(\frac{24}{7}\) 公里。兩邊同乘 \(12\)（分母的最小公倍數）就把分數清掉了。</li>
+              <li><strong>最常見的陷阱：來回的平均速率不是把兩個速率平均</strong>。上面這題若誤以為平均時速是 \(\frac{3+4}{2}=3.5\)，會算出單程 \(3.5 \times 2 \div 2 = 3.5\) 公里，和正確的 \(\frac{24}{7} \approx 3.43\) 不一樣。<strong>走得慢的那一段花的時間比較長</strong>，權重不相等，不能直接平均。</li>
+              <li><strong>單位要先統一</strong>：題目混用「公尺／分」與「公里／時」時，先換算成同一組再列式。\(1\) 公里 \(=1000\) 公尺、\(1\) 小時 \(=60\) 分。</li>
+              <li><strong>算完一定要回頭檢驗</strong>：把 \(x\) 代回去算出兩邊的時間（或距離），看是不是真的相等。速率問題的算式常有分數，檢驗一次最划算。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>題目情境</th><th>什麼是一樣的</th><th>等號怎麼列</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>同時出發，誰先到終點</td><td class="sign-pos">時間相同</td><td>\(\dfrac{\text{甲的距離}}{\text{甲的速率}} = \dfrac{\text{乙的距離}}{\text{乙的速率}}\)</td></tr>
+                <tr><td>同一條路來回一趟</td><td class="sign-pos">距離相同</td><td>\(\dfrac{x}{v_{\text{去}}} + \dfrac{x}{v_{\text{回}}} = \text{總時間}\)</td></tr>
+                <tr><td>兩人相向而行，途中相遇</td><td class="sign-pos">時間相同</td><td>兩人走的距離<strong>加起來</strong>等於全長</td></tr>
+                <tr><td>同向追趕，後者追上前者</td><td class="sign-pos">距離相同</td><td>追上時兩人走的<strong>距離相等</strong></td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="detective_route.webp" alt="復古偵探事務所插圖：偵探在牆上的地圖用紅線畫出兩條路線，桌上並排放著兩只停在不同時刻的碼錶" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-person-running"></i> 視覺互動探索：速率關係追蹤圖</h3>
+            <p class="interactive-instruction">切換兩種情境，看清楚<strong>等號到底是從哪一個「相同」來的</strong>。拉動滑桿時，方程式與答案會跟著重算：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-rate" width="540" height="400"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="step-btn-grid" style="margin-bottom: 0.25rem;">
+                  <button class="step-choice-btn active" data-rate-mode="meet">① 誰先到終點（時間相同）</button>
+                  <button class="step-choice-btn" data-rate-mode="round">② 上山下山（距離相同）</button>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rt-a-slider"><span id="rt-a-label">甲的速率（公尺／分）</span>: <span id="rt-a-val" class="val-num">0</span></label>
+                    <input type="range" id="rt-a-slider" min="40" max="100" value="60" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rt-b-slider"><span id="rt-b-label">乙的速率（公尺／分）</span>: <span id="rt-b-val" class="val-num">0</span></label>
+                    <input type="range" id="rt-b-slider" min="50" max="120" value="80" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rt-c-slider"><span id="rt-c-label">乙抵達時甲還差（公尺）</span>: <span id="rt-c-val" class="val-num">0</span></label>
+                    <input type="range" id="rt-c-slider" min="20" max="200" value="100" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (速率問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-7-1">
+            <p class="quiz-question"><strong>Q1.</strong> 甲、乙兩人同時從同一地點出發，沿同一條路走到終點。甲每分鐘走 \(60\) 公尺，乙每分鐘走 \(80\) 公尺。當乙走到終點時，甲還離終點 \(100\) 公尺。則這條路全長多少公尺？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-7-1" value="A"><span class="option-text">A. \(300\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-1" value="B"><span class="option-text">B. \(400\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-1" value="C"><span class="option-text">C. \(500\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-1" value="D"><span class="option-text">D. \(600\) 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設全長 \(x\) 公尺。乙走了 \(x\) 公尺，甲走了 \((x-100)\) 公尺，<strong>兩人所花的時間相同</strong>：<br>
+              \[\begin{aligned}
+              & \frac{x}{80} = \frac{x-100}{60} \\
+              &\qquad 60x = 80x - 8000 \\
+              &\qquad 20x = 8000 \\
+              &\qquad\ \ \ x = 400
+              \end{aligned}\]
+              全長 \(400\) 公尺。<strong>檢驗</strong>：乙走 \(400 \div 80=5\) 分鐘，甲同樣 \(5\) 分鐘走了 \(60 \times 5=300\) 公尺，離終點正好 \(100\) 公尺。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-7-2">
+            <p class="quiz-question"><strong>Q2.</strong> 小翊騎腳踏車走一條山路，上坡時速 \(8\) 公里、下坡時速 \(12\) 公里。他沿同一條路來回一趟共花 \(1\) 小時，則這條山路單程長多少公里？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-7-2" value="A"><span class="option-text">A. \(4.8\) 公里</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-2" value="B"><span class="option-text">B. \(5\) 公里</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-2" value="C"><span class="option-text">C. \(10\) 公里</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7-2" value="D"><span class="option-text">D. \(2.4\) 公里</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。來回走的是<strong>同一條路</strong>，所以單程距離相同；設單程 \(x\) 公里，兩段的時間加起來是 \(1\) 小時：<br>
+              \[\begin{aligned}
+              & \frac{x}{8} + \frac{x}{12} = 1 \\
+              &\qquad\quad 3x + 2x = 24 \\
+              &\qquad\qquad\ \ 5x = 24 \\
+              &\qquad\qquad\quad x = 4.8
+              \end{aligned}\]
+              兩邊同乘 \(24\)（\(8\) 與 \(12\) 的最小公倍數）就把分母清掉了。<br>
+              <strong>檢驗</strong>：上坡 \(4.8 \div 8 = 0.6\) 小時、下坡 \(4.8 \div 12 = 0.4\) 小時，合計正好 \(1\) 小時。<br>
+              B 是最常見的錯誤——把上下坡的時速<strong>直接平均</strong>成 \(\frac{8+12}{2}=10\)，再算 \(10 \times 1 \div 2 = 5\)。但<strong>上坡花的時間比下坡長</strong>（\(0.6\) 比 \(0.4\)），兩段的權重不一樣，不能直接平均。<br>
+              C 是把來回總長當成單程；D 是把單程再除以 \(2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 解與情境的合理性
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-stamp" aria-hidden="true"></i> 重點 8：結案前的最後一步——這個答案<strong>合理</strong>嗎？
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>方程式算對，不代表答案成立</strong>。前面六個重點練的是「怎麼算出 \(x\)」，這個重點練的是<strong>算出來之後還要做什麼</strong>——把 \(x\) 放回原本的情境，看它在現實裡站不站得住。</li>
+              <li><strong>哪些數一定是正整數</strong>：張數、人數、個數、枚數、袋數、杯數、班級數。<strong>哪些數不能是負的</strong>：長度、面積、年齡、金額。算出來不符合，就表示<strong>題目給的情境本身有問題</strong>，而不是你算錯。</li>
+              <li><strong>不合理的兩種樣子</strong>：
+                <ul>
+                  <li><strong>該是整數卻不是</strong>——游泳池的例子：一張全票 \(120\) 元，比一張優待票貴 \(40\) 元（優待票 \(80\) 元）。買 \(4\) 張全票和若干張優待票，付 \(780\) 元是否合理？設買了 \(x\) 張優待票：\(120 \times 4+80x=780\)，\(480+80x=780\)，\(80x=300\)，\(x=3.75\)。<strong>票的張數一定是正整數，雖然計算無誤但與事實不符，所以付費 \(780\) 元不合理</strong>。</li>
+                  <li><strong>該是正的卻是負的</strong>——若求「幾年後」而算出 \(x=-6\)，那代表事情發生在 \(6\) 年<strong>前</strong>，並不是題目問的「幾年後」。這時要說<strong>不合題意</strong>，不能直接把負號拿掉當答案。</li>
+                </ul>
+              </li>
               <li><strong>「無解」有兩種樣子</strong>：一種是方程式本身解不出來；另一種是<strong>解得出來但不符合情境</strong>——在應用問題裡，後者才是常客。</li>
+              <li><strong>分數不一定就是錯的</strong>：\(x=\frac{24}{7}\) 若問的是山路長度，那完全合理——長度本來就可以是分數。<strong>要看問的是什麼東西</strong>，不是看數字漂不漂亮。</li>
+              <li><strong>寫答案時要回答題目問的那一句</strong>：算出 \(x\) 之後，先看一眼題目最後問的是 \(x\) 本身、還是要再算一步（例如問「相差幾歲」「共幾組」）。這一步和合理性檢查一起做，結案才算完整。</li>
             </ul>
 
             <div class="table-scroll">
@@ -865,6 +1003,7 @@
               <tbody>
                 <tr><td>\(x=3.75\)</td><td>票的張數</td><td class="sign-neg">不合理（不是整數）</td></tr>
                 <tr><td>\(x=-2\)</td><td>人數</td><td class="sign-neg">不合理（不能是負的）</td></tr>
+                <tr><td>\(x=-6\)</td><td>幾年<strong>後</strong></td><td class="sign-neg">不合理（那是 \(6\) 年前）</td></tr>
                 <tr><td>\(x=\frac{24}{7}\)</td><td>山路長度</td><td class="sign-pos">合理（長度可以是分數）</td></tr>
                 <tr><td>\(x=12\)</td><td>袋數</td><td class="sign-pos">合理</td></tr>
               </tbody>
@@ -906,37 +1045,15 @@
         </div>
 
         <div class="quiz-section">
-          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (速率與合理性)</h3>
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (解與情境的合理性)</h3>
 
-          <div class="quiz-card" data-quiz="3-3-7-1">
-            <p class="quiz-question"><strong>Q1.</strong> 甲、乙兩人同時從同一地點出發，沿同一條路走到終點。甲每分鐘走 \(60\) 公尺，乙每分鐘走 \(80\) 公尺。當乙走到終點時，甲還離終點 \(100\) 公尺。則這條路全長多少公尺？</p>
+          <div class="quiz-card" data-quiz="3-3-8-1">
+            <p class="quiz-question"><strong>Q1.</strong> 一盒餅乾 \(150\) 元、一杯飲料 \(45\) 元。小明買了 \(2\) 盒餅乾和若干杯飲料，店員跟他收 \(412\) 元。下列判斷何者<strong>正確</strong>？</p>
             <div class="options-container">
-              <label class="option-label"><input type="radio" name="q3-3-7-1" value="A"><span class="option-text">A. \(300\) 公尺</span></label>
-              <label class="option-label"><input type="radio" name="q3-3-7-1" value="B"><span class="option-text">B. \(400\) 公尺</span></label>
-              <label class="option-label"><input type="radio" name="q3-3-7-1" value="C"><span class="option-text">C. \(500\) 公尺</span></label>
-              <label class="option-label"><input type="radio" name="q3-3-7-1" value="D"><span class="option-text">D. \(600\) 公尺</span></label>
-            </div>
-            <button class="btn-check-ans" disabled>提交答案</button>
-            <div class="explanation-box">
-              <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設全長 \(x\) 公尺。乙走了 \(x\) 公尺，甲走了 \((x-100)\) 公尺，<strong>兩人所花的時間相同</strong>：<br>
-              \[\begin{aligned}
-              & \frac{x}{80} = \frac{x-100}{60} \\
-              &\qquad 60x = 80x - 8000 \\
-              &\qquad 20x = 8000 \\
-              &\qquad\ \ \ x = 400
-              \end{aligned}\]
-              全長 \(400\) 公尺。<strong>檢驗</strong>：乙走 \(400 \div 80=5\) 分鐘，甲同樣 \(5\) 分鐘走了 \(60 \times 5=300\) 公尺，離終點正好 \(100\) 公尺。</p>
-            </div>
-          </div>
-
-          <div class="quiz-card" data-quiz="3-3-7-2">
-            <p class="quiz-question"><strong>Q2.</strong> 一盒餅乾 \(150\) 元、一杯飲料 \(45\) 元。小明買了 \(2\) 盒餅乾和若干杯飲料，店員跟他收 \(412\) 元。下列判斷何者<strong>正確</strong>？</p>
-            <div class="options-container">
-              <label class="option-label"><input type="radio" name="q3-3-7-2" value="A"><span class="option-text">A. 合理，他買了 \(2\) 杯飲料</span></label>
-              <label class="option-label"><input type="radio" name="q3-3-7-2" value="B"><span class="option-text">B. 合理，他買了 \(3\) 杯飲料</span></label>
-              <label class="option-label"><input type="radio" name="q3-3-7-2" value="C"><span class="option-text">C. 不合理，因為算出的杯數不是正整數</span></label>
-              <label class="option-label"><input type="radio" name="q3-3-7-2" value="D"><span class="option-text">D. 不合理，因為 \(412\) 元不夠付 \(2\) 盒餅乾</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8-1" value="A"><span class="option-text">A. 合理，他買了 \(2\) 杯飲料</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8-1" value="B"><span class="option-text">B. 合理，他買了 \(3\) 杯飲料</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8-1" value="C"><span class="option-text">C. 不合理，因為算出的杯數不是正整數</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8-1" value="D"><span class="option-text">D. 不合理，因為 \(412\) 元不夠付 \(2\) 盒餅乾</span></label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
@@ -951,6 +1068,32 @@
               計算完全正確，但<strong>飲料的杯數一定是正整數</strong>，\(\frac{112}{45}\) 不是整數，與事實不符，所以收費 \(412\) 元<strong>不合理</strong>。<br>
               A、B 錯：\(2\) 杯是 \(390\) 元、\(3\) 杯是 \(435\) 元，都不是 \(412\) 元。<br>
               D 錯：\(2\) 盒餅乾 \(300\) 元，\(412\) 元付得起，問題不在這裡。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-8-2">
+            <p class="quiz-question"><strong>Q2.</strong> 姐姐今年 \(15\) 歲、弟弟今年 \(9\) 歲。若干年<strong>後</strong>，姐姐的年齡恰好是弟弟的 \(3\) 倍。下列判斷何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-8-2" value="A"><span class="option-text">A. \(6\) 年後</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8-2" value="B"><span class="option-text">B. \(3\) 年後</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8-2" value="C"><span class="option-text">C. 不合題意，因為算出的 \(x\) 是負數</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8-2" value="D"><span class="option-text">D. 不合題意，因為姐姐永遠不會是弟弟的 \(3\) 倍</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設 \(x\) 年後，屆時姐姐 \((15+x)\) 歲、弟弟 \((9+x)\) 歲：<br>
+              \[\begin{aligned}
+              & 15 + x = 3(9 + x) \\
+              &\quad 15 + x = 27 + 3x \\
+              &\qquad -2x = 12 \\
+              &\qquad\ \ \ x = -6
+              \end{aligned}\]
+              計算沒有錯，但題目問的是「幾年<strong>後</strong>」，\(x\) 應該是<strong>正數</strong>；算出 \(x=-6\) 表示那件事發生在 \(6\) 年<strong>前</strong>，<strong>不合題意</strong>。<br>
+              D 錯得很微妙——姐姐<strong>確實曾經</strong>是弟弟的 \(3\) 倍：\(6\) 年前姐姐 \(9\) 歲、弟弟 \(3\) 歲，正好 \(3\) 倍。只是那是過去，不是未來。<br>
+              A 錯在把負號直接丟掉；\(6\) 年後姐姐 \(21\) 歲、弟弟 \(15\) 歲，\(21 \neq 45\)。<br>
+              B 錯：\(3\) 年後姐姐 \(18\) 歲、弟弟 \(12\) 歲，也不是 \(3\) 倍。<br>
+              <strong>年齡差永遠不變</strong>（這裡固定差 \(6\) 歲），倍數關係只會隨時間越來越接近 \(1\) 倍，所以「\(3\) 倍」這件事只可能發生在過去。</p>
             </div>
           </div>
         </div>

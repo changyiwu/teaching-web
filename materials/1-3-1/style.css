@@ -262,6 +262,7 @@ header {
 #concept4::before { background: linear-gradient(90deg, #0ea5e9 0%, #38bdf8 100%); }
 #concept5::before { background: linear-gradient(90deg, #a855f7 0%, #d946ef 100%); }
 #concept6::before { background: linear-gradient(90deg, #f97316 0%, #fb923c 100%); }
+#concept7::before { background: linear-gradient(90deg, #84cc16 0%, #a3e635 100%); }
 
 .section-title {
   display: flex;
@@ -292,6 +293,9 @@ header {
 #concept6 .section-title { background: linear-gradient(135deg, #ffffff 40%, #ffedd5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 #concept6 .section-title i { color: #f97316; -webkit-text-fill-color: initial; }
 
+#concept7 .section-title { background: linear-gradient(135deg, #ffffff 40%, #ecfccb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#concept7 .section-title i { color: #84cc16; -webkit-text-fill-color: initial; }
+
 /* Themed strong keyword highlights */
 #concept1 strong { color: #fcd34d; }
 #concept2 strong { color: #6ee7b7; }
@@ -299,6 +303,7 @@ header {
 #concept4 strong { color: #7dd3fc; }
 #concept5 strong { color: #e9d5ff; }
 #concept6 strong { color: #fdba74; }
+#concept7 strong { color: #d9f99d; }
 
 .grid-content {
   display: grid;

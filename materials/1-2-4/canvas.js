@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initTrendCanvas();
   initOrderCanvas();
   initExpandCanvas();
-  initDeriveCanvas();
+  initDeriveCanvas({ canvasId: 'canvas-derive-pow', prefix: 'dvp', defMode: 'pow' });
+  initDeriveCanvas({ canvasId: 'canvas-derive-mul', prefix: 'dvm', defMode: 'mul' });
   initZeroCanvas();
 });
 
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initQuizSystem() {
   const quizCards = document.querySelectorAll('.quiz-card');
 
-  // Correct answers mapping for Section 2-4 (12 Quizzes)
+  // Correct answers mapping for Section 2-4 (14 Quizzes)
   const answers = {
     '2-4-1-1': 'C', // 負底數奇次方，負號留下：-5^7/6^7
     '2-4-1-2': 'B', // -2^4 = -16 最小（負號沒被括號括進去）
@@ -28,9 +29,11 @@ function initQuizSystem() {
     '2-4-4-1': 'D', // 沒寫的指數是 1，9-1 = 8
     '2-4-4-2': 'C', // 底數與指數都不同，兩條律都套不上
     '2-4-5-1': 'C', // 乘方的乘方，指數相乘 4x3 = 12
-    '2-4-5-2': 'D', // 指數相同先合併底數，(-3/2)^6 = 729/64
-    '2-4-6-1': 'A', // 1 - 1 + 1x3 = 3
-    '2-4-6-2': 'B'  // (-2)^7 / (-2)^4 = (-2)^3 = -8
+    '2-4-5-2': 'A', // 括號在外是相乘 p=12、同底相乘是相加 q=7，p-q=5
+    '2-4-6-1': 'D', // 指數相同先合併底數，(-3/2)^6 = 729/64
+    '2-4-6-2': 'A', // 指數相同先相除底數，3^4 = 81
+    '2-4-7-1': 'A', // 1 - 1 + 1x3 = 3
+    '2-4-7-2': 'B'  // (-2)^7 / (-2)^4 = (-2)^3 = -8
   };
 
   quizCards.forEach(card => {
@@ -773,20 +776,27 @@ function initExpandCanvas() {
 /* ==========================================================================
    重點 5：展開推導器（乘方的乘方 / 兩數相乘 / 兩數相除）
    ========================================================================== */
-function initDeriveCanvas() {
-  const canvas = document.getElementById('canvas-derive');
+/**
+ * 展開推導器。重點 5（指數律三：乘方的乘方）與重點 6（指數律四：積／商的乘方）
+ * 共用同一份推導程式碼。重點 5 只有 pow 一種模式、不放模式按鈕，
+ * 所以 modeGroup 允許不存在。
+ * opts = { canvasId, prefix, defMode }
+ */
+function initDeriveCanvas(opts) {
+  const canvas = document.getElementById(opts.canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const modeGroup = document.getElementById('dv-mode-group');
-  const mS = document.getElementById('dv-m-slider');
-  const nS = document.getElementById('dv-n-slider');
-  const mV = document.getElementById('dv-m-val');
-  const nV = document.getElementById('dv-n-val');
-  const formula = document.getElementById('dv-formula');
-  const feedback = document.getElementById('dv-feedback');
+  const p = opts.prefix;
+  const modeGroup = document.getElementById(p + '-mode-group');
+  const mS = document.getElementById(p + '-m-slider');
+  const nS = document.getElementById(p + '-n-slider');
+  const mV = document.getElementById(p + '-m-val');
+  const nV = document.getElementById(p + '-n-val');
+  const formula = document.getElementById(p + '-formula');
+  const feedback = document.getElementById(p + '-feedback');
 
-  let mode = 'pow';
+  let mode = opts.defMode;
 
   // 把 count 個 label 用 × 串成一列元件
   function chain(count, label, color, max) {
@@ -802,13 +812,16 @@ function initDeriveCanvas() {
 
   function draw() {
     const m = parseInt(mS.value, 10);
-    const n = parseInt(nS.value, 10);
+    // 重點 6 只有 mul／div 兩種模式，用不到外層指數，那條滑桿不存在
+    const n = nS ? parseInt(nS.value, 10) : 1;
     mV.textContent = m;
-    nV.textContent = mode === 'pow' ? n : '—（本模式不用）';
-    nS.disabled = mode !== 'pow';
-    [...modeGroup.querySelectorAll('.pick-btn')].forEach(b => {
-      b.classList.toggle('active', b.dataset.mode === mode);
-    });
+    if (nV) nV.textContent = mode === 'pow' ? n : '—（本模式不用）';
+    if (nS) nS.disabled = mode !== 'pow';
+    if (modeGroup) {
+      [...modeGroup.querySelectorAll('.pick-btn')].forEach(b => {
+        b.classList.toggle('active', b.dataset.mode === mode);
+      });
+    }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -960,13 +973,15 @@ function initDeriveCanvas() {
     return T(s, label === 'a' ? C_INDIGO : C_ORANGE);
   }
 
-  modeGroup.addEventListener('click', e => {
-    const btn = e.target.closest('.pick-btn');
-    if (!btn) return;
-    mode = btn.dataset.mode;
-    draw();
-  });
-  [mS, nS].forEach(s => s.addEventListener('input', draw));
+  if (modeGroup) {
+    modeGroup.addEventListener('click', e => {
+      const btn = e.target.closest('.pick-btn');
+      if (!btn) return;
+      mode = btn.dataset.mode;
+      draw();
+    });
+  }
+  [mS, nS].filter(Boolean).forEach(s => s.addEventListener('input', draw));
   draw();
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);

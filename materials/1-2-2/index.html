@@ -49,7 +49,8 @@
         <a href="#concept3" class="nav-item"><i class="fa-solid fa-repeat"></i> 公倍數與 \([a,b]\)</a>
         <a href="#concept4" class="nav-item"><i class="fa-solid fa-layer-group"></i> 短除法求 \([a,b]\)</a>
         <a href="#concept5" class="nav-item"><i class="fa-solid fa-chart-simple"></i> 標準分解式</a>
-        <a href="#concept6" class="nav-item"><i class="fa-solid fa-box-open"></i> 應用問題</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-box-open"></i> 分裝與間隔</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-arrows-spin"></i> 週期與拼合</a>
       </nav>
     </header>
 
@@ -681,44 +682,41 @@
       </section>
 
       <!-- ==========================================
-           重點 6: 應用問題
+           重點 6: 分裝與間隔問題（求最大公因數）
            ========================================== -->
       <section class="concept-section" id="concept6">
         <h2 class="section-title">
-          <i class="fa-solid fa-box-open" aria-hidden="true"></i> 重點 6：應用問題——先判斷是「分」還是「合」
+          <i class="fa-solid fa-box-open" aria-hidden="true"></i> 重點 6：分裝與間隔問題——把整體切小，求<strong>最大公因數</strong>
         </h2>
 
         <div class="grid-content">
           <div class="explanation-card">
             <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
             <ul class="bullet-list">
-              <li><strong>一句話判斷</strong>：題目在<strong>把整體切小</strong>（分裝、平分、切割、最大的間隔）→ 求<strong>最大公因數</strong>；題目在<strong>把小的湊成整體</strong>（再相遇、拼成正方形、再度同時發生）→ 求<strong>最小公倍數</strong>。</li>
+              <li><strong>先問自己一句話</strong>：題目是在<strong>把整體切小</strong>（分裝、平分、切割、最大的間隔），還是在<strong>把小的湊成整體</strong>？
+                <ul>
+                  <li>切小 \(\to\) 每一份的大小要能<strong>整除</strong>原本的每一個數 \(\to\) 找<strong>公因數</strong>，要「最多、最大」就取<strong>最大公因數</strong>。</li>
+                  <li>湊整體 \(\to\) 那是下一個重點的事（最小公倍數）。</li>
+                </ul>
+              </li>
               <li><strong>① 分裝問題</strong>：\(36\) 個梨子和 \(60\) 個蘋果分裝成禮盒，每盒個數一樣多且全部裝完，一盒最多幾個？
                 <ul>
-                  <li>每盒個數必須同時整除 \(36\) 與 \(60\)，是兩數的公因數；「最多」就取最大公因數。</li>
-                  <li>\(( 36 , 60 ) = 12\)，一盒最多放 \(12\) 個。</li>
+                  <li>每盒個數必須<strong>同時整除</strong> \(36\) 與 \(60\)，所以它是兩數的公因數。</li>
+                  <li>要「最多」就取最大公因數：\(( 36 , 60 ) = 12\)，一盒最多放 \(12\) 個。</li>
+                  <li>此時梨子裝成 \(36 \div 12 = 3\) 盒、蘋果裝成 \(60 \div 12 = 5\) 盒。</li>
                 </ul>
               </li>
-              <li><strong>② 週期問題</strong>：小翊每 \(8\) 天、小妍每 \(10\) 天、小靖每 \(14\) 天到公園跑步，今天三人都到，最少再幾天會再度同一天？
+              <li><strong>② 間隔問題</strong>：長 \(315\) 公尺、寬 \(135\) 公尺的長方形土地四周種樹，四個頂點都要種、間距相等且最大，樹距與棵數各為多少？
                 <ul>
-                  <li>經過的天數要同時是 \(8\)、\(10\)、\(14\) 的倍數；「最少」就取最小公倍數。</li>
-                  <li>\([ 8 , 10 , 14 ] = 280\)，最少再 \(280\) 天。</li>
-                </ul>
-              </li>
-              <li><strong>③ 圖形拼合問題</strong>：長 \(60\)、寬 \(50\) 的長方形磁磚拼成正方形，最小邊長？
-                <ul>
-                  <li>正方形邊長要同時是 \(60\) 與 \(50\) 的倍數；「最小」就取最小公倍數。</li>
-                  <li>\([ 60 , 50 ] = 300\)，最小邊長 \(300\) 公分，面積 \(300 \times 300 = 90000\) 平方公分。</li>
-                </ul>
-              </li>
-              <li><strong>④ 間隔問題</strong>：長 \(315\)、寬 \(135\) 的長方形土地周圍種樹，四個頂點都種、間距相等且最大，樹距與棵數？
-                <ul>
-                  <li>樹距要同時整除 \(315\) 與 \(135\)；「最大」就取最大公因數，\(( 315 , 135 ) = 45\) 公尺。</li>
-                  <li><strong>繞一圈的關鍵</strong>：四個頂點都種，可看成每邊一端種、一端不種，所以<strong>棵數 = 間隔數</strong>。</li>
+                  <li>樹距必須同時整除 \(315\) 與 \(135\)；要「最大」就取 \(( 315 , 135 ) = 45\) 公尺。</li>
+                  <li><strong>繞一圈的關鍵</strong>：四個頂點都種，可看成每邊「一端種、一端不種」，所以<strong>棵數 \(=\) 間隔數</strong>。</li>
                   <li>周長 \(( 315 + 135 ) \times 2 = 900\)，\(900 \div 45 = 20\)，共種 \(20\) 棵。</li>
+                  <li><strong>對照</strong>：如果是<strong>一直線</strong>種樹（頭尾都種），棵數要<strong>再加 1</strong>——因為直線的兩端沒有接起來。</li>
                 </ul>
               </li>
-              <li><strong>最常見的陷阱</strong>：算出最大公因數之後，要看清楚題目問的是「<strong>每一份多少</strong>」還是「<strong>分成幾份</strong>」。營隊男 \(105\) 人、女 \(75\) 人分組，男、女分開編組，\(( 105 , 75 ) = 15\) 指的是<strong>每組最多 15 人</strong>，不是分成 15 組；組數是 \(105 \div 15 + 75 \div 15 = 7 + 5 = 12\) 組。</li>
+              <li><strong>最常見的陷阱</strong>：算出最大公因數之後，要看清楚題目問的是「<strong>每一份多少</strong>」還是「<strong>分成幾份</strong>」。<br>
+              營隊男生 \(105\) 人、女生 \(75\) 人分組，男女分開編組且每組人數一樣多，\(( 105 , 75 ) = 15\) 指的是<strong>每組最多 15 人</strong>，<strong>不是</strong>分成 15 組。<br>
+              組數要另外算：男生 \(105 \div 15 = 7\) 組、女生 \(75 \div 15 = 5\) 組，共 \(12\) 組。</li>
             </ul>
 
             <div class="table-scroll">
@@ -728,9 +726,8 @@
               </thead>
               <tbody>
                 <tr><td>最多、最大、平分、分裝</td><td>最大公因數</td><td>一盒最多幾個、樹距最大幾公尺</td></tr>
-                <tr><td>最少、最小、再相遇、拼成</td><td>最小公倍數</td><td>最少再幾天、正方形最小邊長</td></tr>
                 <tr><td>繞一圈、四頂點都種</td><td>棵數 \(=\) 間隔數</td><td>周長 \(\div\) 樹距</td></tr>
-                <tr><td>一端種、一端不種</td><td>棵數 \(=\) 間隔數</td><td>直線種樹要另外加 1</td></tr>
+                <tr><td>一直線、頭尾都種</td><td>棵數 \(=\) 間隔數 \(+\ 1\)</td><td>全長 \(\div\) 間距 \(+\ 1\)</td></tr>
               </tbody>
               </table>
             </div>
@@ -741,41 +738,39 @@
           </div>
 
           <div class="interactive-card">
-            <h3><i class="fa-solid fa-shuffle"></i> 視覺互動探索：四型應用情境模擬器</h3>
-            <p class="interactive-instruction">切換四種情境，觀察題目要的到底是<strong>最大公因數</strong>還是<strong>最小公倍數</strong>：</p>
+            <h3><i class="fa-solid fa-scissors"></i> 視覺互動探索：切小情境模擬器</h3>
+            <p class="interactive-instruction">兩種情境都在<strong>把整體切小</strong>，觀察它們求的都是<strong>最大公因數</strong>：</p>
             <div class="canvas-container">
-              <canvas id="canvas-apply" width="540" height="340"></canvas>
+              <canvas id="canvas-apply-gcd" width="540" height="340"></canvas>
               <div class="control-panel">
                 <div class="value-display">
-                  <span id="ap-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                  <span id="apg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
                 </div>
 
                 <div class="step-btn-grid" style="margin-bottom: 0.25rem;">
-                  <button class="step-choice-btn active" data-apply-mode="pack">① 分裝禮盒</button>
-                  <button class="step-choice-btn" data-apply-mode="cycle">② 週期相遇</button>
-                  <button class="step-choice-btn" data-apply-mode="tile">③ 磁磚拼合</button>
-                  <button class="step-choice-btn" data-apply-mode="tree">④ 繞邊種樹</button>
+                  <button class="step-choice-btn active" data-apply-group="gcd" data-apply-mode="pack">① 分裝禮盒</button>
+                  <button class="step-choice-btn" data-apply-group="gcd" data-apply-mode="tree">② 繞邊種樹</button>
                 </div>
 
                 <div class="slider-wrapper">
                   <div class="slider-row">
-                    <label for="ap-a-slider"><span id="ap-a-label">梨子（個）</span>: <span id="ap-a-val" class="val-num">0</span></label>
-                    <input type="range" id="ap-a-slider" min="2" max="60" value="36" step="1">
+                    <label for="apg-a-slider"><span id="apg-a-label">梨子（個）</span>: <span id="apg-a-val" class="val-num">0</span></label>
+                    <input type="range" id="apg-a-slider" min="2" max="60" value="36" step="1">
                   </div>
                   <div class="slider-row">
-                    <label for="ap-b-slider"><span id="ap-b-label">蘋果（個）</span>: <span id="ap-b-val" class="val-num">0</span></label>
-                    <input type="range" id="ap-b-slider" min="2" max="60" value="60" step="1">
+                    <label for="apg-b-slider"><span id="apg-b-label">蘋果（個）</span>: <span id="apg-b-val" class="val-num">0</span></label>
+                    <input type="range" id="apg-b-slider" min="2" max="60" value="60" step="1">
                   </div>
                 </div>
 
-                <div class="visual-feedback" id="ap-feedback">載入中...</div>
+                <div class="visual-feedback" id="apg-feedback">載入中...</div>
               </div>
             </div>
           </div>
         </div>
 
         <div class="quiz-section">
-          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (應用問題)</h3>
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分裝與間隔問題)</h3>
 
           <div class="quiz-card" data-quiz="2-2-6-1">
             <p class="quiz-question"><strong>Q1.</strong> 老師把 \(48\) 顆糖果和 \(72\) 片餅乾分裝成小袋，每袋糖果一樣多、每袋餅乾也一樣多，且全部分完。則<strong>最多可以分成幾袋</strong>？</p>
@@ -796,12 +791,121 @@
           </div>
 
           <div class="quiz-card" data-quiz="2-2-6-2">
-            <p class="quiz-question"><strong>Q2.</strong> 甲路線公車每 \(12\) 分鐘發車一班，乙路線每 \(16\) 分鐘發車一班。若兩線剛剛同時發車，則<strong>最少再幾分鐘</strong>後會再度同時發車？</p>
+            <p class="quiz-question"><strong>Q2.</strong> 一塊長 \(84\) 公尺、寬 \(60\) 公尺的長方形花圃，要沿著四周架設燈柱，<strong>四個頂點都要架</strong>，且相鄰兩根燈柱的距離相等並<strong>盡可能大</strong>。則一共需要幾根燈柱？</p>
             <div class="options-container">
-              <label class="option-label"><input type="radio" name="q2-2-6-2" value="A"><span class="option-text">A. \(24\) 分鐘</span></label>
-              <label class="option-label"><input type="radio" name="q2-2-6-2" value="B"><span class="option-text">B. \(32\) 分鐘</span></label>
-              <label class="option-label"><input type="radio" name="q2-2-6-2" value="C"><span class="option-text">C. \(36\) 分鐘</span></label>
-              <label class="option-label"><input type="radio" name="q2-2-6-2" value="D"><span class="option-text">D. \(48\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-2" value="A"><span class="option-text">A. \(12\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-2" value="B"><span class="option-text">B. \(24\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-2" value="C"><span class="option-text">C. \(25\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6-2" value="D"><span class="option-text">D. \(48\) 根</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>燈柱間距要同時整除長 \(84\) 與寬 \(60\)（四個頂點都要架），所以間距是兩數的<strong>公因數</strong>；要「盡可能大」就取<strong>最大公因數</strong>。<br>
+              短除法：\(84\)、\(60\) 同除以 \(2\) 得 \(42\)、\(30\)，再同除以 \(2\) 得 \(21\)、\(15\)，再同除以 \(3\) 得 \(7\)、\(5\)（已互質）。<br>
+              \(( 84 , 60 ) = 2 \times 2 \times 3 = 12\)，所以間距為 \(12\) 公尺。<br>
+              周長 \(( 84 + 60 ) \times 2 = 288\)，因為是<strong>繞一圈</strong>（每邊一端架、一端不架），<strong>根數 \(=\) 間隔數</strong> \(= 288 \div 12 = 24\)，答案為 B。<br>
+              （選 C 的是把「直線種樹要加 1」誤用到繞一圈的情形——繞一圈頭尾接在一起，<strong>不必加 1</strong>；選 A 的是誤把 \(12\) 公尺這個<strong>間距</strong>當成根數。）</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 週期與拼合問題（求最小公倍數）
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-spin" aria-hidden="true"></i> 重點 7：週期與拼合問題——把小的湊成整體，求<strong>最小公倍數</strong>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>和上一個重點剛好相反</strong>：這裡的答案要<strong>被每一個數整除</strong>，也就是它們的<strong>公倍數</strong>；要「最少、最小」就取<strong>最小公倍數</strong>。
+                <ul>
+                  <li>切小求 \(( a , b )\)：答案<strong>比原來的數小</strong>（是它們的因數）。</li>
+                  <li>湊整體求 \([ a , b ]\)：答案<strong>比原來的數大</strong>（是它們的倍數）。算完先看一眼大小方向對不對，可以擋掉一半的錯。</li>
+                </ul>
+              </li>
+              <li><strong>① 週期問題</strong>：小翊每 \(8\) 天、小妍每 \(10\) 天、小靖每 \(14\) 天到公園跑步，今天三人都到，最少再幾天會再度同一天到？
+                <ul>
+                  <li>經過的天數必須<strong>同時是</strong> \(8\)、\(10\)、\(14\) 的倍數，所以它是三數的公倍數。</li>
+                  <li>要「最少」就取最小公倍數：\([ 8 , 10 , 14 ] = 280\)，最少再 \(280\) 天。</li>
+                  <li><strong>三個數的短除法</strong>：只要<strong>任兩個</strong>還有共同質因數就要繼續除，除不盡的原封不動抄下來。</li>
+                </ul>
+              </li>
+              <li><strong>② 圖形拼合問題</strong>：用長 \(60\) 公分、寬 \(50\) 公分的長方形磁磚拼成一個正方形（不重疊、不切割），最小邊長是多少？要幾塊？
+                <ul>
+                  <li>正方形的邊長必須同時是 \(60\) 與 \(50\) 的倍數；要「最小」就取 \([ 60 , 50 ] = 300\) 公分。</li>
+                  <li><strong>要幾塊要另外算</strong>：橫向排 \(300 \div 60 = 5\) 塊、縱向排 \(300 \div 50 = 6\) 塊，共 \(5 \times 6 = 30\) 塊。</li>
+                  <li>驗算面積：磁磚共 \(30 \times 3000 = 90000\)，正方形 \(300 \times 300 = 90000\)，對得上。</li>
+                </ul>
+              </li>
+              <li><strong>最常見的陷阱</strong>：問「最小邊長」答 \(300\)，但問「<strong>最少幾塊</strong>」時，很多人直接寫 \(300 \div 60 = 5\) 或 \(300 \div 50 = 6\)。<strong>塊數是兩個方向相乘</strong>，不是其中一邊。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>題目關鍵字</th><th>要求什麼</th><th>例子</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>最少、最小、再相遇、再度同時</td><td>最小公倍數</td><td>最少再幾天、最少再幾分鐘</td></tr>
+                <tr><td>拼成正方形（最小邊長）</td><td>最小公倍數</td><td>\([\ 長\ ,\ 寬\ ]\)</td></tr>
+                <tr><td>拼成正方形（要幾塊）</td><td>兩個方向相乘</td><td>\(( 邊長 \div 長 ) \times ( 邊長 \div 寬 )\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="pixel_tiles.webp" alt="像素風插圖：像素蟬把一塊塊同樣大小的長方形磁磚整齊拼成一個完整的發光正方形" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-object-group"></i> 視覺互動探索：湊整體情境模擬器</h3>
+            <p class="interactive-instruction">兩種情境都在<strong>把小的湊成整體</strong>，觀察它們求的都是<strong>最小公倍數</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-apply-lcm" width="540" height="340"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="apl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="step-btn-grid" style="margin-bottom: 0.25rem;">
+                  <button class="step-choice-btn active" data-apply-group="lcm" data-apply-mode="cycle">① 週期相遇</button>
+                  <button class="step-choice-btn" data-apply-group="lcm" data-apply-mode="tile">② 磁磚拼合</button>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="apl-a-slider"><span id="apl-a-label">小翊每幾天來</span>: <span id="apl-a-val" class="val-num">0</span></label>
+                    <input type="range" id="apl-a-slider" min="2" max="60" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="apl-b-slider"><span id="apl-b-label">小妍每幾天來</span>: <span id="apl-b-val" class="val-num">0</span></label>
+                    <input type="range" id="apl-b-slider" min="2" max="60" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="apl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (週期與拼合問題)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-7-1">
+            <p class="quiz-question"><strong>Q1.</strong> 甲路線公車每 \(12\) 分鐘發車一班，乙路線每 \(16\) 分鐘發車一班。若兩線剛剛同時發車，則<strong>最少再幾分鐘</strong>後會再度同時發車？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-7-1" value="A"><span class="option-text">A. \(24\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7-1" value="B"><span class="option-text">B. \(32\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7-1" value="C"><span class="option-text">C. \(36\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7-1" value="D"><span class="option-text">D. \(48\) 分鐘</span></label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
@@ -811,6 +915,25 @@
               \([ 12 , 16 ] = 2 \times 2 \times 3 \times 4 = 48\)，答案為 D。<br>
               驗算：\(48 \div 12 = 4\) 班、\(48 \div 16 = 3\) 班，兩邊剛好都在第 \(48\) 分鐘發車。<br>
               （選 A 的是誤算成最大公因數的相關數字；\(( 12 , 16 ) = 4\) 在這題用不上。）</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-7-2">
+            <p class="quiz-question"><strong>Q2.</strong> 用長 \(8\) 公分、寬 \(6\) 公分的長方形磁磚，不重疊也不切割地拼成一個正方形。若要拼成<strong>最小的</strong>正方形，共需要幾塊磁磚？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-7-2" value="A"><span class="option-text">A. \(3\) 塊</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7-2" value="B"><span class="option-text">B. \(4\) 塊</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7-2" value="C"><span class="option-text">C. \(12\) 塊</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7-2" value="D"><span class="option-text">D. \(24\) 塊</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>分成兩步，<strong>先求邊長、再求塊數</strong>。<br>
+              正方形的邊長要同時是 \(8\) 與 \(6\) 的倍數，取最小公倍數：\([ 8 , 6 ] = 24\)，最小邊長為 \(24\) 公分。<br>
+              接著算塊數：橫向排 \(24 \div 8 = 3\) 塊、縱向排 \(24 \div 6 = 4\) 塊，所以共 \(3 \times 4 = 12\) 塊，答案為 C。<br>
+              驗算面積：\(12 \times ( 8 \times 6 ) = 576 = 24 \times 24\)，對得上。<br>
+              （選 A、B 的是只算了其中一個方向就停下來——<strong>塊數要兩個方向相乘</strong>。）</p>
             </div>
           </div>
         </div>

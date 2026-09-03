@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initMultipleCanvas();
   initLcmLadderCanvas();
   initTowerCanvas();
-  initApplyCanvas();
+  initApplyCanvas({ canvasId: 'canvas-apply-gcd', prefix: 'apg', group: 'gcd', defMode: 'pack' });
+  initApplyCanvas({ canvasId: 'canvas-apply-lcm', prefix: 'apl', group: 'lcm', defMode: 'cycle' });
 });
 
 /* ==========================================================================
@@ -30,7 +31,9 @@ function initQuizSystem() {
     '2-2-5-1': 'B', // 取共同質因數次方最小者 => 2 x 3^2
     '2-2-5-2': 'A', // a x b = (a,b) x [a,b] => 8 x 120 = 960
     '2-2-6-1': 'C', // (48 , 72) = 24 => 最多可分成 24 袋
-    '2-2-6-2': 'D'  // [12 , 16] = 48 分鐘後再度同時發車
+    '2-2-6-2': 'B', // (84 , 60) = 12，周長 288 / 12 = 24 根（繞一圈不加 1）
+    '2-2-7-1': 'D', // [12 , 16] = 48 分鐘後再度同時發車
+    '2-2-7-2': 'C'  // [8 , 6] = 24，3 x 4 = 12 塊
   };
 
   quizCards.forEach(card => {
@@ -900,20 +903,26 @@ function initTowerCanvas() {
 /* ==========================================================================
    8. 重點 6：應用問題情境模擬器
    ========================================================================== */
-function initApplyCanvas() {
-  const canvas = document.getElementById('canvas-apply');
+/**
+ * 應用情境模擬器。重點 6（切小 → 最大公因數）與重點 7（湊整體 → 最小公倍數）
+ * 共用同一份繪圖程式碼，只差在開放哪幾個情境模式。
+ * opts = { canvasId, prefix, group, defMode }
+ */
+function initApplyCanvas(opts) {
+  const canvas = document.getElementById(opts.canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const sliderA = document.getElementById('ap-a-slider');
-  const sliderB = document.getElementById('ap-b-slider');
-  const valA = document.getElementById('ap-a-val');
-  const valB = document.getElementById('ap-b-val');
-  const labA = document.getElementById('ap-a-label');
-  const labB = document.getElementById('ap-b-label');
-  const formula = document.getElementById('ap-formula');
-  const feedback = document.getElementById('ap-feedback');
-  const buttons = document.querySelectorAll('[data-apply-mode]');
+  const p = opts.prefix;
+  const sliderA = document.getElementById(p + '-a-slider');
+  const sliderB = document.getElementById(p + '-b-slider');
+  const valA = document.getElementById(p + '-a-val');
+  const valB = document.getElementById(p + '-b-val');
+  const labA = document.getElementById(p + '-a-label');
+  const labB = document.getElementById(p + '-b-label');
+  const formula = document.getElementById(p + '-formula');
+  const feedback = document.getElementById(p + '-feedback');
+  const buttons = document.querySelectorAll('[data-apply-group="' + opts.group + '"]');
 
   const MODES = {
     pack: { labelA: '梨子（個）', labelB: '蘋果（個）', defA: 36, defB: 60, kind: 'gcd' },
@@ -922,7 +931,7 @@ function initApplyCanvas() {
     tree: { labelA: '土地長（m）', labelB: '土地寬（m）', defA: 24, defB: 18, kind: 'gcd' }
   };
 
-  let mode = 'pack';
+  let mode = opts.defMode;
 
   function drawPack(a, b, g) {
     const perBoxA = a / g;

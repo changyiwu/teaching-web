@@ -50,6 +50,7 @@
         <a href="#concept4" class="nav-item"><i class="fa-solid fa-cash-register"></i> 求代數式的值</a>
         <a href="#concept5" class="nav-item"><i class="fa-solid fa-boxes-stacked"></i> 一元一次式與同類項</a>
         <a href="#concept6" class="nav-item"><i class="fa-solid fa-calculator"></i> 加減與去括號</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-layer-group"></i> 四則運算與分數</a>
       </nav>
     </header>
 
@@ -681,7 +682,7 @@
       </section>
 
       <!-- ==========================================
-           重點 6: 加減與去括號
+           重點 6: 同類項的加減與去括號
            ========================================== -->
       <section class="concept-section" id="concept6">
         <h2 class="section-title">
@@ -706,12 +707,7 @@
               <li><strong>括號前面有數字時，用分配律乘進去</strong>，而且<strong>每一項都要乘到</strong>：
                 \[ \begin{aligned} & (x+4) \times (-4) \\ &= x \times (-4) + 4 \times (-4) \\ &= -4x - 16 \end{aligned} \]
                 \[ \begin{aligned} & -3(-12x-5) \\ &= (-3)(-12x) - (-3)(5) \\ &= 36x + 15 \end{aligned} \]</li>
-              <li><strong>多層括號由內而外拆</strong>——先拆小括號（每一項變號），把中括號裡的同類項併起來，最後才把外面的數乘進去：
-                \[ \begin{aligned} & 11x - 2[3x - (5x - 4)] \\ &= 11x - 2[3x - 5x + 4] \\ &= 11x - 2[-2x + 4] \\ &= 11x + 4x - 8 \\ &= 15x - 8 \end{aligned} \]</li>
-              <li><strong>分數形式先通分，分子記得加括號</strong>。分數線有括號的效果，通分後<strong>整個分子都要乘</strong>：
-                \[ \begin{aligned} & \frac{x-3}{6} - \frac{x-1}{10} \\ &= \frac{5(x-3) - 3(x-1)}{30} \\ &= \frac{5x-15-3x+3}{30} \\ &= \frac{2x-12}{30} = \frac{x-6}{15} \end{aligned} \]
-                第二個分數前面是減號，展開後 \(-3(x-1) = -3x+3\)，<strong>那個 \(+3\) 最容易錯</strong>。</li>
-              <li><strong>答案長得不一樣不代表錯</strong>：\(\frac{x-6}{15}\) 與 \(\frac{x}{15} - \frac{2}{5}\) 其實是同一個式子，通分就看得出來。</li>
+              <li><strong>最後檢查一次「還能不能再併」</strong>：把 \(x\) 的項收成一項、常數收成一項，兩者不同類就停手，那就是最簡的樣子。</li>
             </ul>
 
             <div class="table-scroll">
@@ -741,28 +737,26 @@
               <canvas id="canvas-simplify" width="540" height="380"></canvas>
               <div class="control-panel">
                 <div class="value-display">
-                  <span id="sp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                  <span id="sp6-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
                 </div>
 
                 <div class="btn-group-wrapper">
                   <div class="btn-group-row">
                     <span class="btn-group-label">選一題</span>
-                    <div class="btn-group" id="sp-case-group">
-                  <button class="pick-btn active" data-case="0">3x+5+2x+7</button>
-                  <button class="pick-btn" data-case="1">−2(3x−5)+3(−x−1)</button>
-                  <button class="pick-btn" data-case="2">11x−2[3x−(5x−4)]</button>
-                  <button class="pick-btn" data-case="3">分數形式</button>
+                    <div class="btn-group" id="sp6-case-group">
+                      <button class="pick-btn active" data-case="0">3x+5+2x+7</button>
+                      <button class="pick-btn" data-case="1">−2(3x−5)+3(−x−1)</button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
                 <div class="step-controls">
-                  <button class="step-ctrl-btn" id="sp-prev"><i class="fa-solid fa-chevron-left"></i> 上一步</button>
-                  <span class="step-counter" id="sp-step">1 / 1</span>
-                  <button class="step-ctrl-btn" id="sp-next">下一步 <i class="fa-solid fa-chevron-right"></i></button>
+                  <button class="step-ctrl-btn" id="sp6-prev"><i class="fa-solid fa-chevron-left"></i> 上一步</button>
+                  <span class="step-counter" id="sp6-step">1 / 1</span>
+                  <button class="step-ctrl-btn" id="sp6-next">下一步 <i class="fa-solid fa-chevron-right"></i></button>
                 </div>
 
-                <div class="visual-feedback" id="sp-feedback">載入中...</div>
+                <div class="visual-feedback" id="sp6-feedback">載入中...</div>
               </div>
             </div>
           </div>
@@ -794,12 +788,115 @@
           </div>
 
           <div class="quiz-card" data-quiz="3-1-6-2">
-            <p class="quiz-question"><strong>Q2.</strong> 化簡 \(9x - 3[2x - (4x-5)]\)，結果是什麼？</p>
+            <p class="quiz-question"><strong>Q2.</strong> 化簡 \(7 - (3x - 8) + 2x\)，結果是什麼？</p>
             <div class="options-container">
-              <label class="option-label"><input type="radio" name="q3-1-6-2" value="A"><span class="option-text">A. \(3x - 15\)</span></label>
-              <label class="option-label"><input type="radio" name="q3-1-6-2" value="B"><span class="option-text">B. \(15x - 15\)</span></label>
-              <label class="option-label"><input type="radio" name="q3-1-6-2" value="C"><span class="option-text">C. \(15x + 15\)</span></label>
-              <label class="option-label"><input type="radio" name="q3-1-6-2" value="D"><span class="option-text">D. \(-15x + 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-2" value="A"><span class="option-text">A. \(-x + 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-2" value="B"><span class="option-text">B. \(-x - 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-2" value="C"><span class="option-text">C. \(-5x + 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6-2" value="D"><span class="option-text">D. \(x + 15\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>括號前面是<strong>減號</strong>，去括號後<strong>裡面每一項都要變號</strong>：
+              \[ \begin{aligned} & 7 - (3x - 8) + 2x \\ &= 7 - 3x + 8 + 2x \\ &= -3x + 2x + 7 + 8 \\ &= -x + 15 \end{aligned} \]
+              答案為 A。<br>
+              關鍵在第二項：括號裡的 \(-8\) 變號後成為 \(+8\)，很多人只把 \(3x\) 變號、忘了後面那一項。<br>
+              B 就是只變了 \(3x\)、\(-8\) 原封不動抄下來的結果。<br>
+              C 是把括號<strong>外面</strong>的 \(+2x\) 也一起變號了——變號只發生在<strong>括號裡</strong>。<br>
+              D 是把 \(-3x + 2x\) 誤算成 \(+x\)；係數 \(-3 + 2 = -1\)，所以是 \(-x\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 一元一次式的四則運算（多層括號與分數形式）
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 7：一元一次式的四則運算——<strong>多層括號</strong>與<strong>分數形式</strong>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>順序和數的四則運算一模一樣</strong>：有括號先拆括號（<strong>由內而外</strong>），再<strong>先乘除後加減</strong>，最後合併同類項。上一個重點的每一條規則在這裡全部照用，只是要用很多次。</li>
+              <li><strong>多層括號由內而外拆</strong>——先拆最裡面的小括號（每一項變號），把中括號裡的同類項<strong>先併起來</strong>，最後才把外面的數乘進去：
+                \[ \begin{aligned} & 11x - 2[3x - (5x - 4)] \\ &= 11x - 2[3x - 5x + 4] \\ &= 11x - 2[-2x + 4] \\ &= 11x + 4x - 8 \\ &= 15x - 8 \end{aligned} \]
+                <strong>「中括號裡先併」這一步不要跳過</strong>：先併成 \(-2x + 4\) 只要乘兩次，直接乘進去要乘三次，出錯機會多一半。</li>
+              <li><strong>分數形式先通分，分子記得加括號</strong>。分數線本身有括號的效果，通分後<strong>整個分子都要乘</strong>：
+                \[ \begin{aligned} & \frac{x-3}{6} - \frac{x-1}{10} \\ &= \frac{5(x-3) - 3(x-1)}{30} \\ &= \frac{5x-15-3x+3}{30} \\ &= \frac{2x-12}{30} = \frac{x-6}{15} \end{aligned} \]
+                第二個分數前面是減號，展開後 \(-3(x-1) = -3x+3\)，<strong>那個 \(+3\) 最容易錯</strong>。</li>
+              <li><strong>係數是分數時，可以先乘以分母的最小公倍數嗎</strong>？<strong>不行</strong>——這裡是<strong>式子</strong>不是方程式，兩邊沒有等號可以同乘。式子只能通分，不能「把分母消掉」。這一點到下一節解方程式時才會改變。</li>
+              <li><strong>答案長得不一樣不代表錯</strong>：\(\frac{x-6}{15}\) 與 \(\frac{x}{15} - \frac{2}{5}\) 其實是同一個式子，通分就看得出來。對答案時先確認是不是同一個式子，再說誰對誰錯。</li>
+              <li><strong>從情境列式再化簡（完整流程）</strong>：一枝筆 \(x\) 元，小明買 \(5\) 枝並用了一張折 \(20\) 元的券，小華買的枝數是小明的 \(2\) 倍但沒有券，兩人共付多少元？
+                \[ \begin{aligned} & (5x - 20) + 2 \times 5x \\ &= 5x - 20 + 10x \\ &= 15x - 20 \end{aligned} \]
+                <strong>先老實列出來、再化簡</strong>，不要一邊列一邊心算合併，那是漏項的主因。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>步驟</th><th>做什麼</th><th>以 \(11x - 2[3x - (5x - 4)]\) 為例</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>拆<strong>最內層</strong>小括號</td><td>\(3x - (5x-4) \to 3x - 5x + 4\)</td></tr>
+                <tr><td>2</td><td>括號<strong>裡</strong>先合併</td><td>\(3x - 5x + 4 \to -2x + 4\)</td></tr>
+                <tr><td>3</td><td>外面的數<strong>乘進去</strong></td><td>\(-2[-2x+4] \to 4x - 8\)</td></tr>
+                <tr><td>4</td><td>全式<strong>合併同類項</strong></td><td>\(11x + 4x - 8 \to 15x - 8\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="boba_split.webp" alt="手搖飲黑板菜單風插圖：黑板上的團購單用大中小括號一層層框住各組的訂單，旁邊寫著通分後的分帳金額" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-sitemap"></i> 視覺互動探索：多層括號拆解器</h3>
+            <p class="interactive-instruction">選一題，用<strong>下一步</strong>一行一行拆到底。留意<strong>拆括號的順序是由內而外</strong>，以及分數通分時<strong>整個分子都要乘</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-simplify-adv" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sp7-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">選一題</span>
+                    <div class="btn-group" id="sp7-case-group">
+                      <button class="pick-btn active" data-case="2">11x−2[3x−(5x−4)]</button>
+                      <button class="pick-btn" data-case="3">分數形式</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step-controls">
+                  <button class="step-ctrl-btn" id="sp7-prev"><i class="fa-solid fa-chevron-left"></i> 上一步</button>
+                  <span class="step-counter" id="sp7-step">1 / 1</span>
+                  <button class="step-ctrl-btn" id="sp7-next">下一步 <i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="visual-feedback" id="sp7-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (四則運算與分數形式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-7-1">
+            <p class="quiz-question"><strong>Q1.</strong> 化簡 \(9x - 3[2x - (4x-5)]\)，結果是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-7-1" value="A"><span class="option-text">A. \(3x - 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7-1" value="B"><span class="option-text">B. \(15x - 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7-1" value="C"><span class="option-text">C. \(15x + 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7-1" value="D"><span class="option-text">D. \(-15x + 15\)</span></label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
@@ -813,6 +910,27 @@
               C 錯在 \(-3 \times 5\) 算成 \(+15\)。<br>
               A 是漏了中括號裡的 \(-4x\) 沒有變號，只把 \(-5\) 變號。<br>
               D 是把最後的 \(9x + 6x\) 誤算成 \(-15x\)——這裡兩項<strong>都是正的</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-7-2">
+            <p class="quiz-question"><strong>Q2.</strong> 化簡 \(\frac{x+2}{4} - \frac{x-6}{6}\)，結果是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-7-2" value="A"><span class="option-text">A. \(\frac{x+18}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7-2" value="B"><span class="option-text">B. \(\frac{x-6}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7-2" value="C"><span class="option-text">C. \(\frac{x+8}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7-2" value="D"><span class="option-text">D. \(\frac{5x+18}{12}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>\(4\) 與 \(6\) 的最小公倍數是 \(12\)，先通分——<strong>整個分子都要乘</strong>，所以要加括號：
+              \[ \begin{aligned} & \frac{x+2}{4} - \frac{x-6}{6} \\ &= \frac{3(x+2) - 2(x-6)}{12} \\ &= \frac{3x+6-2x+12}{12} \\ &= \frac{x+18}{12} \end{aligned} \]
+              答案為 A。<br>
+              最容易錯的是第二個分數：前面是<strong>減號</strong>，展開 \(-2(x-6)\) 時 \(-6\) 要變成 \(+12\)。<br>
+              B 就是把它算成 \(-2x-12\)（\(-6\) 沒變號）的結果。<br>
+              C 是通分時只把分子的第一項乘了倍數，\(+2\) 和 \(-6\) 忘了乘。<br>
+              D 是把 \(3x\) 與 \(2x\) 相加而不是相減；分子上是 \(3x - 2x = x\)。</p>
             </div>
           </div>
         </div>

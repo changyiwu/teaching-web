@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initOrderCanvas();
   initSubCanvas();
   initSortCanvas();
-  initSimplifyCanvas();
+  initSimplifyCanvas({ canvasId: 'canvas-simplify', prefix: 'sp6', defCase: 0 });
+  initSimplifyCanvas({ canvasId: 'canvas-simplify-adv', prefix: 'sp7', defCase: 2 });
 });
 
 /* ==========================================================================
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initQuizSystem() {
   const quizCards = document.querySelectorAll('.quiz-card');
 
-  // Correct answers mapping for Section 3-1 (12 Quizzes)
+  // Correct answers mapping for Section 3-1 (14 Quizzes)
   const answers = {
     '3-1-1-1': 'B', // 貴 12 元是 x+12，不是 12x
     '3-1-1-2': 'D', // 未知不等於「不能是某個數」
@@ -30,7 +31,9 @@ function initQuizSystem() {
     '3-1-5-1': 'B', // 係數 -5/2，常數項 7
     '3-1-5-2': 'D', // (-8x)x(-5/4) = 10x
     '3-1-6-1': 'C', // -8x+12-5x+5 = -13x+17
-    '3-1-6-2': 'B'  // 9x+6x-15 = 15x-15
+    '3-1-6-2': 'A', // 7-3x+8+2x = -x+15（括號裡每一項變號）
+    '3-1-7-1': 'B', // 9x+6x-15 = 15x-15
+    '3-1-7-2': 'A'  // (3(x+2)-2(x-6))/12 = (x+18)/12
   };
 
   quizCards.forEach(card => {
@@ -988,15 +991,22 @@ function initSortCanvas() {
 /* ==========================================================================
    重點 6：化簡推導器
    ========================================================================== */
-function initSimplifyCanvas() {
-  const canvas = document.getElementById('canvas-simplify');
+/**
+ * 化簡推導器。重點 6（同類項加減與去括號）與重點 7（多層括號與分數形式）
+ * 共用同一組 CASES；按鈕的 data-case 直接帶 CASES 的絕對索引，
+ * 各自只開放屬於自己那幾題。
+ * opts = { canvasId, prefix, defCase }
+ */
+function initSimplifyCanvas(opts) {
+  const canvas = document.getElementById(opts.canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const formulaEl = document.getElementById('sp-formula');
-  const feedbackEl = document.getElementById('sp-feedback');
-  const stepEl = document.getElementById('sp-step');
-  const prevBtn = document.getElementById('sp-prev');
-  const nextBtn = document.getElementById('sp-next');
+  const p = opts.prefix;
+  const formulaEl = document.getElementById(p + '-formula');
+  const feedbackEl = document.getElementById(p + '-feedback');
+  const stepEl = document.getElementById(p + '-step');
+  const prevBtn = document.getElementById(p + '-prev');
+  const nextBtn = document.getElementById(p + '-next');
 
   const X = (n, color) => xItems(n, color);
 
@@ -1042,7 +1052,7 @@ function initSimplifyCanvas() {
     }
   ];
 
-  let ci = 0, si = 0;
+  let ci = opts.defCase, si = 0;
 
   function draw() {
     const W = canvas.width, H = canvas.height;
@@ -1095,7 +1105,7 @@ function initSimplifyCanvas() {
 
   prevBtn.addEventListener('click', () => { si--; update(); });
   nextBtn.addEventListener('click', () => { si++; update(); });
-  bindPickGroup(document.getElementById('sp-case-group'), 'data-case', v => {
+  bindPickGroup(document.getElementById(p + '-case-group'), 'data-case', v => {
     ci = parseInt(v, 10);
     si = 0;
     update();

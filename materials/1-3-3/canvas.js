@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDiscountCanvas();
   initFigureCanvas();
   initAgeCanvas();
+  initRateCanvas();
   initVerdictCanvas();
 });
 
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initQuizSystem() {
   const quizCards = document.querySelectorAll('.quiz-card');
 
-  // Correct answers mapping for Section 3-3 (14 Quizzes)
+  // Correct answers mapping for Section 3-3 (16 Quizzes)
   const answers = {
     '3-3-1-1': 'B', // 3x×0.8 - x = 42 → x = 30
     '3-3-1-2': 'C', // 解得出來不代表符合情境
@@ -33,7 +34,9 @@ function initQuizSystem() {
     '3-3-6-1': 'B', // x+16 = 3(x+2) → x = 5
     '3-3-6-2': 'B', // 66-x = 3(x+6) → x = 12
     '3-3-7-1': 'B', // x/80 = (x-100)/60 → x = 400
-    '3-3-7-2': 'C'  // 45x = 112，杯數不是正整數，不合理
+    '3-3-7-2': 'A', // x/8 + x/12 = 1 -> x = 4.8（不可把時速直接平均）
+    '3-3-8-1': 'C', // 45x = 112，杯數不是正整數，不合理
+    '3-3-8-2': 'C'  // x = -6，問的是幾年後，負數不合題意
   };
 
   quizCards.forEach(card => {
@@ -1191,4 +1194,250 @@ function initVerdictCanvas() {
   if (btnNo) btnNo.addEventListener('click', () => { verdict = 'no'; draw(); });
   if (btnReset) btnReset.addEventListener('click', () => { verdict = null; draw(); });
   draw();
+}
+
+/* ==========================================================================
+   重點 7：速率關係追蹤圖
+   兩種情境各自對應一種相等關係——「時間相同」與「距離相同」。
+   ========================================================================== */
+function initRateCanvas() {
+  const canvas = document.getElementById('canvas-rate');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const sA = document.getElementById('rt-a-slider');
+  const sB = document.getElementById('rt-b-slider');
+  const sC = document.getElementById('rt-c-slider');
+  const vA = document.getElementById('rt-a-val');
+  const vB = document.getElementById('rt-b-val');
+  const vC = document.getElementById('rt-c-val');
+  const lA = document.getElementById('rt-a-label');
+  const lB = document.getElementById('rt-b-label');
+  const lC = document.getElementById('rt-c-label');
+  const formula = document.getElementById('rt-formula');
+  const fb = document.getElementById('rt-feedback');
+  const buttons = document.querySelectorAll('[data-rate-mode]');
+
+  const C = C_SKY;
+
+  const MODES = {
+    meet: {
+      a: { label: '甲的速率（公尺／分）', min: 40, max: 100, step: 10, def: 60 },
+      b: { label: '乙的速率（公尺／分）', min: 50, max: 120, step: 10, def: 80 },
+      c: { label: '乙抵達時甲還差（公尺）', min: 20, max: 200, step: 10, def: 100 }
+    },
+    round: {
+      a: { label: '上山時速（公里／時）', min: 2, max: 6, step: 1, def: 3 },
+      b: { label: '下山時速（公里／時）', min: 2, max: 8, step: 1, def: 4 },
+      c: { label: '來回總時數（小時）', min: 1, max: 6, step: 1, def: 2 }
+    }
+  };
+
+  let mode = 'meet';
+
+  function applyMode() {
+    const m = MODES[mode];
+    [[sA, vA, lA, m.a], [sB, vB, lB, m.b], [sC, vC, lC, m.c]].forEach(([s, v, l, cfg]) => {
+      s.min = cfg.min; s.max = cfg.max; s.step = cfg.step; s.value = cfg.def;
+      v.textContent = cfg.def;
+      l.textContent = cfg.label;
+    });
+  }
+
+  // 一條進度條：畫底槽、已跑的部分，未跑完的部分用虛線標出來
+  function drawTrack(y, frac, color, name, doneTxt, restTxt) {
+    const L = 74, R = 502, W = R - L, H = 20;
+
+    ctx.fillStyle = MUTED;
+    ctx.font = f(700, 13);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(name, 18, y + H / 2);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    roundRect(ctx, L, y, W, H, 6);
+    ctx.fill();
+
+    const w = Math.max(2, W * clamp(frac, 0, 1));
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.85;
+    roundRect(ctx, L, y, w, H, 6);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    if (frac < 0.999) {
+      ctx.save();
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = NO_COLOR;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(L + w, y + H / 2);
+      ctx.lineTo(R, y + H / 2);
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.fillStyle = NO_COLOR;
+      ctx.font = f(700, 12);
+      ctx.textAlign = 'center';
+      ctx.fillText(restTxt, (L + w + R) / 2, y - 11);
+    }
+
+    // 條上的字壓在填色上，用深底色才讀得清楚
+    ctx.fillStyle = '#0f172a';
+    ctx.font = f(800, 12);
+    ctx.textAlign = 'center';
+    ctx.fillText(doneTxt, L + w / 2, y + H / 2);
+    ctx.textAlign = 'left';
+  }
+
+  function drawFlags(leftTxt, rightTxt) {
+    const L = 74, R = 502;
+    ctx.fillStyle = DIM;
+    ctx.font = f(700, 12);
+    ctx.textAlign = 'center';
+    ctx.fillText(leftTxt, L, 68);
+    ctx.fillText(rightTxt, R, 68);
+    ctx.textAlign = 'left';
+    ctx.save();
+    ctx.setLineDash([3, 5]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.16)';
+    ctx.lineWidth = 1.5;
+    [L, R].forEach(px => {
+      ctx.beginPath();
+      ctx.moveTo(px, 78);
+      ctx.lineTo(px, 196);
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  function drawMeet(v1, v2, d) {
+    drawTitle(ctx, '兩人同時出發，乙先到終點時甲還差一段', C);
+
+    if (v2 <= v1) {
+      drawNote(ctx, '乙必須比甲快，乙才會先抵達終點', 150, NO_COLOR, 15);
+      drawNote(ctx, '請把「乙的速率」調得比「甲的速率」大', 176, MUTED, 13);
+      return {
+        ok: false,
+        tex: '\\text{（乙沒有比甲快，情境不成立）}',
+        note: `目前甲的速率 \\(${v1}\\)、乙的速率 \\(${v2}\\)，乙<strong>沒有比甲快</strong>，` +
+          `不可能發生「乙到終點時甲還差一段」的情形。把乙的速率調大再看一次。`
+      };
+    }
+
+    // x 與 t 都可能不是整數，一律保留精確分數（開發約束 19：canvas 上不寫成除法或小數）
+    const [xn, xd] = reduce(v2 * d, v2 - v1);
+    const [tn, td] = reduce(d, v2 - v1);
+    const x = xn / xd;
+    const t = tn / td;
+    const xItem = xd === 1 ? T(xn, OK_COLOR) : VF(T(xn, OK_COLOR), T(xd, OK_COLOR), OK_COLOR);
+
+    drawFlags('起點', '終點');
+    drawTrack(88, 1, C, '乙', `跑了全長 x`, '');
+    drawTrack(158, (x - d) / x, C_BRASS, '甲', `跑了 x − ${d}`, `還差 ${d}`);
+
+    // 相等關係：兩人所花的時間一樣
+    drawNote(ctx, '兩人同時出發、同時停錶 → 花的時間相同', 218, MUTED, 13);
+    drawEqPanel(ctx, eqLine(
+      [VF(IT('x', C), T(v2, C), C)],
+      [VF(SEQ([IT('x', C), T('−', MUTED), T(d, C)]), T(v1, C), C)],
+      MUTED
+    ), 254, C, { h: 34, size: 24 });
+
+    drawArrow(ctx, canvas.width / 2, 290, canvas.width / 2, 306, MUTED, 2);
+
+    drawEqPanel(ctx, [
+      IT('x', OK_COLOR), T('=', MUTED), xItem, T('公尺', OK_COLOR)
+    ], 332, OK_COLOR, { h: 30, size: 23 });
+
+    const approx = (xd === 1) ? '' : '約 ';
+    drawNote(ctx, `檢驗：兩人都走了 ${approx}${numStr(t)} 分鐘，甲走了 ${approx}${numStr(v1 * t)} 公尺，正好差 ${d} 公尺`, 374, DIM, 12);
+
+    return {
+      ok: true,
+      tex: `x = ${texFrac(xn, xd)}`,
+      note: `設全長 \\(x\\) 公尺。乙走了 \\(x\\)、甲走了 \\(x - ${d}\\)，兩人<strong style="color:${C}">花的時間相同</strong>：<br>` +
+        `\\(\\frac{x}{${v2}} = \\frac{x-${d}}{${v1}}\\)，交叉相乘得 \\(${v1}x = ${v2}x - ${v2 * d}\\)，` +
+        `\\(${v2 - v1}x = ${v2 * d}\\)，所以 \\(x = ${texFrac(xn, xd)}\\) 公尺。<br>` +
+        `<strong>檢驗</strong>：兩人都走了 \\(${texFrac(tn, td)}\\) 分鐘，` +
+        `甲走 \\(${v1} \\times ${texFrac(tn, td)} = ${texFrac(v1 * tn, td)}\\) 公尺，離終點正好 \\(${d}\\) 公尺。`
+    };
+  }
+
+  function drawRound(vu, vd, T2) {
+    drawTitle(ctx, '同一條山路來回一趟，上山慢、下山快', C);
+
+    // 課本這一題的答案就是 24/7，一律保留精確分數（開發約束 19）
+    const [xn, xd] = reduce(T2 * vu * vd, vu + vd);
+    const [un, ud] = reduce(T2 * vd, vu + vd);   // 上山時間 = x / vu
+    const [dn, dd] = reduce(T2 * vu, vu + vd);   // 下山時間 = x / vd
+    const x = xn / xd, tu = un / ud, tdn = dn / dd;
+    const xItem = xd === 1 ? T(xn, OK_COLOR) : VF(T(xn, OK_COLOR), T(xd, OK_COLOR), OK_COLOR);
+
+    drawFlags('山腳', '山頂');
+
+    drawTrack(88, 1, C_EMBER, '上山', '走了 x（比較慢，花的時間長）', '');
+    drawArrow(ctx, 200, 120, 380, 120, C_EMBER, 2);
+    drawTrack(158, 1, C_JADE, '下山', '走了 x（比較快，花的時間短）', '');
+    drawArrow(ctx, 380, 190, 200, 190, C_JADE, 2);
+
+    drawNote(ctx, '來回走的是同一條路 → 距離相同，兩段時間加起來等於總時數', 218, MUTED, 13);
+    drawEqPanel(ctx, eqLine(
+      [VF(IT('x', C_EMBER), T(vu, C_EMBER), C_EMBER), T('+', MUTED), VF(IT('x', C_JADE), T(vd, C_JADE), C_JADE)],
+      [T(T2, C)],
+      MUTED
+    ), 254, C, { h: 34, size: 24 });
+
+    drawArrow(ctx, canvas.width / 2, 290, canvas.width / 2, 306, MUTED, 2);
+
+    drawEqPanel(ctx, [
+      IT('x', OK_COLOR), T('=', MUTED), xItem, T('公里', OK_COLOR)
+    ], 332, OK_COLOR, { h: 30, size: 23 });
+
+    const approx = (xd === 1) ? '' : '約 ';
+    drawNote(ctx, `檢驗：上山 ${approx}${numStr(tu)} 小時 ＋ 下山 ${approx}${numStr(tdn)} 小時 = ${numStr(T2)} 小時`, 374, DIM, 12);
+
+    return {
+      ok: true,
+      tex: `x = ${texFrac(xn, xd)}`,
+      note: `設山路長 \\(x\\) 公里。上山花 \\(\\frac{x}{${vu}}\\) 小時、下山花 \\(\\frac{x}{${vd}}\\) 小時，` +
+        `兩段<strong style="color:${C}">走的是同一段距離</strong>，時間加起來是總時數：<br>` +
+        `\\(\\frac{x}{${vu}} + \\frac{x}{${vd}} = ${T2}\\)，兩邊同乘 \\(${vu * vd}\\) 得 \\(${vd}x + ${vu}x = ${T2 * vu * vd}\\)，` +
+        `所以 \\(x = ${texFrac(xn, xd)}\\) 公里。<br>` +
+        `<strong>注意</strong>：來回的<strong>平均速率不是</strong> \\(\\frac{${vu}+${vd}}{2}\\)——上山走得慢、花的時間比較長，不能直接把兩個速率平均。`
+    };
+  }
+
+  function draw() {
+    const a = parseFloat(sA.value);
+    const b = parseFloat(sB.value);
+    const c = parseFloat(sC.value);
+    vA.textContent = numStr(a);
+    vB.textContent = numStr(b);
+    vC.textContent = numStr(c);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const r = (mode === 'meet') ? drawMeet(a, b, c) : drawRound(a, b, c);
+
+    formula.innerHTML = `\\( ${r.tex} \\)`;
+    fb.innerHTML = wrapFeedback(r.note);
+    typeset([formula, fb]);
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      mode = btn.getAttribute('data-rate-mode');
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyMode();
+      draw();
+    });
+  });
+
+  [sA, sB, sC].forEach(s => s.addEventListener('input', draw));
+  applyMode();
+  draw();
+  if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
+    MathJax.startup.promise.then(draw);
+  }
 }

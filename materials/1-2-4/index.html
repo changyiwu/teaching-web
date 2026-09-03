@@ -49,7 +49,8 @@
         <a href="#concept3" class="nav-item"><i class="fa-solid fa-list-ol"></i> 含乘方的四則運算</a>
         <a href="#concept4" class="nav-item"><i class="fa-solid fa-layer-group"></i> 同底數的乘與除</a>
         <a href="#concept5" class="nav-item"><i class="fa-solid fa-box-open"></i> 乘方的乘方</a>
-        <a href="#concept6" class="nav-item"><i class="fa-solid fa-0"></i> 零次方與綜合應用</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-arrows-left-right-to-line"></i> 積的乘方</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-0"></i> 零次方與綜合應用</a>
       </nav>
     </header>
 
@@ -566,11 +567,11 @@
       </section>
 
       <!-- ==========================================
-           重點 5: 乘方的乘方與兩數相乘的乘方
+           重點 5: 乘方的乘方（指數律三）
            ========================================== -->
       <section class="concept-section" id="concept5">
         <h2 class="section-title">
-          <i class="fa-solid fa-box-open" aria-hidden="true"></i> 重點 5：乘方的乘方——指數相乘、各自乘方
+          <i class="fa-solid fa-box-open" aria-hidden="true"></i> 重點 5：乘方的乘方 \(\left(a^m\right)^n\)——指數<strong>相乘</strong>
         </h2>
 
         <div class="grid-content">
@@ -583,20 +584,13 @@
               <li><strong>指數律（三）乘方的乘方</strong>。若 \(a\) 是不為 \(0\) 的數，且 \(m\)、\(n\) 為正整數，則
                 \[ \left(a^m\right)^n = a^{m \times n} \]
                 例如 \(\left[ \left(\frac{5}{3}\right)^2 \right]^3 = \left(\frac{5}{3}\right)^{2 \times 3} = \left(\frac{5}{3}\right)^6\)。</li>
-              <li><strong>和指數律（一）的差別</strong>：\(a^m \times a^n\) 是指數<strong>相加</strong>，\(\left(a^m\right)^n\) 是指數<strong>相乘</strong>。\(5^4 \times 5^2 = 5^6\)，但 \(\left(5^4\right)^2 = 5^8\)，兩者<strong>不一樣</strong>。</li>
-              <li><strong>從重排看兩數相乘</strong>：\((7 \times 11)^4\) 展開後有 \(4\) 個 \(7\) 和 \(4\) 個 \(11\)，把同樣的數收在一起就是 \(7^4 \times 11^4\)。</li>
-              <li><strong>指數律（四）兩數相乘的乘方</strong>。若 \(a\)、\(b\) 是不為 \(0\) 的數，且 \(m\) 為正整數，則
-                \[ (a \times b)^m = a^m \times b^m \]
-                例如 \(\left(\frac{1}{2} \times \frac{1}{3}\right)^5 = \left(\frac{1}{2}\right)^5 \times \left(\frac{1}{3}\right)^5\)。</li>
-              <li><strong>反過來用最好用</strong>：看到 \(a^m \times b^m\)（<strong>指數相同</strong>）就把底數先乘起來。例如
-                \[ \left(-\frac{10}{7}\right)^8 \times \left(\frac{7}{5}\right)^8 = \left(-\frac{10}{7} \times \frac{7}{5}\right)^8 = (-2)^8 \]
-                本來很難算的兩個大分數，先約分之後只剩一個小整數。</li>
-              <li><strong>括號位置決定一切</strong>：兩個式子的內層都是 \(-3^k\)——負號<strong>沒有</strong>被內層乘方括進去，所以內層算完仍帶著一個負號。差別只在<strong>外層指數的奇偶</strong>：
-                \[ \begin{aligned} \left(-3^4\right)^3 &= (-81)^3 = -3^{12} < 0 \quad \text{（外層 } 3 \text{ 是奇數，負號留下）} \\ \left(-3^3\right)^4 &= (-27)^4 = 3^{12} > 0 \quad \text{（外層 } 4 \text{ 是偶數，負號抵銷）} \end{aligned} \]</li>
-              <li><strong>乘法與除法都成立，加減不成立</strong>：除法可以看成乘以倒數，所以
-                \[ (a \div b)^m = a^m \div b^m \]
-                例如 \(\left(6 \div 3\right)^3 = 2^3 = 8\)，而 \(6^3 \div 3^3 = \frac{216}{27} = 8\)，兩邊相等。<br>
-                但<strong>加減沒有這條性質</strong>：\((a + b)^m \neq a^m + b^m\)。例如 \((2 + 3)^2 = 25\)，但 \(2^2 + 3^2 = 13\)。</li>
+              <li><strong>和指數律（一）的差別，這是本節最容易錯的一組</strong>：\(a^m \times a^n\) 是指數<strong>相加</strong>，\(\left(a^m\right)^n\) 是指數<strong>相乘</strong>。
+                \[ \begin{aligned} & 5^4 \times 5^2 = 5^{4+2} = 5^6 \\ & \left(5^4\right)^2 = 5^{4 \times 2} = 5^8 \end{aligned} \]
+                兩者<strong>不一樣</strong>。分辨方法：<strong>括號在不在</strong>——\(a^m\) 被括號括起來、外面才有指數的，才是相乘。</li>
+              <li><strong>層數再多也一樣</strong>：\(\left[ \left(a^2\right)^3 \right]^4 = a^{2 \times 3 \times 4} = a^{24}\)，由內往外一路乘上去就好。</li>
+              <li><strong>括號位置決定正負</strong>：下面兩個式子的內層都是 \(-3^k\)——負號<strong>沒有</strong>被內層乘方括進去，所以內層算完仍帶著一個負號。差別只在<strong>外層指數的奇偶</strong>：
+                \[ \begin{aligned} \left(-3^4\right)^3 &= (-81)^3 = -3^{12} < 0 \\ \left(-3^3\right)^4 &= (-27)^4 = 3^{12} > 0 \end{aligned} \]
+                上面那條的外層指數 \(3\) 是<strong>奇數</strong>，負號留下來；下面那條的外層指數 \(4\) 是<strong>偶數</strong>，負號兩兩抵銷。</li>
             </ul>
 
             <div class="table-scroll">
@@ -607,8 +601,8 @@
               <tbody>
                 <tr><td>\(\left[ (-7)^5 \right]^3\)</td><td>指數相乘</td><td>\((-7)^{15}\)</td></tr>
                 <tr><td>\((-7)^5 \times (-7)^3\)</td><td>指數相加</td><td>\((-7)^{8}\)</td></tr>
-                <tr><td>\(\left[ 3 \times (-10) \right]^6\)</td><td>各自乘方</td><td>\(3^6 \times (-10)^6\)</td></tr>
-                <tr><td>\(\left(\frac{5}{4}\right)^5 \times \left(\frac{11}{3}\right)^5\)</td><td>底數先乘</td><td>\(\left(\frac{55}{12}\right)^{5}\)</td></tr>
+                <tr><td>\(\left[ \left(\frac{2}{5}\right)^3 \right]^3\)</td><td>指數相乘</td><td>\(\left(\frac{2}{5}\right)^{9}\)</td></tr>
+                <tr><td>\(\left(-2^3\right)^4\)</td><td>指數相乘，外層偶數</td><td>\(2^{12}\)（正）</td></tr>
               </tbody>
               </table>
             </div>
@@ -619,38 +613,27 @@
           </div>
 
           <div class="interactive-card">
-            <h3><i class="fa-solid fa-diagram-project"></i> 視覺互動探索：展開推導器</h3>
-            <p class="interactive-instruction">選一條規律，畫面會把它<strong>一層一層展開到最底</strong>，最後再收攏回去。跟著中間那兩行看，就知道指數為什麼是<strong>相乘</strong>而不是相加：</p>
+            <h3><i class="fa-solid fa-diagram-project"></i> 視覺互動探索：乘方的乘方展開器</h3>
+            <p class="interactive-instruction">拉動兩個指數，畫面會把 \(\left(a^m\right)^n\) <strong>一層一層展開到最底</strong>，最後再收攏回去。跟著中間那兩行看，就知道指數為什麼是<strong>相乘</strong>而不是相加：</p>
             <div class="canvas-container">
-              <canvas id="canvas-derive" width="540" height="380"></canvas>
+              <canvas id="canvas-derive-pow" width="540" height="380"></canvas>
               <div class="control-panel">
                 <div class="value-display">
-                  <span id="dv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
-                </div>
-
-                <div class="btn-group-wrapper">
-                  <div class="btn-group-row">
-                    <span class="btn-group-label">規律</span>
-                    <div class="btn-group" id="dv-mode-group">
-                      <button type="button" class="pick-btn active" data-mode="pow">乘方的乘方</button>
-                      <button type="button" class="pick-btn" data-mode="mul">兩數相乘</button>
-                      <button type="button" class="pick-btn" data-mode="div">兩數相除</button>
-                    </div>
-                  </div>
+                  <span id="dvp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
                 </div>
 
                 <div class="slider-wrapper">
                   <div class="slider-row">
-                    <label for="dv-m-slider">內層指數 m: <span id="dv-m-val" class="val-num">0</span></label>
-                    <input type="range" id="dv-m-slider" min="1" max="3" value="3" step="1">
+                    <label for="dvp-m-slider">內層指數 m: <span id="dvp-m-val" class="val-num">0</span></label>
+                    <input type="range" id="dvp-m-slider" min="1" max="3" value="3" step="1">
                   </div>
                   <div class="slider-row">
-                    <label for="dv-n-slider">外層指數 n: <span id="dv-n-val" class="val-num">0</span></label>
-                    <input type="range" id="dv-n-slider" min="1" max="3" value="2" step="1">
+                    <label for="dvp-n-slider">外層指數 n: <span id="dvp-n-val" class="val-num">0</span></label>
+                    <input type="range" id="dvp-n-slider" min="1" max="3" value="2" step="1">
                   </div>
                 </div>
 
-                <div class="visual-feedback" id="dv-feedback">載入中...</div>
+                <div class="visual-feedback" id="dvp-feedback">載入中...</div>
               </div>
             </div>
           </div>
@@ -678,12 +661,125 @@
           </div>
 
           <div class="quiz-card" data-quiz="2-4-5-2">
-            <p class="quiz-question"><strong>Q2.</strong> 計算 \(\left(-\frac{9}{4}\right)^6 \times \left(\frac{2}{3}\right)^6\) 的值。</p>
+            <p class="quiz-question"><strong>Q2.</strong> 已知 \(\left[ (-2)^3 \right]^4 = (-2)^p\)、\((-2)^3 \times (-2)^4 = (-2)^q\)，則 \(p - q\) 之值為何？</p>
             <div class="options-container">
-              <label class="option-label"><input type="radio" name="q2-4-5-2" value="A"><span class="option-text">A. \(-\frac{729}{64}\)</span></label>
-              <label class="option-label"><input type="radio" name="q2-4-5-2" value="B"><span class="option-text">B. \(\frac{3}{2}\)</span></label>
-              <label class="option-label"><input type="radio" name="q2-4-5-2" value="C"><span class="option-text">C. \(-\frac{3}{2}\)</span></label>
-              <label class="option-label"><input type="radio" name="q2-4-5-2" value="D"><span class="option-text">D. \(\frac{729}{64}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-5-2" value="A"><span class="option-text">A. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-5-2" value="B"><span class="option-text">B. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-5-2" value="C"><span class="option-text">C. \(19\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-5-2" value="D"><span class="option-text">D. \(84\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>這題把兩條容易混淆的指數律放在一起比。<br>
+              左邊有<strong>括號</strong>、外面才有指數，是<strong>乘方的乘方</strong>，指數<strong>相乘</strong>：\(p = 3 \times 4 = 12\)。<br>
+              右邊是<strong>同底數相乘</strong>，指數<strong>相加</strong>：\(q = 3 + 4 = 7\)。<br>
+              所以 \(p - q = 12 - 7 = 5\)，答案為 A。<br>
+              （選 B 的人把兩邊都當成相加或都當成相乘了；選 D 的是把 \(p\)、\(q\) 直接相乘。<strong>分辨的關鍵就是括號</strong>：\(a^m\) 被括起來、括號外還有指數，才是相乘。）</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 積與商的乘方（指數律四）
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right-to-line" aria-hidden="true"></i> 重點 6：積的乘方 \((a \times b)^m\)——底數<strong>各自乘方</strong>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>從重排看起</strong>：\((7 \times 11)^4\) 展開後有 \(4\) 個 \(7\) 和 \(4\) 個 \(11\)，把同樣的數收在一起就是 \(7^4 \times 11^4\)。
+                \[ \begin{aligned}
+                & (7 \times 11)^4 \\
+                &= \underbrace{(7 \times 11) \times \cdots \times (7 \times 11)}_{4 \text{ 個}} \\
+                &= 7^4 \times 11^4
+                \end{aligned} \]</li>
+              <li><strong>指數律（四）積的乘方</strong>。若 \(a\)、\(b\) 是不為 \(0\) 的數，且 \(m\) 為正整數，則
+                \[ (a \times b)^m = a^m \times b^m \]
+                例如 \(\left(\frac{1}{2} \times \frac{1}{3}\right)^5 = \left(\frac{1}{2}\right)^5 \times \left(\frac{1}{3}\right)^5\)。</li>
+              <li><strong>和指數律（三）不要搞混</strong>：這一條是<strong>括號裡兩個不同的底數</strong>各自帶著指數出去；上一個重點那條是<strong>括號裡只有一個底數</strong>、指數乘起來。看括號裡有幾個底數就分得出來。</li>
+              <li><strong>反過來用最好用</strong>：看到 \(a^m \times b^m\)（<strong>指數相同</strong>）就把底數先乘起來。例如
+                \[ \begin{aligned}
+                & \left(-\frac{10}{7}\right)^8 \times \left(\frac{7}{5}\right)^8 \\
+                &= \left(-\frac{10}{7} \times \frac{7}{5}\right)^8 = (-2)^8
+                \end{aligned} \]
+                本來很難算的兩個大分數，先約分之後只剩一個小整數。</li>
+              <li><strong>除法也成立</strong>：除法可以看成乘以倒數，所以
+                \[ \begin{aligned}
+                & (a \div b)^m = a^m \div b^m \\
+                & \left(\frac{a}{b}\right)^m = \frac{a^m}{b^m}
+                \end{aligned} \]
+                例如 \(\left(6 \div 3\right)^3 = 2^3 = 8\)，而 \(6^3 \div 3^3 = \frac{216}{27} = 8\)，兩邊相等。</li>
+              <li><strong>但加減沒有這條性質</strong>：\((a + b)^m \neq a^m + b^m\)。例如 \((2 + 3)^2 = 25\)，但 \(2^2 + 3^2 = 13\)，差很多。<strong>指數律只跟乘除有關，碰到加減一律先把括號內算完</strong>。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>算式</th><th>用哪一條</th><th>結果</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(\left[ 3 \times (-10) \right]^6\)</td><td>各自乘方</td><td>\(3^6 \times (-10)^6\)</td></tr>
+                <tr><td>\(\left(\frac{5}{4}\right)^5 \times \left(\frac{11}{3}\right)^5\)</td><td>指數相同，底數先乘</td><td>\(\left(\frac{55}{12}\right)^{5}\)</td></tr>
+                <tr><td>\(\left(\frac{9}{2}\right)^3 \div \left(\frac{3}{2}\right)^3\)</td><td>指數相同，底數先除</td><td>\(3^3 = 27\)</td></tr>
+                <tr><td>\((2 + 3)^2\)</td><td>加減<strong>不能</strong>各自乘方</td><td>先算括號 \(= 5^2 = 25\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="fold_pair.webp" alt="和紙摺紙工房風插圖：靛藍與朱紅兩疊和紙並排放著，兩疊各摺了同樣的次數，摺好的方塊一藍一紅成對排列" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-object-ungroup"></i> 視覺互動探索：各自乘方展開器</h3>
+            <p class="interactive-instruction">切換乘法或除法，畫面會把 \((a \times b)^m\) 展開成 \(m\) 組，再<strong>把 \(a\) 收一堆、\(b\) 收一堆</strong>，看清楚指數為什麼會分給兩個底數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-derive-mul" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dvm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">規律</span>
+                    <div class="btn-group" id="dvm-mode-group">
+                      <button type="button" class="pick-btn active" data-mode="mul">兩數相乘</button>
+                      <button type="button" class="pick-btn" data-mode="div">兩數相除</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="dvm-m-slider">外層指數 m: <span id="dvm-m-val" class="val-num">0</span></label>
+                    <input type="range" id="dvm-m-slider" min="1" max="3" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dvm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (積與商的乘方)</h3>
+
+          <div class="quiz-card" data-quiz="2-4-6-1">
+            <p class="quiz-question"><strong>Q1.</strong> 計算 \(\left(-\frac{9}{4}\right)^6 \times \left(\frac{2}{3}\right)^6\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-4-6-1" value="A"><span class="option-text">A. \(-\frac{729}{64}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-6-1" value="B"><span class="option-text">B. \(\frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-6-1" value="C"><span class="option-text">C. \(-\frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-6-1" value="D"><span class="option-text">D. \(\frac{729}{64}\)</span></label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
@@ -695,15 +791,34 @@
               選 C 的人算到 \(-\frac{3}{2}\) 就停了，忘了外面還有 \(6\) 次方；選 A 的人是把負號留了下來。</p>
             </div>
           </div>
+
+          <div class="quiz-card" data-quiz="2-4-6-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算 \(\left(\frac{15}{7}\right)^4 \div \left(\frac{5}{7}\right)^4\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-4-6-2" value="A"><span class="option-text">A. \(81\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-6-2" value="B"><span class="option-text">B. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-6-2" value="C"><span class="option-text">C. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-6-2" value="D"><span class="option-text">D. \(\frac{3}{7}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>兩個底數不同，但<strong>指數都是 \(4\)</strong>，所以用指數律（四）的除法版，先把底數相除：<br>
+              \(\left(\frac{15}{7}\right)^4 \div \left(\frac{5}{7}\right)^4 = \left( \frac{15}{7} \div \frac{5}{7} \right)^4\)。<br>
+              括號內：\(\frac{15}{7} \div \frac{5}{7} = \frac{15}{7} \times \frac{7}{5} = 3\)。<br>
+              所以原式 \(= 3^4 = 81\)，答案為 A。<br>
+              （選 B 的人算完括號就停了，忘了外面的 \(4\) 次方；選 C 的人把它誤當成<strong>同底數相除</strong>而做 \(4 - 4 = 0\)——但這兩個底數<strong>不一樣</strong>，指數律（二）套不上；選 D 的人除法沒有乘倒數，把分母也一起除了。）</p>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- ==========================================
-           重點 6: 零次方與指數律的綜合應用
+           重點 7: 零次方與指數律的綜合應用
            ========================================== -->
-      <section class="concept-section" id="concept6">
+      <section class="concept-section" id="concept7">
         <h2 class="section-title">
-          <i class="fa-solid fa-0" aria-hidden="true"></i> 重點 6：零次方與綜合應用——為什麼 \(a^0 = 1\)
+          <i class="fa-solid fa-0" aria-hidden="true"></i> 重點 7：零次方與綜合應用——為什麼 \(a^0 = 1\)
         </h2>
 
         <div class="grid-content">
@@ -777,13 +892,13 @@
         <div class="quiz-section">
           <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (零次方與綜合應用)</h3>
 
-          <div class="quiz-card" data-quiz="2-4-6-1">
+          <div class="quiz-card" data-quiz="2-4-7-1">
             <p class="quiz-question"><strong>Q1.</strong> 計算 \(\left(-\frac{7}{4}\right)^0 - 2^0 + \left(-5\right)^0 \times 3\) 的值。</p>
             <div class="options-container">
-              <label class="option-label"><input type="radio" name="q2-4-6-1" value="A"><span class="option-text">A. \(3\)</span></label>
-              <label class="option-label"><input type="radio" name="q2-4-6-1" value="B"><span class="option-text">B. \(0\)</span></label>
-              <label class="option-label"><input type="radio" name="q2-4-6-1" value="C"><span class="option-text">C. \(1\)</span></label>
-              <label class="option-label"><input type="radio" name="q2-4-6-1" value="D"><span class="option-text">D. \(-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-7-1" value="A"><span class="option-text">A. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-7-1" value="B"><span class="option-text">B. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-7-1" value="C"><span class="option-text">C. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-7-1" value="D"><span class="option-text">D. \(-3\)</span></label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
@@ -796,13 +911,13 @@
             </div>
           </div>
 
-          <div class="quiz-card" data-quiz="2-4-6-2">
+          <div class="quiz-card" data-quiz="2-4-7-2">
             <p class="quiz-question"><strong>Q2.</strong> 計算 \(\left(\frac{8}{5}\right)^7 \times \left(-\frac{5}{4}\right)^7 \div (-2)^4\) 的值。</p>
             <div class="options-container">
-              <label class="option-label"><input type="radio" name="q2-4-6-2" value="A"><span class="option-text">A. \(8\)</span></label>
-              <label class="option-label"><input type="radio" name="q2-4-6-2" value="B"><span class="option-text">B. \(-8\)</span></label>
-              <label class="option-label"><input type="radio" name="q2-4-6-2" value="C"><span class="option-text">C. \(-\frac{1}{8}\)</span></label>
-              <label class="option-label"><input type="radio" name="q2-4-6-2" value="D"><span class="option-text">D. \(\frac{1}{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-7-2" value="A"><span class="option-text">A. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-7-2" value="B"><span class="option-text">B. \(-8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-7-2" value="C"><span class="option-text">C. \(-\frac{1}{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-4-7-2" value="D"><span class="option-text">D. \(\frac{1}{8}\)</span></label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
