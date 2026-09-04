@@ -237,24 +237,40 @@
             </div>
           </div>
 
-          <!-- Dynamic Text / Quick Calculation Display Card -->
+          <!-- Interactive: Regrouping Explorer -->
           <div class="interactive-card">
-            <h3><i class="fa-solid fa-wand-magic-sparkles"></i> 運算規律精妙應用示範</h3>
-            <p class="interactive-instruction">觀察以下算式如何透過交換位置與重新結合，在不使用計算機的情況下快速得出解答：</p>
-            <div style="background: rgba(10, 8, 28, 0.6); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px; padding: 1.5rem; line-height: 1.8;">
-              <h4 style="color:#67e8f9; margin-bottom: 0.75rem;"><i class="fa-solid fa-bolt"></i> 範例：計算 \((-34) + 2508 + (-66)\)</h4>
-              <ol style="margin-left: 1.25rem; color:#e2e8f0; display:flex; flex-direction:column; gap:0.5rem;">
-                <li>第一步（交換律）：將相近的數移在一起<br>
-                  \(\rightarrow 2508 + (-34) + (-66)\)
-                </li>
-                <li>第二步（結合律）：把兩個同負號的數先結合<br>
-                  \(\rightarrow 2508 + [(-34) + (-66)]\)
-                </li>
-                <li>第三步（速算）：\((-34) + (-66) = -100\)<br>
-                  \(\rightarrow 2508 + (-100)\)
-                </li>
-                <li>第四步（答案）：得到最終答案為 <strong style="color:#a7f3d0; font-size:1.15rem;">\(2408\)</strong>！</li>
-              </ol>
+            <h3><i class="fa-solid fa-wand-magic-sparkles"></i> 視覺互動探索：湊整重組實驗台</h3>
+            <p class="interactive-instruction">調整三個加數，再切換「先算哪一對」。觀察兩件事：答案會不會因為分法而改變？哪一種分法最好算？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-regroup" width="520" height="340"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="regroup-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="bracket-btn-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 1rem;">
+                  <button class="bracket-btn active" data-regroup-mode="ab">先算前兩個</button>
+                  <button class="bracket-btn" data-regroup-mode="bc">先算後兩個</button>
+                  <button class="bracket-btn" data-regroup-mode="ac">交換後配對</button>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="regroup-a">加數 a: <span id="regroup-a-val" class="val-num">0</span></label>
+                    <input type="range" id="regroup-a" min="-50" max="50" value="27" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="regroup-b">加數 b: <span id="regroup-b-val" class="val-num">0</span></label>
+                    <input type="range" id="regroup-b" min="-50" max="50" value="-34" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="regroup-c">加數 c: <span id="regroup-c-val" class="val-num">0</span></label>
+                    <input type="range" id="regroup-c" min="-50" max="50" value="13" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="regroup-feedback">載入中...</div>
+              </div>
             </div>
           </div>
         </div>
@@ -858,6 +874,7 @@
   </div>
 
   <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
   <script src="canvas.js"></script>
 
   <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->

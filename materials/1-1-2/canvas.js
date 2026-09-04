@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Canvas Simulations
   initAdditionCanvas();
+  initRegroupCanvas();
   initThermometerCanvas();
   initBracketCanvas();
   initDistanceCanvas();
@@ -853,4 +854,270 @@ function initDistanceCanvas() {
   canvas.addEventListener('touchend', handleUp);
 
   drawDistanceLine();
+}
+/* ==========================================================================
+   2b. Regrouping Explorer (重點 2：加法運算規律)
+   三個加數 + 三種分組法。答案永遠相同（結合律／交換律），
+   差別只在好不好算——「哪一組好算」一律即時算出來，不寫死。
+   字級依開發約束 13 放大：canvas 在課堂投影下只有約 0.71 倍。
+   ========================================================================== */
+function initRegroupCanvas() {
+  const canvas = document.getElementById('canvas-regroup');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const sliderA = document.getElementById('regroup-a');
+  const sliderB = document.getElementById('regroup-b');
+  const sliderC = document.getElementById('regroup-c');
+  const valA = document.getElementById('regroup-a-val');
+  const valB = document.getElementById('regroup-b-val');
+  const valC = document.getElementById('regroup-c-val');
+  const formulaDiv = document.getElementById('regroup-formula');
+  const feedbackDiv = document.getElementById('regroup-feedback');
+  // 只收自己這一組的按鈕，免得跟重點 4 的 .bracket-btn 搶控制項
+  const modeBtns = document.querySelectorAll('[data-regroup-mode]');
+
+  let mode = 'ab';
+
+  const POS = '#fda4af';
+  const NEG = '#60a5fa';
+  const clr = (v) => (v >= 0 ? POS : NEG);
+  // 括號只在負數時才加：那是為了隔開運算符號與性質符號（開發約束 27）
+  const par = (v) => (v < 0 ? `(${v})` : `${v}`);
+
+  // 三種分法：先算哪一對、剩下哪一個
+  const MODES = {
+    ab: { pair: [0, 1], rest: 2, law: '結合律' },
+    bc: { pair: [1, 2], rest: 0, law: '結合律' },
+    ac: { pair: [0, 2], rest: 1, law: '交換律 ＋ 結合律' },
+  };
+
+  function pairSum(nums, key) {
+    const [i, j] = MODES[key].pair;
+    return nums[i] + nums[j];
+  }
+
+  // 「好算」的兩種情形：湊成 0（相反數）、湊成整十
+  function niceness(s) {
+    if (s === 0) return { nice: true, why: '相反數，相加剛好抵消成 0' };
+    if (s % 10 === 0) return { nice: true, why: `剛好湊成整十 ${s}` };
+    return { nice: false, why: '' };
+  }
+
+  const MODE_LABEL = { ab: '先算前兩個', bc: '先算後兩個', ac: '交換後配對' };
+
+  // 本頁不載入 math-canvas.js，圓角矩形自備一份（與共用檔同寫法）
+  function roundRect(x, y, rw, rh, r) {
+    const rad = Math.min(r, Math.abs(rw) / 2, Math.abs(rh) / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + rad, y);
+    ctx.lineTo(x + rw - rad, y);
+    ctx.quadraticCurveTo(x + rw, y, x + rw, y + rad);
+    ctx.lineTo(x + rw, y + rh - rad);
+    ctx.quadraticCurveTo(x + rw, y + rh, x + rw - rad, y + rh);
+    ctx.lineTo(x + rad, y + rh);
+    ctx.quadraticCurveTo(x, y + rh, x, y + rh - rad);
+    ctx.lineTo(x, y + rad);
+    ctx.quadraticCurveTo(x, y, x + rad, y);
+    ctx.closePath();
+  }
+
+  function draw() {
+    const a = parseInt(sliderA.value, 10);
+    const b = parseInt(sliderB.value, 10);
+    const c = parseInt(sliderC.value, 10);
+    const nums = [a, b, c];
+    const total = a + b + c;
+
+    valA.textContent = a > 0 ? `+${a}` : `${a}`;
+    valB.textContent = b > 0 ? `+${b}` : `${b}`;
+    valC.textContent = c > 0 ? `+${c}` : `${c}`;
+
+    const m = MODES[mode];
+    const [pi, pj] = m.pair;
+    const ri = m.rest;
+    const p = nums[pi] + nums[pj];
+    const rest = nums[ri];
+
+    // 重組後的算式：被結合的那一對包一層括號。
+    // 先算後兩個時 a 留在最前面（a + (b + c)），那才是純結合律的形式；
+    // 其餘兩種則是被結合的那一對在前
+    const restFirst = mode === 'bc';
+    const pairTex = `${nums[pi]} + ${par(nums[pj])}`;
+    const grouped = restFirst
+      ? `${rest} + (${pairTex})`
+      : `(${pairTex}) + ${par(rest)}`;
+    const step2Tex = restFirst ? `${rest} + ${par(p)}` : `${p} + ${par(rest)}`;
+
+    // 數值列：用共用的 wbrEq() 在每個頂層的 =、+、- 前斷開（開發約束 24）。
+    // 414px 下數值列只有 183px，只斷等號的話 (-50 + (-50)) + (-50)
+    // 這一段還是溢出 32px；連加減號一起斷才收得住
+    const answerSpan =
+      `<span style="color:#a7f3d0; font-size:1.4rem; font-weight:700;">\\(${total}\\)</span>`;
+    formulaDiv.innerHTML =
+      wbrEq(`${a} + ${par(b)} + ${par(c)} = ${grouped} = ${step2Tex} =`) +
+      '<wbr>' + answerSpan;
+    if (window.MathJax) {
+      MathJax.typesetPromise([formulaDiv]).catch((err) => console.log(err));
+    }
+
+    // 哪些分法好算——即時算，不寫死（開發約束 27）
+    const nicePairs = Object.keys(MODES).filter((k) => niceness(pairSum(nums, k)).nice);
+    const cur = niceness(p);
+    let msg;
+    if (cur.nice) {
+      msg = `<div style="width:100%; text-align:center; line-height:1.6; font-size:0.95rem;">這一對<strong>好算</strong>：${wbrEq(`${pairTex} = ${p}`)}，${cur.why}。剩下只要再加 \\(${par(rest)}\\) 就好。</div>`;
+    } else if (nicePairs.length > 0) {
+      const tips = nicePairs
+        .map((k) => {
+          const s = pairSum(nums, k);
+          const [i, j] = MODES[k].pair;
+          return `<strong>${MODE_LABEL[k]}</strong>（${wbrEq(`${nums[i]} + ${par(nums[j])} = ${s}`)}）`;
+        })
+        .join('、');
+      msg = `<div style="width:100%; text-align:center; line-height:1.6; font-size:0.95rem;">目前這一對是 \\(${p}\\)，不算好算。換成 ${tips} 會輕鬆得多——<strong>答案還是 \\(${total}\\)</strong>。</div>`;
+    } else {
+      msg = `<div style="width:100%; text-align:center; line-height:1.6; font-size:0.95rem;">這三個數<strong>沒有哪一對能湊成 0 或整十</strong>，三種分法一樣費力；但不論先算哪一對，答案都是 \\(${total}\\)。</div>`;
+    }
+    feedbackDiv.innerHTML = msg;
+    if (window.MathJax) {
+      MathJax.typesetPromise([feedbackDiv]).catch((err) => console.log(err));
+    }
+
+    /* ---------- Canvas ---------- */
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.textBaseline = 'middle';
+
+    // 標題
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(226, 232, 240, 0.75)';
+    ctx.font = '600 18px "Noto Sans TC", sans-serif';
+    ctx.fillText('原式（三個數相加，順序照寫）', w / 2, 26);
+
+    // --- 第一列：三張數字牌 ---
+    const tileW = 108;
+    const tileH = 58;
+    const gapW = 46; // 放加號的空隙
+    const rowW = tileW * 3 + gapW * 2;
+    const x0 = (w - rowW) / 2;
+    const tileY = 68;
+    const cx = [0, 1, 2].map((i) => x0 + i * (tileW + gapW) + tileW / 2);
+
+    for (let i = 0; i < 3; i++) {
+      const selected = i === pi || i === pj;
+      const x = cx[i] - tileW / 2;
+      roundRect(x, tileY, tileW, tileH, 12);
+      ctx.fillStyle = selected ? 'rgba(139, 92, 246, 0.22)' : 'rgba(255, 255, 255, 0.05)';
+      ctx.fill();
+      ctx.lineWidth = selected ? 2.5 : 1.5;
+      ctx.strokeStyle = selected ? 'rgba(196, 132, 252, 0.95)' : 'rgba(255, 255, 255, 0.14)';
+      ctx.stroke();
+
+      ctx.fillStyle = clr(nums[i]);
+      ctx.font = '700 30px "Outfit", sans-serif';
+      ctx.fillText(`${nums[i]}`, cx[i], tileY + tileH / 2 + 1);
+
+      ctx.fillStyle = 'rgba(226, 232, 240, 0.5)';
+      ctx.font = '600 16px "Outfit", sans-serif';
+      ctx.fillText(['a', 'b', 'c'][i], cx[i], tileY - 14);
+    }
+
+    // 加號
+    ctx.fillStyle = 'rgba(226, 232, 240, 0.6)';
+    ctx.font = '700 26px "Outfit", sans-serif';
+    for (let i = 0; i < 2; i++) {
+      ctx.fillText('+', (cx[i] + cx[i + 1]) / 2, tileY + tileH / 2 + 1);
+    }
+
+    // --- 連接被結合那一對的弧線 ---
+    const arcTop = tileY + tileH + 8;
+    const arcDepth = mode === 'ac' ? 32 : 18; // 跨過中間那張牌時壓深一點
+    ctx.beginPath();
+    ctx.moveTo(cx[pi], arcTop);
+    ctx.quadraticCurveTo((cx[pi] + cx[pj]) / 2, arcTop + arcDepth * 2, cx[pj], arcTop);
+    ctx.strokeStyle = 'rgba(196, 132, 252, 0.9)';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    ctx.fillStyle = '#c084fc';
+    ctx.font = '600 17px "Noto Sans TC", sans-serif';
+    ctx.fillText(
+      mode === 'ac' ? '交換律：把 a 和 c 移在一起' : '結合律：先算這一對',
+      (cx[pi] + cx[pj]) / 2,
+      arcTop + arcDepth + 24
+    );
+
+    // --- 第二列：重組後的兩步 ---
+    const stepY = 224;
+    const lx = 34;
+    const vx = lx + 74;
+    ctx.textAlign = 'left';
+
+    ctx.font = '600 19px "Noto Sans TC", sans-serif';
+    ctx.fillStyle = 'rgba(226, 232, 240, 0.6)';
+    ctx.fillText('第一步', lx, stepY);
+    ctx.font = '700 23px "Outfit", sans-serif';
+    ctx.fillStyle = cur.nice ? '#a7f3d0' : 'rgba(226, 232, 240, 0.9)';
+    ctx.fillText(`${pairTex} = ${p}`, vx, stepY);
+
+    if (cur.nice) {
+      ctx.font = '600 17px "Noto Sans TC", sans-serif';
+      ctx.fillStyle = '#34d399';
+      ctx.textAlign = 'right';
+      ctx.fillText('好算！', w - 34, stepY);
+      ctx.textAlign = 'left';
+    }
+
+    const step2Y = stepY + 40;
+    ctx.font = '600 19px "Noto Sans TC", sans-serif';
+    ctx.fillStyle = 'rgba(226, 232, 240, 0.6)';
+    ctx.fillText('第二步', lx, step2Y);
+    ctx.font = '700 23px "Outfit", sans-serif';
+    ctx.fillStyle = 'rgba(226, 232, 240, 0.9)';
+    const tailStr = `${step2Tex} = `;
+    ctx.fillText(tailStr, vx, step2Y);
+    const tailW = ctx.measureText(tailStr).width;
+    ctx.font = '700 30px "Outfit", sans-serif';
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillText(`${total}`, vx + tailW, step2Y);
+
+    // --- 底部：三種分法的答案一起列出來，看它們永遠相同 ---
+    const chipY = 312;
+    const keys = ['ab', 'bc', 'ac'];
+    const chipW = 160;
+    const chipGap = 10;
+    const chipX0 = (w - (chipW * 3 + chipGap * 2)) / 2;
+    ctx.textAlign = 'center';
+    for (let i = 0; i < 3; i++) {
+      const k = keys[i];
+      const on = k === mode;
+      const x = chipX0 + i * (chipW + chipGap);
+      roundRect(x, chipY - 16, chipW, 32, 10);
+      ctx.fillStyle = on ? 'rgba(251, 191, 36, 0.16)' : 'rgba(255, 255, 255, 0.04)';
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = on ? 'rgba(251, 191, 36, 0.6)' : 'rgba(255, 255, 255, 0.1)';
+      ctx.stroke();
+      ctx.font = '600 15px "Noto Sans TC", sans-serif';
+      ctx.fillStyle = on ? '#fbbf24' : 'rgba(226, 232, 240, 0.55)';
+      ctx.fillText(`${MODE_LABEL[k]} → ${total}`, x + chipW / 2, chipY + 1);
+    }
+  }
+
+  modeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      mode = btn.dataset.regroupMode;
+      modeBtns.forEach((o) => o.classList.toggle('active', o === btn));
+      draw();
+    });
+  });
+
+  [sliderA, sliderB, sliderC].forEach((s) => s.addEventListener('input', draw));
+
+  draw();
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(draw);
+  }
 }
