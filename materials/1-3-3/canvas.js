@@ -518,12 +518,12 @@ function initAllocCanvas() {
       tex: '7x + 4 = 9x - 44'
     },
     {
-      name: '餅乾分裝案', unitName: '袋數', unit: '袋', totalName: '餅乾片數',
-      clue: '每袋 8 片會多出 5 片；每袋 9 片則不足 7 片',
-      a: 8, m: 5, b: 9, n: -7, sol: 12, min: 5, max: 20,
-      t1: '每袋 8 片，多出 5 片', t2: '每袋 9 片，不足 7 片',
-      e1: '8x + 5', e2: '9x − 7',
-      tex: '8x + 5 = 9x - 7'
+      name: '巧克力分盒案', unitName: '盒數', unit: '盒', totalName: '巧克力顆數',
+      clue: '每盒 6 顆會多出 4 顆；每盒 7 顆則不足 5 顆',
+      a: 6, m: 4, b: 7, n: -5, sol: 9, min: 3, max: 18,
+      t1: '每盒 6 顆，多出 4 顆', t2: '每盒 7 顆，不足 5 顆',
+      e1: '6x + 4', e2: '7x − 5',
+      tex: '6x + 4 = 7x - 5'
     }
   ];
 
@@ -1222,9 +1222,9 @@ function initRateCanvas() {
 
   const MODES = {
     meet: {
-      a: { label: '甲的速率（公尺／分）', min: 40, max: 100, step: 10, def: 60 },
-      b: { label: '乙的速率（公尺／分）', min: 50, max: 120, step: 10, def: 80 },
-      c: { label: '乙抵達時甲還差（公尺）', min: 20, max: 200, step: 10, def: 100 }
+      a: { label: '甲的速率（公尺／分）', min: 40, max: 100, step: 10, def: 50 },
+      b: { label: '乙的速率（公尺／分）', min: 50, max: 120, step: 10, def: 100 },
+      c: { label: '乙抵達時甲還差（公尺）', min: 20, max: 200, step: 10, def: 150 }
     },
     round: {
       a: { label: '上山時速（公里／時）', min: 2, max: 6, step: 1, def: 3 },

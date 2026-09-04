@@ -968,18 +968,18 @@ function initExpandCanvas() {
 
   // 挑錯題：課本 P.202 的題型，數字改過
   const WRONG = {
-    head: '小翊解  (x+5)/2 = (x-1)/3 + 1',
+    head: '小翊解  (x+7)/3 = (x-2)/4 + 2',
     lines: [
-      { items: () => [VF(SEQ([X(), L('+'), L('5')], C, 5), L('2'), C), L('='), VF(SEQ([X(), L('-'), L('1')], C, 5), L('3'), C), L('+'), L('1')], ok: true },
-      { items: () => [L('3'), GRP([X(), L('+'), L('5')], '()', C), L('='), L('2'), GRP([X(), L('-'), L('1')], '()', C), L('+'), L('1')], ok: false },
-      { items: () => [xItems(3, C), L('+'), L('15'), L('='), xItems(2, C), L('-'), L('2'), L('+'), L('1')], ok: false },
-      { items: () => [X(), L('='), L('-16')], ok: false }
+      { items: () => [VF(SEQ([X(), L('+'), L('7')], C, 5), L('3'), C), L('='), VF(SEQ([X(), L('-'), L('2')], C, 5), L('4'), C), L('+'), L('2')], ok: true },
+      { items: () => [L('4'), GRP([X(), L('+'), L('7')], '()', C), L('='), L('3'), GRP([X(), L('-'), L('2')], '()', C), L('+'), L('2')], ok: false },
+      { items: () => [xItems(4, C), L('+'), L('28'), L('='), xItems(3, C), L('-'), L('6'), L('+'), L('2')], ok: false },
+      { items: () => [X(), L('='), L('-32')], ok: false }
     ],
     fixed: [
-      { items: () => [L('3'), GRP([X(), L('+'), L('5')], '()', C), L('='), L('2'), GRP([X(), L('-'), L('1')], '()', C), L('+'), L('6')], note: '兩邊同乘 6，常數項 1 也要乘 6' },
-      { items: () => [xItems(3, C), L('+'), L('15'), L('='), xItems(2, C), L('-'), L('2'), L('+'), L('6')], note: '去括號' },
-      { items: () => [xItems(3, C), L('-'), xItems(2, C), L('='), L('-2'), L('+'), L('6'), L('-'), L('15')], note: '移項，跨過等號就變號' },
-      { items: () => [X(), L('='), L('-11')], note: '合併，得 x = -11' }
+      { items: () => [L('4'), GRP([X(), L('+'), L('7')], '()', C), L('='), L('3'), GRP([X(), L('-'), L('2')], '()', C), L('+'), L('24')], note: '兩邊同乘 12，常數項 2 也要乘 12' },
+      { items: () => [xItems(4, C), L('+'), L('28'), L('='), xItems(3, C), L('-'), L('6'), L('+'), L('24')], note: '去括號' },
+      { items: () => [xItems(4, C), L('-'), xItems(3, C), L('='), L('-6'), L('+'), L('24'), L('-'), L('28')], note: '移項，跨過等號就變號' },
+      { items: () => [X(), L('='), L('-10')], note: '合併，得 x = -10' }
     ]
   };
 
@@ -1053,11 +1053,11 @@ function initExpandCanvas() {
     if (stepLabel) stepLabel.textContent = '挑錯';
     if (fb) {
       if (picked === correctLine) {
-        fb.innerHTML = wrapFeedback('第 2 行兩邊同乘 \\(6\\) 時，右邊的常數 \\(1\\) <strong>也要乘 \\(6\\)</strong>，應該是 \\(3(x+5)=2(x-1)+6\\)。少乘那一項，後面全錯，正確答案是 \\(x=-11\\)。');
+        fb.innerHTML = wrapFeedback('第 2 行兩邊同乘 \\(12\\) 時，右邊的常數 \\(2\\) <strong>也要乘 \\(12\\)</strong>，應該是 \\(4(x+7)=3(x-2)+24\\)。少乘那一項，後面全錯，正確答案是 \\(x=-10\\)。');
       } else if (picked >= 0) {
-        fb.innerHTML = wrapFeedback('再想想：<strong>等量乘法公理是「兩邊」同乘</strong>，而右邊是 \\(\\frac{x-1}{3}+1\\) 兩項相加，兩項都要乘到。');
+        fb.innerHTML = wrapFeedback('再想想：<strong>等量乘法公理是「兩邊」同乘</strong>，而右邊是 \\(\\frac{x-2}{4}+2\\) 兩項相加，兩項都要乘到。');
       } else {
-        fb.innerHTML = wrapFeedback('這是課本的挑錯題型。小翊的答案 \\(x=-16\\) 是錯的，<strong>點一下你認為開始出錯的那一行</strong>。');
+        fb.innerHTML = wrapFeedback('這是課本的挑錯題型。小翊的答案 \\(x=-32\\) 是錯的，<strong>點一下你認為開始出錯的那一行</strong>。');
       }
       typeset([fb]);
     }

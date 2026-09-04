@@ -518,15 +518,15 @@
                 <div class="slider-wrapper">
                   <div class="slider-row">
                     <label for="ll-a-slider">第一個數 a: <span id="ll-a-val" class="val-num">0</span></label>
-                    <input type="range" id="ll-a-slider" min="2" max="90" value="48" step="1">
+                    <input type="range" id="ll-a-slider" min="2" max="26" value="12" step="1">
                   </div>
                   <div class="slider-row">
                     <label for="ll-b-slider">第二個數 b: <span id="ll-b-val" class="val-num">0</span></label>
-                    <input type="range" id="ll-b-slider" min="2" max="90" value="60" step="1">
+                    <input type="range" id="ll-b-slider" min="2" max="26" value="18" step="1">
                   </div>
                   <div class="slider-row">
                     <label for="ll-c-slider">第三個數 c: <span id="ll-c-val" class="val-num">0</span></label>
-                    <input type="range" id="ll-c-slider" min="2" max="90" value="72" step="1">
+                    <input type="range" id="ll-c-slider" min="2" max="26" value="20" step="1">
                   </div>
                 </div>
 
@@ -953,7 +953,7 @@
           </div>
 
           <div class="quiz-card" data-quiz="2-2-7-2">
-            <p class="quiz-question"><strong>Q2.</strong> 用長 \(8\) 公分、寬 \(6\) 公分的長方形磁磚，不重疊也不切割地拼成一個正方形。若要拼成<strong>最小的</strong>正方形，共需要幾塊磁磚？</p>
+            <p class="quiz-question"><strong>Q2.</strong> 用長 \(80\) 公分、寬 \(60\) 公分的長方形木板，不重疊也不切割地拼成一個正方形。若要拼成<strong>最小的</strong>正方形，共需要幾塊木板？</p>
             <div class="options-container">
               <label class="option-label"><input type="radio" name="q2-2-7-2" value="A"><span class="option-text">A. \(3\) 塊</span></label>
               <label class="option-label"><input type="radio" name="q2-2-7-2" value="B"><span class="option-text">B. \(4\) 塊</span></label>
@@ -964,9 +964,14 @@
             <div class="explanation-box">
               <div class="explanation-title"></div>
               <p class="explanation-desc"><strong>解析：</strong>分成兩步，<strong>先求邊長、再求塊數</strong>。<br>
-              正方形的邊長要同時是 \(8\) 與 \(6\) 的倍數，取最小公倍數：\([ 8 , 6 ] = 24\)，最小邊長為 \(24\) 公分。<br>
-              接著算塊數：橫向排 \(24 \div 8 = 3\) 塊、縱向排 \(24 \div 6 = 4\) 塊，所以共 \(3 \times 4 = 12\) 塊，答案為 C。<br>
-              驗算面積：\(12 \times ( 8 \times 6 ) = 576 = 24 \times 24\)，對得上。<br>
+              正方形的邊長要同時是 \(80\) 與 \(60\) 的倍數，取最小公倍數：\([ 80 , 60 ] = 240\)，最小邊長為 \(240\) 公分。<br>
+              接著算塊數：橫向排 \(240 \div 80 = 3\) 塊、縱向排 \(240 \div 60 = 4\) 塊，所以共 \(3 \times 4 = 12\) 塊，答案為 C。<br>
+              驗算面積
+              \[\begin{aligned}
+              & 12 \times ( 80 \times 60 ) \\
+              &= 57600 = 240 \times 240
+              \end{aligned}\]
+              對得上。<br>
               （選 A、B 的是只算了其中一個方向就停下來——<strong>塊數要兩個方向相乘</strong>。）</p>
             </div>
           </div>

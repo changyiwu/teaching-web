@@ -924,14 +924,22 @@ function initApplyCanvas(opts) {
   const feedback = document.getElementById(p + '-feedback');
   const buttons = document.querySelectorAll('[data-apply-group="' + opts.group + '"]');
 
+  // max 沒寫就沿用 HTML 上的 60。cycle 收到 10，是為了讓 Q1 的 12、16 分鐘調不出來——
+  // 否則那一題只要把兩個班距輸進來就直接顯示答案（開發約束 29）
   const MODES = {
     pack: { labelA: '梨子（個）', labelB: '蘋果（個）', defA: 36, defB: 60, kind: 'gcd' },
-    cycle: { labelA: '小翊每幾天來', labelB: '小妍每幾天來', defA: 8, defB: 10, kind: 'lcm' },
+    cycle: { labelA: '小翊每幾天來', labelB: '小妍每幾天來', defA: 8, defB: 10, maxA: 10, maxB: 10, kind: 'lcm' },
     tile: { labelA: '磁磚長（cm）', labelB: '磁磚寬（cm）', defA: 6, defB: 4, kind: 'lcm' },
     tree: { labelA: '土地長（m）', labelB: '土地寬（m）', defA: 24, defB: 18, kind: 'gcd' }
   };
 
   let mode = opts.defMode;
+
+  // 切換情境時先套用該情境的滑桿上限，再填預設值（順序反過來會被舊上限夾住）
+  function applyRange() {
+    sliderA.max = MODES[mode].maxA || 60;
+    sliderB.max = MODES[mode].maxB || 60;
+  }
 
   function drawPack(a, b, g) {
     const perBoxA = a / g;
@@ -1239,6 +1247,7 @@ function initApplyCanvas(opts) {
       mode = btn.getAttribute('data-apply-mode');
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      applyRange();
       sliderA.value = MODES[mode].defA;
       sliderB.value = MODES[mode].defB;
       draw();
@@ -1247,5 +1256,6 @@ function initApplyCanvas(opts) {
 
   sliderA.addEventListener('input', draw);
   sliderB.addEventListener('input', draw);
+  applyRange();
   draw();
 }

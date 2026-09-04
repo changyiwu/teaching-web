@@ -281,9 +281,11 @@ function initSignsCanvas() {
   const formulaDiv = document.getElementById('signs-formula');
   const feedbackDiv = document.getElementById('signs-feedback');
 
-  // 5 個因數的正負（true 代表負）
-  const negs = [true, false, true, false, true];
-  const values = [3, 5, 7, 9, 11]; // 數字部分固定，只切換符號
+  // 6 個因數的正負（true 代表負）
+  // 因數個數與數字都刻意與 Q2 的 (-3)(-5)(-7)(-9)(-11) 錯開，
+  // 否則全部點成負號就等於把那一題的答案直接印在畫面上（開發約束 29）
+  const negs = [true, false, true, false, true, false];
+  const values = [2, 3, 4, 5, 6, 8]; // 數字部分固定，只切換符號
 
   function syncButtons() {
     grid.querySelectorAll('.sign-btn').forEach(btn => {
@@ -328,7 +330,7 @@ function initSignsCanvas() {
 
     const tileW = 66;
     const tileH = 66;
-    const gap = 24;
+    const gap = 16;
     const totalW = values.length * tileW + (values.length - 1) * gap;
     const startX = (w - totalW) / 2;
     const tileY = 46;

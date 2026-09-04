@@ -870,9 +870,16 @@ footer {
 
 .sign-btn-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 0.5rem;
   width: 100%;
+}
+
+/* 窄螢幕下 6 欄會把每顆按鈕壓到 29px，改排成兩列 3 欄才點得到 */
+@media (max-width: 640px) {
+  .sign-btn-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .sign-btn {
