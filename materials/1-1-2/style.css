@@ -889,11 +889,17 @@ footer {
   color: white;
 }
 
+/* 選到哪一顆要在投影下一眼看得出來：原本只換底色加一道淡陰影，
+   智慧板上跟未選中的區別不夠。改成亮度拉高的漸層➕外圈光環➕微微浮起。 */
 .bracket-btn.active {
   background: var(--primary-gradient);
-  border-color: transparent;
+  border-color: rgba(233, 213, 255, 0.85);
   color: white;
-  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.25);
+  font-weight: 700;
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 2px rgba(233, 213, 255, 0.35),
+    0 6px 18px rgba(168, 85, 247, 0.55);
 }
 
 .bracket-formula-display {
@@ -918,7 +924,8 @@ footer {
 /* 顯示型算式（\[ ... \]）遇到比卡片還寬的長算式時，預設會直接往右溢出，
    蓋到右欄的互動卡上。改成在卡片內橫向捲動，並留上下 padding
    避免 overflow-y 把分數的上下緣切掉。 */
-.explanation-card mjx-container[display="true"] {
+.explanation-card mjx-container[display="true"],
+.explanation-box mjx-container[display="true"] {
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRegroupCanvas();
   initThermometerCanvas();
   initBracketCanvas();
+  initAbsCanvas();
   initDistanceCanvas();
 });
 /* ==========================================================================
@@ -525,7 +526,10 @@ function initThermometerCanvas() {
    5. Concept 3: Parental removal/bracket dynamic explorer
    ========================================================================== */
 function initBracketCanvas() {
-  const btns = document.querySelectorAll('.bracket-btn');
+  // 只收自己這一組的按鈕。.bracket-btn 這個 class 已經被重點 2、重點 5
+  // 的模式按鈕共用（只為了共用樣式），用 class 選會把它們一起收走——
+  // 點重點 2 會清掉這裡的選取並把畫面重置回第一種情形
+  const btns = document.querySelectorAll('[data-bracket-mode]');
   const formulaBox = document.getElementById('bracket-formula');
   const bracketExplanation = document.getElementById('bracket-canvas-feedback');
 
@@ -594,7 +598,7 @@ function initBracketCanvas() {
     btn.addEventListener('click', () => {
       btns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      updateBracketExplorer(btn.id);
+      updateBracketExplorer(btn.dataset.bracketMode);
     });
   });
 
@@ -1115,6 +1119,253 @@ function initRegroupCanvas() {
   });
 
   [sliderA, sliderB, sliderC].forEach((s) => s.addEventListener('input', draw));
+
+  draw();
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(draw);
+  }
+}
+/* ==========================================================================
+   5b. Absolute Value Explorer (重點 5：含絕對值的算式運算)
+   兩個常見誤解各給一個模式：
+     split — |a+b| 可以拆成 |a|+|b| 嗎？
+     neg   — -|a+b| 可以像去括號那樣變號嗎？
+   「這次相不相等」與理由一律即時算出來，不寫死（開發約束 27）。
+   字級依開發約束 13 放大：canvas 在課堂投影下只有約 0.71 倍。
+   ========================================================================== */
+function initAbsCanvas() {
+  const canvas = document.getElementById('canvas-abs');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const sliderA = document.getElementById('abs-a');
+  const sliderB = document.getElementById('abs-b');
+  const valA = document.getElementById('abs-a-val');
+  const valB = document.getElementById('abs-b-val');
+  const formulaDiv = document.getElementById('abs-formula');
+  const feedbackDiv = document.getElementById('abs-feedback');
+  // 只收自己這一組的按鈕（工作約定：querySelectorAll 要收斂到自己那一組）
+  const modeBtns = document.querySelectorAll('[data-abs-mode]');
+
+  let mode = 'split';
+
+  const OK = '#34d399';
+  const NG = '#f87171';
+  // 括號只在負數時才加：那是為了隔開運算符號與性質符號（開發約束 27）
+  const par = (v) => (v < 0 ? `(${v})` : `${v}`);
+
+  // 本頁不載入 math-canvas.js 的繪圖元件，圓角矩形自備一份
+  function roundRect(x, y, rw, rh, r) {
+    const rad = Math.min(r, Math.abs(rw) / 2, Math.abs(rh) / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + rad, y);
+    ctx.lineTo(x + rw - rad, y);
+    ctx.quadraticCurveTo(x + rw, y, x + rw, y + rad);
+    ctx.lineTo(x + rw, y + rh - rad);
+    ctx.quadraticCurveTo(x + rw, y + rh, x + rw - rad, y + rh);
+    ctx.lineTo(x + rad, y + rh);
+    ctx.quadraticCurveTo(x, y + rh, x, y + rh - rad);
+    ctx.lineTo(x, y + rad);
+    ctx.quadraticCurveTo(x, y, x + rad, y);
+    ctx.closePath();
+  }
+
+  function draw() {
+    const a = parseInt(sliderA.value, 10);
+    const b = parseInt(sliderB.value, 10);
+    const s = a + b;
+
+    valA.textContent = a > 0 ? `+${a}` : `${a}`;
+    valB.textContent = b > 0 ? `+${b}` : `${b}`;
+
+    // left = 先算內部（課本的做法）；right = 學生常見的另一種做法
+    let leftVal, rightVal, leftTex, rightTex, leftShort, rightShort, question, rightLabel;
+    if (mode === 'split') {
+      leftVal = Math.abs(s);
+      rightVal = Math.abs(a) + Math.abs(b);
+      leftTex = `|${a} + ${par(b)}| = |${s}| = ${leftVal}`;
+      rightTex = `|${a}| + |${b}| = ${Math.abs(a)} + ${Math.abs(b)} = ${rightVal}`;
+      leftShort = `|${a} + ${par(b)}|`;
+      rightShort = `|${a}| + |${b}|`;
+      question = '把絕對值「拆開來」各自取，答案會一樣嗎？';
+      rightLabel = '拆開來算';
+    } else {
+      leftVal = -Math.abs(s);
+      rightVal = -s;
+      leftTex = `-|${a} + ${par(b)}| = -|${s}| = ${leftVal}`;
+      rightTex = `-(${a} + ${par(b)}) = -(${s}) = ${rightVal}`;
+      leftShort = `-|${a} + ${par(b)}|`;
+      rightShort = `-(${a} + ${par(b)})`;
+      question = '絕對值前面的負號，可以像去括號那樣變號嗎？';
+      rightLabel = '當成括號變號';
+    }
+    const same = leftVal === rightVal;
+
+    // 數值列：直接寫成「左式 =／≠ 右式」的比較。
+    // 只在等號處斷成多段，用 <wbr> 接合（開發約束 24）——這裡不能用 wbrEq()，
+    // 它的括號深度只算 {}、()、[]，不認得絕對值的 |，會斷在 |…| 正中間。
+    const seg = (lhs, rhs) => `\\(${lhs}\\)<wbr>\\({}= ${rhs}\\)`;
+    const rel = same ? '=' : '\\ne';
+    formulaDiv.innerHTML =
+      `<span style="color:${OK}">${seg(leftShort, leftVal)}</span>` +
+      `<wbr>\\(\\;${rel}\\;\\)` +
+      `<wbr><span style="color:${same ? OK : NG}">${seg(rightShort, rightVal)}</span>`;
+    if (window.MathJax) {
+      MathJax.typesetPromise([formulaDiv]).catch((err) => console.log(err));
+    }
+
+    // 這次為什麼相等／不相等——即時算，不寫死（開發約束 27）
+    let msg;
+    if (mode === 'split') {
+      if (same) {
+        const why =
+          a === 0 || b === 0
+            ? '其中一個是 0，沒有東西可以抵消'
+            : '兩數同號，相加時不會互相抵消';
+        msg = `這一組<strong>剛好相等</strong>：${why}。但這是特例，不是通則——把其中一個拉成異號再看看。`;
+      } else {
+        msg = `<strong>不相等</strong>，差了 \\(${rightVal - leftVal}\\)。\\(${a}\\) 與 \\(${b}\\) 異號，相加時先抵消掉一部分才剩 \\(${s}\\)；先各自取絕對值就抵消不到了。所以一定要<strong>先算內部</strong>。`;
+      }
+    } else {
+      if (same) {
+        msg = `這一組<strong>剛好相等</strong>：因為 \\(${a} + ${par(b)} = ${s}\\) 本來就不是負的，取絕對值沒有改變它。這是特例，把和拉成負的再看看。`;
+      } else {
+        msg = `<strong>不相等</strong>。\\(|${a} + ${par(b)}|\\) 是距離，一定不是負的，前面加負號後必定 \\(\\le 0\\)；而 \\(-(${a} + ${par(b)}) \\)<wbr>\\({}= ${rightVal}\\) 卻是正的。<strong>絕對值不是括號</strong>，不能直接變號。`;
+      }
+    }
+    feedbackDiv.innerHTML = `<div style="width:100%; text-align:center; line-height:1.6; font-size:0.95rem;">${msg}</div>`;
+    if (window.MathJax) {
+      MathJax.typesetPromise([feedbackDiv]).catch((err) => console.log(err));
+    }
+
+    /* ---------- Canvas ---------- */
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.textBaseline = 'middle';
+
+    // 問題（開發約束 22：互動要能單獨讀懂）
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(226, 232, 240, 0.78)';
+    ctx.font = '600 18px "Noto Sans TC", sans-serif';
+    ctx.fillText(question, w / 2, 26);
+
+    // --- 兩種做法各一列 ---
+    const rows = [
+      { label: '先算內部', tex: leftTex, val: leftVal, color: OK, y: 74 },
+      { label: rightLabel, tex: rightTex, val: rightVal, color: same ? OK : NG, y: 126 },
+    ];
+    // 算式的起點由「兩列標籤裡最寬的那一個」決定，不寫死——
+    // 「當成括號變號」六個字比「先算內部」寬得多，寫死會被壓到
+    const LABEL_X = 44;
+    ctx.font = '600 16px "Noto Sans TC", sans-serif';
+    const texX = LABEL_X + Math.max(...rows.map((r) => ctx.measureText(r.label).width)) + 14;
+    for (const r of rows) {
+      roundRect(30, r.y - 22, w - 60, 44, 12);
+      ctx.fillStyle = `${r.color}22`;
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = `${r.color}88`;
+      ctx.stroke();
+
+      ctx.textAlign = 'left';
+      ctx.font = '600 16px "Noto Sans TC", sans-serif';
+      ctx.fillStyle = 'rgba(226, 232, 240, 0.65)';
+      ctx.fillText(r.label, LABEL_X, r.y);
+      ctx.font = '700 22px "Outfit", sans-serif';
+      ctx.fillStyle = r.color;
+      ctx.fillText(r.tex, texX, r.y);
+    }
+
+    // --- 數線：兩個結果各自站在自己的位置上（長度與數值成正比，開發約束 17） ---
+    const lineY = 214;
+    const padding = 46;
+    const RANGE = 20; // a、b 各為 -10~10，兩種做法的結果都落在 -20~20
+    const sx = (v) => padding + ((v + RANGE) / (RANGE * 2)) * (w - padding * 2);
+
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(sx(-RANGE), lineY);
+    ctx.lineTo(sx(RANGE), lineY);
+    ctx.stroke();
+
+    ctx.textAlign = 'center';
+    ctx.font = '600 14px "Outfit", sans-serif';
+    for (let v = -20; v <= 20; v += 5) {
+      ctx.beginPath();
+      ctx.moveTo(sx(v), lineY - 5);
+      ctx.lineTo(sx(v), lineY + 5);
+      ctx.strokeStyle = v === 0 ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.28)';
+      ctx.lineWidth = v === 0 ? 2 : 1;
+      ctx.stroke();
+      ctx.fillStyle = v === 0 ? 'rgba(255,255,255,0.85)' : 'rgba(226,232,240,0.45)';
+      ctx.fillText(`${v}`, sx(v), lineY + 20);
+    }
+
+    // 兩個結果的標記：相等時會疊在同一點上，一眼看得出來
+    const marks = [
+      { v: leftVal, color: OK, dy: -34, label: '先算內部' },
+      { v: rightVal, color: same ? OK : NG, dy: same ? -34 : 48, label: rightLabel },
+    ];
+    for (const mk of marks) {
+      const x = sx(mk.v);
+      ctx.beginPath();
+      ctx.moveTo(x, lineY);
+      ctx.lineTo(x, lineY + mk.dy * 0.45);
+      ctx.strokeStyle = mk.color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(x, lineY, 6, 0, Math.PI * 2);
+      ctx.fillStyle = mk.color;
+      ctx.fill();
+
+      // 結果的數字加一塊色底：不加的話它跟正下方的刻度數字長得一模一樣，
+      // 在 -20／20 這種剛好落在刻度上的位置會看成兩個刻度標籤
+      ctx.font = '700 19px "Outfit", sans-serif';
+      const label = `${mk.v}`;
+      const tw = ctx.measureText(label).width;
+      const cw = tw + 18;
+      // 落在數線兩端時整塊會超出畫布，夾回來
+      const cxp = Math.min(Math.max(x, cw / 2 + 4), w - cw / 2 - 4);
+      roundRect(cxp - cw / 2, lineY + mk.dy - 13, cw, 26, 8);
+      ctx.fillStyle = `${mk.color}2e`;
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = mk.color;
+      ctx.stroke();
+      ctx.fillStyle = mk.color;
+      ctx.textAlign = 'center';
+      ctx.fillText(label, cxp, lineY + mk.dy);
+    }
+    if (same) {
+      // 疊在一起時只畫一個數字，另外標一句話說明它們同一點
+      ctx.font = '600 15px "Noto Sans TC", sans-serif';
+      ctx.fillStyle = 'rgba(226, 232, 240, 0.6)';
+      ctx.fillText('兩種做法落在同一點', w / 2, lineY + 46);
+    }
+
+    // --- 結論 ---
+    ctx.textAlign = 'center';
+    ctx.font = '700 19px "Noto Sans TC", sans-serif';
+    ctx.fillStyle = same ? OK : NG;
+    ctx.fillText(
+      same ? '這一組剛好相等（特例）' : `不相等：差了 ${Math.abs(rightVal - leftVal)}`,
+      w / 2,
+      300
+    );
+  }
+
+  modeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      mode = btn.dataset.absMode;
+      modeBtns.forEach((o) => o.classList.toggle('active', o === btn));
+      draw();
+    });
+  });
+
+  [sliderA, sliderB].forEach((s) => s.addEventListener('input', draw));
 
   draw();
   if (document.fonts && document.fonts.ready) {
