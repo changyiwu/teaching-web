@@ -678,7 +678,8 @@ function initSubCanvas() {
     formulaEl.innerHTML = `\\( ${cs.tex} = ${r.valTex} \\)`;
     feedbackEl.innerHTML = wrapFeedback(
       `把 \\( x = ${numStr(x)} \\) 代入 \\( ${cs.tex} \\)：<br>` +
-      `\\( ${cs.tex} = ${r.subTex} ${r.midTex ? '= ' + r.midTex : ''} = ${r.valTex} \\)<br>` +
+      // 逐步代入的三、四段等式整條包成一段時 414px 下會撐出捲軸，斷成多段才換得了行
+      wbrEq(`${cs.tex} = ${r.subTex} ${r.midTex ? '= ' + r.midTex : ''} = ${r.valTex}`) + `<br>` +
       (x < 0
         ? `<strong style="color:${C_SKY}">代入負數要加括號</strong>——乘號是運算符號、負號是性質符號，兩者不能直接相鄰。`
         : `同一條式子，換一個 \\(x\\) 就換一個值——這正是代數式好用的地方。`)
@@ -956,7 +957,7 @@ function initSortCanvas() {
     } else if (allPlaced) {
       feedbackEl.innerHTML = wrapFeedback(
         `x 項合併：係數相加 \\( ${coefTex(xSum)}x \\)；常數項合併：\\( ${cSum} \\)。<br>` +
-        `所以 \\( ${cs.tex} = ${resTex} \\)。<br>` +
+        `所以 ` + wbrEq(`${cs.tex} = ${resTex}`) + `。<br>` +
         `<strong style="color:${OK_COLOR}">兩類不能再併</strong>——\\( ${coefTex(xSum)}x \\) 與 \\( ${cSum} \\) 不是同類項，這已經是最簡的樣子。`
       );
     } else if (selected >= 0) {

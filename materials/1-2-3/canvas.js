@@ -1341,7 +1341,10 @@ function initApplyCanvas() {
     feedback.innerHTML = wrapFeedback(
       `① 喝掉的果汁：\\( ${W} - ${R} = ${drunk} \\) 公克。<br>` +
       `② 它占果汁原重的 \\( \\frac{${rn}}{${rd}} \\)。<br>` +
-      `③ 果汁原重 \\( = ${drunk} \\div \\frac{${rn}}{${rd}} = ${drunk} \\times \\frac{${rd}}{${rn}} = ${round2(juice)} \\) 公克。<br>` +
+      // 三段等式整條包成一段時 414px 下會撐出捲軸，斷成多段才換得了行
+      `③ 果汁原重 ` +
+      wbrEq(`= ${drunk} \\div \\frac{${rn}}{${rd}} = ${drunk} \\times \\frac{${rd}}{${rn}} = ${round2(juice)}`) +
+      ` 公克。<br>` +
       `④ 空瓶重 \\( = ${W} - ${round2(juice)} = ${round2(bottle)} \\) 公克。<br>` +
       `<span style="color:#94a3b8">關鍵是「喝掉的分率是對<strong>果汁</strong>算的，不是對連瓶總重算的」。</span>`
     );
@@ -1400,7 +1403,9 @@ function initApplyCanvas() {
     feedback.innerHTML = wrapFeedback(
       `① 添購前占添購後的 \\( \\frac{${n}}{${d}} \\)，所以<strong>新書</strong>占添購後的 ` +
       `\\( 1 - \\frac{${n}}{${d}} = \\frac{${rn}}{${rd}} \\)。<br>` +
-      `② 添購後 \\( = ${add} \\div \\frac{${rn}}{${rd}} = ${add} \\times \\frac{${rd}}{${rn}} = ${round2(after)} \\) 本。<br>` +
+      `② 添購後 ` +
+      wbrEq(`= ${add} \\div \\frac{${rn}}{${rd}} = ${add} \\times \\frac{${rd}}{${rn}} = ${round2(after)}`) +
+      ` 本。<br>` +
       `③ 添購前 \\( = ${round2(after)} - ${add} = ${round2(before)} \\) 本。<br>` +
       `<span style="color:#94a3b8">分率的「1」是<strong>添購後</strong>的總數，先認清誰是 1 再列式。</span>`
     );

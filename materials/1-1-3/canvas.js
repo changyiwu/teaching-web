@@ -746,9 +746,12 @@ function initDistributeCanvas() {
       `\\(\\Rightarrow\\) <span style="color:#f472b6; font-size:1.35rem; text-shadow: 0 0 10px rgba(255,255,255,0.2)">\\(${left}\\)</span>`;
     typeset([formulaDiv]);
 
+    // 回饋區的兩條算式同樣要斷段：整條包成一段時 414px 下會撐出一根捲軸
     feedbackDiv.innerHTML = wrapFeedback(
-      `<strong>分開算</strong>：\\(${a} \\times ${c} + ${b} \\times ${c} = ${a * c} + ${b * c} = ${right}\\)；` +
-      `<strong>合起來算</strong>：\\((${a} + ${b}) \\times ${c} = ${a + b} \\times ${c} = ${left}\\)。<br>` +
+      `<strong>分開算</strong>：` +
+      wbrEq(`${a} \\times ${c} + ${b} \\times ${c} = ${a * c} + ${b * c} = ${right}`) + `；` +
+      `<strong>合起來算</strong>：` +
+      wbrEq(`(${a} + ${b}) \\times ${c} = ${a + b} \\times ${c} = ${left}`) + `。<br>` +
       `兩種算法的面積<strong>完全相同</strong>，這就是乘法對加法的分配律。`
     );
     typeset([feedbackDiv]);

@@ -1319,7 +1319,7 @@ function initRateCanvas() {
       drawNote(ctx, '請把「乙的速率」調得比「甲的速率」大', 176, MUTED, 13);
       return {
         ok: false,
-        tex: '\\text{（乙沒有比甲快，情境不成立）}',
+        plain: '（乙沒有比甲快，情境不成立）',
         note: `目前甲的速率 \\(${v1}\\)、乙的速率 \\(${v2}\\)，乙<strong>沒有比甲快</strong>，` +
           `不可能發生「乙到終點時甲還差一段」的情形。把乙的速率調大再看一次。`
       };
@@ -1372,7 +1372,7 @@ function initRateCanvas() {
       drawNote(ctx, '請把「下山時速」調得比「上山時速」大', 176, MUTED, 13);
       return {
         ok: false,
-        tex: '\\text{（下山沒有比上山快，情境不成立）}',
+        plain: '（下山沒有比上山快，情境不成立）',
         note: `目前上山時速 \\(${vu}\\)、下山時速 \\(${vd}\\)，下山<strong>沒有比上山快</strong>，` +
           `爬同一條山路不會有這種情形。把下山時速調大再看一次。`
       };
@@ -1430,7 +1430,11 @@ function initRateCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const r = (mode === 'meet') ? drawMeet(a, b, c) : drawRound(a, b, c);
 
-    formula.innerHTML = `\\( ${r.tex} \\)`;
+    // 情境不成立時印的是一句中文，包進 \( \) 會變成不折行的 mjx-container，
+    // 414px 下撐出一根捲軸；當純文字輸出才換得了行
+    formula.innerHTML = r.ok
+      ? `\\( ${r.tex} \\)`
+      : `<span style="color:${NO_COLOR}">${r.plain}</span>`;
     fb.innerHTML = wrapFeedback(r.note);
     typeset([formula, fb]);
   }
