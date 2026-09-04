@@ -1100,3 +1100,16 @@ mjx-mn > mjx-c + mjx-c {
 .value-display mjx-assistive-mml {
   width: 1px !important;
 }
+
+/* 顯示型算式（\[ ... \]）遇到比卡片還寬的長算式時，預設會直接往右溢出，
+   而 .concept-section 是 overflow: hidden，超出的部分會被真的裁掉。
+   改成在卡片內橫向捲動，並留上下 padding 避免 overflow-y 切掉分數的上下緣。
+   評量的解析框（.explanation-box）預設 display:none，掃描時容易整批漏掉，
+   所以一起掛上。（開發約束 14） */
+.explanation-card mjx-container[display="true"],
+.explanation-box mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.35rem;
+}

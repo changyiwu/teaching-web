@@ -1092,7 +1092,8 @@ mjx-msup > mjx-TeXAtom + mjx-script {
    蓋到右欄的互動卡上。改成在卡片內橫向捲動，並留上下 padding
    避免 overflow-y 把分數與指數的上下緣切掉。 */
 .explanation-card mjx-container[display="true"],
-.summary-card mjx-container[display="true"] {
+.summary-card mjx-container[display="true"],
+.explanation-box mjx-container[display="true"] {
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;

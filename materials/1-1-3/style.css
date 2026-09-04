@@ -1051,7 +1051,8 @@ footer {
 /* 顯示型算式（\[ ... \]）遇到比卡片還寬的長算式時，預設會直接往右溢出，
    蓋到右欄的互動卡上。改成在卡片內橫向捲動，並留上下 padding
    避免 overflow-y 把分數的上下緣切掉。 */
-.explanation-card mjx-container[display="true"] {
+.explanation-card mjx-container[display="true"],
+.explanation-box mjx-container[display="true"] {
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
