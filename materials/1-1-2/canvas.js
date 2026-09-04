@@ -562,11 +562,11 @@ function initBracketCanvas() {
     if (prefix === '+') {
       term1Val = val1;
       term2Val = val2;
-      explText = `<strong>括號前面是「＋」號</strong>：直接去括號，括號內各項的<strong>性質符號皆保持不變</strong>：即 \\(10 + (a + b) = 10 + a + b\\)。`;
+      explText = `<strong>括號前面是「＋」號</strong>：直接去括號，括號內各項的<strong>性質符號皆保持不變</strong>：即 \\(10 + (a + b)\\)<wbr>\\({}= 10 + a + b\\)。`;
     } else {
       term1Val = -val1;
       term2Val = -val2;
-      explText = `<strong>括號前面是「－」號</strong>：去括號時必須<strong>變號</strong>，括號內的「＋」變「－」，「－」變「＋」：即 \\(10 - (a + b) = 10 - a - b\\)。`;
+      explText = `<strong>括號前面是「－」號</strong>：去括號時必須<strong>變號</strong>，括號內的「＋」變「－」，「－」變「＋」：即 \\(10 - (a + b)\\)<wbr>\\({}= 10 - a - b\\)。`;
     }
 
     const val1Str = val1; // first term inside parentheses does not need a leading plus
