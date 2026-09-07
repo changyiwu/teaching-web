@@ -44,7 +44,7 @@
       {
         "chapter": "第1章 二元一次聯立方程式",
         "sections": [
-          { "code": "1-1", "title": "二元一次方程式" },
+          { "code": "1-1", "title": "二元一次方程式", "status": "completed" },
           { "code": "1-2", "title": "解二元一次聯立方程式" },
           { "code": "1-3", "title": "應用問題" }
         ]

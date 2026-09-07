@@ -4,39 +4,1266 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-1 二元一次方程式 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-1 二元一次方程式 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第二冊 (1下) • 第1章 二元一次聯立方程式</div>
-    <h1>1-1 二元一次方程式</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第二冊 • 第一章</span>
+        <h1>1-1 二元一次方程式</h1>
+        <p>第一冊我們用一個符號 \(x\) 代表一個不知道的數。但售票口前的問題常常一次有<strong>兩個</strong>不知道的數——全票多少錢、優待票多少錢，兩個都沒寫。這一節要做的事很單純：<strong>兩種數量，就用兩個符號</strong>。有了 \(x\) 和 \(y\)，就能把「\(5\) 張全票 \(2\) 張優待票」寫成 \((5x+2y)\) 元；再加上一句「總共付了 \(360\) 元」，等號就出現了，變成 \(5x+2y=360\)。最後你會發現一件跟第一冊很不一樣的事：這種方程式的答案<strong>不只一組，而是無限多組</strong>。</p>
+      </div>
+      <!-- Progress navigation (8 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-ticket"></i> 二元一次式</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-calculator"></i> 式子的值</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-boxes-packing"></i> 項與同類項</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-right-left"></i> 去括號</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-share-nodes"></i> 分配律與分數</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-equals"></i> 二元一次方程式</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-door-open"></i> 方程式的解</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-infinity"></i> 無限多組解</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Vintage Ticket Printing)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(20, 184, 166, 0.25);">
+        <h2 class="section-title" style="color: #5eead4; border-bottom-color: rgba(94, 234, 212, 0.2);">
+          <i class="fa-solid fa-ticket" aria-hidden="true" style="color: #5eead4; text-shadow: 0 0 10px rgba(20, 184, 166, 0.4);"></i> 課前暖身漫畫：售票口沒有貼價目表
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            動物園的售票窗口前排著隊，木頭窗框上<strong style="color:#5eead4">只掛著「全票」「優待票」兩塊牌子，價錢那一欄是空的</strong>——今天的票價還沒印好。前面那家人買了 \(5\) 張全票、\(2\) 張優待票；後面這家買了 \(3\) 張全票、\(1\) 張優待票。小翊想算算兩家各付多少，卻卡在同一個地方：<strong style="color:#5eead4">兩種票的價錢都不知道</strong>。第一冊那招「不知道就給它一個代號」還能用嗎？售票員從抽屜拿出兩枚橡皮章，一枚刻著 \(x\)、一枚刻著 \(y\)，往兩塊空牌子上各蓋一下：全票每張 \(x\) 元、優待票每張 \(y\) 元。空欄一被填上，票根就自己算得出來了——前面那家 \((5x+2y)\) 元，後面那家照同樣的方法算，是 \((3x+y)\) 元。<strong style="color:#5eead4">一個代號不夠用，那就用兩個。</strong>
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古車票印刷風四格漫畫：動物園售票口的兩塊木框價目牌中間的價錢槽是空的，戴眼鏡的男孩指著空槽說票價還沒印上去，綁雙馬尾的女孩拿著兩張空白票根想不出怎麼算，售票員兩手各拿一枚刻著 x 與 y 的橡皮章準備蓋上去，最後兩塊牌子分別印出 x 與 y，旁白框寫著五張全票加兩張優待票等於五x加二y元" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 二元一次式
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ticket" aria-hidden="true"></i> 重點 1：二元一次式——兩種數量，兩個符號
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>一個符號只能代表一種數量</strong>。題目裡出現兩種不知道的數量時，就要用<strong>兩個不同的符號</strong>去分別代表它們，最常用的是 \(x\) 和 \(y\)。</li>
+              <li><strong>二元一次式的定義</strong>：含有<strong>兩種</strong>文字符號（二元），且兩種文字符號的<strong>次數都是 \(1\)</strong>（一次）的代數式。</li>
+              <li><strong>售票口的列式</strong>：設全票每張 \(x\) 元、優待票每張 \(y\) 元，則
+                <ul>
+                  <li>買 \(5\) 張全票花 \(5x\) 元、\(2\) 張優待票花 \(2y\) 元，共 \((5x+2y)\) 元。</li>
+                  <li>買 \(3\) 張全票花 \(3x\) 元、\(1\) 張優待票花 \(y\) 元，共 \((3x+y)\) 元。</li>
+                </ul>
+              </li>
+              <li><strong>係數是 \(1\) 就不寫</strong>：\(1\) 張優待票寫成 \(y\)，不寫 \(1y\)。這條規則第一冊就學過，二元照舊。</li>
+              <li><strong>順序要跟符號的定義對上</strong>，這是最常見的失分點。若<strong>設蘋果每個 \(x\) 元、芭樂每個 \(y\) 元</strong>，那麼「\(4\) 個蘋果與 \(3\) 個芭樂」是 \((4x+3y)\) 元，<strong>不是</strong> \((3x+4y)\) 元。寫完回頭問一次：\(x\) 到底是誰的價錢？</li>
+              <li><strong>怎樣就不算二元一次式</strong>：
+                <ul>
+                  <li>\(3x+5\)：只有<strong>一種</strong>文字符號，是一元一次式。</li>
+                  <li>\(x^2+y\)：\(x\) 的<strong>次數是 \(2\)</strong>，不是一次。</li>
+                  <li>\(2x+3y=12\)：多了<strong>等號</strong>，那已經是方程式（重點 6 會談），不是「式」。</li>
+                </ul>
+              </li>
+              <li><strong>寫下 \(x\) 的那一刻，未知的東西就變得可以計算</strong>。這是整節、也是整章的起手式。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>情境</th><th>設誰是 \(x\)、誰是 \(y\)</th><th>列出的二元一次式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(5\) 張全票、\(2\) 張優待票</td><td>全票 \(x\) 元、優待票 \(y\) 元</td><td class="sign-pos">\(5x+2y\)</td></tr>
+                <tr><td>\(3\) 張全票、\(1\) 張優待票</td><td>同上</td><td class="sign-pos">\(3x+y\)</td></tr>
+                <tr><td>\(4\) 個蘋果、\(3\) 個芭樂</td><td>蘋果 \(x\) 元、芭樂 \(y\) 元</td><td class="sign-pos">\(4x+3y\)</td></tr>
+                <tr><td>\(4\) 個蘋果、\(3\) 個芭樂</td><td>芭樂 \(x\) 元、蘋果 \(y\) 元</td><td class="sign-pos">\(3x+4y\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_two_symbols.webp" alt="復古車票印刷風插圖：售票窗口的木櫃檯上立著兩塊價目牌，左牌中央印著一個大大的 x、右牌印著一個 y，售票員手上拿著蓋章用的橡皮章；櫃檯上平放兩排票根，上排五張都印著 x、下排兩張都印著 y，兩排之間留有明顯空隙" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：售票口列式機</h3>
+            <p class="interactive-instruction">選一個情境，拉兩支滑桿決定各買幾張。票根一張張排出來，右邊的算式就跟著長出來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-express" width="540" height="400"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ex-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ex-case-group">
+                      <button class="pick-btn active" data-case="0">動物園門票</button>
+                      <button class="pick-btn" data-case="1">早餐店</button>
+                      <button class="pick-btn" data-case="2">回收站</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ex-a-slider"><span id="ex-a-name">全票</span>數量：<span id="ex-a-val" class="val-num">5</span></label>
+                    <input type="range" id="ex-a-slider" min="0" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ex-b-slider"><span id="ex-b-name">優待票</span>數量：<span id="ex-b-val" class="val-num">2</span></label>
+                    <input type="range" id="ex-b-slider" min="0" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ex-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (二元一次式)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 文具店的鉛筆每枝 \(x\) 元、原子筆每枝 \(y\) 元。小玉買了 \(9\) 枝鉛筆和 \(7\) 枝原子筆，共花了多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-1-1" value="A"><span class="option-text">A. \((9x+7y)\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-1" value="B"><span class="option-text">B. \((7x+9y)\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-1" value="C"><span class="option-text">C. \((9+7)xy\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-1" value="D"><span class="option-text">D. \(16xy\) 元</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。題目<strong>先說</strong>「鉛筆每枝 \(x\) 元」，所以 \(x\) 是鉛筆的價錢：
+              \[\begin{aligned}
+              & 9 \text{ 枝鉛筆} = 9 \times x = 9x \text{ 元} \\
+              &\quad 7 \text{ 枝原子筆} = 7 \times y = 7y \text{ 元} \\
+              &\quad \text{合計} = (9x+7y) \text{ 元}
+              \end{aligned}\]
+              B 是最常見的錯誤——把數字的順序照抄成 \(7x+9y\)，等於偷偷把 \(x\) 換成原子筆的價錢。<br>
+              C、D 錯在把兩種東西相乘。\(x\) 和 \(y\) 是<strong>兩種不同的價錢</strong>，各自乘上自己的數量後<strong>相加</strong>，不會乘在一起。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列四個式子中，哪一個是<strong>二元一次式</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-1-2" value="A"><span class="option-text">A. \(7a-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-2" value="B"><span class="option-text">B. \(a^2+3b\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-2" value="C"><span class="option-text">C. \(5a-8b+1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1-2" value="D"><span class="option-text">D. \(2a+9b=15\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。二元一次式要同時滿足三件事：<strong>兩種</strong>文字符號、次數<strong>都是 \(1\)</strong>、<strong>沒有</strong>等號。<br>
+              C 有 \(a\)、\(b\) 兩種符號，次數都是 \(1\)，也沒有等號，符合。（文字符號不一定要用 \(x\)、\(y\)，用 \(a\)、\(b\) 一樣算。）<br>
+              A 只有 \(a\) 一種符號，是<strong>一元</strong>一次式。<br>
+              B 的 \(a^2\) 次數是 \(2\)，不是一次。<br>
+              D 有<strong>等號</strong>，它是二元一次<strong>方程式</strong>，不是「式」。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 二元一次式的值
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> 重點 2：二元一次式的值——兩個數一起代進去
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>定義</strong>：當二元一次式中的文字符號都代表數時，這個二元一次式也代表<strong>一個數</strong>，稱為<strong>二元一次式的值</strong>。</li>
+              <li><strong>票價公布之後</strong>：小妍花了 \((3x+y)\) 元買 \(3\) 張全票和 \(1\) 張優待票。
+                \[\begin{aligned}
+                & x = 60,\ y = 30 \\
+                &\quad \Rightarrow 3x+y \\
+                &\qquad = 3 \times 60 + 30 = 210 \\
+                & x = 120,\ y = 60 \\
+                &\quad \Rightarrow 3x+y \\
+                &\qquad = 3 \times 120 + 60 = 420
+                \end{aligned}\]
+                <strong>同一個式子，代不同的數就得到不同的值</strong>。</li>
+              <li><strong>代入時要注意的三件事</strong>：
+                <ul>
+                  <li><strong>負數一定要加括號</strong>：\(y=-3\) 代入 \(5y\) 要寫 \(5 \times (-3)\)，不能寫成 \(5 \times -3\)。</li>
+                  <li><strong>係數是乘法</strong>：\(3x\) 是 \(3 \times x\)，不是 \(3+x\)。</li>
+                  <li><strong>常數項不動</strong>：\(x-2y+3\) 裡的 \(+3\) 不必代任何東西，照抄。</li>
+                </ul>
+              </li>
+              <li><strong>兩個未知數要一起代</strong>，不能只代一個。這一步是第一冊「求代數式的值」的延伸，難的地方就在<strong>要同時盯住兩個符號和它們各自的正負</strong>。</li>
+              <li><strong>用表格整理</strong>：同一個式子要代很多組數時，把 \(x\)、\(y\) 和算出來的值列成一張表，會比一條條寫清楚得多——這張表在下一章畫圖形時還會再用到。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>\(x\)</th><th>\(y\)</th><th>\(3x+5y\)</th><th>\(x-2y+3\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(2\)</td><td>\(0\)</td><td class="sign-pos">\(6\)</td><td class="sign-pos">\(5\)</td></tr>
+                <tr><td>\(2\)</td><td>\(-3\)</td><td class="sign-neg">\(-9\)</td><td class="sign-pos">\(11\)</td></tr>
+                <tr><td>\(-0.5\)</td><td>\(0.2\)</td><td class="sign-neg">\(-0.5\)</td><td class="sign-pos">\(2.1\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_value.webp" alt="復古車票印刷風插圖：售票口的兩塊價目牌中央各有一道橫槽，原本空的槽現在已經插滿金屬鉛字，左牌排出 60、右牌排出 30；售票員的手正把最後一枚鉛字壓進左邊的槽，旁邊放著一盒備用鉛字，橘白貓趴在櫃檯上" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：代入計算台</h3>
+            <p class="interactive-instruction">選一個式子，把 \(x\) 和 \(y\) 兩張票根調到想要的數字，看每一項各自算成多少：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-value" width="540" height="400"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="vl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求值的式子</span>
+                    <div class="btn-group" id="vl-eq-group">
+                      <button class="pick-btn active" data-eq="0">\(4x-3y\)</button>
+                      <button class="pick-btn" data-eq="1">\(2x+5y-1\)</button>
+                      <button class="pick-btn" data-eq="2">\(-x+3y\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="vl-x-slider">\(x\) 的值：<span id="vl-x-val" class="val-num">2</span></label>
+                    <input type="range" id="vl-x-slider" min="-4" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="vl-y-slider">\(y\) 的值：<span id="vl-y-val" class="val-num">-1</span></label>
+                    <input type="range" id="vl-y-slider" min="-4" max="4" value="-1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="vl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (二元一次式的值)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 當 \(x=-2\)、\(y=3\) 時，二元一次式 \(5x-2y+4\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-2-1" value="A"><span class="option-text">A. \(-12\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-1" value="B"><span class="option-text">B. \(-8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-1" value="C"><span class="option-text">C. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-1" value="D"><span class="option-text">D. \(20\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(x\) 是負數，代入時<strong>務必加括號</strong>：
+              \[\begin{aligned}
+              & 5x-2y+4 \\
+              &= 5 \times (-2) - 2 \times 3 + 4 \\
+              &= -10 - 6 + 4 \\
+              &= -12
+              \end{aligned}\]
+              D 錯在把 \(5 \times (-2)\) 算成 \(+10\)（漏掉負號）。<br>
+              B 錯在把常數項 \(+4\) 也拿去乘或漏掉了。<strong>常數項不必代，照抄就好</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 當 \(x=\dfrac{1}{2}\)、\(y=-\dfrac{1}{3}\) 時，二元一次式 \(4x+6y\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-2-2" value="A"><span class="option-text">A. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-2" value="B"><span class="option-text">B. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-2" value="C"><span class="option-text">C. \(-4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2-2" value="D"><span class="option-text">D. \(\dfrac{1}{6}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。分數代入的做法跟整數完全一樣，一樣要記得加括號：
+              \[\begin{aligned}
+              & 4x+6y \\
+              &= 4 \times \frac{1}{2} + 6 \times \left(-\frac{1}{3}\right) \\
+              &= 2 + (-2) \\
+              &= 0
+              \end{aligned}\]
+              兩項恰好互為相反數，加起來是 \(0\)。<br>
+              B 錯在把第二項的負號丟掉，算成 \(2+2\)。<br>
+              D 錯在把 \(x\) 和 \(y\) 直接相乘。<strong>\(4x\) 和 \(6y\) 是兩項，中間是加號</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 項、係數與同類項
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-boxes-packing" aria-hidden="true"></i> 重點 3：項、係數與同類項——\(x\) 項和 \(y\) 項不能併
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>項</strong>：在二元一次式中，<strong>加號（\(+\)）所隔開的每一部分</strong>都稱為這個式子的項。以 \(3x+y+2\) 為例，它的項是 \(3x\)、\(y\)、\(2\)。項可能含文字符號（\(3x\)、\(y\)），也可能是不含文字符號的數（\(2\)）。</li>
+              <li><strong>係數與常數項</strong>：在 \(3x+y+2\) 中，
+                <ul>
+                  <li>\(3x\) 是 \(x\) <strong>項</strong>，\(3\) 是 \(x\) 項的<strong>係數</strong>；</li>
+                  <li>\(y\) 是 \(y\) <strong>項</strong>，\(1\) 是 \(y\) 項的<strong>係數</strong>（沒寫出來的 \(1\) 也算）；</li>
+                  <li>\(2\) 是<strong>常數項</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>有減號時先改寫成加法</strong>，係數的正負才看得清楚：
+                \[\begin{aligned}
+                & 5x-3y+1 \\
+                &= 5x + (-3y) + 1
+                \end{aligned}\]
+                所以 \(x\) 項係數是 \(5\)、\(y\) 項係數是 \(-3\)、常數項是 \(1\)。<strong>係數要連同前面的正負號一起讀</strong>。</li>
+              <li><strong>同類項</strong>：<strong>文字符號及次數均相同</strong>的項稱為同類項。例如 \(-x\) 和 \(\dfrac{1}{7}x\) 是同類項；\(5y\) 和 \(-6y\) 是同類項；\(-3\) 和 \(\dfrac{1}{8}\) 也是同類項（都是常數項）。</li>
+              <li><strong>\(2x\) 和 \(3y\) 不是同類項</strong>——文字符號不一樣。這是二元一次式最容易錯的地方：一元的時候只有一種符號，看到項就能併；二元有兩種，<strong>要先分家再合併</strong>。</li>
+              <li><strong>化簡的規則只有一句</strong>：<strong>同類項合併，不同類項不能合併</strong>。所以 \(4x+3y\) 已經是最簡了，不能寫成 \(7xy\) 或 \(7x\)。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>二元一次式</th><th>\(x\) 項係數</th><th>\(y\) 項係數</th><th>常數項</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(3x+y+2\)</td><td class="sign-pos">\(3\)</td><td class="sign-pos">\(1\)</td><td class="sign-pos">\(2\)</td></tr>
+                <tr><td>\(5x-3y+1\)</td><td class="sign-pos">\(5\)</td><td class="sign-neg">\(-3\)</td><td class="sign-pos">\(1\)</td></tr>
+                <tr><td>\(-x+7y\)</td><td class="sign-neg">\(-1\)</td><td class="sign-pos">\(7\)</td><td class="sign-pos">\(0\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_sorting.webp" alt="復古車票印刷風插圖：櫃檯上一座木製分類櫃有三個並排的格子，第一格的標籤卡是 x、第二格是 y、第三格是一張沒有字的空白卡；櫃子前面平放著四張票根，兩張印 x 的並排在第一格正下方、一張印 y 的在第二格下方、一張沒有字的在第三格下方" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：票根分類箱</h3>
+            <p class="interactive-instruction">選一個式子，按<strong>下一步</strong>看票根怎麼分家、怎麼合併。滑桿可以改其中一項的係數，觀察它只會影響自己那一箱：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-terms" width="540" height="420"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要化簡的式子</span>
+                    <div class="btn-group" id="tm-eq-group">
+                      <button class="pick-btn active" data-eq="0">式子一</button>
+                      <button class="pick-btn" data-eq="1">式子二</button>
+                      <button class="pick-btn" data-eq="2">式子三</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tm-k-slider">可調的那一項係數 \(k\)：<span id="tm-k-val" class="val-num">2</span></label>
+                    <input type="range" id="tm-k-slider" min="-5" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="axiom-controls">
+                  <button class="step-ctrl-btn primary" id="tm-next">下一步</button>
+                  <button class="step-ctrl-btn secondary" id="tm-prev">上一步</button>
+                  <button class="step-ctrl-btn secondary" id="tm-reset">重來</button>
+                </div>
+
+                <div class="visual-feedback" id="tm-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (項、係數與同類項)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 化簡 \(6x-5y+3-2x+8y-7\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="A"><span class="option-text">A. \(4x+3y-4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="B"><span class="option-text">B. \(4x+3y+4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="C"><span class="option-text">C. \(8x-13y-4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="D"><span class="option-text">D. \(7xy-4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先把同類項排在一起，再各自合併：
+              \[\begin{aligned}
+              & 6x-5y+3-2x+8y-7 \\
+              &= 6x-2x-5y+8y+3-7 \\
+              &= 4x+3y-4
+              \end{aligned}\]
+              移動項的時候<strong>要把它前面的正負號一起帶走</strong>：\(-2x\) 搬過去還是 \(-2x\)。<br>
+              B 錯在常數項算成 \(3+7\)；那個 \(7\) 前面是減號。<br>
+              C 錯在把減號當成加號合併。<br>
+              D 錯在把 \(x\) 項和 \(y\) 項併成一項，<strong>它們不是同類項</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 關於二元一次式 \(7x-4y+2\)，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="A"><span class="option-text">A. \(y\) 項的係數是 \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="B"><span class="option-text">B. \(y\) 項的係數是 \(-4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="C"><span class="option-text">C. 常數項是 \(-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="D"><span class="option-text">D. 它可以再化簡成 \(3x+2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。把減號改寫成加法就看得清楚了：
+              \[\begin{aligned}
+              & 7x-4y+2 \\
+              &= 7x + (-4y) + 2
+              \end{aligned}\]
+              所以 \(x\) 項係數是 \(7\)、\(y\) 項係數是 \(-4\)、常數項是 \(2\)。<br>
+              A 錯在<strong>把係數的負號漏掉</strong>——這是最常見的失分點。<br>
+              C 錯：常數項是 \(+2\)，它前面是加號。<br>
+              D 錯：\(7x\) 和 \(-4y\) <strong>不是同類項，不能相減</strong>，這個式子已經是最簡了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 去括號與直式計算
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> 重點 4：去括號與直式計算——減號括號整組翻面
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>去括號規則</strong>（第一冊學過，二元完全照舊）：
+                <ul>
+                  <li>括號前面是<strong>加號</strong>：直接把括號拿掉，裡面每一項<strong>都不變號</strong>。</li>
+                  <li>括號前面是<strong>減號</strong>：把括號拿掉時，裡面<strong>每一項都要變號</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>加號的例子</strong>：
+                \[\begin{aligned}
+                & (13x-5y)+(4x+3y) \\
+                &= 13x-5y+4x+3y \\
+                &= 13x+4x-5y+3y \\
+                &= 17x-2y
+                \end{aligned}\]</li>
+              <li><strong>減號的例子</strong>（注意括號裡三項<strong>全部</strong>變號）：
+                \[\begin{aligned}
+                & (-x-4y+3)-(3x-6y-4) \\
+                &= -x-4y+3-3x+6y+4 \\
+                &= -x-3x-4y+6y+3+4 \\
+                &= -4x+2y+7
+                \end{aligned}\]</li>
+              <li><strong>最常見的錯是「只變第一項」</strong>：把 \(-(3x-6y-4)\) 寫成 \(-3x-6y-4\)。那個減號要<strong>發到括號裡的每一項</strong>，一個都不能漏。</li>
+              <li><strong>直式計算</strong>：也可以把兩個式子上下排好再一起算，寫法像小學的直式加減。<strong>做直式計算時，需先把同類項對齊</strong>——\(x\) 項對 \(x\) 項、\(y\) 項對 \(y\) 項、常數對常數，沒有的那一欄留空。</li>
+              <li><strong>直式的減法一樣要整列變號</strong>。橫式和直式只是<strong>寫法不同</strong>，做的是同一件事，答案必須一樣；哪一種順手就用哪一種。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>原式</th><th>去括號後</th><th>說明</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(+(2x-3y+1)\)</td><td class="sign-pos">\(2x-3y+1\)</td><td>每一項都不變</td></tr>
+                <tr><td>\(-(2x-3y+1)\)</td><td class="sign-neg">\(-2x+3y-1\)</td><td>三項<strong>全部</strong>變號</td></tr>
+                <tr><td>\(-(2x-3y+1)\)</td><td class="sign-neg">\(-2x-3y+1\)</td><td>✗ 只變第一項，錯</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_bracket.webp" alt="復古車票印刷風插圖：櫃檯左邊三張票根平放成一排，被一條橫向紙帶整組捆住，紙帶正中央印著一個減號；右邊同樣三張票根維持一樣的排列，但每一張都已經翻到空白的背面，剪開的紙帶鬆鬆地放在它們旁邊" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：括號拆解器</h3>
+            <p class="interactive-instruction">切換括號前的正負號，看括號裡三項各自變不變號。也可以切到<strong>直式</strong>，看同類項怎麼對齊：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-bracket" width="540" height="420"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bk-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">括號前的符號</span>
+                    <div class="btn-group" id="bk-sign-group">
+                      <button class="pick-btn active" data-sign="1">\(+(\ \ )\)</button>
+                      <button class="pick-btn" data-sign="-1">\(-(\ \ )\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">呈現方式</span>
+                    <div class="btn-group" id="bk-view-group">
+                      <button class="pick-btn active" data-view="row">橫式</button>
+                      <button class="pick-btn" data-view="col">直式</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bk-a-slider">括號內 \(x\) 的係數：<span id="bk-a-val" class="val-num">4</span></label>
+                    <input type="range" id="bk-a-slider" min="-5" max="5" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bk-b-slider">括號內 \(y\) 的係數：<span id="bk-b-val" class="val-num">-6</span></label>
+                    <input type="range" id="bk-b-slider" min="-6" max="6" value="-6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (去括號與直式計算)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 化簡 \((5x-3y)-(2x-7y)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-4-1" value="A"><span class="option-text">A. \(3x-10y\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-1" value="B"><span class="option-text">B. \(3x+4y\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-1" value="C"><span class="option-text">C. \(7x-10y\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-1" value="D"><span class="option-text">D. \(3x-4y\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。第二個括號前面是減號，裡面<strong>兩項都要變號</strong>：
+              \[\begin{aligned}
+              & (5x-3y)-(2x-7y) \\
+              &= 5x-3y-2x+7y \\
+              &= 5x-2x-3y+7y \\
+              &= 3x+4y
+              \end{aligned}\]
+              A 錯在 \(-7y\) 沒變號，直接抄成 \(-7y\)——這正是「只變第一項」的典型症狀。<br>
+              C 錯在把 \(-2x\) 抄成 \(+2x\)（第一項也沒變）。<br>
+              D 錯在 \(y\) 項的符號算反。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 小翊用直式計算 \((4x+y-3)-(x-2y+5)\)，他寫成下面這樣，結果得到 \(3x-y-8\)。他錯在哪裡？<br>
+            \[\begin{aligned}
+            &\quad\ \ 4x+y-3 \\
+            &\underline{-)\ \ x-2y+5} \\
+            &\quad\ \ 3x-y-8
+            \end{aligned}\]</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-4-2" value="A"><span class="option-text">A. 沒有錯，答案就是 \(3x-y-8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-2" value="B"><span class="option-text">B. 同類項沒有對齊</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-2" value="C"><span class="option-text">C. \(y\) 項只變了一部分的號，正確答案是 \(3x+3y-8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4-2" value="D"><span class="option-text">D. 直式不能拿來做減法</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。直式的減法要把<strong>整列每一項都變號</strong>再相加：
+              \[\begin{aligned}
+              & (4x+y-3)-(x-2y+5) \\
+              &= 4x+y-3-x+2y-5 \\
+              &= 4x-x+y+2y-3-5 \\
+              &= 3x+3y-8
+              \end{aligned}\]
+              \(y\) 項是 \(1-(-2)=1+2=3\)，不是 \(1-2=-1\)。小翊把 \(-2y\) 的負號當成減號用了兩次，等於只變了一半。<br>
+              A 錯：答案應是 \(3x+3y-8\)。<br>
+              B 錯：他的 \(x\) 項、\(y\) 項、常數項確實各自對齊了，對齊不是問題。<br>
+              D 錯：直式可以做減法，只是<strong>減的那一列要整列變號</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 分配律、多層括號與分數形式
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-share-nodes" aria-hidden="true"></i> 重點 5：分配律、多層括號與分數——每一項都要顧到
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分配律</strong>：括號外的數要<strong>乘進括號裡的每一項</strong>，包括最後那個常數項。
+                \[\begin{aligned}
+                & a(b+c+d) \\
+                &= a \times b + a \times c + a \times d
+                \end{aligned}\]
+                \[\begin{aligned}
+                & 3(x+3y-2) \\
+                &= 3 \times x + 3 \times 3y - 3 \times 2 \\
+                &= 3x+9y-6
+                \end{aligned}\]</li>
+              <li><strong>括號外是負數時，每一項都跟著變號</strong>：
+                \[\begin{aligned}
+                & 6(x-y)-2(5x-2y+3) \\
+                &= 6x-6y-10x+4y-6 \\
+                &= -4x-2y-6
+                \end{aligned}\]</li>
+              <li><strong>多層括號由內而外</strong>：先拆最裡面的小括號，再拆外面的中括號。
+                \[\begin{aligned}
+                & 5-y+2[4x-(6x+y)] \\
+                &= 5-y+2[4x-6x-y] \\
+                &= 5-y+2[-2x-y] \\
+                &= 5-y-4x-2y \\
+                &= -4x-3y+5
+                \end{aligned}\]</li>
+              <li><strong>分數形式：通分之後，分子一定要整組加括號</strong>。這是本節最容易出錯的一步：
+                \[\begin{aligned}
+                & \frac{2x-y}{3} - \frac{x+y-1}{2} \\
+                &= \frac{2(2x-y)}{6} - \frac{3(x+y-1)}{6} \\
+                &= \frac{2(2x-y) - 3(x+y-1)}{6} \\
+                &= \frac{4x-2y-3x-3y+3}{6} \\
+                &= \frac{x-5y+3}{6}
+                \end{aligned}\]</li>
+              <li><strong>減號在前的那個分數，分子每一項都要變號</strong>。若把 \(-3(x+y-1)\) 寫成 \(-3x+3y-3\) 就錯了——負號要<strong>發給三項</strong>，正確是 \(-3x-3y+3\)。</li>
+              <li><strong>檢查的小技巧</strong>：化簡完隨便代一組數（例如 \(x=1\)、\(y=1\)）進原式和答案，兩邊的值應該相同。不同就是中間某一步變號變錯了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ticket_distribute.webp" alt="復古車票印刷風插圖：櫃檯上一台手搖滾筒印刷機，滾筒表面刻著一枚圓形圖章；紙張從滾筒下方送出後裁成三張各自獨立的票根，平放成一排，每一張的正中央都印著滾筒上那一枚一模一樣的圓形圖章" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：化簡工作台</h3>
+            <p class="interactive-instruction">選一種化簡類型，按<strong>下一步</strong>一行一行推。滑桿可以換掉括號外的那個數，看它怎麼發給每一項：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-simplify" width="540" height="430"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">化簡類型</span>
+                    <div class="btn-group" id="sp-mode-group">
+                      <button class="pick-btn active" data-mode="dist">分配律</button>
+                      <button class="pick-btn" data-mode="nest">多層括號</button>
+                      <button class="pick-btn" data-mode="frac">分數通分</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="sp-k-row">
+                    <label for="sp-k-slider">括號外的數 \(k\)：<span id="sp-k-val" class="val-num">3</span></label>
+                    <input type="range" id="sp-k-slider" min="-4" max="4" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="axiom-controls">
+                  <button class="step-ctrl-btn primary" id="sp-next">下一步</button>
+                  <button class="step-ctrl-btn secondary" id="sp-prev">上一步</button>
+                  <button class="step-ctrl-btn secondary" id="sp-reset">重來</button>
+                </div>
+
+                <div class="visual-feedback" id="sp-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分配律、多層括號與分數)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-5-1">
+            <p class="quiz-question"><strong>Q1.</strong> 化簡 \(4(2x-3y+1)-3(x-2y)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-5-1" value="A"><span class="option-text">A. \(5x-6y+4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-1" value="B"><span class="option-text">B. \(5x-18y+4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-1" value="C"><span class="option-text">C. \(11x-6y+4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-1" value="D"><span class="option-text">D. \(5x-6y+1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩個括號各自用分配律拆開，第二個括號外是 \(-3\)：
+              \[\begin{aligned}
+              & 4(2x-3y+1)-3(x-2y) \\
+              &= 8x-12y+4-3x+6y \\
+              &= 8x-3x-12y+6y+4 \\
+              &= 5x-6y+4
+              \end{aligned}\]
+              注意 \(-3 \times (-2y) = +6y\)，負負得正。<br>
+              B 錯在把 \(-3 \times (-2y)\) 算成 \(-6y\)。<br>
+              C 錯在第二個括號的 \(x\) 沒有乘到 \(-3\)。<br>
+              D 錯在 \(4 \times 1\) 漏乘，直接抄成 \(1\)。<strong>括號裡的常數項也要乘</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-5-2">
+            <p class="quiz-question"><strong>Q2.</strong> 化簡 \(\dfrac{x-y}{3} - \dfrac{2y-1}{4}\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-5-2" value="A"><span class="option-text">A. \(\dfrac{4x-10y+3}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-2" value="B"><span class="option-text">B. \(\dfrac{4x-10y-3}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-2" value="C"><span class="option-text">C. \(\dfrac{4x+2y-3}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5-2" value="D"><span class="option-text">D. \(\dfrac{x-3y+1}{12}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。通分成分母 \(12\) 之後，<strong>兩個分子都要整組加括號</strong>：
+              \[\begin{aligned}
+              & \frac{x-y}{3} - \frac{2y-1}{4} \\
+              &= \frac{4(x-y) - 3(2y-1)}{12} \\
+              &= \frac{4x-4y-6y+3}{12} \\
+              &= \frac{4x-10y+3}{12}
+              \end{aligned}\]
+              關鍵在 \(-3 \times (-1) = +3\)。<br>
+              B 是<strong>本節最經典的錯</strong>：把 \(-3(2y-1)\) 寫成 \(-6y-3\)，只讓第一項變號，後面那個 \(-1\) 忘了跟著變成 \(+3\)。<br>
+              C 錯在 \(y\) 項的符號整個算反。<br>
+              D 錯在通分時只乘了分母、忘了乘分子。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 二元一次方程式
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> 重點 6：二元一次方程式——經化簡後才算數
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>從式到方程式，只差一句話</strong>。前面算出小翊花了 \((5x+2y)\) 元，這只是一個「式」；一旦加上「<strong>他總共付了 \(360\) 元</strong>」，等號就出現了：
+                \[\begin{aligned}
+                & 5x+2y = 360
+                \end{aligned}\]
+                同理，小妍花了 \((3x+y)\) 元、金額為 \(210\) 元，可列 \(3x+y=210\)。</li>
+              <li><strong>二元一次方程式的定義</strong>：<strong>經化簡後的等式</strong>，含有<strong>兩種未知數</strong>（二元），且兩種未知數的<strong>次數都是 \(1\)</strong>（一次）。</li>
+              <li><strong>三個條件缺一不可</strong>：
+                <ul>
+                  <li><strong>①</strong> 要是<strong>等式</strong>（有等號）。\(2x+3y\) 沒有等號，只是二元一次式。</li>
+                  <li><strong>②</strong> 化簡後要剩下<strong>兩種</strong>未知數。</li>
+                  <li><strong>③</strong> 兩種未知數的次數<strong>都是 \(1\)</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>「經化簡後」這四個字是重點</strong>，不能只看原式的長相：
+                <ul>
+                  <li>\(2(x+1)=8-3y\) 化簡後是 \(2x+3y=6\)，<strong>是</strong>二元一次方程式。</li>
+                  <li>\(3x+2=3x+y\) 化簡後 \(x\) 項互相抵消，只剩 \(y=2\)，<strong>只有一種</strong>未知數，<strong>不是</strong>二元一次方程式。</li>
+                </ul>
+              </li>
+              <li><strong>列式的做法跟重點 1 一樣</strong>，只是最後多寫一個等號和一個總量。例如：鋁罐每公斤 \(32\) 元、寶特瓶每公斤 \(10\) 元，回收鋁罐 \(x\) 公斤、寶特瓶 \(y\) 公斤，
+                <ul>
+                  <li>回收量共 \(9\) 公斤 \(\Rightarrow x+y=9\)；</li>
+                  <li>回收價總計 \(200\) 元 \(\Rightarrow 32x+10y=200\)。</li>
+                </ul>
+              </li>
+              <li><strong>同一個情境，看你抓的是哪一個總量，就會列出不同的方程式</strong>。抓「數量」得到一條、抓「金額」得到另一條——下一節要把這兩條放在一起解，那就是聯立方程式。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>式子</th><th>是二元一次方程式嗎</th><th>原因</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(5x+2y=360\)</td><td class="sign-pos">是</td><td>三個條件都符合</td></tr>
+                <tr><td>\(2(x+1)=8-3y\)</td><td class="sign-pos">是</td><td>化簡後為 \(2x+3y=6\)</td></tr>
+                <tr><td>\(2x+3y\)</td><td class="sign-neg">不是</td><td>沒有等號，是「式」</td></tr>
+                <tr><td>\(3x+2=3x+y\)</td><td class="sign-neg">不是</td><td>化簡後只剩 \(y=2\)</td></tr>
+                <tr><td>\(x+y^2=5\)</td><td class="sign-neg">不是</td><td>\(y\) 的次數是 \(2\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_equation.webp" alt="復古車票印刷風插圖：櫃檯上並排兩張同樣大小的紙，兩張都印著同樣三行品項列。左邊那張在最後一行之後就是一片空白，沒有橫線也沒有任何框；右邊那張在最後一行下方多了一條貫穿整張紙的橫線，橫線底下還有一個長方形的總計框" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：三道關卡驗票機</h3>
+            <p class="interactive-instruction">選一個式子，按<strong>下一步</strong>讓它依序通過三道關卡。三關全過才是二元一次方程式：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-eqcheck" width="540" height="420"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ec-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要檢查的式子</span>
+                    <div class="btn-group" id="ec-eq-group">
+                      <button class="pick-btn active" data-eq="0">\(4x-y=8\)</button>
+                      <button class="pick-btn" data-eq="1">\(2(x+1)=8-3y\)</button>
+                      <button class="pick-btn" data-eq="2">\(6x+5y\)</button>
+                      <button class="pick-btn" data-eq="3">\(3x+2=3x+y\)</button>
+                      <button class="pick-btn" data-eq="4">\(x+y^2=5\)</button>
+                      <button class="pick-btn" data-eq="5">\(7x-4=10\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="axiom-controls">
+                  <button class="step-ctrl-btn primary" id="ec-next">下一步</button>
+                  <button class="step-ctrl-btn secondary" id="ec-prev">上一步</button>
+                  <button class="step-ctrl-btn secondary" id="ec-reset">重來</button>
+                </div>
+
+                <div class="visual-feedback" id="ec-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (二元一次方程式)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-6-1">
+            <p class="quiz-question"><strong>Q1.</strong> 早餐店的漢堡一個 \(45\) 元、豆漿一杯 \(20\) 元。老師買了 \(x\) 個漢堡和 \(y\) 杯豆漿，共花了 \(430\) 元。依題意列出的二元一次方程式為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-6-1" value="A"><span class="option-text">A. \(45x+20y=430\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-1" value="B"><span class="option-text">B. \(20x+45y=430\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-1" value="C"><span class="option-text">C. \(45x+20y\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-1" value="D"><span class="option-text">D. \(x+y=430\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(x\) 是<strong>漢堡的個數</strong>，一個 \(45\) 元，所以漢堡花了 \(45x\) 元；\(y\) 是豆漿的杯數，一杯 \(20\) 元，花了 \(20y\) 元。兩者相加等於總金額：
+              \[\begin{aligned}
+              & 45x+20y = 430
+              \end{aligned}\]
+              B 錯在單價配錯了對象。<br>
+              C 錯在<strong>沒有等號</strong>，那只是二元一次式，不是方程式。<br>
+              D 錯在把「\(430\) 元」當成件數。\(x+y\) 算的是<strong>總件數</strong>，不是總金額。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-6-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列四個式子中，哪一個<strong>不是</strong>二元一次方程式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="A"><span class="option-text">A. \(3(x-2)=y+4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="B"><span class="option-text">B. \(5x+2y-1=2y+9\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="C"><span class="option-text">C. \(\dfrac{x}{2}+y=6\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6-2" value="D"><span class="option-text">D. \(-x+8y=0\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。它的長相有兩種未知數，但<strong>化簡之後 \(y\) 項互相抵消了</strong>：
+              \[\begin{aligned}
+              & 5x+2y-1 = 2y+9 \\
+              &\quad 5x+2y-2y = 9+1 \\
+              &\qquad\qquad\ \ 5x = 10
+              \end{aligned}\]
+              只剩下一種未知數 \(x\)，所以它是<strong>一元</strong>一次方程式。這就是定義裡「<strong>經化簡後</strong>」四個字要擋的情況。<br>
+              A 化簡後是 \(3x-y=10\)，符合。<br>
+              C 的 \(\dfrac{x}{2}\) 就是 \(\dfrac{1}{2}x\)，係數是分數沒關係，<strong>次數仍然是 \(1\)</strong>，符合。<br>
+              D 常數項是 \(0\) 也沒關係，兩種未知數次數都是 \(1\)，符合。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 二元一次方程式的解
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-door-open" aria-hidden="true"></i> 重點 7：方程式的解——一組 \(x\)、\(y\) 才算一個解
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>第一冊的解是「一個數」</strong>：某數代入一元一次方程式後等號成立，這個數就是解。</li>
+              <li><strong>二元的解是「一組數」</strong>：將任一組 \(x\)、\(y\) 的值代入二元一次方程式中，如果能讓方程式的<strong>等號成立</strong>，那麼這一組 \(x\)、\(y\) 的值就稱為此二元一次方程式的<strong>解</strong>。</li>
+              <li><strong>範例</strong>：將 \(x=3\)、\(y=1\) 代入 \(2x+y=7\)，
+                \[\begin{aligned}
+                & 2 \times 3 + 1 = 7
+                \end{aligned}\]
+                等號成立，所以 \(x=3\)、\(y=1\) 是 \(2x+y=7\) 的一組解。</li>
+              <li><strong>解的記法</strong>：這組解也可以記成
+                \[\begin{aligned}
+                & \begin{cases} x=3 \\ y=1 \end{cases}
+                \end{aligned}\]
+                大括號表示這兩個值是<strong>綁在一起</strong>的，缺一不可。</li>
+              <li><strong>檢驗只有一個動作</strong>：兩個值一起代進去，算出左邊、對照右邊。<strong>相等就是解，不相等就不是</strong>，沒有「一半對」這種事。</li>
+              <li><strong>最常見的誤解</strong>：「\(x=3\) 是這個方程式的解。」這句話沒有意義——少了 \(y\)，等號根本算不出來。<strong>解一定是成對出現的</strong>。</li>
+              <li><strong>代入時同樣要注意負數加括號</strong>：\(y=-2\) 代入 \(-5y\) 要寫成 \(-5 \times (-2) = 10\)。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>代入 \(3x-5y=1\)</th><th>左邊算出來</th><th>是解嗎</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(x=2\)、\(y=1\)</td><td>\(3 \times 2 - 5 \times 1 = 1\)</td><td class="sign-pos">是</td></tr>
+                <tr><td>\(x=7\)、\(y=4\)</td><td>\(3 \times 7 - 5 \times 4 = 1\)</td><td class="sign-pos">是</td></tr>
+                <tr><td>\(x=-1\)、\(y=1\)</td><td>\(3 \times (-1) - 5 \times 1 = -8\)</td><td class="sign-neg">不是</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_gate.webp" alt="復古車票印刷風插圖：動物園入口並排兩台木製驗票閘門，左邊那台的橫桿已經斜斜抬起、通道敞開，讀票口上插著一張票根；右邊那台的橫桿還平平地放下擋住通道，讀票口是空的；兩個學生站在左側，橘白貓坐在兩台閘門中間" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：驗票閘門</h3>
+            <p class="interactive-instruction">選一個方程式，把 \(x\) 和 \(y\) 兩個數字一起送進閘門。只有等號真的成立，橫桿才會抬起來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-solution" width="540" height="410"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要檢驗的方程式</span>
+                    <div class="btn-group" id="sl-eq-group">
+                      <button class="pick-btn active" data-eq="0">\(2x+3y=12\)</button>
+                      <button class="pick-btn" data-eq="1">\(5x-2y=4\)</button>
+                      <button class="pick-btn" data-eq="2">\(x+4y=-3\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sl-x-slider">送進去的 \(x\)：<span id="sl-x-val" class="val-num">0</span></label>
+                    <input type="range" id="sl-x-slider" min="-5" max="6" value="0" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sl-y-slider">送進去的 \(y\)：<span id="sl-y-val" class="val-num">2</span></label>
+                    <input type="range" id="sl-y-slider" min="-5" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (二元一次方程式的解)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-7-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一組數是二元一次方程式 \(3x-2y=8\) 的解？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-7-1" value="A"><span class="option-text">A. \(x=2\)、\(y=1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7-1" value="B"><span class="option-text">B. \(x=4\)、\(y=2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7-1" value="C"><span class="option-text">C. \(x=0\)、\(y=4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7-1" value="D"><span class="option-text">D. \(x=-2\)、\(y=1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。一組一組代進去算左邊，看是不是等於 \(8\)：
+              \[\begin{aligned}
+              & \text{A：} 3 \times 2 - 2 \times 1 = 4 \ne 8 \\
+              & \text{B：} 3 \times 4 - 2 \times 2 = 8 \\
+              & \text{C：} 3 \times 0 - 2 \times 4 = -8 \ne 8 \\
+              & \text{D：} 3 \times (-2) - 2 \times 1 = -8 \ne 8
+              \end{aligned}\]
+              只有 B 讓等號成立。<br>
+              C、D 算出來是 \(-8\)，跟 \(8\) 差一個負號，<strong>差一個負號就不是解</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-7-2">
+            <p class="quiz-question"><strong>Q2.</strong> 關於二元一次方程式的解，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-7-2" value="A"><span class="option-text">A. 只要 \(x=2\) 就是 \(x+y=5\) 的解</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7-2" value="B"><span class="option-text">B. 解必須是 \(x\)、\(y\) 成對出現，一起讓等號成立</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7-2" value="C"><span class="option-text">C. 只要 \(x\) 代進去左邊算得出數字，就算是解</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7-2" value="D"><span class="option-text">D. 解一定要是正整數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。二元一次方程式的解是<strong>一組</strong> \(x\)、\(y\)，兩個值綁在一起才有意義。<br>
+              A 錯：只說 \(x=2\) 還算不出等號成不成立。要配上 \(y=3\) 才是 \(x+y=5\) 的解；配 \(y=1\) 就不是。<br>
+              C 錯：算得出數字不代表<strong>等於右邊</strong>。\(x=1\)、\(y=1\) 代入 \(x+y=5\) 得 \(2\)，算得出來但不等於 \(5\)。<br>
+              D 錯：解可以是 \(0\)、負數或分數。例如 \(x=\dfrac{7}{2}\)、\(y=0\) 就是 \(2x+y=7\) 的一組解。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 無限多組解
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-infinity" aria-hidden="true"></i> 重點 8：解有無限多組——除非 \(x\)、\(y\) 被限制住
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>怎麼找解</strong>：不必碰運氣。<strong>假設其中一個未知數是某個特定值，再算出對應的另一個</strong>。以 \(2x+y=7\) 為例：
+                <ul>
+                  <li>設 \(x=0 \Rightarrow 2 \times 0 + y = 7 \Rightarrow y=7\)</li>
+                  <li>設 \(x=1 \Rightarrow 2 \times 1 + y = 7 \Rightarrow y=5\)</li>
+                  <li>設 \(y=0 \Rightarrow 2x + 0 = 7 \Rightarrow x=\dfrac{7}{2}\)</li>
+                  <li>設 \(y=1 \Rightarrow 2x + 1 = 7 \Rightarrow x=3\)</li>
+                </ul>
+              </li>
+              <li><strong>結論</strong>：任意一個二元一次方程式中，把 \(x\)（或 \(y\)）以<strong>任意數</strong>代入，都可以得到對應的 \(y\)（或 \(x\)）值，所以<strong>二元一次方程式有無限多組解</strong>。</li>
+              <li><strong>這是跟一元最大的不同</strong>。一元一次方程式 \(2x=6\) 只有 \(x=3\) 這一個解；二元一次方程式的解永遠列不完——這也是下一章要把它畫成<strong>一條直線</strong>的原因，線上的每一個點都是一組解。</li>
+              <li><strong>但 \(x\)、\(y\) 被限制時，解會變少</strong>，甚至找不到。生活情境常常自帶限制：張數、顆數、人數<strong>必須是正整數或 \(0\)</strong>。</li>
+              <li><strong>例</strong>：全票每張 \(60\) 元、優待票每張 \(40\) 元，某家人共付 \(480\) 元。設買全票 \(x\) 張、優待票 \(y\) 張，可列 \(60x+40y=480\)，化簡得 \(3x+2y=24\)。把 \(x\) 從 \(0\) 依序代入，<strong>再檢查 \(y\) 是不是也符合條件</strong>，只有 \(5\) 組成立：\((0,12)\)、\((2,9)\)、\((4,6)\)、\((6,3)\)、\((8,0)\)。</li>
+              <li><strong>不能只算出 \(y\) 就收工</strong>：\(x=1\) 時 \(y=10.5\)，張數不可能是半張，這一組要<strong>刪掉</strong>。列表時養成「算完再打勾或打叉」的習慣。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>\(3x+2y=24\) 中的 \(x\)</th><th>\(0\)</th><th>\(1\)</th><th>\(2\)</th><th>\(3\)</th><th>\(4\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>算出的 \(y\)</td><td>\(12\)</td><td>\(10.5\)</td><td>\(9\)</td><td>\(7.5\)</td><td>\(6\)</td></tr>
+                <tr><td>張數可以嗎</td><td class="sign-pos">✓</td><td class="sign-neg">✗</td><td class="sign-pos">✓</td><td class="sign-neg">✗</td><td class="sign-pos">✓</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_infinite.webp" alt="復古車票印刷風插圖：櫃檯上一台售票機正吐出一條連在一起、沒有盡頭的票根長帶，長帶往右越過畫面邊緣繼續延伸看不到盡頭；長帶下方另外平放著五張已經裁下來的票根，排成一排、彼此稍微分開" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：解的清單機</h3>
+            <p class="interactive-instruction">先在<strong>沒有限制</strong>下拉滑桿，看每個 \(x\) 都算得出 \(y\)；再切到<strong>張數限制</strong>，按下一步逐一檢查，數數看剩幾組：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-infinite" width="540" height="430"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="if-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">有沒有限制</span>
+                    <div class="btn-group" id="if-mode-group">
+                      <button class="pick-btn active" data-mode="free">沒有限制</button>
+                      <button class="pick-btn" data-mode="limit">張數必須是整數且不為負</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="if-x-row">
+                    <label for="if-x-slider">代入的 \(x\)：<span id="if-x-val" class="val-num">2</span></label>
+                    <input type="range" id="if-x-slider" min="-4" max="10" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="axiom-controls" id="if-step-row">
+                  <button class="step-ctrl-btn primary" id="if-next">下一步</button>
+                  <button class="step-ctrl-btn secondary" id="if-prev">上一步</button>
+                  <button class="step-ctrl-btn secondary" id="if-reset">重來</button>
+                </div>
+
+                <div class="visual-feedback" id="if-feedback" style="margin-top: 1rem;">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (無限多組解)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-8-1">
+            <p class="quiz-question"><strong>Q1.</strong> 在沒有其他條件限制的情況下，二元一次方程式 \(2x+5y=20\) 共有幾組解？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-8-1" value="A"><span class="option-text">A. \(1\) 組</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8-1" value="B"><span class="option-text">B. \(2\) 組</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8-1" value="C"><span class="option-text">C. \(4\) 組</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8-1" value="D"><span class="option-text">D. 無限多組</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(x\) 可以是<strong>任何數</strong>，每給一個 \(x\) 就算得出一個對應的 \(y\)：
+              \[\begin{aligned}
+              & x=0 \Rightarrow 5y=20 \Rightarrow y=4 \\
+              & x=5 \Rightarrow 5y=10 \Rightarrow y=2 \\
+              & x=1 \Rightarrow 5y=18 \Rightarrow y=\frac{18}{5}
+              \end{aligned}\]
+              連 \(y\) 算出分數也算一組解（沒有限制的時候），所以永遠列不完，是<strong>無限多組</strong>。<br>
+              C 是把「用整數代得剛好」的那幾組數成全部——但題目<strong>沒有</strong>要求 \(x\)、\(y\) 是整數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-8-2">
+            <p class="quiz-question"><strong>Q2.</strong> 文具店的筆一枝 \(15\) 元、筆記本一本 \(25\) 元。小安共花 \(300\) 元買這兩種文具，且<strong>每一種至少買一個</strong>。他有幾種可能的買法？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-8-2" value="A"><span class="option-text">A. \(2\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8-2" value="B"><span class="option-text">B. \(3\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8-2" value="C"><span class="option-text">C. \(4\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8-2" value="D"><span class="option-text">D. 無限多種</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設筆買 \(x\) 枝、筆記本買 \(y\) 本，且 \(x\)、\(y\) 都是<strong>正整數</strong>：
+              \[\begin{aligned}
+              & 15x+25y = 300 \\
+              &\qquad\ \ 3x+5y = 60
+              \end{aligned}\]
+              把 \(y\) 依序代入並檢查 \(x\) 是不是正整數：\(y=3 \Rightarrow x=15\)；\(y=6 \Rightarrow x=10\)；\(y=9 \Rightarrow x=5\)；\(y=12 \Rightarrow x=0\)，但題目要求<strong>每一種至少買一個</strong>，\(x=0\) 不合，刪掉。其餘 \(y\) 值算出的 \(x\) 都不是整數。<br>
+              所以共 \(3\) 種買法。<br>
+              C 錯在把 \(x=0\) 那一組也算進去；<strong>「至少買一個」把 \(0\) 排除掉了</strong>。<br>
+              D 錯在忽略限制。一旦要求「枝數、本數是正整數」，解就從無限多組縮成有限的幾組。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-ticket"></i> 售票口手冊</h4>
+            <ul class="bullet-list">
+              <li><strong>二元一次式</strong>：含兩種文字符號、次數都是 \(1\)、<strong>沒有</strong>等號。列式時 \(x\) 是誰、\(y\) 是誰要先講清楚，順序不能亂配。</li>
+              <li><strong>式的值</strong>：兩個數一起代進去。<strong>負數加括號</strong>、係數是乘法、常數項照抄。</li>
+              <li><strong>項與係數</strong>：加號隔開的每一部分是項；係數<strong>連正負號一起讀</strong>（\(5x-3y+1\) 的 \(y\) 項係數是 \(-3\)）。</li>
+              <li><strong>同類項</strong>：文字符號及次數<strong>均相同</strong>才是。\(2x\) 和 \(3y\) <strong>不是</strong>同類項，\(4x+3y\) 已經最簡。</li>
+              <li><strong>去括號</strong>：前面是 \(+\) 就照抄；前面是 \(-\)，括號裡<strong>每一項都變號</strong>。直式計算要先把同類項對齊。</li>
+              <li><strong>分配律</strong>：括號外的數要乘進<strong>每一項</strong>，常數項也不能漏。多層括號<strong>由內而外</strong>。</li>
+              <li><strong>分數形式</strong>：通分後分子<strong>整組加括號</strong>；減號在前的那一組，三項全部變號。</li>
+              <li><strong>二元一次方程式</strong>：<strong>經化簡後</strong>的等式，含兩種未知數且次數都是 \(1\)。長相有兩個未知數不算數，要化簡完再看。</li>
+              <li><strong>解</strong>：一組 \(x\)、\(y\) 一起代入讓等號成立。記作 \(\begin{cases} x=3 \\ y=1 \end{cases}\)，兩個值綁在一起。</li>
+              <li><strong>解的個數</strong>：沒有限制時<strong>無限多組</strong>；\(x\)、\(y\) 被情境限制成正整數或 \(0\) 時，就只剩有限幾組，甚至沒有。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-ticket"></i> 回到售票口：兩枚橡皮章</h4>
+              <h5><i class="fa-solid fa-stamp"></i> 為什麼要用兩個符號</h5>
+              <p>漫畫裡的價目牌是空的，全票和優待票的價錢都沒印。第一冊的做法是「不知道就給它一個代號 \(x\)」，但這裡卡住了——<strong>只有一個代號不夠分</strong>。如果全票和優待票都叫 \(x\)，那 \(5\) 張全票加 \(2\) 張優待票就會變成 \(7x\)，等於偷偷宣稱兩種票同價，而那不是題目說的。</p>
+              <p>所以售票員拿出<strong>兩枚</strong>章：\(x\) 給全票、\(y\) 給優待票。從這一刻起，\(5x\) 和 \(2y\) 就是<strong>兩種不同的東西</strong>，只能各自堆、不能互相合併——這正是重點 3「\(x\) 項和 \(y\) 項不是同類項」在說的事。一元的時候看到項就併，二元的時候要<strong>先分家再合併</strong>。</p>
+              <h5><i class="fa-solid fa-equals"></i> 一句話讓式子變成方程式</h5>
+              <p>\((5x+2y)\) 元只是<strong>一個式子</strong>——它會隨票價而變，還不能拿來求答案。真正讓事情動起來的是那句「總共付了 \(360\) 元」：一個量有了<strong>兩種說法</strong>，中間就可以畫等號，\(5x+2y=360\) 於是誕生。這個「同一個量的兩種說法」正是第一冊 \(3\text{-}3\) 應用問題的核心，只是這次左邊有兩個未知數。</p>
+              <h5><i class="fa-solid fa-infinity"></i> 為什麼答案列不完</h5>
+              <p>最後那件事最值得記住。\(2x=6\) 只有 \(x=3\) 一個答案，但 \(5x+2y=360\) 的答案永遠列不完：全票 \(40\) 元、優待票 \(80\) 元可以；全票 \(60\) 元、優待票 \(30\) 元也可以。<strong>一條方程式配兩個未知數，本來就綁不住答案</strong>。</p>
+              <p>那怎麼辦？兩條路。一是<strong>加限制</strong>——票價通常是 \(10\) 元的倍數、張數一定是整數，一加上去答案就少了一大半（重點 8 那 \(5\) 組買法就是這樣來的）。二是<strong>再給一條方程式</strong>——如果知道另一家人「\(3\) 張全票 \(1\) 張優待票付了 \(210\) 元」，兩條式子擺在一起，票價就被釘死了。第二條路就是下一節 \(1\text{-}2\) 的<strong>二元一次聯立方程式</strong>；而第一條路的「所有解排起來會長什麼樣子」，是第二章的<strong>圖形</strong>。這一節寫下的每一組解，其實都是那條直線上的一個點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
