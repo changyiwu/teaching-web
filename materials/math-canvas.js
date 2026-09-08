@@ -500,3 +500,155 @@ function wbrEq(tex) {
     .map((p, i) => `\\( ${i === 0 ? '' : '{}'}${p.trim()} \\)`)
     .join('<wbr>');
 }
+
+/* ==========================================================================
+   由 2-1-1／2-1-2／2-1-3 三頁抽出的共用工具（原本三份逐字相同的複本）
+
+   drawTicket／drawBrace 是票券與大括號的形狀，drawStepRows 是開發約束 22
+   要求的「左欄步驟名、右側算式」固定分欄，其餘是 ax + by = c 這類標準式的
+   字串與元件工具。這些都跟課程主題無關，任何節都用得到。
+
+   ⚠️ 各節的**主題配色**（C_INK、C_PAPER…）不在這裡：那是每一節自己的調色盤，
+   而且 1-3-1～1-3-3 也各自宣告了 C_SKY／C_EMBER，搬進來會變成重複宣告。
+   需要顏色的一律由呼叫端傳入（drawStepRows 的 opts.color 即是）。
+   ========================================================================== */
+
+// 一張復古票根：圓角矩形加一條虛線撕線
+function drawTicket(ctx, x, y, w, h, color, opts) {
+  const o = opts || {};
+  ctx.save();
+  roundRect(ctx, x, y, w, h, 5);
+  ctx.fillStyle = o.bg || 'rgba(148, 163, 184, 0.14)';
+  ctx.fill();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = o.lw || 1.8;
+  ctx.stroke();
+  if (o.perf !== false) {
+    ctx.save();
+    ctx.setLineDash([3, 3]);
+    ctx.globalAlpha = 0.55;
+    ctx.beginPath();
+    ctx.moveTo(x + w * 0.74, y + 4);
+    ctx.lineTo(x + w * 0.74, y + h - 4);
+    ctx.stroke();
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+// 聯立方程式的大括號（左半邊）
+function drawBrace(ctx, x, yTop, yBot, color) {
+  const h = yBot - yTop, mid = (yTop + yBot) / 2, w = 15;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.6;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(x + w, yTop);
+  ctx.quadraticCurveTo(x + w * 0.35, yTop, x + w * 0.35, yTop + h * 0.24);
+  ctx.quadraticCurveTo(x + w * 0.35, mid - 3, x, mid);
+  ctx.quadraticCurveTo(x + w * 0.35, mid + 3, x + w * 0.35, yBot - h * 0.24);
+  ctx.quadraticCurveTo(x + w * 0.35, yBot, x + w, yBot);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 逐行推導的固定分欄：左欄步驟名與說明（自動折行），右側算式
+//   rows: [{ name, hint, items }]
+function drawStepRows(ctx, rows, shown, opts) {
+  const o = opts || {};
+  // 列色的預設值由呼叫端給（各節調色盤不進共用檔）
+  const base = o.color || INK;
+  // 步驟列數不固定，列距由畫布高度自動配，最後一列才不會掉出畫面
+  const top = o.top == null ? 56 : o.top;
+  const gap = o.gap == null
+    ? Math.min(46, (ctx.canvas.height - top - 24) / Math.max(1, rows.length - 1))
+    : o.gap;
+  const labX = o.labX == null ? 22 : o.labX;
+  const eqX = o.eqX == null ? 186 : o.eqX;
+  const maxW = o.maxW == null ? ctx.canvas.width - eqX - 20 : o.maxW;
+  rows.forEach((r, i) => {
+    if (i >= shown) return;
+    const cy = top + i * gap;
+    const active = (i === shown - 1);
+    ctx.save();
+    ctx.globalAlpha = active ? 1 : 0.62;
+    if (active) drawPanel(ctx, 14, cy - gap / 2 + 3, ctx.canvas.width - 28, gap - 6, r.color || base, 0.09);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    const labW = eqX - labX - 12;
+    ctx.fillStyle = r.color || base;
+    ctx.font = f(800, 13);
+    const hintLines = r.hint ? fitLines(ctx, r.hint, labW, f(600, 11.5)).slice(0, 2) : [];
+    ctx.font = f(800, 13);
+    ctx.fillText(r.name, labX, hintLines.length === 2 ? cy - 14 : (hintLines.length === 1 ? cy - 9 : cy));
+    if (hintLines.length) {
+      ctx.fillStyle = MUTED;
+      ctx.font = f(600, 11.5);
+      const y0 = hintLines.length === 2 ? cy + 1 : cy + 9;
+      hintLines.forEach((ln, k) => ctx.fillText(ln, labX, y0 + k * 13));
+    }
+    drawExpr(ctx, r.items, 0, cy, o.size || 20, r.color || INK, { left: eqX, maxW: maxW, gap: 6 });
+    ctx.restore();
+  });
+}
+
+// 中文沒有空白可斷，逐字量寬度折成幾行
+function fitLines(ctx, text, maxW, font) {
+  const prev = ctx.font;
+  if (font) ctx.font = font;
+  const lines = [];
+  let cur = '';
+  for (const ch of String(text)) {
+    const t = cur + ch;
+    if (cur && ctx.measureText(t).width > maxW) { lines.push(cur); cur = ch; }
+    else cur = t;
+  }
+  if (cur) lines.push(cur);
+  ctx.font = prev;
+  return lines;
+}
+
+// 把一段算式字串轉成 canvas 元件：x、y 走斜體，其餘照原樣
+function inkItems(s, color) {
+  const parts = [];
+  let buf = '';
+  for (const ch of String(s)) {
+    if (ch === 'x' || ch === 'y') {
+      if (buf) { parts.push(T(buf, color)); buf = ''; }
+      parts.push(IT(ch, color));
+    } else {
+      buf += ch;
+    }
+  }
+  if (buf) parts.push(T(buf, color));
+  return SEQ(parts, color, 1);
+}
+
+// 同一組項的字串版本（也給 LaTeX 用）
+function termTex(terms) {
+  let s = '';
+  terms.forEach(t => {
+    if (t.c === 0 && t.v) return;
+    const a = Math.abs(t.c);
+    const body = !t.v ? numStr(a) : (a === 1 ? t.v : numStr(a) + t.v);
+    if (!s) s = (t.c < 0 ? '-' : '') + body;
+    else s += (t.c < 0 ? ' - ' : ' + ') + body;
+  });
+  return s || '0';
+}
+
+// 一條標準式 ax + by = c 的字串
+function eqTex(a, b, c) {
+  return termTex([{ c: a, v: 'x' }, { c: b, v: 'y' }]) + ' = ' + numStr(c);
+}
+
+// 代入時的數字寫法：負數要加括號
+function sub(v) {
+  return v < 0 ? `(${v})` : String(v);
+}
+
+// 兩式並列的 LaTeX cases 環境（不要餵給 wbrEq，它會把 cases 拆壞）
+function casesTex(l1, l2) {
+  return `\\(\\begin{cases} ${l1} \\\\ ${l2} \\end{cases}\\)`;
+}

@@ -105,29 +105,6 @@ const C_EMBER = '#fdba74';
    3. 本節專屬繪圖：票根、票根上的文字、驗票閘門
    ========================================================================== */
 
-// 一張復古票根：圓角矩形加一條虛線撕線
-function drawTicket(ctx, x, y, w, h, color, opts) {
-  const o = opts || {};
-  ctx.save();
-  roundRect(ctx, x, y, w, h, 5);
-  ctx.fillStyle = o.bg || 'rgba(148, 163, 184, 0.14)';
-  ctx.fill();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = o.lw || 1.8;
-  ctx.stroke();
-  if (o.perf !== false) {
-    ctx.save();
-    ctx.setLineDash([3, 3]);
-    ctx.globalAlpha = 0.55;
-    ctx.beginPath();
-    ctx.moveTo(x + w * 0.74, y + 4);
-    ctx.lineTo(x + w * 0.74, y + h - 4);
-    ctx.stroke();
-    ctx.restore();
-  }
-  ctx.restore();
-}
-
 // 票根中央（撕線左半邊）的標籤
 function ticketLabel(ctx, x, y, w, h, text, color, size, italic) {
   ctx.save();
@@ -200,41 +177,6 @@ function termItems(terms, colorOf) {
   });
   if (!out.length) out.push(T('0', C_SLATE));
   return out;
-}
-
-// 同一組項的 LaTeX 版本
-function termTex(terms) {
-  let s = '';
-  terms.forEach(t => {
-    if (t.c === 0 && t.v) return;
-    const a = Math.abs(t.c);
-    const body = !t.v ? String(a) : (a === 1 ? t.v : a + t.v);
-    if (!s) s = (t.c < 0 ? '-' : '') + body;
-    else s += (t.c < 0 ? ' - ' : ' + ') + body;
-  });
-  return s || '0';
-}
-
-// 代入時的數字寫法：負數要加括號（重點 2 的核心提醒）
-function sub(v) {
-  return v < 0 ? `(${v})` : String(v);
-}
-
-// 把一段算式字串轉成 canvas 元件：x、y 走斜體，其餘照原樣
-// （canvas 上的變數要跟頁面上的 MathJax 一樣是斜體）
-function inkItems(s, color) {
-  const parts = [];
-  let buf = '';
-  for (const ch of String(s)) {
-    if (ch === 'x' || ch === 'y') {
-      if (buf) { parts.push(T(buf, color)); buf = ''; }
-      parts.push(IT(ch, color));
-    } else {
-      buf += ch;
-    }
-  }
-  if (buf) parts.push(T(buf, color));
-  return SEQ(parts, color, 1);
 }
 
 /* ==========================================================================
