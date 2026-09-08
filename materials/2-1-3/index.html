@@ -4,39 +4,987 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-3 應用問題 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-3 應用問題 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第二冊 (1下) • 第1章 二元一次聯立方程式</div>
-    <h1>1-3 應用問題</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第二冊 • 第一章</span>
+        <h1>1-3 應用問題</h1>
+        <p>前兩節的題目都<strong>直接把式子給你</strong>：\(\begin{cases} 5x+2y=360 \\ 3x+y=210 \end{cases}\)，你只要消去一個未知數。這一節不一樣——題目只給一段中文，式子要<strong>自己列</strong>。整節其實只有一套流程：<strong>設未知數 → 列聯立方程式 → 解 → 寫答案</strong>。真正難的從來不是解，而是<strong>把中文翻成兩條式子</strong>；而算完之後還有兩件事常被忘記：題目問的<strong>是不是你解出來的那個數</strong>，以及這個答案<strong>在現實裡說不說得通</strong>——買 \(2.5\) 張票、班上有 \(19.5\) 個人，式子解得再漂亮也不算數。</p>
+      </div>
+      <!-- Progress navigation (6 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-list-ol"></i> 列式四步驟</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-coins"></i> 數量問題</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-right-left"></i> 看錯與弄反</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-box-open"></i> 剩下與不足</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 回頭讀題</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-ban"></i> 合理性與無解</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Vintage Ticket Printing)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(20, 184, 166, 0.25);">
+        <h2 class="section-title" style="color: #5eead4; border-bottom-color: rgba(94, 234, 212, 0.2);">
+          <i class="fa-solid fa-scissors" aria-hidden="true" style="color: #5eead4; text-shadow: 0 0 10px rgba(20, 184, 166, 0.4);"></i> 課前暖身漫畫：算出來的答案，是半張票
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            這次換小妍出題考小翊。她把手寫的題目卡推過櫃檯，小翊照著上一節學的做：<strong style="color:#5eead4">兩句話、兩條式子</strong>，並排夾好、消去一個未知數，答案很快就出來了。他得意地把結果攤在櫃檯上——<strong style="color:#5eead4">一張完整的票，和一張沿虛線撕開、只剩一半的票</strong>。售票員看了一眼，雙手交叉比出一個大叉：<strong style="color:#5eead4">「票不能買半張。」</strong>式子沒列錯，計算也沒錯，可是這個答案<strong style="color:#5eead4">在現實裡不存在</strong>。這時候正確的回答不是「我算錯了」，而是——<strong style="color:#5eead4">此題無解</strong>。這一節要學的，就是從中文列出兩條式子，以及算完之後回頭問一句：這個答案說得通嗎？
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古車票印刷風四格漫畫：第一格綁雙馬尾、穿米白毛衣的女孩把一張手寫題目卡推過木櫃檯給戴圓框眼鏡、穿芥末黃連帽外套的男孩；第二格男孩握筆在一張紙上寫字，紙的左緣扣著一支黃銅大括號夾同時夾住上下兩行；第三格櫃檯上平放兩張票，左邊那張是完整的鋸齒邊票根、右邊那張只剩窄窄一條並留著撕開的毛邊；第四格戴大盤帽、留八字鬍的售票員在窗口後把雙臂在胸前交叉成一個大叉，男孩與女孩都抬頭看他。戴紅項圈金鈴鐺的橘白貓四格都在櫃檯上" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 列式四步驟
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-ol" aria-hidden="true"></i> 重點 1：四步驟——把一段中文變成兩條式子
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>用二元一次聯立方程式解應用問題，一律走這四步</strong>：
+                <ul>
+                  <li>① <strong>設未知數</strong>：依題意假設兩個適當的未知數。</li>
+                  <li>② <strong>列聯立方程式</strong>：根據題意列出兩條二元一次方程式。</li>
+                  <li>③ <strong>解聯立方程式</strong>：用代入消去法或加減消去法（上一節的兩條路）。</li>
+                  <li>④ <strong>寫答案</strong>：依題意寫出答案；若求出的解<strong>不符合情境</strong>，即此題無解。</li>
+                </ul>
+              </li>
+              <li><strong>為什麼要設兩個未知數</strong>：題目裡有<strong>兩個不知道的量</strong>。只設一個，另一個沒有名字，第二句話就寫不成式子。</li>
+              <li><strong>設未知數要把話講完整</strong>：寫「設全票每張 \(x\) 元、優待票每張 \(y\) 元」，不要只寫「設 \(x\) 是全票」——<strong>單位和對象都要交代</strong>，否則列式時很容易把「幾張」和「幾元」混在一起。</li>
+              <li><strong>一句話列一條式子</strong>。題目裡通常剛好有<strong>兩句</strong>可以寫成等式的話，一句一條，湊成聯立方程式。</li>
+              <li><strong>兩條式子必須來自不同的敘述</strong>。同一句話換個說法再寫一次（例如把 \(x+y=8\) 寫成 \(2x+2y=16\)）並沒有多給任何資訊，解不出唯一答案。</li>
+              <li><strong>兩條式子講的是同一組 \(x\)、\(y\)</strong>。第①式的 \(x\) 是全票價，第②式的 \(x\) 也必須是全票價。</li>
+              <li><strong>第④步不是抄答案</strong>：\(x=70\) 只是一個數，答案要寫成「<strong>全票每張 \(70\) 元</strong>」這種帶單位的完整句子，而且要回頭確認題目問的就是它（重點 5）、這個數字在現實裡說得通（重點 6）。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>步驟</th><th>在做什麼</th><th>以門票題為例</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>① 設未知數</td><td>給兩個未知的量各取一個名字</td><td class="sign-pos">設全票每張 \(x\) 元、優待票每張 \(y\) 元</td></tr>
+                <tr><td>② 列聯立方程式</td><td>一句話列一條式子</td><td class="sign-pos">\(4x+3y=430\)、\(2x+5y=390\)</td></tr>
+                <tr><td>③ 解聯立方程式</td><td>消去一個未知數</td><td class="sign-pos">\(x=70\)、\(y=50\)</td></tr>
+                <tr><td>④ 寫答案</td><td>翻回中文、帶單位、查合理性</td><td class="sign-pos">全票 \(70\) 元、優待票 \(50\) 元</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_translate.webp" alt="復古車票印刷風插圖：木櫃檯上一台深色木框、黃銅零件的老式排版機，左側進紙口垂下一條寫滿手寫符號的長紙條，右側出紙口同時吐出兩張並排、彼此分開的空白窄票條；戴圓框眼鏡、穿芥末黃連帽外套的男孩伸手轉動機器側面的黃銅手輪，戴紅項圈金鈴鐺的橘白貓坐在出紙口旁看著吐出來的那兩張" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：四步驟工作台</h3>
+            <p class="interactive-instruction">選一個情境，再把滑桿從第 \(1\) 步推到第 \(4\) 步，看一段中文怎麼一路變成答案：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-steps" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="st-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="st-case-group">
+                      <button class="pick-btn active" data-case="0">動物園門票</button>
+                      <button class="pick-btn" data-case="1">飲料攤</button>
+                      <button class="pick-btn" data-case="2">置物櫃</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="st-step-slider">進行到第幾步：<span id="st-step-val" class="val-num">1</span></label>
+                    <input type="range" id="st-step-slider" min="1" max="4" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="st-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (列式四步驟)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 關於「用二元一次聯立方程式解應用問題」的做法，下列敘述何者<strong>錯誤</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="A"><span class="option-text">A. 設未知數時要把單位與對象寫清楚，例如「設每枝筆 \(x\) 元」</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="B"><span class="option-text">B. 兩條式子可以由題目中<strong>同一句話</strong>換成兩種寫法得到</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="C"><span class="option-text">C. 兩條式子裡的 \(x\) 必須代表同一個量</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-1" value="D"><span class="option-text">D. 解出 \(x\)、\(y\) 之後還要回頭確認答案合不合情境</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。同一句話換個寫法<strong>沒有多給任何資訊</strong>。例如由「共買 \(8\) 件」得到 \(x+y=8\)，再把它乘以 \(2\) 寫成 \(2x+2y=16\)，兩條並列後：
+              \[\begin{aligned}
+              & \begin{cases} x+y=8 \\ 2x+2y=16 \end{cases} \\
+              &\quad \text{②} \div 2 \Rightarrow x+y=8 \\
+              &\quad \text{兩條其實是同一條}
+              \end{aligned}\]
+              消去之後會得到 \(0=0\)，答案<strong>列不完</strong>——這正是 \(1\text{-}1\) 說過的「一條式子綁不住兩個未知數」。<br>
+              A 正確：不寫單位很容易把「幾枝」和「幾元」混用。<br>
+              C 正確：兩條式子講的必須是同一組 \(x\)、\(y\)。<br>
+              D 正確：那是第④步「寫答案」的一部分。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 博物館的成人票每張 \(x\) 元、學生票每張 \(y\) 元。小翊買 \(3\) 張成人票和 \(4\) 張學生票，共付 \(620\) 元；小妍買 \(5\) 張成人票和 \(2\) 張學生票，共付 \(660\) 元。依題意列出的二元一次聯立方程式是下列何者？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="A"><span class="option-text">A. \(\begin{cases} 3x+4y=660 \\ 5x+2y=620 \end{cases}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="B"><span class="option-text">B. \(\begin{cases} 4x+3y=620 \\ 2x+5y=660 \end{cases}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="C"><span class="option-text">C. \(\begin{cases} 3x+5y=620 \\ 4x+2y=660 \end{cases}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-2" value="D"><span class="option-text">D. \(\begin{cases} 3x+4y=620 \\ 5x+2y=660 \end{cases}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。題目<strong>先說</strong>成人票每張 \(x\) 元，所以 \(x\) 的係數要放成人票的<strong>張數</strong>，一句話列一條式子：
+              \[\begin{aligned}
+              & \text{小翊：} 3x+4y=620 \\
+              &\quad \text{小妍：} 5x+2y=660
+              \end{aligned}\]
+              A 把兩個總價對調，收據跟金額配錯人。<br>
+              B 把兩種票的順序整組寫反，等於偷偷把 \(x\) 換成學生票的價錢。<br>
+              C 把小翊的學生票數 \(4\) 和小妍的成人票數 \(5\) 交換了，兩條式子都不是原本那張收據。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 數量問題
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-coins" aria-hidden="true"></i> 重點 2：數量問題——一條數個數，一條數金額
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>最常見的應用題型</strong>：買了兩種東西，知道<strong>總共幾個</strong>，也知道<strong>總共多少錢</strong>。兩句話剛好給你兩條式子。</li>
+              <li><strong>兩條式子是兩種不同的「數法」</strong>：
+                <ul>
+                  <li>① <strong>數個數</strong>：\(x+y=\) 總數量。</li>
+                  <li>② <strong>數金額</strong>：（甲單價）\(\times x\ +\) （乙單價）\(\times y = \) 總金額。</li>
+                </ul>
+              </li>
+              <li><strong>核心關係是「單價 \(\times\) 數量 \(=\) 金額」</strong>。單價是題目給的<strong>已知數</strong>，會變成係數；數量是未知數。</li>
+              <li><strong>最常見的錯誤：兩條都寫成同一種</strong>。把總金額寫進數個數的式子（\(x+y=380\)），或把總數量寫進金額式（\(35x+25y=12\)），列出來的東西跟題目根本不是同一件事。</li>
+              <li><strong>檢查係數的單位</strong>：數個數的式子係數是 \(1\)（沒有單位），數金額的式子係數是「元／個」。<strong>兩條式子的等號右邊，一邊是「個」、一邊是「元」</strong>。</li>
+              <li><strong>有附加項就先整理</strong>。「再加購 \(1\) 個 \(2\) 元的袋子，共付 \(902\) 元」要寫成 \(10x+5y+2=902\)，移項化成 \(10x+5y=900\) 再解（\(1\text{-}2\) 重點 7 的動作）。</li>
+              <li><strong>面額問題是同一型</strong>：「\(500\) 元和 \(100\) 元的鈔票共 \(70\) 張、合計 \(15000\) 元」，一條數<strong>張數</strong>、一條數<strong>金額</strong>。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>題目的一句話</th><th>翻成方程式</th><th>這是哪一種數法</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>兩種飲料<strong>共 \(12\) 杯</strong></td><td class="sign-pos">\(x+y=12\)</td><td>數個數</td></tr>
+                <tr><td>大杯 \(45\) 元、小杯 \(30\) 元，<strong>共付 \(465\) 元</strong></td><td class="sign-pos">\(45x+30y=465\)</td><td>數金額</td></tr>
+                <tr><td>鈔票<strong>共 \(70\) 張</strong></td><td class="sign-pos">\(x+y=70\)</td><td>數張數</td></tr>
+                <tr><td>面額 \(500\) 與 \(100\)，<strong>合計 \(15000\) 元</strong></td><td class="sign-pos">\(500x+100y=15000\)</td><td>數金額</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_count.webp" alt="復古車票印刷風插圖：木製售票櫃檯上左右兩只淺色木托盤，左盤裡平放六張印著動物圖案的窄票根、右盤裡平放三張較寬的票根，九張全部平放成一排、彼此分開不重疊；兩盤中間擺一個裝滿黃銅硬幣的玻璃罐；綁雙馬尾、穿米白毛衣的女孩俯身伸出一根食指點著左盤的票根數數" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩條式子配對台</h3>
+            <p class="interactive-instruction">拉滑桿決定實際買了幾件，畫面會給你四條候選式子。<strong>挑兩條組成聯立方程式</strong>，看哪一種配法算得出正確答案：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-count" width="540" height="450"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ct-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ct-case-group">
+                      <button class="pick-btn active" data-case="0">飲料攤</button>
+                      <button class="pick-btn" data-case="1">文具店</button>
+                      <button class="pick-btn" data-case="2">動物園門票</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">挑兩條</span>
+                    <div class="btn-group" id="ct-pick-group">
+                      <button class="pick-btn active" data-pick="0">①＋②</button>
+                      <button class="pick-btn" data-pick="1">①＋③</button>
+                      <button class="pick-btn" data-pick="2">②＋④</button>
+                      <button class="pick-btn" data-pick="3">③＋④</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ct-a-slider"><span id="ct-a-name">大杯</span>買了：<span id="ct-a-val" class="val-num">5</span></label>
+                    <input type="range" id="ct-a-slider" min="1" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ct-b-slider"><span id="ct-b-name">小杯</span>買了：<span id="ct-b-val" class="val-num">4</span></label>
+                    <input type="range" id="ct-b-slider" min="1" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ct-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (數量問題)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3-3">
+            <p class="quiz-question"><strong>Q3.</strong> 便利商店的御飯糰每個 \(35\) 元、飲料每瓶 \(25\) 元。小翊買了御飯糰 \(x\) 個、飲料 \(y\) 瓶，<strong>兩種合計 \(12\) 件</strong>，<strong>共付 \(380\) 元</strong>。依題意列出的二元一次聯立方程式是下列何者？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-3" value="A"><span class="option-text">A. \(\begin{cases} x+y=12 \\ 35x+25y=380 \end{cases}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-3" value="B"><span class="option-text">B. \(\begin{cases} x+y=380 \\ 35x+25y=12 \end{cases}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-3" value="C"><span class="option-text">C. \(\begin{cases} 35x+25y=12 \\ 35x+25y=380 \end{cases}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-3" value="D"><span class="option-text">D. \(\begin{cases} x+y=12 \\ 25x+35y=380 \end{cases}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩句話是<strong>兩種數法</strong>：
+              \[\begin{aligned}
+              & \text{數件數：} x+y=12 \\
+              &\quad \text{數金額：} 35x+25y=380
+              \end{aligned}\]
+              B 把兩個等號右邊對調，變成「共 \(380\) 件、花了 \(12\) 元」。<br>
+              C 兩條式子的左邊一模一樣、右邊卻不同，同一次購物不可能既是 \(12\) 元又是 \(380\) 元。<br>
+              D 把單價配錯商品：御飯糰是 \(35\) 元，係數要跟著 \(x\) 走。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-3-4">
+            <p class="quiz-question"><strong>Q4.</strong> 文具店的筆記本每本 \(45\) 元、鉛筆每枝 \(15\) 元。小妍買筆記本和鉛筆共 \(14\) 件，付了 \(390\) 元。試問她買了幾本筆記本？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-4" value="A"><span class="option-text">A. \(4\) 本</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-4" value="B"><span class="option-text">B. \(5\) 本</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-4" value="C"><span class="option-text">C. \(6\) 本</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-4" value="D"><span class="option-text">D. \(8\) 本</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設筆記本 \(x\) 本、鉛筆 \(y\) 枝：
+              \[\begin{aligned}
+              & ①\ x+y=14 \\
+              & ②\ 45x+15y=390 \\
+              &\quad ② \div 15 \Rightarrow 3x+y=26 \cdots ③ \\
+              &\quad ③ - ① \Rightarrow 2x=12 \\
+              &\quad x=6,\ y=14-6=8
+              \end{aligned}\]
+              筆記本 \(6\) 本、鉛筆 \(8\) 枝，驗算 \(45(6)+15(8)=390\)。<br>
+              D 是<strong>鉛筆</strong>的枝數 \(8\)，答錯對象（重點 5 的坑）。<br>
+              A、B 代回去金額分別是 \(45(4)+15(10)=330\) 與 \(45(5)+15(9)=360\)，都湊不到 \(390\) 元。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 看錯與弄反
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> 重點 3：看錯與弄反——把「錯的情形」也寫成式子
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>這一型的特徵</strong>：題目描述了<strong>兩種情形</strong>——一種是正確的，一種是弄錯的，並告訴你兩者<strong>差多少</strong>。</li>
+              <li><strong>列式的關鍵：錯的那一種也要寫成式子</strong>。把「弄錯之後的結果」和「原本應該的結果」放在等號兩邊，差額補在<strong>比較少的那一邊</strong>：
+                \[\text{少的} + \text{差額} = \text{多的}\]
+              </li>
+              <li><strong>三種常見的弄錯方式</strong>：
+                <ul>
+                  <li><strong>數量聽反</strong>：點 \(4\) 頂帽 \(2\) 件衣，送成 \(2\) 頂 \(4\) 件。</li>
+                  <li><strong>價錢貼反</strong>：兩種商品的標價互換，賣出的杯數沒變。</li>
+                  <li><strong>符號看錯</strong>：把加號看成減號，算出另一個答案。</li>
+                </ul>
+              </li>
+              <li><strong>符號看錯最單純</strong>：「看成減號得 \(19\)、正確答案是 \(45\)」直接就是兩條式子 \(x-y=19\) 與 \(x+y=45\)，不用整理。</li>
+              <li><strong>另外兩種都要先整理</strong>。列出來的式子兩邊都有未知數，要<strong>移項化成 \(ax+by=c\)</strong>（\(1\text{-}2\) 重點 7），同類項還會抵消掉一部分：
+                \[\begin{aligned}
+                & 2x+4y=4x+2y+80 \\
+                &\quad {}-2x+2y=80 \\
+                &\quad y-x=40
+                \end{aligned}\]
+              </li>
+              <li><strong>「多花」和「少花」差在加號放哪邊</strong>，這是最容易錯的一步。寫完之後<strong>用常識檢查</strong>：若送來的比較貴，那一邊就該比較大。</li>
+              <li><strong>第一條式子通常很單純</strong>（總數或總價），難的永遠是第二條。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>題目的說法</th><th>先寫成</th><th>整理後</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>送來的比點的<strong>多花 \(80\) 元</strong></td><td>\(2x+4y=4x+2y+80\)</td><td class="sign-pos">\(y-x=40\)</td></tr>
+                <tr><td>貼反價錢後收入<strong>多 \(200\) 元</strong></td><td>\(25x+35y=35x+25y+200\)</td><td class="sign-pos">\(y-x=20\)</td></tr>
+                <tr><td>把 \(+\) 看成 \(-\)，得 \(19\)</td><td>\(x-y=19\)</td><td class="sign-pos">\(x-y=19\)</td></tr>
+                <tr><td>正確答案是 \(45\)</td><td>\(x+y=45\)</td><td class="sign-pos">\(x+y=45\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_swapped.webp" alt="復古車票印刷風插圖：戴大盤帽、留八字鬍、穿深藍制服的售票員站在售票窗口後，雙臂在胸前交叉成一個明顯的 X；伸向畫面右邊的那隻手舉著一塊印著 30 的木製價目牌、伸向畫面左邊的那隻手舉著一塊印著 20 的木製價目牌，兩個數字各只印一次；櫃檯上兩座空的木製牌座正等著這兩塊牌；戴圓框眼鏡、穿芥末黃連帽外套的男孩站在左邊皺眉伸手指著交叉的手臂" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：弄錯了幾元對照台</h3>
+            <p class="interactive-instruction">選一種弄錯的方式，拉滑桿改變差額，看第二條式子怎麼從「兩邊都有未知數」被整理成標準式：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-swap" width="540" height="450"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sw-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">弄錯方式</span>
+                    <div class="btn-group" id="sw-case-group">
+                      <button class="pick-btn active" data-case="0">數量聽反</button>
+                      <button class="pick-btn" data-case="1">價錢貼反</button>
+                      <button class="pick-btn" data-case="2">符號看錯</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sw-d-slider"><span id="sw-d-name">多花的金額</span>：<span id="sw-d-val" class="val-num">80</span></label>
+                    <input type="range" id="sw-d-slider" min="0" max="160" value="80" step="4">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sw-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (看錯與弄反)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3-5">
+            <p class="quiz-question"><strong>Q5.</strong> 園遊會攤位賣熱狗（每份 \(45\) 元）與飲料（每杯 \(30\) 元），設熱狗賣出 \(x\) 份、飲料賣出 \(y\) 杯，兩種<strong>共賣出 \(70\) 件</strong>。結算時發現有人把兩種價錢<strong>貼反了</strong>，導致收入<strong>比原本少了 \(150\) 元</strong>。下列哪一組是依題意列出的聯立方程式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-5" value="A"><span class="option-text">A. \(\begin{cases} x+y=70 \\ 30x+45y=45x+30y+150 \end{cases}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-5" value="B"><span class="option-text">B. \(\begin{cases} x+y=70 \\ 45x+30y+150=30x+45y \end{cases}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-5" value="C"><span class="option-text">C. \(\begin{cases} x+y=150 \\ 30x+45y+70=45x+30y \end{cases}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-5" value="D"><span class="option-text">D. \(\begin{cases} x+y=70 \\ 30x+45y+150=45x+30y \end{cases}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。貼反之後熱狗被收 \(30\) 元、飲料被收 \(45\) 元，實收是 \(30x+45y\)；原本應收 \(45x+30y\)。「少了 \(150\) 元」表示<strong>實收比較少</strong>，差額要補在實收那一邊：
+              \[\begin{aligned}
+              & 30x+45y+150=45x+30y \\
+              &\quad 15y-15x=150 \\
+              &\quad y-x=10
+              \end{aligned}\]
+              配上 \(x+y=70\) 解得 \(x=30\)、\(y=40\)。<br>
+              A、B 都把 \(150\) 加在<strong>原本應收</strong>那一邊，等於說貼反之後收得比較多，與題意相反。<br>
+              C 除了加錯邊，還把「共 \(70\) 件」與「少 \(150\) 元」兩個數字對調了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-3-6">
+            <p class="quiz-question"><strong>Q6.</strong> 小翊做兩個整數的加法，不小心把加號看成減號，算得的答案是 \(24\)；已知正確答案應該是 \(58\)。試問這兩個整數中<strong>較小的那個</strong>是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-6" value="A"><span class="option-text">A. \(17\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-6" value="B"><span class="option-text">B. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-6" value="C"><span class="option-text">C. \(34\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-6" value="D"><span class="option-text">D. \(41\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設兩個整數為 \(x\)、\(y\)。看成減號得到 \(24\)，正確的加法得到 \(58\)：
+              \[\begin{aligned}
+              & ①\ x-y=24 \\
+              & ②\ x+y=58 \\
+              &\quad ①+② \Rightarrow 2x=82,\ x=41 \\
+              &\quad y=58-41=17
+              \end{aligned}\]
+              兩數是 \(41\) 與 \(17\)，較小的是 \(17\)。<br>
+              D 是<strong>較大</strong>的那個數，答錯對象。<br>
+              B 是題目給的錯誤答案 \(24\) 本身。<br>
+              C 是誤用 \(58-24=34\) 直接當答案，少除以 \(2\) 那一步。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 剩下與不足
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-box-open" aria-hidden="true"></i> 重點 4：分組分裝——「剩下」用減，「不足」用加
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>這一型的特徵</strong>：同一批東西用<strong>兩種分法</strong>各分一次，一次會<strong>剩下</strong>、一次會<strong>不足</strong>。兩種分法各給一條式子。</li>
+              <li><strong>基本關係</strong>：\(\text{每組個數} \times \text{組數} = \text{分掉的總數}\)。設總數 \(x\)、組數 \(y\)：
+                <ul>
+                  <li><strong>剩下 \(r\) 個</strong>（分不完）：分掉的比總數<strong>少</strong> \(r\) 個 → \(x-r=k\,y\)。</li>
+                  <li><strong>不足 \(s\) 個</strong>（不夠分）：要湊滿還得再<strong>加</strong> \(s\) 個 → \(x+s=k\,y\)。</li>
+                </ul>
+              </li>
+              <li><strong>加減方向記反就全錯</strong>。用一句話記：<strong>東西多出來就把它扣掉，東西不夠就把它補上</strong>，扣完補完剛好等於「整整齊齊裝滿」的數量。</li>
+              <li><strong>「多出一組」是組數變少</strong>，不是總數變少。「\(8\) 人一間會多出一間房」表示實際只用了 \(y-1\) 間，寫成 \(x=8(y-1)\)。</li>
+              <li><strong>「每 \(k\) 人分一個」要寫成分數</strong>：男生 \(x\) 人每 \(4\) 人分一個披薩，用掉 \(\dfrac{x}{4}\) 個。列完之後<strong>兩邊同乘分母的最小公倍數</strong>去分母（\(1\text{-}2\) 重點 8）：
+                \[\begin{aligned}
+                & \frac{x}{4}+\frac{y}{6}=7 \\
+                &\quad \times 12 \Rightarrow 3x+2y=84
+                \end{aligned}\]
+              </li>
+              <li><strong>兩式相減時 \(x\) 會自己消失</strong>，因為兩條式子的 \(x\) 係數都是 \(1\)，剩下的就是組數 \(y\)。這一型幾乎都用加減消去法最快。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>題目的說法</th><th>翻成方程式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>每盒裝 \(8\) 個，<strong>剩下 \(7\) 個</strong>沒盒子裝</td><td class="sign-pos">\(x-7=8y\)</td></tr>
+                <tr><td>每盒裝 \(10\) 個，<strong>不足 \(3\) 個</strong></td><td class="sign-pos">\(x+3=10y\)</td></tr>
+                <tr><td>\(7\) 人一間，<strong>有 \(6\) 人沒房間</strong></td><td class="sign-pos">\(x-6=7y\)</td></tr>
+                <tr><td>\(8\) 人一間，<strong>多出一間房</strong></td><td class="sign-pos">\(x=8(y-1)\)</td></tr>
+                <tr><td>男生每 \(4\) 人分一個披薩</td><td class="sign-pos">\(\dfrac{x}{4}\) 個</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_boxes.webp" alt="復古車票印刷風插圖：木櫃檯上八個淺色紙盒排成上下兩排、每排四個；上排四盒都裝滿票券與盒口齊平，下排前三盒也裝滿、最右邊那一盒裡的票明顯低了一截、盒口留著一道空隙；紙盒右邊的檯面上另外平放三張沒有盒子裝的票；綁雙馬尾、穿米白毛衣的女孩俯身把一張票放進上排的盒子，戴紅項圈金鈴鐺的橘白貓坐在紙盒右側，窗外可以看到大象與長頸鹿" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：裝盒機</h3>
+            <p class="interactive-instruction">拉滑桿決定一種裝法，畫面會把兩句話畫出來並列出兩條式子。注意<strong>「剩下」是減、「不足」是加</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pack" width="540" height="450"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pk-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">第二句話</span>
+                    <div class="btn-group" id="pk-mode-group">
+                      <button class="pick-btn active" data-mode="0">不足幾個</button>
+                      <button class="pick-btn" data-mode="1">多出一盒</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pk-k-slider">第一種裝法每盒裝：<span id="pk-k-val" class="val-num">5</span></label>
+                    <input type="range" id="pk-k-slider" min="5" max="8" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pk-r-slider">這樣會剩下：<span id="pk-r-val" class="val-num">2</span></label>
+                    <input type="range" id="pk-r-slider" min="1" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="pk-s-row">
+                    <label for="pk-s-slider">第二種裝法不足：<span id="pk-s-val" class="val-num">4</span></label>
+                    <input type="range" id="pk-s-slider" min="1" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分組分裝)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3-7">
+            <p class="quiz-question"><strong>Q7.</strong> 烘焙坊把一批餅乾裝進袋子。若每袋裝 \(6\) 片，會<strong>剩下 \(5\) 片</strong>沒袋子裝；若每袋裝 \(7\) 片，則會<strong>不足 \(3\) 片</strong>。試問這批餅乾共有多少片？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-7" value="A"><span class="option-text">A. \(8\) 片</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-7" value="B"><span class="option-text">B. \(17\) 片</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-7" value="C"><span class="option-text">C. \(53\) 片</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-7" value="D"><span class="option-text">D. \(43\) 片</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設餅乾共 \(x\) 片、袋子共 \(y\) 個。剩下要<strong>減</strong>、不足要<strong>加</strong>：
+              \[\begin{aligned}
+              & ①\ x-5=6y \\
+              & ②\ x+3=7y \\
+              &\quad ②-① \Rightarrow 8=y \\
+              &\quad x=6(8)+5=53
+              \end{aligned}\]
+              驗算：\(6 \times 8=48\)，\(53-48=5\) 剩下 ✓；\(7 \times 8=56\)，\(56-53=3\) 不足 ✓。<br>
+              A 是<strong>袋子的個數</strong> \(8\)，答錯對象。<br>
+              B 是把「不足 \(3\)」也當成「剩下」，列成 \(x-5=6y\)、\(x-3=7y\)，相減得 \(y=2\)、\(x=17\)——加減方向記反就整題垮掉。<br>
+              D 是 \(y=8\) 算對了，代回時把 \(x-5=6y\) 解成 \(x=6y-5=43\)，移項少變一次號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-3-8">
+            <p class="quiz-question"><strong>Q8.</strong> 社團共有 \(42\) 位成員一起吃蛋糕。男生每 \(5\) 人分食一個、女生每 \(4\) 人分食一個，恰好分完，共買了 \(9\) 個蛋糕。試問男生有多少人？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-8" value="A"><span class="option-text">A. \(12\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-8" value="B"><span class="option-text">B. \(30\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-8" value="C"><span class="option-text">C. \(18\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-8" value="D"><span class="option-text">D. \(24\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設男生 \(x\) 人、女生 \(y\) 人。男生用掉 \(\dfrac{x}{5}\) 個蛋糕、女生用掉 \(\dfrac{y}{4}\) 個：
+              \[\begin{aligned}
+              & ①\ x+y=42 \\
+              & ②\ \dfrac{x}{5}+\dfrac{y}{4}=9 \\
+              &\quad ②\times 20:\ 4x+5y=180 \\
+              &\quad ①\times 4:\ 4x+4y=168 \\
+              &\quad \text{兩式相減：} y=12 \\
+              &\quad x=42-12=30
+              \end{aligned}\]
+              驗算：\(30 \div 5=6\) 個、\(12 \div 4=3\) 個，合計 \(9\) 個 ✓。<br>
+              A 是<strong>女生</strong>的人數 \(12\)，答錯對象。<br>
+              C、D 代回去分別得 \(\frac{18}{5}\) 與 \(\frac{24}{5}\)，連「恰好分完」都做不到。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 回頭讀題
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 重點 5：題目問的，不一定是你解出來的那個數
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>解完不等於答完</strong>。\(x=18\)、\(y=13\) 只是兩個數，題目最後那句問句才決定要交出什麼。</li>
+              <li><strong>回頭讀題目的最後一句</strong>。應用題的問句幾乎都在最後，而且常常問的是 \(x\)、\(y\) 的<strong>某種組合</strong>：
+                <ul>
+                  <li>「兩種<strong>各</strong>有幾個」→ 交出 \(x\) 和 \(y\)。</li>
+                  <li>「<strong>全班共</strong>有幾人」→ 交出 \(x+y\)。</li>
+                  <li>「甲<strong>比</strong>乙多幾個」→ 交出 \(x-y\)。</li>
+                  <li>「這次<strong>總共收入</strong>多少元」→ 交出（單價）\(\times x\ +\)（單價）\(\times y\)。</li>
+                </ul>
+              </li>
+              <li><strong>選擇題的誘答就藏在這裡</strong>。問「較小的那個數」，選項一定會放較大的那個；問「女生幾人」，選項一定會放男生的人數。</li>
+              <li><strong>設的量和問的量不一定相同</strong>。有時候設「每盒幾個」比較好列式，題目問的卻是「一共幾盒」——設什麼由<strong>好不好列式</strong>決定，跟題目問什麼是兩件事。</li>
+              <li><strong>把答案寫成完整句子並帶單位</strong>：「全班共有 \(31\) 位同學」而不是只寫「\(31\)」。寫完之後那句話唸起來如果怪怪的，通常就是答錯對象了。</li>
+              <li><strong>兩個常用的檢查動作</strong>：把解代回<strong>原本的兩條式子</strong>（不是整理過的），再把答案唸一次對照題目的問句。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>已解出</th><th>題目問句</th><th>要交出的答案</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>男 \(18\)、女 \(13\)</td><td>男生有幾人</td><td class="sign-pos">\(18\) 人</td></tr>
+                <tr><td>男 \(18\)、女 \(13\)</td><td>全班共有幾人</td><td class="sign-pos">\(18+13=31\) 人</td></tr>
+                <tr><td>男 \(18\)、女 \(13\)</td><td>男生比女生多幾人</td><td class="sign-pos">\(18-13=5\) 人</td></tr>
+                <tr><td>大杯 \(18\)、小杯 \(27\)</td><td>總收入多少元（\(60\)／\(45\) 元）</td><td class="sign-pos">\(60(18)+45(27)=2295\) 元</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_question.webp" alt="復古車票印刷風插圖：木櫃檯上攤著一張細長的紙條，紙上滿是一行行細小的手寫符號；戴圓框眼鏡、穿芥末黃連帽外套的男孩握著一支黃銅放大鏡，鏡片正對著紙條的最右端，鏡片裡是一個放得很大的紅色問號，比紙上其他東西都醒目；紙條左側的木盤裡並排立著兩張空白的小標籤牌" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：回頭讀題機</h3>
+            <p class="interactive-instruction">兩支滑桿是<strong>已經解出來</strong>的 \(x\)、\(y\)。換一個問句看看——同一組解，答案完全不同：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ask" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ak-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ak-case-group">
+                      <button class="pick-btn active" data-case="0">班級人數</button>
+                      <button class="pick-btn" data-case="1">飲料攤</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目問</span>
+                    <div class="btn-group" id="ak-q-group">
+                      <button class="pick-btn active" data-q="0">第一種</button>
+                      <button class="pick-btn" data-q="1">第二種</button>
+                      <button class="pick-btn" data-q="2">合計</button>
+                      <button class="pick-btn" data-q="3">相差</button>
+                      <button class="pick-btn" data-q="4">總金額</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ak-x-slider"><span id="ak-x-name">男生</span>解得：<span id="ak-x-val" class="val-num">18</span></label>
+                    <input type="range" id="ak-x-slider" min="10" max="26" value="18" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ak-y-slider"><span id="ak-y-name">女生</span>解得：<span id="ak-y-val" class="val-num">13</span></label>
+                    <input type="range" id="ak-y-slider" min="10" max="26" value="13" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ak-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (回頭讀題)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3-9">
+            <p class="quiz-question"><strong>Q9.</strong> 某班男生比女生多 \(3\) 人。某日有 \(2\) 位女生請公假，此時班上男生人數是女生的 \(2\) 倍少 \(1\) 人。試問<strong>全班共有多少位同學</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-9" value="A"><span class="option-text">A. \(19\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-9" value="B"><span class="option-text">B. \(11\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-9" value="C"><span class="option-text">C. \(8\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-9" value="D"><span class="option-text">D. \(17\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設男生 \(x\) 人、女生 \(y\) 人。請假後女生剩 \(y-2\) 人：
+              \[\begin{aligned}
+              & ①\ x=y+3 \\
+              & ②\ x=2(y-2)-1 \\
+              &\quad ② \Rightarrow x=2y-5 \\
+              &\quad y+3=2y-5,\ y=8 \\
+              &\quad x=8+3=11
+              \end{aligned}\]
+              男 \(11\) 人、女 \(8\) 人，題目問的是<strong>全班</strong>：\(11+8=19\) 人。<br>
+              B 是<strong>男生</strong>人數、C 是<strong>女生</strong>人數，兩個都解對了卻沒回頭讀最後那句問句。<br>
+              D 是把請假的 \(2\) 人也扣掉的 \(19-2=17\)，但那 \(2\) 位同學只是請假，仍然是班上的人。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-3-10">
+            <p class="quiz-question"><strong>Q10.</strong> 小妍買了每張 \(8\) 元和每張 \(12\) 元的郵票，兩種<strong>共 \(30\) 張</strong>，一共付了 \(316\) 元。試問 \(12\) 元的郵票<strong>比 \(8\) 元的多幾張</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-10" value="A"><span class="option-text">A. \(11\) 張</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-10" value="B"><span class="option-text">B. \(19\) 張</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-10" value="C"><span class="option-text">C. \(30\) 張</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-10" value="D"><span class="option-text">D. \(8\) 張</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設 \(8\) 元的 \(x\) 張、\(12\) 元的 \(y\) 張：
+              \[\begin{aligned}
+              & ①\ x+y=30 \\
+              & ②\ 8x+12y=316 \\
+              &\quad ② \div 4 \Rightarrow 2x+3y=79 \cdots ③ \\
+              &\quad ③-①\times 2 \Rightarrow y=19 \\
+              &\quad x=30-19=11
+              \end{aligned}\]
+              題目問的是<strong>相差幾張</strong>：\(19-11=8\) 張。<br>
+              A 是 \(8\) 元郵票的張數、B 是 \(12\) 元郵票的張數，兩個都是中途的解不是答案。<br>
+              C 是題目給的總張數 \(30\)，跟問句無關。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 合理性與無解
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ban" aria-hidden="true"></i> 重點 6：解得出來，不代表題目有解
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>最後一道關卡</strong>：確定列式與計算都沒錯之後，還要問一句——這個解<strong>在題目的情境裡存在嗎</strong>？若不存在或違反常理，則<strong>此題無解</strong>。</li>
+              <li><strong>「此題無解」不是「我算錯了」</strong>。式子解得出來，只是那組數字在現實中不成立；正確的回答就是寫出「此題無解」，並說明哪裡不合理。</li>
+              <li><strong>常見的不合理，大致三類</strong>：
+                <ul>
+                  <li><strong>該是正數卻算出負數</strong>：年齡、人數、張數、長度不可能是負的。</li>
+                  <li><strong>該是整數卻算出小數</strong>：人數 \(19.5\) 人、球賽得分 \(9.5\) 分、票 \(2.5\) 張。</li>
+                  <li><strong>超出可能的範圍</strong>：月分只有 \(1\) 到 \(12\)、日期最多 \(31\)、一週只有 \(7\) 天。</li>
+                </ul>
+              </li>
+              <li><strong>不是所有量都要求整數</strong>。長度 \(3.5\) 公尺、重量 \(2.4\) 公斤、金額 \(19.5\) 元都很正常；<strong>「一個一個數得出來」的東西</strong>才必須是整數。判斷標準是那個量的性質，不是它看起來整不整齊。</li>
+              <li><strong>還要檢查題目沒明說的條件</strong>。「\(3\) 年前姐姐的年齡」隱含<strong>那時她已經出生</strong>，所以 \(3\) 年前的歲數也不能是負的——不只檢查今年的答案，題目提到的每個時間點都要成立。</li>
+              <li><strong>檢查的時機是第④步「寫答案」</strong>，不是解完就算了。把兩件事一起做完：確認題目問的是哪個量（重點 5），再確認那個答案說得通。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>算出來的解</th><th>哪裡不合理</th><th>該怎麼回答</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>弟弟今年 \(-2\) 歲</td><td>年齡不能是負數</td><td class="sign-neg">此題無解</td></tr>
+                <tr><td>生日是 \(13\) 月 \(18\) 日</td><td>月分沒有 \(13\) 月</td><td class="sign-neg">此題無解</td></tr>
+                <tr><td>甲隊得 \(9.5\) 分</td><td>棒球得分沒有小數</td><td class="sign-neg">此題無解</td></tr>
+                <tr><td>男生 \(19.5\) 人</td><td>人數必須是正整數</td><td class="sign-neg">此題無解</td></tr>
+                <tr><td>繩子長 \(3.5\) 公尺</td><td>長度本來就可以有小數</td><td class="sign-pos">合理，照常作答</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ticket_reject.webp" alt="復古車票印刷風插圖：木櫃檯上平放著三張票，排成一排、彼此分開；左邊兩張是四邊都有鋸齒孔的完整票根，最右邊那張的左緣同樣是鋸齒孔、右緣卻是一道手撕出來的參差裂口並露出紙纖維，寬度大約只有左邊兩張的一半；戴大盤帽、留八字鬍的售票員在窗口後把手掌張開舉在空中、掌心朝外做出制止的手勢，沒有碰到那張票；戴紅項圈金鈴鐺的橘白貓坐在櫃檯右端低頭盯著它" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：合理性檢查關</h3>
+            <p class="interactive-instruction">選一個情境，拉滑桿改變題目給的數字。式子每次都解得出來，但<strong>解得出來不一定過得了關</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-check" width="540" height="450"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ck-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ck-case-group">
+                      <button class="pick-btn active" data-case="0">年齡</button>
+                      <button class="pick-btn" data-case="1">生日</button>
+                      <button class="pick-btn" data-case="2">球賽得分</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ck-p-slider"><span id="ck-p-name">姐姐的 \(4\) 倍多出幾歲</span>：<span id="ck-p-val" class="val-num">81</span></label>
+                    <input type="range" id="ck-p-slider" min="18" max="90" value="81" step="9">
+                  </div>
+                  <div class="slider-row" id="ck-q-row">
+                    <label for="ck-q-slider"><span id="ck-q-name">第二個條件</span>：<span id="ck-q-val" class="val-num">8</span></label>
+                    <input type="range" id="ck-q-slider" min="4" max="40" value="8" step="4">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ck-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (合理性與無解)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3-11">
+            <p class="quiz-question"><strong>Q11.</strong> 小妍說她看的那場籃球賽「甲隊比乙隊多得 \(7\) 分，兩隊<strong>合計得 \(96\) 分</strong>」。若小妍的計算過程沒有錯，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-11" value="A"><span class="option-text">A. 甲隊得 \(52\) 分、乙隊得 \(44\) 分</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-11" value="B"><span class="option-text">B. 甲隊得 \(51\) 分、乙隊得 \(45\) 分</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-11" value="C"><span class="option-text">C. 小妍一定把得分記錯了，此題無解</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-11" value="D"><span class="option-text">D. 甲隊得 \(51.5\) 分、乙隊得 \(44.5\) 分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設甲隊得 \(x\) 分、乙隊得 \(y\) 分：
+              \[\begin{aligned}
+              & ①\ x-y=7 \\
+              & ②\ x+y=96 \\
+              &\quad ①+② \Rightarrow 2x=103 \\
+              &\quad x=51.5,\ y=44.5
+              \end{aligned}\]
+              式子解得出來，但<strong>籃球得分不會有小數</strong>，與事實不符，所以小妍記錯了，此題無解。<br>
+              D 雖然是算出來的數值，卻不是這題該給的答案——不合情境時要回答「無解」，不是照抄小數。<br>
+              A 的兩隊得分差是 \(8\)、B 的差是 \(6\)，兩個都湊得出 \(96\) 分，卻擅自改掉了題目說的「多 \(7\) 分」。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-3-12">
+            <p class="quiz-question"><strong>Q12.</strong> 姐姐今年 \(x\) 歲、妹妹今年 \(y\) 歲。已知 \(5\) 年後姐姐的年齡<strong>是妹妹的 \(4\) 倍</strong>，且 \(3\) 年前姐姐年齡的 \(2\) 倍<strong>比妹妹年齡的 \(3\) 倍多 \(28\) 歲</strong>。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3-12" value="A"><span class="option-text">A. 妹妹今年 \(1\) 歲</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-12" value="B"><span class="option-text">B. 求得的解不合情境，此題無解</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-12" value="C"><span class="option-text">C. 妹妹今年 \(4\) 歲</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3-12" value="D"><span class="option-text">D. 兩條式子互相矛盾，聯立方程式無法求解</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(5\) 年後兩人各加 \(5\) 歲、\(3\) 年前各減 \(3\) 歲：
+              \[\begin{aligned}
+              & \begin{cases} x+5=4(y+5) \\ 2(x-3)=3(y-3)+28 \end{cases} \\
+              &\quad \text{化簡：} ①\ x-4y=15 \\
+              &\qquad\quad\ \ ②\ 2x-3y=25 \\
+              &\quad ②-①\times 2 \Rightarrow 5y=-5 \\
+              &\quad y=-1,\ x=15+4(-1)=11
+              \end{aligned}\]
+              解確實求得出來，但<strong>妹妹今年 \(-1\) 歲</strong>不可能，與事實不符，所以此題無解。<br>
+              D 錯在「無法求解」：聯立方程式本身有唯一解 \(x=11\)、\(y=-1\)，問題出在這組解不合情境，兩者不一樣。<br>
+              C 是 \(5\) 年後妹妹的年齡 \(y+5=4\)，不是今年的歲數。<br>
+              A 是把 \(y=-1\) 的負號漏掉直接寫成 \(1\)，代回 \(x-4y=15\) 會得到 \(x=19\)，並不滿足第②式。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 應用問題解題手冊</h4>
+            <ul class="bullet-list">
+              <li><strong>四步驟</strong>：設未知數 → 列聯立方程式 → 解 → 寫答案。四步都要做完，少了最後一步很容易白算。</li>
+              <li><strong>設未知數要完整</strong>：對象與單位都寫出來（「設全票每張 \(x\) 元」），不要只寫「設 \(x\) 是全票」。</li>
+              <li><strong>一句話列一條式子</strong>，兩條必須來自<strong>不同的敘述</strong>；同一句換個寫法等於沒有多給資訊。</li>
+              <li><strong>數量問題</strong>：一條<strong>數個數</strong>（\(x+y=\) 總數）、一條<strong>數金額</strong>（單價 \(\times\) 數量的和）。兩條的等號右邊一邊是「個」、一邊是「元」。</li>
+              <li><strong>看錯與弄反</strong>：把錯的情形也寫成式子，差額補在<strong>比較少的那一邊</strong>，再移項化成標準式。「符號看錯」型不用整理，兩句話直接就是兩條式子。</li>
+              <li><strong>分組分裝</strong>：<strong>剩下用減、不足用加</strong>，扣完補完剛好等於「整整齊齊裝滿」。「多出一組」是<strong>組數</strong>少一，寫成 \(k(y-1)\)。</li>
+              <li><strong>「每 \(k\) 人分一個」寫成 \(\dfrac{x}{k}\)</strong>，列完兩邊同乘最小公倍數去分母。</li>
+              <li><strong>回頭讀最後那句問句</strong>：問的常常是 \(x+y\)、\(x-y\) 或總金額，不是 \(x\) 或 \(y\) 本身。選擇題的誘答就藏在這裡。</li>
+              <li><strong>檢查合理性</strong>：該是正數、該是整數、該在範圍內。不合理時的答案是「<strong>此題無解</strong>」，不是把小數硬寫上去。</li>
+              <li><strong>不是每個量都要求整數</strong>：長度、重量、金額可以有小數；「一個一個數得出來」的東西才不行。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-ticket"></i> 回到售票口：這一次，題目只給一段話</h4>
+              <h5><i class="fa-solid fa-language"></i> 難的是翻譯，不是計算</h5>
+              <p>前兩節的題目都直接把 \(\begin{cases} 5x+2y=360 \\ 3x+y=210 \end{cases}\) 端到你面前，你只要消去一個未知數。這一節把那張紙抽走了，換成一段中文：「我們家買了 \(5\) 張全票、\(2\) 張優待票，共 \(360\) 元。」</p>
+              <p>整節在練的就是這個翻譯動作。而翻譯有一套固定手續：<strong>先給兩個未知的量各取一個名字</strong>（設未知數），<strong>再一句話換一條式子</strong>（列聯立方程式）。第三步的解法上一節已經練熟了，這一節反而不是重點。</p>
+              <h5><i class="fa-solid fa-shapes"></i> 三種常見的句型</h5>
+              <p><strong>數量問題</strong>最直接：一句數個數、一句數金額。<strong>看錯與弄反</strong>要多一個動作——把「弄錯的那一種情形」也老老實實寫成式子，再讓差額補在少的那一邊。<strong>分組分裝</strong>則是加減方向的考驗：東西多出來就扣掉，東西不夠就補上。</p>
+              <p>這三種句型幾乎涵蓋了整章的應用題。遇到沒看過的情境不必慌，回頭問同一個問題就好：<strong>題目裡哪兩句話可以寫成等號</strong>？</p>
+              <h5><i class="fa-solid fa-flag"></i> 最後兩關，都在「寫答案」那一步</h5>
+              <p>算出 \(x\)、\(y\) 之後還沒結束。第一關是<strong>回頭讀題</strong>：問句要的常常是 \(x+y\) 或 \(x-y\)，不是你手上那兩個數。第二關是<strong>合理性</strong>：\(-1\) 歲的妹妹、\(13\) 月的生日、\(9.5\) 分的球賽，式子都解得出來，現實裡卻不存在——這時候的答案是「此題無解」，而不是把數字硬抄上去。</p>
+              <p>這也是應用問題和純計算題最大的差別：<strong>計算題只有對和錯，應用問題還有「說不說得通」</strong>。第 \(1\) 章到這裡就結束了。下一章要問一個新問題：這些方程式如果畫在紙上，會長成什麼樣子？答案是——每一條二元一次方程式都是一條<strong>直線</strong>，而聯立方程式的那組共同解，就是兩條直線<strong>交叉的那一點</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
