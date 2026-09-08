@@ -97,30 +97,6 @@ const C_EMBER = '#fdba74';
    3. 本節專屬繪圖與字串工具
    ========================================================================== */
 
-// 把 ax + by + c 這種項的陣列排成 canvas 算式元件
-//   terms: [{ c: 係數, v: 'x' | 'y' | null }]
-function termItems(terms, colorOf) {
-  const out = [];
-  terms.forEach(t => {
-    if (t.c === 0 && t.v) return;
-    const col = colorOf ? colorOf(t) : C_SLATE;
-    const a = Math.abs(t.c);
-    let body;
-    if (!t.v) body = T(numStr(a), col);
-    else if (a === 1) body = IT(t.v, col);
-    else body = SEQ([T(numStr(a), col), IT(t.v, col)], col, 1);
-    if (out.length) {
-      out.push(T(t.c < 0 ? '-' : '+', C_SLATE));
-      out.push(body);
-    } else {
-      // 首項的負號要貼著項，不然 drawExpr 的字距會把它推成「- 2x」
-      out.push(t.c < 0 ? SEQ([T('-', col), body], col, 1) : body);
-    }
-  });
-  if (!out.length) out.push(T('0', C_SLATE));
-  return out;
-}
-
 // 一句中文題目，畫成一張紙條（可整條反白）
 function drawSentence(ctx, x, y, w, text, color, active) {
   const lines = fitLines(ctx, text, w - 28, f(650, 14));

@@ -157,28 +157,6 @@ function drawGate(ctx, cx, cy, open, color) {
   ctx.restore();
 }
 
-// 把 ax + by + c 這種項的陣列排成 canvas 算式元件
-//   terms: [{ c: 係數, v: 'x' | 'y' | null }]
-function termItems(terms, colorOf) {
-  const out = [];
-  terms.forEach((t, i) => {
-    if (t.c === 0 && t.v) return;
-    const col = colorOf ? colorOf(t) : C_SLATE;
-    if (out.length) out.push(T(t.c < 0 ? '-' : '+', C_SLATE));
-    else if (t.c < 0) out.push(T('-', col));
-    const a = Math.abs(t.c);
-    if (!t.v) {
-      out.push(T(String(a), col));
-    } else if (a === 1) {
-      out.push(IT(t.v, col));
-    } else {
-      out.push(SEQ([T(String(a), col), IT(t.v, col)], col, 1));
-    }
-  });
-  if (!out.length) out.push(T('0', C_SLATE));
-  return out;
-}
-
 /* ==========================================================================
    重點 1：售票口列式機
    兩支滑桿決定各買幾張，票根一張張排出來，右邊的二元一次式跟著長出來。
