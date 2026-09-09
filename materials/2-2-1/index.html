@@ -4,39 +4,1291 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>2-1 直角坐標平面 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-1 直角坐標平面 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第二冊 (1下) • 第2章 直角坐標與二元一次方程式的圖形</div>
-    <h1>2-1 直角坐標平面</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第二冊 • 第二章</span>
+        <h1>2-1 直角坐標平面</h1>
+        <p>第一冊的<strong>數線</strong>只能描述<strong>一條直線上</strong>的位置：\(A(2)\) 就是原點右方 \(2\) 單位。可是海圖是一整片<strong>平面</strong>，只給一個數字說不清楚船在哪裡。這一節把<strong>兩條互相垂直、共用同一個原點的數線</strong>疊在一起，於是平面上每一個位置都能用<strong>一對數字</strong> \((x,y)\) 精準標定。要學的東西其實只有一件事——<strong>位置與數對之間的來回翻譯</strong>：給你數對能標出點，給你點能寫出坐標，給你一段航行指令能推出新位置，給你一個新的原點能重畫整張圖。最後再認識把平面切成四塊的<strong>象限</strong>，光看正負號就知道點落在哪一區。</p>
+      </div>
+      <!-- Progress navigation (9 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-compass-drafting"></i> 平面的骨架</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-location-crosshairs"></i> 坐標表示法</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-ruler-horizontal"></i> 軸上的點</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-ruler-combined"></i> 點到兩軸的距離</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-route"></i> 平移：正推</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-rotate-left"></i> 平移：回推</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-map-location-dot"></i> 自訂原點</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-compass"></i> 四個象限</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-plus-minus"></i> 由符號判象限</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Vintage Nautical Chart Room)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(245, 158, 11, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-anchor" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);"></i> 課前暖身漫畫：同一組數字，兩支旗子
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            領航員小汐把一張紙條推過製圖桌，上面只寫了一組數字：<strong style="color:#fcd34d">\((2,3)\)</strong>。見習製圖員阿岸接過來，在海圖上先橫著數 \(2\) 格、再直著數 \(3\) 格，插下一支小旗。小汐看了一眼，也插了一支——<strong style="color:#fcd34d">兩支旗子插在完全不同的兩個位置</strong>。原來阿岸讀成「橫 \(2\)、直 \(3\)」，小汐讀成「橫 \(3\)、直 \(2\)」。同一組數字，兩種讀法，船就會開到兩個地方去。所以在畫任何一張海圖之前，<strong style="color:#fcd34d">得先約好誰是橫的、誰是直的、從哪裡開始數</strong>——這正是這一節要建立的三件事：<strong style="color:#fcd34d">原點、\(x\) 軸、\(y\) 軸</strong>。約定好了以後，\((2,3)\) 和 \((3,2)\) 就是兩個不同的位置，再也不會有第二支旗子。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古航海製圖室風四格漫畫：第一格紅棕色長辮、戴深藍水手帽的少女把一張紙條推過大橡木桌，給坐在對面、黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年；第二格少年俯身在攤開的羊皮方格海圖上用指尖數格子，圖上插著一支小紅旗；第三格同一張海圖上插著兩支小旗，一紅一藍，落在相距很遠的兩個格點上，兩人同時指著海圖；第四格兩人把一枚黃銅圓釘壓在海圖上，並由它畫出一條水平線與一條鉛垂線——水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，少年手裡拿著鵝毛筆。一隻深灰色虎斑船貓戴著掛黃銅小圓牌的項圈，四格都待在桌上" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 坐標平面的骨架與數對
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i> 重點 1：平面的骨架——兩條數線與一個原點
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>數對</strong>：像 \((2,3)\)、\((3,2)\) 這樣<strong>含有一對數字、而且有先後順序</strong>的表示方式。「第 \(2\) 排第 \(3\) 個」和「第 \(3\) 排第 \(2\) 個」是不同的座位，所以 \((2,3)\) 與 \((3,2)\) 是<strong>不同的數對</strong>。</li>
+              <li><strong>直角坐標平面</strong>：在平面上作<strong>兩條互相垂直、且有共同原點的數線</strong>，這樣的平面稱為直角坐標平面，簡稱<strong>坐標平面</strong>。</li>
+              <li><strong>四個名詞一次記清楚</strong>：
+                <ul>
+                  <li>⑴ <strong>水平</strong>的那條數線叫 \(x\) 軸，也叫<strong>橫軸</strong>。</li>
+                  <li>⑵ <strong>鉛垂</strong>的那條數線叫 \(y\) 軸，也叫<strong>縱軸</strong>。</li>
+                  <li>⑶ 兩條合稱<strong>坐標軸</strong>；箭頭指的方向就是各自的<strong>正向</strong>。</li>
+                  <li>⑷ 兩軸的<strong>交點</strong>叫<strong>原點</strong>，通常寫成大寫字母 \(O\)。</li>
+                </ul>
+              </li>
+              <li><strong>正向的約定</strong>：\(x\) 軸<strong>向右</strong>為正向，\(y\) 軸<strong>向上</strong>為正向。所以箭頭只畫在右端與上端，左端和下端是平的。</li>
+              <li><strong>和數線比一比</strong>：數線有原點、正向、單位長；坐標平面只是把<strong>兩條這樣的數線垂直疊在一起</strong>，三個要素完全沿用，並沒有新東西。</li>
+              <li><strong>為什麼平面需要兩個數字</strong>：一個數字只能沿一條線前後移動；平面上既要說「左右多遠」又要說「上下多遠」，所以非得<strong>一對</strong>不可。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th></th><th>數線（第一冊）</th><th>坐標平面（本節）</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>幾條數線</td><td>\(1\) 條</td><td class="sign-pos">\(2\) 條，互相垂直</td></tr>
+                <tr><td>原點</td><td>\(1\) 個</td><td class="sign-pos">\(1\) 個，兩條<strong>共用</strong></td></tr>
+                <tr><td>描述一個位置</td><td>\(1\) 個數：\(A(2)\)</td><td class="sign-pos">\(1\) 對數：\(A(2,3)\)</td></tr>
+                <tr><td>正向</td><td>向右</td><td class="sign-pos">\(x\) 向右、\(y\) 向上</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="chart_frame.webp" alt="復古航海製圖室風插圖：大橡木桌上攤開一張米黃色羊皮海圖，上面用黑墨畫著一條水平線與一條鉛垂線交叉成十字，交叉處壓著一枚黃銅小圓釘；水平線越過交叉點往兩邊延伸，只在右端有一個箭頭、左端平切，鉛垂線同樣往上下延伸，只在上端有一個箭頭、下端平切。黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年與紅棕色長辮、戴深藍水手帽的少女一起把一把黃銅平行尺按在海圖上緣，戴黃銅小圓牌項圈的深灰色虎斑貓坐在海圖右側" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：數對順序實驗台</h3>
+            <p class="interactive-instruction">調整兩個數字，看看把它們<strong>對調</strong>之後會插到哪裡去：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-frame" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fr-m-slider">第一個數 \(m\)：<span id="fr-m-val" class="val-num">2</span></label>
+                    <input type="range" id="fr-m-slider" min="-5" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fr-n-slider">第二個數 \(n\)：<span id="fr-n-val" class="val-num">3</span></label>
+                    <input type="range" id="fr-n-slider" min="-5" max="5" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平面的骨架)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 關於直角坐標平面，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-1" value="A"><span class="option-text">A. 鉛垂的那條數線稱為 \(x\) 軸，又叫橫軸</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-1" value="B"><span class="option-text">B. 兩條坐標軸只要相交就好，不一定要互相垂直</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-1" value="C"><span class="option-text">C. \(x\) 軸與 \(y\) 軸的交點稱為原點，通常記為 \(O\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-1" value="D"><span class="option-text">D. \(x\) 軸以向左為正向，\(y\) 軸以向下為正向</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。坐標平面由<strong>兩條互相垂直、共用同一個原點</strong>的數線構成，兩軸的交點就是原點 \(O\)。<br>
+              A 把兩軸搞反了：<strong>水平</strong>的才是 \(x\) 軸（橫軸），鉛垂的是 \(y\) 軸（縱軸）。<br>
+              B 錯在「不一定要垂直」：<strong>互相垂直</strong>是定義的一部分，斜著交叉就不是直角坐標平面。<br>
+              D 把兩個正向都寫反了：\(x\) 軸<strong>向右</strong>為正、\(y\) 軸<strong>向上</strong>為正，所以箭頭只畫在右端與上端。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知 \(A(2m,\ m+5)\) 與 \(B(6,\ 8)\) 在坐標平面上表示<strong>同一個點</strong>，則 \(m\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-2" value="A"><span class="option-text">A. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-2" value="B"><span class="option-text">B. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-2" value="C"><span class="option-text">C. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-2" value="D"><span class="option-text">D. 沒有這樣的 \(m\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩個數對表示同一個點，代表<strong>對應位置的數字要一一相等</strong>：第一個對第一個、第二個對第二個。
+              \[\begin{aligned}
+              & x \text{ 坐標}：2m = 6 \Rightarrow m = 3 \\
+              &\quad y \text{ 坐標}：m+5 = 8 \Rightarrow m = 3 \\
+              &\quad \text{兩條解出來一致，所以 } m = 3
+              \end{aligned}\]
+              代回去檢查：\(A(6,8)\)、\(B(6,8)\)，確實是同一個點。<br>
+              B 把兩個數對<strong>交叉</strong>對應了（拿 \(2m\) 去對 \(8\)），那樣會解出 \(m=4\)；坐標要比對的是<strong>同一個位置</strong>。<br>
+              C 把 \(m+5=8\) 誤算成 \(m=8+5\)，移項時該減卻加。<br>
+              D 錯在以為兩條式子矛盾：這裡兩條都解出 \(m=3\)，是一致的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 坐標表示法（雙向）
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i> 重點 2：坐標表示法——先橫後直，來回翻譯
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>由數對找點（走路法）</strong>：從原點 \(O\) 出發，<strong>先沿 \(x\) 軸左右走</strong>，<strong>再沿 \(y\) 軸上下走</strong>，停下來的位置就是那個點。</li>
+              <li><strong>由點寫數對（作垂線法）</strong>：過這個點分別作一條<strong>鉛垂線</strong>與一條<strong>水平線</strong>，看它們分別交在 \(x\) 軸、\(y\) 軸的哪個刻度，那兩個數就是它的坐標。</li>
+              <li><strong>坐標的寫法</strong>：數對 \((m,n)\) 表示 \(P\) 點的位置時，記為 \(P(m,n)\)。其中 \(m\) 是 \(P\) 點的 <strong>\(x\) 坐標（橫坐標）</strong>，\(n\) 是 <strong>\(y\) 坐標（縱坐標）</strong>。</li>
+              <li><strong>順序永遠是「先 \(x\) 後 \(y\)」</strong>，就像先報排數再報座號。這也是 \((m,n)\) 與 \((n,m)\) 會標到不同位置的原因。</li>
+              <li><strong>正負決定方向</strong>：\(x\) 坐標為正往<strong>右</strong>、為負往<strong>左</strong>；\(y\) 坐標為正往<strong>上</strong>、為負往<strong>下</strong>。</li>
+              <li><strong>先上下再左右也會到同一點</strong>：從原點先向上走 \(4\) 再向左走 \(3\)，和先向左 \(3\) 再向上 \(4\)，落點<strong>完全一樣</strong>。走的順序可以換，但<strong>寫坐標的順序不能換</strong>——寫下來一定是 \((-3,4)\)。</li>
+              <li><strong>坐標可以是分數或小數</strong>：\(D\left(1\frac{2}{3},-3\right)\) 就是沿 \(x\) 軸向右走 \(1\frac{2}{3}\) 單位、再向下走 \(3\) 單位。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>坐標</th><th>先左右</th><th>再上下</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(A(4,3)\)</td><td class="sign-pos">向右 \(4\)</td><td class="sign-pos">向上 \(3\)</td></tr>
+                <tr><td>\(B(-3,-2)\)</td><td class="sign-neg">向左 \(3\)</td><td class="sign-neg">向下 \(2\)</td></tr>
+                <tr><td>\(C(-3,4)\)</td><td class="sign-neg">向左 \(3\)</td><td class="sign-pos">向上 \(4\)</td></tr>
+                <tr><td>\(O(0,0)\)</td><td>不動</td><td>不動</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="chart_walk.webp" alt="復古航海製圖室風插圖：大橡木桌上攤著一張米黃色羊皮方格海圖，圖上用黑墨畫著一條折線——先沿著一條水平格線向右走一段，再轉一個直角沿著一條鉛垂格線向上走一段，終點插著一支小紅旗；一副打開的黃銅分規擱在水平那一段上。紅棕色長辮、戴深藍水手帽的少女俯身用指尖按住折線的起點，戴黃銅小圓牌項圈的深灰色虎斑貓趴在海圖右下角看著小紅旗" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：雙向翻譯台</h3>
+            <p class="interactive-instruction">切換兩種方法，看同一個點怎麼<strong>被找出來</strong>、又怎麼<strong>被讀出來</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-walk" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="wk-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方法</span>
+                    <div class="btn-group" id="wk-mode-group">
+                      <button class="pick-btn active" data-wkmode="walk">走路法：由數對找點</button>
+                      <button class="pick-btn" data-wkmode="read">作垂線法：由點讀坐標</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="wk-x-slider">\(x\) 坐標：<span id="wk-x-val" class="val-num">4</span></label>
+                    <input type="range" id="wk-x-slider" min="-5" max="5" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="wk-y-slider">\(y\) 坐標：<span id="wk-y-val" class="val-num">3</span></label>
+                    <input type="range" id="wk-y-slider" min="-5" max="5" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="wk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (坐標表示法)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 在坐標平面上，從原點 \(O\) 出發，先向左走 \(6\) 單位，再向下走 \(2\) 單位，最後到達 \(P\) 點。則 \(P\) 點的坐標為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-3" value="A"><span class="option-text">A. \((6,2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-3" value="B"><span class="option-text">B. \((-2,-6)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-3" value="C"><span class="option-text">C. \((-6,-2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-3" value="D"><span class="option-text">D. \((2,6)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。向左是 \(x\) 軸的<strong>負向</strong>、向下是 \(y\) 軸的<strong>負向</strong>：
+              \[\begin{aligned}
+              & x \text{ 坐標}：\text{向左 } 6 \Rightarrow -6 \\
+              &\quad y \text{ 坐標}：\text{向下 } 2 \Rightarrow -2 \\
+              &\quad \text{所以 } P(-6,-2)
+              \end{aligned}\]
+              A 把兩個負號都漏掉，寫成向右 \(6\)、向上 \(2\)，方向整個相反。<br>
+              B 負號對了，但把 \(x\) 與 \(y\) <strong>對調</strong>——那是「向左 \(2\)、向下 \(6\)」的點。<br>
+              D 同時犯了漏負號與對調兩個錯。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 坐標平面上有一點 \(Q\)，它在 \(y\) 軸<strong>右方 \(7\) 單位</strong>、在 \(x\) 軸<strong>下方 \(2\) 單位</strong>。則 \(Q\) 點的坐標為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-4" value="A"><span class="option-text">A. \((-2,7)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-4" value="B"><span class="option-text">B. \((7,-2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-4" value="C"><span class="option-text">C. \((2,-7)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-4" value="D"><span class="option-text">D. \((-7,2)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。要小心的是「<strong>離開哪一條軸</strong>」決定的是哪一個坐標：離開 \(y\) 軸走的是<strong>左右</strong>，管左右的是 \(x\)；離開 \(x\) 軸走的是<strong>上下</strong>，管上下的是 \(y\)。
+              \[\begin{aligned}
+              & y \text{ 軸右方 } 7 \Rightarrow x = 7 \\
+              &\quad x \text{ 軸下方 } 2 \Rightarrow y = -2 \\
+              &\quad \text{所以 } Q(7,-2)
+              \end{aligned}\]
+              A、D 都把兩個數字<strong>對調</strong>了，等於把「左右」當成「上下」讀。<br>
+              C 把兩個數字對調之後又亂配了正負號。<br>
+              記住這個口訣：<strong>離 \(y\) 軸多遠管的是 \(x\)，離 \(x\) 軸多遠管的是 \(y\)</strong>——這一點在重點 4 還會再用到一次。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 軸上的點與原點
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-horizontal" aria-hidden="true"></i> 重點 3：軸上的點——有一個坐標是 \(0\)
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>\(x\) 軸上的點</strong>：坐標一定是 \((m,0)\) 的形式。反過來，只要一個點的 <strong>\(y\) 坐標是 \(0\)</strong>，它就一定在 \(x\) 軸上。例：\((-5,0)\)、\((21.8,0)\)。</li>
+              <li><strong>\(y\) 軸上的點</strong>：坐標一定是 \((0,n)\) 的形式。反過來，只要一個點的 <strong>\(x\) 坐標是 \(0\)</strong>，它就一定在 \(y\) 軸上。例：\((0,2.4)\)、\((0,-107)\)。</li>
+              <li><strong>原點</strong>：坐標是 \(O(0,0)\)，兩個坐標都是 \(0\)，所以它<strong>同時在 \(x\) 軸上，也在 \(y\) 軸上</strong>。</li>
+              <li><strong>怎麼想才不會記反</strong>：從原點出發要停在 \(x\) 軸上，代表<strong>上下完全不能動</strong>，所以動的是左右、\(y\) 坐標必須是 \(0\)。停在 \(y\) 軸上同理。</li>
+              <li><strong>坐標軸上的點不屬於任何一個象限</strong>。兩條軸是四個區域的<strong>界線</strong>，界線本身不歸任何一區——這是最常見的陷阱題（重點 8 會再談一次象限）。</li>
+              <li><strong>所以「\((0,-7)\) 在第四象限」是錯的</strong>：它的 \(x\) 坐標是 \(0\)，落在 \(y\) 軸上，不屬於任何象限。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>坐標</th><th>\(x\) 坐標</th><th>\(y\) 坐標</th><th>位置</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\((-5,0)\)</td><td>\(-5\)</td><td class="sign-neg">\(0\)</td><td class="sign-pos">\(x\) 軸上</td></tr>
+                <tr><td>\((0,2.4)\)</td><td class="sign-neg">\(0\)</td><td>\(2.4\)</td><td class="sign-pos">\(y\) 軸上</td></tr>
+                <tr><td>\((0,0)\)</td><td class="sign-neg">\(0\)</td><td class="sign-neg">\(0\)</td><td class="sign-pos">原點（兩軸都在）</td></tr>
+                <tr><td>\((3,-1)\)</td><td>\(3\)</td><td>\(-1\)</td><td>不在軸上（在某個象限裡）</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="chart_axis.webp" alt="復古航海製圖室風插圖：米黃色羊皮海圖上有一條水平的黃銅細桿與一條鉛垂的黃銅細桿，兩者在一點上交叉成直角；水平那條只在右端有箭頭、左端平切，鉛垂那條只在上端有箭頭、下端平切。水平桿上串著三顆黃銅小圓珠、鉛垂桿上串著兩顆，其中一顆正好在交叉點上；每顆圓珠都套在自己那一條桿上，只能沿著它滑動。戴黃銅小圓牌項圈的深灰色虎斑貓伸出前掌，把水平桿上的一顆圓珠往旁邊推" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：離軸偵測器</h3>
+            <p class="interactive-instruction">試著把點<strong>停在某一條軸上</strong>——你會發現只有一種辦法：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-axis" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ax-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ax-x-slider">\(x\) 坐標：<span id="ax-x-val" class="val-num">3</span></label>
+                    <input type="range" id="ax-x-slider" min="-6" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ax-y-slider">\(y\) 坐標：<span id="ax-y-val" class="val-num">2</span></label>
+                    <input type="range" id="ax-y-slider" min="-6" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ax-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (軸上的點)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 下列各點中，哪一個點在 \(y\) 軸上？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-5" value="A"><span class="option-text">A. \((-4,0)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-5" value="B"><span class="option-text">B. \((7,7)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-5" value="C"><span class="option-text">C. \(\left(\dfrac{1}{2},0\right)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-5" value="D"><span class="option-text">D. \((0,-4)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。在 \(y\) 軸上的點，坐標是 <strong>\((0,n)\)</strong> 的形式——也就是 \(x\) 坐標必須是 \(0\)。只有 \((0,-4)\) 的 \(x\) 坐標是 \(0\)。<br>
+              A 與 C 的 \(y\) 坐標是 \(0\)，所以它們在 <strong>\(x\) 軸</strong>上，不是 \(y\) 軸。這正是最容易記反的地方。<br>
+              B 的兩個坐標都不是 \(0\)，兩條軸都不在。<br>
+              順帶一提，若某個點<strong>兩軸都在</strong>，那它只可能是原點 \((0,0)\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 對於「\(R(0,-9)\) 在坐標平面的第四象限內」這個說法，下列判斷何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-6" value="A"><span class="option-text">A. 正確，因為它的 \(y\) 坐標是負數</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-6" value="B"><span class="option-text">B. 錯誤，\(R\) 在 \(y\) 軸上，不屬於任何象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-6" value="C"><span class="option-text">C. 錯誤，\(R\) 應該在第三象限內</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-6" value="D"><span class="option-text">D. 錯誤，\(R\) 在 \(x\) 軸上，不屬於任何象限</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(R(0,-9)\) 的 \(x\) 坐標是 \(0\)，所以它落在 <strong>\(y\) 軸</strong>上；而兩條坐標軸是四個象限的<strong>界線</strong>，界線上的點<strong>不屬於任何一個象限</strong>。<br>
+              A 只看了 \(y\) 坐標就下結論。要進第四象限，必須 \(x\) 是<strong>正數</strong>、\(y\) 是負數；\(x=0\) 既不正也不負，連門檻都不到。<br>
+              C 同樣忽略了 \(x=0\)：第三象限要求兩個坐標<strong>都是負數</strong>。<br>
+              D 把兩條軸記反了。\(x\) 坐標是 \(0\) 對應的是 \(y\) 軸；要在 \(x\) 軸上，該是 \(y\) 坐標為 \(0\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 點到兩軸的距離
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> 重點 4：點到兩軸的距離——量的是另一個坐標
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>核心結論</strong>：點 \(P(m,n)\) 到 <strong>\(y\) 軸</strong>的距離是 \(|m|\)；到 <strong>\(x\) 軸</strong>的距離是 \(|n|\)。</li>
+              <li><strong>為什麼是交叉的</strong>：要離開 \(y\) 軸，必須<strong>左右</strong>移動，而管左右的是 \(x\) 坐標；要離開 \(x\) 軸，必須<strong>上下</strong>移動，管上下的是 \(y\) 坐標。所以「到 \(x\) 軸的距離」量的是 \(y\)，兩者<strong>永遠是交叉的</strong>。</li>
+              <li><strong>為什麼要加絕對值</strong>：距離不會是負的。\(P(-3,-2)\) 在原點的左下方，但它到 \(y\) 軸就是 \(|-3|=3\) 單位、到 \(x\) 軸就是 \(|-2|=2\) 單位。</li>
+              <li><strong>比大小時比的是絕對值</strong>：問「誰離 \(x\) 軸最近」，就是比 \(|n|\) 誰最小，跟正負號無關。\((5,-1)\) 比 \((5,3)\) 更靠近 \(x\) 軸。</li>
+              <li><strong>軸上的點距離為 \(0\)</strong>：\(x\) 軸上的點到 \(x\) 軸的距離是 \(|0|=0\)，它本來就在上面。</li>
+              <li><strong>常見錯誤</strong>：看到 \(A(5,-4)\) 就說「因為 \(|5|>|-4|\)，所以 \(A\) 到 \(x\) 軸比到 \(y\) 軸遠」。恰恰相反——\(5\) 是到 \(y\) 軸的距離，\(4\) 才是到 \(x\) 軸的距離，所以 \(A\) 離 \(x\) 軸<strong>比較近</strong>。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>點</th><th>到 \(y\) 軸（左右）</th><th>到 \(x\) 軸（上下）</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(P(-1,2)\)</td><td class="sign-pos">\(|-1|=1\)</td><td class="sign-pos">\(|2|=2\)</td></tr>
+                <tr><td>\(A(5,-4)\)</td><td class="sign-pos">\(|5|=5\)</td><td class="sign-pos">\(|-4|=4\)</td></tr>
+                <tr><td>\(B(-3,-2)\)</td><td class="sign-pos">\(|-3|=3\)</td><td class="sign-pos">\(|-2|=2\)</td></tr>
+                <tr><td>\(T(-2,0)\)</td><td class="sign-pos">\(|-2|=2\)</td><td class="sign-neg">\(|0|=0\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="chart_distance.webp" alt="復古航海製圖室風插圖：由正上方俯視一張米黃色羊皮海圖，圖上一條水平線與一條鉛垂線交叉成直角，水平線只在右端有箭頭、鉛垂線只在上端有箭頭。右上方立著一支小紅旗，兩把黃銅刻度尺在旗子腳下接成一個直角：一把橫著擺，右端頂著旗腳、左端剛好停在鉛垂線上；另一把直著擺，上端頂著旗腳、下端剛好停在水平線上，兩把尺都沒有越過所對的那條線，直的那把明顯比橫的那把長。紅棕色長辮、戴深藍水手帽的少女用一根指尖按著橫擺的那把尺，戴黃銅小圓牌項圈的深灰色虎斑貓坐在海圖旁邊的桌面上" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩軸測距儀</h3>
+            <p class="interactive-instruction">移動旗子，看兩把尺各自量到什麼——注意<strong>哪一把尺對應哪一個坐標</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dist" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="di-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">量哪一把</span>
+                    <div class="btn-group" id="di-mode-group">
+                      <button class="pick-btn active" data-dimode="both">兩把都量</button>
+                      <button class="pick-btn" data-dimode="toy">只量到 \(y\) 軸</button>
+                      <button class="pick-btn" data-dimode="tox">只量到 \(x\) 軸</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="di-x-slider">\(x\) 坐標：<span id="di-x-val" class="val-num">-3</span></label>
+                    <input type="range" id="di-x-slider" min="-6" max="6" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="di-y-slider">\(y\) 坐標：<span id="di-y-val" class="val-num">4</span></label>
+                    <input type="range" id="di-y-slider" min="-6" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="di-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (點到兩軸的距離)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 坐標平面上有一點 \(P(-8,5)\)。設 \(P\) 到 \(x\) 軸的距離為 \(a\)、到 \(y\) 軸的距離為 \(b\)，則 \(a\)、\(b\) 分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-7" value="A"><span class="option-text">A. \(a=5\)，\(b=8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-7" value="B"><span class="option-text">B. \(a=8\)，\(b=5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-7" value="C"><span class="option-text">C. \(a=-8\)，\(b=5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-7" value="D"><span class="option-text">D. \(a=5\)，\(b=-8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩個距離是<strong>交叉</strong>對應的：到 \(x\) 軸的距離量的是 \(y\) 坐標，到 \(y\) 軸的距離量的是 \(x\) 坐標。
+              \[\begin{aligned}
+              & a = |y| = |5| = 5 \\
+              &\quad b = |x| = |-8| = 8
+              \end{aligned}\]
+              B 把兩者對調，等於把「到 \(x\) 軸」量成 \(|x|\)——這是本節最常見的錯。<br>
+              C、D 都把絕對值忘了：<strong>距離不會是負數</strong>，\(-8\) 不可能是一段長度。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 坐標平面上有 \(A\left(-\dfrac{7}{2},3\right)\)、\(B(2,-5)\)、\(C(-1,6)\) 三點。哪一點與 \(y\) 軸的距離<strong>最近</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-8" value="A"><span class="option-text">A. \(A\) 點</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-8" value="B"><span class="option-text">B. \(B\) 點</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-8" value="C"><span class="option-text">C. 無法比較，因為有兩點的 \(x\) 坐標是負數</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-8" value="D"><span class="option-text">D. \(C\) 點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。到 \(y\) 軸的距離量的是 <strong>\(x\) 坐標的絕對值</strong>，跟 \(y\) 坐標完全無關：
+              \[\begin{aligned}
+              & A：\left|-\frac{7}{2}\right| = \frac{7}{2} = 3.5 \\
+              &\quad B：|2| = 2 \\
+              &\quad C：|-1| = 1 \\
+              &\quad 1 < 2 < 3.5 \Rightarrow C \text{ 最近}
+              \end{aligned}\]
+              A 可能是拿 \(y\) 坐標 \(3\) 去比（\(3\) 看起來比 \(6\) 小），但那量的是到 \(x\) 軸的距離。<br>
+              B 若只看正數、把兩個負的 \(x\) 排除掉，就會選它。<br>
+              C 錯在以為負數不能比：加了<strong>絕對值</strong>之後全部變成長度，當然比得出來。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 平移（正推）
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-route" aria-hidden="true"></i> 重點 5：平移（正推）——左右改 \(x\)、上下改 \(y\)
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>只有一句話</strong>：<strong>左右移動只改 \(x\) 坐標，上下移動只改 \(y\) 坐標</strong>，另一個完全不動。</li>
+              <li><strong>四個方向怎麼算</strong>：
+                <ul>
+                  <li>向右 \(k\) 單位：\(x\) 坐標<strong>加</strong> \(k\)。</li>
+                  <li>向左 \(k\) 單位：\(x\) 坐標<strong>減</strong> \(k\)。</li>
+                  <li>向上 \(k\) 單位：\(y\) 坐標<strong>加</strong> \(k\)。</li>
+                  <li>向下 \(k\) 單位：\(y\) 坐標<strong>減</strong> \(k\)。</li>
+                </ul>
+              </li>
+              <li><strong>寫成一條式子</strong>：\(A(a,b)\) 先向右 \(h\)、再向下 \(v\)，到達的點是 \((a+h,\ b-v)\)。兩個坐標<strong>各算各的</strong>，不會互相影響。</li>
+              <li><strong>順序不影響結果</strong>：先左右再上下，和先上下再左右，落點一樣——因為兩個坐標各自獨立。</li>
+              <li><strong>先算再判斷正負</strong>：\(A(1,2)\) 向左 \(4\) 得 \(1-4=-3\)，結果變成負數是正常的，代表它跨過 \(y\) 軸到左邊去了。</li>
+              <li><strong>只動一個方向時，另一個坐標原封不動</strong>抄下來。\(A(1,2)\) 向上 \(2\) 得 \((1,4)\)，\(x\) 還是 \(1\)。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>從 \(A(1,2)\) 出發</th><th>\(x\) 坐標</th><th>\(y\) 坐標</th><th>到達</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>向左 \(4\)</td><td class="sign-neg">\(1-4=-3\)</td><td>不變 \(=2\)</td><td class="sign-pos">\((-3,2)\)</td></tr>
+                <tr><td>向上 \(2\)</td><td>不變 \(=1\)</td><td class="sign-pos">\(2+2=4\)</td><td class="sign-pos">\((1,4)\)</td></tr>
+                <tr><td>向右 \(3\) 再向下 \(4\)</td><td class="sign-pos">\(1+3=4\)</td><td class="sign-neg">\(2-4=-2\)</td><td class="sign-pos">\((4,-2)\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="chart_move.webp" alt="復古航海製圖室風插圖：米黃色羊皮方格海圖上，一支小藍旗與一支小紅旗插在兩個不同的格點上，兩者之間畫著一條黑墨折線——從小藍旗先沿著一條水平格線橫走一段，再轉一個直角沿著一條鉛垂格線直走一段，末端的箭頭指著小紅旗。黑色短髮、額頭戴黃銅單片放大鏡的少年拿著鵝毛筆沿折線描畫，戴黃銅小圓牌項圈的深灰色虎斑貓趴在小藍旗旁邊" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：航行指令台</h3>
+            <p class="interactive-instruction">設定起點與兩段航程，看兩個坐標<strong>各自</strong>怎麼變：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-move" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mv-a-slider">起點 \(x\) 坐標：<span id="mv-a-val" class="val-num">1</span></label>
+                    <input type="range" id="mv-a-slider" min="-3" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mv-b-slider">起點 \(y\) 坐標：<span id="mv-b-val" class="val-num">2</span></label>
+                    <input type="range" id="mv-b-slider" min="-3" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mv-h-slider">水平航程（正為向右）：<span id="mv-h-val" class="val-num">3</span></label>
+                    <input type="range" id="mv-h-slider" min="-5" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mv-v-slider">鉛垂航程（正為向上）：<span id="mv-v-val" class="val-num">-4</span></label>
+                    <input type="range" id="mv-v-slider" min="-5" max="5" value="-4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平移：正推)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 坐標平面上有一點 \(P(-2,4)\)。若從 \(P\) 點出發，先向右 \(7\) 單位，再向下 \(9\) 單位，最後到達 \(Q\) 點，則 \(Q\) 點的坐標為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-9" value="A"><span class="option-text">A. \((5,-5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-9" value="B"><span class="option-text">B. \((-9,13)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-9" value="C"><span class="option-text">C. \((5,13)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-9" value="D"><span class="option-text">D. \((-5,5)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩個坐標各算各的：
+              \[\begin{aligned}
+              & \text{向右 } 7：x = -2+7 = 5 \\
+              &\quad \text{向下 } 9：y = 4-9 = -5 \\
+              &\quad \text{所以 } Q(5,-5)
+              \end{aligned}\]
+              B 把兩個方向都做反了（向左 \(7\)、向上 \(9\)），得到 \(-2-7=-9\)、\(4+9=13\)。<br>
+              C 只把「向下」做反成向上。<br>
+              D 是把正確答案的兩個符號一起翻掉，那不對應任何一種走法。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 在坐標平面上，若從點 \((-2,3)\) 出發，<strong>先向下移動，再向右移動</strong>（兩段都確實有移動），則可能移動到下列哪一點？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-10" value="A"><span class="option-text">A. \((-5,1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-10" value="B"><span class="option-text">B. \((-4,5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-10" value="C"><span class="option-text">C. \((3,1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-10" value="D"><span class="option-text">D. \((3,6)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。這題不必算出移動幾單位，只要看<strong>兩個坐標各往哪個方向變</strong>：
+              \[\begin{aligned}
+              & \text{向下} \Rightarrow y \text{ 變小} \Rightarrow y < 3 \\
+              &\quad \text{向右} \Rightarrow x \text{ 變大} \Rightarrow x > -2
+              \end{aligned}\]
+              只有 \(C(3,1)\) 同時滿足 \(3 > -2\) 且 \(1 < 3\)。<br>
+              A 的 \(x=-5 < -2\)，那是向<strong>左</strong>走。<br>
+              B 兩個條件都不合：向左又向上。<br>
+              D 的 \(x\) 對了，但 \(y=6 > 3\) 是向上走。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 平移（回推）
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 重點 6：平移（回推）——已知終點，反求起點
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>題型長這樣</strong>：不告訴你起點，只說「從某點出發，先向右 \(6\)、再向下 \(3\)，到達 \(F(4,-1)\)」，要你把<strong>起點</strong>找回來。</li>
+              <li><strong>方法一：設未知數解方程式</strong>（課本主線）。設起點為 \(E(a,b)\)，把平移寫成兩條一元一次方程式：
+                \[\begin{aligned}
+                & \text{向右 } 6：a+6=4 \Rightarrow a=-2 \\
+                &\quad \text{向下 } 3：b-3=-1 \Rightarrow b=2 \\
+                &\quad \text{所以 } E(-2,2)
+                \end{aligned}\]
+              </li>
+              <li><strong>方法二：從終點倒著走回去</strong>。把每一段指令<strong>換成相反方向</strong>再走一次：原本向右 \(6\) 就改成向左 \(6\)，原本向下 \(3\) 就改成向上 \(3\)。\(4-6=-2\)、\(-1+3=2\)，一樣得到 \(E(-2,2)\)。</li>
+              <li><strong>兩種都對，挑順手的用</strong>。方法一比較不容易搞錯方向，也和之後的代數解題接得上；方法二算得快。<strong>不要記成「回推一定要用減法」</strong>——原本向左走時，回推反而是<strong>加</strong>。</li>
+              <li><strong>最常見的錯</strong>：把指令照抄一次就當成答案（\(4+6=10\)、\(-1-3=-4\)）。那算的是「從 \(F\) 再往前走一趟」的位置，不是起點。</li>
+              <li><strong>檢查方法</strong>：把算出來的起點<strong>照原題的指令正推一次</strong>，看看會不會回到題目給的終點。回得去才對。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>原本的指令</th><th>方程式</th><th>倒著走</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>向右 \(6\)</td><td>\(a+6=4\)</td><td class="sign-pos">向左 \(6\)：\(4-6\)</td></tr>
+                <tr><td>向下 \(3\)</td><td>\(b-3=-1\)</td><td class="sign-pos">向上 \(3\)：\(-1+3\)</td></tr>
+                <tr><td>向左 \(5\)</td><td>\(a-5=\ ?\)</td><td class="sign-neg">向右 \(5\)：\(?+5\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="chart_back.webp" alt="復古航海製圖室風插圖：米黃色羊皮方格海圖上，右下方插著一支小紅旗，左上方是一個沒有插旗的空格點；兩者之間畫著一條黑墨折線，折線上有兩個箭頭——一個指向左、一個指向上，兩個都由小紅旗那一端指向空格點那一端。紅棕色長辮、戴深藍水手帽的少女用一副黃銅分規從小紅旗開始沿著折線倒著量回去，戴黃銅小圓牌項圈的深灰色虎斑貓就坐在那個空格點上" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：回航推算台</h3>
+            <p class="interactive-instruction">給定終點與航行指令，把滑桿推到最後一步，看起點怎麼被解出來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-back" width="540" height="530"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bk-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bk-p-slider">終點 \(x\) 坐標：<span id="bk-p-val" class="val-num">3</span></label>
+                    <input type="range" id="bk-p-slider" min="-3" max="3" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bk-q-slider">終點 \(y\) 坐標：<span id="bk-q-val" class="val-num">-1</span></label>
+                    <input type="range" id="bk-q-slider" min="-3" max="3" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bk-h-slider">水平航程（正為向右）：<span id="bk-h-val" class="val-num">5</span></label>
+                    <input type="range" id="bk-h-slider" min="-5" max="5" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bk-v-slider">鉛垂航程（正為向上）：<span id="bk-v-val" class="val-num">-3</span></label>
+                    <input type="range" id="bk-v-slider" min="-5" max="5" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bk-step-slider">推導到第幾步：<span id="bk-step-val" class="val-num">1</span></label>
+                    <input type="range" id="bk-step-slider" min="1" max="4" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平移：回推)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 坐標平面上有一點 \(E\)。若從 \(E\) 點出發，先向左 \(3\) 單位，再向上 \(6\) 單位，最後到達 \(F(2,1)\)，則 \(E\) 點的坐標為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-11" value="A"><span class="option-text">A. \((-1,7)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-11" value="B"><span class="option-text">B. \((5,7)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-11" value="C"><span class="option-text">C. \((-1,-5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-11" value="D"><span class="option-text">D. \((5,-5)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設 \(E(a,b)\)，把兩段指令寫成方程式：
+              \[\begin{aligned}
+              & \text{向左 } 3：a-3=2 \Rightarrow a=5 \\
+              &\quad \text{向上 } 6：b+6=1 \Rightarrow b=-5 \\
+              &\quad \text{所以 } E(5,-5)
+              \end{aligned}\]
+              倒著走也一樣：從 \(F(2,1)\) 改成向右 \(3\)、向下 \(6\)，得 \(2+3=5\)、\(1-6=-5\)。<br>
+              A 是把指令<strong>照抄一次</strong>套在 \(F\) 上（\(2-3=-1\)、\(1+6=7\)），算出來的是「從 \(F\) 再走一趟」的落點。<br>
+              B、C 各只倒對了一半：B 的 \(y\) 沒有倒回去，C 的 \(x\) 沒有倒回去。<br>
+              驗算：從 \(E(5,-5)\) 向左 \(3\) 得 \(x=2\)、向上 \(6\) 得 \(y=1\)，確實回到 \(F(2,1)\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 已知從 \(M\) 點出發，先向右 \(a\) 單位，再向下 \(b\) 單位（\(a>0\)、\(b>0\)），最後到達 \(N\) 點。下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-12" value="A"><span class="option-text">A. \(N\) 點的 \(x\) 坐標比 \(M\) 點的 \(x\) 坐標小</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-12" value="B"><span class="option-text">B. 從 \(N\) 點先向左 \(a\) 單位、再向上 \(b\) 單位，就會回到 \(M\) 點</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-12" value="C"><span class="option-text">C. \(M\) 點與 \(N\) 點的 \(y\) 坐標一定相同</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-12" value="D"><span class="option-text">D. 要由 \(N\) 求出 \(M\)，應把 \(N\) 的 \(x\) 坐標加 \(a\)、\(y\) 坐標減 \(b\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。回推就是把每一段指令<strong>換成相反方向</strong>再走一次：向右換成向左、向下換成向上，走一樣的格數，當然回得到原處。設 \(M(m,n)\)：
+              \[\begin{aligned}
+              & N(m+a,\ n-b) \\
+              &\quad \text{向左 } a：(m+a)-a=m \\
+              &\quad \text{向上 } b：(n-b)+b=n
+              \end{aligned}\]
+              A 說反了：向右 \(a\) 單位（\(a>0\)）讓 \(x\) 坐標<strong>加</strong> \(a\)，所以 \(N\) 的 \(x\) 坐標比較<strong>大</strong>。<br>
+              C 錯：向下移動改的正是 \(y\) 坐標，兩點的 \(y\) 相差 \(b\)，只有 \(b=0\)（沒移動）時才會相同。<br>
+              D 把兩個方向<strong>都倒錯了</strong>：\(x\) 該減 \(a\)、\(y\) 該加 \(b\)，剛好和選項寫的相反。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 坐標平面的應用（自訂原點）
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> 重點 7：自訂原點——原點換了，整張圖的坐標都換
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>題型長這樣</strong>：給你一張沒有坐標軸的方格圖（棋盤、地圖、座位表），只告訴你<strong>其中一兩個位置的坐標</strong>，要你把其他位置的坐標寫出來。</li>
+              <li><strong>三個步驟</strong>：
+                <ul>
+                  <li>① 由已知點的坐標<strong>反推原點在哪</strong>：某點坐標是 \((4,3)\)，就代表原點在它的<strong>左方 \(4\) 格、下方 \(3\) 格</strong>。</li>
+                  <li>② 通過原點把 \(x\) 軸與 \(y\) 軸<strong>沿格線畫出來</strong>。</li>
+                  <li>③ 其餘的點照重點 2 的方法一一讀出坐標。</li>
+                </ul>
+              </li>
+              <li><strong>只要一個已知點就夠了</strong>（前提是方格的方向已經確定：右為 \(x\) 正向、上為 \(y\) 正向）。給兩個點通常是讓你順便<strong>核對單位長</strong>。</li>
+              <li><strong>原點是「約定」，不是天生的</strong>。同一張地圖，把原點放在碼頭或放在燈塔，每個地標的坐標<strong>整組都會不一樣</strong>；但地標彼此之間的<strong>相對位置永遠不變</strong>——兩點的 \(x\) 坐標差、\(y\) 坐標差不會因為換原點而改變。</li>
+              <li><strong>換原點的算法</strong>：新原點原本的坐標是 \((p,q)\)，那麼每個點的新坐標就是<strong>舊坐標各減掉 \((p,q)\)</strong>：\((x-p,\ y-q)\)。</li>
+              <li><strong>畫坐標軸的實務問題</strong>：紙的大小有限，原點要放在<strong>能同時容納所有點</strong>的位置。左邊最遠的點需要多少格，原點左邊就要留多少格；上下同理。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>地標</th><th>以碼頭為原點</th><th>改以燈塔為原點</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>碼頭</td><td class="sign-pos">\((0,0)\)</td><td>\((2,-2)\)</td></tr>
+                <tr><td>燈塔</td><td>\((-2,2)\)</td><td class="sign-pos">\((0,0)\)</td></tr>
+                <tr><td>浮標</td><td>\((2,1)\)</td><td>\((4,-1)\)</td></tr>
+                <tr><td>浮標與燈塔的差</td><td colspan="2" class="sign-pos">兩套坐標算出來都是 \((4,-1)\)，不隨原點改變</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="chart_origin.webp" alt="復古航海製圖室風插圖：大橡木桌上攤著一張米黃色羊皮海圖，圖上有一座紅白條紋燈塔、一座木造碼頭與一個圓形浮標三個小圖示；一枚黃銅小圓釘壓在碼頭的圖示上，由它伸出一條水平黑線與一條鉛垂黑線，把海圖分成四塊，水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切。黑色短髮、額頭戴黃銅單片放大鏡的少年正捏著另一枚黃銅圓釘移向燈塔，戴黃銅小圓牌項圈的深灰色虎斑貓坐在浮標那一側" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：海圖重繪台</h3>
+            <p class="interactive-instruction">換一個地標當原點，看整張海圖的坐標<strong>全部改寫</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-origin" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="og-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">以誰為原點</span>
+                    <div class="btn-group" id="og-origin-group">
+                      <button class="pick-btn active" data-ogorigin="0">碼頭</button>
+                      <button class="pick-btn" data-ogorigin="1">燈塔</button>
+                      <button class="pick-btn" data-ogorigin="2">沉船</button>
+                      <button class="pick-btn" data-ogorigin="3">浮標</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="og-pick-slider">要讀哪一個地標：<span id="og-pick-val" class="val-num">1</span></label>
+                    <input type="range" id="og-pick-slider" min="1" max="6" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="og-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (自訂原點)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 一張方格地圖上有燈塔、碼頭、浮標三個地標。已知燈塔在碼頭的正西方 \(4\) 格、正北方 \(2\) 格；浮標在碼頭的正東方 \(3\) 格、正南方 \(1\) 格。若把這張地圖看成坐標平面，<strong>以燈塔為原點</strong>，向東為 \(x\) 軸正向、向北為 \(y\) 軸正向，一格為一單位長，則浮標的坐標為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-13" value="A"><span class="option-text">A. \((7,-3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-13" value="B"><span class="option-text">B. \((1,-3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-13" value="C"><span class="option-text">C. \((7,-1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-13" value="D"><span class="option-text">D. \((-7,3)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先把碼頭的坐標找出來，再由碼頭走到浮標：
+              \[\begin{aligned}
+              & \text{燈塔在碼頭西 } 4 \text{ 北 } 2 \\
+              &\quad \Rightarrow \text{碼頭在燈塔東 } 4 \text{ 南 } 2 \\
+              &\quad \Rightarrow \text{碼頭} = (4,-2) \\
+              &\quad \text{浮標} = (4+3,\ -2-1) \\
+              &\quad \phantom{\text{浮標}} = (7,-3)
+              \end{aligned}\]
+              B 把浮標算成在碼頭的正<strong>西</strong>方 \(3\) 格（\(4-3=1\)），方向弄反了。<br>
+              C 的 \(x\) 對了，但把「浮標在碼頭南方 \(1\) 格」做成了北方（\(-2+1=-1\)）。<br>
+              D 把整組坐標的符號都翻掉，等於沒有照題目「向東為正、向北為正」的約定去讀。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 想在一張方格紙上沿著格線畫出 \(x\) 軸、\(y\) 軸並標出原點，以小方格邊長為單位長。若要讓 \((6,2)\)、\((-3,-4)\)、\((-2,5)\)、\((4,-3)\) 四點都落在紙上，則原點的<strong>左方</strong>至少要留 \(a\) 格、<strong>下方</strong>至少要留 \(b\) 格。\(a\)、\(b\) 分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-14" value="A"><span class="option-text">A. \(a=2\)，\(b=3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-14" value="B"><span class="option-text">B. \(a=6\)，\(b=5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-14" value="C"><span class="option-text">C. \(a=3\)，\(b=4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-14" value="D"><span class="option-text">D. \(a=4\)，\(b=3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。原點左方要留的格數，由<strong>最負的那個 \(x\) 坐標</strong>決定；下方要留的格數，由<strong>最負的那個 \(y\) 坐標</strong>決定：
+              \[\begin{aligned}
+              & x \text{ 坐標}：6,\ -3,\ -2,\ 4 \\
+              &\quad \Rightarrow \text{最負是 } -3 \Rightarrow a=3 \\
+              &\quad y \text{ 坐標}：2,\ -4,\ 5,\ -3 \\
+              &\quad \Rightarrow \text{最負是 } -4 \Rightarrow b=4
+              \end{aligned}\]
+              A 挑到的是<strong>第二負</strong>的 \(-2\) 與 \(-3\)，那樣 \((-3,-4)\) 就跑出紙外了。<br>
+              B 拿的是<strong>最大的正數</strong> \(6\) 與 \(5\)，那算的是原點<strong>右方</strong>與<strong>上方</strong>要留的格數。<br>
+              D 把 \(a\) 與 \(b\) 對調了：左右由 \(x\) 決定、上下由 \(y\) 決定。<br>
+              補充：右方至少要留 \(6\) 格、上方至少要留 \(5\) 格，所以整張紙至少要 \(3+6=9\) 格寬、\(4+5=9\) 格高。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 四個象限
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compass" aria-hidden="true"></i> 重點 8：四個象限——光看正負號就知道在哪一區
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>象限</strong>：\(x\) 軸與 \(y\) 軸把坐標平面分成<strong>四個區域</strong>，每個區域都叫一個象限。</li>
+              <li><strong>編號方向</strong>：從<strong>右上角</strong>那一塊開始，以<strong>逆時針</strong>方向依序稱為第一、第二、第三、第四象限。</li>
+              <li><strong>四組符號規則</strong>：
+                <ul>
+                  <li>第一象限 \((+,+)\)：\(x\)、\(y\) 都是正數。</li>
+                  <li>第二象限 \((-,+)\)：\(x\) 負、\(y\) 正。</li>
+                  <li>第三象限 \((-,-)\)：\(x\)、\(y\) 都是負數。</li>
+                  <li>第四象限 \((+,-)\)：\(x\) 正、\(y\) 負。</li>
+                </ul>
+              </li>
+              <li><strong>兩個方向都成立</strong>：在第二象限內的點，符號一定是 \((-,+)\)；反過來，符號是 \((-,+)\) 的點也一定在第二象限內。所以判象限<strong>只要看兩個符號</strong>，數字大小完全不影響。</li>
+              <li><strong>怎麼記編號</strong>：\(x\) 的正負決定左右、\(y\) 的正負決定上下，先定出「右上／左上／左下／右下」，再對照逆時針的一、二、三、四。不必死背四組符號。</li>
+              <li><strong>坐標軸上的點不屬於任何象限</strong>（重點 3 已經說過）：只要有<strong>任何一個坐標是 \(0\)</strong>，它就落在界線上，四個象限都不歸它。</li>
+              <li><strong>「在第幾象限」是位置，不是大小</strong>：\((0.1,0.1)\) 和 \((300,900)\) 同樣都在第一象限。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>位置</th><th>象限</th><th>\((x,y)\) 符號</th><th>例</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>右上</td><td>第一象限</td><td class="sign-pos">\((+,+)\)</td><td>\((3,5)\)</td></tr>
+                <tr><td>左上</td><td>第二象限</td><td>\((-,+)\)</td><td>\((-5,8)\)</td></tr>
+                <tr><td>左下</td><td>第三象限</td><td class="sign-neg">\((-,-)\)</td><td>\((-2,-4)\)</td></tr>
+                <tr><td>右下</td><td>第四象限</td><td>\((+,-)\)</td><td>\((7,-4)\)</td></tr>
+                <tr><td>界線上</td><td>不屬於任何象限</td><td class="sign-neg">有一個是 \(0\)</td><td>\((21.8,0)\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="chart_quadrant.webp" alt="復古航海製圖室風插圖：米黃色羊皮海圖被一條水平黑線與一條鉛垂黑線分成四塊大小相同的區域，水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切；四塊分別染上淡藍、淡綠、淡紫、淡橘四種淡彩，每一塊正中央各立著一支同色的小旗，共四支。一個黃銅羅盤平放在兩線交叉處，戴黃銅小圓牌項圈的深灰色虎斑貓趴在羅盤上方" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：四海域羅盤</h3>
+            <p class="interactive-instruction">移動旗子看它落在哪一塊——也試著把它<strong>停在界線上</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-quad" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="qd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="qd-x-slider">\(x\) 坐標：<span id="qd-x-val" class="val-num">-5</span></label>
+                    <input type="range" id="qd-x-slider" min="-6" max="6" value="-5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="qd-y-slider">\(y\) 坐標：<span id="qd-y-val" class="val-num">3</span></label>
+                    <input type="range" id="qd-y-slider" min="-6" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="qd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (四個象限)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 下列各點中，哪一個點在<strong>第二象限</strong>內？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-15" value="A"><span class="option-text">A. \(\left(\dfrac{3}{5},9\right)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-15" value="B"><span class="option-text">B. \(\left(-2\dfrac{2}{3},1.5\right)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-15" value="C"><span class="option-text">C. \((-4.25,-7)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-15" value="D"><span class="option-text">D. \(\left(12,-\dfrac{1}{8}\right)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。第二象限的符號規則是 \((-,+)\)，也就是 \(x\) 坐標<strong>負</strong>、\(y\) 坐標<strong>正</strong>。只要看符號，數字是分數還是小數都不影響：
+              \[\begin{aligned}
+              & A：(+,+) \Rightarrow \text{第一象限} \\
+              &\quad B：(-,+) \Rightarrow \text{第二象限} \\
+              &\quad C：(-,-) \Rightarrow \text{第三象限} \\
+              &\quad D：(+,-) \Rightarrow \text{第四象限}
+              \end{aligned}\]
+              C 最容易誤選：它的 \(x\) 確實是負的，但 \(y\) 也是負的，兩個都負就落到<strong>左下角</strong>的第三象限去了。判象限一定要<strong>兩個符號一起看</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 關於坐標平面上的象限，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-16" value="A"><span class="option-text">A. 若一點的 \(x\) 坐標是負數，則此點必在第二象限內</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-16" value="B"><span class="option-text">B. 第四象限內任意一點的 \(x\) 坐標與 \(y\) 坐標都是負數</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-16" value="C"><span class="option-text">C. 坐標軸上的點會依它的符號歸入相鄰的那個象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-16" value="D"><span class="option-text">D. 若一點的 \(x\) 坐標與 \(y\) 坐標都是負數，則此點必在第三象限內</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。符號規則是<strong>雙向</strong>的：第三象限的點兩坐標都負，而兩坐標都負的點也必定在第三象限。<br>
+              A 只看了一半：\(x\) 為負只能確定它在 \(y\) 軸<strong>左邊</strong>，還要再看 \(y\) 的正負才知道是左上的第二象限、還是左下的第三象限。<br>
+              B 把第四象限寫成第三象限的規則了。第四象限在<strong>右下</strong>，符號是 \((+,-)\)。<br>
+              C 錯：<strong>坐標軸上的點不屬於任何一個象限</strong>，兩條軸是四塊區域的界線，界線本身不歸任何一區。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 由符號運算判象限
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-plus-minus" aria-hidden="true"></i> 重點 9：由符號運算判象限——先定正負，再對照
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>題型長這樣</strong>：已知 \(A(s,t)\) 在第二象限內，問 \(B(t,|s|)\)、\(C\left(-s,\dfrac{s}{t}\right)\) 各在第幾象限。這種題目<strong>算不出數字</strong>，只能判斷正負。</li>
+              <li><strong>三步驟</strong>：
+                <ul>
+                  <li>① 由已知的象限，定出 <strong>\(s\)、\(t\) 各自的正負</strong>。（第二象限 \(\Rightarrow s<0\)、\(t>0\)）</li>
+                  <li>② 把每一個分量<strong>逐一判斷正負</strong>。</li>
+                  <li>③ 拿這組符號對照四象限的規則，寫出答案。</li>
+                </ul>
+              </li>
+              <li><strong>常用的判號工具</strong>：
+                <ul>
+                  <li>\(|\ \ |\)：絕對值一定 \(\ge 0\)；只要裡面不是 \(0\)，就是<strong>正</strong>。</li>
+                  <li>\(-s\)：把 \(s\) 的符號<strong>翻過來</strong>。\(s<0\) 時 \(-s>0\)。</li>
+                  <li>平方 \(s^2\)：只要 \(s \ne 0\) 就是<strong>正</strong>，不管 \(s\) 本身正負。</li>
+                  <li>兩數相乘或相除：<strong>同號得正、異號得負</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>加減要小心，不見得判得出來</strong>：\(s+t\) 在 \(s<0\)、\(t>0\) 時可能正、可能負、也可能是 \(0\)，光看符號<strong>定不下來</strong>。但 \(s-t\)（負減正）一定是負的——同號相加、異號相減才判得準。</li>
+              <li><strong>符號寫在旁邊，不要在腦中換算</strong>：像課本 Hint 那樣把 \(B(t,|s|)\) 一路改寫成 \((+,|-|) \to (+,+)\)，錯誤率會低很多。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>已知 \(s<0\)、\(t>0\)</th><th>推理</th><th>符號</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(B(t,|s|)\)</td><td>\(t\) 正、\(|s|\) 正</td><td class="sign-pos">\((+,+)\) 第一象限</td></tr>
+                <tr><td>\(C\left(-s,\dfrac{s}{t}\right)\)</td><td>\(-s\) 正、負除以正得負</td><td class="sign-pos">\((+,-)\) 第四象限</td></tr>
+                <tr><td>\(D(st,s^2)\)</td><td>異號相乘得負、平方為正</td><td class="sign-pos">\((-,+)\) 第二象限</td></tr>
+                <tr><td>\(E(s+t,\ ?)\)</td><td>負加正，正負不定</td><td class="sign-neg">判不出來</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="chart_signs.webp" alt="復古航海製圖室風插圖：夜裡的製圖室，一盞黃銅油燈亮著，黑色短髮、額頭戴黃銅單片放大鏡的少年與紅棕色長辮、戴深藍水手帽的少女並肩伏在大橡木桌前，一起看著攤開的空白羊皮海圖，桌上另有一副黃銅分規與一具黃銅六分儀，窗外是夜色中的港灣與一座紅白條紋燈塔；戴黃銅小圓牌項圈的深灰色虎斑貓蜷在一卷捲起的海圖上睡著。畫面上沒有任何數字、符號、線條或箭頭" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：符號推算盤</h3>
+            <p class="interactive-instruction">先指定 \(A(s,t)\) 在哪一個象限，再選一個式子，看符號怎麼一步步定下來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sign" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">\(A(s,t)\) 在</span>
+                    <div class="btn-group" id="sg-quad-group">
+                      <button class="pick-btn" data-sgquad="1">第一象限</button>
+                      <button class="pick-btn active" data-sgquad="2">第二象限</button>
+                      <button class="pick-btn" data-sgquad="3">第三象限</button>
+                      <button class="pick-btn" data-sgquad="4">第四象限</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sg-expr-slider">要判斷的點：<span id="sg-expr-val" class="val-num">1</span></label>
+                    <input type="range" id="sg-expr-slider" min="1" max="6" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sg-step-slider">推導到第幾步：<span id="sg-step-val" class="val-num">1</span></label>
+                    <input type="range" id="sg-step-slider" min="1" max="4" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (由符號判象限)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 已知 \(P(a,b)\) 在<strong>第二象限</strong>內，則 \(Q(-a,|b|)\) 與 \(R(ab,\ a-b)\) 分別在第幾象限內？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-17" value="A"><span class="option-text">A. \(Q\) 在第一象限，\(R\) 在第三象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-17" value="B"><span class="option-text">B. \(Q\) 在第一象限，\(R\) 在第二象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-17" value="C"><span class="option-text">C. \(Q\) 在第四象限，\(R\) 在第三象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-17" value="D"><span class="option-text">D. \(Q\) 在第二象限，\(R\) 在第四象限</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先由第二象限定出 \(a<0\)、\(b>0\)，再逐一判斷四個分量：
+              \[\begin{aligned}
+              & -a：a \text{ 為負} \Rightarrow -a \text{ 為正} \\
+              &\quad |b|：\text{絕對值} \Rightarrow \text{正} \\
+              &\quad ab：\text{負乘正} \Rightarrow \text{負} \\
+              &\quad a-b：\text{負減正} \Rightarrow \text{負}
+              \end{aligned}\]
+              所以 \(Q\) 的符號是 \((+,+)\)，在<strong>第一象限</strong>；\(R\) 的符號是 \((-,-)\)，在<strong>第三象限</strong>。<br>
+              B 把 \(a-b\) 誤判成正：負數<strong>再減掉</strong>一個正數只會更負。<br>
+              C 把 \(|b|\) 誤判成負——絕對值不可能是負的。<br>
+              D 把 \(-a\) 的符號沒有翻過來，直接沿用 \(a\) 的負號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 已知 \(ab<0\) 且 \(b>0\)，則 \(P(a,b)\) 與 \(Q(b-a,\ ab)\) 分別在第幾象限內？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1-18" value="A"><span class="option-text">A. \(P\) 在第三象限，\(Q\) 在第四象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-18" value="B"><span class="option-text">B. \(P\) 在第二象限，\(Q\) 在第三象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-18" value="C"><span class="option-text">C. \(P\) 在第二象限，\(Q\) 在第四象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1-18" value="D"><span class="option-text">D. \(P\) 在第四象限，\(Q\) 在第二象限</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。這題沒有直接告訴你象限，要先從兩個條件把 \(a\) 的符號逼出來：
+              \[\begin{aligned}
+              & ab<0 \Rightarrow a \text{ 與 } b \text{ 異號} \\
+              &\quad b>0 \Rightarrow a<0 \\
+              &\quad P(a,b)：(-,+) \Rightarrow \text{第二象限} \\
+              &\quad b-a：\text{正減負} \Rightarrow \text{正} \\
+              &\quad Q(b-a,\ ab)：(+,-) \\
+              &\qquad \Rightarrow \text{第四象限}
+              \end{aligned}\]
+              A 把 \(P\) 判成第三象限，等於把題目給的 \(b>0\) 忘掉了。<br>
+              B 把 \(b-a\) 誤判成負——正數<strong>減掉</strong>一個負數只會變得更大，一定是正的。<br>
+              D 把 \(P\) 的兩個符號對調了。\(ab<0\) 這個條件本身<strong>還不能</strong>定出誰正誰負，一定要配上 \(b>0\) 才行。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 直角坐標平面速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>骨架</strong>：兩條互相垂直、共用同一個原點的數線。水平的是 \(x\) 軸（橫軸，向右為正），鉛垂的是 \(y\) 軸（縱軸，向上為正），交點是原點 \(O\)。</li>
+              <li><strong>數對有順序</strong>：\((m,n)\) 與 \((n,m)\) 只有在 \(m=n\) 時才是同一個點。</li>
+              <li><strong>標點</strong>：從原點先左右走 \(x\)、再上下走 \(y\)。<strong>讀坐標</strong>：過該點作鉛垂線與水平線，交在兩軸上的讀數就是坐標。</li>
+              <li><strong>軸上的點</strong>：\(x\) 軸是 \((m,0)\)、\(y\) 軸是 \((0,n)\)、原點是 \((0,0)\)。<strong>坐標軸上的點不屬於任何象限</strong>。</li>
+              <li><strong>到兩軸的距離是交叉的</strong>：\(P(m,n)\) 到 \(y\) 軸是 \(|m|\)、到 \(x\) 軸是 \(|n|\)。比遠近就是比絕對值。</li>
+              <li><strong>平移正推</strong>：向右加、向左減都動 \(x\)；向上加、向下減都動 \(y\)。兩個坐標各算各的。</li>
+              <li><strong>平移回推</strong>：設起點 \((a,b)\) 列方程式，或把每段指令<strong>換成反方向</strong>再走一次。算完拿原指令正推一次驗算。</li>
+              <li><strong>自訂原點</strong>：由已知點反推原點位置，再沿格線畫兩軸。新原點原本是 \((p,q)\) 時，每個點的新坐標是 \((x-p,\ y-q)\)；<strong>點與點之間的差不會變</strong>。</li>
+              <li><strong>四象限</strong>：右上起逆時針為一、二、三、四，符號依序是 \((+,+)\)、\((-,+)\)、\((-,-)\)、\((+,-)\)。判象限<strong>只看符號</strong>，與數字大小無關。</li>
+              <li><strong>由符號運算判象限</strong>：先定 \(s\)、\(t\) 的正負，再逐個分量判號。\(|\ |\) 與平方必為正，\(-s\) 翻號，乘除同號得正異號得負；<strong>異號相加判不出來</strong>。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-compass"></i> 回到製圖室：一個數字不夠，兩個剛剛好</h4>
+              <h5><i class="fa-solid fa-ruler-horizontal"></i> 從一條線到一整片海</h5>
+              <p>第一冊的數線只有一條，能講清楚的也只有「原點的左邊或右邊多遠」。可是海是一整片的，船可能在燈塔的西北方——這時候不管把數字說得多精確，只要是<strong>一個</strong>數字就注定說不清楚。</p>
+              <p>解法出乎意料地樸素：<strong>再拿一條數線來，讓它和原本那條垂直，並且共用同一個原點</strong>。沒有發明任何新東西，原點、正向、單位長三個要素全都沿用，可是能描述的範圍從一條線變成了一整片平面。這就是笛卡兒留下來的那個好主意。</p>
+              <h5><i class="fa-solid fa-arrows-turn-to-dots"></i> 整節都在做同一件事：翻譯</h5>
+              <p>把 \((-3,4)\) 翻成海圖上的一個位置，是<strong>標點</strong>；把海圖上的一支旗子翻成 \((-3,4)\)，是<strong>讀坐標</strong>。把「向右 \(3\) 再向下 \(4\)」翻成坐標的加減，是<strong>平移</strong>；反過來由終點翻回起點，就是<strong>回推</strong>。連換一個地標當原點，也只是把整張海圖<strong>重新翻譯一遍</strong>。</p>
+              <p>所以真正要練熟的不是九件事，而是同一件事的九個方向。翻譯久了會發現一個很方便的副產品：<strong>有些問題根本不必算數字</strong>。想知道一個點在哪一區，看兩個正負號就夠了；想知道 \(Q(-a,|b|)\) 在哪一區，連 \(a\)、\(b\) 是多少都不用知道。</p>
+              <h5><i class="fa-solid fa-chart-line"></i> 下一節：把方程式畫出來</h5>
+              <p>這一節建好了舞台，卻還沒有請人上台。下一節要把上一章的<strong>二元一次方程式</strong>帶進這個坐標平面：\(x+y=5\) 有無限多組解，\((0,5)\)、\((1,4)\)、\((2,3)\)⋯⋯把它們<strong>一個一個標成點</strong>，會發現這些點乖乖地排成<strong>一條直線</strong>。</p>
+              <p>到那時候，上一章結尾埋的那句話就會兌現：<strong>聯立方程式的那組共同解，就是兩條直線交叉的那一點</strong>。代數與幾何，在這張海圖上第一次接上線。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
