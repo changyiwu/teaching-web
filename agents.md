@@ -108,6 +108,7 @@ teaching-web/
 
 - 任何 Agent、任何電腦：**開工先讀 `handoff.md`，收工必更新 `handoff.md`**
 - 修改共用檔案前先讀最新內容，避免覆蓋其他 Agent 的變更
+- **`git status` 冒出一大批「變動」時，先跑 `git diff HEAD` 再動作**：本 repo 放在 Google 雲端硬碟裡，雲端硬碟會把舊版的 `.git/index` 同步回來，於是 `git status` 列出幾十筆變動、逐檔比對 HEAD 卻是 byte-identical。用 `git reset` 重建索引就好（內容零損失），**不要 checkout，那才會真的丟掉工作**。同理，判斷版本一律以 `git diff HEAD`／`git log` 為準，不要靠讀檔或看時間戳——雲端硬碟可能餵出過期內容。若 `git status` 是 `MM` 但 `git diff HEAD` 空的，多半只是 LF/CRLF 差異，`git add --renormalize .` 消掉即可
 - 所有回應與文件使用繁體中文；涉及檔案操作時回報完整產出位置
 - Windows 指令優先使用 PowerShell
 - 收工前檢查程式碼是否含 API key、網址 Token、學生姓名等敏感資料
