@@ -4,39 +4,1556 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-1 比例式 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-1 比例式 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第二冊 (1下) • 第3章 比與比例式</div>
-    <h1>3-1 比例式</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第二冊 • 第三章</span>
+        <h1>3-1 比例式</h1>
+        <p>國小學過比和比值，那時候的比都是<strong>兩個正數</strong>。這一節把它接到國中：比<strong>可以有負數</strong>，也可以是<strong>分數與小數</strong>。而當兩個比相等，把它們用等號接起來，就成了<strong>比例式</strong>——這一步很關鍵，因為「比」本來只是一種記法，變成<strong>等式</strong>之後就能拿來解未知數了：\(a:b=c:d\) 可以立刻改寫成 \(ad=bc\)。第二個性質更好用：知道 \(x:y=a:b\)，就可以<strong>設 \(x=ar\)、\(y=br\)</strong>，把兩個未知數壓成一個 \(r\)。最後三個重點回到生活——<strong>倍數問題、數量變化問題、比例尺</strong>。模型工坊牆上那張寫著 \(1:150\) 的圖紙，就是靠這一節讀出來的。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-fill-drip"></i> 比與比值</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-divide"></i> 負數與分數的比值</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-equals"></i> 相等的比</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-compress"></i> 最簡整數比</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-xmark"></i> 比例式 \(ad=bc\)</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-ruler"></i> 設 \(x=ar\)、\(y=br\)</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-repeat"></i> 由等式反求比</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> 比不是數本身</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-layer-group"></i> 倍數問題</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-right-left"></i> 數量變化問題</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-ruler-combined"></i> 比例尺</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Miniature Model Workshop)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(217, 160, 102, 0.25);">
+        <h2 class="section-title" style="color: #f0c48a; border-bottom-color: rgba(240, 196, 138, 0.2);">
+          <i class="fa-solid fa-cubes" aria-hidden="true" style="color: #f0c48a; text-shadow: 0 0 10px rgba(217, 160, 102, 0.4);"></i> 課前暖身漫畫：差不多就好了吧？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            見習模型師阿寬要做一座微縮小屋的屋頂，隨手裁了一長一短兩根木條——<strong style="color:#f0c48a">「看起來差不多就好了吧？」</strong>組上去之後屋頂整個歪掉。資深學徒小榕拿起量尺，尺尖點了點設計圖：<strong style="color:#f0c48a">重點從來不是「各多長」，而是「兩根的比」</strong>。只要兩根的比對了，整座模型要做多大都不會走樣；比錯了，再怎麼量都救不回來。這一節就是把這件事寫成數學——先弄清楚<strong style="color:#f0c48a">比與比值</strong>，再把兩個相等的比接成<strong style="color:#f0c48a">比例式</strong>，最後拿它去解工坊裡真正會遇到的問題。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="微縮建築模型工坊風四格漫畫，厚塗廣告顏料質感、暖黃工作燈，四格都是同一張長木工作檯：第一格，黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年兩手各舉起一根淺色木條，一根明顯長、一根明顯短，深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女站在旁邊看著他；第二格，少年把那兩根木條裝成屋頂裝到小木屋模型上，屋頂明顯一邊高一邊低地歪著，他皺著眉抓頭；第三格，少女拿起一把量尺，尺尖點在攤開在檯面上的房屋設計圖上，少年托著下巴湊過來看；第四格，重做好的小木屋模型端正地立在綠色切割墊上，旁邊立著一張同樣輪廓的房屋相片。一隻奶油色柴犬四格都趴在工作檯邊，脖子上掛著一小截黃銅比例尺當吊牌。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 比與比值
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-fill-drip" aria-hidden="true"></i> 重點 1：比與比值——比值就是「幾倍」
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>比的寫法</strong>：兩個數 \(a\)、\(b\)，\(a\) 與 \(b\) 的比記為 \(a:b\)，讀作「\(a\) 比 \(b\)」。其中 \(a\) 是<strong>前項</strong>、\(b\) 是<strong>後項</strong>。</li>
+              <li><strong>比值的定義</strong>：把<strong>前項除以後項</strong>所得到的數，叫做這個比的<strong>比值</strong>。
+                \[\begin{aligned}
+                & a:b \text{ 的比值} \\
+                &= a \div b = \frac{a}{b} \quad (b \ne 0)
+                \end{aligned}\]
+              </li>
+              <li><strong>比值就是倍數</strong>：\(a:b\) 的比值是 \(\dfrac{a}{b}\)，同時也就是說「\(a\) 是 \(b\) 的 \(\dfrac{a}{b}\) 倍」。反過來，「\(b\) 是 \(a\) 的 \(\dfrac{b}{a}\) 倍」。</li>
+              <li><strong>順序不可以顛倒</strong>：\(a:b\) 與 \(b:a\) 是<strong>兩個不同的比</strong>，比值也互為倒數。看到「甲與乙的比」，前項一定是甲。</li>
+              <li><strong>比和比值不是同一種東西</strong>：<strong>比</strong>是一種<strong>記法</strong>（\(3:2\)），描述兩個量的關係；<strong>比值</strong>是一個<strong>數</strong>（\(\frac{3}{2}\)）。所以不要寫成「\(3:2 = \frac{3}{2}\)」。</li>
+              <li><strong>單位要先統一</strong>：\(1\) 公尺與 \(40\) 公分的比，要先換成同一個單位再寫，是 \(100:40\)，不是 \(1:40\)。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>調色配方</th><th>比</th><th>比值</th><th>倍數關係</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>白漆 \(6\) 匙、藍漆 \(4\) 匙</td><td class="sign-pos">\(6:4\)</td><td>\(\frac{6}{4}=\frac{3}{2}\)</td><td>白是藍的 \(\frac{3}{2}\) 倍</td></tr>
+                <tr><td>藍漆 \(4\) 匙、白漆 \(6\) 匙</td><td class="sign-neg">\(4:6\)</td><td>\(\frac{4}{6}=\frac{2}{3}\)</td><td>藍是白的 \(\frac{2}{3}\) 倍</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ratio_mix.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：綠色切割墊上直立著兩排大小一模一樣的小圓漆罐，彼此稍微分開、絕不疊放。上排是三罐米白色的漆，下排是兩罐天藍色的漆。黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年用一支小攪拌棒指著上排，深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女托著臉頰在旁邊看。一隻奶油色柴犬趴在切割墊右邊的檯面上，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：調色配方台</h3>
+            <p class="interactive-instruction">調整兩種漆的<strong>匙數</strong>，看看比、比值與<strong>倍數關係</strong>怎麼跟著變：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mix" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mx-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mx-a-slider">米白漆（匙）：<span id="mx-a-val" class="val-num">6</span></label>
+                    <input type="range" id="mx-a-slider" min="1" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mx-b-slider">天藍漆（匙）：<span id="mx-b-val" class="val-num">4</span></label>
+                    <input type="range" id="mx-b-slider" min="1" max="9" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mx-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (比與比值)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 工坊調「屋瓦紅」的配方是紅漆 \(45\) 毫升配白漆 \(27\) 毫升。下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-1" value="A"><span class="option-text">A. 紅漆量是白漆量的 \(\frac{3}{5}\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="B"><span class="option-text">B. 白漆量是紅漆量的 \(\frac{5}{3}\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="C"><span class="option-text">C. 紅漆量與白漆量的比值是 \(\frac{5}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="D"><span class="option-text">D. 白漆量與紅漆量的比值是 \(\frac{5}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。紅漆量與白漆量的比是 \(45:27\)，比值是前項除以後項：
+              \[\begin{aligned}
+              & 45 : 27 \text{ 的比值} \\
+              &= \frac{45}{27} = \frac{5}{3}
+              \end{aligned}\]
+              所以<strong>紅是白的 \(\frac{5}{3}\) 倍</strong>、<strong>白是紅的 \(\frac{3}{5}\) 倍</strong>。<br>
+              A 與 B 都把倍數的方向講反了（A 應為 \(\frac{5}{3}\)、B 應為 \(\frac{3}{5}\)）。<br>
+              D 錯在比的順序：白與紅的比是 \(27:45\)，比值為 \(\frac{27}{45}=\frac{3}{5}\)，不是 \(\frac{5}{3}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知甲與乙的比為 \(11 : 4\)。下列敘述何者<strong>錯誤</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-2" value="A"><span class="option-text">A. 甲與乙的比值是 \(\frac{11}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="B"><span class="option-text">B. 甲是乙的 \(\frac{11}{4}\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="C"><span class="option-text">C. 乙是甲的 \(\frac{4}{11}\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="D"><span class="option-text">D. 乙與甲的比值是 \(\frac{11}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。「甲與乙的比為 \(11:4\)」表示前項是甲、後項是乙，所以
+              \[\begin{aligned}
+              & \text{甲與乙的比值} = \frac{11}{4} \\
+              & \text{乙與甲的比值} = \frac{4}{11}
+              \end{aligned}\]
+              兩者<strong>互為倒數</strong>，不會相等。D 把方向弄反了，所以是錯的敘述。<br>
+              A 正確（比值就是前項除以後項）。<br>
+              B 正確（比值 \(\frac{11}{4}\) 的意思就是甲是乙的 \(\frac{11}{4}\) 倍）。<br>
+              C 正確（反過來看，乙是甲的 \(\frac{4}{11}\) 倍）。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 含負數、分數、小數的比值
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> 重點 2：負數、分數、小數也可以當比的項
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>國中的新東西</strong>：國小學的比都是兩個正數。到了國中，<strong>比的前項與後項可以是任何數</strong>——負數、分數、小數都可以，只要<strong>後項不為 \(0\)</strong>。</li>
+              <li><strong>算法完全沒變</strong>：不管是哪一種數，比值一律是<strong>前項除以後項</strong>，最後<strong>化成最簡分數</strong>。</li>
+              <li><strong>分數比：除以一個分數，等於乘以它的倒數。</strong>
+                \[\begin{aligned}
+                & \frac{2}{3} : \left(-\frac{3}{4}\right) \text{ 的比值} \\
+                &= \frac{2}{3} \div \left(-\frac{3}{4}\right) \\
+                &= \frac{2}{3} \times \left(-\frac{4}{3}\right) = -\frac{8}{9}
+                \end{aligned}\]
+              </li>
+              <li><strong>小數比：先把小數寫成分數，再照分數的做法。</strong>
+                \[\begin{aligned}
+                & (-0.7) : (-1.3) \text{ 的比值} \\
+                &= \left(-\frac{7}{10}\right) \div \left(-\frac{13}{10}\right) \\
+                &= \left(-\frac{7}{10}\right) \times \left(-\frac{10}{13}\right) = \frac{7}{13}
+                \end{aligned}\]
+              </li>
+              <li><strong>負號的位置</strong>：兩項<strong>同號</strong>時比值為正，<strong>異號</strong>時比值為負。化成最簡分數後，習慣把負號寫在<strong>分數前面</strong>（寫 \(-\frac{3}{4}\)，不寫 \(\frac{-3}{4}\) 或 \(\frac{3}{-4}\)）。</li>
+              <li><strong>不要提早化簡比本身</strong>：這裡要的是「比值」——一個數。先算出 \(a \div b\)，再把那個<strong>分數</strong>化到最簡即可。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_value.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女站在長木工作檯邊，兩根手指捏著一小片裁好的薄木片，舉起來對著天窗灑下的光端詳；黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年站在她身旁一起看。檯面上放著漆罐、鑷子與散落的木屑。一隻奶油色柴犬趴在他們腳邊的地板上抬頭看，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字、數字、招牌與標價。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：比值計算台</h3>
+            <p class="interactive-instruction">切換<strong>數的種類</strong>，調整前項與後項，看比值是<strong>怎麼一步一步算出來</strong>的：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-val" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="vl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">數的種類</span>
+                    <div class="btn-group" id="vl-mode-group">
+                      <button class="pick-btn active" data-vl-mode="int">整數</button>
+                      <button class="pick-btn" data-vl-mode="frac">分數</button>
+                      <button class="pick-btn" data-vl-mode="dec">小數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="vl-a-slider">前項：<span id="vl-a-val" class="val-num">-6</span></label>
+                    <input type="range" id="vl-a-slider" min="0" max="17" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="vl-b-slider">後項：<span id="vl-b-val" class="val-num">4</span></label>
+                    <input type="range" id="vl-b-slider" min="0" max="17" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="vl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (負數與分數的比值)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> \(\dfrac{5}{6} : \left(-\dfrac{10}{9}\right)\) 的比值，以最簡分數表示是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-3" value="A"><span class="option-text">A. \(-\frac{3}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="B"><span class="option-text">B. \(-\frac{4}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="C"><span class="option-text">C. \(\frac{3}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="D"><span class="option-text">D. \(-\frac{50}{54}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。比值是前項除以後項，除以一個分數就是乘以它的<strong>倒數</strong>：
+              \[\begin{aligned}
+              & \frac{5}{6} \div \left(-\frac{10}{9}\right) \\
+              &= \frac{5}{6} \times \left(-\frac{9}{10}\right) \\
+              &= -\frac{45}{60} = -\frac{3}{4}
+              \end{aligned}\]
+              兩項<strong>異號</strong>，所以比值是負的。<br>
+              B 是把前項與後項對調（算成 \(\left(-\frac{10}{9}\right) \div \frac{5}{6}\)）。<br>
+              C 漏掉了負號。<br>
+              D 是把兩個分數的分子、分母<strong>直接相乘</strong>（\(\frac{5 \times 10}{6 \times 9}\)），除法沒有換成乘倒數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> \((-1.2) : 0.9\) 的比值，以最簡分數表示是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-4" value="A"><span class="option-text">A. \(-\frac{3}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="B"><span class="option-text">B. \(-\frac{4}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="C"><span class="option-text">C. \(\frac{4}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="D"><span class="option-text">D. \(-\frac{12}{9}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。先把小數寫成分數，再除：
+              \[\begin{aligned}
+              & (-1.2) \div 0.9 \\
+              &= \left(-\frac{12}{10}\right) \div \frac{9}{10} \\
+              &= \left(-\frac{12}{10}\right) \times \frac{10}{9} \\
+              &= -\frac{12}{9} = -\frac{4}{3}
+              \end{aligned}\]
+              A 是把前後項對調的結果。<br>
+              C 漏掉了負號（前項是負、後項是正，異號，比值必為負）。<br>
+              D 算式其實對，但 \(-\frac{12}{9}\) <strong>還沒化到最簡</strong>——分子分母都可以再除以 \(3\)。題目要求最簡分數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 相等的比
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> 重點 3：相等的比——前後項同乘、同除
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>什麼叫相等的比</strong>：當幾個比的<strong>比值相等</strong>時，就說這幾個比是<strong>相等的比</strong>。例如 \(1:4\) 與 \(2:8\) 的比值都是 \(\frac{1}{4}\)，所以 \(1:4=2:8\)。</li>
+              <li><strong>運算性質</strong>：已知 \(a\)、\(b\)、\(m\) 三個數，其中 \(b\)、\(m\) 皆不為 \(0\)，則
+                \[\begin{aligned}
+                & a : b = (a \times m) : (b \times m) \\
+                & a : b = (a \div m) : (b \div m)
+                \end{aligned}\]
+                也就是<strong>前項與後項同乘（或同除）以不為 \(0\) 的數，比不會改變</strong>。</li>
+              <li><strong>為什麼成立</strong>：比值是 \(\dfrac{a}{b}\)，而分數的分子分母同乘或同除以不為 \(0\) 的數，值不變（<strong>擴分與約分</strong>）。比的性質其實就是分數的性質換個說法。</li>
+              <li><strong>找填空的做法</strong>：先看<strong>已知的那一對</strong>是乘了幾倍，另一項就跟著乘幾倍。
+                \[\begin{aligned}
+                & 8 : 18 = 4 : \square \\
+                & \text{前項 } 8 \div 2 = 4 \Rightarrow \text{同除以 } 2 \\
+                & \square = 18 \div 2 = 9
+                \end{aligned}\]
+              </li>
+              <li><strong>倍率可以是負數</strong>：\(2:(-7) = (-12):42\)，因為前後項都乘以 \(-6\)。倍率只有一個限制——<strong>不可以是 \(0\)</strong>（全變成 \(0:0\) 就沒有意義了）。</li>
+              <li><strong>「同乘」不是「同加」</strong>：\(2:3\) 的前後項各加 \(1\) 變成 \(3:4\)，比值從 \(\frac{2}{3}\) 變成 \(\frac{3}{4}\)，<strong>不相等</strong>。這是最常見的錯誤，重點 8 會再看一次。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_equal.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：長木工作檯上並排平放著兩張同一棟房子的立面設計圖，兩張都是同樣的細鉛筆線稿，房子的形狀與比例完全相同，只有大小不同——右邊那張明顯比左邊那張大得多。黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年一手按著左邊的小圖、一手按著右邊的大圖比對，深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女在旁邊探身看。一隻奶油色柴犬坐在工作檯的右端，脖子上掛著一小截黃銅比例尺當吊牌。圖紙上只有房子的線稿，沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：等比放大縮小台</h3>
+            <p class="interactive-instruction">把一個基準比的前後項<strong>同乘以一個倍率</strong>，看看兩根木條的長度變了，<strong>比值變不變</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-eq" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="eq-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">基準比</span>
+                    <div class="btn-group" id="eq-base-group">
+                      <button class="pick-btn active" data-eq-base="0">\(3:5\)</button>
+                      <button class="pick-btn" data-eq-base="1">\(4:(-6)\)</button>
+                      <button class="pick-btn" data-eq-base="2">\(8:18\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="eq-m-slider">同乘以的倍率 \(m\)：<span id="eq-m-val" class="val-num">2</span></label>
+                    <input type="range" id="eq-m-slider" min="0" max="11" value="7" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="eq-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (相等的比)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 若 \((-21) : 28 = 6 : \square\)，則 \(\square\) 中應填入的數是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-5" value="A"><span class="option-text">A. \(-\frac{56}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="B"><span class="option-text">B. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="C"><span class="option-text">C. \(-6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="D"><span class="option-text">D. \(-8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。先看<strong>前項</strong>是怎麼變過去的：
+              \[\begin{aligned}
+              & (-21) \times \left(-\frac{2}{7}\right) = 6 \\
+              & \Rightarrow \text{前後項同乘以 } -\frac{2}{7} \\
+              & \square = 28 \times \left(-\frac{2}{7}\right) = -8
+              \end{aligned}\]
+              也可以用「相等的比比值相同」來驗算：\(\dfrac{-21}{28} = -\dfrac{3}{4}\)，而 \(\dfrac{6}{-8} = -\dfrac{3}{4}\)，兩者確實相等。<br>
+              B 漏掉負號（前項由負變正，倍率是負的，後項也必須跟著變號）。<br>
+              C 是把「同乘」誤看成前項相差 \(27\)、後項也相差 \(27\)（同加同減不能用在比上）。<br>
+              A 是把倍率算成 \(-\frac{7}{2}\)（倒過來了）。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 下列哪一個比，與 \(15 : (-9)\) 是<strong>相等的比</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-6" value="A"><span class="option-text">A. \(3 : (-5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="B"><span class="option-text">B. \((-5) : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="C"><span class="option-text">C. \(5 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="D"><span class="option-text">D. \(20 : (-14)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。比較比值就知道了。\(15:(-9)\) 的比值是 \(\dfrac{15}{-9} = -\dfrac{5}{3}\)。
+              \[\begin{aligned}
+              & \text{B：} \frac{-5}{3} = -\frac{5}{3} \quad \checkmark \\
+              &\quad \text{A：} \frac{3}{-5} = -\frac{3}{5} \\
+              &\quad \text{C：} \frac{5}{3} \\
+              &\quad \text{D：} \frac{20}{-14} = -\frac{10}{7}
+              \end{aligned}\]
+              只有 B 相等——它是把 \(15:(-9)\) 的前後項<strong>同除以 \(-3\)</strong> 得到的。<br>
+              A 把前項與後項對調了。<br>
+              C 漏掉負號。<br>
+              D 是把前項加 \(5\)、後項減 \(5\)，<strong>同加同減不能用在比上</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 最簡整數比
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compress" aria-hidden="true"></i> 重點 4：最簡整數比
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>定義</strong>：當一個比的前項、後項<strong>都是整數</strong>，而且兩者<strong>互質</strong>（最大公因數為 \(1\)）時，就說這個比是<strong>最簡整數比</strong>。</li>
+              <li><strong>兩個條件缺一不可</strong>：
+                <ul>
+                  <li>\(3:2\)、\(2:9\) 是最簡整數比（都是整數，且互質）。</li>
+                  <li>\(60:40\) <strong>不是</strong>（都是整數，但公因數是 \(20\)）。</li>
+                  <li>\(1:\frac{9}{2}\) <strong>不是</strong>（後項不是整數）。</li>
+                </ul>
+              </li>
+              <li><strong>整數比怎麼化</strong>：前後項<strong>同除以最大公因數</strong>。
+                \[\begin{aligned}
+                & 60 : 40 \\
+                &= (60 \div 20) : (40 \div 20) \\
+                &= 3 : 2
+                \end{aligned}\]
+              </li>
+              <li><strong>分數比怎麼化</strong>：前後項<strong>同乘以兩個分母的最小公倍數</strong>，一次把分母清掉。
+                \[\begin{aligned}
+                & \frac{1}{3} : \frac{1}{2} \\
+                &= \left(\frac{1}{3} \times 6\right) : \left(\frac{1}{2} \times 6\right) \\
+                &= 2 : 3
+                \end{aligned}\]
+              </li>
+              <li><strong>小數比怎麼化</strong>：前後項<strong>同乘以 \(10\)、\(100\)…</strong>（看小數點後最多幾位），變成整數再約分。
+                \[0.36 : 0.48 = 36 : 48 = 3 : 4\]
+              </li>
+              <li><strong>負號怎麼擺</strong>：\(7:(-5)\) 與 \((-7):5\) 的比值都是 \(-\frac{7}{5}\)，所以它們是<strong>相等的比</strong>，兩種寫法都可以。但要小心 \((-7):(-5)\) 的比值是 \(\frac{7}{5}\)——兩項<strong>同時</strong>帶負號等於前後項同乘以 \(-1\)，那就變成 \(7:5\) 了。化簡時習慣<strong>只讓其中一項帶負號</strong>。</li>
+              <li><strong>比化到最簡，比值也就是最簡分數</strong>：這兩件事是同一件事的兩種說法。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_simplest.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：綠色切割墊上平放著兩根淺色木條，上下並排、左端切齊在同一條直線上；切割墊上印著等距的方格刻度，上面那根木條明顯比下面那根長，右端伸出下面那根很多。墊子上沒有放尺，深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女用一根手指點著上面那根木條的右端，黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年在旁邊看。一隻奶油色柴犬趴在工作檯的左上角，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：化簡工作台</h3>
+            <p class="interactive-instruction">選一種數的形式，看看要<strong>同乘或同除以什麼</strong>，才能把它化成最簡整數比：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-simp" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">數的形式</span>
+                    <div class="btn-group" id="sp-mode-group">
+                      <button class="pick-btn active" data-sp-mode="int">整數比</button>
+                      <button class="pick-btn" data-sp-mode="frac">分數比</button>
+                      <button class="pick-btn" data-sp-mode="dec">小數比</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sp-a-slider">前項的分子：<span id="sp-a-val" class="val-num">24</span></label>
+                    <input type="range" id="sp-a-slider" min="0" max="71" value="59" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sp-b-slider">後項的分子：<span id="sp-b-val" class="val-num">-36</span></label>
+                    <input type="range" id="sp-b-slider" min="0" max="71" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (最簡整數比)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 工坊調「木紋棕」時，甲配方用掉 \(\dfrac{5}{6}\) 罐深棕漆，乙配方用掉 \(\dfrac{2}{9}\) 罐深棕漆。甲、乙用量的<strong>最簡整數比</strong>是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-7" value="A"><span class="option-text">A. \(45 : 12\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="B"><span class="option-text">B. \(5 : 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="C"><span class="option-text">C. \(4 : 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="D"><span class="option-text">D. \(15 : 4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。兩個分母 \(6\) 與 \(9\) 的最小公倍數是 \(18\)，前後項<strong>同乘以 \(18\)</strong>：
+              \[\begin{aligned}
+              & \frac{5}{6} : \frac{2}{9} \\
+              &= \left(\frac{5}{6} \times 18\right) : \left(\frac{2}{9} \times 18\right) \\
+              &= 15 : 4
+              \end{aligned}\]
+              \(15\) 與 \(4\) 互質，已是最簡整數比。<br>
+              A 是同乘以 \(54\)（\(6 \times 9\)）得到的 \(45:12\)，比是對的但<strong>沒有化到最簡</strong>（還可以同除以 \(3\)）。<br>
+              B 只把兩個分子拿出來，分母不同不能這樣比。<br>
+              C 把前項與後項對調了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 下列哪一個比<strong>是</strong>最簡整數比？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-8" value="A"><span class="option-text">A. \(\frac{2}{5} : \frac{3}{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="B"><span class="option-text">B. \(48 : (-40)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="C"><span class="option-text">C. \(39 : (-50)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="D"><span class="option-text">D. \(1 : \frac{5}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。要同時滿足<strong>兩項都是整數</strong>與<strong>兩項互質</strong>。
+              \[\begin{aligned}
+              & \text{C：} 39 \text{ 與 } -50 \text{ 都是整數} \\
+              &\quad\ \gcd(39,\ 50) = 1 \quad \checkmark
+              \end{aligned}\]
+              （\(39 = 3 \times 13\)、\(50 = 2 \times 5^2\)，沒有共同的質因數。）<br>
+              A 的兩項都是分數，不是整數比（化簡後是 \(14:15\)）。<br>
+              B 的兩項雖然都是整數，但公因數是 \(8\)，還可以化成 \(6:(-5)\)。<br>
+              D 的後項 \(\frac{5}{2}\) 不是整數（化簡後是 \(2:5\)）。<br>
+              注意：<strong>負數不影響「最簡」的判定</strong>，只要兩項是整數且它們的最大公因數為 \(1\) 就可以。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 比例式與運算性質①
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i> 重點 5：比例式與性質①——外項乘積＝內項乘積
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>比例式的定義</strong>：兩個相等的比 \(a:b\) 與 \(c:d\)，寫成等式 \(a:b=c:d\)，這個等式就叫做<strong>比例式</strong>。</li>
+              <li><strong>內項與外項</strong>：在 \(a:b=c:d\) 裡，<strong>靠外面的 \(a\) 與 \(d\) 是外項</strong>，<strong>靠中間的 \(b\) 與 \(c\) 是內項</strong>。</li>
+              <li><strong>運算性質①</strong>：
+                \[\text{若 } a:b=c:d\text{，則 } ad = bc\]
+                也就是<strong>外項乘積＝內項乘積</strong>（俗稱「交叉相乘」）。</li>
+              <li><strong>為什麼成立</strong>：\(a:b=c:d\) 就是 \(\dfrac{a}{b}=\dfrac{c}{d}\)，等號兩邊<strong>同乘以 \(bd\)</strong>：
+                \[\begin{aligned}
+                & \frac{a}{b} \times bd = \frac{c}{d} \times bd \\
+                & ad = bc
+                \end{aligned}\]
+              </li>
+              <li><strong>這一步為什麼重要</strong>：比例式本來只是「兩個比相等」的記法，用了性質① 之後就變成<strong>一般的一元一次方程式</strong>，未知數立刻解得出來。</li>
+              <li><strong>項是一次式時，別忘了分配律</strong>：
+                \[\begin{aligned}
+                & (x+3):4 = (2x-1):3 \\
+                & 3(x+3) = 4(2x-1) \\
+                & 3x + 9 = 8x - 4 \\
+                & -5x = -13,\quad x = \frac{13}{5}
+                \end{aligned}\]
+                括號整組都要乘，只乘第一項是最常見的錯。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_cross.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年低著頭（護目鏡仍推在額頭上），用一把細鑷子把一片極小的窗框零件放進一棟半完成的微縮小屋。一盞可彎曲的金屬工作燈從上方照著小屋，檯面上散著幾片備用的小零件與一把美工刀。深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女站在對面看著他的手。一隻奶油色柴犬趴在工作燈的燈座旁打盹，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：交叉相乘解題台</h3>
+            <p class="interactive-instruction">看「外項乘積＝內項乘積」怎麼把一個比例式，<strong>一步一步變成解得出來的方程式</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cross" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題型</span>
+                    <div class="btn-group" id="cr-mode-group">
+                      <button class="pick-btn active" data-cr-mode="num">純數字</button>
+                      <button class="pick-btn" data-cr-mode="lin">含一次式</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cr-a-slider"><span id="cr-a-label">第一個外項</span>：<span id="cr-a-val" class="val-num">6</span></label>
+                    <input type="range" id="cr-a-slider" min="2" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cr-b-slider"><span id="cr-b-label">第一個內項</span>：<span id="cr-b-val" class="val-num">-4</span></label>
+                    <input type="range" id="cr-b-slider" min="0" max="17" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="cr-c-row">
+                    <label for="cr-c-slider"><span id="cr-c-label">第二個內項</span>：<span id="cr-c-val" class="val-num">9</span></label>
+                    <input type="range" id="cr-c-slider" min="2" max="9" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (比例式與交叉相乘)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 若 \(5 : (-4) = 15 : x\)，則 \(x\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-9" value="A"><span class="option-text">A. \(-12\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="B"><span class="option-text">B. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="C"><span class="option-text">C. \(-\frac{75}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="D"><span class="option-text">D. \(-\frac{4}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。外項是 \(5\) 與 \(x\)、內項是 \(-4\) 與 \(15\)，由外項乘積＝內項乘積：
+              \[\begin{aligned}
+              & 5x = (-4) \times 15 \\
+              & 5x = -60 \\
+              & x = -12
+              \end{aligned}\]
+              B 漏掉了負號（內項一正一負，乘積必為負）。<br>
+              C 是把性質記成「前項乘前項＝後項乘後項」：\(5 \times 15 = (-4) \times x\)，算出 \(x=-\frac{75}{4}\)。要相乘的是<strong>外項配外項、內項配內項</strong>。<br>
+              D 是把三個已知數擺錯位置（算成 \(\frac{5 \times (-4)}{15}\)）。<br>
+              驗算：\(5:(-4)\) 的比值是 \(-\frac{5}{4}\)，而 \(15:(-12)\) 的比值也是 \(-\frac{5}{4}\)，確實相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 若 \((2x + 1) : 5 = (x - 4) : 2\)，則 \(x\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-10" value="A"><span class="option-text">A. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="B"><span class="option-text">B. \(22\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="C"><span class="option-text">C. \(-\frac{13}{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="D"><span class="option-text">D. \(-\frac{22}{9}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。外項是 \(2x+1\) 與 \(2\)、內項是 \(5\) 與 \(x-4\)：
+              \[\begin{aligned}
+              & 2(2x + 1) = 5(x - 4) \\
+              & 4x + 2 = 5x - 20 \\
+              & -x = -22 \\
+              & x = 22
+              \end{aligned}\]
+              A 是<strong>忘了分配律</strong>：把左邊算成 \(2 \times 2x + 1 = 4x+1\)、右邊算成 \(5 \times x - 4 = 5x-4\)，解出 \(x=5\)。括號整組都要乘。<br>
+              C 是把內外項配錯（算成 \(5(2x+1) = 2(x-4)\)）。<br>
+              D 是移項時沒有變號（把 \(4x + 2 = 5x - 20\) 寫成 \(4x + 5x = -20 - 2\)）。<br>
+              驗算：\(x=22\) 時左邊是 \(45:5\)、右邊是 \(18:2\)，比值都是 \(9\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 運算性質② 設 x=ar、y=br
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler" aria-hidden="true"></i> 重點 6：性質②——把比拆成「幾份」
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>運算性質②</strong>：若 \(x:y = a:b\)，其中 \(a\)、\(b\) 均不為 \(0\)，則
+                \[\begin{aligned}
+                & \frac{x}{a} = \frac{y}{b} \quad \text{（或 } x:a = y:b\text{）} \\
+                & \text{可設 } x = ar,\ y = br \quad (r \ne 0)
+                \end{aligned}\]
+              </li>
+              <li><strong>怎麼推出來的</strong>：由 \(x:y=a:b\) 用性質① 得 \(bx = ay\)，兩邊同除以 \(ab\) 就得到 \(\dfrac{x}{a} = \dfrac{y}{b}\)。把這個共同的值命名為 \(r\)，就得到 \(x=ar\)、\(y=br\)。</li>
+              <li><strong>\(r\) 是什麼</strong>：\(r\) 就是「<strong>一份</strong>」的大小。\(x:y=5:3\) 的意思是「\(x\) 有 \(5\) 份、\(y\) 有 \(3\) 份」，而每一份都是 \(r\)。</li>
+              <li><strong>為什麼要這樣設</strong>：本來 \(x\)、\(y\) 是<strong>兩個</strong>未知數，很難處理。設成 \(ar\)、\(br\) 之後只剩 \(r\) <strong>一個</strong>未知數，再配上題目給的另一個條件，就變成一元一次方程式。</li>
+              <li><strong>標準解題流程</strong>：
+                <ul>
+                  <li>① 由比設出 \(x = ar\)、\(y = br\)</li>
+                  <li>② 代入題目的另一個條件</li>
+                  <li>③ 解出 \(r\)</li>
+                  <li>④ 回代求 \(x\)、\(y\)</li>
+                </ul>
+              </li>
+              <li><strong>\(r\) 可以是負數或分數</strong>：只要 \(r \ne 0\) 就好。\(r\) 是負的時候，\(x\) 與 \(y\) 都是負數，比值仍然是 \(\frac{a}{b}\)。</li>
+              <li><strong>不要直接令 \(x=a\)、\(y=b\)</strong>：那只是「其中一組」而已（相當於 \(r=1\)），題目的條件通常不會剛好符合。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_share.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：綠色切割墊上平放著一根長木條，木條上用等距的記號分成八個一樣長的小段。左邊連續五段塗上米白色的漆、右邊連續三段塗上天藍色的漆。深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女用一支扁平鉛筆指著顏色交界處的那一段，黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年在旁邊看。一隻奶油色柴犬趴在木條的右端旁邊，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一份是多少？</h3>
+            <p class="interactive-instruction">選一個比，再給一個條件，看看<strong>一份 \(r\)</strong> 是怎麼被算出來的：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-share" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sh-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知的比</span>
+                    <div class="btn-group" id="sh-ratio-group">
+                      <button class="pick-btn active" data-sh-ratio="0">\(x:y=5:3\)</button>
+                      <button class="pick-btn" data-sh-ratio="1">\(x:y=4:7\)</button>
+                      <button class="pick-btn" data-sh-ratio="2">\(x:y=2:9\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">另一個條件</span>
+                    <div class="btn-group" id="sh-cond-group">
+                      <button class="pick-btn active" data-sh-cond="sum">\(x+y=S\)</button>
+                      <button class="pick-btn" data-sh-cond="dif">\(x-y=S\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sh-s-slider">條件裡的 \(S\)：<span id="sh-s-val" class="val-num">24</span></label>
+                    <input type="range" id="sh-s-slider" min="0" max="29" value="26" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sh-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (設 x=ar、y=br)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 已知 \(x : y = 7 : 5\)，且 \(x + y = 48\)，則 \(x - y\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-11" value="A"><span class="option-text">A. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="B"><span class="option-text">B. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="C"><span class="option-text">C. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="D"><span class="option-text">D. \(-8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。由 \(x:y=7:5\) 設 \(x=7r\)、\(y=5r\)：
+              \[\begin{aligned}
+              & 7r + 5r = 48 \\
+              & 12r = 48,\quad r = 4 \\
+              & x = 28,\ y = 20 \\
+              & x - y = 8
+              \end{aligned}\]
+              A 是直接算 \(7-5\)，忘了每一份是 \(r=4\)（\(x-y=2r\)，不是 \(2\)）。<br>
+              B 是把 \(x+y\) 的份數 \(12\) 當成答案。<br>
+              D 把相減的順序反過來（\(y-x\)）。<br>
+              也可以不算 \(r\)：\(x-y\) 佔 \(2\) 份、\(x+y\) 佔 \(12\) 份，所以 \(x-y = 48 \times \frac{2}{12} = 8\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 已知 \(a : b = 3 : 8\)，且 \(b - a = 25\)，則 \(b\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-12" value="A"><span class="option-text">A. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="B"><span class="option-text">B. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="C"><span class="option-text">C. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="D"><span class="option-text">D. \(40\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。由 \(a:b=3:8\) 設 \(a=3r\)、\(b=8r\)：
+              \[\begin{aligned}
+              & 8r - 3r = 25 \\
+              & 5r = 25,\quad r = 5 \\
+              & b = 8r = 40
+              \end{aligned}\]
+              A 求出來的是 \(a = 3r = 15\)，不是題目問的 \(b\)。<br>
+              B 是「一份」的大小 \(r = 5\)，還要再乘以 \(8\)。<br>
+              C 直接把比裡面的 \(8\) 當成答案——這正是重點 8 要提醒的：<strong>比是 \(3:8\)，不代表 \(a=3\)、\(b=8\)</strong>。<br>
+              驗算：\(a=15\)、\(b=40\)，\(15:40 = 3:8\) ✓，且 \(40-15=25\) ✓。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 由等式反求比、算組合比
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-repeat" aria-hidden="true"></i> 重點 7：由 \(px = qy\) 反求比，再算組合比
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>反過來走一次</strong>：性質① 是「由比得到等式」；這裡要<strong>由等式得到比</strong>。
+                \[\begin{aligned}
+                & 7x = 4y \quad \text{（兩邊同除以 } 28\text{）} \\
+                & \frac{x}{4} = \frac{y}{7} \\
+                & x : y = 4 : 7
+                \end{aligned}\]
+              </li>
+              <li><strong>係數會左右互換</strong>：\(px = qy\) 得到的是 \(x:y = q:p\)，<strong>不是</strong> \(p:q\)。這是最容易錯的一步——係數大的那一邊，數量反而小。</li>
+              <li><strong>另一個想法（也很好用）</strong>：由 \(7x = 4y\) 兩邊同除以 \(y\) 再同除以 \(7\)，得 \(\dfrac{x}{y} = \dfrac{4}{7}\)，也就是 \(x:y=4:7\)。</li>
+              <li><strong>接著算組合比</strong>：設 \(x = 4r\)、\(y = 7r\)，代進去之後 \(r\) 會自己約掉。
+                \[\begin{aligned}
+                & 2x : 3y \\
+                &= (2 \times 4r) : (3 \times 7r) \\
+                &= 8r : 21r = 8 : 21
+                \end{aligned}\]
+              </li>
+              <li><strong>比例式形式的條件也一樣處理</strong>：\((a+b):(a-b) = 3:(-2)\) 先用性質① 展開、整理，就會得到 \(a\) 與 \(b\) 的關係式，再照上面的做法轉成比。
+                \[\begin{aligned}
+                & -2(a+b) = 3(a-b) \\
+                & -2a - 2b = 3a - 3b \\
+                & 5a = b \quad \Rightarrow \quad a : b = 1 : 5
+                \end{aligned}\]
+              </li>
+              <li><strong>後項算出 \(0\) 時要小心</strong>：例如 \(x:y=1:1\) 時 \((x+y):(x-y)\) 的後項是 \(0\)，此時<strong>比值不存在</strong>（不能除以 \(0\)）。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_swap.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年與深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女兩人一起用雙手捧著一座完成的微縮小屋，正要把它放上牆邊的木製展示層架；層架上已經擺著另外兩座造型不同的小屋。一隻奶油色柴犬站在他們腳邊的檯面上仰頭往上看，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：係數互換台</h3>
+            <p class="interactive-instruction">調整 \(px = qy\) 的兩個係數，注意 \(x:y\) 是<strong>怎麼互換過去</strong>的；再挑一個組合比看結果：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-swap" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sw-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要算的比</span>
+                    <div class="btn-group" id="sw-target-group">
+                      <button class="pick-btn active" data-sw-target="0">\(x:y\)</button>
+                      <button class="pick-btn" data-sw-target="1">\(2x:3y\)</button>
+                      <button class="pick-btn" data-sw-target="2">\((x+y):(x-y)\)</button>
+                      <button class="pick-btn" data-sw-target="3">\((2x-y):(x+3y)\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sw-p-slider">\(x\) 的係數 \(p\)：<span id="sw-p-val" class="val-num">6</span></label>
+                    <input type="range" id="sw-p-slider" min="2" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sw-q-slider">\(y\) 的係數 \(q\)：<span id="sw-q-val" class="val-num">9</span></label>
+                    <input type="range" id="sw-q-slider" min="2" max="9" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sw-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (由等式反求比)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 設 \(x\)、\(y\) 皆不為 \(0\)，且 \(11x = 6y\)，則 \(x : y\) 的最簡整數比是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-13" value="A"><span class="option-text">A. \(6 : 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="B"><span class="option-text">B. \(11 : 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="C"><span class="option-text">C. \(11 : 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="D"><span class="option-text">D. \(1 : 6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩邊同除以 \(66\)：
+              \[\begin{aligned}
+              & 11x = 6y \\
+              & \frac{x}{6} = \frac{y}{11} \\
+              & x : y = 6 : 11
+              \end{aligned}\]
+              B 把係數照原來的順序抄下來——<strong>係數是要互換的</strong>。可以用一組具體的數驗證：取 \(x=6\)、\(y=11\)，則 \(11 \times 6 = 66\)、\(6 \times 11 = 66\)，等式成立；若取 \(x=11\)、\(y=6\)，則 \(11 \times 11 = 121 \ne 6 \times 6 = 36\)。<br>
+              C 是把 \(11x = 6y\) 誤讀成「\(x\) 是 \(y\) 的 \(11\) 倍」。<br>
+              D 是把等式誤讀成「\(y\) 是 \(x\) 的 \(6\) 倍」。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 設 \(x\)、\(y\) 皆不為 \(0\)，且 \(x : y = 5 : 2\)，則 \((3x + y) : (x - 2y)\) 的比值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-14" value="A"><span class="option-text">A. \(\frac{1}{17}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="B"><span class="option-text">B. \(\frac{17}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="C"><span class="option-text">C. \(\frac{17}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="D"><span class="option-text">D. \(17\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。由 \(x:y=5:2\) 設 \(x=5r\)、\(y=2r\)（\(r \ne 0\)）：
+              \[\begin{aligned}
+              & 3x + y = 15r + 2r = 17r \\
+              & x - 2y = 5r - 4r = r \\
+              & (3x+y):(x-2y) \\
+              &= 17r : r = 17 : 1
+              \end{aligned}\]
+              所以比值是 \(\dfrac{17}{1} = 17\)。<br>
+              A 把比值的前後項顛倒了。<br>
+              B 是把 \(2y\) 誤算成 \(2r\)（\(y\) 本身已經是 \(2r\)，\(2y\) 要算 \(4r\)），分母錯成 \(3r\)。<br>
+              C 是把 \(x - 2y\) 看成 \(x + 2y = 9r\)。<br>
+              注意這個式子的分子分母都是 \(x\)、\(y\) 的<strong>一次式且沒有常數項</strong>，\(r\) 才會約得掉、比值才是固定的——重點 8 就要看不是這樣的情形。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 比不是數本身
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 重點 8：比不是數本身——加了常數就不固定了
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>最重要的一句話</strong>：\(x:y = 9:5\) <strong>不代表</strong> \(x=9\)、\(y=5\)。它只說「\(x\) 是 \(9\) 份、\(y\) 是 \(5\) 份」，一份到底多大還不知道——\((9,5)\)、\((18,10)\)、\((-27,-15)\) 全都符合。</li>
+              <li><strong>哪些式子的值是固定的</strong>：把 \(x=9r\)、\(y=5r\) 代進去之後，\(r\) 能<strong>完全約掉</strong>的才固定。
+                \[\begin{aligned}
+                & \frac{2x}{3y} = \frac{18r}{15r} = \frac{6}{5} \quad \text{（固定）} \\
+                & \frac{x+y}{x-y} = \frac{14r}{4r} = \frac{7}{2} \quad \text{（固定）}
+                \end{aligned}\]
+              </li>
+              <li><strong>哪些不固定</strong>：一旦式子裡出現<strong>常數項</strong>，\(r\) 就約不掉了。
+                \[\frac{x+1}{y+1} = \frac{9r+1}{5r+1}\]
+                \(r=1\) 時是 \(\dfrac{10}{6}=\dfrac{5}{3}\)，\(r=2\) 時是 \(\dfrac{19}{11}\)——<strong>兩個值不一樣，所以它不是一個固定的數</strong>。</li>
+              <li><strong>判斷的口訣</strong>：分子分母都是 \(x\)、\(y\) 的<strong>一次式，而且沒有常數項</strong>（數學上叫「齊次」），比值才固定。</li>
+              <li><strong>怎麼證明「不固定」</strong>：不必推導，<strong>舉兩個反例就夠了</strong>——取 \(r=1\) 算一次、取 \(r=2\) 再算一次，兩個答案不同，就證明它不是固定值。</li>
+              <li><strong>常見的錯誤寫法</strong>：把 \(\dfrac{x+1}{y+1}\) 寫成 \(\dfrac{9+1}{5+1}\)。那等於偷偷假設了 \(r=1\)，只是<strong>其中一種情形</strong>而已。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_pitfall.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：綠色切割墊上平放著兩排同款的小木塊，每一塊大小相同、彼此稍微分開、絕不疊放。上面那排是三塊：兩塊米白色接一塊天藍色；下面那排是六塊：四塊米白色接兩塊天藍色，顏色的排法一模一樣，只是下面那排剛好是上面那排的兩倍長。黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年張開雙手同時指著上下兩排，深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女托著臉頰在旁邊看。一隻奶油色柴犬趴在切割墊的右側，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：\(r\) 一變，誰跟著變？</h3>
+            <p class="interactive-instruction">固定 \(x : y = 7 : 3\)，只調整<strong>一份的大小 \(r\)</strong>，看哪一欄動了、哪一欄沒動：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fix" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fx-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fx-r-slider">一份的大小 \(r\)：<span id="fx-r-val" class="val-num">1</span></label>
+                    <input type="range" id="fx-r-slider" min="0" max="9" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fx-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (比不是數本身)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 已知 \(x : y = 4 : 9\)（\(x\)、\(y\) 皆不為 \(0\)），下列哪一個式子的值<strong>不會</strong>隨 \(x\)、\(y\) 的實際大小而改變？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-15" value="A"><span class="option-text">A. \(\frac{x + 2}{y + 2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="B"><span class="option-text">B. \(\frac{3x}{2y}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="C"><span class="option-text">C. \(\frac{x - 1}{y}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="D"><span class="option-text">D. \(\frac{x + y}{5}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設 \(x=4r\)、\(y=9r\)（\(r \ne 0\)），逐一代入看 \(r\) 約不約得掉：
+              \[\begin{aligned}
+              & \text{B：} \frac{3 \times 4r}{2 \times 9r} = \frac{12r}{18r} = \frac{2}{3} \quad \checkmark \\
+              &\quad \text{A：} \frac{4r+2}{9r+2} \\
+              &\quad \text{C：} \frac{4r-1}{9r} \\
+              &\quad \text{D：} \frac{13r}{5}
+              \end{aligned}\]
+              只有 B 的分子分母都是<strong>沒有常數項的一次式</strong>，\(r\) 上下相消。<br>
+              A 與 C 各帶了一個常數 \(+2\)、\(-1\)，\(r\) 約不掉。<br>
+              D 的分母是常數 \(5\)（不含 \(r\)），所以 \(r\) 只在分子，值會跟著 \(r\) 變大。<br>
+              驗算 D：\(r=1\) 時是 \(\frac{13}{5}\)，\(r=2\) 時是 \(\frac{26}{5}\)，確實不同。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 小榕說：「已知 \(a : b = 6 : 5\)，所以 \((a+3) : (b+3) = 9 : 8\)。」這個說法<strong>錯在哪裡</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-16" value="A"><span class="option-text">A. 因為前後項要同時加的話，必須改成加 \(6\) 與加 \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="B"><span class="option-text">B. 因為前後項相加時，應該寫成 \((a+b) : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="C"><span class="option-text">C. 因為 \(a:b=6:5\) 不代表 \(a=6\)、\(b=5\)，答案會隨 \(a\)、\(b\) 的實際大小而不同</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="D"><span class="option-text">D. 沒有錯，\(9 : 8\) 就是正確答案</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設 \(a=6r\)、\(b=5r\)（\(r \ne 0\)），則
+              \[\begin{aligned}
+              & (a+3):(b+3) \\
+              &= (6r+3):(5r+3)
+              \end{aligned}\]
+              \(r\) 約不掉，所以答案不是固定的。舉兩組實際的數就看得出來：
+              \[\begin{aligned}
+              & r=1:\ a=6,\ b=5 \\
+              &\quad \Rightarrow 9:8 \\
+              & r=2:\ a=12,\ b=10 \\
+              &\quad \Rightarrow 15:13
+              \end{aligned}\]
+              \(9:8\) 的比值是 \(\frac{9}{8}\)、\(15:13\) 的比值是 \(\frac{15}{13}\)，兩者不相等——所以「\(9:8\)」只是 \(r=1\) 時的<strong>其中一種情形</strong>，不能當成答案。<br>
+              A 錯在「加 \(6\) 與加 \(5\)」仍然是同加不同數，一樣不會保持比不變。<br>
+              B 的寫法沒有任何依據。<br>
+              D 錯在把一種特例當成通則。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 應用——倍數問題
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 9：應用一——倍數問題
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>題目長什麼樣</strong>：「甲的 \(m\) 倍，和乙的 \(n\) 倍一樣多」。這句話翻成數學就是一個等式：
+                \[m x = n y\]
+              </li>
+              <li><strong>翻成比</strong>：由重點 7 的做法（兩邊同除以 \(mn\)），得到
+                \[x : y = n : m\]
+                注意<strong>係數互換</strong>：倍數是 \(m:n\)，數量卻是 \(n:m\)。</li>
+              <li><strong>直覺檢查</strong>：要乘上比較大的倍數才追得上，表示這個量<strong>本來比較小</strong>。所以「甲的 \(3\) 倍＝乙的 \(2\) 倍」時，甲比乙少，\(x:y=2:3\)。算完務必用這句話對一下方向。</li>
+              <li><strong>接著配另一個條件</strong>：題目通常還會給總和或差。設 \(x=nr\)、\(y=mr\)，代進去解 \(r\)，再回代。
+                \[\begin{aligned}
+                & \text{甲的 } 3 \text{ 倍} = \text{乙的 } 2 \text{ 倍} \\
+                & 3x = 2y \Rightarrow x:y = 2:3 \\
+                & \text{設 } x=2r,\ y=3r \\
+                & \text{且 } x+y=45 \\
+                & 5r = 45,\ r = 9 \\
+                & x = 18,\ y = 27
+                \end{aligned}\]
+              </li>
+              <li><strong>最後一定要回答題目問的東西</strong>：問的是 \(x\)、是 \(y\)、還是兩者的差？算出 \(r\) 只是中繼站，不是答案。</li>
+              <li><strong>實際的量要合理</strong>：人數、個數、長度這些量必須是<strong>正數</strong>（個數還要是整數）。算出負的或分數，就要回頭檢查題目有沒有讀錯。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_times.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：綠色切割墊上平放著兩排木條，上下並排。上排是三根一樣長的米白色木條首尾相接排成一直線；下排是五根一樣長的天藍色木條首尾相接排成一直線。兩排的左端與右端都切齊，合起來剛好是一個完整的長方形，也就是兩排的總長度相同。深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女把一把長直尺豎著壓在兩排的右端，黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年在旁邊看。一隻奶油色柴犬趴在切割墊的左邊，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：倍數換算台</h3>
+            <p class="interactive-instruction">調整兩邊的<strong>倍數</strong>與<strong>總量</strong>，注意比是怎麼<strong>反過來</strong>的：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-times" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tm-m-slider">甲要乘的倍數 \(m\)：<span id="tm-m-val" class="val-num">3</span></label>
+                    <input type="range" id="tm-m-slider" min="2" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tm-n-slider">乙要乘的倍數 \(n\)：<span id="tm-n-val" class="val-num">2</span></label>
+                    <input type="range" id="tm-n-slider" min="2" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tm-s-slider">兩者的總量 \(x+y\)：<span id="tm-s-val" class="val-num">45</span></label>
+                    <input type="range" id="tm-s-slider" min="10" max="100" value="45" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (倍數問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 已知甲盒零件個數的 \(8\) 倍，等於乙盒零件個數的 \(3\) 倍。則甲盒零件個數與乙盒零件個數的比是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-17" value="A"><span class="option-text">A. \(3 : 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="B"><span class="option-text">B. \(8 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="C"><span class="option-text">C. \(24 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="D"><span class="option-text">D. \(11 : 3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設甲盒有 \(x\) 個、乙盒有 \(y\) 個：
+              \[\begin{aligned}
+              & 8x = 3y \\
+              & \frac{x}{3} = \frac{y}{8} \\
+              & x : y = 3 : 8
+              \end{aligned}\]
+              B 把倍數直接抄成比——<strong>係數是要互換的</strong>。用直覺檢查也對得起來：甲要乘上比較大的 \(8\) 倍才追得上，表示甲本來<strong>比較少</strong>，所以甲的那一項應該是小的 \(3\)。<br>
+              C 是把 \(8 \times 3 = 24\) 擺到前項去。<br>
+              D 是把兩個倍數相加當成前項。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 做一座模型時，大屋頂用的木片數的 \(5\) 倍，等於小屋頂用的木片數的 \(9\) 倍；兩個屋頂共用了 \(154\) 片木片。則大屋頂用了幾片？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-18" value="A"><span class="option-text">A. \(55\) 片</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="B"><span class="option-text">B. \(99\) 片</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="C"><span class="option-text">C. \(11\) 片</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="D"><span class="option-text">D. \(77\) 片</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設大屋頂用 \(x\) 片、小屋頂用 \(y\) 片：
+              \[\begin{aligned}
+              & 5x = 9y \Rightarrow x : y = 9 : 5 \\
+              & \text{設 } x = 9r,\ y = 5r \\
+              & 9r + 5r = 154 \\
+              & 14r = 154,\quad r = 11 \\
+              & x = 9 \times 11 = 99
+              \end{aligned}\]
+              A 求出來的是小屋頂的 \(y = 5 \times 11 = 55\) 片。<br>
+              C 是「一份」的大小 \(r=11\)，還沒乘上份數。<br>
+              D 是把 \(154\) 直接對半分，忽略了兩者根本不一樣多。<br>
+              驗算：\(5 \times 99 = 495\)、\(9 \times 55 = 495\)，確實相等，且 \(99+55=154\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 應用——數量變化問題
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> 重點 10：應用二——數量變化問題
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>題目長什麼樣</strong>：先給<strong>原本的比</strong>，再讓兩邊各自增加或減少一些，最後給<strong>變化後的比</strong>，問原本各是多少。</li>
+              <li><strong>關鍵第一步</strong>：原本的比 \(a:b\) 一定要設成 \(ar\)、\(br\)，<strong>不可以直接用 \(a\)、\(b\)</strong>——那正是重點 8 的陷阱。</li>
+              <li><strong>標準流程</strong>：
+                <ul>
+                  <li>① 原本：\(ar\) 與 \(br\)</li>
+                  <li>② 變化後：\(ar+p\) 與 \(br+q\)（減少就用負的 \(p\)、\(q\)）</li>
+                  <li>③ 列出新的比例式 \((ar+p):(br+q) = c:d\)</li>
+                  <li>④ 用性質① 交叉相乘，解出 \(r\)</li>
+                  <li>⑤ 回代求原本的量</li>
+                </ul>
+              </li>
+              <li><strong>完整範例</strong>：
+                \[\begin{aligned}
+                & \text{原本 } 5:2,\ \text{各加 } 4,\ \text{變成 } 2:1 \\
+                & (5r+4):(2r+4) = 2:1 \\
+                & 1 \times (5r+4) = 2 \times (2r+4) \\
+                & 5r + 4 = 4r + 8 \\
+                & r = 4 \\
+                & \text{原本是 } 20 \text{ 與 } 8
+                \end{aligned}\]
+              </li>
+              <li><strong>兩個容易錯的地方</strong>：<strong>交叉相乘要整組乘</strong>（\(2 \times (2r+4)\) 的 \(2\) 要乘進括號裡的每一項）；<strong>減少的量要記得寫成負號</strong>。</li>
+              <li><strong>算完要驗算</strong>：把 \(r\) 代回去，檢查變化後的兩個數化簡之後真的等於題目給的新比；順便確認每個量都是<strong>合理的正數</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_change.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：綠色切割墊上平放著兩根淺色木條，上下並排、左端切齊在同一條直線上，上面那根大約是下面那根的兩倍長。每一根的右端都接上了一小段顏色較深的木條、首尾相接排成一直線，上面接的那一小段明顯比下面接的那一小段長。黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年用一根手指按著上面那段深色木條的接縫處，深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女托著臉頰在旁邊看。一隻奶油色柴犬趴在工作檯前緣，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：進出料工作台</h3>
+            <p class="interactive-instruction">調整<strong>一份的大小 \(r\)</strong>，找出讓變化後的比剛好等於目標的那個 \(r\)：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-chg" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="cg-case-group">
+                      <button class="pick-btn active" data-cg-case="0">各加料</button>
+                      <button class="pick-btn" data-cg-case="1">各領走</button>
+                      <button class="pick-btn" data-cg-case="2">一加一減</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cg-r-slider">一份的大小 \(r\)：<span id="cg-r-val" class="val-num">2</span></label>
+                    <input type="range" id="cg-r-slider" min="1" max="12" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (數量變化問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 工坊裡木片與塑膠片的數量比原本是 \(4 : 3\)。後來又補進了 \(9\) 片木片和 \(2\) 片塑膠片，兩者的數量比變成 \(3 : 2\)。則原本有木片幾片？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-19" value="A"><span class="option-text">A. \(36\) 片</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="B"><span class="option-text">B. \(12\) 片</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="C"><span class="option-text">C. \(48\) 片</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="D"><span class="option-text">D. \(57\) 片</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設原本有木片 \(4r\) 片、塑膠片 \(3r\) 片：
+              \[\begin{aligned}
+              & (4r+9):(3r+2) = 3:2 \\
+              & 2(4r+9) = 3(3r+2) \\
+              & 8r + 18 = 9r + 6 \\
+              & r = 12 \\
+              & \text{木片} = 4 \times 12 = 48
+              \end{aligned}\]
+              A 求出來的是塑膠片 \(3 \times 12 = 36\) 片。<br>
+              B 是「一份」的大小 \(r=12\)。<br>
+              D 是<strong>補進之後</strong>的木片數 \(48+9=57\)，題目問的是原本。<br>
+              驗算：補進後是 \(57\) 與 \(38\)，\(57:38 = 3:2\) ✓。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 工坊裡長木條與短木條的數量比原本是 \(9 : 7\)。用掉 \(3\) 根長木條和 \(6\) 根短木條後，兩者的數量比變成 \(3 : 2\)。則原本長木條與短木條<strong>共有</strong>幾根？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-20" value="A"><span class="option-text">A. \(36\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="B"><span class="option-text">B. \(28\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="C"><span class="option-text">C. \(55\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="D"><span class="option-text">D. \(64\) 根</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設原本有長木條 \(9r\) 根、短木條 \(7r\) 根，用掉的量寫成<strong>負的</strong>：
+              \[\begin{aligned}
+              & (9r-3):(7r-6) = 3:2 \\
+              & 2(9r-3) = 3(7r-6) \\
+              & 18r - 6 = 21r - 18 \\
+              & -3r = -12,\quad r = 4 \\
+              & \text{共 } 9r + 7r = 16 \times 4 = 64
+              \end{aligned}\]
+              A 只算出長木條 \(9 \times 4 = 36\) 根。<br>
+              B 只算出短木條 \(7 \times 4 = 28\) 根。<br>
+              C 是<strong>用掉之後</strong>的總數 \(33+22=55\)，題目問的是原本。<br>
+              驗算：用掉後是 \(33\) 與 \(22\)，\(33:22 = 3:2\) ✓。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 應用——比例尺
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> 重點 11：應用三——比例尺
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>比例尺的定義</strong>：
+                \[\text{比例尺} = \text{圖上距離} : \text{實際距離}\]
+                習慣把前項化成 \(1\)，寫成 \(1 : k\)。\(1:150\) 的意思是「圖上 \(1\) 公分代表實際 \(150\) 公分」。</li>
+              <li><strong>解題就是列一個比例式</strong>：
+                \[1 : k = \text{圖上長度} : \text{實際長度}\]
+                再用性質① 交叉相乘。已知任意兩個，第三個就求得出來。</li>
+              <li><strong>單位一定要先統一</strong>：比例尺的兩項<strong>沒有單位</strong>，所以圖上與實際必須用同一個單位去比。
+                \[\begin{aligned}
+                & 1 \text{ 公尺} = 100 \text{ 公分} \\
+                & 1 \text{ 公里} = 1000 \text{ 公尺} \\
+                & 1 \text{ 公里} = 100000 \text{ 公分}
+                \end{aligned}\]
+              </li>
+              <li><strong>完整範例</strong>：比例尺 \(1:400\) 的圖上量得 \(7\) 公分，實際是多少公尺？
+                \[\begin{aligned}
+                & 1 : 400 = 7 : x \\
+                & x = 2800 \text{ 公分} \\
+                & = 28 \text{ 公尺}
+                \end{aligned}\]
+              </li>
+              <li><strong>圖示比例尺</strong>：地圖上那條「畫了一段線段並標上距離」的尺，用法完全一樣——先用尺量出那條線段在圖上有幾公分，就得到一組「圖上：實際」，再拿去比。</li>
+              <li><strong>面積不是直接乘</strong>：長度縮小成 \(\frac{1}{k}\) 時，面積會縮小成 \(\frac{1}{k^2}\)（長和寬各縮一次）。所以由圖上面積換算實際面積要<strong>乘以 \(k^2\)</strong>，不是乘以 \(k\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ratio_scale.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：長木工作檯上放著一座手工微縮小屋模型，模型後方的窗外可以看到一棟輪廓與比例完全相同、但大得多的真實房屋。深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女蹲低身子，把一把直尺平放在模型旁邊量它的寬度；黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年站在她身後，一手指向窗外那棟房子。一隻奶油色柴犬趴在工作檯下方，脖子上掛著一小截黃銅比例尺當吊牌。畫面沒有任何文字與數字。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：比例尺換算台</h3>
+            <p class="interactive-instruction">選一個比例尺，量一個<strong>圖上長度</strong>，看看實際的長度是多少：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-scale" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">比例尺</span>
+                    <div class="btn-group" id="sc-k-group">
+                      <button class="pick-btn active" data-sc-k="0">\(1:200\)</button>
+                      <button class="pick-btn" data-sc-k="1">\(1:800\)</button>
+                      <button class="pick-btn" data-sc-k="2">\(1:25000\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sc-l-slider">圖上量到的長度（公分）：<span id="sc-l-val" class="val-num">6</span></label>
+                    <input type="range" id="sc-l-slider" min="1" max="20" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (比例尺)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 某座教室模型的比例尺是 \(1 : 150\)。若模型上黑板的長是 \(2.6\) 公分，則實際黑板的長是多少公尺？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-21" value="A"><span class="option-text">A. \(3.9\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="B"><span class="option-text">B. \(39\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="C"><span class="option-text">C. \(0.39\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="D"><span class="option-text">D. \(390\) 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設實際長為 \(x\) 公分：
+              \[\begin{aligned}
+              & 1 : 150 = 2.6 : x \\
+              & x = 150 \times 2.6 = 390 \text{ 公分} \\
+              & = 3.9 \text{ 公尺}
+              \end{aligned}\]
+              D 算出的 \(390\) 是<strong>公分</strong>，忘了換算成公尺（\(100\) 公分才是 \(1\) 公尺）。<br>
+              B 是把 \(390\) 公分誤除以 \(10\)。<br>
+              C 是把 \(390\) 公分誤除以 \(1000\)。<br>
+              合理性檢查：一塊黑板大約 \(4\) 公尺長，只有 A 是合理的。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 一張校園平面圖上，兩棵樹之間的距離是 \(4\) 公分，而它們的實際距離是 \(60\) 公尺。則這張平面圖的比例尺是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-22" value="A"><span class="option-text">A. \(1 : 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="B"><span class="option-text">B. \(1 : 1500\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="C"><span class="option-text">C. \(1 : 240\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="D"><span class="option-text">D. \(1 : 6000\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。比例尺的兩項<strong>沒有單位</strong>，所以要先把實際距離換成公分：
+              \[\begin{aligned}
+              & 60 \text{ 公尺} = 6000 \text{ 公分} \\
+              & \text{比例尺} = 4 : 6000 \\
+              & = 1 : 1500
+              \end{aligned}\]
+              A 直接拿 \(4 : 60\) 化簡，<strong>單位沒有統一</strong>（一個是公分、一個是公尺）。<br>
+              C 是把 \(60 \times 4\) 當成後項。<br>
+              D 忘了把前項化成 \(1\)（\(4:6000\) 的前項要除以 \(4\)，後項也要跟著除以 \(4\)）。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 比例式速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>比與比值</strong>：\(a:b\) 的前項是 \(a\)、後項是 \(b\)；比值 \(=\dfrac{a}{b}\)（\(b \ne 0\)），也就是「\(a\) 是 \(b\) 的幾倍」。<strong>順序不可顛倒</strong>，\(a:b\) 與 \(b:a\) 的比值互為倒數。</li>
+              <li><strong>各種數都可以</strong>：負數、分數、小數都能當比的項。分數比<strong>除以就是乘倒數</strong>，小數比<strong>先化成分數</strong>，結果一律化最簡。</li>
+              <li><strong>相等的比</strong>：前後項<strong>同乘或同除</strong>以不為 \(0\) 的數，比不變；<strong>同加同減不行</strong>。</li>
+              <li><strong>最簡整數比</strong>：兩項都是整數<strong>且互質</strong>。分數比同乘分母的最小公倍數，小數比同乘 \(10\) 的次方。</li>
+              <li><strong>性質①</strong>：\(a:b=c:d \Rightarrow ad = bc\)（<strong>外項乘積＝內項乘積</strong>）。項是一次式時<strong>要用分配律整組乘</strong>。</li>
+              <li><strong>性質②</strong>：\(x:y=a:b \Rightarrow\) 可設 \(x=ar\)、\(y=br\)（\(r \ne 0\)）。\(r\) 就是「<strong>一份</strong>」，兩個未知數因此壓成一個。</li>
+              <li><strong>由等式反求比</strong>：\(px = qy \Rightarrow x:y = q:p\)（<strong>係數互換</strong>）。組合比代入後 \(r\) 會自己約掉。</li>
+              <li><strong>比不是數本身</strong>：\(x:y=9:5\) 不代表 \(x=9\)、\(y=5\)。<strong>沒有常數項</strong>的一次式（齊次）比值才固定；出現 \(+1\)、\(-2\) 這種常數就<strong>不固定</strong>，舉兩個 \(r\) 就能反證。</li>
+              <li><strong>倍數問題</strong>：「甲的 \(m\) 倍＝乙的 \(n\) 倍」\(\Rightarrow mx=ny \Rightarrow x:y=n:m\)。<strong>倍數大的那個量反而小</strong>。</li>
+              <li><strong>數量變化問題</strong>：原比先設 \(ar\)、\(br\)，變化後列新比例式，交叉相乘解 \(r\)，回代求原量。<strong>減少要寫負號</strong>。</li>
+              <li><strong>比例尺</strong>：\(1:k =\) 圖上：實際，<strong>單位要先統一</strong>；面積要乘 \(k^2\) 不是 \(k\)。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-cubes"></i> 回到工坊：為什麼師傅只看比</h4>
+              <h5><i class="fa-solid fa-ruler"></i> 「差不多」為什麼會歪</h5>
+              <p>阿寬那根歪掉的屋頂，問題不在他量得不夠準。他其實兩根都量得很仔細——只是<strong>各自量各自的</strong>。模型會不會像，從來不取決於某一根有多長，而取決於<strong>兩根之間的關係</strong>。這就是比。</p>
+              <p>把這件事寫成數學之後，好處立刻出現：一旦知道 \(x:y = a:b\)，你就可以說「\(x\) 有 \(a\) 份、\(y\) 有 \(b\) 份」，剩下的問題只有一個——<strong>一份是多大</strong>。兩個未知數就這樣變成一個 \(r\)。</p>
+              <h5><i class="fa-solid fa-triangle-exclamation"></i> 全節最貴的一個錯</h5>
+              <p>如果整節只能記一件事，記這個：<strong>\(9:5\) 不是 \(9\) 和 \(5\)</strong>。它是一個<strong>形狀</strong>，不是一組數字。同樣是 \(9:5\)，可以是 \(9\) 片和 \(5\) 片，也可以是 \(90\) 片和 \(50\) 片——就像同一張設計圖，可以做成桌上的小屋，也可以蓋成真的房子。</p>
+              <p>所以只要式子裡冒出常數項（\(+3\)、\(-1\) 這種），答案就會跟著「一份多大」跑掉。這時候不要硬算，<strong>換兩個 \(r\) 代代看</strong>，答案不一樣就代表它本來就沒有固定值。</p>
+              <h5><i class="fa-solid fa-forward"></i> 再往前走一步</h5>
+              <p>下一節 \(3\)-\(2\) 會問一個新問題：如果兩個量的比值<strong>始終不變</strong>，那它們之間是什麼關係？答案是<strong>正比</strong>——而它畫在坐標平面上，正好是上一章那條<strong>通過原點的直線</strong>。第 \(2\) 章與第 \(3\) 章就在那裡接起來。</p>
+              <p>再往後，第四冊的<strong>相似形</strong>會把「同一個形狀、不同的大小」講成完整的一套定理；那時候你會發現，這一節在工作檯上做的事——按比放大、按比縮小、形狀不走樣——就是整套相似形的起點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

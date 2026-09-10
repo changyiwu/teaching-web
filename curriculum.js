@@ -59,7 +59,7 @@
       {
         "chapter": "第3章 比與比例式",
         "sections": [
-          { "code": "3-1", "title": "比例式" },
+          { "code": "3-1", "title": "比例式", "status": "completed" },
           { "code": "3-2", "title": "正比與反比" }
         ]
       },
