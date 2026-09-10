@@ -106,162 +106,6 @@ const CH_MAGENTA = '#f9a8d4';
 const CH_MOSS = '#bef264';
 const CH_SLATE = '#cbd5e1';
 
-/* ==========================================================================
-   3. 本節專屬繪圖工具：坐標平面
-   ========================================================================== */
-
-/**
- * 建立一個坐標平面的座標換算器並把格線與兩軸畫出來。
- * cfg：{ cx, top, unit, min, max, labelEvery, axisColor }
- * 回傳 { px(u), py(v), unit, min, max, left, right, top, bottom }
- *
- * ⚠️ 依〈開發約束 34〉，數線只在**正向那一端**畫箭頭：
- *    x 軸只有右端有箭頭、左端平切；y 軸只有上端有箭頭、下端平切。
- */
-function drawPlane(ctx, cfg) {
-  const min = cfg.min, max = cfg.max, unit = cfg.unit;
-  const span = (max - min) * unit;
-  const left = cfg.cx - span / 2;
-  const top = cfg.top;
-  const px = u => left + (u - min) * unit;
-  const py = v => top + (max - v) * unit;
-  const ox = px(0), oy = py(0);
-  const labelEvery = cfg.labelEvery || 1;
-  const axisColor = cfg.axisColor || CH_SLATE;
-
-  ctx.save();
-  // 格線
-  ctx.strokeStyle = 'rgba(203, 213, 225, 0.13)';
-  ctx.lineWidth = 1;
-  for (let u = min; u <= max; u++) {
-    ctx.beginPath();
-    ctx.moveTo(px(u), py(min));
-    ctx.lineTo(px(u), py(max));
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(px(min), py(u));
-    ctx.lineTo(px(max), py(u));
-    ctx.stroke();
-  }
-
-  // 兩條坐標軸（左端／下端平切，右端／上端加箭頭）
-  ctx.strokeStyle = axisColor;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(px(min), oy);
-  ctx.lineTo(px(max) + 8, oy);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(ox, py(min));
-  ctx.lineTo(ox, py(max) - 8);
-  ctx.stroke();
-  axisArrow(ctx, px(max) + 4, oy, 'right', axisColor);
-  axisArrow(ctx, ox, py(max) - 4, 'up', axisColor);
-
-  // 刻度與數字
-  ctx.fillStyle = MUTED;
-  ctx.font = f(600, 11.5);
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  for (let u = min; u <= max; u++) {
-    if (u === 0 || u % labelEvery !== 0) continue;
-    ctx.beginPath();
-    ctx.moveTo(px(u), oy - 3);
-    ctx.lineTo(px(u), oy + 3);
-    ctx.strokeStyle = axisColor;
-    ctx.stroke();
-    ctx.fillText(String(u), px(u), oy + 6);
-  }
-  ctx.textAlign = 'right';
-  ctx.textBaseline = 'middle';
-  for (let v = min; v <= max; v++) {
-    if (v === 0 || v % labelEvery !== 0) continue;
-    ctx.beginPath();
-    ctx.moveTo(ox - 3, py(v));
-    ctx.lineTo(ox + 3, py(v));
-    ctx.strokeStyle = axisColor;
-    ctx.stroke();
-    ctx.fillText(String(v), ox - 7, py(v));
-  }
-
-  // 軸名與原點
-  ctx.fillStyle = axisColor;
-  ctx.font = fi(700, 14);
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('x', px(max) + 26, oy);
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('y', ox + 12, py(max) + 2);
-  ctx.font = fi(700, 13);
-  ctx.textAlign = 'right';
-  ctx.textBaseline = 'top';
-  ctx.fillText('O', ox - 6, oy + 5);
-  ctx.restore();
-
-  return { px, py, unit, min, max, ox, oy, left, right: px(max), top, bottom: py(min) };
-}
-
-// 坐標軸的正向箭頭：實心三角形，比 drawArrow 的箭頭大得多。
-// 這個箭頭是〈開發約束 34〉用來標示正向的唯一記號，投影 0.7 倍下必須讀得出來。
-function axisArrow(ctx, x, y, dir, color) {
-  const L = 13, W = 5.5;
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  if (dir === 'right') {
-    ctx.moveTo(x + L, y);
-    ctx.lineTo(x, y - W);
-    ctx.lineTo(x, y + W);
-  } else {
-    ctx.moveTo(x, y - L);
-    ctx.lineTo(x - W, y);
-    ctx.lineTo(x + W, y);
-  }
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-}
-
-// 在坐標平面上畫一個發光的點
-function drawDot(ctx, x, y, color, r) {
-  ctx.save();
-  ctx.shadowColor = color;
-  ctx.shadowBlur = 10;
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.arc(x, y, r || 6, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.shadowBlur = 0;
-  ctx.strokeStyle = 'rgba(255,255,255,0.75)';
-  ctx.lineWidth = 1.2;
-  ctx.beginPath();
-  ctx.arc(x - (r || 6) * 0.3, y - (r || 6) * 0.35, (r || 6) * 0.32, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.restore();
-}
-
-// 一支小旗子（旗桿底端就是那個點）
-function drawFlag(ctx, x, y, color) {
-  // 太靠近畫布頂端時旗桿改成向下掛，否則會插進標題那一列
-  const d = (y > 80) ? -1 : 1;
-  ctx.save();
-  ctx.strokeStyle = CH_SLATE;
-  ctx.lineWidth = 1.8;
-  ctx.beginPath();
-  ctx.moveTo(x, y);
-  ctx.lineTo(x, y + d * 26);
-  ctx.stroke();
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.moveTo(x + 1, y + d * 26);
-  ctx.lineTo(x + 18, y + d * 21);
-  ctx.lineTo(x + 1, y + d * 15);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-  drawDot(ctx, x, y, color, 5);
-}
 
 // 在點旁邊標一個名稱與坐標
 function labelPoint(ctx, x, y, name, u, v, color, opts) {
@@ -286,18 +130,6 @@ function labelPoint(ctx, x, y, name, u, v, color, opts) {
   ctx.restore();
 }
 
-// 虛線
-function dashLine(ctx, x1, y1, x2, y2, color, dash) {
-  ctx.save();
-  ctx.setLineDash(dash || [5, 4]);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 1.6;
-  ctx.beginPath();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  ctx.stroke();
-  ctx.restore();
-}
 
 // 方向的中文說法：正負各一句，畫面上的敘述要跟著滑桿翻向
 function dirWord(v, pos, neg) {
@@ -306,19 +138,6 @@ function dirWord(v, pos, neg) {
   return '不動';
 }
 
-// 象限編號 → 中文；0 代表在坐標軸上
-function quadName(q) {
-  return ['不屬於任何象限', '第一象限', '第二象限', '第三象限', '第四象限'][q];
-}
-
-// 由兩個坐標判象限（在軸上回傳 0）
-function quadOf(x, y) {
-  if (x === 0 || y === 0) return 0;
-  if (x > 0 && y > 0) return 1;
-  if (x < 0 && y > 0) return 2;
-  if (x < 0 && y < 0) return 3;
-  return 4;
-}
 
 /* ==========================================================================
    重點 1：數對順序實驗台
