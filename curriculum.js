@@ -53,7 +53,7 @@
         "chapter": "第2章 直角坐標與二元一次方程式的圖形",
         "sections": [
           { "code": "2-1", "title": "直角坐標平面", "status": "completed" },
-          { "code": "2-2", "title": "二元一次方程式的圖形" }
+          { "code": "2-2", "title": "二元一次方程式的圖形", "status": "completed" }
         ]
       },
       {

@@ -4,39 +4,1284 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>2-2 二元一次方程式的圖形 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-2 二元一次方程式的圖形 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第二冊 (1下) • 第2章 直角坐標與二元一次方程式的圖形</div>
-    <h1>2-2 二元一次方程式的圖形</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第二冊 • 第二章</span>
+        <h1>2-2 二元一次方程式的圖形</h1>
+        <p>第 1 章說過，<strong>二元一次方程式有無限多組解</strong>；上一節又把整片海面鋪成了<strong>坐標平面</strong>。這一節就是把兩件事接起來——把每一組解 \(x=a\)、\(y=b\) 寫成數對 \((a,b)\)，當成坐標<strong>描到平面上</strong>。奇妙的事情發生了：那些點不是散開的，而是乖乖排成<strong>一條直線</strong>。有了這條線，很多事情就變得看得見：<strong>兩組解就足以畫出整條線</strong>、線<strong>穿過哪些象限</strong>一眼可知、\(y=m\) 與 \(x=n\) 原來是<strong>水平線與鉛垂線</strong>、<strong>「點在線上」和「坐標是解」是同一件事</strong>。最後，上一章埋的那句話會在這裡兌現：<strong>聯立方程式的解，就是兩條直線的交點</strong>。</p>
+      </div>
+      <!-- Progress navigation (10 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-map-pin"></i> 一組解一個點</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-chart-line"></i> 圖形是直線</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-pen-ruler"></i> 兩點作圖法</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-crosshairs"></i> 與兩軸的交點</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-grip-lines"></i> \(y=m\) 與 \(x=n\)</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-magnifying-glass-location"></i> 點在圖形上</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-bullseye"></i> 通過原點</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-arrow-rotate-left"></i> 由兩點反求</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-xmarks-lines"></i> 交點＝聯立解</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-draw-polygon"></i> 圍成的面積</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Vintage Nautical Chart Room)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(245, 158, 11, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-anchor" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);"></i> 課前暖身漫畫：插滿旗子之後
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            領航員小汐給了見習製圖員阿岸一條航行規則：<strong style="color:#fcd34d">\(x - y = 0\)</strong>——也就是「往東走幾格，就往北走幾格」。阿岸照著找解：\((1,1)\)、\((2,2)\)、\((3,3)\)⋯⋯每找到一組就在海圖上插一支小旗。插到第三支的時候他抬起頭：<strong style="color:#fcd34d">這些旗子怎麼排得這麼整齊？</strong>小汐把黃銅平行尺往桌上一放，尺的邊緣同時貼住了三支旗——它們<strong style="color:#fcd34d">在同一條直線上</strong>。而且既然是直線，<strong style="color:#fcd34d">只要兩支旗就畫得出來</strong>，剩下的無限多組解，全都躺在這條線上等著。這一節要做的，就是把「解」與「線」這兩個字換著用。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古航海製圖室風四格漫畫：第一格，紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女把一張摺起的紙條推過大橡木桌，遞給對面的黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年；第二格，少年俯身在攤開的羊皮方格海圖上插下三支小紅旗，三支旗的黃銅底座各落在一個格點上、排成一條斜斜的直線；第三格，少年猛地抬頭、瞪大眼睛指著那三支旗，少女轉頭看過來；第四格，少女把一把長長的黃銅平行尺平放在海圖上，尺的直邊同時碰到三支旗的底座。戴黃銅小圓牌項圈的深灰色虎斑貓四格都在桌上，桌角每格都有一盞黃銅提燈與幾捲海圖。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 一組解就是一個點
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-map-pin" aria-hidden="true"></i> 重點 1：一組解，就是平面上的一個點
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先回憶第 1 章</strong>：一個二元一次方程式（例如 \(x - 2y = 1\)）有<strong>無限多組解</strong>。給定任何一個 \(x\)，都能算出配套的 \(y\)。</li>
+              <li><strong>三段翻譯</strong>：同一件事有三種長相，要能自由換來換去。
+                <ul>
+                  <li>⑴ <strong>解</strong>：\(x = 1\)、\(y = 0\)</li>
+                  <li>⑵ <strong>數對</strong>：\((1, 0)\)</li>
+                  <li>⑶ <strong>坐標平面上的點</strong>：從原點向右 \(1\)、上下不動的那個位置</li>
+                </ul>
+              </li>
+              <li><strong>順序不可以顛倒</strong>：數對<strong>前面放 \(x\)、後面放 \(y\)</strong>。把 \(x=4\)、\(y=7\) 寫成 \((7,4)\) 就會標到完全不同的位置去（上一節的兩支旗子）。</li>
+              <li><strong>解不一定是整數</strong>：\(x - 2y = 1\) 也有 \(x = 2\)、\(y = \dfrac{1}{2}\) 這種解，它一樣是平面上一個實實在在的點，只是落在格線之間。</li>
+              <li><strong>怎麼一組一組找出來</strong>：把方程式整理成「\(y\) 等於含 \(x\) 的式子」，然後<strong>挑一個 \(x\) 代進去</strong>，就得到配套的 \(y\)。挑<strong>能整除的 \(x\)</strong> 算起來最輕鬆。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>方程式 \(x - 2y = 1\)</th><th>解</th><th>數對</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>代 \(x = 1\)</td><td>\(x=1\)、\(y=0\)</td><td class="sign-pos">\((1,0)\)</td></tr>
+                <tr><td>代 \(x = 3\)</td><td>\(x=3\)、\(y=1\)</td><td class="sign-pos">\((3,1)\)</td></tr>
+                <tr><td>代 \(x = -1\)</td><td>\(x=-1\)、\(y=-1\)</td><td class="sign-pos">\((-1,-1)\)</td></tr>
+                <tr><td>代 \(x = 2\)</td><td>\(x=2\)、\(y=\frac{1}{2}\)</td><td class="sign-pos">\(\left(2,\frac{1}{2}\right)\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="line_solution.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年用兩根手指把一支小紅旗插在一個格點上，整張海圖只有這一支旗；旁邊攤開一本皮面航海日誌，那一頁畫著一個空白的兩列表格，紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女把鵝毛筆尖點在表格的其中一格上。戴黃銅小圓牌項圈的深灰色虎斑貓趴在海圖左緣看著旗子。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：解 → 數對 → 點</h3>
+            <p class="interactive-instruction">挑一個 \(x\) 值，看看它<strong>配套的 \(y\)</strong> 是多少，以及這組解會插在哪裡：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sol" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方程式</span>
+                    <div class="btn-group" id="sl-case-group">
+                      <button class="pick-btn active" data-case="0">\(x + 2y = 6\)</button>
+                      <button class="pick-btn" data-case="1">\(x - 3y = 3\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sl-x-slider">代進去的 \(x\)：<span id="sl-x-val" class="val-num">2</span></label>
+                    <input type="range" id="sl-x-slider" min="-4" max="4" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (一組解一個點)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一個點，是二元一次方程式 \(4x - 5y = 13\) 的一組解所對應的點？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-1" value="A"><span class="option-text">A. \((-2, 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-1" value="B"><span class="option-text">B. \((1, 2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-1" value="C"><span class="option-text">C. \((2, -1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-1" value="D"><span class="option-text">D. \((-1, 2)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。把每個數對的<strong>前一個數當 \(x\)、後一個數當 \(y\)</strong> 代進 \(4x-5y\)，算出來等於 \(13\) 的才是解。
+              \[\begin{aligned}
+              & \text{C：} 4 \times 2 - 5 \times (-1) = 13 \\
+              &\quad \text{A：} 4 \times (-2) - 5 \times 1 = -13 \\
+              &\quad \text{B：} 4 \times 1 - 5 \times 2 = -6 \\
+              &\quad \text{D：} 4 \times (-1) - 5 \times 2 = -14
+              \end{aligned}\]
+              只有 C 算出 \(13\)。A 恰好算出 \(-13\)，它是「把 C 的兩個坐標都變號」的結果，代進去會整條式子跟著變號，<strong>不是</strong>同一個方程式的解。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知 \(x = 5\)、\(y = 2\) 是二元一次方程式 \(3x - 7y = 1\) 的一組解。關於這組解在坐標平面上對應的點，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-2" value="A"><span class="option-text">A. 對應到 \((2,5)\)，因為數對要先寫 \(y\) 再寫 \(x\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-2" value="B"><span class="option-text">B. 對應到 \((5,2)\)，這個點在第一象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-2" value="C"><span class="option-text">C. 對應到 \((5,2)\)，這個點在第四象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-2" value="D"><span class="option-text">D. 一組解只是兩個數字，在坐標平面上沒有對應的點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。先驗算這確實是一組解：\(3 \times 5 - 7 \times 2 = 15 - 14 = 1\)。<br>
+              數對的寫法是<strong>前 \(x\) 後 \(y\)</strong>，所以寫成 \((5,2)\)；兩個坐標都是正的，符號是 \((+,+)\)，落在<strong>第一象限</strong>。<br>
+              A 把順序寫反了，\((2,5)\) 是另一個位置（而且它<strong>不是</strong>這個方程式的解：\(3\times2-7\times5=-29\)）。<br>
+              C 的坐標寫對了但象限判錯：第四象限的符號是 \((+,-)\)，\(y\) 要是負的。<br>
+              D 錯在「沒有對應的點」——把解寫成數對、再當成坐標，正是這一節的出發點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 圖形是一條直線
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-line" aria-hidden="true"></i> 重點 2：把解都描上去，會排成一條直線
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>圖形的定義</strong>：把一個二元一次方程式<strong>所有的解</strong>都描在坐標平面上，所形成的圖形，就叫做<strong>這個二元一次方程式的圖形</strong>。</li>
+              <li><strong>核心結論</strong>：在坐標平面上，<strong>二元一次方程式的圖形是一條直線</strong>。</li>
+              <li><strong>為什麼看起來像「幾個點」</strong>：因為我們每次只描得出有限個點。實際上解有無限多組，把它們全部描完，中間的空隙會被填滿，成為一條<strong>沒有缺口的直線</strong>。</li>
+              <li><strong>分數解也在線上</strong>：\(\left(-\frac{1}{2},\ -\frac{1}{2}\right)\)、\(\left(\frac{5}{2},\ \frac{5}{2}\right)\) 這種落在格線之間的解，同樣乖乖躺在那條直線上——課本用<strong>透明片疊合</strong>就是要看這件事。</li>
+              <li><strong>反過來也成立</strong>：這條直線上的<strong>任何一點</strong>，它的坐標都是這個方程式的解。所以「線上的點」和「方程式的解」講的是同一批東西（重點 6 會再用到）。</li>
+              <li><strong>不要說成「散開的一群點」</strong>：一群不相干的點連不成線；這些點會共線，正是因為它們都滿足同一個方程式。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="line_trace.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。海圖上立著五支一模一樣的小紅旗，彼此間隔相等，黃銅底座全都落在格點上，五支旗排成一條斜斜的直線；黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年整個人趴低在桌邊、閉起一隻眼睛沿著這排旗子瞄過去，像木匠瞄一塊板子那樣。紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女從對面探身看。戴黃銅小圓牌項圈的深灰色虎斑貓坐在這排旗子的另一端。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一支一支插旗</h3>
+            <p class="interactive-instruction">把旗子<strong>愈插愈多</strong>（包含落在格線之間的解），看看它們排成什麼形狀：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-trace" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方程式</span>
+                    <div class="btn-group" id="tr-case-group">
+                      <button class="pick-btn active" data-case="0">\(2x - y = 3\)</button>
+                      <button class="pick-btn" data-case="1">\(x + y = 4\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tr-n-slider">描出幾組解：<span id="tr-n-val" class="val-num">3</span></label>
+                    <input type="range" id="tr-n-slider" min="1" max="13" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圖形是直線)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 關於二元一次方程式 \(2x + y = 9\) 的圖形，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-3" value="A"><span class="option-text">A. 它的解只有有限組，所以圖形是幾個分開的點</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-3" value="B"><span class="option-text">B. 只有 \(x\)、\(y\) 都是整數的解，才在圖形上</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-3" value="C"><span class="option-text">C. 它的圖形是一條通過原點的直線</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-3" value="D"><span class="option-text">D. 把它的每一組解都描成點，這些點會排成一條直線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。這正是本節的核心結論：<strong>二元一次方程式的圖形是一條直線</strong>。<br>
+              A 錯在「解只有有限組」：二元一次方程式的解有<strong>無限多組</strong>，隨便給一個 \(x\) 都配得出 \(y\)。<br>
+              B 錯在把分數解排除掉。例如 \(\left(\frac{1}{2},\ 8\right)\)：\(2 \times \frac{1}{2} + 8 = 9\)，它也是解，也在圖形上，只是落在格線之間。<br>
+              C 要實際檢查：把 \((0,0)\) 代進去得 \(2 \times 0 + 0 = 0 \ne 9\)，所以<strong>不通過原點</strong>（重點 7 會專門處理這件事）。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 小汐把 \(x - 3y = 6\) 的四組解描成四個點：\((0,-2)\)、\((3,-1)\)、\((6,0)\)、\((9,1)\)，發現四點共線。她想再插一支旗，下列哪一個點<strong>也一定</strong>落在同一條直線上？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-4" value="A"><span class="option-text">A. \((-3, -3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-4" value="B"><span class="option-text">B. \((1, -1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-4" value="C"><span class="option-text">C. \((-3, 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-4" value="D"><span class="option-text">D. \((2, -2)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。那條直線就是 \(x-3y=6\) 的圖形，所以「在線上」等於「代進去會成立」。逐一檢查：
+              \[\begin{aligned}
+              & \text{A：} (-3) - 3 \times (-3) = 6 \\
+              &\quad \text{B：} 1 - 3 \times (-1) = 4 \\
+              &\quad \text{C：} (-3) - 3 \times 3 = -12 \\
+              &\quad \text{D：} 2 - 3 \times (-2) = 8
+              \end{aligned}\]
+              只有 A 等於 \(6\)。<br>
+              C 和 A 的 \(y\) 只差一個負號，代進去卻差了 \(18\)——\(-3y\) 這一項對 \(y\) 的正負很敏感，抄的時候要特別小心。<br>
+              B、D 算出來的 \(4\)、\(8\) 都在 \(6\) 附近，光看點的位置「好像差不多」，但只要不等於 \(6\) 就不在線上。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 兩點作圖法
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-pen-ruler" aria-hidden="true"></i> 重點 3：兩組解就夠了——兩點作圖法
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>憑什麼只要兩點</strong>：通過<strong>相異兩點</strong>的直線<strong>只有一條</strong>。既然二元一次方程式的圖形是一條直線，那麼只要抓住線上的兩個點，整條線就被釘死了。</li>
+              <li><strong>三個步驟</strong>：
+                <ul>
+                  <li>步驟 1：找出<strong>任意兩組解</strong>。</li>
+                  <li>步驟 2：把這兩組解對應的點<strong>描在坐標平面上</strong>。</li>
+                  <li>步驟 3：畫一條<strong>通過這兩點</strong>的直線。</li>
+                </ul>
+              </li>
+              <li><strong>盡量挑整數解</strong>：整數解落在格點上，描起來準；分數解落在格線之間，手一抖線就歪了。挑 \(x\) 的時候，找<strong>能被 \(y\) 的係數整除</strong>的那些值。</li>
+              <li><strong>兩點不可以重合</strong>：兩組解如果算出同一個點，那只是<strong>一個</strong>點，通過它的直線有無限多條，畫不出唯一的圖形。</li>
+              <li><strong>兩點離遠一點比較準</strong>：兩個點靠得太近時，畫線的角度誤差會被放大，延伸出去就偏掉了。</li>
+              <li><strong>畫完可以驗算</strong>：再找第三組解，看它是不是也落在剛畫的線上；落不上去就是前面算錯了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="line_twopoint.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。海圖上只插著兩支旗，一支紅色一支藍色，分別落在相距很遠的兩個格點上；一把長長的黃銅平行尺被按在海圖上，尺的直邊同時碰到兩支旗的底座，紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女另一手拿著鵝毛筆準備沿著尺邊畫線，黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年壓住尺的另一端。戴黃銅小圓牌項圈的深灰色虎斑貓坐在海圖右側。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：挑兩組解來畫線</h3>
+            <p class="interactive-instruction">替 \(3x + 2y = 6\) 挑<strong>兩個 \(x\) 值</strong>，看看畫出來的線好不好畫：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-two" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tw-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tw-a-slider">第一組解的 \(x\)：<span id="tw-a-val" class="val-num">0</span></label>
+                    <input type="range" id="tw-a-slider" min="-2" max="6" value="0" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tw-b-slider">第二組解的 \(x\)：<span id="tw-b-val" class="val-num">4</span></label>
+                    <input type="range" id="tw-b-slider" min="-2" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tw-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩點作圖法)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 要在坐標平面上畫出 \(5x + 2y = 10\) 的圖形，下列做法何者<strong>正確且最有效率</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-5" value="A"><span class="option-text">A. 找一組解描一個點，再畫一條通過它的直線</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-5" value="B"><span class="option-text">B. 找兩組解描成兩點，再畫一條通過這兩點的直線</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-5" value="C"><span class="option-text">C. 至少要找出十組解，才能確定圖形的形狀</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-5" value="D"><span class="option-text">D. 找兩組解描成兩點，再畫一條通過這兩點的曲線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。因為圖形是<strong>直線</strong>，而通過相異兩點的直線<strong>只有一條</strong>，所以兩組解就把整條線釘死了。<br>
+              A 只描一個點是不夠的：通過同一個點的直線有<strong>無限多條</strong>，沒辦法決定該往哪個方向畫。<br>
+              C 不是錯，而是白費力氣——多找的那八組解只會落在同一條線上，得到的圖形完全一樣。<br>
+              D 的點抓對了但形狀畫錯：二元一次方程式的圖形<strong>一定是直線</strong>，不會是彎的。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 要畫 \(4x - 3y = 12\) 的圖形，下列哪一組的<strong>兩個點都是它的解</strong>，可以拿來描點連線？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-6" value="A"><span class="option-text">A. \((3,0)\) 與 \((0,4)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-6" value="B"><span class="option-text">B. \((0,-4)\) 與 \((-3,0)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-6" value="C"><span class="option-text">C. \((3,0)\) 與 \((0,-4)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-6" value="D"><span class="option-text">D. \((0,4)\) 與 \((-3,0)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。四個候選點各代一次 \(4x-3y\)，依 \((3,0)\)、\((0,-4)\)、\((0,4)\)、\((-3,0)\) 的順序：
+              \[\begin{aligned}
+              & 4 \times 3 - 3 \times 0 = 12 \;\checkmark \\
+              &\quad 4 \times 0 - 3 \times (-4) = 12 \;\checkmark \\
+              &\quad 4 \times 0 - 3 \times 4 = -12 \;\times \\
+              &\quad 4 \times (-3) - 3 \times 0 = -12 \;\times
+              \end{aligned}\]
+              兩個都對的只有 C。<br>
+              A、B、D 各混進了一個算出 \(-12\) 的點——那是<strong>把正負號弄反</strong>的結果，\((0,4)\) 與 \((-3,0)\) 其實是另一條線 \(4x-3y=-12\) 的解。<br>
+              順帶一提，C 的這兩個點正好就是這條線<strong>與兩軸的交點</strong>，是最好描的一組（重點 4 會專門講）。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 與兩軸的交點、不通過哪個象限
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-crosshairs" aria-hidden="true"></i> 重點 4：與兩軸的交點，以及不通過哪個象限
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>兩個代零的口訣</strong>（來自上一節「軸上的點」）：
+                <ul>
+                  <li>\(x\) 軸上任何一點的 \(y\) 坐標都是 \(0\) \(\Rightarrow\) 令 \(y=0\)，解出的 \(x\) 就是<strong>與 \(x\) 軸的交點</strong>。</li>
+                  <li>\(y\) 軸上任何一點的 \(x\) 坐標都是 \(0\) \(\Rightarrow\) 令 \(x=0\)，解出的 \(y\) 就是<strong>與 \(y\) 軸的交點</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>交點寫成數對時別漏掉那個 \(0\)</strong>：與 \(x\) 軸的交點是 \((\square, 0)\)，與 \(y\) 軸的交點是 \((0, \square)\)。位置放錯就變成完全不同的點。</li>
+              <li><strong>這兩個交點最好用</strong>：它們一定落在軸上，描起來又快又準，是兩點作圖法的<strong>首選</strong>（只要這條線真的和兩軸都相交）。</li>
+              <li><strong>怎麼看「不通過第幾象限」</strong>：把兩個交點描上去、連成線再<strong>往兩端延伸</strong>，然後看四個象限哪一區<strong>完全空著</strong>。</li>
+              <li><strong>一條斜的直線恰好會經過三個象限</strong>，所以「不通過的象限」正好有一個。<strong>通過原點</strong>的斜直線是例外——它只經過相對的兩個象限。</li>
+              <li><strong>不要背規則，畫出來最快</strong>：兩個交點一描，線一連，答案用看的就有了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="line_intercept.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。海圖上另外畫了一條斜的黑墨直線，它與鉛垂線交於一點、與水平線交於另一點，兩個交點上各壓著一枚黃銅小圖釘；黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年探身用鵝毛筆尖點著上面那枚圖釘，紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女在旁邊看。海圖左邊那一整塊區域完全空白，戴黃銅小圓牌項圈的深灰色虎斑貓蜷起來睡在那塊空白上。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：截點與空白的那一區</h3>
+            <p class="interactive-instruction">調整 \(a\)、\(b\)、\(c\)，看 \(ax + by = c\) 的線<strong>切在兩軸的哪裡</strong>、又漏掉哪一個象限：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cept" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ic-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ic-a-slider">\(x\) 的係數 \(a\)：<span id="ic-a-val" class="val-num">1</span></label>
+                    <input type="range" id="ic-a-slider" min="1" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ic-b-slider">\(y\) 的係數 \(b\)：<span id="ic-b-val" class="val-num">2</span></label>
+                    <input type="range" id="ic-b-slider" min="-3" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ic-c-slider">常數項 \(c\)：<span id="ic-c-val" class="val-num">4</span></label>
+                    <input type="range" id="ic-c-slider" min="-6" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ic-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (與兩軸的交點)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 二元一次方程式 \(2x + 5y = 20\) 的圖形，與 \(x\) 軸、\(y\) 軸的交點坐標分別為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-7" value="A"><span class="option-text">A. 與 \(x\) 軸交於 \((10,0)\)、與 \(y\) 軸交於 \((0,4)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-7" value="B"><span class="option-text">B. 與 \(x\) 軸交於 \((0,10)\)、與 \(y\) 軸交於 \((4,0)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-7" value="C"><span class="option-text">C. 與 \(x\) 軸交於 \((4,0)\)、與 \(y\) 軸交於 \((0,10)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-7" value="D"><span class="option-text">D. 與 \(x\) 軸交於 \((20,0)\)、與 \(y\) 軸交於 \((0,20)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩次代零：
+              \[\begin{aligned}
+              & \text{令 } y=0：2x = 20 \Rightarrow x = 10 \\
+              &\quad \Rightarrow \text{與 } x \text{ 軸交於 } (10, 0) \\
+              &\quad \text{令 } x=0：5y = 20 \Rightarrow y = 4 \\
+              &\quad \Rightarrow \text{與 } y \text{ 軸交於 } (0, 4)
+              \end{aligned}\]
+              B 的數字算對了，但兩個數對<strong>裡外顛倒</strong>：與 \(x\) 軸的交點必須把 \(0\) 放在<strong>後面</strong>。<br>
+              C 把兩個交點<strong>對調</strong>了——\(4\) 是令 \(x=0\) 得到的 \(y\)，屬於 \(y\) 軸那一邊。<br>
+              D 是把 \(x\)、\(y\) 的係數當成 \(1\) 直接讀常數項，忘了要除以係數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> 二元一次方程式 \(4x - 5y = 20\) 的圖形<strong>不通過</strong>第幾象限？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-8" value="A"><span class="option-text">A. 第一象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-8" value="B"><span class="option-text">B. 第三象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-8" value="C"><span class="option-text">C. 第四象限</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-8" value="D"><span class="option-text">D. 第二象限</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。先求兩個交點再畫線：
+              \[\begin{aligned}
+              & \text{令 } y=0：4x = 20 \Rightarrow (5, 0) \\
+              &\quad \text{令 } x=0：-5y = 20 \\
+              &\qquad \Rightarrow (0, -4)
+              \end{aligned}\]
+              把 \((5,0)\) 與 \((0,-4)\) 連起來並向兩端延伸：這條線從<strong>左下往右上</strong>爬。<br>
+              往右上延伸過 \((5,0)\) 之後進入<strong>第一象限</strong>；\((5,0)\) 與 \((0,-4)\) 之間那一段 \(x>0\)、\(y<0\)，在<strong>第四象限</strong>；往左下延伸過 \((0,-4)\) 之後 \(x<0\)、\(y<-4\)，在<strong>第三象限</strong>。左上那一區（\(x<0\)、\(y>0\)）完全沒有碰到，所以不通過<strong>第二象限</strong>。<br>
+              A、B、C 都是這條線<strong>確實會經過</strong>的三個象限。一條斜的直線恰好經過三個象限，題目要的是<strong>剩下</strong>的那一個。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: y = m 與 x = n 的圖形
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-grip-lines" aria-hidden="true"></i> 重點 5：\(y=m\) 是水平線，\(x=n\) 是鉛垂線
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>它們也是二元一次方程式</strong>：把 \(y = 5\) 補成 \(0x + y = 5\)，把 \(x = 3\) 補成 \(x + 0y = 3\)，就看得出來它們同屬這一家，圖形當然也是<strong>直線</strong>。</li>
+              <li><strong>\(y=m\) 的圖形</strong>：是一條<strong>與 \(y\) 軸垂直</strong>（也就是水平）的直線，並且與 \(y\) 軸交於 \((0, m)\)。線上每一點的 \(y\) 坐標都是 \(m\)，\(x\) 想是多少都行。</li>
+              <li><strong>\(x=n\) 的圖形</strong>：是一條<strong>與 \(x\) 軸垂直</strong>（也就是鉛垂）的直線，並且與 \(x\) 軸交於 \((n, 0)\)。線上每一點的 \(x\) 坐標都是 \(n\)。</li>
+              <li><strong>兩個特例</strong>：\(y = 0\) 的圖形<strong>就是 \(x\) 軸</strong>；\(x = 0\) 的圖形<strong>就是 \(y\) 軸</strong>。</li>
+              <li><strong>最容易搞混的地方</strong>：「\(y=m\)」裡出現的是 \(y\)，畫出來的線卻<strong>不是</strong>沿著 \(y\) 軸的方向。記法是<strong>「等號右邊那個數釘住哪一個坐標，線就往另一個方向鋪開」</strong>。</li>
+              <li><strong>它不是一個點</strong>：\(x=5\) 不是「\(x\) 軸上的 \(5\) 那一點」，而是通過 \((5,0)\) 的<strong>一整條</strong>鉛垂線。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th></th><th>\(y = m\)</th><th>\(x = n\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>補成二元一次</td><td>\(0x + y = m\)</td><td class="sign-pos">\(x + 0y = n\)</td></tr>
+                <tr><td>線的方向</td><td>水平</td><td class="sign-pos">鉛垂</td></tr>
+                <tr><td>垂直於哪一軸</td><td>\(y\) 軸</td><td class="sign-pos">\(x\) 軸</td></tr>
+                <tr><td>與軸的交點</td><td>\((0, m)\)</td><td class="sign-pos">\((n, 0)\)</td></tr>
+                <tr><td>特例</td><td>\(y=0\) 就是 \(x\) 軸</td><td class="sign-pos">\(x=0\) 就是 \(y\) 軸</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="line_grid.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女把一把長長的黃銅平行尺完全水平地平放在海圖上，黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年把另一把黃銅平行尺完全鉛垂地壓在它上面，兩把尺交叉成一個清楚的十字，每一把都往兩端伸出對方之外；兩人各按住自己那一把。戴黃銅小圓牌項圈的深灰色虎斑貓就坐在兩把尺交叉的地方旁邊。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：水平線與鉛垂線切換台</h3>
+            <p class="interactive-instruction">選一種形式、拖動那個數字，看線<strong>往哪個方向鋪、又釘在哪裡</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-grid" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="gr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">形式</span>
+                    <div class="btn-group" id="gr-mode-group">
+                      <button class="pick-btn active" data-mode="y">\(y = m\)</button>
+                      <button class="pick-btn" data-mode="x">\(x = n\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="gr-k-slider">等號右邊那個數：<span id="gr-k-val" class="val-num">3</span></label>
+                    <input type="range" id="gr-k-slider" min="-5" max="5" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="gr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (水平線與鉛垂線)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 在坐標平面上，通過點 \((-8, 5)\) 且<strong>垂直 \(x\) 軸</strong>的直線，其方程式為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-9" value="A"><span class="option-text">A. \(y = 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-9" value="B"><span class="option-text">B. \(y = -8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-9" value="C"><span class="option-text">C. \(x = -8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-9" value="D"><span class="option-text">D. \(x = 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。「垂直 \(x\) 軸」就是<strong>鉛垂</strong>的直線，形式一定是 \(x = n\)。<br>
+              這條線上每一點的 \(x\) 坐標都相同；已知它通過 \((-8,5)\)，所以那個共同的 \(x\) 坐標是 \(-8\)，方程式為 \(x = -8\)。<br>
+              A 是<strong>水平</strong>線（垂直 \(y\) 軸），方向差了 \(90^\circ\)；它確實通過 \((-8,5)\)，但不符合「垂直 \(x\) 軸」。<br>
+              B、D 都是把 \(-8\) 與 \(5\) 這兩個數字<strong>放錯邊</strong>：\(x=n\) 裡的 \(n\) 要拿<strong>已知點的 \(x\) 坐標</strong>，不能拿 \(y\) 坐標。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 關於方程式 \(y = -\dfrac{7}{2}\) 在坐標平面上的圖形，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-10" value="A"><span class="option-text">A. 它與 \(y\) 軸垂直，且交 \(y\) 軸於 \(\left(0, -\frac{7}{2}\right)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-10" value="B"><span class="option-text">B. 它與 \(x\) 軸垂直，且交 \(x\) 軸於 \(\left(-\frac{7}{2}, 0\right)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-10" value="C"><span class="option-text">C. 它在坐標平面上只是一個點 \(\left(0, -\frac{7}{2}\right)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-10" value="D"><span class="option-text">D. 因為 \(-\frac{7}{2}\) 不是整數，所以畫不出圖形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(y = -\frac{7}{2}\) 屬於 \(y = m\) 這一型（其中 \(m = -\frac{7}{2}\)），圖形是一條<strong>與 \(y\) 軸垂直的水平線</strong>，並且交 \(y\) 軸於 \(\left(0, -\frac{7}{2}\right)\)，位置在 \(x\) 軸下方 \(3.5\) 格。<br>
+              B 把它讀成 \(x = n\) 那一型了：式子裡出現的是 \(y\)，被釘住的就是 \(y\) 坐標。<br>
+              C 錯在「只是一個點」：線上有無限多個點，\(\left(1,-\frac{7}{2}\right)\)、\(\left(-4,-\frac{7}{2}\right)\) 都在上面——\(x\) 是自由的。<br>
+              D 錯在以為分數畫不出來：\(-\frac{7}{2}\) 只是落在 \(-3\) 與 \(-4\) 之間，照樣描得出位置。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 點在圖形上 ⇔ 坐標是解
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass-location" aria-hidden="true"></i> 重點 6：點在圖形上，就是坐標代得進去
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>雙向的等價關係</strong>：
+                <ul>
+                  <li>⑴ 一組解 \(\Rightarrow\) 它對應的點<strong>一定</strong>在圖形上。</li>
+                  <li>⑵ 圖形上的<strong>任何</strong>一點 \(\Rightarrow\) 它的坐標<strong>一定</strong>是一組解。</li>
+                </ul>
+              </li>
+              <li><strong>所以「驗點」只有一招</strong>：把點的 \(x\)、\(y\) 坐標代進方程式，<strong>兩邊相等</strong>就在線上，不相等就不在。不必畫圖、不必量距離。</li>
+              <li><strong>反過來可以求未知的係數</strong>：題目說「圖形通過 \(P\)」，等於<strong>送你一組解</strong>。把 \(P\) 的坐標代進去，方程式裡剩下的那個字母就變成<strong>一元一次方程式</strong>，解出來即可。</li>
+              <li><strong>代的時候盯緊位置</strong>：\(x\) 坐標只能代給 \(x\)，\(y\) 坐標只能代給 \(y\)。把 \(P(3,-2)\) 代成 \(x=-2\)、\(y=3\) 是最常見的失分點。</li>
+              <li><strong>負數要加括號</strong>：\(3 \times b \times (-1)\) 這種地方不加括號就容易掉負號。</li>
+              <li><strong>算完回代驗算</strong>：把解出來的係數放回原式，再把 \(P\) 代一次，兩邊要真的相等。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="line_check.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。海圖上另外畫了一條斜的黑墨直線；一支小紅旗的黃銅底座正好壓在這條線上，線從底座下面穿過去、再從另一邊直直出來；另一支小藍旗立在離線很遠的地方，底座與線之間隔著一大片空白的羊皮。黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年把一面圓形黃銅放大鏡湊到藍旗底座旁邊檢查那道空隙，紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女在旁邊看，戴黃銅小圓牌項圈的深灰色虎斑貓也伸長脖子湊過來。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：驗點機與求係數台</h3>
+            <p class="interactive-instruction">左邊那顆按鈕先<strong>驗一個點在不在線上</strong>，右邊那顆<strong>反過來求出未知係數</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-chk" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ck-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="ck-mode-group">
+                      <button class="pick-btn active" data-mode="check">驗點：\(2x - 3y = 6\)</button>
+                      <button class="pick-btn" data-mode="solve">求係數：\(2x + by = 8\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ck-p-slider">點 \(P\) 的 \(x\) 坐標：<span id="ck-p-val" class="val-num">3</span></label>
+                    <input type="range" id="ck-p-slider" min="-4" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ck-q-slider">點 \(P\) 的 \(y\) 坐標：<span id="ck-q-val" class="val-num">0</span></label>
+                    <input type="range" id="ck-q-slider" min="-4" max="4" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ck-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (點在圖形上)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> 若方程式 \(5x + ay = -7\) 的圖形通過點 \(P(-2, 3)\)，則 \(a\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-11" value="A"><span class="option-text">A. \(\dfrac{17}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-11" value="B"><span class="option-text">B. \(-\dfrac{17}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-11" value="C"><span class="option-text">C. \(11\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-11" value="D"><span class="option-text">D. \(1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。「圖形通過 \(P(-2,3)\)」等於「\(x=-2\)、\(y=3\) 是一組解」，代進去：
+              \[\begin{aligned}
+              & 5 \times (-2) + a \times 3 = -7 \\
+              &\quad -10 + 3a = -7 \\
+              &\quad 3a = 3 \Rightarrow a = 1
+              \end{aligned}\]
+              回代驗算：\(5 \times (-2) + 1 \times 3 = -7\)，成立。<br>
+              A 是把右邊的 \(-7\) 抄成 \(+7\)：\(-10+3a=7\) 會得到 \(a=\frac{17}{3}\)。<br>
+              B 是把 \(5 \times (-2)\) 算成 \(+10\)（漏掉負號）：\(10+3a=-7\) 會得到 \(a=-\frac{17}{3}\)。<br>
+              C 是把 \(P\) 的兩個坐標<strong>對調</strong>，代成 \(x=3\)、\(y=-2\)：\(15-2a=-7\) 會得到 \(a=11\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 下列哪一個點<strong>不在</strong>方程式 \(3x - 4y = 10\) 的圖形上？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-12" value="A"><span class="option-text">A. \((2, -1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-12" value="B"><span class="option-text">B. \((6, 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-12" value="C"><span class="option-text">C. \((-2, -4)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-12" value="D"><span class="option-text">D. \((10, 5)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。四個點各代一次 \(3x - 4y\)，等於 \(10\) 的才在線上：
+              \[\begin{aligned}
+              & \text{A：} 3 \times 2 - 4 \times (-1) = 10 \\
+              &\quad \text{B：} 3 \times 6 - 4 \times 3 = 6 \\
+              &\quad \text{C：} 3 \times (-2) - 4 \times (-4) = 10 \\
+              &\quad \text{D：} 3 \times 10 - 4 \times 5 = 10
+              \end{aligned}\]
+              只有 B 算出 \(6\)，所以 B 不在圖形上。<br>
+              A、C 都用到「減去一個負數等於加」；只要在這一步掉了負號，就會把它們誤判成不在線上。<br>
+              提醒：不在線上<strong>不代表</strong>離線很遠。\((6,3)\) 其實離這條線不遠，光用眼睛看是分不出來的，一定要代進去算。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 通過原點 ⇔ c = 0
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-bullseye" aria-hidden="true"></i> 重點 7：通過原點，就是常數項為 \(0\)
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>原點也只是一個點</strong>：它的坐標是 \((0,0)\)。所以「圖形通過原點」就是「\(x=0\)、\(y=0\) 是一組解」，仍然是重點 6 的那一招。</li>
+              <li><strong>核心結論</strong>：把 \((0,0)\) 代進 \(ax + by = c\)，左邊必定變成 \(0\)，所以
+                \[\begin{aligned}
+                & ax + by = c \text{ 的圖形通過原點} \\
+                &\quad \Longleftrightarrow c = 0
+                \end{aligned}\]
+              </li>
+              <li><strong>用之前要先整理成標準式</strong>：\(y = 3x + 1\) 要先搬成 \(-3x + y = 1\)，看出 \(c = 1 \ne 0\)，才知道它<strong>不</strong>通過原點。沒整理就直接看數字很容易誤判。</li>
+              <li><strong>常數項藏在別處也算</strong>：\(4x - 3y + k - 8 = 0\) 的常數項是 \(k-8\)，通過原點的條件是 \(k - 8 = 0\)，不是 \(k = 0\)。</li>
+              <li><strong>通過原點的線比較特別</strong>：它只會經過<strong>相對的兩個象限</strong>（一、三或二、四），不像一般的斜直線經過三個。</li>
+              <li><strong>不確定就代代看</strong>：這條規則的本質只是「代 \((0,0)\)」，忘記結論時直接代一次最保險。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="line_origin.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。中央那枚黃銅小圓釘外面另外畫了一圈細墨線；一條斜的黑墨直線正好從圓釘上壓過去，另一條斜線則從圓釘下方很遠的地方掠過，中間隔著一大片空白，完全沒有碰到圓釘。紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女用鵝毛筆尖點著那枚圓釘，黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年托著下巴在旁邊看，戴黃銅小圓牌項圈的深灰色虎斑貓在海圖右邊打呵欠。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：原點檢查器</h3>
+            <p class="interactive-instruction">拖動常數項 \(c\)，看直線<strong>平移</strong>，並注意它什麼時候才壓到原點：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-org" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="og-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">左式</span>
+                    <div class="btn-group" id="og-case-group">
+                      <button class="pick-btn active" data-case="0">\(4x - 3y\)</button>
+                      <button class="pick-btn" data-case="1">\(5x + 2y\)</button>
+                      <button class="pick-btn" data-case="2">\(y - 2x\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="og-c-slider">常數項 \(c\)：<span id="og-c-val" class="val-num">3</span></label>
+                    <input type="range" id="og-c-slider" min="-6" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="og-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (通過原點)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 下列哪一個二元一次方程式的圖形<strong>會通過原點</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-13" value="A"><span class="option-text">A. \(7x = 4y\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-13" value="B"><span class="option-text">B. \(7x - 4y = 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-13" value="C"><span class="option-text">C. \(y = 7x + 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-13" value="D"><span class="option-text">D. \(x + y = 4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。把 \((0,0)\) 代進每一個方程式，兩邊相等的才通過原點：
+              \[\begin{aligned}
+              & \text{A：} 7 \times 0 = 4 \times 0 \Rightarrow 0 = 0 \quad \checkmark \\
+              &\quad \text{B：} 0 - 0 = 0 \ne 1 \quad \times \\
+              &\quad \text{C：} 0 \ne 7 \times 0 + 4 = 4 \quad \times \\
+              &\quad \text{D：} 0 + 0 = 0 \ne 4 \quad \times
+              \end{aligned}\]
+              A 整理成標準式是 \(7x - 4y = 0\)，常數項 \(c = 0\)，符合結論。<br>
+              C 要特別小心：它<strong>還沒整理成標準式</strong>，搬過去是 \(-7x + y = 4\)，常數項是 \(4\) 不是 \(0\)。若只看「等號右邊有沒有單獨的數字」就會誤判 A 與 C。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 若方程式 \(6x - 5y + k - 8 = 0\) 的圖形通過坐標平面上的<strong>原點</strong>，則 \(k\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-14" value="A"><span class="option-text">A. \(-8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-14" value="B"><span class="option-text">B. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-14" value="C"><span class="option-text">C. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-14" value="D"><span class="option-text">D. \(7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。直接把原點的坐標 \(x=0\)、\(y=0\) 代進去：
+              \[\begin{aligned}
+              & 6 \times 0 - 5 \times 0 + k - 8 = 0 \\
+              &\quad k - 8 = 0 \Rightarrow k = 8
+              \end{aligned}\]
+              A 是移項時<strong>沒有變號</strong>：把 \(k-8=0\) 寫成 \(k=0-8\)。<br>
+              B 是把結論背成「通過原點就是 \(k=0\)」——真正要等於 \(0\) 的是<strong>整個常數項</strong> \(k-8\)，不是那個字母本身。<br>
+              D 是把「原點」誤當成 \((1,1)\) 代進去：\(6-5+k-8=0\) 會得到 \(k=7\)。原點的坐標是 \((0,0)\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 由圖上兩點反求方程式
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i> 重點 8：反過來，由兩個點求出方程式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>方向反過來了</strong>：前面都是「給方程式，畫出線」；這裡是「給線上的<strong>兩個點</strong>，反求那個方程式」。</li>
+              <li><strong>做法只有三步</strong>：
+                <ul>
+                  <li>步驟 1：把方程式寫成待定的形式，例如 \(y = ax + b\)（或 \(ax + by = 2\) 這種題目指定的樣子）。</li>
+                  <li>步驟 2：把<strong>兩個點各代一次</strong>，得到兩條方程式——這正是一個<strong>二元一次聯立方程式</strong>，未知數是 \(a\) 與 \(b\)。</li>
+                  <li>步驟 3：用第 1 章的<strong>加減消去法或代入消去法</strong>解出 \(a\)、\(b\)，寫回原式。</li>
+                </ul>
+              </li>
+              <li><strong>兩個特例要先看出來，不必列聯立</strong>：
+                <ul>
+                  <li>兩點的 \(x\) 坐標<strong>相同</strong>（如 \((-2,1)\) 與 \((-2,4)\)）\(\Rightarrow\) 是<strong>鉛垂線</strong> \(x = -2\)。</li>
+                  <li>兩點的 \(y\) 坐標<strong>相同</strong>（如 \((1,-3)\) 與 \((5,-3)\)）\(\Rightarrow\) 是<strong>水平線</strong> \(y = -3\)。</li>
+                </ul>
+              </li>
+              <li><strong>鉛垂線寫不成 \(y = ax + b\)</strong>：那一型的每個 \(x\) 只配一個 \(y\)，而鉛垂線上同一個 \(x\) 配了無限多個 \(y\)。遇到這種題目要直接寫成 \(x = n\)。</li>
+              <li><strong>兩點不可以是同一點</strong>：那樣兩條式子會變成同一條，解不出唯一的 \(a\)、\(b\)。</li>
+              <li><strong>算完把兩個點都回代一次</strong>：兩個都要成立，只驗一個容易漏掉抄錯的那條。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="line_recover.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。海圖上只有兩支旗：紅旗立在水平線上方偏左，藍旗立在水平線下方偏右，兩個底座都沒有碰到任何一條線；紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女把一條深色細繩從紅旗桿頂拉到藍旗桿頂，繩子繃成一條由左上往右下的斜直線；黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年拿著一把黃銅分規，兩隻尖腳分別抵在兩支旗的底座上。戴黃銅小圓牌項圈的深灰色虎斑貓在旁邊看著那條繩子。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩點反求台</h3>
+            <p class="interactive-instruction">把兩支旗插到任意位置，看看反推出來的<strong>方程式</strong>長什麼樣子：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-rec" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rc-ax-slider">\(A\) 的 \(x\) 坐標：<span id="rc-ax-val" class="val-num">-2</span></label>
+                    <input type="range" id="rc-ax-slider" min="-4" max="4" value="-2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rc-ay-slider">\(A\) 的 \(y\) 坐標：<span id="rc-ay-val" class="val-num">-1</span></label>
+                    <input type="range" id="rc-ay-slider" min="-4" max="4" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rc-bx-slider">\(B\) 的 \(x\) 坐標：<span id="rc-bx-val" class="val-num">2</span></label>
+                    <input type="range" id="rc-bx-slider" min="-4" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rc-by-slider">\(B\) 的 \(y\) 坐標：<span id="rc-by-val" class="val-num">3</span></label>
+                    <input type="range" id="rc-by-slider" min="-4" max="4" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (由兩點反求)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> 若方程式 \(y = ax + b\) 的圖形通過 \((1, 3)\) 與 \((-1, 7)\) 兩點，則此方程式為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-15" value="A"><span class="option-text">A. \(y = 2x + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-15" value="B"><span class="option-text">B. \(y = -2x + 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-15" value="C"><span class="option-text">C. \(y = -2x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-15" value="D"><span class="option-text">D. \(y = 5x - 2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。兩點各代一次，得到以 \(a\)、\(b\) 為未知數的聯立方程式：
+              \[\begin{aligned}
+              & 3 = a + b \quad \cdots ① \\
+              &\quad 7 = -a + b \quad \cdots ② \\
+              &\quad ① + ②：10 = 2b \Rightarrow b = 5 \\
+              &\quad \text{代回 ①：} a = 3 - 5 = -2
+              \end{aligned}\]
+              所以方程式是 \(y = -2x + 5\)。回代驗算：\(-2 \times 1 + 5 = 3\)、\(-2 \times (-1) + 5 = 7\)，兩點都成立。<br>
+              A 是把 \(a\) 的負號漏掉、再用 ① 反推 \(b = 3-2 = 1\)。<br>
+              C 的 \(a\) 對了，但把 \(b\) 的符號抄錯成 \(-5\)；代 \((1,3)\) 會得到 \(-7\)。<br>
+              D 把 \(a\) 與 \(b\) <strong>對調</strong>了：\(a\) 是 \(x\) 的係數，\(b\) 是常數項，不能互換。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 在坐標平面上，通過 \((6, 0)\) 與 \((6, 3)\) 兩點的直線，其方程式為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-16" value="A"><span class="option-text">A. \(y = 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-16" value="B"><span class="option-text">B. \(y = 2x\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-16" value="C"><span class="option-text">C. \(x + y = 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-16" value="D"><span class="option-text">D. \(x = 6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。兩個點的 \(x\) 坐標<strong>都是 \(6\)</strong>，代表這條線上的每一點都在「\(x\) 等於 \(6\)」的位置上，所以它是一條<strong>鉛垂線</strong> \(x = 6\)。<br>
+              這種題目<strong>不必列聯立</strong>——事實上它也寫不成 \(y = ax + b\)：那一型的每個 \(x\) 只能配一個 \(y\)，而這條線在 \(x=6\) 上配了無限多個 \(y\)。<br>
+              A 是把「相同的坐標」認錯邊了：相同的是 \(x\) 坐標，不是 \(y\)。\(y=6\) 是一條水平線，它<strong>兩個點都不通過</strong>。<br>
+              B 通過 \((6,0)\) 嗎？\(2 \times 6 = 12 \ne 0\)，不通過。<br>
+              C 通過 \((6,0)\)，但代 \((6,3)\) 得 \(9 \ne 6\)，只碰到其中一個點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 交點坐標 = 聯立方程式的解
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-xmarks-lines" aria-hidden="true"></i> 重點 9：兩條線的交點，就是聯立方程式的解
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>交點特別在哪裡</strong>：交點<strong>同時</strong>在兩條線上。既然「在線上」等於「是那個方程式的解」，交點的坐標就<strong>同時</strong>是兩個方程式的解——那正是<strong>共同解</strong>的定義。</li>
+              <li><strong>雙向的結論</strong>：
+                <ul>
+                  <li>⑴ 兩個二元一次方程式的圖形若<strong>相交於一點</strong>，交點坐標就是這個聯立方程式的解。</li>
+                  <li>⑵ 聯立方程式若<strong>有一組解</strong>，這組解就是兩個圖形的交點坐標。</li>
+                </ul>
+              </li>
+              <li><strong>代數與幾何接上線了</strong>：第 1 章用加減消去法「算」出來的那一組 \(x\)、\(y\)，在這裡變成海圖上<strong>看得見的一個位置</strong>。</li>
+              <li><strong>兩種求法可以互相驗算</strong>：畫圖看交點快但受限於格線精度；解聯立慢一點但精確。<strong>交點是分數時一定要用解的</strong>，用看的讀不出 \(\frac{8}{3}\)。</li>
+              <li><strong>畫圖時各自找兩組解</strong>：\(L_1\) 找兩點連線、\(L_2\) 找兩點連線，兩條線一畫，交點就浮出來了。</li>
+              <li><strong>本冊只處理相交於一點的情況</strong>：課綱規定國中階段的聯立方程式只討論<strong>恰有一組解</strong>，所以兩條線一定會交，而且只交一次。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="line_cross.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。海圖上另外畫了兩條斜的黑墨直線，它們交叉成一個叉，只相交於一點，而且這個交點偏在右上角一帶、離中央那枚黃銅圓釘很遠；交點上插著一支小紅旗。黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年伸出一根手指沿著其中一條線滑過去指著那支旗，紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女的手正好也停在旗子上。戴黃銅小圓牌項圈的深灰色虎斑貓在兩人中間抬頭看。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：交點＝共同解</h3>
+            <p class="interactive-instruction">分別拖動兩條線的常數項，看<strong>交點跑到哪裡</strong>，並對照解出來的答案：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cross" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cx-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cx-p-slider">\(L_1：x + 2y = \) <span id="cx-p-val" class="val-num">4</span></label>
+                    <input type="range" id="cx-p-slider" min="-6" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cx-q-slider">\(L_2：2x - y = \) <span id="cx-q-val" class="val-num">3</span></label>
+                    <input type="range" id="cx-q-slider" min="-6" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cx-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (交點＝聯立解)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 坐標平面上，直線 \(L_1\) 是 \(3x + y = 11\) 的圖形，直線 \(L_2\) 是 \(x - 2y = -8\) 的圖形，兩直線相交於點 \(P\)。則 \(P\) 的坐標為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-17" value="A"><span class="option-text">A. \((5, 2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-17" value="B"><span class="option-text">B. \((3, 2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-17" value="C"><span class="option-text">C. \((2, 5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-17" value="D"><span class="option-text">D. \((0, 4)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。交點坐標就是聯立方程式的解，所以直接解：
+              \[\begin{aligned}
+              & 3x + y = 11 \Rightarrow y = 11 - 3x \\
+              &\quad \text{代入 } x - 2y = -8： \\
+              &\quad x - 2(11 - 3x) = -8 \\
+              &\quad x - 22 + 6x = -8 \\
+              &\quad 7x = 14 \Rightarrow x = 2 \\
+              &\quad y = 11 - 3 \times 2 = 5
+              \end{aligned}\]
+              所以 \(P(2, 5)\)。回代驗算：\(3\times2+5=11\)、\(2-2\times5=-8\)，兩式都成立。<br>
+              交點必須<strong>同時</strong>滿足兩個方程式，所以驗算時<strong>兩條都要代</strong>——另外三個選項各差在這裡：<br>
+              A 把 \(x\)、\(y\) <strong>對調</strong>寫成 \((5,2)\)：代 \(L_1\) 得 \(3\times5+2=17\)，兩條都不通過。<br>
+              B 的 \((3,2)\) 只滿足 \(L_1\)（\(3\times3+2=11\)），代 \(L_2\) 卻得 \(3-2\times2=-1 \ne -8\)——它在 \(L_1\) 上，但不在 \(L_2\) 上。<br>
+              D 的 \((0,4)\) 剛好相反，只滿足 \(L_2\)（\(0-2\times4=-8\)），代 \(L_1\) 得 \(4 \ne 11\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 已知二元一次聯立方程式 \(\begin{cases} 2x + y = 7 \\ x - y = 2 \end{cases}\) 的解是 \(x = 3\)、\(y = 1\)。關於這兩個方程式在坐標平面上的圖形，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-18" value="A"><span class="option-text">A. 兩條直線相交於點 \((3, 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-18" value="B"><span class="option-text">B. 兩條直線相交於點 \((1, 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-18" value="C"><span class="option-text">C. 兩條直線完全重疊成同一條</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-18" value="D"><span class="option-text">D. 兩條直線互相平行，沒有交點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。聯立方程式<strong>有一組解</strong>，就代表兩個圖形<strong>相交於一點</strong>，而那個交點的坐標就是這組解——把 \(x=3\)、\(y=1\) 寫成數對，交點是 \((3,1)\)。<br>
+              B 把數對的順序寫反了：前面放 \(x\)、後面放 \(y\)，而題目給的是 \(x=3\)、\(y=1\)。<br>
+              C 錯在「重疊」：兩條線若完全重疊，線上每一點都是共同解，聯立方程式會有<strong>無限多組解</strong>，不會只有一組。<br>
+              D 錯在「平行」：平行就沒有共同的點，聯立方程式會<strong>無解</strong>。題目已經說有一組解了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 圖形圍成的區域面積
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-draw-polygon" aria-hidden="true"></i> 重點 10：兩條線與坐標軸圍成的面積
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>要圍成三角形，需要三個頂點</strong>：兩條線的<strong>交點</strong>算一個，兩條線各自與那條軸的<strong>交點</strong>再算兩個。</li>
+              <li><strong>四個步驟</strong>：
+                <ul>
+                  <li>步驟 1：各自求出<strong>與 \(x\) 軸的交點</strong>（令 \(y=0\)），得到 \(B\)、\(C\)。</li>
+                  <li>步驟 2：<strong>解聯立</strong>求出兩線的交點 \(A\)。</li>
+                  <li>步驟 3：<strong>底</strong>就是 \(B\)、\(C\) 之間的距離；<strong>高</strong>就是 \(A\) 到 \(x\) 軸的距離。</li>
+                  <li>步驟 4：面積 \(= \dfrac{1}{2} \times \text{底} \times \text{高}\)。</li>
+                </ul>
+              </li>
+              <li><strong>底怎麼算</strong>：兩點都在 \(x\) 軸上時，距離是<strong>兩個 \(x\) 坐標相減再取絕對值</strong>。相減時記得<strong>減去負數要變加</strong>。</li>
+              <li><strong>高怎麼算</strong>：交點 \(A\) 到 \(x\) 軸的距離是 \(|y_A|\)（上一節的「點到兩軸的距離是交叉的」）。<strong>不是</strong> \(A\) 的 \(x\) 坐標。</li>
+              <li><strong>換成 \(y\) 軸也一樣</strong>：改成令 \(x=0\) 求兩個交點當底，高改用 \(|x_A|\)。</li>
+              <li><strong>什麼時候圍不出三角形</strong>：兩條線若<strong>與 \(x\) 軸交在同一點</strong>（也就是交點剛好落在 \(x\) 軸上），三個頂點會擠成一直線，面積是 \(0\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="line_area.webp" alt="復古航海製圖室風插圖，墨線加水彩、米黃羊皮海圖上有方格；海圖上的水平線只在右端有箭頭、左端平切，鉛垂線只在上端有箭頭、下端平切，兩線交於一枚黃銅小圓釘。海圖上另外畫的兩條斜直線與水平線圍出一塊清楚的三角形，這塊三角形塗上淡淡的藍綠色水彩；三角形的三個頂點上各壓著一枚黃銅小圖釘。黑色短髮、額頭戴黃銅單片放大鏡、穿深藍水手領罩衫的少年拿著一把黃銅分規在三角形上方量距離，紅棕色長辮、戴深藍水手帽、穿米白高領毛衣加深藍背心的少女在旁邊看。戴黃銅小圓牌項圈的深灰色虎斑貓睡在那塊上了色的三角形上。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：圍出來的那塊海域</h3>
+            <p class="interactive-instruction">拖動兩條線的常數項，看三角形<strong>怎麼變形</strong>，以及底、高、面積各是多少：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-area" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ar-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ar-a-slider">\(L_1：x - y = \) <span id="ar-a-val" class="val-num">-1</span></label>
+                    <input type="range" id="ar-a-slider" min="-4" max="4" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ar-b-slider">\(L_2：2x + y = \) <span id="ar-b-val" class="val-num">4</span></label>
+                    <input type="range" id="ar-b-slider" min="-6" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ar-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圍成的面積)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 坐標平面上，\(x - y = 2\) 與 \(x + 2y = 8\) 的圖形交於點 \(A\)，兩圖形與 \(x\) 軸的交點分別為 \(B\)、\(C\)。則三角形 \(ABC\) 的面積為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-19" value="A"><span class="option-text">A. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-19" value="B"><span class="option-text">B. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-19" value="C"><span class="option-text">C. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-19" value="D"><span class="option-text">D. \(6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。照四個步驟走：
+              \[\begin{aligned}
+              & \text{令 } y=0，\text{兩線各得：} \\
+              &\quad x-y=2 \Rightarrow B(2, 0) \\
+              &\quad x+2y=8 \Rightarrow C(8, 0) \\
+              &\quad \text{兩式相減：} -3y = -6 \Rightarrow y = 2 \\
+              &\quad x = 2 + y = 4 \Rightarrow A(4, 2) \\
+              &\quad \text{底} = |8-2| = 6 \\
+              &\quad \text{高} = |2| = 2 \\
+              &\quad \text{面積} = \tfrac{1}{2} \times 6 \times 2 = 6
+              \end{aligned}\]
+              A 是<strong>忘了乘 \(\frac{1}{2}\)</strong>：\(6 \times 2 = 12\)。<br>
+              B 是把「底」誤取成 \(C\) 的 \(x\) 坐標 \(8\)：\(\frac{1}{2} \times 8 \times 2 = 8\)。底是兩點之間的<strong>距離</strong>，要相減。<br>
+              C 是把兩個 \(x\) 坐標<strong>相加</strong>當成底：\(\frac{1}{2} \times (2+8) \times 2 = 10\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> 坐標平面上，\(3x + 4y = 24\) 的圖形與 \(x\) 軸、\(y\) 軸圍成一個三角形，則此三角形的面積為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2-20" value="A"><span class="option-text">A. \(48\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-20" value="B"><span class="option-text">B. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-20" value="C"><span class="option-text">C. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2-20" value="D"><span class="option-text">D. \(14\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。這次的三個頂點是<strong>原點與兩個軸上的交點</strong>：
+              \[\begin{aligned}
+              & \text{令 } y=0：3x = 24 \Rightarrow (8, 0) \\
+              &\quad \text{令 } x=0：4y = 24 \Rightarrow (0, 6) \\
+              &\quad \text{兩股} = 8 \text{ 與 } 6 \\
+              &\quad \text{面積} = \tfrac{1}{2} \times 8 \times 6 = 24
+              \end{aligned}\]
+              因為兩軸互相垂直，這個三角形是<strong>直角三角形</strong>，兩個交點到原點的距離就是兩股。<br>
+              A 是<strong>忘了乘 \(\frac{1}{2}\)</strong>：\(8 \times 6 = 48\)。<br>
+              C 是把兩股各取一半再相乘（\(4 \times 3\)），等於多除了一次 \(2\)。<br>
+              D 是把兩股<strong>相加</strong>當成面積：\(8+6=14\)。面積要用乘的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 二元一次方程式圖形速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>解就是點</strong>：\(x=a\)、\(y=b\) \(\to\) 數對 \((a,b)\) \(\to\) 平面上的一個點。<strong>前 \(x\) 後 \(y\)</strong>，順序不可顛倒。</li>
+              <li><strong>圖形是一條直線</strong>：把所有的解描上去，會是一條沒有缺口的直線；分數解也在線上。</li>
+              <li><strong>兩點作圖</strong>：找兩組解 \(\to\) 描點 \(\to\) 連線。挑<strong>整數解</strong>、兩點<strong>離遠一點</strong>最好畫；兩點重合就畫不出來。</li>
+              <li><strong>與兩軸的交點</strong>：令 \(y=0\) 得 \((\square,0)\)、令 \(x=0\) 得 \((0,\square)\)。這兩點也是最好用的作圖點。</li>
+              <li><strong>不通過哪個象限</strong>：兩交點連線後往兩端延伸，看哪一區<strong>完全空著</strong>。斜直線恰好經過三個象限。</li>
+              <li><strong>\(y=m\) 與 \(x=n\)</strong>：\(y=m\) 是<strong>水平線</strong>、垂直 \(y\) 軸、交於 \((0,m)\)；\(x=n\) 是<strong>鉛垂線</strong>、垂直 \(x\) 軸、交於 \((n,0)\)。\(y=0\) 就是 \(x\) 軸，\(x=0\) 就是 \(y\) 軸。</li>
+              <li><strong>點在圖形上 \(\Longleftrightarrow\) 坐標是解</strong>：驗點就是代進去比兩邊；反過來「通過某點」等於送你一組解，可以拿來求未知係數。</li>
+              <li><strong>通過原點 \(\Longleftrightarrow\) 常數項為 \(0\)</strong>：先整理成 \(ax+by=c\) 再看 \(c\)；常數項藏成 \(k-8\) 時，要 \(k-8=0\)。</li>
+              <li><strong>由兩點反求方程式</strong>：兩點各代一次 \(\to\) 得到聯立 \(\to\) 解出係數。\(x\) 坐標相同是 \(x=n\)、\(y\) 坐標相同是 \(y=m\)，這兩種不必列聯立。</li>
+              <li><strong>交點＝聯立解</strong>：交點同時在兩條線上，坐標同時滿足兩式。交點是分數時一定要用解的，看圖讀不出來。</li>
+              <li><strong>圍成的面積</strong>：底取軸上兩點的<strong>距離</strong>（相減取絕對值），高取交點到該軸的<strong>距離</strong>（另一個坐標的絕對值），再乘 \(\frac{1}{2}\)。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-anchor"></i> 回到製圖室：把規則畫成一條航線</h4>
+              <h5><i class="fa-solid fa-map-pin"></i> 從無限多組解，到一條看得見的線</h5>
+              <p>第 1 章的結論其實有點抽象：\(x - y = 0\) 有無限多組解。無限多是多少？那時候只能一組一組列給你看，寫成一張永遠寫不完的表。</p>
+              <p>這一節換了一個做法——<strong>把每一組解插一支旗</strong>。插到第三支的時候就看得出苗頭，插到第七支已經很清楚：這些旗子排成一條線。於是「無限多組解」不再是一句話，而是<strong>一條可以用尺畫出來的航線</strong>。原本要用表格慢慢列的東西，現在一眼看完。</p>
+              <h5><i class="fa-solid fa-right-left"></i> 一句話，兩種說法</h5>
+              <p>整節其實只在做一件事：把<strong>代數的說法</strong>和<strong>幾何的說法</strong>換著用。「\((3,-1)\) 是解」＝「\((3,-1)\) 在線上」；「通過原點」＝「\((0,0)\) 是解」＝「\(c=0\)」；「兩條線交在一起」＝「有共同解」。哪一種說法算起來比較快，就用哪一種。</p>
+              <p>最漂亮的一次兌現在重點 9。上一章要用加減消去法辛苦算出來的那組共同解，在海圖上就是<strong>兩條航線交叉的那個叉</strong>——一個位置。代數與幾何，在這裡第一次接上線。</p>
+              <h5><i class="fa-solid fa-chart-line"></i> 再往前走一步</h5>
+              <p>第四冊會把這條線再看仔細一點：它<strong>斜得多陡</strong>、它<strong>從 \(y\) 軸的哪裡出發</strong>，都會有自己的名字（斜率與截距）。到那時候，\(y = ax + b\) 裡的 \(a\) 與 \(b\) 就不再只是兩個待解的字母，而是這條航線的<strong>方向與起點</strong>。</p>
+              <p>不過那是以後的事。眼前這張海圖上，你已經能把一個方程式畫成一條線、把一條線讀回一個方程式，也能一眼指出兩條航線會在哪裡相遇。第 2 章到這裡就走完了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
