@@ -4,39 +4,1461 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-2 正比與反比 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-2 正比與反比 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第二冊 (1下) • 第3章 比與比例式</div>
-    <h1>3-2 正比與反比</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第二冊 • 第三章</span>
+        <h1>3-2 正比與反比</h1>
+        <p>上一節學會了「比」。這一節換一個角度看：當兩個量<strong>一起變動</strong>時，它們之間是什麼關係？最常見的有兩種。第一種是<strong>正比</strong>——\(x\) 變成幾倍，\(y\) 也跟著變成幾倍，寫成 \(y=kx\)，<strong>比值 \(\dfrac{y}{x}\) 固定</strong>。第二種是<strong>反比</strong>——\(x\) 變成幾倍，\(y\) 反而變成幾分之一，寫成 \(xy=k\)，<strong>乘積 \(xy\) 固定</strong>。前八個重點把兩種關係各走一遍：意義、判斷、求值、應用。最後兩個重點處理全節最容易誤會的地方——<strong>「一起變大」不等於正比、「一個變大一個變小」也不等於反比</strong>，以及同一條「面積＝長×寬」，<strong>固定的是哪一個量</strong>，就決定了是正比還是反比。</p>
+      </div>
+      <!-- Progress navigation (10 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> 正比的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-list-check"></i> 判斷正比</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-calculator"></i> 正比的求值</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-train"></i> 正比的應用</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-table-cells"></i> 反比的意義</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-clipboard-check"></i> 判斷反比</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-square-root-variable"></i> 反比的求值</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-people-group"></i> 反比的應用</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> 趨勢不等於正反比</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-lock"></i> 固定哪一個量</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Miniature Model Workshop)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(217, 160, 102, 0.25);">
+        <h2 class="section-title" style="color: #f0c48a; border-bottom-color: rgba(240, 196, 138, 0.2);">
+          <i class="fa-solid fa-cubes" aria-hidden="true" style="color: #f0c48a; text-shadow: 0 0 10px rgba(217, 160, 102, 0.4);"></i> 課前暖身漫畫：調快速度，時間去哪了？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            阿寬拿碼錶替模型小火車計時：跑一趟 \(10\) 秒，跑兩趟 \(20\) 秒——<strong style="color:#f0c48a">「路程變 \(2\) 倍，時間也變 \(2\) 倍！」</strong>接著他把控制盒的旋鈕轉到兩倍速，再跑一趟，碼錶卻只走了 \(5\) 秒。同一台火車、同一條軌道，時間第一次跟著變大，第二次卻<strong style="color:#f0c48a">反而變小</strong>——差別只在於<strong style="color:#f0c48a">哪一個量被固定住了</strong>。第一次速度固定，距離與時間一起變大，這是<strong style="color:#f0c48a">正比</strong>；第二次距離固定，速度一變快，時間就變短，這是<strong style="color:#f0c48a">反比</strong>。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="微縮建築模型工坊風四格漫畫，暖黃工作燈，四格都是同一張長木工作檯，檯面上有一條直線模型鐵道、一台紅色小火車頭與一個黃銅控制盒，一隻奶油色柴犬四格都趴在工作檯右邊。第一格，黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年拿著碼錶替火車計時，深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女在旁邊看，對白：「跑一趟，10 秒。」第二格，少年高舉碼錶興奮地大喊，少女笑了，對白：「跑兩趟，20 秒！時間也變 2 倍！」第三格，少年伸手調整火車頭，對白：「速度調快 2 倍，再跑一趟！」第四格，火車頭帶著速度線衝過軌道，少年兩手抓著頭一臉驚訝，心想：「只要 5 秒……時間反而剩一半？」" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 正比的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> 重點 1：正比的意義——\(x\) 變幾倍，\(y\) 就變幾倍
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>常數與變數</strong>：在 \(y=60x\) 這個式子裡，\(60\) 是固定不變的數，叫做<strong>常數</strong>；\(x\)、\(y\) 代表的數會隨情況改變，叫做<strong>變數</strong>。</li>
+              <li><strong>正比的定義</strong>：兩個變數 \(x\)、\(y\)，當 \(x\) 改變時 \(y\) 也跟著改變，而且 \(y\) <strong>始終保持為 \(x\) 的某個固定倍數</strong> \(k\)（\(k \ne 0\)），可以寫成
+                \[y = kx\]
+                我們就說「\(y\) 與 \(x\) 成正比」。</li>
+              <li><strong>倍數同步</strong>：\(x\) 變成 \(2\) 倍、\(3\) 倍、\(4\) 倍⋯⋯，\(y\) 也跟著變成 \(2\) 倍、\(3\) 倍、\(4\) 倍⋯⋯。變成<strong>幾分之幾倍</strong>也一樣：\(x\) 變成 \(\frac{1}{2}\) 倍，\(y\) 也變成 \(\frac{1}{2}\) 倍。</li>
+              <li><strong>比值固定</strong>：當 \(x \ne 0\) 時，\(y=kx\) 可以改寫成
+                \[\frac{y}{x} = k\]
+                也就是說，<strong>每一組對應值的比值都是同一個數</strong>。這一句就是下一個重點判斷正比的依據。</li>
+              <li><strong>\(k\) 可以是負數或分數</strong>：\(y=-2x\)、\(y=\frac{3}{4}x\) 都是正比。\(k\) 唯一的限制是<strong>不可以是 \(0\)</strong>——\(k=0\) 時 \(y\) 永遠是 \(0\)，根本不會「跟著 \(x\) 變」。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>根數 \(x\)</th><th>\(1\)</th><th>\(2\)</th><th>\(3\)</th><th>\(4\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>總重 \(y\)（公克）</td><td>\(6\)</td><td>\(12\)</td><td>\(18\)</td><td>\(24\)</td></tr>
+                <tr><td>\(y \div x\)</td><td class="sign-pos">\(6\)</td><td class="sign-pos">\(6\)</td><td class="sign-pos">\(6\)</td><td class="sign-pos">\(6\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+            <p class="table-note" style="color:#94a3b8; font-size:0.92rem; margin-top:0.5rem;">每根小木條重 \(6\) 公克：\(y=6x\)，\(y\) 與 \(x\) 成正比。</p>
+
+            <div class="illustration-container">
+              <img src="prop_floor.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：長木工作檯上放著一座小小的木製房屋模型，旁邊散放著幾片正方形的薄木片。黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年拿著一支細長的工具在模型底座邊調整；深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女雙手托著一小疊木片站在他身旁；一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬趴在工作檯邊看著。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：木條秤重台</h3>
+            <p class="interactive-instruction">調整<strong>每根重幾公克</strong>與<strong>原本、後來的根數</strong>，看看總重是不是跟著變成一樣的倍數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mean" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mn-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mn-k-slider">每根重（公克）：<span id="mn-k-val" class="val-num">3</span></label>
+                    <input type="range" id="mn-k-slider" min="2" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mn-a-slider">原本的根數：<span id="mn-a-val" class="val-num">2</span></label>
+                    <input type="range" id="mn-a-slider" min="1" max="8" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mn-b-slider">後來的根數：<span id="mn-b-val" class="val-num">6</span></label>
+                    <input type="range" id="mn-b-slider" min="1" max="8" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mn-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (正比的意義)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 已知 \(y\) 與 \(x\) 成正比。當 \(x\) 由 \(6\) 變成 \(18\) 時，\(y\) 由 \(10\) 變成多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-1" value="A"><span class="option-text">A. \(22\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1" value="B"><span class="option-text">B. \(\frac{10}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1" value="C"><span class="option-text">C. \(30\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1" value="D"><span class="option-text">D. \(\frac{54}{5}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(x\) 由 \(6\) 變成 \(18\)，是變成 \(18 \div 6 = 3\) 倍。成正比時 \(y\) 也要變成 \(3\) 倍：
+              \[\begin{aligned}
+              & y = 10 \times 3 \\
+              &= 30
+              \end{aligned}\]
+              也可以先求固定倍數：\(k = \frac{10}{6} = \frac{5}{3}\)，再算 \(\frac{5}{3} \times 18 = 30\)，答案相同。<br>
+              A 是以為「\(x\) 增加 \(12\)，\(y\) 也增加 \(12\)」——正比講的是<strong>倍數</strong>，不是加減。<br>
+              B 把「變成 \(3\) 倍」誤當成「變成 \(\frac{1}{3}\) 倍」。<br>
+              D 把比值算反了：\(k\) 是 \(y \div x = \frac{5}{3}\)，誤算成 \(x \div y = \frac{3}{5}\)，得到 \(\frac{3}{5} \times 18 = \frac{54}{5}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知 \(y\) 與 \(x\) 成正比，關係式為 \(y = kx\)。下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-2" value="A"><span class="option-text">A. 當 \(x\) 變成原來的 \(\frac{1}{10}\) 倍時，\(y\) 也變成原來的 \(\frac{1}{10}\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2" value="B"><span class="option-text">B. 當 \(x\) 增加 \(3\) 時，\(y\) 也一定增加 \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2" value="C"><span class="option-text">C. 關係式中的 \(k\) 可以是 \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2" value="D"><span class="option-text">D. \(x\) 與 \(y\) 的乘積 \(xy\) 固定不變</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(y = kx\)，把 \(x\) 換成 \(\frac{1}{10}x\)：
+              \[\begin{aligned}
+              & k \times \frac{1}{10}x \\
+              &= \frac{1}{10} \times kx = \frac{1}{10}y
+              \end{aligned}\]
+              所以 \(y\) 也變成原來的 \(\frac{1}{10}\) 倍。<br>
+              B 錯：\(x\) 增加 \(3\) 時，\(y\) 增加的是 \(3k\)。例如 \(y = 2x\)，\(x\) 由 \(1\) 變成 \(4\)，\(y\) 由 \(2\) 變成 \(8\)，增加了 \(6\)。<br>
+              C 錯：定義規定 \(k \ne 0\)。\(k = 0\) 時 \(y\) 永遠是 \(0\)，不會跟著 \(x\) 變。<br>
+              D 錯：乘積固定是<strong>反比</strong>。正比固定的是<strong>比值</strong> \(\frac{y}{x}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 判斷正比
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> 重點 2：判斷正比——每一組都算 \(\frac{y}{x}\)
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>判斷的依據只有一個</strong>：\(\dfrac{y}{x}\) 是不是一個<strong>固定的數</strong>。是，就成正比；不是，就不成正比。</li>
+              <li><strong>看表格：每一組都要算</strong>。全部相等才成正比；<strong>只要有一組不同</strong>，就不成正比，後面也不必再算。</li>
+              <li><strong>不能只看前兩組</strong>：前兩組的比值相同，第三組可能就不同了——例如買到一定數量開始打折、或是多送一個。</li>
+              <li><strong>「一起變」還不夠</strong>：一罐 \(500\) 毫升的漆，每次用掉 \(50\) 毫升。
+                <ul>
+                  <li><strong>剩下的量</strong> \(450\)、\(400\)、\(350\)⋯⋯：\(\frac{450}{1} \ne \frac{400}{2}\)，<strong>不成正比</strong>。</li>
+                  <li><strong>用掉的量</strong> \(50\)、\(100\)、\(150\)⋯⋯：每一組都是 \(50\)，<strong>成正比</strong>。</li>
+                </ul>
+                兩個量都「隨次數均勻改變」，但只有一個成正比。</li>
+              <li><strong>看情境：先列出關係式</strong>。能整理成 \(y = kx\)（\(k\) 是固定的數）就成正比；式子裡多了一個常數（例如 \(y = x + 5\)）就不是。</li>
+              <li><strong>單位要先統一</strong>：每 \(20\) 秒做好一個，做 \(x\) 個共花 \(y\) 分鐘。\(20\) 秒是 \(\frac{1}{3}\) 分鐘，所以 \(y = \frac{1}{3}x\)，成正比。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>情境</th><th>關係式</th><th>成正比？</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>寬 \(5\) 公分的長方形，長 \(x\)、面積 \(y\)</td><td>\(y = 5x\)</td><td class="sign-pos">是</td></tr>
+                <tr><td>圓的直徑 \(x\)、圓周長 \(y\)</td><td>\(y = \pi x\)</td><td class="sign-pos">是（\(\pi\) 也是常數）</td></tr>
+                <tr><td>小榕 \(x\) 歲時，哥哥 \(y\) 歲（差 \(3\) 歲）</td><td>\(y = x + 3\)</td><td class="sign-neg">否</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="prop_check.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女站在長木工作檯前拿著一塊寫字板，黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年在她身旁用筆在寫字板上記錄；檯面上排成一列、稍微分開的四個一模一樣的小木箱。一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬坐在工作檯旁的地板上抬頭看。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：逐組檢查台</h3>
+            <p class="interactive-instruction">選一個情境，把滑桿往右拉，<strong>一組一組</strong>算 \(y \div x\)，看看什麼時候才能下結論：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-chk" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ck-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ck-case-group">
+                      <button class="pick-btn active" data-ck-case="0">雷射切割</button>
+                      <button class="pick-btn" data-ck-case="1">剩下的木條</button>
+                      <button class="pick-btn" data-ck-case="2">鋸掉的長度</button>
+                      <button class="pick-btn" data-ck-case="3">買木板</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ck-n-slider">檢查到第幾組：<span id="ck-n-val" class="val-num">1</span></label>
+                    <input type="range" id="ck-n-slider" min="1" max="4" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ck-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (判斷正比)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 下列各選項列出三組 \((x,\ y)\) 的對應值。哪一個選項中的 \(y\) 與 \(x\) <strong>成正比</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-3" value="A"><span class="option-text">A. \((1,\ 5)\)、\((2,\ 8)\)、\((3,\ 11)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3" value="B"><span class="option-text">B. \((2,\ 9)\)、\((4,\ 18)\)、\((6,\ 24)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3" value="C"><span class="option-text">C. \((4,\ 12)\)、\((6,\ 10)\)、\((8,\ 8)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3" value="D"><span class="option-text">D. \((9,\ 12)\)、\((15,\ 20)\)、\((21,\ 28)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。逐組算 \(\frac{y}{x}\)：
+              \[\begin{aligned}
+              & \frac{12}{9} = \frac{4}{3} \\
+              & \frac{20}{15} = \frac{4}{3} \\
+              & \frac{28}{21} = \frac{4}{3}
+              \end{aligned}\]
+              三組都是 \(\frac{4}{3}\)，所以成正比，\(y = \frac{4}{3}x\)。<br>
+              A 的比值是 \(5\)、\(4\)、\(\frac{11}{3}\)，不固定。\(y\) 每次都加 \(3\)，但「加得一樣多」不是正比。<br>
+              B 的前兩組都是 \(\frac{9}{2}\)，第三組卻是 \(\frac{24}{6} = 4\)——<strong>只看前兩組就會誤判</strong>。<br>
+              C 的比值是 \(3\)、\(\frac{5}{3}\)、\(1\)，不固定（這三組其實滿足 \(x + y = 16\)）。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 下列哪一個情境中的 \(y\) 與 \(x\) <strong>成正比</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-4" value="A"><span class="option-text">A. 一條 \(30\) 公分的緞帶剪掉 \(x\) 公分後，剩下 \(y\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4" value="B"><span class="option-text">B. 正方形的邊長為 \(x\) 公分，面積為 \(y\) 平方公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4" value="C"><span class="option-text">C. 印表機每 \(45\) 秒印好一張，印 \(x\) 張共花 \(y\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4" value="D"><span class="option-text">D. 小榕今年 \(x\) 歲，比她大 \(24\) 歲的姑姑今年 \(y\) 歲</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。先把單位統一成分鐘：
+              \[\begin{aligned}
+              & 45 \text{ 秒} = \frac{45}{60} \text{ 分} = \frac{3}{4} \text{ 分} \\
+              & y = \frac{3}{4}x
+              \end{aligned}\]
+              \(y\) 始終是 \(x\) 的 \(\frac{3}{4}\) 倍，所以成正比。<br>
+              A 的關係式是 \(y = 30 - x\)：\(x = 10\) 時 \(\frac{y}{x} = 2\)，\(x = 20\) 時 \(\frac{y}{x} = \frac{1}{2}\)，不固定。<br>
+              B 的關係式是 \(y = x^2\)：比值 \(\frac{y}{x} = x\) 會跟著 \(x\) 變，不固定。<br>
+              D 的關係式是 \(y = x + 24\)：兩人一起長大，但比值 \(\frac{y}{x}\) 一年一年在變。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 正比的求值
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> 重點 3：正比的求值——先求出 \(k\)
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>解題三步</strong>：
+                <ul>
+                  <li>① 題目說成正比，就設 \(y = kx\)（\(k \ne 0\)）</li>
+                  <li>② 把已知的一組 \(x\)、\(y\) 代進去，<strong>求出 \(k\)</strong></li>
+                  <li>③ 寫出關係式，再代入題目給的另一個值</li>
+                </ul>
+              </li>
+              <li><strong>完整範例</strong>：已知 \(x = -2\) 時 \(y = 7\)，求 \(x = 4\) 時的 \(y\)。
+                \[\begin{aligned}
+                & 7 = k \times (-2) \\
+                & k = -\frac{7}{2} \\
+                & y = -\frac{7}{2}x \\
+                & y = -\frac{7}{2} \times 4 = -14
+                \end{aligned}\]
+              </li>
+              <li><strong>反過來問 \(x\) 也一樣</strong>：同一條關係式，若 \(y = 21\)，
+                \[\begin{aligned}
+                & 21 = -\frac{7}{2}x \\
+                & x = 21 \times \left(-\frac{2}{7}\right) = -6
+                \end{aligned}\]
+              </li>
+              <li><strong>另一種寫法：兩組的比值相等</strong>。成正比時 \(\frac{y_1}{x_1} = \frac{y_2}{x_2}\)，所以
+                \[\begin{aligned}
+                & \frac{7}{-2} = \frac{y}{4} \\
+                & y = -14
+                \end{aligned}\]
+                兩種做法<strong>都對</strong>，答案一定相同。</li>
+              <li><strong>\(k\) 是 \(y\) 除以 \(x\)</strong>，不是 \(x\) 除以 \(y\)。算反了會得到倒數，是這一類題目最常見的錯。</li>
+              <li><strong>代入負數要加括號</strong>；\(k\) 若是分數就保留分數，不要四捨五入。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="prop_find.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年俯身在長木工作檯前，用一把長尺壓著綠色切割墊上的一根細長淺色木條，拿鉛筆沿著尺畫線；深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女站在旁邊，在打開的小筆記本上寫字。一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬坐在工作檯邊。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：正比求值台</h3>
+            <p class="interactive-instruction">調整<strong>已知的一組</strong>與<strong>所求的值</strong>，看 \(k\) 是怎麼求出來、再怎麼用的：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sol" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求什麼</span>
+                    <div class="btn-group" id="sl-ask-group">
+                      <button class="pick-btn active" data-sl-ask="y">已知 \(x\)，求 \(y\)</button>
+                      <button class="pick-btn" data-sl-ask="x">已知 \(y\)，求 \(x\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sl-x1-slider">已知的 \(x\)：<span id="sl-x1-val" class="val-num">-2</span></label>
+                    <input type="range" id="sl-x1-slider" min="0" max="11" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sl-y1-slider">已知的 \(y\)：<span id="sl-y1-val" class="val-num">6</span></label>
+                    <input type="range" id="sl-y1-slider" min="0" max="17" value="14" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sl-t-slider"><span id="sl-t-name">已知的另一個 x</span>：<span id="sl-t-val" class="val-num">5</span></label>
+                    <input type="range" id="sl-t-slider" min="0" max="17" value="13" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (正比的求值)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 已知 \(y\) 與 \(x\) 成正比，且 \(x = 8\) 時 \(y = -12\)。當 \(x = -10\) 時，\(y\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-5" value="A"><span class="option-text">A. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5" value="B"><span class="option-text">B. \(-15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5" value="C"><span class="option-text">C. \(\frac{20}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5" value="D"><span class="option-text">D. \(-30\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設 \(y = kx\)：
+              \[\begin{aligned}
+              & -12 = 8k \\
+              & k = -\frac{3}{2} \\
+              & y = -\frac{3}{2} \times (-10) = 15
+              \end{aligned}\]
+              B 漏掉了 \(k\) 的負號，用 \(\frac{3}{2}\) 去乘。<br>
+              C 把比值算反了：用 \(x \div y = -\frac{2}{3}\) 當成 \(k\)，得到 \(-\frac{2}{3} \times (-10) = \frac{20}{3}\)。<br>
+              D 是以為 \(y\) 永遠比 \(x\) 少 \(20\)（\(8 - 20 = -12\)），於是算 \(-10 - 20\)——那是「差固定」，不是正比。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 已知 \(y\) 與 \(x\) 成正比，且 \(x = -9\) 時 \(y = 6\)。當 \(y = -14\) 時，\(x\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-6" value="A"><span class="option-text">A. \(-21\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6" value="B"><span class="option-text">B. \(\frac{28}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6" value="C"><span class="option-text">C. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6" value="D"><span class="option-text">D. \(\frac{27}{7}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設 \(y = kx\)：
+              \[\begin{aligned}
+              & 6 = -9k \\
+              & k = -\frac{2}{3} \\
+              & -14 = -\frac{2}{3}x \\
+              & x = -14 \times \left(-\frac{3}{2}\right) = 21
+              \end{aligned}\]
+              A 漏掉了 \(k\) 的負號：用 \(\frac{2}{3}\) 去算，得到 \(-21\)。<br>
+              B 把比值算反了：用 \(k = -\frac{3}{2}\) 去算，得到 \(-14 \div \left(-\frac{3}{2}\right) = \frac{28}{3}\)。<br>
+              D 當成反比來算：\(xy = -54\)，得到 \(-54 \div (-14) = \frac{27}{7}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 正比的應用問題
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-train" aria-hidden="true"></i> 重點 4：正比的應用問題
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>常見的正比情境</strong>：<strong>單價固定</strong>時數量與總價、<strong>速率固定</strong>時時間與距離、<strong>配方固定</strong>時兩種原料的量。共同點是「每一份都一樣多」。</li>
+              <li><strong>步驟</strong>：
+                <ul>
+                  <li>① 說清楚 \(x\)、\(y\) 各代表什麼（含單位）</li>
+                  <li>② 設 \(y = kx\)，用已知的一組求出 \(k\)</li>
+                  <li>③ 代入題目給的量</li>
+                  <li>④ 回答題目問的東西，記得寫單位</li>
+                </ul>
+              </li>
+              <li><strong>\(k\) 本身有意思</strong>：它就是單價、速率、配方比例這類「每一份的量」。求出來先想一想合不合理。</li>
+              <li><strong>完整範例</strong>：小火車的速率固定，\(8\) 秒跑了 \(120\) 公分，\(25\) 秒跑多遠？
+                \[\begin{aligned}
+                & 120 = 8k,\quad k = 15 \\
+                & y = 15x \\
+                & y = 15 \times 25 = 375
+                \end{aligned}\]
+                \(k = 15\) 表示小火車每秒跑 \(15\) 公分，\(25\) 秒跑 \(375\) 公分。</li>
+              <li><strong>用比例式也可以</strong>：時間與距離的比固定，
+                \[\begin{aligned}
+                & 8 : 120 = 25 : y \\
+                & 8y = 3000,\quad y = 375
+                \end{aligned}\]
+                兩種做法<strong>都對</strong>。</li>
+              <li><strong>單位先統一</strong>：題目裡同時有「分」與「秒」、「公尺」與「公分」時，先換成同一個單位再代入。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="prop_train.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：長木工作檯上鋪著一條直線模型鐵道，一台紅色的小火車頭停在軌道上。黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年拿著一個圓形黃銅碼錶盯著火車，深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女俯身在旁邊一起看，一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬站在軌道旁的檯面上。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：工坊訂單計算機</h3>
+            <p class="interactive-instruction">選一個工坊情境，決定要求<strong>哪一個量</strong>，再調整題目給的數字：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-app" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ap-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ap-case-group">
+                      <button class="pick-btn active" data-ap-case="0">買木料</button>
+                      <button class="pick-btn" data-ap-case="1">小火車</button>
+                      <button class="pick-btn" data-ap-case="2">調漆</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求什麼</span>
+                    <div class="btn-group" id="ap-ask-group">
+                      <button class="pick-btn active" data-ap-ask="y">求 \(y\)</button>
+                      <button class="pick-btn" data-ap-ask="x">求 \(x\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ap-q-slider">題目給的<span id="ap-q-name">長度（公尺）</span>：<span id="ap-q-val" class="val-num">6</span></label>
+                    <input type="range" id="ap-q-slider" min="0" max="7" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ap-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (正比的應用問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 工坊的 3D 列印機用掉的線材長度與列印時間成正比。印 \(12\) 分鐘用掉 \(9\) 公尺線材，若要印 \(28\) 分鐘，需要多少公尺線材？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-7" value="A"><span class="option-text">A. \(25\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-7" value="B"><span class="option-text">B. \(21\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-7" value="C"><span class="option-text">C. \(\frac{112}{3}\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-7" value="D"><span class="option-text">D. \(252\) 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設列印 \(x\) 分鐘用掉 \(y\) 公尺，\(y = kx\)：
+              \[\begin{aligned}
+              & 9 = 12k,\quad k = \frac{3}{4} \\
+              & y = \frac{3}{4} \times 28 = 21
+              \end{aligned}\]
+              \(k = \frac{3}{4}\) 表示每分鐘用掉 \(\frac{3}{4}\) 公尺。<br>
+              A 是用「差」來算：時間多了 \(16\) 分鐘，就以為線材也多 \(16\) 公尺。<br>
+              C 把 \(k\) 算反了：用 \(12 \div 9 = \frac{4}{3}\) 去乘 \(28\)。<br>
+              D 是 \(28 \times 9\)，忘了再除以 \(12\)。合理性檢查：\(12\) 分鐘才用 \(9\) 公尺，\(28\) 分鐘不可能用到 \(252\) 公尺。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> 阿寬用砂紙打磨木條，打磨的根數與花費的時間成正比。他打磨 \(6\) 根花了 \(4\) 分 \(30\) 秒。若他花了 \(12\) 分鐘，可以打磨幾根？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-8" value="A"><span class="option-text">A. \(18\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-8" value="B"><span class="option-text">B. \(9\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-8" value="C"><span class="option-text">C. \(\frac{9}{4}\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-8" value="D"><span class="option-text">D. \(16\) 根</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。先統一單位：\(4\) 分 \(30\) 秒 \(= \frac{9}{2}\) 分。設花 \(x\) 分鐘打磨 \(y\) 根，\(y = kx\)：
+              \[\begin{aligned}
+              & 6 = \frac{9}{2}k,\quad k = \frac{4}{3} \\
+              & y = \frac{4}{3} \times 12 = 16
+              \end{aligned}\]
+              A 漏掉了 \(30\) 秒，只用 \(4\) 分鐘算：\(k = \frac{3}{2}\)，得到 \(18\) 根。<br>
+              B 把 \(k\) 算反了：用「時間 ÷ 根數」\(= \frac{3}{4}\) 去乘 \(12\)。<br>
+              C 當成反比來算：\(6 \times \frac{9}{2} = 27\)，再除以 \(12\)。時間變長、根數卻變少，一看就不合理。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 反比的意義
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells" aria-hidden="true"></i> 重點 5：反比的意義——\(x\) 變幾倍，\(y\) 就變幾分之一
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>反比的定義</strong>：兩個變數 \(x\)、\(y\)，當 \(x\) 改變時 \(y\) 也跟著改變，而且 <strong>\(x\) 與 \(y\) 的乘積始終是某個固定的數</strong> \(k\)（\(k \ne 0\)），可以寫成
+                \[xy = k\]
+                我們就說「\(y\) 與 \(x\) 成反比」。</li>
+              <li><strong>倍數互為倒數</strong>：\(x\) 變成 \(2\) 倍、\(3\) 倍、\(4\) 倍⋯⋯，\(y\) 就變成 \(\frac{1}{2}\) 倍、\(\frac{1}{3}\) 倍、\(\frac{1}{4}\) 倍⋯⋯。兩個倍數<strong>乘起來是 \(1\)</strong>，乘積才保持不變。</li>
+              <li><strong>另一種寫法</strong>：當 \(x \ne 0\) 時，\(xy = k\) 也可以寫成 \(y = \dfrac{k}{x}\)。</li>
+              <li><strong>例子</strong>：用 \(24\) 塊一樣大的方磚排成長方形，每排 \(x\) 塊、共 \(y\) 排，磚數不變，所以 \(xy = 24\)。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>每排 \(x\) 塊</th><th>\(2\)</th><th>\(3\)</th><th>\(4\)</th><th>\(6\)</th><th>\(8\)</th><th>\(12\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>共 \(y\) 排</td><td>\(12\)</td><td>\(8\)</td><td>\(6\)</td><td>\(4\)</td><td>\(3\)</td><td>\(2\)</td></tr>
+                <tr><td>\(x \times y\)</td><td class="sign-pos">\(24\)</td><td class="sign-pos">\(24\)</td><td class="sign-pos">\(24\)</td><td class="sign-pos">\(24\)</td><td class="sign-pos">\(24\)</td><td class="sign-pos">\(24\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list">
+              <li><strong>正比與反比對照</strong>：
+                <ul>
+                  <li>正比：\(y = kx\)，<strong>比值</strong> \(\frac{y}{x}\) 固定；\(x\) 變 \(n\) 倍，\(y\) 也變 \(n\) 倍。</li>
+                  <li>反比：\(xy = k\)，<strong>乘積</strong> \(xy\) 固定；\(x\) 變 \(n\) 倍，\(y\) 變 \(\frac{1}{n}\) 倍。</li>
+                </ul>
+              </li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="prop_ponder.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年與深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女並肩站在長木工作檯前，一起低頭用手整理綠色切割墊上一小堆散開的正方形淺色木片，木片還沒有排好。一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬趴在工作檯的左端看著他們。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：方磚排列台</h3>
+            <p class="interactive-instruction">選一個磚數，調整<strong>原本</strong>與<strong>後來</strong>每排放幾塊，看排數怎麼跟著變：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tile" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">磚數</span>
+                    <div class="btn-group" id="tl-n-group">
+                      <button class="pick-btn" data-tl-n="12">\(12\) 塊</button>
+                      <button class="pick-btn" data-tl-n="18">\(18\) 塊</button>
+                      <button class="pick-btn active" data-tl-n="24">\(24\) 塊</button>
+                      <button class="pick-btn" data-tl-n="36">\(36\) 塊</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tl-a-slider">原本每排：<span id="tl-a-val" class="val-num">2</span> 塊</label>
+                    <input type="range" id="tl-a-slider" min="0" max="5" value="0" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tl-b-slider">後來每排：<span id="tl-b-val" class="val-num">6</span> 塊</label>
+                    <input type="range" id="tl-b-slider" min="0" max="5" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (反比的意義)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 已知 \(y\) 與 \(x\) 成反比。當 \(x\) 由 \(4\) 變成 \(12\) 時，\(y\) 由 \(15\) 變成多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-9" value="A"><span class="option-text">A. \(45\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-9" value="B"><span class="option-text">B. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-9" value="C"><span class="option-text">C. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-9" value="D"><span class="option-text">D. \(720\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(x\) 由 \(4\) 變成 \(12\)，是變成 \(3\) 倍。成反比時 \(y\) 要變成 \(\frac{1}{3}\) 倍：
+              \[\begin{aligned}
+              & y = 15 \times \frac{1}{3} = 5
+              \end{aligned}\]
+              也可以用乘積檢查：\(4 \times 15 = 60\)、\(12 \times 5 = 60\)，確實相等。<br>
+              A 當成正比，讓 \(y\) 也變成 \(3\) 倍。<br>
+              C 是以為 \(x + y\) 固定（\(4 + 15 = 19\)，\(19 - 12 = 7\)）——「一個變大一個變小」不等於反比。<br>
+              D 算對了 \(k = 60\)，最後卻用 \(60 \times 12\)，應該是 \(60 \div 12\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 已知 \(y\) 與 \(x\) 成反比，且 \(x\)、\(y\) 都是正數。下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-10" value="A"><span class="option-text">A. \(x\) 變成原來的 \(3\) 倍時，\(y\) 也變成原來的 \(3\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-10" value="B"><span class="option-text">B. \(x\) 變成原來的 \(\frac{1}{5}\) 倍時，\(y\) 變成原來的 \(5\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-10" value="C"><span class="option-text">C. \(x\) 增加 \(2\) 時，\(y\) 就減少 \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-10" value="D"><span class="option-text">D. \(y\) 與 \(x\) 的比值 \(\frac{y}{x}\) 固定不變</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設 \(xy = k\)，把 \(x\) 換成 \(\frac{1}{5}x\)，乘積仍要是 \(k\)，\(y\) 就必須換成 \(5y\)：
+              \[\begin{aligned}
+              & \frac{1}{5}x \times 5y \\
+              &= xy = k
+              \end{aligned}\]
+              A 是正比的性質。<br>
+              C 是「和固定」的情形（例如 \(x + y = 10\)），不是反比。例如 \(xy = 12\) 時，\(x\) 由 \(2\) 變成 \(4\)，\(y\) 由 \(6\) 變成 \(3\)，減少的是 \(3\)，不是 \(2\)。<br>
+              D 也是正比的性質；反比固定的是<strong>乘積</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 判斷反比
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 重點 6：判斷反比——每一組都算 \(xy\)
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>判斷的依據只有一個</strong>：\(x \times y\) 是不是一個<strong>固定的數</strong>。是，就成反比；不是，就不成反比。</li>
+              <li><strong>看表格：每一組都要算</strong>。全部相等才成反比；只要有一組不同就不成反比。</li>
+              <li><strong>「一個變大、另一個變小」還不夠</strong>：米白漆與天藍漆一共 \(30\) 罐，米白 \(x\) 罐、天藍 \(y\) 罐。
+                \[\begin{aligned}
+                & 10 \times 20 = 200 \\
+                & 12 \times 18 = 216
+                \end{aligned}\]
+                乘積不固定，<strong>不成反比</strong>——這是 \(x + y = 30\)，「和」固定，不是「積」固定。</li>
+              <li><strong>加送、打折會打破乘積</strong>：預算固定時，單價與數量本來成反比；但只要「買滿幾個多送一個」，某幾組的數量就多出來，乘積跟著變，就不成反比了。</li>
+              <li><strong>看情境：先列出關係式</strong>。能整理成 \(xy = k\)（或 \(y = \frac{k}{x}\)）就成反比。
+                <ul>
+                  <li>面積 \(40\) 平方公分的長方形，長 \(x\)、寬 \(y\)：\(xy = 40\)，成反比。</li>
+                  <li>\(y = \frac{6}{x}\)：兩邊同乘以 \(x\)，得到 \(xy = 6\)，成反比。</li>
+                </ul>
+              </li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="prop_pour.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女站在長木工作檯前，拿著一大罐奶油色的漆，倒進排成一列的四個小玻璃罐；黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年拿著一支小刷子站在她身旁看。一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬坐在地板上抬頭看。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：乘積檢查台</h3>
+            <p class="interactive-instruction">選一個情境，把滑桿往右拉，<strong>一組一組</strong>算 \(x \times y\)：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-chk2" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ck2-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ck2-case-group">
+                      <button class="pick-btn active" data-ck2-case="0">分裝螺絲</button>
+                      <button class="pick-btn" data-ck2-case="1">買筆刷</button>
+                      <button class="pick-btn" data-ck2-case="2">兩色漆</button>
+                      <button class="pick-btn" data-ck2-case="3">繞軌道</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ck2-n-slider">檢查到第幾組：<span id="ck2-n-val" class="val-num">1</span></label>
+                    <input type="range" id="ck2-n-slider" min="1" max="4" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ck2-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (判斷反比)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> 下列各選項列出三組 \((x,\ y)\) 的對應值。哪一個選項中的 \(y\) 與 \(x\) <strong>成反比</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-11" value="A"><span class="option-text">A. \((5,\ 14)\)、\((7,\ 10)\)、\((10,\ 7)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-11" value="B"><span class="option-text">B. \((2,\ 18)\)、\((3,\ 12)\)、\((4,\ 8)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-11" value="C"><span class="option-text">C. \((1,\ 11)\)、\((4,\ 8)\)、\((7,\ 5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-11" value="D"><span class="option-text">D. \((2,\ 3)\)、\((4,\ 6)\)、\((8,\ 12)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。逐組算 \(x \times y\)：
+              \[\begin{aligned}
+              & 5 \times 14 = 70 \\
+              & 7 \times 10 = 70 \\
+              & 10 \times 7 = 70
+              \end{aligned}\]
+              三組都是 \(70\)，所以成反比，\(xy = 70\)。<br>
+              B 的前兩組都是 \(36\)，第三組卻是 \(4 \times 8 = 32\)——只看前兩組就會誤判。<br>
+              C 的乘積是 \(11\)、\(32\)、\(35\)，不固定；\(x\) 變大 \(y\) 變小，但那是 \(x + y = 12\)。<br>
+              D 的乘積是 \(6\)、\(24\)、\(96\)，不固定；它的比值 \(\frac{y}{x}\) 都是 \(\frac{3}{2}\)，是<strong>正比</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 下列哪一個情境中的 \(y\) 與 \(x\) <strong>成反比</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-12" value="A"><span class="option-text">A. 高為 \(8\) 公分的圓柱，底面積 \(x\) 平方公分，體積 \(y\) 立方公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-12" value="B"><span class="option-text">B. 把 \(150\) 毫升的漆平均倒進 \(x\) 個小罐，每罐 \(y\) 毫升</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-12" value="C"><span class="option-text">C. 一根 \(50\) 公分的木條鋸下 \(x\) 公分，剩下 \(y\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-12" value="D"><span class="option-text">D. 周長 \(40\) 公分的長方形，長 \(x\) 公分，寬 \(y\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。漆的總量固定：
+              \[\begin{aligned}
+              & xy = 150
+              \end{aligned}\]
+              乘積固定，所以成反比。<br>
+              A 的關係式是 \(y = 8x\)，比值固定，是<strong>正比</strong>。<br>
+              C 的關係式是 \(x + y = 50\)，和固定，不是反比。<br>
+              D 的關係式是 \(2(x + y) = 40\)，也就是 \(x + y = 20\)，同樣是和固定。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 反比的求值
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-root-variable" aria-hidden="true"></i> 重點 7：反比的求值——\(k\) 是乘出來的
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>解題三步</strong>：
+                <ul>
+                  <li>① 題目說成反比，就設 \(xy = k\)（\(k \ne 0\)）</li>
+                  <li>② 把已知的一組 \(x\)、\(y\) <strong>相乘</strong>，求出 \(k\)</li>
+                  <li>③ 寫出關係式，再代入題目給的另一個值</li>
+                </ul>
+              </li>
+              <li><strong>完整範例</strong>：已知 \(x = -4\) 時 \(y = 5\)，求 \(y = -2\) 時的 \(x\)。
+                \[\begin{aligned}
+                & k = (-4) \times 5 = -20 \\
+                & xy = -20 \\
+                & x \times (-2) = -20 \\
+                & x = 10
+                \end{aligned}\]
+              </li>
+              <li><strong>另一種寫法：兩組的乘積相等</strong>。成反比時 \(x_1 y_1 = x_2 y_2\)，所以
+                \[\begin{aligned}
+                & (-4) \times 5 = x \times (-2) \\
+                & x = 10
+                \end{aligned}\]
+                兩種做法<strong>都對</strong>。</li>
+              <li><strong>和正比最大的不同</strong>：正比的 \(k\) 是<strong>除</strong>出來的（\(y \div x\)），反比的 \(k\) 是<strong>乘</strong>出來的（\(x \times y\)）。題目一混在一起，最常錯的就是這一步。</li>
+              <li><strong>符號要跟著判斷</strong>：\(k\) 是負數時，每一組的 \(x\)、\(y\) 都是一正一負；\(k\) 是正數時，兩者同號。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="prop_notes.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年與深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女並肩坐在長木工作檯前，各拿一支鉛筆看著綠色切割墊上一張空白的大紙，少女一手托著臉頰在想；一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬閉著眼睛趴在檯面上睡覺。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：反比求值台</h3>
+            <p class="interactive-instruction">調整<strong>已知的一組</strong>與<strong>所求的值</strong>，注意 \(k\) 是怎麼<strong>乘</strong>出來的：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sol2" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sl2-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求什麼</span>
+                    <div class="btn-group" id="sl2-ask-group">
+                      <button class="pick-btn active" data-sl2-ask="y">已知 \(x\)，求 \(y\)</button>
+                      <button class="pick-btn" data-sl2-ask="x">已知 \(y\)，求 \(x\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sl2-x1-slider">已知的 \(x\)：<span id="sl2-x1-val" class="val-num">3</span></label>
+                    <input type="range" id="sl2-x1-slider" min="0" max="11" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sl2-y1-slider">已知的 \(y\)：<span id="sl2-y1-val" class="val-num">-4</span></label>
+                    <input type="range" id="sl2-y1-slider" min="0" max="17" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sl2-t-slider"><span id="sl2-t-name">已知的另一個 x</span>：<span id="sl2-t-val" class="val-num">-6</span></label>
+                    <input type="range" id="sl2-t-slider" min="0" max="17" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sl2-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (反比的求值)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 已知 \(y\) 與 \(x\) 成反比，且 \(x = -8\) 時 \(y = 3\)。當 \(x = 12\) 時，\(y\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-13" value="A"><span class="option-text">A. \(-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-13" value="B"><span class="option-text">B. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-13" value="C"><span class="option-text">C. \(-\frac{9}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-13" value="D"><span class="option-text">D. \(-\frac{1}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設 \(xy = k\)：
+              \[\begin{aligned}
+              & k = (-8) \times 3 = -24 \\
+              & 12y = -24 \\
+              & y = -2
+              \end{aligned}\]
+              B 漏掉了負號。<br>
+              C 當成正比來算：\(k = 3 \div (-8) = -\frac{3}{8}\)，得到 \(-\frac{3}{8} \times 12 = -\frac{9}{2}\)。<br>
+              D 求對了 \(k = -24\)，最後卻算成 \(12 \div (-24)\)——應該是 \(k\) 除以 \(x\)，不是 \(x\) 除以 \(k\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 已知 \(y\) 與 \(x\) 成反比，且 \(x = \frac{2}{3}\) 時 \(y = -9\)。當 \(y = 4\) 時，\(x\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-14" value="A"><span class="option-text">A. \(\frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-14" value="B"><span class="option-text">B. \(-\frac{8}{27}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-14" value="C"><span class="option-text">C. \(-\frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-14" value="D"><span class="option-text">D. \(-6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設 \(xy = k\)：
+              \[\begin{aligned}
+              & k = \frac{2}{3} \times (-9) = -6 \\
+              & 4x = -6 \\
+              & x = -\frac{3}{2}
+              \end{aligned}\]
+              A 漏掉了負號。<br>
+              B 當成正比來算：\(k = (-9) \div \frac{2}{3} = -\frac{27}{2}\)，得到 \(4 \div \left(-\frac{27}{2}\right) = -\frac{8}{27}\)。<br>
+              D 只求出 \(k = -6\) 就停下來，還沒除以 \(4\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 反比的應用問題
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-people-group" aria-hidden="true"></i> 重點 8：反比的應用問題
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>常見的反比情境</strong>：共同點是「<strong>總量固定</strong>」，兩個相乘的量此消彼長。
+                <ul>
+                  <li><strong>距離固定</strong>：速率與時間</li>
+                  <li><strong>總工作量固定</strong>：人數與完工天數（前提是每個人每天做的一樣多）</li>
+                  <li><strong>總數固定</strong>：每份的數量與份數</li>
+                  <li><strong>體積固定</strong>：底面積與高</li>
+                </ul>
+              </li>
+              <li><strong>步驟</strong>：設 \(xy = k\)，用已知的一組相乘求出 \(k\)（\(k\) 就是那個固定的總量），再代入所求。</li>
+              <li><strong>完整範例</strong>：軌道一圈的長度固定。小火車每秒跑 \(24\) 公分時，一圈要 \(15\) 秒；每秒跑 \(40\) 公分時，一圈要幾秒？
+                \[\begin{aligned}
+                & k = 24 \times 15 = 360 \\
+                & 40y = 360 \\
+                & y = 9
+                \end{aligned}\]
+                \(k = 360\) 就是軌道一圈的長度（公分）。</li>
+              <li><strong>一定要做合理性檢查</strong>：跑得比較快，時間應該<strong>變短</strong>。如果誤用正比，會算出 \(15 \times \frac{40}{24} = 25\) 秒，比原本還久，一看就不對。</li>
+              <li><strong>體積與容量的單位</strong>：\(1\) 公升 \(= 1000\) 毫升 \(= 1000\) 立方公分。題目給公升、答案要公分時，先換成立方公分。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="prop_team.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：長木工作檯中央立著一座還沒上漆的淺色木製小屋模型。黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年拿小刷子替它的左側上漆，深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女拿另一支小刷子替右側上漆，兩人同時在同一座模型上工作；檯面上放著兩個小漆罐。一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬坐在工作檯前看著。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：工坊排程計算機</h3>
+            <p class="interactive-instruction">選一個情境，調整題目給的數字——兩個長方形的<strong>面積始終一樣大</strong>，那就是固定的 \(k\)：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-app2" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ap2-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ap2-case-group">
+                      <button class="pick-btn active" data-ap2-case="0">繞軌道</button>
+                      <button class="pick-btn" data-ap2-case="1">上漆師傅</button>
+                      <button class="pick-btn" data-ap2-case="2">分裝螺絲</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求什麼</span>
+                    <div class="btn-group" id="ap2-ask-group">
+                      <button class="pick-btn active" data-ap2-ask="y">求 \(y\)</button>
+                      <button class="pick-btn" data-ap2-ask="x">求 \(x\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ap2-q-slider">題目給的<span id="ap2-q-name">速率（公分/秒）</span>：<span id="ap2-q-val" class="val-num">16</span></label>
+                    <input type="range" id="ap2-q-slider" min="0" max="7" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ap2-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (反比的應用問題)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> 工坊要替一批模型上漆。假設每位師傅每天的工作量都相同，完工天數與師傅人數成反比。已知 \(4\) 位師傅要 \(15\) 天完工，若想在 \(6\) 天內剛好完工，需要幾位師傅？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-15" value="A"><span class="option-text">A. \(10\) 位</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-15" value="B"><span class="option-text">B. \(13\) 位</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-15" value="C"><span class="option-text">C. \(\frac{8}{5}\) 位</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-15" value="D"><span class="option-text">D. \(60\) 位</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設 \(x\) 位師傅要 \(y\) 天，\(xy = k\)：
+              \[\begin{aligned}
+              & k = 4 \times 15 = 60 \\
+              & 6x = 60 \\
+              & x = 10
+              \end{aligned}\]
+              \(k = 60\) 表示這批工作總共要 \(60\) 個「人天」。<br>
+              B 是以為「天數少 \(9\) 天，人就多 \(9\) 位」。<br>
+              C 當成正比來算，天數變少、人數也變少——不但不合理，人數還不是整數。<br>
+              D 是把 \(k = 60\) 直接當成答案。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 模型師把調好的 \(2.4\) 公升樹脂，全部倒進一個長方體模具。模具的底面積為 \(x\) 平方公分，樹脂高 \(y\) 公分。當底面積是 \(150\) 平方公分時，樹脂高幾公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-16" value="A"><span class="option-text">A. \(0.016\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-16" value="B"><span class="option-text">B. \(1.6\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-16" value="C"><span class="option-text">C. \(160\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-16" value="D"><span class="option-text">D. \(16\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。樹脂的體積固定，底面積與高成反比。先把公升換成立方公分：
+              \[\begin{aligned}
+              & 2.4 \text{ 公升} = 2400 \text{ 立方公分} \\
+              & xy = 2400 \\
+              & 150y = 2400,\quad y = 16
+              \end{aligned}\]
+              A 沒有換單位，直接算 \(2.4 \div 150\)。<br>
+              B 把 \(1\) 公升誤當成 \(100\) 立方公分。<br>
+              C 把 \(1\) 公升誤當成 \(10000\) 立方公分。<br>
+              合理性檢查：一個模具裡的樹脂高 \(160\) 公分，比人還高，不合理。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 趨勢不等於正反比
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 重點 9：「一起變大」不等於正比，「此消彼長」不等於反比
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>最常見的兩個誤會</strong>：「\(x\) 愈大、\(y\) 也愈大，所以成正比」「\(x\) 愈大、\(y\) 愈小，所以成反比」。<strong>這兩句都是錯的，反過來說也都是錯的。</strong></li>
+              <li><strong>正比，不一定愈來愈大</strong>：\(y = -3x\) 成正比（\(k = -3\)），但 \(x\) 愈大，\(y\) 反而愈小。</li>
+              <li><strong>愈來愈大，不一定是正比</strong>：\(y = x + 1\)。\(x = 1\) 時 \(y = 2\)，\(x = 2\) 時 \(y = 3\)，比值 \(2\) 與 \(\frac{3}{2}\) 不同，不成正比。</li>
+              <li><strong>反比，不一定愈來愈小</strong>：\(xy = 6\)。\(x = -2\) 時 \(y = -3\)，\(x = 3\) 時 \(y = 2\)——\(x\) 變大，\(y\) 也變大了。</li>
+              <li><strong>愈來愈小，不一定是反比</strong>：\(x + y = 10\)。\(2 \times 8 = 16\)、\(4 \times 6 = 24\)，乘積不固定，不成反比。</li>
+              <li><strong>兩種都不是，也很常見</strong>：年齡就是一例——我長一歲，爸爸也長一歲，但兩人年齡的比值年年在變，<strong>不成正比</strong>。</li>
+              <li><strong>判斷只看兩件事</strong>：比值 \(\frac{y}{x}\) 固定嗎？乘積 \(xy\) 固定嗎？<strong>跟 \(y\) 變大還是變小無關。</strong></li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>關係式</th><th>\(x\) 變大時 \(y\)</th><th>\(\frac{y}{x}\) 固定？</th><th>\(xy\) 固定？</th><th>結論</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(y = -3x\)</td><td>變小</td><td class="sign-pos">是</td><td class="sign-neg">否</td><td>正比</td></tr>
+                <tr><td>\(y = x + 1\)</td><td>變大</td><td class="sign-neg">否</td><td class="sign-neg">否</td><td>都不是</td></tr>
+                <tr><td>\(xy = 6\)</td><td>不一定</td><td class="sign-neg">否</td><td class="sign-pos">是</td><td>反比</td></tr>
+                <tr><td>\(x + y = 10\)</td><td>變小</td><td class="sign-neg">否</td><td class="sign-neg">否</td><td>都不是</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="prop_height.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：工坊裡一根木頭門框旁，黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年站得直挺挺的，一手扶著門框；深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女把一把木尺水平地放在他的頭頂上。門框上畫著三條高度不同的鉛筆橫線。一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬坐在少年腳邊抬頭看。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：關係檢驗台</h3>
+            <p class="interactive-instruction">選一條關係式，移動 \(x\) 的起點，看看<strong>趨勢</strong>和<strong>比值、乘積</strong>哪一個才能下結論：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-trend" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">關係式</span>
+                    <div class="btn-group" id="tr-cand-group">
+                      <button class="pick-btn active" data-tr-cand="0">\(y = 3x\)</button>
+                      <button class="pick-btn" data-tr-cand="1">\(y = -2x\)</button>
+                      <button class="pick-btn" data-tr-cand="2">\(y = x + 4\)</button>
+                      <button class="pick-btn" data-tr-cand="3">\(xy = 12\)</button>
+                      <button class="pick-btn" data-tr-cand="4">\(x + y = 8\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tr-s-slider">\(x\) 從幾開始（跳過 \(0\)）：<span id="tr-s-val" class="val-num">1</span></label>
+                    <input type="range" id="tr-s-slider" min="-5" max="3" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (趨勢不等於正反比)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-17" value="A"><span class="option-text">A. 若 \(x\) 愈大 \(y\) 也愈大，則 \(y\) 與 \(x\) 一定成正比</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-17" value="B"><span class="option-text">B. 若 \(y = 5x - 2\)，則 \(y\) 與 \(x\) 成正比</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-17" value="C"><span class="option-text">C. 若 \(y\) 與 \(x\) 成正比，則 \(x\) 愈大 \(y\) 一定愈大</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-17" value="D"><span class="option-text">D. 若 \(y = -\frac{1}{4}x\)，則 \(y\) 與 \(x\) 成正比，但 \(x\) 愈大 \(y\) 愈小</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(y = -\frac{1}{4}x\) 可以寫成 \(y = kx\)，\(k = -\frac{1}{4}\)，所以成正比；而 \(k\) 是負數，\(x\) 愈大 \(y\) 反而愈小。<br>
+              A 錯：\(y = x + 2\) 也是愈來愈大，但 \(x = 1\) 時比值 \(3\)、\(x = 2\) 時比值 \(2\)，不成正比。<br>
+              B 錯：多了常數 \(-2\)。
+              \[\begin{aligned}
+              & x = 1:\ y = 3,\ \frac{y}{x} = 3 \\
+              & x = 2:\ y = 8,\ \frac{y}{x} = 4
+              \end{aligned}\]
+              比值不固定。<br>
+              C 錯：D 選項本身就是反例。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 小榕說：「\(x + y = 15\)，\(x\) 變大時 \(y\) 就變小，所以 \(y\) 與 \(x\) 成反比。」阿寬說：「\(xy = 20\)，所以 \(y\) 與 \(x\) 成反比。」下列判斷何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-18" value="A"><span class="option-text">A. 兩人都對</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-18" value="B"><span class="option-text">B. 小榕對，阿寬錯</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-18" value="C"><span class="option-text">C. 小榕錯，阿寬對</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-18" value="D"><span class="option-text">D. 兩人都錯</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。<br>
+              小榕錯：她用「一個變大一個變小」判斷，但反比要看乘積。取兩組算算看：
+              \[\begin{aligned}
+              & x = 1,\ y = 14:\ xy = 14 \\
+              & x = 5,\ y = 10:\ xy = 50
+              \end{aligned}\]
+              乘積不固定，不成反比。<br>
+              阿寬對：\(xy = 20\) 正是反比的關係式，\(k = 20\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 固定哪一個量
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-lock" aria-hidden="true"></i> 重點 10：同一條乘法式，固定哪一個量決定正比或反比
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>三個量的乘法關係</strong>：很多公式都長成「\(A = B \times C\)」。三個量裡<strong>固定其中一個</strong>，另外兩個的關係就確定了：
+                <ul>
+                  <li>固定 \(C\)：\(A\) 與 \(B\) <strong>成正比</strong></li>
+                  <li>固定 \(B\)：\(A\) 與 \(C\) <strong>成正比</strong></li>
+                  <li>固定 \(A\)：\(B\) 與 \(C\) <strong>成反比</strong></li>
+                </ul>
+              </li>
+              <li><strong>一句話記法</strong>：固定的是<strong>乘出來的那個</strong>，另外兩個就成反比；固定的是<strong>其中一個因數</strong>，乘積就和另一個因數成正比。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>公式</th><th>固定</th><th>關係</th></tr>
+              </thead>
+              <tbody>
+                <tr><td rowspan="3">面積＝長×寬</td><td>寬</td><td class="sign-pos">面積與長成正比</td></tr>
+                <tr><td>長</td><td class="sign-pos">面積與寬成正比</td></tr>
+                <tr><td>面積</td><td class="sign-neg">長與寬成反比</td></tr>
+                <tr><td rowspan="3">距離＝速率×時間</td><td>速率</td><td class="sign-pos">距離與時間成正比</td></tr>
+                <tr><td>時間</td><td class="sign-pos">距離與速率成正比</td></tr>
+                <tr><td>距離</td><td class="sign-neg">速率與時間成反比</td></tr>
+                <tr><td rowspan="2">總價＝單價×數量</td><td>數量</td><td class="sign-pos">總價與單價成正比</td></tr>
+                <tr><td>總價</td><td class="sign-neg">單價與數量成反比</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list">
+              <li><strong>應用：距離相同時比速率</strong>。同一段路，甲花 \(15\) 分鐘、乙花 \(25\) 分鐘。距離固定，速率與時間成反比，所以<strong>速率比是時間比倒過來</strong>：
+                \[\begin{aligned}
+                & \text{甲速率} : \text{乙速率} \\
+                &= 25 : 15 = 5 : 3
+                \end{aligned}\]
+                花的時間比較少的甲，速率比較快，方向對得起來。</li>
+              <li><strong>分東西也是反比</strong>：一盤點心全部平分，總量固定，人數愈多每人分到愈少——人數與每人分到的量成反比。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="prop_loop.webp" alt="微縮建築模型工坊風插圖，厚塗廣告顏料質感、暖黃工作燈：長木工作檯上有一條小小的橢圓形模型鐵道，一台紅色、一台藍色的小火車頭停在同一條軌道上。黑色短髮、額前一撮翹起、圓框護目鏡推在額頭上、穿深綠格紋襯衫加卡其色工作圍裙的少年與深棕色短鮑伯頭、耳上別著一支扁平木工鉛筆、穿藏青色工作服的少女俯身在工作檯兩側看著火車，一隻戴著咖啡色項圈與黃銅吊牌的奶油色柴犬坐在他們中間、軌道的後方。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：三個量的開關</h3>
+            <p class="interactive-instruction">選一條公式，<strong>鎖住其中一個量</strong>，再一組一組看另外兩個量怎麼變：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fix" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fx-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公式</span>
+                    <div class="btn-group" id="fx-form-group">
+                      <button class="pick-btn active" data-fx-form="0">面積＝長×寬</button>
+                      <button class="pick-btn" data-fx-form="1">距離＝速率×時間</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">鎖住</span>
+                    <div class="btn-group" id="fx-lock-group">
+                      <button class="pick-btn active" data-fx-lock="0">固定面積</button>
+                      <button class="pick-btn" data-fx-lock="1">固定長</button>
+                      <button class="pick-btn" data-fx-lock="2">固定寬</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fx-n-slider">看第幾組：<span id="fx-n-val" class="val-num">2</span></label>
+                    <input type="range" id="fx-n-slider" min="1" max="4" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fx-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (固定哪一個量)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 三角形的面積 \(= \frac{1}{2} \times\) 底 \(\times\) 高。下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-19" value="A"><span class="option-text">A. 面積固定時，底與高成正比</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-19" value="B"><span class="option-text">B. 高固定時，面積與底成反比</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-19" value="C"><span class="option-text">C. 面積固定時，底與高不成正比也不成反比</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-19" value="D"><span class="option-text">D. 底固定時，面積與高成正比</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設面積為 \(S\)、底為 \(a\)、高為 \(h\)。底 \(a\) 固定時：
+              \[\begin{aligned}
+              & S = \frac{a}{2} \times h
+              \end{aligned}\]
+              \(\frac{a}{2}\) 是固定的數，\(S\) 始終是 \(h\) 的 \(\frac{a}{2}\) 倍，所以面積與高成正比。<br>
+              A 與 C 錯：面積固定時 \(a \times h = 2S\) 是固定的數，底與高<strong>成反比</strong>。<br>
+              B 錯：高固定時 \(S = \frac{h}{2} \times a\)，面積與底<strong>成正比</strong>。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> 甲、乙兩臺模型火車在同一條環狀軌道上各跑一圈，甲花了 \(12\) 秒，乙花了 \(18\) 秒。若兩臺火車各自保持固定速率，則甲的速率與乙的速率的比是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-20" value="A"><span class="option-text">A. \(2 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-20" value="B"><span class="option-text">B. \(3 : 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-20" value="C"><span class="option-text">C. \(1 : 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-20" value="D"><span class="option-text">D. 不知道軌道長度，無法判斷</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。兩臺跑的是同一圈，距離相同，所以速率與時間成反比，速率比就是時間比倒過來：
+              \[\begin{aligned}
+              & \text{甲速率} : \text{乙速率} \\
+              &= 18 : 12 = 3 : 2
+              \end{aligned}\]
+              也可以設一圈長 \(d\)，甲的速率 \(\frac{d}{12}\)、乙的速率 \(\frac{d}{18}\)，兩者的比 \(\frac{1}{12} : \frac{1}{18} = 3 : 2\)，\(d\) 自己約掉了。<br>
+              A 把時間比直接當成速率比——那是把反比當成正比。花的時間少的甲應該比較快。<br>
+              C 以為跑同一圈速率就一樣，但兩臺花的時間不同。<br>
+              D 錯：不知道 \(d\) 也沒關係，比的時候 \(d\) 會約掉。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 正比與反比速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>正比的意義</strong>：\(y = kx\)（\(k \ne 0\)）。\(x\) 變幾倍，\(y\) 也變幾倍；<strong>比值 \(\frac{y}{x}\) 固定</strong>。</li>
+              <li><strong>判斷正比</strong>：表格<strong>每一組</strong>都算 \(\frac{y}{x}\)，全部相等才是；情境先列式，看能不能寫成 \(y = kx\)。<strong>單位先統一</strong>。</li>
+              <li><strong>正比的求值</strong>：設 \(y = kx\)，\(k = y \div x\)（<strong>除</strong>出來），再代入。</li>
+              <li><strong>正比的應用</strong>：單價、速率、配方固定的情境。\(k\) 就是「每一份的量」；也可以用比例式解，答案相同。</li>
+              <li><strong>反比的意義</strong>：\(xy = k\)（\(k \ne 0\)）。\(x\) 變 \(n\) 倍，\(y\) 變 \(\frac{1}{n}\) 倍；<strong>乘積 \(xy\) 固定</strong>。</li>
+              <li><strong>判斷反比</strong>：表格<strong>每一組</strong>都算 \(xy\)；\(x + y\) 固定是「和」固定，不是反比。</li>
+              <li><strong>反比的求值</strong>：設 \(xy = k\)，\(k = x \times y\)（<strong>乘</strong>出來），再代入。</li>
+              <li><strong>反比的應用</strong>：總量固定的情境。一定要做<strong>合理性檢查</strong>——一個變大，另一個要變小。</li>
+              <li><strong>趨勢不算數</strong>：正比可能愈來愈小（\(k &lt; 0\)），反比也可能一起變大；判斷只看<strong>比值與乘積</strong>。</li>
+              <li><strong>固定哪一個量</strong>：\(A = B \times C\)。固定因數 \(\Rightarrow\) 乘積與另一因數<strong>正比</strong>；固定乘積 \(\Rightarrow\) 兩個因數<strong>反比</strong>。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-cubes"></i> 回到工坊：同一台小火車</h4>
+              <h5><i class="fa-solid fa-train"></i> 為什麼兩次的方向相反</h5>
+              <p>阿寬兩次動的都是「距離＝速率×時間」這條式子。第一次他沒碰旋鈕，<strong>速率</strong>固定，跑兩趟距離變 \(2\) 倍，時間就只能跟著變 \(2\) 倍；第二次他只跑一趟，<strong>距離</strong>固定，速率一調快，時間就只能縮短。</p>
+              <p>所以正比和反比不是兩種毫不相干的東西——它們常常出現在<strong>同一條乘法式</strong>裡，差別只在於你把哪一個量按住不動。</p>
+              <h5><i class="fa-solid fa-triangle-exclamation"></i> 全節最貴的一個錯</h5>
+              <p>如果整節只能記一件事，記這個：<strong>判斷正比反比，不要看「變大還是變小」</strong>。你的年齡和爸爸的年齡每年一起長大，兩人年齡的比值卻年年在變——一起變大，卻不是正比。</p>
+              <p>要判斷，就老老實實地<strong>一組一組算</strong>：比值都一樣是正比，乘積都一樣是反比，兩個都不一樣就兩者都不是。</p>
+              <h5><i class="fa-solid fa-forward"></i> 再往前走一步</h5>
+              <p>正比的關係式 \(y = kx\)，把每一組 \((x,\ y)\) 描到坐標平面上，會連成一條<strong>通過原點的直線</strong>——第四冊的<strong>一次函數</strong>會從這裡接下去。反比 \(xy = k\) 描出來則是兩條彎彎的曲線，要到高中才會正式認識它。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
