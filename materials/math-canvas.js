@@ -869,3 +869,180 @@ function quadOf(x, y) {
   if (x < 0 && y < 0) return 3;
   return 4;
 }
+
+/* ==========================================================================
+   由 2-4-1／2-4-2 兩頁抽出的共用工具：不等式與數線
+
+   wbrRel 是 wbrEq 的不等式版；numLine 系列是在數線上畫解的形狀（端點、
+   射線、線段），textCenter／textLeft 是單行文字。都跟課程主題無關。
+   ⚠️ 顏色一律由呼叫端傳入（各節的調色盤不進共用檔）。
+   ========================================================================== */
+
+/**
+ * 不等式版的 wbrEq：在頂層的 \le、\ge、\lt、\gt、\ne、= 前面斷開，接成多段 \( \)。
+ * wbrEq() 只認 =、+、-，連寫的不等式（-2 \lt x \le 3）會整條包成一段、
+ * 在窄螢幕的數值列裡溢出（開發約束 24）。
+ * \left( 的 \le 後面接的是字母 f，不會被誤認成 \le。
+ * 吃的是裸 LaTeX，不要自己先包 \( \)。
+ */
+function wbrRel(tex) {
+  const REL = ['le', 'ge', 'lt', 'gt', 'ne'];
+  const parts = [];
+  let depth = 0;
+  let start = 0;
+  let i = 0;
+  while (i < tex.length) {
+    const ch = tex[i];
+    if (ch === '\\') {
+      let j = i + 1;
+      while (j < tex.length && /[a-zA-Z]/.test(tex[j])) j++;
+      if (j === i + 1) j++;              // \{ \} 這類單一符號
+      const cmd = tex.slice(i + 1, j);
+      if (depth === 0 && i > start && REL.indexOf(cmd) >= 0) {
+        parts.push(tex.slice(start, i));
+        start = i;
+      }
+      i = j;
+      continue;
+    }
+    if (ch === '{' || ch === '(' || ch === '[') depth++;
+    else if (ch === '}' || ch === ')' || ch === ']') depth--;
+    else if (ch === '=' && depth === 0 && i > start) {
+      parts.push(tex.slice(start, i));
+      start = i;
+    }
+    i++;
+  }
+  parts.push(tex.slice(start));
+  return parts
+    .map((p, k) => `\\( ${k === 0 ? '' : '{}'}${p.trim()} \\)`)
+    .join('<wbr>');
+}
+
+// 置中的一行字
+function textCenter(ctx, text, cx, cy, color, font) {
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.font = font;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, cx, cy);
+  ctx.restore();
+}
+
+// 靠左的一行字
+function textLeft(ctx, text, x, cy, color, font) {
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.font = font;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, x, cy);
+  ctx.restore();
+}
+
+const NUMLINE_FOLD = 34;   // 折線畫法抬高的高度
+
+/**
+ * 一條數線：刻度與數字，只有右端（正向）有箭頭，左端平切（開發約束 34）。
+ * cfg：{ x0, x1, y, min, max, tick, labelEvery, color, font }
+ *   x0／x1 是 min／max 的像素位置；tick 是刻度間隔（預設 1）
+ * 回傳 { px(v), left, right }：left／right 是解的線段往兩端延伸時的終點
+ */
+function numLine(ctx, cfg) {
+  const c = cfg;
+  const color = c.color || INK;
+  const tick = c.tick || 1;
+  const every = c.labelEvery || tick;
+  const unit = (c.x1 - c.x0) / (c.max - c.min);
+  const px = v => c.x0 + (v - c.min) * unit;
+  const left = c.x0 - 18;
+  const right = c.x1 + 16;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(left, c.y);
+  ctx.lineTo(right, c.y);
+  ctx.stroke();
+  axisArrow(ctx, right, c.y, 'right', color);
+  ctx.fillStyle = MUTED;
+  ctx.font = c.font || f(700, 14);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  for (let v = c.min; v <= c.max; v += tick) {
+    ctx.beginPath();
+    ctx.moveTo(px(v), c.y - 5);
+    ctx.lineTo(px(v), c.y + 5);
+    ctx.stroke();
+    if (v % every === 0) ctx.fillText(String(v), px(v), c.y + 9);
+  }
+  ctx.restore();
+  return { px, left, right };
+}
+
+// 端點：含等號畫實心圓點；不含等號畫空心圓圈（連同底下的數線一起挖空）
+function numLineEnd(ctx, x, y, filled, color) {
+  const r = 7.5;
+  ctx.save();
+  if (filled) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  } else {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(x, y, r - 1.5, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// 單一不等號的解：從端點往一邊畫到數線盡頭。style 'fold' 是抬高的折線畫法
+function numLineRay(ctx, L, y, xa, toRight, color, style) {
+  const xe = toRight ? L.right - 2 : L.left;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineJoin = 'miter';
+  ctx.beginPath();
+  if (style === 'fold') {
+    ctx.lineWidth = 3.5;
+    ctx.moveTo(xa, y);
+    ctx.lineTo(xa, y - NUMLINE_FOLD);
+    ctx.lineTo(xe, y - NUMLINE_FOLD);
+  } else {
+    ctx.lineWidth = 6;
+    ctx.moveTo(xa, y);
+    ctx.lineTo(xe, y);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 兩個不等號的解：兩端點之間的一段。style 'fold' 畫成ㄇ字形
+function numLineSeg(ctx, y, xa, xb, color, style) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineJoin = 'miter';
+  ctx.beginPath();
+  if (style === 'fold') {
+    ctx.lineWidth = 3.5;
+    ctx.moveTo(xa, y);
+    ctx.lineTo(xa, y - NUMLINE_FOLD);
+    ctx.lineTo(xb, y - NUMLINE_FOLD);
+    ctx.lineTo(xb, y);
+  } else {
+    ctx.lineWidth = 6;
+    ctx.moveTo(xa, y);
+    ctx.lineTo(xb, y);
+  }
+  ctx.stroke();
+  ctx.restore();
+}

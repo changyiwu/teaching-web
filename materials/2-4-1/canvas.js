@@ -3,8 +3,9 @@
    畫風：復古遊樂園海報（網版印刷，番茄紅／薄荷綠／芥末黃／深海軍藍）
 
    共用工具在 ../math-canvas.js（T／IT／VF／FR／SEQ／drawExpr／drawStepRows／
-   drawPanel／drawChip／drawEqPanel／axisArrow／wrapFeedback／numStr…），
-   本檔只放本節專屬的色票、不等號與數線工具，以及 8 個互動。
+   drawPanel／drawChip／drawEqPanel／axisArrow／wrapFeedback／numStr／
+   wbrRel／numLine 系列／textCenter／textLeft…），
+   本檔只放本節專屬的色票、不等號工具，以及 8 個互動。
 
    ⚠️ 本節所有 LaTeX 的不等號一律寫 \lt、\gt、\le、\ge：寫成 < 的話，
    innerHTML 會把「<x」這類字串當成標籤開頭，整段算式直接消失。
@@ -58,46 +59,6 @@ function iqPar(v) {
   return v < 0 ? `(${numStr(v)})` : numStr(v);
 }
 
-/**
- * 不等式版的 wbrEq：在頂層的 \le、\ge、\lt、\gt、= 前面斷開，接成多段 \( \)。
- * 共用檔的 wbrEq() 只認 =、+、-，連寫的不等式（-2 \lt x \le 3）會整條包成一段、
- * 在窄螢幕的數值列裡溢出（開發約束 24）。
- * \left( 的 \le 後面接的是字母 f，不會被誤認成 \le。
- */
-function iqWbr(tex) {
-  const REL = ['le', 'ge', 'lt', 'gt', 'ne'];
-  const parts = [];
-  let depth = 0;
-  let start = 0;
-  let i = 0;
-  while (i < tex.length) {
-    const ch = tex[i];
-    if (ch === '\\') {
-      let j = i + 1;
-      while (j < tex.length && /[a-zA-Z]/.test(tex[j])) j++;
-      if (j === i + 1) j++;              // \{ \} 這類單一符號
-      const cmd = tex.slice(i + 1, j);
-      if (depth === 0 && i > start && REL.indexOf(cmd) >= 0) {
-        parts.push(tex.slice(start, i));
-        start = i;
-      }
-      i = j;
-      continue;
-    }
-    if (ch === '{' || ch === '(' || ch === '[') depth++;
-    else if (ch === '}' || ch === ')' || ch === ']') depth--;
-    else if (ch === '=' && depth === 0 && i > start) {
-      parts.push(tex.slice(start, i));
-      start = i;
-    }
-    i++;
-  }
-  parts.push(tex.slice(start));
-  return parts
-    .map((p, k) => `\\( ${k === 0 ? '' : '{}'}${p.trim()} \\)`)
-    .join('<wbr>');
-}
-
 // 算式字串 → canvas 元件：單一小寫英文字母（x、y、a）走斜體，其餘照原樣
 function iqInk(s, color) {
   const parts = [];
@@ -114,28 +75,6 @@ function iqInk(s, color) {
   return SEQ(parts, color, 1);
 }
 
-// 置中的一行字
-function iqCenter(ctx, text, cx, cy, color, font) {
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.font = font;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(text, cx, cy);
-  ctx.restore();
-}
-
-// 靠左的一行字
-function iqLeft(ctx, text, x, cy, color, font) {
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.font = font;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(text, x, cy);
-  ctx.restore();
-}
-
 // 一組互斥按鈕的 active 狀態，改由程式切換（切換情境時要把按鈕歸位）
 function iqSetActive(groupEl, attr, value) {
   if (!groupEl) return;
@@ -145,114 +84,8 @@ function iqSetActive(groupEl, attr, value) {
 }
 
 /* --------------------------------------------------------------------------
-   數線工具
+   數線工具：numLine／numLineEnd／numLineRay／numLineSeg 在 ../math-canvas.js
    -------------------------------------------------------------------------- */
-
-const IQ_FOLD = 34;   // 折線畫法抬高的高度
-
-/**
- * 一條數線：刻度與數字，只有右端（正向）有箭頭，左端平切（開發約束 34）。
- * cfg：{ x0, x1, y, min, max, tick, labelEvery, color, font }
- *   x0／x1 是 min／max 的像素位置；tick 是刻度間隔（預設 1）
- * 回傳 { px(v), left, right }：left／right 是解的線段往兩端延伸時的終點
- */
-function iqLine(ctx, cfg) {
-  const c = cfg;
-  const color = c.color || INK;
-  const tick = c.tick || 1;
-  const every = c.labelEvery || tick;
-  const unit = (c.x1 - c.x0) / (c.max - c.min);
-  const px = v => c.x0 + (v - c.min) * unit;
-  const left = c.x0 - 18;
-  const right = c.x1 + 16;
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(left, c.y);
-  ctx.lineTo(right, c.y);
-  ctx.stroke();
-  axisArrow(ctx, right, c.y, 'right', color);
-  ctx.fillStyle = MUTED;
-  ctx.font = c.font || f(700, 14);
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  for (let v = c.min; v <= c.max; v += tick) {
-    ctx.beginPath();
-    ctx.moveTo(px(v), c.y - 5);
-    ctx.lineTo(px(v), c.y + 5);
-    ctx.stroke();
-    if (v % every === 0) ctx.fillText(String(v), px(v), c.y + 9);
-  }
-  ctx.restore();
-  return { px, left, right };
-}
-
-// 端點：含等號畫實心圓點；不含等號畫空心圓圈（連同底下的數線一起挖空）
-function iqEnd(ctx, x, y, filled, color) {
-  const r = 7.5;
-  ctx.save();
-  if (filled) {
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-  } else {
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.arc(x, y, r - 1.5, 0, Math.PI * 2);
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
-// 單一不等號的解：從端點往一邊畫到數線盡頭。style 'fold' 是抬高的折線畫法
-function iqRay(ctx, L, y, xa, toRight, color, style) {
-  const xe = toRight ? L.right - 2 : L.left;
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineJoin = 'miter';
-  ctx.beginPath();
-  if (style === 'fold') {
-    ctx.lineWidth = 3.5;
-    ctx.moveTo(xa, y);
-    ctx.lineTo(xa, y - IQ_FOLD);
-    ctx.lineTo(xe, y - IQ_FOLD);
-  } else {
-    ctx.lineWidth = 6;
-    ctx.moveTo(xa, y);
-    ctx.lineTo(xe, y);
-  }
-  ctx.stroke();
-  ctx.restore();
-}
-
-// 兩個不等號的解：兩端點之間的一段。style 'fold' 畫成ㄇ字形
-function iqSeg(ctx, y, xa, xb, color, style) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineJoin = 'miter';
-  ctx.beginPath();
-  if (style === 'fold') {
-    ctx.lineWidth = 3.5;
-    ctx.moveTo(xa, y);
-    ctx.lineTo(xa, y - IQ_FOLD);
-    ctx.lineTo(xb, y - IQ_FOLD);
-    ctx.lineTo(xb, y);
-  } else {
-    ctx.lineWidth = 6;
-    ctx.moveTo(xa, y);
-    ctx.lineTo(xb, y);
-  }
-  ctx.stroke();
-  ctx.restore();
-}
 
 // 試驗點：數線下方的向上三角形與標籤
 function iqProbe(ctx, x, y, label, color) {
@@ -421,14 +254,14 @@ function initGateCanvas() {
     ctx.textBaseline = 'bottom';
     ctx.fillText(`規定 ${a}`, 132, ry(a) - 5);
     ctx.restore();
-    iqCenter(ctx, `x = ${h} 公分`, 104, BASE + 20, IQ_MINT, f(800, 14));
+    textCenter(ctx, `x = ${h} 公分`, 104, BASE + 20, IQ_MINT, f(800, 14));
   }
 
   function stepBox(y, title, items, ok) {
     const x = 212, w = 314, hgt = 92;
     const col = (ok == null) ? MUTED : (ok ? OK_COLOR : NO_COLOR);
     drawPanel(ctx, x, y, w, hgt, col, 0.07);
-    iqLeft(ctx, title, x + 12, y + 20, C, f(800, 13.5));
+    textLeft(ctx, title, x + 12, y + 20, C, f(800, 13.5));
     drawExpr(ctx, items, 0, y + 58, 22, INK, { left: x + 14, maxW: 196, gap: 6 });
     if (ok != null) {
       drawChip(ctx, x + w - 90, y + 43, 78, 30, ok ? '成立' : '不成立', col, 'rgba(15,23,42,0.55)');
@@ -461,11 +294,11 @@ function initGateCanvas() {
 
     const col = ok ? OK_COLOR : NO_COLOR;
     drawPanel(ctx, 14, 384, 512, 84, col, 0.08);
-    iqCenter(ctx, RULE[key](a), 270, 406, INK, f(700, 14.5));
+    textCenter(ctx, RULE[key](a), 270, 406, INK, f(700, 14.5));
     drawExpr(ctx, [IT('x', C), T(`${S.ch} ${a}`, C), T('→', MUTED),
       T(`${h} 公分${ok ? '可以搭乘' : '不能搭乘'}`, col)], 270, 444, 22, INK, { maxW: 490, gap: 8 });
 
-    out.innerHTML = iqWbr(`x = ${h}`) + '，' + iqWbr(`${h} ${S.tex} ${a}`) + (ok ? ' 成立' : ' 不成立');
+    out.innerHTML = wbrRel(`x = ${h}`) + '，' + wbrRel(`${h} ${S.tex} ${a}`) + (ok ? ' 成立' : ' 不成立');
 
     let msg;
     if (equal && S.eq) {
@@ -538,9 +371,9 @@ function initDefCanvas() {
     roundRect(ctx, 28, y + 17, 40, 40, 10);
     ctx.fill();
     ctx.restore();
-    iqCenter(ctx, String(n), 48, y + 37, '#0f172a', f(900, 20));
-    iqLeft(ctx, q, 84, y + 25, C, f(800, 15));
-    iqLeft(ctx, text, 84, y + 52, INK, f(600, 14));
+    textCenter(ctx, String(n), 48, y + 37, '#0f172a', f(900, 20));
+    textLeft(ctx, q, 84, y + 25, C, f(800, 15));
+    textLeft(ctx, text, 84, y + 52, INK, f(600, 14));
     drawChip(ctx, 424, y + 22, 90, 30, st === 1 ? '通過' : (st === 0 ? '不通過' : '不必看'), col, 'rgba(15,23,42,0.55)');
   }
 
@@ -554,8 +387,8 @@ function initDefCanvas() {
 
     const col = cd.yes ? OK_COLOR : NO_COLOR;
     drawPanel(ctx, 14, 400, 512, 60, col, 0.12);
-    iqCenter(ctx, cd.yes ? '✔ 是一元一次不等式' : '✘ 不是一元一次不等式', 270, 419, col, f(900, 17));
-    iqCenter(ctx, cd.note, 270, 444, INK, f(600, 13.5));
+    textCenter(ctx, cd.yes ? '✔ 是一元一次不等式' : '✘ 不是一元一次不等式', 270, 419, col, f(900, 17));
+    textCenter(ctx, cd.note, 270, 444, INK, f(600, 13.5));
 
     out.innerHTML = `\\(${cd.tex}\\)` + (cd.yes ? ' 是一元一次不等式' : ' 不是一元一次不等式');
     fb.innerHTML = wrapFeedback(cd.note + (cd.yes
@@ -621,9 +454,9 @@ function initWordCanvas() {
 
     // 數線：a 左右各 4 格，並試 a − 1、a、a + 1 三個數
     const y = 184;
-    const L = iqLine(ctx, { x0: 60, x1: 470, y: y, min: a - 4, max: a + 4 });
-    iqRay(ctx, L, y, L.px(a), S.up, C, 'line');
-    iqEnd(ctx, L.px(a), y, S.eq, C);
+    const L = numLine(ctx, { x0: 60, x1: 470, y: y, min: a - 4, max: a + 4 });
+    numLineRay(ctx, L, y, L.px(a), S.up, C, 'line');
+    numLineEnd(ctx, L.px(a), y, S.eq, C);
     [a - 1, a, a + 1].forEach(v => {
       const ok = iqHolds(v, wd.key, a);
       const col = ok ? OK_COLOR : NO_COLOR;
@@ -636,7 +469,7 @@ function initWordCanvas() {
       ctx.fill();
       ctx.stroke();
       ctx.restore();
-      iqCenter(ctx, ok ? '✔' : '✘', L.px(v), y - 42, col, f(900, 15));
+      textCenter(ctx, ok ? '✔' : '✘', L.px(v), y - 42, col, f(900, 15));
     });
 
     drawStepRows(ctx, [
@@ -650,7 +483,7 @@ function initWordCanvas() {
 
     wrapText(ctx, `「${wd.w}」：${why}`, 270, 450, 490, 18, INK, 14);
 
-    out.innerHTML = `「${sentence}」：` + iqWbr(`x ${S.tex} ${a}`);
+    out.innerHTML = `「${sentence}」：` + wbrRel(`x ${S.tex} ${a}`);
     fb.innerHTML = wrapFeedback(
       `「${wd.w}」寫成 \\(${S.tex}\\)。先看<b style="color:${C}">方向</b>：符合的數比 \\(${a}\\) ${S.up ? '大' : '小'}；再看<b style="color:${C}">端點</b>：剛好 \\(${a}\\) ${S.eq ? '也算，所以要有等號' : '不算，所以不能有等號'}。`
     );
@@ -717,7 +550,7 @@ function initBudgetCanvas() {
   // 一條長條：標籤、長度、數值
   function bar(y, label, val, maxV, color) {
     const x0 = 150, W = 330;
-    iqLeft(ctx, label, 22, y, color, f(800, 14));
+    textLeft(ctx, label, 22, y, color, f(800, 14));
     const w = Math.max(3, W * val / maxV);
     ctx.save();
     ctx.fillStyle = color;
@@ -725,7 +558,7 @@ function initBudgetCanvas() {
     roundRect(ctx, x0, y - 12, w, 24, 6);
     ctx.fill();
     ctx.restore();
-    iqLeft(ctx, numStr(val), Math.min(x0 + w + 8, 488), y, color, f(800, 15));
+    textLeft(ctx, numStr(val), Math.min(x0 + w + 8, 488), y, color, f(800, 15));
   }
 
   function draw() {
@@ -787,7 +620,7 @@ function initBudgetCanvas() {
     // 試一個數：兩條長條比長短
     const col = ok ? OK_COLOR : NO_COLOR;
     drawPanel(ctx, 14, 330, 512, 160, col, 0.06);
-    iqLeft(ctx, ci === 3 ? `試一個：第三局 x = ${x} 分` : `試一個：x = ${x}`, 26, 352, IQ_MUSTARD, f(800, 14.5));
+    textLeft(ctx, ci === 3 ? `試一個：第三局 x = ${x} 分` : `試一個：x = ${x}`, 26, 352, IQ_MUSTARD, f(800, 14.5));
     const maxV = Math.max(lv, rv) * 1.12;
     bar(388, lName, lv, maxV, IQ_TOMATO);
     bar(422, rName, rv, maxV, IQ_NAVY);
@@ -799,7 +632,7 @@ function initBudgetCanvas() {
     drawChip(ctx, 26, 450, 200, 30, `情境：${sitText}`, col, 'rgba(15,23,42,0.55)');
     drawChip(ctx, 240, 450, 274, 30, `不等式${ok ? '成立' : '不成立'}（兩者一致）`, col, 'rgba(15,23,42,0.55)');
 
-    out.innerHTML = iqWbr(ineqTex) + `；\\(x = ${x}\\) 時${ok ? '成立' : '不成立'}`;
+    out.innerHTML = wbrRel(ineqTex) + `；\\(x = ${x}\\) 時${ok ? '成立' : '不成立'}`;
 
     let msg;
     if (equal) {
@@ -859,11 +692,11 @@ function initRangeCanvas() {
     ctx.clearRect(0, 0, cv.width, cv.height);
     drawTitle(ctx, '上下限看板：兩個條件要同時成立', C);
     drawPanel(ctx, 14, 48, 512, 50, C, 0.07);
-    iqCenter(ctx, `規定：身高 ${loText}，而且${hiText}`, 270, 73, INK, f(700, 15.5));
+    textCenter(ctx, `規定：身高 ${loText}，而且${hiText}`, 270, 73, INK, f(700, 15.5));
 
     if (a >= b) {
       drawPanel(ctx, 14, 130, 512, 130, NO_COLOR, 0.1);
-      iqCenter(ctx, '下限不小於上限，這個範圍不成立', 270, 170, NO_COLOR, f(900, 18));
+      textCenter(ctx, '下限不小於上限，這個範圍不成立', 270, 170, NO_COLOR, f(900, 18));
       wrapText(ctx, `沒有任何身高能同時「${lo ? '至少' : '超過'} ${a}」又「${hi ? '至多' : '未滿'} ${b}」。把上限調高，或把下限調低。`, 270, 220, 470, 20, INK, 14.5);
       out.innerHTML = `下限 \\(${a}\\)、上限 \\(${b}\\)：範圍不成立`;
       fb.innerHTML = wrapFeedback(`下限 \\(${a}\\) 公分不小於上限 \\(${b}\\) 公分，兩個條件不可能同時成立。<b style="color:${C}">把上限調到比下限高</b>再看。`);
@@ -882,10 +715,10 @@ function initRangeCanvas() {
 
     // 身高尺：95～165 公分
     const y = 330;
-    const L = iqLine(ctx, { x0: 44, x1: 474, y: y, min: 95, max: 165, tick: 5, labelEvery: 10, font: f(700, 12.5) });
-    iqSeg(ctx, y, L.px(a), L.px(b), C, 'line');
-    iqEnd(ctx, L.px(a), y, !!lo, C);
-    iqEnd(ctx, L.px(b), y, !!hi, C);
+    const L = numLine(ctx, { x0: 44, x1: 474, y: y, min: 95, max: 165, tick: 5, labelEvery: 10, font: f(700, 12.5) });
+    numLineSeg(ctx, y, L.px(a), L.px(b), C, 'line');
+    numLineEnd(ctx, L.px(a), y, !!lo, C);
+    numLineEnd(ctx, L.px(b), y, !!hi, C);
     const ok1 = iqHolds(x, k1 === 'le' ? 'ge' : 'gt', a);
     const ok2 = iqHolds(x, k2, b);
     const ok = ok1 && ok2;
@@ -899,17 +732,17 @@ function initRangeCanvas() {
     ctx.closePath();
     ctx.fill();
     ctx.restore();
-    iqCenter(ctx, `x = ${x}`, clamp(L.px(x), 40, 500), y - 36, col, f(800, 13.5));
+    textCenter(ctx, `x = ${x}`, clamp(L.px(x), 40, 500), y - 36, col, f(800, 13.5));
 
     drawPanel(ctx, 14, 382, 512, 90, col, 0.07);
     const c1 = ok1 ? OK_COLOR : NO_COLOR, c2 = ok2 ? OK_COLOR : NO_COLOR;
     drawChip(ctx, 26, 398, 150, 30, `${a} ${s1.ch} ${x}  ${ok1 ? '✔' : '✘'}`, c1, 'rgba(15,23,42,0.55)');
-    iqCenter(ctx, '而且', 200, 413, MUTED, f(800, 14));
+    textCenter(ctx, '而且', 200, 413, MUTED, f(800, 14));
     drawChip(ctx, 224, 398, 150, 30, `${x} ${s2.ch} ${b}  ${ok2 ? '✔' : '✘'}`, c2, 'rgba(15,23,42,0.55)');
     drawChip(ctx, 390, 398, 124, 30, ok ? '符合規定' : '不符合', col, 'rgba(15,23,42,0.55)');
-    iqCenter(ctx, ok ? '兩個都成立，才算符合' : '只要有一個不成立，就不符合', 270, 452, INK, f(600, 14));
+    textCenter(ctx, ok ? '兩個都成立，才算符合' : '只要有一個不成立，就不符合', 270, 452, INK, f(600, 14));
 
-    out.innerHTML = iqWbr(`${a} ${s1.tex} x ${s2.tex} ${b}`) + `；\\(x = ${x}\\) ${ok ? '符合' : '不符合'}`;
+    out.innerHTML = wbrRel(`${a} ${s1.tex} x ${s2.tex} ${b}`) + `；\\(x = ${x}\\) ${ok ? '符合' : '不符合'}`;
 
     let msg;
     if (x === a || x === b) {
@@ -985,7 +818,7 @@ function initSubCanvas() {
 
     // 試過的數
     const y = 384;
-    const L = iqLine(ctx, { x0: 50, x1: 470, y: y, min: -4, max: 8, font: f(700, 12.5) });
+    const L = numLine(ctx, { x0: 50, x1: 470, y: y, min: -4, max: 8, font: f(700, 12.5) });
     history[ci].forEach((good, v) => {
       ctx.save();
       ctx.fillStyle = good ? OK_COLOR : NO_COLOR;
@@ -1003,10 +836,10 @@ function initSubCanvas() {
     ctx.restore();
     let good = 0, bad = 0;
     history[ci].forEach(g => { if (g) good++; else bad++; });
-    iqCenter(ctx, `已經試了 ${good + bad} 個數：${good} 個是解、${bad} 個不是（綠點是解）`, 270, 440, INK, f(700, 14));
-    iqCenter(ctx, '解通常不只一個，小數也可能是解', 270, 464, MUTED, f(600, 13));
+    textCenter(ctx, `已經試了 ${good + bad} 個數：${good} 個是解、${bad} 個不是（綠點是解）`, 270, 440, INK, f(700, 14));
+    textCenter(ctx, '解通常不只一個，小數也可能是解', 270, 464, MUTED, f(600, 13));
 
-    out.innerHTML = iqWbr(`${cs.t(x)} = ${numStr(lv)}`) + '，' + iqWbr(`${numStr(lv)} ${S.tex} ${cs.r}`) + (ok ? ' 成立' : ' 不成立');
+    out.innerHTML = wbrRel(`${cs.t(x)} = ${numStr(lv)}`) + '，' + wbrRel(`${numStr(lv)} ${S.tex} ${cs.r}`) + (ok ? ' 成立' : ' 不成立');
 
     let msg;
     if (equal) {
@@ -1059,11 +892,11 @@ function initRayCanvas() {
     drawEqPanel(ctx, [IT('x', IQ_CREAM_INK), T(`${S.ch} ${as}`, IQ_CREAM_INK)], 76, C, { h: 30, size: 30 });
 
     const y = 172;
-    const L = iqLine(ctx, { x0: 50, x1: 474, y: y, min: -6, max: 6 });
-    iqRay(ctx, L, y, L.px(a), S.up, C, style);
-    iqEnd(ctx, L.px(a), y, S.eq, C);
+    const L = numLine(ctx, { x0: 50, x1: 474, y: y, min: -6, max: 6 });
+    numLineRay(ctx, L, y, L.px(a), S.up, C, style);
+    numLineEnd(ctx, L.px(a), y, S.eq, C);
     // 端點不是整數時，數線上沒有現成的刻度數字，補寫在下方
-    if (!Number.isInteger(a)) iqCenter(ctx, as, L.px(a), y + 42, C, f(900, 15));
+    if (!Number.isInteger(a)) textCenter(ctx, as, L.px(a), y + 42, C, f(900, 15));
     iqProbe(ctx, L.px(t), y + 58, `試 x = ${ts}`, IQ_MUSTARD);
 
     drawStepRows(ctx, [
@@ -1076,9 +909,9 @@ function initRayCanvas() {
     ], 3, { top: 296, gap: 56, labX: 22, eqX: 212, size: 21, color: C });
 
     const styleName = style === 'fold' ? '折線畫法' : '直線畫法';
-    iqCenter(ctx, `目前是${styleName}：兩種畫法表示的解完全相同`, 270, 452, MUTED, f(600, 13.5));
+    textCenter(ctx, `目前是${styleName}：兩種畫法表示的解完全相同`, 270, 452, MUTED, f(600, 13.5));
 
-    out.innerHTML = iqWbr(`x ${S.tex} ${as}`) + `：端點${S.eq ? '實心' : '空心'}，往${S.up ? '右' : '左'}`;
+    out.innerHTML = wbrRel(`x ${S.tex} ${as}`) + `：端點${S.eq ? '實心' : '空心'}，往${S.up ? '右' : '左'}`;
 
     let msg;
     if (t === a) {
@@ -1137,7 +970,7 @@ function initSegCanvas() {
 
     if (a >= b) {
       drawPanel(ctx, 14, 60, 512, 150, NO_COLOR, 0.1);
-      iqCenter(ctx, `左端 ${a} 不小於右端 ${b}，範圍不成立`, 270, 110, NO_COLOR, f(900, 18));
+      textCenter(ctx, `左端 ${a} 不小於右端 ${b}，範圍不成立`, 270, 110, NO_COLOR, f(900, 18));
       wrapText(ctx, '連寫的不等式要把小的數寫在左邊，中間才夾得住 x。把右端調大，或把左端調小。', 270, 160, 470, 20, INK, 14.5);
       out.innerHTML = `左端 \\(${a}\\)、右端 \\(${b}\\)：範圍不成立`;
       fb.innerHTML = wrapFeedback(`左端 \\(${a}\\) 不小於右端 \\(${b}\\)，沒有任何數能同時比 \\(${a}\\) 大、又比 \\(${b}\\) 小。<b style="color:${C}">把右端調到比左端大</b>再看。`);
@@ -1148,7 +981,7 @@ function initSegCanvas() {
     drawEqPanel(ctx, [T(`${a} ${s1.ch}`, IQ_CREAM_INK), IT('x', IQ_CREAM_INK), T(`${s2.ch} ${b}`, IQ_CREAM_INK)], 76, C, { h: 30, size: 30 });
 
     const y = 190;
-    const L = iqLine(ctx, { x0: 50, x1: 474, y: y, min: -6, max: 6 });
+    const L = numLine(ctx, { x0: 50, x1: 474, y: y, min: -6, max: 6 });
 
     // 範圍內、而且符合篩選的整數
     const list = [];
@@ -1164,12 +997,12 @@ function initSegCanvas() {
       roundRect(ctx, L.px(v) - 13, y + 6, 26, 22, 6);
       ctx.fill();
       ctx.restore();
-      iqCenter(ctx, String(v), L.px(v), y + 17, '#1f2937', f(900, 14));
+      textCenter(ctx, String(v), L.px(v), y + 17, '#1f2937', f(900, 14));
     });
 
-    iqSeg(ctx, y, L.px(a), L.px(b), C, style);
-    iqEnd(ctx, L.px(a), y, !!lo, C);
-    iqEnd(ctx, L.px(b), y, !!hi, C);
+    numLineSeg(ctx, y, L.px(a), L.px(b), C, style);
+    numLineEnd(ctx, L.px(a), y, !!lo, C);
+    numLineEnd(ctx, L.px(b), y, !!hi, C);
 
     const listStr = list.length ? list.join(', ') : '沒有';
     drawStepRows(ctx, [
@@ -1182,9 +1015,9 @@ function initSegCanvas() {
     ], 3, { top: 272, gap: 58, labX: 22, eqX: 200, size: 20, color: C });
 
     const styleName = style === 'fold' ? 'ㄇ字形畫法' : '直線畫法';
-    iqCenter(ctx, `目前是${styleName}：只畫兩個端點之間的一段，不延伸到盡頭`, 270, 440, MUTED, f(600, 13.5));
+    textCenter(ctx, `目前是${styleName}：只畫兩個端點之間的一段，不延伸到盡頭`, 270, 440, MUTED, f(600, 13.5));
 
-    out.innerHTML = iqWbr(`${a} ${s1.tex} x ${s2.tex} ${b}`) + `；${F.name}共 ${list.length} 個`;
+    out.innerHTML = wbrRel(`${a} ${s1.tex} x ${s2.tex} ${b}`) + `；${F.name}共 ${list.length} 個`;
 
     const full = b - a + 1;
     let msg = `\\(${a}\\) 到 \\(${b}\\) 之間（兩端都算）有 \\(${full}\\) 個整數；`;
