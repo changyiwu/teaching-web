@@ -4,39 +4,1611 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>4-2 解一元一次不等式 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>4-2 解一元一次不等式 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第二冊 (1下) • 第4章 一元一次不等式</div>
-    <h1>4-2 解一元一次不等式</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第二冊 • 第四章</span>
+        <h1>4-2 解一元一次不等式</h1>
+        <p>上一節用「代入」一個一個檢查解，可是不等式的解有無限多個，試不完。這一節要像解方程式那樣，把不等式一步步整理成「\(x \gt\) 某個數」。大部分的步驟和方程式一模一樣，只有一條新規則：<strong>兩邊同乘或同除以負數時，不等號的方向要反過來</strong>。學會之後，再用它解決存錢、點餐、團購這些生活問題——解出來的是一整段範圍，還要依情境挑出<strong>合理的整數</strong>。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-arrows-left-right"></i> 加減規則</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-maximize"></i> 乘除正數</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-rotate"></i> 乘除負數</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-right-left"></i> 移項法則</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-scale-unbalanced"></i> 兩邊都有 x</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-box-open"></i> 去括號</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-divide"></i> 去分母與圖示</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-piggy-bank"></i> 取整數</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-receipt"></i> 價目表</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-tags"></i> 折扣門檻</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-glass-water"></i> 兩個條件</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Retro Amusement Park Poster)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(251, 113, 133, 0.25);">
+        <h2 class="section-title" style="color: #fda4af; border-bottom-color: rgba(253, 164, 175, 0.2);">
+          <i class="fa-solid fa-piggy-bank" aria-hidden="true" style="color: #fda4af; text-shadow: 0 0 10px rgba(251, 113, 133, 0.4);"></i> 課前暖身漫畫：存 7.5 天？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小晴在售票亭看到<strong style="color:#fda4af">遊園年票 \(900\) 元</strong>，她的小豬撲滿裡已經有 \(300\) 元，打算之後每天再存 \(80\) 元。阿哲列出不等式一算，得到「\(x \ge 7.5\)」——難道要存 \(7.5\) 天？這一節先學怎麼<strong style="color:#fda4af">解</strong>出這樣的不等式，最後再回來回答：天數只能是整數，<strong style="color:#fda4af">至少</strong>要存幾天？
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古遊樂園海報風四格漫畫，網版印刷質感，四格都是同一個遊樂園售票亭前，天空是帶網點的薄荷綠，背景有摩天輪與紅白條紋的帳篷。黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女站在左邊，棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣和深藍長褲的少年站在右邊。第一格，少女一手握拳、一手往上指，對白：「遊園年票 900 元！我好想要！」少年看著她。第二格，少女雙手捧著一隻粉紅色的小豬撲滿，少年彎腰湊過來看，少女說：「我已經存了 300 元，之後每天再存 80 元……」第三格，少年一手摸著下巴、一臉疑惑，心想：「300 + 80x ≥ 900，x ≥ 7.5……要存 7.5 天？」少女也摸著下巴看著他。第四格，少女一手叉腰、一手豎起大拇指大喊：「哪有半天！至少要存 8 天！」少年抓著帽子不好意思地笑。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 解不等式的意義與加減規則
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> 重點 1：解不等式與加減規則——同加同減，方向不變
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>解一元一次不等式</strong>：找出一個不等式<strong>所有解</strong>的過程。\(x \gt 3\) 一眼就看得出哪些數是解；\(x + 6 \gt 5\) 看不出來，就要把它整理成「\(x \gt\) 某個數」的樣子。</li>
+              <li><strong>加減規則</strong>：若 \(a \gt b\)，則 \(a + c \gt b + c\)，而且 \(a - c \gt b - c\)。<strong>兩邊同加或同減一個數，不等號的方向不變</strong>。</li>
+              <li><strong>在數線上看</strong>：\(a \gt b\) 表示 \(a\) 在 \(b\) 的右邊。兩個點一起往右（或往左）移動同樣的格數，\(a\) 還是在 \(b\) 的右邊。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>原本</th><th>兩邊同時</th><th>結果</th><th>方向</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(7 \gt 2\)</td><td>\(+\,3\)</td><td>\(10 \gt 5\)</td><td class="sign-pos">不變</td></tr>
+                <tr><td>\(-1 \lt 4\)</td><td>\(-\,5\)</td><td>\(-6 \lt -1\)</td><td class="sign-pos">不變</td></tr>
+                <tr><td>\(x - 2 \le 5\)</td><td>\(+\,2\)</td><td>\(x \le 7\)</td><td class="sign-pos">不變</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用加減規則解不等式</strong>：兩邊同減 \(6\)，把 \(x\) 旁邊的 \(+6\) 消掉：
+                \[\begin{aligned} & x + 6 \gt 5 \\ & x + 6 - 6 \gt 5 - 6 \\ & x \gt -1 \end{aligned}\]
+                所有比 \(-1\) 大的數都是解。</li>
+              <li><strong>和方程式的差別</strong>：\(x + 6 = 5\) 的解只有 \(x = -1\) 一個數；\(x + 6 \gt 5\) 的解是<strong>一整段</strong>，而且不包含 \(-1\) 本身。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_gondola.webp" alt="復古遊樂園海報風插圖，網版印刷質感：一條深藍色的纜繩從畫面左下方斜斜拉到右上方，上面掛著兩個空中纜車車廂。黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女坐在右上方較高的黃色車廂裡揮手；棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣和深藍長褲的少年坐在左下方較低的車廂裡微笑。背景有摩天輪、旋轉木馬和紅白條紋帳篷。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：纜車平移台</h3>
+            <p class="interactive-instruction">「兩個數」模式：拉動兩個數與移動的格數，看兩點一起平移後<strong>誰在右邊</strong>有沒有改變。「解不等式」模式：看兩邊同加或同減之後，怎麼得到 \(x\) 的範圍：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-shift" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sh-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="sh-mode-group">
+                      <button class="pick-btn active" data-sh-mode="pair">兩個數</button>
+                      <button class="pick-btn" data-sh-mode="solve">解不等式</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="sh-sign-row" hidden>
+                    <span class="btn-group-label">不等號</span>
+                    <div class="btn-group" id="sh-sign-group">
+                      <button class="pick-btn active" data-sh-sign="gt">&gt;</button>
+                      <button class="pick-btn" data-sh-sign="ge">≥</button>
+                      <button class="pick-btn" data-sh-sign="lt">&lt;</button>
+                      <button class="pick-btn" data-sh-sign="le">≤</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sh-a-slider"><span id="sh-a-name">第一個數 a</span>：<span id="sh-a-val" class="val-num">3</span></label>
+                    <input type="range" id="sh-a-slider" min="-5" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-b-slider"><span id="sh-b-name">第二個數 b</span>：<span id="sh-b-val" class="val-num">-1</span></label>
+                    <input type="range" id="sh-b-slider" min="-5" max="5" value="-1" step="1">
+                  </div>
+                  <div class="slider-row" id="sh-c-row">
+                    <label for="sh-c-slider">兩邊同加 c（負數就是往左移）：<span id="sh-c-val" class="val-num">4</span></label>
+                    <input type="range" id="sh-c-slider" min="-5" max="5" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sh-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (加減規則)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 已知 \(a \lt b\)，下列何者<strong>一定正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-1" value="A"><span class="option-text">A. \(a - 5 \gt b - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-1" value="B"><span class="option-text">B. \(a + 3 \lt b + 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-1" value="C"><span class="option-text">C. \(a - 2 \ge b - 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-1" value="D"><span class="option-text">D. \(a + 7 = b + 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(a \lt b\) 的兩邊同加 \(3\)，<strong>不等號的方向不變</strong>，得到 \(a + 3 \lt b + 3\)。<br>
+              A 錯：兩邊同減 \(5\) 方向也不變，應該是 \(a - 5 \lt b - 5\)。<br>
+              C 錯：同減 \(2\) 後是 \(a - 2 \lt b - 2\)，\(a - 2\) 比 \(b - 2\) 小，「大於或等於」不成立。<br>
+              D 錯：\(a\) 與 \(b\) 不一樣大，同加 \(7\) 之後仍然不一樣大。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 解一元一次不等式 \(x + 9 \ge 4\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-2" value="A"><span class="option-text">A. \(x \ge 13\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-2" value="B"><span class="option-text">B. \(x \le -5\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-2" value="C"><span class="option-text">C. \(x \ge -5\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-2" value="D"><span class="option-text">D. \(x \ge 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩邊同減 \(9\)，方向不變：
+              \[\begin{aligned} & x + 9 \ge 4 \\ & x + 9 - 9 \ge 4 - 9 \\ & x \ge -5 \end{aligned}\]
+              A 錯：要消掉 \(+9\) 應該同減 \(9\)，這是同加了 \(9\)。<br>
+              B 錯：同加同減不會改變不等號的方向。<br>
+              D 錯：\(4 - 9 = -5\)，不是 \(5\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 同乘同除以正數
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-maximize" aria-hidden="true"></i> 重點 2：同乘同除以正數——方向不變
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>生活裡的例子</strong>：一支棉花糖比一包爆米花貴，那麼三支棉花糖也一定比三包爆米花貴，半支棉花糖也比半包爆米花貴。</li>
+              <li><strong>乘除正數的規則</strong>：若 \(a \gt b\) 且 \(c \gt 0\)，則 \(ac \gt bc\)，而且 \(a \div c \gt b \div c\)。<strong>兩邊同乘或同除以正數，方向不變</strong>。</li>
+              <li><strong>除以 \(c\) 就是乘以 \(\frac{1}{c}\)</strong>，所以只要記「乘以正數」這一條，除法跟著成立。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>原本</th><th>兩邊同時</th><th>結果</th><th>方向</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(8 \gt 3\)</td><td>\(\times\, 4\)</td><td>\(32 \gt 12\)</td><td class="sign-pos">不變</td></tr>
+                <tr><td>\(-6 \lt -1\)</td><td>\(\times\, 2\)</td><td>\(-12 \lt -2\)</td><td class="sign-pos">不變</td></tr>
+                <tr><td>\(0 \gt -5\)</td><td>\(\times\, 3\)</td><td>\(0 \gt -15\)</td><td class="sign-pos">不變</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用來解不等式</strong>：\(4x \le 10\) 兩邊同除以 \(4\)，得 \(x \le \frac{5}{2}\)；\(\frac{1}{2}x \lt 7\) 兩邊同乘以 \(2\)，得 \(x \lt 14\)。</li>
+              <li><strong>要看的是「乘除的那個數」</strong>，不是右邊的數：\(5x \gt -30\) 兩邊同除以正數 \(5\)，得 \(x \gt -6\)。右邊出現負數，<strong>方向照樣不變</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_cotton.webp" alt="復古遊樂園海報風插圖，網版印刷質感：黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女，兩手各拿著一支粉紅色的大棉花糖；棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣和深藍長褲的少年，懷裡抱著兩桶紅白條紋紙桶裝的爆米花，笑著轉頭看她。背景有旋轉木馬、摩天輪和紅白條紋帳篷。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：倍數放大鏡（正數）</h3>
+            <p class="interactive-instruction">拉動兩個數，再選一個<strong>正數</strong>讓兩邊同乘或同除。看虛線怎麼把上面的點送到下面，<strong>左右順序有沒有交換</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mul" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mu-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">兩邊同時</span>
+                    <div class="btn-group" id="mu-k-group">
+                      <button class="pick-btn active" data-mu-k="2">× 2</button>
+                      <button class="pick-btn" data-mu-k="3">× 3</button>
+                      <button class="pick-btn" data-mu-k="/2">÷ 2</button>
+                      <button class="pick-btn" data-mu-k="/4">÷ 4</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mu-a-slider">第一個數 a：<span id="mu-a-val" class="val-num">3</span></label>
+                    <input type="range" id="mu-a-slider" min="-4" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mu-b-slider">第二個數 b：<span id="mu-b-val" class="val-num">-2</span></label>
+                    <input type="range" id="mu-b-slider" min="-4" max="4" value="-2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mu-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (乘除正數)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 下列哪一個推論是<strong>正確</strong>的？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-3" value="A"><span class="option-text">A. 若 \(5x \gt -15\)，則 \(x \gt -3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-3" value="B"><span class="option-text">B. 若 \(\frac{1}{2}x \ge 4\)，則 \(x \ge 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-3" value="C"><span class="option-text">C. 若 \(7x \lt -21\)，則 \(x \gt -3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-3" value="D"><span class="option-text">D. 若 \(3x \le 7\)，則 \(x \le 21\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(5x \gt -15\) 兩邊同除以<strong>正數</strong> \(5\)，方向不變，得 \(x \gt -3\)。<br>
+              B 錯：要消掉 \(\frac{1}{2}\) 應該同乘以 \(2\)，得 \(x \ge 8\)；這裡卻除以了 \(2\)。<br>
+              C 錯：除以的是正數 \(7\)，方向不變，應該是 \(x \lt -3\)。右邊是負數不會讓不等號變號。<br>
+              D 錯：要消掉係數 \(3\) 應該同除以 \(3\)，得 \(x \le \frac{7}{3}\)；這裡卻乘了 \(3\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 解一元一次不等式 \(\frac{3}{4}x \gt 9\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-4" value="A"><span class="option-text">A. \(x \gt 12\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-4" value="B"><span class="option-text">B. \(x \gt \frac{27}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-4" value="C"><span class="option-text">C. \(x \lt 12\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-4" value="D"><span class="option-text">D. \(x \gt 3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩邊同乘以正數 \(\frac{4}{3}\)（也就是同除以 \(\frac{3}{4}\)），方向不變：
+              \[\begin{aligned} & \frac{3}{4}x \gt 9 \\ & x \gt 9 \times \frac{4}{3} \\ & x \gt 12 \end{aligned}\]
+              B 錯：\(\frac{27}{4} = 9 \times \frac{3}{4}\)，是乘了 \(\frac{3}{4}\)，應該乘它的倒數。<br>
+              C 錯：乘的是正數，方向不變。<br>
+              D 錯：只除以分子 \(3\)，忘了分母 \(4\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 同乘同除以負數
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-rotate" aria-hidden="true"></i> 重點 3：同乘同除以負數——方向要反過來
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先想一個例子</strong>：\(8 \gt 3\)。但「欠 \(8\) 元」比「欠 \(3\) 元」糟，所以 \(-8 \lt -3\)——兩邊同乘以 \(-1\)，大小關係反過來了。</li>
+              <li><strong>乘除負數的規則</strong>：若 \(a \gt b\) 且 \(c \lt 0\)，則 \(ac \lt bc\)，而且 \(a \div c \lt b \div c\)。<strong>兩邊同乘或同除以負數，不等號的方向要改變</strong>。</li>
+              <li><strong>在數線上看</strong>：乘以負數會把每個點翻到 \(0\) 的另一邊，原本在右邊的點翻過去之後變成在左邊，左右順序整個顛倒。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>原本</th><th>同乘以 \(-3\)</th><th>方向</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(8 \gt 3\)</td><td>\(-24 \lt -9\)</td><td class="sign-neg">改變</td></tr>
+                <tr><td>\(-6 \lt -1\)</td><td>\(18 \gt 3\)</td><td class="sign-neg">改變</td></tr>
+                <tr><td>\(0 \gt -5\)</td><td>\(0 \lt 15\)</td><td class="sign-neg">改變</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用來解不等式</strong>：\(-x \gt 4\) 兩邊同乘以 \(-1\)，「\(\gt\)」變「\(\lt\)」，得 \(x \lt -4\)。\(-4x \le 10\) 兩邊同除以 \(-4\)，「\(\le\)」變「\(\ge\)」，得 \(x \ge -\frac{5}{2}\)。</li>
+              <li><strong>含等號的不等號也照樣反過來</strong>：\(\ge\) 變 \(\le\)、\(\le\) 變 \(\ge\)，<strong>等號留著</strong>。</li>
+              <li><strong>判斷要不要變號，只看乘除的那個數</strong>：它是負數才變號。加減一個負數不變號，右邊是負數也不變號。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_loop.webp" alt="復古遊樂園海報風插圖，網版印刷質感：一座番茄紅色的雲霄飛車圓形迴環佔滿畫面，車廂正好開到迴環的最頂端、上下顛倒。黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣的少女，和棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣的少年並肩坐在車廂裡，身體倒過來、頭朝下，雙手往下伸，張大嘴巴尖叫。背景有摩天輪和紅白條紋帳篷。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：倍數放大鏡（負數）</h3>
+            <p class="interactive-instruction">和重點 2 同一台放大鏡，這次選的是<strong>負數</strong>。看虛線是不是交叉了——交叉就代表<strong>左右順序交換，不等號要反過來</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-neg" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ng-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">兩邊同時</span>
+                    <div class="btn-group" id="ng-k-group">
+                      <button class="pick-btn active" data-ng-k="-1">× (−1)</button>
+                      <button class="pick-btn" data-ng-k="-2">× (−2)</button>
+                      <button class="pick-btn" data-ng-k="-3">× (−3)</button>
+                      <button class="pick-btn" data-ng-k="/-2">÷ (−2)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ng-a-slider">第一個數 a：<span id="ng-a-val" class="val-num">3</span></label>
+                    <input type="range" id="ng-a-slider" min="-4" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ng-b-slider">第二個數 b：<span id="ng-b-val" class="val-num">1</span></label>
+                    <input type="range" id="ng-b-slider" min="-4" max="4" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ng-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (乘除負數)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 已知 \(m \lt n\)，下列何者<strong>一定正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-5" value="A"><span class="option-text">A. \(-2m \lt -2n\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-5" value="B"><span class="option-text">B. \(-m \lt -n\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-5" value="C"><span class="option-text">C. \(-5m = -5n\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-5" value="D"><span class="option-text">D. \(m \div (-3) \gt n \div (-3)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(m \lt n\) 的兩邊同除以<strong>負數</strong> \(-3\)，不等號要反過來，「\(\lt\)」變「\(\gt\)」，得 \(m \div (-3) \gt n \div (-3)\)。<br>
+              A 錯：同乘以 \(-2\) 要變號，應該是 \(-2m \gt -2n\)。<br>
+              B 錯：同乘以 \(-1\) 要變號，應該是 \(-m \gt -n\)。<br>
+              C 錯：\(m\) 與 \(n\) 不一樣大，乘以 \(-5\) 之後也不會相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 解一元一次不等式 \(-6x \ge 15\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-6" value="A"><span class="option-text">A. \(x \ge -\frac{5}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-6" value="B"><span class="option-text">B. \(x \le -\frac{2}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-6" value="C"><span class="option-text">C. \(x \le \frac{5}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-6" value="D"><span class="option-text">D. \(x \le -\frac{5}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。兩邊同除以<strong>負數</strong> \(-6\)，「\(\ge\)」變「\(\le\)」：
+              \[\begin{aligned} & -6x \ge 15 \\ & x \le 15 \div (-6) \\ & x \le -\frac{5}{2} \end{aligned}\]
+              A 錯：除以負數卻忘了變號。<br>
+              B 錯：變號對了，但算成 \(6 \div 15\)，被除數與除數顛倒。<br>
+              C 錯：\(15 \div (-6)\) 是負數，商的正負號算錯了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 移項法則
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> 重點 4：移項法則——×、÷ 負數移過去要變號
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>移項法則</strong>：把某一項移到不等號的另一邊，<strong>加變減、減變加、乘變除、除變乘</strong>。它其實是「兩邊同加、同減、同乘、同除」省略中間步驟的寫法。</li>
+              <li><strong>唯一和方程式不同的地方</strong>：乘或除的那個數是<strong>負數</strong>時，移過去之後<strong>不等號要反過來</strong>。</li>
+              <li><strong>解題順序</strong>：① 把常數項移到另一邊；② 兩邊各自化簡；③ 把 \(x\) 的係數移過去（係數是負數就變號）。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>移項前</th><th>移項後</th><th>不等號</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(x + 5 \lt 1\)</td><td>\(x \lt 1 - 5\)</td><td class="sign-pos">不變</td></tr>
+                <tr><td>\(4x \ge 8\)</td><td>\(x \ge 8 \div 4\)</td><td class="sign-pos">不變</td></tr>
+                <tr><td>\(-3x \gt 6\)</td><td>\(x \lt 6 \div (-3)\)</td><td class="sign-neg">反過來</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>係數是正數</strong>：
+                \[\begin{aligned} & 3x - 7 \gt 8 \\ & 3x \gt 8 + 7 \\ & 3x \gt 15 \\ & x \gt 5 \end{aligned}\]</li>
+              <li><strong>係數是負數</strong>：最後一步除以 \(-2\)，「\(\le\)」變「\(\ge\)」：
+                \[\begin{aligned} & 9 - 2x \le 13 \\ & -2x \le 13 - 9 \\ & -2x \le 4 \\ & x \ge -2 \end{aligned}\]</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_claw.webp" alt="復古遊樂園海報風插圖，網版印刷質感：一台薄荷綠色的夾娃娃機，玻璃窗裡堆滿各種顏色的小熊玩偶，機器的金屬爪子正夾起一隻芥末黃色的小熊。黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女站在機台前握著紅色搖桿，專心盯著爪子；棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣和深藍長褲的少年站在右邊舉起雙手，緊張地看著。背景有摩天輪和旋轉木馬。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：移項工作台</h3>
+            <p class="interactive-instruction">調整 \(ax + b\) 與右邊的數、選一個不等號，看每一項怎麼移過去。特別把 \(a\) 調成<strong>負數</strong>，注意最後一步的不等號：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-move" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">不等號</span>
+                    <div class="btn-group" id="mv-sign-group">
+                      <button class="pick-btn" data-mv-sign="gt">&gt;</button>
+                      <button class="pick-btn active" data-mv-sign="ge">≥</button>
+                      <button class="pick-btn" data-mv-sign="lt">&lt;</button>
+                      <button class="pick-btn" data-mv-sign="le">≤</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mv-a-slider">x 的係數 a：<span id="mv-a-val" class="val-num">-3</span></label>
+                    <input type="range" id="mv-a-slider" min="-5" max="5" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mv-b-slider">常數項 b：<span id="mv-b-val" class="val-num">4</span></label>
+                    <input type="range" id="mv-b-slider" min="-9" max="9" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mv-c-slider">右邊的數 c：<span id="mv-c-val" class="val-num">-8</span></label>
+                    <input type="range" id="mv-c-slider" min="-9" max="9" value="-8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (移項法則)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 解一元一次不等式 \(-7x + 12 \lt 40\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-7" value="A"><span class="option-text">A. \(x \lt -4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-7" value="B"><span class="option-text">B. \(x \gt -4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-7" value="C"><span class="option-text">C. \(x \gt 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-7" value="D"><span class="option-text">D. \(x \gt -\frac{52}{7}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(+12\) 移過去變 \(-12\)；係數 \(-7\) 是負數，移過去要變號：
+              \[\begin{aligned} & -7x + 12 \lt 40 \\ & -7x \lt 40 - 12 \\ & -7x \lt 28 \\ & x \gt -4 \end{aligned}\]
+              A 錯：除以 \(-7\) 卻忘了把「\(\lt\)」改成「\(\gt\)」。<br>
+              C 錯：\(28 \div (-7) = -4\)，商的正負號算錯了。<br>
+              D 錯：\(+12\) 移過去沒有變號，算成 \(40 + 12 = 52\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> 小芸用移項法則解 \(13 - 4x \ge 21\)，過程如下。她從第幾步<strong>開始</strong>出錯？
+            \[\begin{aligned} &① \ -4x \ge 21 - 13 \\ &② \ -4x \ge 8 \\ &③ \ x \ge 8 \div (-4) \\ &④ \ x \ge -2 \end{aligned}\]</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-8" value="A"><span class="option-text">A. 第 ① 步</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-8" value="B"><span class="option-text">B. 第 ② 步</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-8" value="C"><span class="option-text">C. 第 ③ 步</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-8" value="D"><span class="option-text">D. 第 ④ 步</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。①、② 都對：\(13\) 移過去變 \(-13\)，\(21 - 13 = 8\)。第 ③ 步把 \(\times (-4)\) 移過去變成 \(\div (-4)\)，除的是<strong>負數</strong>，「\(\ge\)」應該改成「\(\le\)」，她忘了變號。正確答案是 \(x \le -2\)。<br>
+              D 不選：第 ④ 步的 \(8 \div (-4) = -2\) 算得沒錯，只是沿用了第 ③ 步錯的不等號；題目問的是<strong>從哪一步開始</strong>出錯。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 兩邊都有 x
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-unbalanced" aria-hidden="true"></i> 重點 5：兩邊都有 \(x\)——移到哪一邊都可以
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先分邊</strong>：把含 \(x\) 的項移到同一邊、常數項移到另一邊，化簡之後再處理 \(x\) 的係數。</li>
+              <li><strong>\(x\) 移到左邊或右邊都對</strong>，只是過程不一樣。以 \(2x + 1 \gt 5x - 8\) 為例：</li>
+            </ul>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>\(x\) 移到左邊</strong>：最後除以 \(-3\)，<span class="sign-neg">要變號</span>
+                \[\begin{aligned} & 2x - 5x \gt -8 - 1 \\ & -3x \gt -9 \\ & x \lt 3 \end{aligned}\]</li>
+              <li><strong>\(x\) 移到右邊</strong>：最後除以 \(3\)，<span class="sign-pos">不必變號</span>
+                \[\begin{aligned} & 1 + 8 \gt 5x - 2x \\ & 9 \gt 3x \\ & 3 \gt x \end{aligned}\]</li>
+            </ul>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>\(3 \gt x\) 就是 \(x \lt 3\)</strong>：開口永遠朝向大的那一邊，把兩邊對調時不等號跟著轉向。畫在數線上是從 \(3\) <strong>往左</strong>，不要被「\(\gt\)」騙去往右畫。</li>
+              <li><strong>小技巧</strong>：把 \(x\) 移到<strong>係數比較大的那一邊</strong>，化簡後係數是正數，最後一步就不必變號。這只是比較好算，兩種做法都正確。</li>
+              <li><strong>最常見的錯</strong>：化簡成 \(-3x \gt -9\) 之後，看到右邊也是負數，就以為「負負得正、不用變號」。要不要變號<strong>只看除的那個數</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_seesaw.webp" alt="復古遊樂園海報風插圖，網版印刷質感：遊樂園草地上一座長長的木頭蹺蹺板，中間是紅色的支架。黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女坐在左端，那一端翹得比較高；棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣和深藍長褲的少年坐在右端，那一端比較低。兩人抓著把手笑著看對方，背景有摩天輪、旋轉木馬與紅白條紋帳篷。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：左右搬家台</h3>
+            <p class="interactive-instruction">調整 \(px + q\) 與 \(rx + t\)，再切換「\(x\) 移到左邊」「\(x\) 移到右邊」。兩條路線一條可能要變號、一條不用，但<strong>最後的解一定一樣</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-both" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bo-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">x 移到哪一邊</span>
+                    <div class="btn-group" id="bo-side-group">
+                      <button class="pick-btn active" data-bo-side="left">移到左邊</button>
+                      <button class="pick-btn" data-bo-side="right">移到右邊</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">不等號</span>
+                    <div class="btn-group" id="bo-sign-group">
+                      <button class="pick-btn active" data-bo-sign="gt">&gt;</button>
+                      <button class="pick-btn" data-bo-sign="ge">≥</button>
+                      <button class="pick-btn" data-bo-sign="lt">&lt;</button>
+                      <button class="pick-btn" data-bo-sign="le">≤</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bo-p-slider">左邊 x 的係數 p：<span id="bo-p-val" class="val-num">2</span></label>
+                    <input type="range" id="bo-p-slider" min="-5" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bo-q-slider">左邊的常數 q：<span id="bo-q-val" class="val-num">1</span></label>
+                    <input type="range" id="bo-q-slider" min="-9" max="9" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bo-r-slider">右邊 x 的係數 r：<span id="bo-r-val" class="val-num">5</span></label>
+                    <input type="range" id="bo-r-slider" min="-5" max="5" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bo-t-slider">右邊的常數 t：<span id="bo-t-val" class="val-num">-8</span></label>
+                    <input type="range" id="bo-t-slider" min="-9" max="9" value="-8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bo-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩邊都有 x)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 解一元一次不等式 \(3x - 11 \le 7x + 5\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-9" value="A"><span class="option-text">A. \(x \le -4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-9" value="B"><span class="option-text">B. \(x \ge \frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-9" value="C"><span class="option-text">C. \(x \ge -4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-9" value="D"><span class="option-text">D. \(x \ge 4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。把 \(x\) 移到左邊：
+              \[\begin{aligned} & 3x - 7x \le 5 + 11 \\ & -4x \le 16 \\ & x \ge -4 \end{aligned}\]
+              除以負數 \(-4\)，「\(\le\)」變「\(\ge\)」。也可以把 \(x\) 移到右邊：\(-11 - 5 \le 7x - 3x\)，\(-16 \le 4x\)，\(-4 \le x\)，結果相同。<br>
+              A 錯：除以 \(-4\) 忘了變號。<br>
+              B 錯：\(-11\) 移過去沒有變號，算成 \(5 - 11 = -6\)，得 \(-4x \le -6\)。<br>
+              D 錯：\(16 \div (-4) = -4\)，商的正負號算錯了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 小安解 \(-3x + 8 \gt 2x - 12\) 時，把 \(x\) 移到右邊，寫成 \(8 + 12 \gt 2x + 3x\)，接著得到 \(20 \gt 5x\)，最後寫 \(4 \gt x\)。下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-10" value="A"><span class="option-text">A. \(4 \gt x\) 應該改寫成 \(x \gt 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-10" value="B"><span class="option-text">B. 除以 \(5\) 時忘了變號，答案錯誤</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-10" value="C"><span class="option-text">C. 做法正確，解就是 \(x \lt 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-10" value="D"><span class="option-text">D. \(x\) 移到右邊得到的解，一定和移到左邊不同</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(-3x\) 移到右邊變 \(+3x\)、\(-12\) 移到左邊變 \(+12\)，都對；\(20 \gt 5x\) 兩邊同除以<strong>正數</strong> \(5\)，不變號，得 \(4 \gt x\)，也就是 \(x \lt 4\)。<br>
+              A 錯：\(4 \gt x\) 表示 \(x\) 比 \(4\) 小；兩邊對調時開口要跟著轉，是 \(x \lt 4\)。<br>
+              B 錯：除以的是正數，不必變號。<br>
+              D 錯：移到左邊是 \(-5x \gt -20\)，除以 \(-5\) 變號得 \(x \lt 4\)，兩種做法的解相同。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 先去括號再解
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-box-open" aria-hidden="true"></i> 重點 6：先去括號——每一項都要乘到
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先用分配律把括號乘開</strong>，變成沒有括號的式子，再照重點 5 移項。</li>
+              <li><strong>括號外的數要乘到括號裡的每一項</strong>：\(4(x - 2) = 4x - 8\)，不是 \(4x - 2\)。</li>
+              <li><strong>括號前是負數，每一項都要變號</strong>：\(-2(x - 3) = -2x + 6\)。\(-2\) 乘 \(-3\) 是 \(+6\)，最容易寫成 \(-6\)。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>括號</th><th>正確乘開</th><th>常見錯誤</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(4(x - 2)\)</td><td class="sign-pos">\(4x - 8\)</td><td class="sign-neg">\(4x - 2\)</td></tr>
+                <tr><td>\(-2(x - 3)\)</td><td class="sign-pos">\(-2x + 6\)</td><td class="sign-neg">\(-2x - 6\)</td></tr>
+                <tr><td>\(-(3 - x)\)</td><td class="sign-pos">\(-3 + x\)</td><td class="sign-neg">\(-3 - x\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>完整的例子</strong>：
+                \[\begin{aligned} & 5 - 2(x - 3) \ge 3x + 1 \\ & 5 - 2x + 6 \ge 3x + 1 \\ & -2x - 3x \ge 1 - 11 \\ & -5x \ge -10 \\ & x \le 2 \end{aligned}\]
+                最後除以 \(-5\)，「\(\ge\)」變「\(\le\)」。</li>
+              <li><strong>去完括號才輪到不等號的規則</strong>：分配律本身和不等號無關，乘開時不必變號；要不要變號，要等到最後除以 \(x\) 的係數時才判斷。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_capsule.webp" alt="復古遊樂園海報風插圖，網版印刷質感：一排扭蛋機前，黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女雙手捧著一顆打開的扭蛋，紅色的底座裡站著一隻薄荷綠色的小恐龍玩偶，她開心地張大嘴；棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣和深藍長褲的少年手裡拿著另一顆還沒打開的藍色扭蛋，湊過來看。背景有摩天輪和紅白條紋帳篷。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：拆括號檢查站</h3>
+            <p class="interactive-instruction">調整 \(m(x + n)\) 與右邊的 \(px + q\)。切到「只乘第一項（錯）」，比較錯誤的解和正確的解差在哪裡，再看<strong>代入一個數</strong>檢查時誰才對：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-paren" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pa-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">乘開的方法</span>
+                    <div class="btn-group" id="pa-method-group">
+                      <button class="pick-btn active" data-pa-method="right">每一項都乘</button>
+                      <button class="pick-btn" data-pa-method="wrong">只乘第一項（錯）</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">不等號</span>
+                    <div class="btn-group" id="pa-sign-group">
+                      <button class="pick-btn active" data-pa-sign="gt">&gt;</button>
+                      <button class="pick-btn" data-pa-sign="ge">≥</button>
+                      <button class="pick-btn" data-pa-sign="lt">&lt;</button>
+                      <button class="pick-btn" data-pa-sign="le">≤</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pa-m-slider">括號外的數 m：<span id="pa-m-val" class="val-num">-2</span></label>
+                    <input type="range" id="pa-m-slider" min="-4" max="4" value="-2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pa-n-slider">括號裡的常數 n：<span id="pa-n-val" class="val-num">-3</span></label>
+                    <input type="range" id="pa-n-slider" min="-6" max="6" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pa-p-slider">右邊 x 的係數 p：<span id="pa-p-val" class="val-num">1</span></label>
+                    <input type="range" id="pa-p-slider" min="-4" max="4" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pa-q-slider">右邊的常數 q：<span id="pa-q-val" class="val-num">-4</span></label>
+                    <input type="range" id="pa-q-slider" min="-9" max="9" value="-4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pa-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (去括號)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> 解一元一次不等式 \(6(2 - x) \lt 3x - 6\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-11" value="A"><span class="option-text">A. \(x \gt 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-11" value="B"><span class="option-text">B. \(x \lt 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-11" value="C"><span class="option-text">C. \(x \lt -6\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-11" value="D"><span class="option-text">D. \(x \gt \frac{9}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\begin{aligned} & 6(2 - x) \lt 3x - 6 \\ & 12 - 6x \lt 3x - 6 \\ & -6x - 3x \lt -6 - 12 \\ & -9x \lt -18 \\ & x \gt 2 \end{aligned}\]
+              B 錯：除以 \(-9\) 忘了變號。<br>
+              C 錯：把 \(6 \times (-x)\) 寫成 \(+6x\)，得 \(12 + 6x \lt 3x - 6\)。<br>
+              D 錯：\(6\) 只乘了第一項，寫成 \(12 - x \lt 3x - 6\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 解一元一次不等式 \(-3(x - 5) \ge 21 - x\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-12" value="A"><span class="option-text">A. \(x \ge -3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-12" value="B"><span class="option-text">B. \(x \le -13\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-12" value="C"><span class="option-text">C. \(x \le -18\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-12" value="D"><span class="option-text">D. \(x \le -3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(-3\) 乘 \(-5\) 得 \(+15\)：
+              \[\begin{aligned} & -3x + 15 \ge 21 - x \\ & -3x + x \ge 21 - 15 \\ & -2x \ge 6 \\ & x \le -3 \end{aligned}\]
+              A 錯：除以 \(-2\) 忘了變號。<br>
+              B 錯：\(-3\) 只乘了第一項，寫成 \(-3x - 5\)。<br>
+              C 錯：\(-3 \times (-5)\) 算成 \(-15\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 先去分母再解，並圖示
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> 重點 7：先去分母，再把解畫在數線上
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>兩邊同乘分母的最小公倍數</strong>，把分數全部消掉。最小公倍數一定是<strong>正數</strong>，所以這一步<strong>不必變號</strong>。</li>
+              <li><strong>每一項都要乘</strong>，包括沒有分母的常數項；分子是兩項以上時要<strong>加括號</strong>再乘。</li>
+              <li><strong>完整的例子</strong>：分母 \(2\) 與 \(3\) 的最小公倍數是 \(6\)。
+                \[\begin{aligned} & \frac{x + 1}{2} - 1 \le \frac{2x - 1}{3} \\ & 3(x + 1) - 6 \le 2(2x - 1) \\ & 3x - 3 \le 4x - 2 \\ & -x \le 1 \\ & x \ge -1 \end{aligned}\]</li>
+            </ul>
+
+            <div class="numline-figs">
+              <figure class="numline-fig">
+                <svg viewBox="0 0 360 72" role="img" aria-label="x 大於或等於 -1 的解：-1 畫實心圓點，往右畫到數線盡頭">
+                  <path d="M12 38 H336" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+                  <polygon points="336,32.5 349,38 336,43.5" fill="#cbd5e1"/>
+                  <g stroke="#cbd5e1" stroke-width="2"><path d="M30 33V43M66 33V43M102 33V43M138 33V43M174 33V43M210 33V43M246 33V43M282 33V43M318 33V43"/></g>
+                  <path d="M102 38 H340" stroke="#fdba74" stroke-width="6"/>
+                  <circle cx="102" cy="38" r="7.5" fill="#fdba74"/>
+                  <g fill="#94a3b8" font-size="13" font-weight="700" text-anchor="middle"><text x="30" y="62">−3</text><text x="66" y="62">−2</text><text x="102" y="62">−1</text><text x="138" y="62">0</text><text x="174" y="62">1</text><text x="210" y="62">2</text><text x="246" y="62">3</text><text x="282" y="62">4</text><text x="318" y="62">5</text></g>
+                </svg>
+                <figcaption>\(x \ge -1\)：有等號，實心；大於，往右</figcaption>
+              </figure>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>常見錯誤</strong>：常數項 \(-1\) 忘了乘 \(6\)，寫成 \(3(x + 1) - 1 \le 2(2x - 1)\)，會解出 \(x \ge 4\)——整段解都跑掉了。</li>
+              <li><strong>解是分數時</strong>：先化成帶分數判斷位置。\(x \lt \frac{7}{3}\) 的 \(\frac{7}{3} = 2\frac{1}{3}\)，端點畫在 \(2\) 與 \(3\) 之間、比較靠近 \(2\) 的地方。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_teacups.webp" alt="復古遊樂園海報風插圖，網版印刷質感：旋轉咖啡杯設施裡，黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣的少女，和棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣的少年，一起坐在同一個帶白色圓點的薄荷綠色大咖啡杯裡，雙手扶著杯子中間的圓盤開心大笑。旁邊有紅色與黃色的咖啡杯，背景是摩天輪與旋轉木馬。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：去分母畫解台</h3>
+            <p class="interactive-instruction">選兩個分母、調整分子與常數項 \(c\)，看同乘最小公倍數之後怎麼一路解到數線上。切到「常數項忘了乘（錯）」，看解會跑到哪裡：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-frac" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">左邊的分母 m</span>
+                    <div class="btn-group" id="fr-m-group">
+                      <button class="pick-btn active" data-fr-m="2">2</button>
+                      <button class="pick-btn" data-fr-m="3">3</button>
+                      <button class="pick-btn" data-fr-m="4">4</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">右邊的分母 n</span>
+                    <div class="btn-group" id="fr-n-group">
+                      <button class="pick-btn active" data-fr-n="3">3</button>
+                      <button class="pick-btn" data-fr-n="4">4</button>
+                      <button class="pick-btn" data-fr-n="6">6</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">不等號</span>
+                    <div class="btn-group" id="fr-sign-group">
+                      <button class="pick-btn" data-fr-sign="gt">&gt;</button>
+                      <button class="pick-btn" data-fr-sign="ge">≥</button>
+                      <button class="pick-btn" data-fr-sign="lt">&lt;</button>
+                      <button class="pick-btn active" data-fr-sign="le">≤</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">常數項 c</span>
+                    <div class="btn-group" id="fr-method-group">
+                      <button class="pick-btn active" data-fr-method="right">也乘最小公倍數</button>
+                      <button class="pick-btn" data-fr-method="wrong">忘了乘（錯）</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">畫法</span>
+                    <div class="btn-group" id="fr-style-group">
+                      <button class="pick-btn active" data-fr-style="line">直線畫法</button>
+                      <button class="pick-btn" data-fr-style="fold">折線畫法</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fr-a-slider">左邊分子 x + a 的 a：<span id="fr-a-val" class="val-num">1</span></label>
+                    <input type="range" id="fr-a-slider" min="-6" max="6" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fr-c-slider">左邊的常數項 c：<span id="fr-c-val" class="val-num">-1</span></label>
+                    <input type="range" id="fr-c-slider" min="-3" max="3" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fr-b-slider">右邊分子 2x + b 的 b：<span id="fr-b-val" class="val-num">-1</span></label>
+                    <input type="range" id="fr-b-slider" min="-6" max="6" value="-1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (去分母與圖示)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 解一元一次不等式 \(\frac{2x - 1}{3} - 1 \gt \frac{x + 4}{2}\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-13" value="A"><span class="option-text">A. \(x \gt 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-13" value="B"><span class="option-text">B. \(x \gt 19\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-13" value="C"><span class="option-text">C. \(x \gt 20\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-13" value="D"><span class="option-text">D. \(x \lt 20\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩邊同乘 \(6\)（正數，不變號），每一項都要乘：
+              \[\begin{aligned} & 2(2x - 1) - 6 \gt 3(x + 4) \\ & 4x - 2 - 6 \gt 3x + 12 \\ & 4x - 3x \gt 12 + 8 \\ & x \gt 20 \end{aligned}\]
+              A 錯：常數項 \(-1\) 忘了乘 \(6\)，寫成 \(4x - 2 - 1 \gt 3x + 12\)。<br>
+              B 錯：分子沒有加括號，\(2 \times 2x - 1\) 只乘到 \(2x\)，寫成 \(4x - 1 - 6 \gt 3x + 12\)。<br>
+              D 錯：同乘的 \(6\) 是正數，最後的係數 \(1\) 也是正數，都不必變號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 不等式 \(\frac{x - 3}{4} \ge \frac{3x + 1}{6}\) 的解畫在數線上，下列描述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-14" value="A"><span class="option-text">A. 空心圓圈在 \(-4\) 與 \(-3\) 之間，往左畫</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-14" value="B"><span class="option-text">B. 實心圓點在 \(-4\) 與 \(-3\) 之間，往左畫</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-14" value="C"><span class="option-text">C. 實心圓點在 \(-4\) 與 \(-3\) 之間，往右畫</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-14" value="D"><span class="option-text">D. 實心圓點在 \(3\) 與 \(4\) 之間，往左畫</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。分母 \(4\) 與 \(6\) 的最小公倍數是 \(12\)：
+              \[\begin{aligned} & 3(x - 3) \ge 2(3x + 1) \\ & 3x - 9 \ge 6x + 2 \\ & -3x \ge 11 \\ & x \le -\frac{11}{3} \end{aligned}\]
+              \(-\frac{11}{3} = -3\frac{2}{3}\)，在 \(-4\) 與 \(-3\) 之間；有等號畫<strong>實心</strong>，小於或等於<strong>往左</strong>。<br>
+              A 錯：\(\le\) 含等號，端點要實心。<br>
+              C 錯：除以 \(-3\) 忘了變號，才會變成往右。<br>
+              D 錯：\(11 \div (-3)\) 是負數，端點在 \(0\) 的左邊。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 應用問題取整數
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-piggy-bank" aria-hidden="true"></i> 重點 8：答案要取整數——「至少」取最小、「最多」取最大
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>應用問題的解是一整段範圍</strong>，天數、人數、個數卻只能是整數，還要回到情境<strong>挑出合理的答案</strong>。</li>
+              <li><strong>「至少」取最小的整數，「最多」取最大的整數</strong>：解是 \(x \gt\) 或 \(x \ge\) 某數時，通常問「至少」；解是 \(x \lt\) 或 \(x \le\) 某數時，通常問「最多」。</li>
+              <li><strong>端點是整數時，看有沒有等號</strong>：\(x \ge 8\) 的最小整數是 \(8\)；\(x \gt 8\) 不含 \(8\)，最小整數是 \(9\)。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>解出來</th><th>題目問</th><th>答案</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(x \gt 5.2\)</td><td>至少</td><td>\(6\)</td></tr>
+                <tr><td>\(x \ge 6\)</td><td>至少</td><td>\(6\)</td></tr>
+                <tr><td>\(x \gt 6\)</td><td>至少</td><td>\(7\)</td></tr>
+                <tr><td>\(x \le 12.6\)</td><td>最多</td><td>\(12\)</td></tr>
+                <tr><td>\(x \lt 12\)</td><td>最多</td><td>\(11\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>不可以四捨五入</strong>：\(x \le 12.6\) 四捨五入是 \(13\)，但 \(13\) 比 \(12.6\) 大，<strong>根本不是解</strong>。</li>
+              <li><strong>回到漫畫</strong>：小晴有 \(300\) 元，每天存 \(80\) 元，存 \(x\) 天後要足夠買 \(900\) 元的年票：
+                \[\begin{aligned} & 300 + 80x \ge 900 \\ & 80x \ge 600 \\ & x \ge 7.5 \end{aligned}\]
+                天數是整數，大於或等於 \(7.5\) 的最小整數是 \(8\)，<strong>至少要存 \(8\) 天</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_piggy.webp" alt="復古遊樂園海報風插圖，網版印刷質感：遊樂園裡的一張木頭長椅上，黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女腿上放著一隻粉紅色小豬撲滿，手指捏著一枚金色硬幣正要投進去；棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣和深藍長褲的少年坐在她旁邊，豎起一根手指像在數日子。背景有旋轉木馬、摩天輪和帳篷。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：整數挑選器</h3>
+            <p class="interactive-instruction">選一個不等號、調整解的端點，看數線上<strong>哪些整數是解</strong>、題目問「至少」或「最多」時該挑哪一個，再和四捨五入的結果比一比：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-int" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="it-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">解出來的不等號</span>
+                    <div class="btn-group" id="it-sign-group">
+                      <button class="pick-btn" data-it-sign="gt">x &gt; k（問至少）</button>
+                      <button class="pick-btn active" data-it-sign="ge">x ≥ k（問至少）</button>
+                      <button class="pick-btn" data-it-sign="lt">x &lt; k（問最多）</button>
+                      <button class="pick-btn" data-it-sign="le">x ≤ k（問最多）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="it-k-slider">端點 k：<span id="it-k-val" class="val-num">7.5</span></label>
+                    <input type="range" id="it-k-slider" min="8" max="36" value="30" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="it-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (取整數)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> 遊樂園的遊戲代幣一枚 \(35\) 元。阿哲帶了 \(500\) 元，先買一張 \(120\) 元的門票，剩下的錢<strong>最多</strong>還能買幾枚代幣？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-15" value="A"><span class="option-text">A. \(10\) 枚</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-15" value="B"><span class="option-text">B. \(11\) 枚</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-15" value="C"><span class="option-text">C. \(14\) 枚</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-15" value="D"><span class="option-text">D. \(17\) 枚</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設買 \(x\) 枚代幣，總花費不能超過帶的錢：
+              \[\begin{aligned} & 120 + 35x \le 500 \\ & 35x \le 380 \\ & x \le \frac{76}{7} \end{aligned}\]
+              \(\frac{76}{7} = 10\frac{6}{7}\)，代幣枚數是整數，小於或等於 \(10\frac{6}{7}\) 的最大整數是 \(10\)。<br>
+              B 錯：\(10\frac{6}{7}\) 四捨五入是 \(11\)，但買 \(11\) 枚要 \(120 + 385 = 505\) 元，錢不夠。<br>
+              C 錯：忘了先扣掉 \(120\) 元的門票，算成 \(35x \le 500\)。<br>
+              D 錯：\(120\) 移過去沒有變號，算成 \(35x \le 620\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 若 \(x\) 是整數，滿足 \(6x - 13 \gt 71\) 的 \(x\) <strong>最小</strong>是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-16" value="A"><span class="option-text">A. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-16" value="B"><span class="option-text">B. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-16" value="C"><span class="option-text">C. \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-16" value="D"><span class="option-text">D. \(10\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(6x \gt 71 + 13\)，\(6x \gt 84\)，\(x \gt 14\)。\(14\) 本身<strong>不包含</strong>在解內（沒有等號），比 \(14\) 大的最小整數是 \(15\)。<br>
+              A 錯：把 \(x \gt 14\) 當成 \(x \ge 14\)。代入 \(x = 14\)：\(6 \times 14 - 13 = 71\)，\(71 \gt 71\) 不成立。<br>
+              C 錯：\(15\) 已經是解，而且比 \(16\) 小。<br>
+              D 錯：\(-13\) 移過去沒有變號，算成 \(6x \gt 58\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 價目表題
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-receipt" aria-hidden="true"></i> 重點 9：價目表題——解完再回到表上逐項篩選
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>設還沒決定的那一份為 \(x\) 元</strong>，把「已經買的 \(+\, x\)」乘上折扣，和預算比較。打九折是 \(\times 0.9\)、打八折是 \(\times 0.8\)。</li>
+              <li><strong>「不超過」包含剛好等於</strong>，所以用 \(\le\)；價錢剛好等於上限的品項也可以選。</li>
+              <li><strong>解出 \(x \le\) 某數之後，回到價目表</strong>一項一項比，並且注意題目的限制，例如「不同品項」要扣掉已經買過的。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>園區點心站</th><th>價錢</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>雞蛋糕</td><td>\(40\) 元</td></tr>
+                <tr><td>熱狗</td><td>\(55\) 元</td></tr>
+                <tr><td>玉米杯</td><td>\(60\) 元</td></tr>
+                <tr><td>薯條</td><td>\(65\) 元</td></tr>
+                <tr><td>可麗餅</td><td>\(75\) 元</td></tr>
+                <tr><td>霜淇淋</td><td>\(80\) 元</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例子</strong>：今天全部打九折。小晴買了熱狗和可麗餅，還想再買一種<strong>不同的</strong>點心，總花費不超過 \(180\) 元。設第三種點心 \(x\) 元：
+                \[\begin{aligned} & (55 + 75 + x) \times 0.9 \le 180 \\ & 130 + x \le 200 \\ & x \le 70 \end{aligned}\]
+                不超過 \(70\) 元的有雞蛋糕、熱狗、玉米杯、薯條，但熱狗已經買過，所以有<strong>雞蛋糕、玉米杯、薯條三種</strong>。</li>
+              <li><strong>小技巧</strong>：兩邊同除以 \(0.9\) 比先乘開更快——\(180 \div 0.9 = 200\)，除以正數不變號。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_icecream.webp" alt="復古遊樂園海報風插圖，網版印刷質感：冰淇淋小攤上方掛著一塊芥末黃色的價目板，板上只畫著一排六種顏色的冰淇淋甜筒，沒有文字。黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女抬頭伸手指著其中一個甜筒；棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣和深藍長褲的少年一手托著下巴，認真看著價目板。背景有摩天輪和旋轉木馬。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：點心站價目表</h3>
+            <p class="interactive-instruction">點選已經買的點心、選折扣、調整預算，看第 \(x\) 份的價錢上限落在哪裡，價目表上哪些<strong>可以選</strong>、哪些<strong>太貴</strong>、哪些<strong>已經買過</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-menu" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mn-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已經買的（可複選）</span>
+                    <div class="btn-group" id="mn-bought-group">
+                      <button class="pick-btn" data-mn-item="0">雞蛋糕</button>
+                      <button class="pick-btn active" data-mn-item="1">熱狗</button>
+                      <button class="pick-btn" data-mn-item="2">玉米杯</button>
+                      <button class="pick-btn" data-mn-item="3">薯條</button>
+                      <button class="pick-btn active" data-mn-item="4">可麗餅</button>
+                      <button class="pick-btn" data-mn-item="5">霜淇淋</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">今日折扣</span>
+                    <div class="btn-group" id="mn-disc-group">
+                      <button class="pick-btn" data-mn-disc="10">不打折</button>
+                      <button class="pick-btn active" data-mn-disc="9">九折</button>
+                      <button class="pick-btn" data-mn-disc="8">八折</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">第 x 份的限制</span>
+                    <div class="btn-group" id="mn-rule-group">
+                      <button class="pick-btn active" data-mn-rule="diff">要和已買的不同</button>
+                      <button class="pick-btn" data-mn-rule="any">可以重複</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mn-b-slider">預算（總花費不超過，元）：<span id="mn-b-val" class="val-num">180</span></label>
+                    <input type="range" id="mn-b-slider" min="100" max="260" value="180" step="2">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mn-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (價目表)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 飲料攤的價目表是：紅茶 \(25\) 元、綠茶 \(30\) 元、奶茶 \(45\) 元、檸檬汁 \(50\) 元、果汁 \(60\) 元、奶昔 \(70\) 元，今天全部打八折。阿哲買了 \(2\) 杯奶茶，還想再買 \(1\) 杯<strong>不同</strong>的飲料，而且總花費不超過 \(120\) 元。第 \(3\) 杯最多有幾種選擇？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-17" value="A"><span class="option-text">A. \(3\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-17" value="B"><span class="option-text">B. \(2\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-17" value="C"><span class="option-text">C. \(5\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-17" value="D"><span class="option-text">D. \(4\) 種</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設第 \(3\) 杯 \(x\) 元：
+              \[\begin{aligned} & (45 \times 2 + x) \times 0.8 \le 120 \\ & 90 + x \le 150 \\ & x \le 60 \end{aligned}\]
+              不超過 \(60\) 元的有紅茶、綠茶、奶茶、檸檬汁、果汁；奶茶已經買過要扣掉，剩<strong>紅茶、綠茶、檸檬汁、果汁</strong>，共 \(4\) 種。<br>
+              A 錯：漏掉了剛好 \(60\) 元的果汁，「不超過」包含等於。<br>
+              B 錯：忘了打八折，算成 \(90 + x \le 120\)。<br>
+              C 錯：沒有扣掉已經買過的奶茶。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 餐廳今天每份餐點都打七五折。小晴點了 \(85\) 元和 \(95\) 元的餐點，想再點第三份，而且總花費不超過 \(240\) 元。設第三份餐點的定價是 \(x\) 元，下列哪一個不等式<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-18" value="A"><span class="option-text">A. \((85 + 95 + x) \times 0.75 \le 240\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-18" value="B"><span class="option-text">B. \((85 + 95 + x) \times 0.75 \lt 240\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-18" value="C"><span class="option-text">C. \(85 + 95 + 0.75x \le 240\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-18" value="D"><span class="option-text">D. \(85 + 95 + x \le 240 \times 0.75\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。三份餐點都打七五折，所以是<strong>三份定價的總和</strong>乘以 \(0.75\)；「不超過」包含剛好等於，用 \(\le\)。<br>
+              B 錯：「不超過 \(240\) 元」時剛好 \(240\) 元也可以，要用 \(\le\)。<br>
+              C 錯：只有第三份打折，前兩份沒有乘 \(0.75\)。<br>
+              D 錯：折扣乘在預算上了。要把 \(\times 0.75\) 移到右邊，應該是 \(\div 0.75\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 折扣門檻
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-tags" aria-hidden="true"></i> 重點 10：折扣門檻——多買反而便宜
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>買得多、折扣大</strong>時，可能出現「多買幾個，總價反而比較便宜」。</li>
+              <li><strong>列式</strong>：原本數量的總價 \(\gt\) 門檻數量的總價（「反而便宜」是門檻那一邊比較少，<strong>不含相等</strong>）。</li>
+              <li><strong>答案要落在原本的數量範圍內</strong>，而且是整數，照重點 8 取「至少」的最小整數。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>紀念徽章每個 \(50\) 元</th><th>折扣</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(10\) 個以上（含）</td><td>打九折</td></tr>
+                <tr><td>\(20\) 個以上（含）</td><td>打七折</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例子</strong>：班長原本想買十幾個徽章（\(10\) 到 \(19\) 個），卻發現直接買 \(20\) 個反而比較便宜。設原本想買 \(x\) 個：
+                \[\begin{aligned} & 50 \times 0.9 \times x \gt 50 \times 0.7 \times 20 \\ & 45x \gt 700 \\ & x \gt \frac{140}{9} \end{aligned}\]
+                \(\frac{140}{9} = 15\frac{5}{9}\)，大於它的最小整數是 \(16\)，也在 \(10\) 到 \(19\) 之間，所以原本<strong>至少</strong>想買 \(16\) 個。</li>
+              <li><strong>檢查一下</strong>：買 \(15\) 個是 \(675\) 元、買 \(20\) 個是 \(700\) 元，\(15\) 個還是比較便宜；買 \(16\) 個是 \(720\) 元，這時買 \(20\) 個才比較划算。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="solve_lemonade.webp" alt="復古遊樂園海報風插圖，網版印刷質感：黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女，和棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣和深藍長褲的少年，一起抬著一個淺棕色的紙箱往前走，紙箱裡排滿一瓶瓶綠色玻璃瓶裝的檸檬汽水。少女抬左邊、少年抬右邊，兩人笑得很得意。背景有旋轉木馬、摩天輪和紅白條紋帳篷。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：門檻比價台</h3>
+            <p class="interactive-instruction">設定單價、兩段折扣與門檻數量，再拉動「原本想買的數量」，比較兩條長條。找出從第幾個開始，<strong>直接買到門檻反而便宜</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tier" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">10 個以上（含）的折扣</span>
+                    <div class="btn-group" id="tr-d1-group">
+                      <button class="pick-btn active" data-tr-d1="90">九折</button>
+                      <button class="pick-btn" data-tr-d1="85">八五折</button>
+                      <button class="pick-btn" data-tr-d1="80">八折</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">門檻數量</span>
+                    <div class="btn-group" id="tr-n-group">
+                      <button class="pick-btn active" data-tr-n="20">20 個</button>
+                      <button class="pick-btn" data-tr-n="30">30 個</button>
+                      <button class="pick-btn" data-tr-n="40">40 個</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">門檻以上（含）的折扣</span>
+                    <div class="btn-group" id="tr-d2-group">
+                      <button class="pick-btn" data-tr-d2="75">七五折</button>
+                      <button class="pick-btn active" data-tr-d2="70">七折</button>
+                      <button class="pick-btn" data-tr-d2="60">六折</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tr-p-slider">單價（元）：<span id="tr-p-val" class="val-num">50</span></label>
+                    <input type="range" id="tr-p-slider" min="20" max="60" value="50" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tr-x-slider">原本想買的數量 x：<span id="tr-x-val" class="val-num">15</span></label>
+                    <input type="range" id="tr-x-slider" min="10" max="19" value="15" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (折扣門檻)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 文具店的筆記本每本 \(40\) 元，買 \(12\) 本以上（含）打九折，買 \(30\) 本以上（含）打八折。老師原本想買的數量在 \(12\) 本到 \(29\) 本之間，卻發現直接買 \(30\) 本反而更便宜。老師原本<strong>至少</strong>想買幾本？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-19" value="A"><span class="option-text">A. \(26\) 本</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-19" value="B"><span class="option-text">B. \(27\) 本</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-19" value="C"><span class="option-text">C. \(28\) 本</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-19" value="D"><span class="option-text">D. \(24\) 本</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設原本想買 \(x\) 本：
+              \[\begin{aligned} & 40 \times 0.9 \times x \gt 40 \times 0.8 \times 30 \\ & 36x \gt 960 \\ & x \gt \frac{80}{3} \end{aligned}\]
+              \(\frac{80}{3} = 26\frac{2}{3}\)，大於它的最小整數是 \(27\)，也在 \(12\) 到 \(29\) 之間。<br>
+              A 錯：\(26\) 比 \(26\frac{2}{3}\) 小，不是解。買 \(26\) 本是 \(936\) 元，比買 \(30\) 本的 \(960\) 元便宜。<br>
+              C 錯：\(28\) 雖然也符合，但題目問「至少」，\(27\) 更小。<br>
+              D 錯：\(24\) 只是 \(30 \times 0.8\)，沒有列出不等式。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> 遊樂園的團體票每張 \(280\) 元，\(25\) 張以上（含）打八五折，\(50\) 張以上（含）打七折。某班原本想買 \(x\) 張（\(25 \le x \lt 50\)），卻發現買 \(50\) 張反而比較便宜。下列哪一個不等式<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-20" value="A"><span class="option-text">A. \(196x \gt 11900\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-20" value="B"><span class="option-text">B. \(280x \gt 9800\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-20" value="C"><span class="option-text">C. \(238x \gt 9800\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-20" value="D"><span class="option-text">D. \(238x \lt 9800\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。原本買 \(x\) 張（\(25\) 張以上）打八五折，買 \(50\) 張打七折：
+              \[\begin{aligned} & 280 \times 0.85 \times x = 238x \\ & 280 \times 0.7 \times 50 = 9800 \end{aligned}\]
+              「買 \(50\) 張反而便宜」表示原本的總價<strong>比較多</strong>，用 \(\gt\)，得 \(238x \gt 9800\)。<br>
+              A 錯：兩邊的折扣對調了：\(280 \times 0.7 = 196\)、\(280 \times 0.85 \times 50 = 11900\)。<br>
+              B 錯：原本的數量已經達到 \(25\) 張，也要打八五折。<br>
+              D 錯：方向反了，這表示原本的數量比較便宜。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 兩個條件夾出範圍
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-glass-water" aria-hidden="true"></i> 重點 11：兩個條件夾出範圍——各解各的，再合起來
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>題目給兩個情況時</strong>，每個情況各列一個一元一次不等式、各自解出來。</li>
+              <li><strong>兩個解要同時成立</strong>：一個說 \(x\) 要比某數大、一個說 \(x\) 要比某數小，合起來就是夾在中間的一段，寫成 \(a \lt x \lt b\)。</li>
+              <li><strong>課本只要求分開解</strong>，不必直接解 \(a \lt 3x + 1 \lt b\) 這種連寫兩個不等號的式子。</li>
+            </ul>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例子</strong>：容量 \(520\) 毫升的杯子裡已經有 \(340\) 毫升的水，還能再裝 \(180\) 毫升。放入 \(4\) 顆相同的彈珠，水沒有滿；再放 \(2\) 顆（共 \(6\) 顆），水溢出來了。設每顆彈珠 \(x\) 立方公分：
+                \[\begin{aligned} & 4x \lt 180 \Rightarrow x \lt 45 \\ & 6x \gt 180 \Rightarrow x \gt 30 \end{aligned}\]
+                兩個條件合起來：\(30 \lt x \lt 45\)。</li>
+              <li><strong>端點不含等號</strong>：「沒有滿」表示比 \(180\) 少，「溢出」表示比 \(180\) 多；剛好 \(180\) 是剛好滿，兩個情況都不算。</li>
+            </ul>
+
+            <div class="numline-figs">
+              <figure class="numline-fig">
+                <svg viewBox="0 0 360 72" role="img" aria-label="30 小於 x 小於 45：30 與 45 都畫空心圓圈，中間畫一段">
+                  <path d="M12 38 H83 M97 38 H239 M253 38 H336" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+                  <polygon points="336,32.5 349,38 336,43.5" fill="#cbd5e1"/>
+                  <g stroke="#cbd5e1" stroke-width="2"><path d="M38 33V43M142 33V43M194 33V43M298 33V43"/></g>
+                  <path d="M97 38 H239" stroke="#67e8f9" stroke-width="6"/>
+                  <circle cx="90" cy="38" r="6" fill="none" stroke="#67e8f9" stroke-width="3"/>
+                  <circle cx="246" cy="38" r="6" fill="none" stroke="#67e8f9" stroke-width="3"/>
+                  <g fill="#94a3b8" font-size="13" font-weight="700" text-anchor="middle"><text x="38" y="62">25</text><text x="90" y="62">30</text><text x="142" y="62">35</text><text x="194" y="62">40</text><text x="246" y="62">45</text><text x="298" y="62">50</text></g>
+                </svg>
+                <figcaption>\(30 \lt x \lt 45\)：兩端都不含，畫空心</figcaption>
+              </figure>
+            </div>
+
+            <div class="illustration-container">
+              <img src="solve_marbles.webp" alt="復古遊樂園海報風插圖，網版印刷質感：木頭檯面上放著一個透明的高玻璃杯，杯裡的水離杯口還有一段距離，杯底躺著三顆彩色彈珠。黑色齊肩短髮、戴紅白條紋髮箍、穿芥末黃上衣和深藍吊帶短褲、斜背紅色圓形零錢包的少女用手指捏著一顆彈珠，舉在杯口上方準備放進去；棕色短捲髮、戴薄荷綠棒球帽、穿紅白橫條紋上衣的少年蹲低身子，眼睛湊近杯子盯著水面。背景有摩天輪、旋轉木馬和紅白條紋帳篷。" class="illustration" loading="lazy">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：彈珠量杯</h3>
+            <p class="interactive-instruction">設定杯子還能裝的量、兩次放入的彈珠顆數，再拉動「猜一顆彈珠的體積」，看左杯是不是<strong>沒滿</strong>、右杯是不是<strong>溢出</strong>，兩個條件都成立的猜測才在範圍裡：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cup" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">第一次放入（水沒滿）</span>
+                    <div class="btn-group" id="cp-n1-group">
+                      <button class="pick-btn" data-cp-n1="3">3 顆</button>
+                      <button class="pick-btn active" data-cp-n1="4">4 顆</button>
+                      <button class="pick-btn" data-cp-n1="5">5 顆</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">第二次再多放（水溢出）</span>
+                    <div class="btn-group" id="cp-add-group">
+                      <button class="pick-btn" data-cp-add="1">再 1 顆</button>
+                      <button class="pick-btn active" data-cp-add="2">再 2 顆</button>
+                      <button class="pick-btn" data-cp-add="3">再 3 顆</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cp-s-slider">杯子還能裝（毫升）：<span id="cp-s-val" class="val-num">180</span></label>
+                    <input type="range" id="cp-s-slider" min="120" max="240" value="180" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cp-x-slider">猜一顆彈珠的體積 x（立方公分）：<span id="cp-x-val" class="val-num">38</span></label>
+                    <input type="range" id="cp-x-slider" min="10" max="70" value="38" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩個條件)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-21">
+            <p class="quiz-question"><strong>Q21.</strong> 容量 \(650\) 毫升的水壺裡已經裝了 \(400\) 毫升的水。放入 \(5\) 顆相同的鐵球，水沒有滿；再放入 \(3\) 顆（共 \(8\) 顆），水溢出來了。設每顆鐵球的體積為 \(x\) 立方公分，\(x\) 的範圍為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-21" value="A"><span class="option-text">A. \(31.25 \lt x \lt 50\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-21" value="B"><span class="option-text">B. \(50 \lt x \lt 80\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-21" value="C"><span class="option-text">C. \(31.25 \lt x \lt 130\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-21" value="D"><span class="option-text">D. \(x \lt 50\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。水壺還能裝 \(650 - 400 = 250\) 毫升：
+              \[\begin{aligned} & 5x \lt 250 \Rightarrow x \lt 50 \\ & 8x \gt 250 \Rightarrow x \gt 31.25 \end{aligned}\]
+              兩個條件同時成立：\(31.25 \lt x \lt 50\)。<br>
+              B 錯：把已經裝的 \(400\) 毫升當成還能裝的量。<br>
+              C 錯：第一個條件用了整個容量，寫成 \(5x \lt 650\)。<br>
+              D 錯：只用了第一個條件，漏掉「放 \(8\) 顆會溢出」。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-22">
+            <p class="quiz-question"><strong>Q22.</strong> 一個杯子還能再裝 \(270\) 毫升的水。放入 \(6\) 顆相同的彈珠，水沒有滿；再放入 \(3\) 顆（共 \(9\) 顆），水溢出來了。下列哪一個<strong>不可能</strong>是一顆彈珠的體積（單位：立方公分）？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-22" value="A"><span class="option-text">A. \(31\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-22" value="B"><span class="option-text">B. \(38\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-22" value="C"><span class="option-text">C. \(44\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-22" value="D"><span class="option-text">D. \(30\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設一顆彈珠 \(x\) 立方公分：
+              \[\begin{aligned} & 6x \lt 270 \Rightarrow x \lt 45 \\ & 9x \gt 270 \Rightarrow x \gt 30 \end{aligned}\]
+              範圍是 \(30 \lt x \lt 45\)。\(30\) 不含在內：如果一顆剛好 \(30\) 立方公分，\(9\) 顆是 \(270\)，<strong>剛好裝滿、不會溢出</strong>，和題目不符。<br>
+              A、B、C 的 \(31\)、\(38\)、\(44\) 都比 \(30\) 大、比 \(45\) 小，都有可能。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 解一元一次不等式速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>加減</strong>：兩邊同加或同減一個數，方向不變。</li>
+              <li><strong>乘除正數</strong>：方向不變；右邊是負數也不影響。</li>
+              <li><strong>乘除負數</strong>：方向要反過來，\(\gt\) 與 \(\lt\) 互換、\(\ge\) 與 \(\le\) 互換。</li>
+              <li><strong>移項法則</strong>：加變減、減變加、乘變除、除變乘；乘除的數是負數時要變號。</li>
+              <li><strong>兩邊都有 \(x\)</strong>：移到哪一邊都對；\(3 \gt x\) 就是 \(x \lt 3\)。</li>
+              <li><strong>去括號</strong>：括號外的數乘到每一項，負數要連符號一起乘。</li>
+              <li><strong>去分母</strong>：同乘最小公倍數（正數，不變號），常數項也要乘；解是分數時畫在兩個整數之間。</li>
+              <li><strong>取整數</strong>：「至少」取最小整數、「最多」取最大整數，不可以四捨五入。</li>
+              <li><strong>價目表</strong>：「不超過」含等號；解完回到表上逐項比，扣掉題目排除的品項。</li>
+              <li><strong>折扣門檻</strong>：原本的總價 \(\gt\) 門檻的總價，答案要落在原本的範圍內。</li>
+              <li><strong>兩個條件</strong>：各列各解，再合起來寫成 \(a \lt x \lt b\)。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-ticket"></i> 回到售票亭：到底要存幾天？</h4>
+              <h5><i class="fa-solid fa-piggy-bank"></i> 小晴的年票</h5>
+              <p>\(300 + 80x \ge 900\) 解出 \(x \ge 7.5\)。存 \(7\) 天只有 \(300 + 560 = 860\) 元，還差 \(40\) 元；存 \(8\) 天有 \(940\) 元，夠了。天數沒有「半天」，所以<strong>至少要存 \(8\) 天</strong>——阿哲算的 \(7.5\) 沒有錯，只是還差最後一步：回到情境挑出合理的整數。</p>
+              <h5><i class="fa-solid fa-rotate"></i> 為什麼只有乘除負數要變號</h5>
+              <p>加減只是把兩個數一起往左或往右挪，誰在右邊不會變；乘以正數只是一起放大或縮小，順序也不變。乘以負數卻會把每個數翻到 \(0\) 的另一邊，原本在右邊的跑到左邊——<strong>欠 \(8\) 元比欠 \(3\) 元糟</strong>，就是這個道理。</p>
+              <h5><i class="fa-solid fa-flag"></i> 第 4 章完結</h5>
+              <p>從上一節的「看懂不等號、列出不等式、判斷解、畫出解」，到這一節的「解出不等式、用它解決問題」，第 4 章到這裡告一段落。下一章要換一個方向，學習<strong>統計圖表與資料分析</strong>，用數學讀懂一大堆數字。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

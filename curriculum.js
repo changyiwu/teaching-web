@@ -67,7 +67,7 @@
         "chapter": "第4章 一元一次不等式",
         "sections": [
           { "code": "4-1", "title": "認識一元一次不等式", "status": "completed" },
-          { "code": "4-2", "title": "解一元一次不等式" }
+          { "code": "4-2", "title": "解一元一次不等式", "status": "completed" }
         ]
       },
       {
