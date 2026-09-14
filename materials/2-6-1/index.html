@@ -4,39 +4,1546 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>6-1 垂直、線對稱與三視圖 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>6-1 垂直、線對稱與三視圖 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第二冊 (1下) • 第6章 生活中的幾何</div>
-    <h1>6-1 垂直、線對稱與三視圖</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第二冊 • 第六章</span>
+        <h1>6-1 垂直、線對稱與三視圖</h1>
+        <p>美勞課要布置教室：剪一顆左右對稱的愛心、在方格紙上畫完整的圖案、用積木堆出作品再畫成設計圖……這些都用得到幾何的語言。這一節先認識最基本的<strong>點、線、角與多邊形</strong>，以及它們的標示方法；接著學<strong>垂直與中垂線</strong>，再用中垂線說清楚<strong>線對稱圖形</strong>為什麼對稱；最後從不同方向看同一個立體，畫出它的<strong>三視圖</strong>。</p>
+      </div>
+      <!-- Progress navigation (13 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-arrows-left-right"></i> 直線線段射線</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-compass-drafting"></i> 角</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-shapes"></i> 多邊形</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-draw-polygon"></i> 標示與對角線</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-ruler-combined"></i> 垂直與距離</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-arrows-left-right-to-line"></i> 中點與中垂線</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-clone"></i> 線對稱圖形</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-arrows-to-dot"></i> 對稱軸與中垂線</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 找對稱軸</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-table-cells"></i> 完成對稱圖形</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-scissors"></i> 摺紙剪紙</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-cubes"></i> 三視圖</a>
+        <a href="#concept13" class="nav-item"><i class="fa-solid fa-eye"></i> 判斷觀察方向</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Paper Craft Collage)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(251, 146, 60, 0.25);">
+        <h2 class="section-title" style="color: #fdba74; border-bottom-color: rgba(253, 186, 116, 0.2);">
+          <i class="fa-solid fa-scissors" aria-hidden="true" style="color: #fdba74; text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);"></i> 課前暖身漫畫：怎麼剪都歪一邊的愛心
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            美勞課要布置教室，小芸拿起剪刀直接在紅色卡紙上剪愛心，剪出來卻一邊胖、一邊瘦。阿翔把卡紙<strong style="color:#fdba74">先對摺</strong>，只沿著摺痕畫<strong style="color:#fdba74">半顆</strong>愛心，剪好攤開——左右兩半剛好一樣。<strong style="color:#fdba74">為什麼先對摺再剪，就一定對稱？摺痕在這裡扮演什麼角色？</strong>學完重點 7～11，再回來回答。
+          </p>
+          <!-- 課前暖身漫畫（桌機生成後放入）：motivation_comic.webp；提示詞與對白在 comfyui/2-6-1/comic.json -->
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 直線、線段、射線
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> 重點 1：點、直線、線段、射線——看端點與延伸方向
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>點</strong>：只表示位置，沒有大小。習慣在點的旁邊寫大寫英文字母，稱為 \(A\) 點（或點 \(A\)）。</li>
+              <li><strong>線</strong>：點移動所經過的路徑，沒有粗細。彎曲的是曲線；筆直、向兩端無限延伸的是<strong>直線</strong>。</li>
+              <li><strong>相異兩點決定一直線</strong>：通過 \(A\)、\(B\) 兩點的曲線有很多條，直線只有一條。直線也常用一個字母標示，例如直線 \(L\)。</li>
+              <li>若 \(A\)、\(B\) 是直線 \(L\) 上的兩點，可以標示出三種圖形：</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>名稱</th><th>符號</th><th>端點</th><th>字母能對調嗎</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>直線 \(AB\)</td><td>\(\overleftrightarrow{AB}\)</td><td>沒有</td><td>可以</td></tr>
+                <tr><td>線段 \(AB\)</td><td>\(\overline{AB}\)</td><td>\(A\) 與 \(B\)</td><td>可以</td></tr>
+                <tr><td>射線 \(AB\)</td><td>\(\overrightarrow{AB}\)</td><td>只有 \(A\)</td><td><strong>不可以</strong></td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <figure class="numline-fig">
+              <!--SVG:c1--><svg viewBox="0 0 380 144" role="img" aria-label="三列圖：直線 AB 通過 A、B 兩點並向左右延伸；線段 AB 只在 A、B 兩個端點之間；射線 AB 從端點 A 出發，經過 B 往右延伸"><text x="46" y="35" fill="#94a3b8" font-size="13" text-anchor="middle" font-weight="700">直線 AB</text><defs><linearGradient id="c1g30" x1="100" y1="0" x2="372" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fb923c" stop-opacity="0"/><stop offset="0.18" stop-color="#fb923c"/><stop offset="0.82" stop-color="#fb923c"/><stop offset="1" stop-color="#fb923c" stop-opacity="0"/></linearGradient></defs><line x1="100" y1="30" x2="372" y2="30" stroke="url(#c1g30)" stroke-width="5"/><circle cx="150" cy="30" r="3.5" fill="#f8fafc"/><circle cx="270" cy="30" r="3.5" fill="#f8fafc"/><text x="150" y="19" fill="#f8fafc" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">A</text><text x="270" y="19" fill="#f8fafc" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">B</text><text x="46" y="83" fill="#94a3b8" font-size="13" text-anchor="middle" font-weight="700">線段 AB</text><defs><linearGradient id="c1g78" x1="100" y1="0" x2="372" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fb923c" stop-opacity="1"/><stop offset="0.18" stop-color="#fb923c"/><stop offset="0.82" stop-color="#fb923c"/><stop offset="1" stop-color="#fb923c" stop-opacity="1"/></linearGradient></defs><line x1="150" y1="78" x2="270" y2="78" stroke="url(#c1g78)" stroke-width="5"/><circle cx="150" cy="78" r="5.5" fill="#fb923c"/><circle cx="270" cy="78" r="5.5" fill="#fb923c"/><text x="150" y="67" fill="#f8fafc" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">A</text><text x="270" y="67" fill="#f8fafc" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">B</text><text x="46" y="131" fill="#94a3b8" font-size="13" text-anchor="middle" font-weight="700">射線 AB</text><defs><linearGradient id="c1g126" x1="100" y1="0" x2="372" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fb923c" stop-opacity="1"/><stop offset="0.18" stop-color="#fb923c"/><stop offset="0.82" stop-color="#fb923c"/><stop offset="1" stop-color="#fb923c" stop-opacity="0"/></linearGradient></defs><line x1="150" y1="126" x2="372" y2="126" stroke="url(#c1g126)" stroke-width="5"/><circle cx="150" cy="126" r="5.5" fill="#fb923c"/><circle cx="270" cy="126" r="3.5" fill="#f8fafc"/><text x="150" y="115" fill="#f8fafc" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">A</text><text x="270" y="115" fill="#f8fafc" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">B</text></svg><!--/SVG-->
+              <figcaption>直線向兩端延伸；線段停在兩個端點；射線從端點出發往一個方向延伸</figcaption>
+            </figure>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>射線看兩件事</strong>：端點（寫在前面的字母）與方向（往第二個字母那一邊）。\(\overrightarrow{AB}\) 從 \(A\) 往 \(B\) 延伸，\(\overrightarrow{BA}\) 從 \(B\) 往 \(A\) 延伸，兩者不同。</li>
+              <li><strong>只有線段有長度</strong>：\(\overline{AB}\) 也可以表示這條線段的長；直線與射線無限延伸，沒有長度。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_line.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：同一個圖形嗎？</h3>
+            <p class="interactive-instruction">直線 \(L\) 上依序有 \(A\)、\(B\)、\(C\) 三點。替「甲」「乙」各選一個種類，再在該列的直線上<strong>依序點兩個點</strong>（先點的是第一個字母），看看兩種寫法是不是同一個圖形：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-line" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ln-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">甲的種類</span>
+                    <div class="btn-group" id="ln-type-a">
+                      <button class="pick-btn active" data-ln-type="seg">線段</button>
+                      <button class="pick-btn" data-ln-type="ray">射線</button>
+                      <button class="pick-btn" data-ln-type="line">直線</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">乙的種類</span>
+                    <div class="btn-group" id="ln-type-b">
+                      <button class="pick-btn active" data-ln-type="seg">線段</button>
+                      <button class="pick-btn" data-ln-type="ray">射線</button>
+                      <button class="pick-btn" data-ln-type="line">直線</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ln-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (直線、線段、射線)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 如圖，直線 \(L\) 上依序有 \(P\)、\(Q\)、\(R\)、\(S\) 四點。下列哪一組表示的是<strong>同一個</strong>圖形？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q1--><svg viewBox="0 0 380 76" role="img" aria-label="直線 L 上由左到右依序有 P、Q、R、S 四點"><line x1="12" y1="44" x2="368" y2="44" stroke="#cbd5e1" stroke-width="2.5"/><circle cx="80" cy="44" r="4.5" fill="#f8fafc"/><text x="80" y="30" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">P</text><circle cx="160" cy="44" r="4.5" fill="#f8fafc"/><text x="160" y="30" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">Q</text><circle cx="240" cy="44" r="4.5" fill="#f8fafc"/><text x="240" y="30" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">R</text><circle cx="320" cy="44" r="4.5" fill="#f8fafc"/><text x="320" y="30" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">S</text><text x="372" y="66" fill="#94a3b8" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">L</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-1" value="A"><span class="option-text">A. \(\overrightarrow{QP}\) 與 \(\overrightarrow{QR}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-1" value="B"><span class="option-text">B. \(\overline{PR}\) 與 \(\overline{QS}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-1" value="C"><span class="option-text">C. \(\overrightarrow{RQ}\) 與 \(\overrightarrow{RP}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-1" value="D"><span class="option-text">D. \(\overrightarrow{PQ}\) 與 \(\overrightarrow{QR}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩條射線的端點都是 \(R\)，而且 \(Q\)、\(P\) 都在 \(R\) 的左邊，都是從 \(R\) 往左無限延伸，所以是同一條射線。<br>
+              A 錯：端點都是 \(Q\)，但一條往左、一條往右。<br>
+              B 錯：\(\overline{PR}\) 的端點是 \(P\)、\(R\)，\(\overline{QS}\) 的端點是 \(Q\)、\(S\)，是不同的線段。<br>
+              D 錯：一條從 \(P\) 出發、一條從 \(Q\) 出發，端點不同。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 如圖，直線上依序有 \(R\)、\(P\)、\(S\)、\(Q\)、\(T\) 五點。哪一個點在 \(\overrightarrow{QP}\) 上，但<strong>不在</strong> \(\overline{PQ}\) 上？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q2--><svg viewBox="0 0 380 70" role="img" aria-label="一條直線上由左到右依序有 R、P、S、Q、T 五點"><line x1="12" y1="44" x2="368" y2="44" stroke="#cbd5e1" stroke-width="2.5"/><circle cx="50" cy="44" r="4.5" fill="#f8fafc"/><text x="50" y="30" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">R</text><circle cx="120" cy="44" r="4.5" fill="#f8fafc"/><text x="120" y="30" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">P</text><circle cx="190" cy="44" r="4.5" fill="#f8fafc"/><text x="190" y="30" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">S</text><circle cx="260" cy="44" r="4.5" fill="#f8fafc"/><text x="260" y="30" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">Q</text><circle cx="330" cy="44" r="4.5" fill="#f8fafc"/><text x="330" y="30" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">T</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-2" value="A"><span class="option-text">A. \(S\) 點</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-2" value="B"><span class="option-text">B. \(R\) 點</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-2" value="C"><span class="option-text">C. \(T\) 點</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-2" value="D"><span class="option-text">D. 沒有這樣的點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overrightarrow{QP}\) 的端點是 \(Q\)，往 \(P\) 的方向（往左）無限延伸，\(R\)、\(P\)、\(S\)、\(Q\) 都在它上面；\(\overline{PQ}\) 只有 \(P\) 到 \(Q\) 之間的部分。在射線上、卻不在線段上的，是 \(P\) 左邊的 \(R\)。<br>
+              A 錯：\(S\) 在 \(P\)、\(Q\) 之間，射線與線段都經過它。<br>
+              C 錯：\(T\) 在 \(Q\) 的右邊，\(\overrightarrow{QP}\) 往左延伸，碰不到 \(T\)。<br>
+              D 錯：\(R\) 就是這樣的點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 角
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i> 重點 2：角的標示與分類——頂點的字母寫中間
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>角</strong>：從同一個端點畫出的兩條射線形成角。共同的端點是<strong>頂點</strong>，兩條射線是角的<strong>邊</strong>。</li>
+              <li><strong>標示</strong>：\(\overrightarrow{BA}\) 與 \(\overrightarrow{BC}\) 形成的角記作 \(\angle ABC\) 或 \(\angle CBA\)，<strong>頂點的字母一定寫在中間</strong>。</li>
+              <li><strong>簡記</strong>：以 \(B\) 為頂點的角只有一個時，可以簡記成 \(\angle B\)。以 \(B\) 為頂點的角不只一個時就不能簡記，要寫三個字母，或在角的內部寫代號，例如 \(\angle 1\)。</li>
+              <li><strong>度數</strong>：\(\angle B\) 也可以代表這個角的度數，例如 \(\angle B = 45^\circ\)。角的大小只看兩邊張開多少，<strong>與邊畫多長無關</strong>。</li>
+              <li><strong>相鄰的角可以相加</strong>：兩個角共用一條邊、又不重疊時，合起來的大角等於兩個小角的和。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>角的種類</th><th>度數</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>銳角</td><td>小於 \(90^\circ\)</td></tr>
+                <tr><td>直角</td><td>等於 \(90^\circ\)</td></tr>
+                <tr><td>鈍角</td><td>大於 \(90^\circ\)、小於 \(180^\circ\)</td></tr>
+                <tr><td>平角</td><td>等於 \(180^\circ\)（兩邊成一直線）</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <!-- 插圖（桌機生成後放入）：craft_angle.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：拼角台</h3>
+            <p class="interactive-instruction">四條射線共用頂點 \(A\)。拉動滑桿改變三個小角，再選一個角，看它的名稱、度數是由哪幾個小角拼成，以及它是哪一種角：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-angle" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ag-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-row">
+                  <label>∠BAC <span class="val-num" id="ag-a1-val">40°</span></label>
+                  <input type="range" id="ag-a1" min="10" max="70" step="5" value="40">
+                </div>
+                <div class="slider-row">
+                  <label>∠CAD <span class="val-num" id="ag-a2-val">50°</span></label>
+                  <input type="range" id="ag-a2" min="10" max="70" step="5" value="50">
+                </div>
+                <div class="slider-row">
+                  <label>∠DAE <span class="val-num" id="ag-a3-val">30°</span></label>
+                  <input type="range" id="ag-a3" min="10" max="40" step="5" value="30">
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">選一個角</span>
+                    <div class="btn-group" id="ag-pick-group">
+                      <button class="pick-btn" data-ag-pick="0,1">∠BAC</button>
+                      <button class="pick-btn active" data-ag-pick="0,2">∠BAD</button>
+                      <button class="pick-btn" data-ag-pick="0,3">∠BAE</button>
+                      <button class="pick-btn" data-ag-pick="1,2">∠CAD</button>
+                      <button class="pick-btn" data-ag-pick="1,3">∠CAE</button>
+                      <button class="pick-btn" data-ag-pick="2,3">∠DAE</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ag-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (角的標示與分類)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 如圖，\(\overrightarrow{OP}\)、\(\overrightarrow{OQ}\)、\(\overrightarrow{OR}\)、\(\overrightarrow{OS}\) 共用端點 \(O\)，圖上標出三個小角的度數。\(\angle QOS\) 是幾度？是哪一種角？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q3--><svg viewBox="0 0 390 234" role="img" aria-label="共用端點 O 的四條射線 OP、OQ、OR、OS，由 OP 往逆時針依序排列。∠POQ 標 33 度、∠QOR 標 61 度、∠ROS 標 47 度"><path d="M242 205 A42 42 0 0 0 235.2 182.1" fill="none" stroke="#fb923c" stroke-width="2.5"/><path d="M252 171.2 A62 62 0 0 0 195.7 143.2" fill="none" stroke="#4ade80" stroke-width="2.5"/><path d="M194.3 123.2 A82 82 0 0 0 136.3 153.4" fill="none" stroke="#f472b6" stroke-width="2.5"/><text x="257.5" y="193" fill="#fb923c" font-size="13.5" text-anchor="middle" font-weight="800">33°</text><text x="235.7" y="138.4" fill="#4ade80" font-size="13.5" text-anchor="middle" font-weight="800">61°</text><text x="153.8" y="121.3" fill="#f472b6" font-size="13.5" text-anchor="middle" font-weight="800">47°</text><line x1="200" y1="205" x2="360" y2="205" stroke="#cbd5e1" stroke-width="2.5"/><text x="376" y="211" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">P</text><line x1="200" y1="205" x2="334.2" y2="117.9" stroke="#cbd5e1" stroke-width="2.5"/><text x="347.6" y="115.1" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">Q</text><line x1="200" y1="205" x2="188.8" y2="45.4" stroke="#cbd5e1" stroke-width="2.5"/><text x="187.7" y="35.4" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">R</text><line x1="200" y1="205" x2="75.7" y2="104.3" stroke="#cbd5e1" stroke-width="2.5"/><text x="63.2" y="100.2" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">S</text><circle cx="200" cy="205" r="4.5" fill="#f8fafc"/><text x="196" y="227" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">O</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-3" value="A"><span class="option-text">A. \(108^\circ\)，銳角</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-3" value="B"><span class="option-text">B. \(47^\circ\)，銳角</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-3" value="C"><span class="option-text">C. \(94^\circ\)，鈍角</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-3" value="D"><span class="option-text">D. \(108^\circ\)，鈍角</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\angle QOS\) 由 \(\angle QOR\) 與 \(\angle ROS\) 拼成：
+              \[\begin{aligned} & \angle QOS \\ &= \angle QOR + \angle ROS \\ &= 61^\circ + 47^\circ = 108^\circ \end{aligned}\]
+              \(108^\circ\) 大於 \(90^\circ\)、小於 \(180^\circ\)，是鈍角。<br>
+              A 錯：度數對，但 \(108^\circ\) 大於 \(90^\circ\)，不是銳角。<br>
+              B 錯：\(47^\circ\) 只是 \(\angle ROS\)。<br>
+              C 錯：\(94^\circ\) 是 \(\angle POR\)，由 \(33^\circ\) 與 \(61^\circ\) 拼成。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 如圖，\(\overrightarrow{BA}\)、\(\overrightarrow{BD}\)、\(\overrightarrow{BC}\) 共用端點 \(B\)，\(\angle 1\) 是 \(\angle ABD\)、\(\angle 2\) 是 \(\angle DBC\)。下列敘述何者正確？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q4--><svg viewBox="0 0 330 224" role="img" aria-label="共用端點 B 的三條射線 BA、BD、BC。BA 與 BD 之間標 1，BD 與 BC 之間標 2"><path d="M163.7 158.4 A40 40 0 0 0 124.3 165.4" fill="none" stroke="#fb923c" stroke-width="2.5"/><path d="M184 196 A34 34 0 0 0 161.6 164.1" fill="none" stroke="#4ade80" stroke-width="2.5"/><text x="139.9" y="143.9" fill="#fb923c" font-size="15" text-anchor="middle" font-weight="800">1</text><text x="192.6" y="171.2" fill="#4ade80" font-size="15" text-anchor="middle" font-weight="800">2</text><line x1="150" y1="196" x2="53.6" y2="81.1" stroke="#cbd5e1" stroke-width="2.5"/><text x="43.3" y="74.8" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">A</text><line x1="150" y1="196" x2="201.3" y2="55" stroke="#cbd5e1" stroke-width="2.5"/><text x="206.8" y="46" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">D</text><line x1="150" y1="196" x2="300" y2="196" stroke="#cbd5e1" stroke-width="2.5"/><text x="316" y="202" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">C</text><circle cx="150" cy="196" r="4.5" fill="#f8fafc"/><text x="148" y="218" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">B</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-4" value="A"><span class="option-text">A. \(\angle 1\) 可以簡記成 \(\angle B\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-4" value="B"><span class="option-text">B. \(\angle ABC\) 也可以寫成 \(\angle BCA\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-4" value="C"><span class="option-text">C. \(\angle 1 + \angle 2 = \angle ABC\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-4" value="D"><span class="option-text">D. \(\angle DBC\) 也可以寫成 \(\angle BDC\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\angle 1\) 與 \(\angle 2\) 共用 \(\overrightarrow{BD}\) 這條邊又不重疊，合起來正好是 \(\overrightarrow{BA}\) 與 \(\overrightarrow{BC}\) 夾的角。<br>
+              A 錯：以 \(B\) 為頂點的角有 \(\angle ABD\)、\(\angle DBC\)、\(\angle ABC\) 三個，寫 \(\angle B\) 分不出是哪一個。<br>
+              B、D 錯：頂點的字母要寫在中間。\(\angle BCA\) 的頂點是 \(C\)，\(\angle BDC\) 的頂點是 \(D\)，都是別的角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 多邊形與正多邊形
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shapes" aria-hidden="true"></i> 重點 3：多邊形與正多邊形——邊等長、角相等，缺一不可
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>平面幾何圖形</strong>：畫在平面上的圖形，例如三角形、四邊形、圓。</li>
+              <li><strong>多邊形</strong>：把平面上幾個點依序用線段連接、頭尾相接圍成的圖形。這些點是<strong>頂點</strong>，這些線段是<strong>邊</strong>，相鄰兩邊夾成<strong>內角</strong>。</li>
+              <li><strong>依邊數命名</strong>：有 \(n\) 條邊的多邊形叫 \(n\) 邊形，它有 \(n\) 個頂點、\(n\) 個內角。三邊形通常稱為三角形。</li>
+              <li><strong>正多邊形</strong>：<strong>所有邊都等長，而且所有內角都相等</strong>的多邊形。兩個條件缺一不可。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>四邊形</th><th>邊都等長</th><th>角都相等</th><th>正多邊形嗎</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>正方形</td><td class="sign-pos">是</td><td class="sign-pos">是</td><td class="sign-pos">是</td></tr>
+                <tr><td>菱形</td><td class="sign-pos">是</td><td class="sign-neg">否</td><td class="sign-neg">不是</td></tr>
+                <tr><td>長方形</td><td class="sign-neg">否</td><td class="sign-pos">是</td><td class="sign-neg">不是</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>名稱</strong>：正三角形又稱等邊三角形，正四邊形又稱正方形。</li>
+              <li>把紙條的接頭轉一轉，邊長不變，角的大小卻會變——所以<strong>光看邊等長，不能斷定是正多邊形</strong>。右邊的互動可以一邊數一邊試。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_polygon.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：紙條多邊形工作台</h3>
+            <p class="interactive-instruction">選邊數與條件，看畫出來的多邊形：每條邊標著長度（公分），每個內角標著度數。哪些條件組合是正多邊形？有沒有「做不出來」的組合？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-poly" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">邊數</span>
+                    <div class="btn-group" id="pg-n-group">
+                      <button class="pick-btn" data-pg-n="3">3</button>
+                      <button class="pick-btn" data-pg-n="4">4</button>
+                      <button class="pick-btn active" data-pg-n="5">5</button>
+                      <button class="pick-btn" data-pg-n="6">6</button>
+                      <button class="pick-btn" data-pg-n="7">7</button>
+                      <button class="pick-btn" data-pg-n="8">8</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">條件</span>
+                    <div class="btn-group" id="pg-kind-group">
+                      <button class="pick-btn" data-pg-kind="regular">邊等長、角相等</button>
+                      <button class="pick-btn active" data-pg-kind="side">只有邊等長</button>
+                      <button class="pick-btn" data-pg-kind="angle">只有角相等</button>
+                      <button class="pick-btn" data-pg-kind="none">邊、角都不相等</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多邊形與正多邊形)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 十邊形有 \(a\) 條邊、\(b\) 個頂點、\(c\) 個內角，則 \(a + b + c = \)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-5" value="A"><span class="option-text">A. \(30\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-5" value="B"><span class="option-text">B. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-5" value="C"><span class="option-text">C. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-5" value="D"><span class="option-text">D. \(40\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(n\) 邊形有 \(n\) 條邊、\(n\) 個頂點、\(n\) 個內角。十邊形的 \(a\)、\(b\)、\(c\) 都是 \(10\)，\(a + b + c = 30\)。<br>
+              B 錯：只算了邊與頂點，漏掉內角。<br>
+              C 錯：只算了邊數。<br>
+              D 錯：邊、頂點、內角各 \(10\) 個，只有三組，不是四組。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 用 \(6\) 根一樣長的吸管頭尾相接，圍成一個六邊形。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-6" value="A"><span class="option-text">A. 這個六邊形一定是正六邊形</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-6" value="B"><span class="option-text">B. 不一定是正六邊形，還要 \(6\) 個內角都相等才是</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-6" value="C"><span class="option-text">C. 它的 \(6\) 個內角一定都相等</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-6" value="D"><span class="option-text">D. 它一定不是正六邊形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。正多邊形要「邊都等長」而且「角都相等」。吸管一樣長只保證邊等長，接頭可以轉動，角的大小會跟著改變。<br>
+              A、C 錯：把六邊形壓扁一點，邊還是一樣長，角卻不再相等。<br>
+              D 錯：把 \(6\) 個內角調成一樣大，它就是正六邊形。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 多邊形的標示與對角線
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-draw-polygon" aria-hidden="true"></i> 重點 4：多邊形的標示與對角線——沿著邊依序寫
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>標示多邊形</strong>：從任意一個頂點開始，沿著<strong>順時針或逆時針</strong>方向，把頂點依序寫出來。</li>
+              <li>例：四邊形的頂點沿著邊依序是 \(A\)、\(B\)、\(C\)、\(D\)，可以寫成四邊形 \(ABCD\)、\(BCDA\)、\(ADCB\)……；<strong>不能跳著寫</strong>成四邊形 \(ACBD\)，那樣連出來的線會交叉。</li>
+              <li><strong>三角形</strong>的三個頂點兩兩相鄰，怎麼排都可以，以符號 \(\triangle ABC\) 標示。</li>
+              <li><strong>對角線</strong>：連接兩個<strong>不相鄰</strong>頂點的線段。例如 \(\overline{AC}\)、\(\overline{BD}\) 是四邊形 \(ABCD\) 的對角線。</li>
+              <li><strong>從一個頂點出發</strong>：不能連到自己，也不能連到兩旁相鄰的頂點（那兩條是邊），所以 \(n\) 邊形從一個頂點可以畫 \(n - 3\) 條對角線。三角形沒有對角線。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_label.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：頂點連連看</h3>
+            <p class="interactive-instruction">「寫名稱」模式：依序點頂點，看你寫的名稱能不能表示這個多邊形。「畫對角線」模式：點一個頂點，畫出從它出發的所有對角線：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-diag" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="dg-mode-group">
+                      <button class="pick-btn active" data-dg-mode="label">寫名稱</button>
+                      <button class="pick-btn" data-dg-mode="diag">畫對角線</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <div class="btn-group">
+                      <button class="pick-btn" id="dg-reset">重來</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">邊數</span>
+                    <div class="btn-group" id="dg-n-group">
+                      <button class="pick-btn" data-dg-n="4">四邊形</button>
+                      <button class="pick-btn active" data-dg-n="5">五邊形</button>
+                      <button class="pick-btn" data-dg-n="6">六邊形</button>
+                      <button class="pick-btn" data-dg-n="7">七邊形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多邊形的標示與對角線)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 如圖，\(P\)、\(Q\)、\(R\)、\(S\)、\(T\) 是五邊形的五個頂點。下列哪一個標示<strong>不可以</strong>表示這個五邊形？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q7--><svg viewBox="0 0 380 300" role="img" aria-label="一個五邊形，頂點沿著邊順時針依序是：上方 P、右上 T、右下 R、左下 Q、左上 S"><polygon points="190,24 338,124 286,262 96,262 42,124" fill="rgba(253,164,175,0.14)" stroke="#fda4af" stroke-width="2.5" stroke-linejoin="round"/><circle cx="190" cy="24" r="4.5" fill="#f8fafc"/><text x="190" y="10" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">P</text><circle cx="338" cy="124" r="4.5" fill="#f8fafc"/><text x="357.4" y="125.3" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">T</text><circle cx="286" cy="262" r="4.5" fill="#f8fafc"/><text x="299.7" y="282.6" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">R</text><circle cx="96" cy="262" r="4.5" fill="#f8fafc"/><text x="82.4" y="282.7" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">Q</text><circle cx="42" cy="124" r="4.5" fill="#f8fafc"/><text x="22.6" y="125.3" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">S</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-7" value="A"><span class="option-text">A. 五邊形 \(PTRQS\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-7" value="B"><span class="option-text">B. 五邊形 \(RTPSQ\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-7" value="C"><span class="option-text">C. 五邊形 \(QRTPS\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-7" value="D"><span class="option-text">D. 五邊形 \(PQRST\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。沿著邊繞一圈，頂點的順序是 \(P\)、\(T\)、\(R\)、\(Q\)、\(S\)（或反方向）。\(PQRST\) 從 \(P\) 直接寫到 \(Q\)，但 \(P\)、\(Q\) 不相鄰，連出來的線會穿過圖形內部。<br>
+              A 可以：從 \(P\) 順時針繞一圈。<br>
+              B 可以：從 \(R\) 逆時針繞一圈。<br>
+              C 可以：從 \(Q\) 逆時針繞一圈。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 六邊形 \(ABCDEF\) 一共有幾條對角線？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-8" value="A"><span class="option-text">A. \(6\) 條</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-8" value="B"><span class="option-text">B. \(9\) 條</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-8" value="C"><span class="option-text">C. \(3\) 條</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-8" value="D"><span class="option-text">D. \(18\) 條</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。每個頂點可以畫 \(6 - 3 = 3\) 條對角線，\(6\) 個頂點一共算到 \(6 \times 3 = 18\) 條。但每條對角線有兩個端點，從兩端各被算了一次，所以是 \(18 \div 2 = 9\) 條。<br>
+              A 錯：\(6\) 是邊數。<br>
+              C 錯：\(3\) 只是從一個頂點出發的條數。<br>
+              D 錯：每條對角線被算了兩次，要再除以 \(2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 垂直與點到直線的距離
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> 重點 5：垂直與點到直線的距離——垂直的那一條最短
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>垂直</strong>：兩條直線（或線段）相交成直角（\(90^\circ\)）時，稱它們<strong>互相垂直</strong>，以符號「\(\perp\)」標示，例如 \(\overline{OA} \perp \overline{OB}\)。</li>
+              <li><strong>垂足</strong>：互相垂直的兩線的交點。圖上用一個小方角記號表示直角。</li>
+              <li><strong>作垂線</strong>：三角板的一條直角邊貼著直線 \(L\)，另一條直角邊通過 \(L\) 外的點 \(A\)，沿著它畫出 \(\overline{AB}\)，就有 \(\overline{AB} \perp L\)，垂足是 \(B\) 點。</li>
+              <li><strong>點到直線的距離</strong>：\(A\) 點連到 \(L\) 上各點的線段中，<strong>垂直的 \(\overline{AB}\) 最短</strong>。\(\overline{AB}\) 的長就是 \(A\) 點到直線 \(L\) 的距離。</li>
+              <li><strong>垂直不等於「往正下方」</strong>：直線 \(L\) 是斜的時候，從 \(A\) 往正下方畫到 \(L\) 的線段沒有和 \(L\) 垂直，也就不是最短的那一條。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_perp.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：最短的那一條</h3>
+            <p class="interactive-instruction">\(F\) 是 \(A\) 到直線 \(L\) 的垂足。沿著 \(L\) 移動 \(P\) 點，看 \(\overline{AP}\) 的長度怎麼變（下方的曲線記錄每個位置的長度）；再把 \(L\) 換成斜的，比較「正下方」與「垂直」：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-perp" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-row">
+                  <label>A 到 L 的距離 AF <span class="val-num" id="pp-h-val">4</span></label>
+                  <input type="range" id="pp-h" min="2" max="6" step="1" value="4">
+                </div>
+                <div class="slider-row">
+                  <label>P 在 F 的哪裡（負數在左邊） <span class="val-num" id="pp-x-val">3</span></label>
+                  <input type="range" id="pp-x" min="-6" max="6" step="0.5" value="3">
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">直線 L</span>
+                    <div class="btn-group" id="pp-tilt-group">
+                      <button class="pick-btn active" data-pp-tilt="flat">水平的 L</button>
+                      <button class="pick-btn" data-pp-tilt="tilt">斜的 L</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (垂直與點到直線的距離)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 如圖，\(P\) 是直線 \(L\) 外一點，\(Q\)、\(R\)、\(S\)、\(T\) 在 \(L\) 上，\(R\) 在 \(P\) 的正下方，\(S\) 處標有直角記號。\(P\) 點到直線 \(L\) 的距離是哪一條線段的長？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q9--><svg viewBox="0 0 400 236" role="img" aria-label="斜的直線 L 由左上往右下，直線外上方有一點 P。L 上由左到右依序是 Q、S、R、T，P 與這四點各連一條線段；R 在 P 的正下方，S 處畫有直角記號"><line x1="20" y1="60" x2="380" y2="200" stroke="#cbd5e1" stroke-width="2.5"/><line x1="170" y1="20" x2="60" y2="75.6" stroke="rgba(203,213,225,0.55)" stroke-width="1.8"/><line x1="170" y1="20" x2="170" y2="118.3" stroke="rgba(203,213,225,0.55)" stroke-width="1.8"/><line x1="170" y1="20" x2="136.8" y2="105.4" stroke="rgba(203,213,225,0.55)" stroke-width="1.8"/><line x1="170" y1="20" x2="300" y2="168.9" stroke="rgba(203,213,225,0.55)" stroke-width="1.8"/><polyline points="146.1,109 149.7,99.7 140.4,96.1" fill="none" stroke="#4ade80" stroke-width="2"/><circle cx="170" cy="20" r="5" fill="#facc15"/><text x="170" y="12" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700"></text><text x="186" y="26" fill="#facc15" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">P</text><circle cx="60" cy="75.6" r="4.5" fill="#f8fafc"/><text x="64" y="99.6" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">Q</text><circle cx="170" cy="118.3" r="4.5" fill="#f8fafc"/><text x="174" y="142.3" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">R</text><circle cx="136.8" cy="105.4" r="4.5" fill="#f8fafc"/><text x="140.8" y="129.4" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">S</text><circle cx="300" cy="168.9" r="4.5" fill="#f8fafc"/><text x="304" y="192.9" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">T</text><text x="386" y="222" fill="#94a3b8" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">L</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-9" value="A"><span class="option-text">A. \(\overline{PS}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-9" value="B"><span class="option-text">B. \(\overline{PR}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-9" value="C"><span class="option-text">C. \(\overline{PQ}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-9" value="D"><span class="option-text">D. \(\overline{PT}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。點到直線的距離是<strong>垂直</strong>線段的長。\(\overline{PS} \perp L\)，它是 \(P\) 連到 \(L\) 上各點的線段中最短的一條。<br>
+              B 錯：\(R\) 在正下方，但 \(L\) 是斜的，\(\overline{PR}\) 沒有和 \(L\) 垂直，比 \(\overline{PS}\) 長。<br>
+              C、D 錯：\(Q\)、\(T\) 離垂足 \(S\) 更遠，線段更長。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 如圖，\(\triangle ABC\) 中，\(D\) 在 \(\overline{BC}\) 上，且 \(\overline{AD} \perp \overline{BC}\)。已知 \(\overline{AB} = 13\)、\(\overline{AC} = 15\)、\(\overline{AD} = 12\)、\(\overline{BC} = 14\)。下列敘述何者正確？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q10--><svg viewBox="0 0 270 224" role="img" aria-label="三角形 ABC，BC 在下方。從 A 往下畫到 BC 上的 D 點，AD 與 BC 垂直，D 處有直角記號。AB 標 13、AC 標 15、AD 標 12"><polygon points="100,28 30,196 226,196" fill="rgba(110,231,183,0.12)" stroke="#6ee7b7" stroke-width="2.5" stroke-linejoin="round"/><line x1="100" y1="28" x2="100" y2="196" stroke="#facc15" stroke-width="2.5" stroke-dasharray="6 4"/><polyline points="100,185 111,185 111,196" fill="none" stroke="#facc15" stroke-width="2"/><text x="100" y="18" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">A</text><text x="20" y="214" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">B</text><text x="236" y="214" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">C</text><text x="100" y="216" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">D</text><text x="49" y="112" fill="#f8fafc" font-size="14" text-anchor="middle" font-weight="800">13</text><text x="181" y="112" fill="#f8fafc" font-size="14" text-anchor="middle" font-weight="800">15</text><text x="114" y="132" fill="#facc15" font-size="14" text-anchor="middle" font-weight="800">12</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-10" value="A"><span class="option-text">A. \(A\) 點到直線 \(BC\) 的距離是 \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-10" value="B"><span class="option-text">B. 垂足是 \(A\) 點</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-10" value="C"><span class="option-text">C. \(A\) 連到直線 \(BC\) 的線段中，\(\overline{AC}\) 最短</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-10" value="D"><span class="option-text">D. \(A\) 點到直線 \(BC\) 的距離是 \(12\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{AD} \perp \overline{BC}\)，垂直線段 \(\overline{AD}\) 的長 \(12\) 就是 \(A\) 點到直線 \(BC\) 的距離。<br>
+              A 錯：\(\overline{AB}\) 沒有和 \(\overline{BC}\) 垂直，它的長不是距離。<br>
+              B 錯：垂足是兩線的交點 \(D\)。<br>
+              C 錯：最短的是垂直的 \(\overline{AD}\)，\(12 \lt 13 \lt 15\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 中點與中垂線
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right-to-line" aria-hidden="true"></i> 重點 6：中點與中垂線——對摺線段找出來的線
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>把紙上的 \(\overline{AB}\) 對摺，讓 \(A\)、\(B\) 疊在一起，攤開後摺痕是直線 \(L\)，\(L\) 與 \(\overline{AB}\) 交於 \(M\) 點：
+                <ul>
+                  <li>摺痕兩側的 \(\angle 1\) 與 \(\angle 2\) 疊合，所以 \(\angle 1 = \angle 2\)；兩個角合起來是平角 \(180^\circ\)，各是 \(90^\circ\)，也就是 \(L \perp \overline{AB}\)。</li>
+                  <li>\(\overline{AM}\) 與 \(\overline{BM}\) 疊合，所以 \(\overline{AM} = \overline{BM}\)，各是 \(\overline{AB}\) 的一半。</li>
+                </ul>
+              </li>
+              <li><strong>中點</strong>：\(M\) 在 \(\overline{AB}\) 上，而且 \(\overline{AM} = \overline{BM}\)，稱 \(M\) 是 \(\overline{AB}\) 的中點。</li>
+              <li><strong>中垂線</strong>（或<strong>垂直平分線</strong>）：<strong>通過線段的中點、又與線段垂直</strong>的直線。</li>
+              <li><strong>中點是線段的中點</strong>：直線 \(L\) 是 \(\overline{AB}\) 的中垂線時，交點 \(M\) 是 \(\overline{AB}\) 的中點，不是直線 \(L\) 的中點——直線無限延伸，沒有中點。</li>
+              <li><strong>用中點列式</strong>：知道 \(M\) 是 \(\overline{AB}\) 的中點，就能寫出 \(\overline{AM} = \overline{BM}\)，或 \(\overline{AB} = 2 \times \overline{AM}\)。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_fold_mid.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：摺紙找中點</h3>
+            <p class="interactive-instruction">紙條上有 \(\overline{AB}\)。移動摺痕的位置，再拉「摺起來」看 \(B\) 翻過去落在哪裡。摺痕移到哪裡，\(A\)、\(B\) 才會剛好疊合？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mid" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="md-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-row">
+                  <label>AB 的長 <span class="val-num" id="md-len-val">12</span></label>
+                  <input type="range" id="md-len" min="6" max="20" step="2" value="12">
+                </div>
+                <div class="slider-row">
+                  <label>摺痕離 A 多遠 <span class="val-num" id="md-c-val">4</span></label>
+                  <input type="range" id="md-c" min="1" max="11" step="0.5" value="4">
+                </div>
+                <div class="slider-row">
+                  <label>摺起來 <span class="val-num" id="md-fold-val">100%</span></label>
+                  <input type="range" id="md-fold" min="0" max="100" step="5" value="100">
+                </div>
+
+                <div class="visual-feedback" id="md-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (中點與中垂線)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> \(\overline{AB} = 36\)，\(M\) 是 \(\overline{AB}\) 的中點，\(N\) 是 \(\overline{MB}\) 的中點，則 \(\overline{AN} = \)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-11" value="A"><span class="option-text">A. \(27\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-11" value="B"><span class="option-text">B. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-11" value="C"><span class="option-text">C. \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-11" value="D"><span class="option-text">D. \(13.5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。依序由中點算出每一段：
+              \[\begin{aligned} & \overline{AM} = 36 \div 2 = 18 \\ & \overline{MN} = 18 \div 2 = 9 \\ & \overline{AN} = 18 + 9 = 27 \end{aligned}\]
+              B 錯：\(9\) 是 \(\overline{MN}\)（也是 \(\overline{NB}\)）。<br>
+              C 錯：\(18\) 是 \(\overline{AM}\)。<br>
+              D 錯：\(13.5\) 是把 \(27\) 又除以 \(2\)，多除了一次。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 直線 \(L\) 是 \(\overline{AB}\) 的中垂線，與 \(\overline{AB}\) 交於 \(C\) 點。若 \(\overline{AC} = 3x + 2\)、\(\overline{BC} = 5x - 6\)，則 \(\overline{AB} = \)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-12" value="A"><span class="option-text">A. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-12" value="B"><span class="option-text">B. \(28\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-12" value="C"><span class="option-text">C. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-12" value="D"><span class="option-text">D. \(32\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。中垂線通過 \(\overline{AB}\) 的中點，所以 \(C\) 是中點，\(\overline{AC} = \overline{BC}\)：
+              \[\begin{aligned} & 3x + 2 = 5x - 6 \\ & 8 = 2x \\ & x = 4 \end{aligned}\]
+              \(\overline{AC} = 3 \times 4 + 2 = 14\)，\(\overline{AB} = 2 \times 14 = 28\)。<br>
+              A 錯：\(4\) 是 \(x\)，不是長度。<br>
+              C 錯：\(14\) 只是 \(\overline{AC}\)。<br>
+              D 錯：\(\overline{AC} + \overline{BC} = 8x - 4\)，漏掉 \(-4\) 就會算成 \(8 \times 4 = 32\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 線對稱圖形
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-clone" aria-hidden="true"></i> 重點 7：線對稱圖形——對摺後完全重疊
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>線對稱圖形</strong>：沿著一條直線對摺，直線兩側的部分<strong>完全重疊</strong>的圖形。</li>
+              <li><strong>對稱軸</strong>：那一條對摺線。</li>
+              <li>對摺後疊在一起的點、角、線段，分別叫作<strong>對稱點</strong>、<strong>對稱角</strong>、<strong>對稱線段</strong>。</li>
+              <li><strong>在對稱軸上的點</strong>，對摺時不會移動，它的對稱點就是自己。</li>
+              <li><strong>性質</strong>：對稱的部分能完全疊合，所以<strong>對稱角相等、對稱線段等長</strong>。</li>
+              <li><strong>找對稱線段要先配對稱點</strong>：\(\overline{BC}\) 的對稱線段，是「\(B\) 的對稱點」連「\(C\) 的對稱點」。字母一個一個換，不要只看位置差不多就猜。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_symmetry.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：卡紙圖案摺疊台</h3>
+            <p class="interactive-instruction">選「點」「線段」或「角」，再點圖形上的頂點或邊，看它的對稱部分在哪裡、大小是否相同。拉動「對摺」，看兩邊怎麼疊在一起：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sym" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sy-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-row">
+                  <label>對摺 <span class="val-num" id="sy-fold-val">0%</span></label>
+                  <input type="range" id="sy-fold" min="0" max="100" step="5" value="0">
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要找什麼</span>
+                    <div class="btn-group" id="sy-kind-group">
+                      <button class="pick-btn" data-sy-kind="pt">點</button>
+                      <button class="pick-btn" data-sy-kind="seg">線段</button>
+                      <button class="pick-btn active" data-sy-kind="ang">角</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖案</span>
+                    <div class="btn-group" id="sy-shape-group">
+                      <button class="pick-btn active" data-sy-shape="shield">盾牌</button>
+                      <button class="pick-btn" data-sy-shape="lantern">燈籠</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sy-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (線對稱圖形)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 如圖是以虛線 \(L\) 為對稱軸的線對稱圖形。下列敘述何者<strong>錯誤</strong>？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q13--><svg viewBox="0 0 300 264" role="img" aria-label="以鉛垂的虛線 L 為對稱軸的六邊形。P 在上方、S 在下方，都在 L 上；左邊由上而下是 Q、R，右邊由上而下是 U、T"><polygon points="150,18 58,72 82,196 150,244 218,196 242,72" fill="rgba(253,186,116,0.14)" stroke="#fdba74" stroke-width="2.5" stroke-linejoin="round"/><line x1="150" y1="4" x2="150" y2="258" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 5"/><circle cx="150" cy="18" r="4" fill="#f8fafc"/><text x="164" y="5" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">P</text><circle cx="58" cy="72" r="4" fill="#f8fafc"/><text x="42.4" y="67.1" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">Q</text><circle cx="82" cy="196" r="4" fill="#f8fafc"/><text x="67.8" y="214.6" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">R</text><circle cx="150" cy="244" r="4" fill="#f8fafc"/><text x="164" y="269" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">S</text><circle cx="218" cy="196" r="4" fill="#f8fafc"/><text x="232.2" y="214.6" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">T</text><circle cx="242" cy="72" r="4" fill="#f8fafc"/><text x="257.6" y="67.1" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">U</text><text x="166" y="256" fill="#94a3b8" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">L</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-13" value="A"><span class="option-text">A. \(Q\) 的對稱點是 \(U\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-13" value="B"><span class="option-text">B. \(\overline{QR}\) 的對稱線段是 \(\overline{UT}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-13" value="C"><span class="option-text">C. \(\angle R\) 的對稱角是 \(\angle T\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-13" value="D"><span class="option-text">D. \(\overline{PQ}\) 的對稱線段是 \(\overline{ST}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。先配對稱點：\(P\)、\(S\) 在對稱軸上，對稱點是自己；\(Q\) 與 \(U\)、\(R\) 與 \(T\) 互為對稱點。\(\overline{PQ}\) 的對稱線段是「\(P\) 的對稱點」連「\(Q\) 的對稱點」，也就是 \(\overline{PU}\)，不是 \(\overline{ST}\)。<br>
+              A、B、C 都正確。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 同 Q13 的線對稱圖形，若 \(\angle R = 112^\circ\)、\(\overline{RS} = 4\) 公分，下列何者正確？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q13--><svg viewBox="0 0 300 264" role="img" aria-label="以鉛垂的虛線 L 為對稱軸的六邊形。P 在上方、S 在下方，都在 L 上；左邊由上而下是 Q、R，右邊由上而下是 U、T"><polygon points="150,18 58,72 82,196 150,244 218,196 242,72" fill="rgba(253,186,116,0.14)" stroke="#fdba74" stroke-width="2.5" stroke-linejoin="round"/><line x1="150" y1="4" x2="150" y2="258" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 5"/><circle cx="150" cy="18" r="4" fill="#f8fafc"/><text x="164" y="5" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">P</text><circle cx="58" cy="72" r="4" fill="#f8fafc"/><text x="42.4" y="67.1" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">Q</text><circle cx="82" cy="196" r="4" fill="#f8fafc"/><text x="67.8" y="214.6" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">R</text><circle cx="150" cy="244" r="4" fill="#f8fafc"/><text x="164" y="269" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">S</text><circle cx="218" cy="196" r="4" fill="#f8fafc"/><text x="232.2" y="214.6" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">T</text><circle cx="242" cy="72" r="4" fill="#f8fafc"/><text x="257.6" y="67.1" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">U</text><text x="166" y="256" fill="#94a3b8" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">L</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-14" value="A"><span class="option-text">A. \(\angle T = 112^\circ\)，\(\overline{TS} = 4\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-14" value="B"><span class="option-text">B. \(\angle T = 68^\circ\)，\(\overline{TS} = 4\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-14" value="C"><span class="option-text">C. \(\angle U = 112^\circ\)，\(\overline{US} = 4\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-14" value="D"><span class="option-text">D. \(\angle T = 112^\circ\)，\(\overline{TU} = 4\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle R\) 的對稱角是 \(\angle T\)，對稱角相等，所以 \(\angle T = 112^\circ\)。\(R\) 的對稱點是 \(T\)、\(S\) 的對稱點是自己，\(\overline{RS}\) 的對稱線段是 \(\overline{TS}\)，對稱線段等長，所以 \(\overline{TS} = 4\) 公分。<br>
+              B 錯：對稱角是相等，不是加起來 \(180^\circ\)。<br>
+              C 錯：\(U\) 是 \(Q\) 的對稱點，不是 \(R\) 的；\(\overline{US}\) 也不是圖形的邊。<br>
+              D 錯：\(\overline{TU}\) 的對稱線段是 \(\overline{RQ}\)，和 \(\overline{RS}\) 無關。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 對稱軸是對稱點連線的中垂線
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-to-dot" aria-hidden="true"></i> 重點 8：對稱軸是對稱點連線的中垂線
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>在線對稱圖形上，把一組對稱點 \(D\)、\(D'\) 連起來，與對稱軸交於 \(Q\) 點。對摺時 \(\overline{DQ}\) 與 \(\overline{D'Q}\) 疊合，對稱軸兩旁的兩個角也疊合：
+                <ul>
+                  <li>\(\overline{DQ} = \overline{D'Q}\)：對稱軸<strong>平分</strong> \(\overline{DD'}\)。</li>
+                  <li>兩個角相等、合起來是 \(180^\circ\)，各是 \(90^\circ\)：對稱軸與 \(\overline{DD'}\) <strong>垂直</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>Key point：線對稱圖形的對稱軸，是任意兩個對稱點連接線段的中垂線。</strong></li>
+              <li><strong>反過來用</strong>：已知一點 \(P\) 與對稱軸 \(L\)，從 \(P\) 畫一條與 \(L\) 垂直的線，在 \(L\) 的另一側取同樣的距離，就得到 \(P\) 的對稱點。</li>
+              <li><strong>不是對稱點的兩點</strong>連起來，對稱軸不會同時垂直又平分它，所以對稱軸不是那條線段的中垂線。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_mirror_pairs.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：中垂線檢查器</h3>
+            <p class="interactive-instruction">點圖形上的兩個頂點連成線段，量一量：對稱軸 \(L\) 有沒有把它平分？和它垂直嗎？哪些點的組合會讓 \(L\) 成為中垂線？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-check" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ck-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">對稱軸的方向</span>
+                    <div class="btn-group" id="ck-axis-group">
+                      <button class="pick-btn active" data-ck-axis="v">直的</button>
+                      <button class="pick-btn" data-ck-axis="tilt">斜的</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ck-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (對稱軸與中垂線)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 如圖是以直線 \(L\) 為對稱軸的線對稱圖形。直線 \(L\) <strong>不是</strong>下列哪一條線段的中垂線？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q15--><svg viewBox="0 0 300 272" role="img" aria-label="以鉛垂的直線 L 為對稱軸的八邊形。P 在上方、T 在下方，都在 L 上；左邊由上而下是 Q、R、S，右邊由上而下是 W、V、U"><polygon points="150,16 72,52 30,140 80,222 150,252 220,222 270,140 228,52" fill="rgba(249,168,212,0.13)" stroke="#f9a8d4" stroke-width="2.5" stroke-linejoin="round"/><line x1="150" y1="2" x2="150" y2="266" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 5"/><circle cx="150" cy="16" r="4" fill="#f8fafc"/><text x="164" y="3" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">P</text><circle cx="72" cy="52" r="4" fill="#f8fafc"/><text x="59.1" y="44.1" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">Q</text><circle cx="30" cy="140" r="4" fill="#f8fafc"/><text x="11" y="146.6" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">R</text><circle cx="80" cy="222" r="4" fill="#f8fafc"/><text x="68" y="242.7" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">S</text><circle cx="150" cy="252" r="4" fill="#f8fafc"/><text x="164" y="277" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">T</text><circle cx="220" cy="222" r="4" fill="#f8fafc"/><text x="232" y="242.7" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">U</text><circle cx="270" cy="140" r="4" fill="#f8fafc"/><text x="289" y="146.6" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">V</text><circle cx="228" cy="52" r="4" fill="#f8fafc"/><text x="240.9" y="44.1" fill="#f8fafc" font-size="17" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">W</text><text x="166" y="266" fill="#94a3b8" font-size="15" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700">L</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-15" value="A"><span class="option-text">A. \(\overline{QW}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-15" value="B"><span class="option-text">B. \(\overline{RV}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-15" value="C"><span class="option-text">C. \(\overline{SU}\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-15" value="D"><span class="option-text">D. \(\overline{RU}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。對稱軸是任意一組對稱點連接線段的中垂線。\(Q\) 與 \(W\)、\(R\) 與 \(V\)、\(S\) 與 \(U\) 都是對稱點，所以 \(L\) 是 \(\overline{QW}\)、\(\overline{RV}\)、\(\overline{SU}\) 的中垂線。\(R\) 的對稱點是 \(V\) 而不是 \(U\)，\(L\) 不會垂直平分 \(\overline{RU}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> \(A\) 與 \(A'\) 是某個線對稱圖形上的一組對稱點，\(\overline{AA'}\) 與對稱軸 \(L\) 交於 \(M\) 點。若 \(\overline{AA'} = 18\) 公分，下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-16" value="A"><span class="option-text">A. \(\overline{AM} = 18\) 公分，\(\overline{AA'} \perp L\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-16" value="B"><span class="option-text">B. \(\overline{AM} = 9\) 公分，\(\overline{AA'}\) 與 \(L\) 夾 \(45^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-16" value="C"><span class="option-text">C. \(\overline{AM} = 9\) 公分，\(\overline{AA'} \perp L\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-16" value="D"><span class="option-text">D. \(\overline{AM} = 6\) 公分，\(\overline{AA'} \perp L\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。對稱軸 \(L\) 是 \(\overline{AA'}\) 的中垂線：\(M\) 是 \(\overline{AA'}\) 的中點，\(\overline{AM} = 18 \div 2 = 9\) 公分；而且 \(\overline{AA'} \perp L\)。<br>
+              A 錯：\(18\) 公分是整條 \(\overline{AA'}\)，不是一半。<br>
+              B 錯：對稱點的連線與對稱軸垂直，夾角是 \(90^\circ\)。<br>
+              D 錯：中點把線段分成兩等分，不是三等分。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 判斷線對稱圖形、找所有對稱軸
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 重點 9：判斷線對稱圖形——找出所有對稱軸
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>判斷方法</strong>：試著找一條直線，沿著它對摺，兩側完全重疊。<strong>找得到至少一條</strong>就是線對稱圖形，一條都找不到就不是。</li>
+              <li><strong>對稱軸不一定只有一條</strong>，題目說「畫出所有對稱軸」時要一條不漏。</li>
+              <li><strong>等腰三角形</strong>（\(\overline{AB} = \overline{AC}\)）：把 \(C\) 摺到 \(B\)，摺痕是底邊 \(\overline{BC}\) 的中垂線，而且<strong>通過頂點 \(A\)</strong>，兩邊完全重疊。所以等腰三角形是線對稱圖形，底邊的中垂線是它的對稱軸。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>圖形</th><th>對稱軸</th><th>在哪裡</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>等腰三角形</td><td>1 條</td><td>底邊的中垂線</td></tr>
+                <tr><td>正三角形</td><td>3 條</td><td>三邊的中垂線</td></tr>
+                <tr><td>正方形</td><td>4 條</td><td>兩條對角線、兩組對邊中點的連線</td></tr>
+                <tr><td>長方形</td><td>2 條</td><td>兩組對邊中點的連線</td></tr>
+                <tr><td>菱形</td><td>2 條</td><td>兩條對角線</td></tr>
+                <tr><td>箏形</td><td>1 條</td><td>一條對角線</td></tr>
+                <tr><td>等腰梯形</td><td>1 條</td><td>上、下底的中垂線</td></tr>
+                <tr><td>平行四邊形</td><td>0 條</td><td>不是線對稱圖形</td></tr>
+                <tr><td>圓</td><td>無限多條</td><td>通過圓心的直線</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>箏形</strong>是兩雙鄰邊分別等長的四邊形，它的對稱軸是連接「兩雙等長鄰邊各自交會的頂點」的那條對角線。</li>
+              <li><strong>正多邊形都是線對稱圖形</strong>，而且正 \(n\) 邊形有 \(n\) 條對稱軸。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_axes.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：轉動摺線找對稱軸</h3>
+            <p class="interactive-instruction">選一個圖形，拉動滑桿轉動通過中心的摺線。粉紅虛線是沿著摺線翻過去的樣子，和原圖完全重疊時就找到一條對稱軸。把每一條都找出來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-axis" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ax-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-row">
+                  <label>摺線的角度 <span class="val-num" id="ax-angle-val">30°</span></label>
+                  <input type="range" id="ax-angle" min="0" max="177" step="3" value="30">
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="ax-shape-group">
+                      <button class="pick-btn active" data-ax-shape="iso">等腰三角形</button>
+                      <button class="pick-btn" data-ax-shape="equi">正三角形</button>
+                      <button class="pick-btn" data-ax-shape="square">正方形</button>
+                      <button class="pick-btn" data-ax-shape="rect">長方形</button>
+                      <button class="pick-btn" data-ax-shape="rhombus">菱形</button>
+                      <button class="pick-btn" data-ax-shape="kite">箏形</button>
+                      <button class="pick-btn" data-ax-shape="para">平行四邊形</button>
+                      <button class="pick-btn" data-ax-shape="trap">等腰梯形</button>
+                      <button class="pick-btn" data-ax-shape="pent">正五邊形</button>
+                      <button class="pick-btn" data-ax-shape="hex">正六邊形</button>
+                      <button class="pick-btn" data-ax-shape="circle">圓</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ax-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (判斷線對稱圖形)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 下列哪一個大寫英文字母<strong>不是</strong>線對稱圖形？（以筆畫粗細一致、沒有裝飾的印刷字體為準）</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-17" value="A"><span class="option-text">A. <b style="font-family: Arial, sans-serif; font-size: 1.3em;">M</b></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-17" value="B"><span class="option-text">B. <b style="font-family: Arial, sans-serif; font-size: 1.3em;">N</b></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-17" value="C"><span class="option-text">C. <b style="font-family: Arial, sans-serif; font-size: 1.3em;">T</b></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-17" value="D"><span class="option-text">D. <b style="font-family: Arial, sans-serif; font-size: 1.3em;">E</b></span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。M 與 T 可以沿著正中間的鉛垂線對摺重疊，E 可以沿著正中間的水平線對摺重疊。N 不論沿著哪一條直線對摺，兩邊都無法完全重疊，所以不是線對稱圖形（它轉半圈會和自己一樣，但那不是對摺）。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 把 \(\triangle ABC\) 的 \(B\) 點摺到 \(C\) 點上，使 \(B\)、\(C\) 重合。下列哪一個三角形的摺痕<strong>會通過 \(A\) 點</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-18" value="A"><span class="option-text">A. \(\overline{AB} = 5\)、\(\overline{BC} = 5\)、\(\overline{AC} = 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-18" value="B"><span class="option-text">B. \(\overline{AB} = 4\)、\(\overline{BC} = 4\)、\(\overline{AC} = 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-18" value="C"><span class="option-text">C. \(\overline{AB} = 6\)、\(\overline{AC} = 6\)、\(\overline{BC} = 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-18" value="D"><span class="option-text">D. \(\overline{AB} = 3\)、\(\overline{BC} = 4\)、\(\overline{AC} = 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。把 \(B\) 摺到 \(C\)，摺痕是 \(\overline{BC}\) 的中垂線。\(\overline{AB} = \overline{AC}\) 時，\(\triangle ABC\) 是以 \(\overline{BC}\) 為底邊的等腰三角形，底邊的中垂線就是它的對稱軸，會通過頂點 \(A\)。<br>
+              A、B 錯：等長的是 \(\overline{AB}\) 與 \(\overline{BC}\)，兩邊交會在 \(B\)；\(\overline{BC}\) 的中垂線不會通過 \(A\)。<br>
+              D 錯：三邊都不等長，\(\overline{BC}\) 的中垂線不會通過 \(A\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 在方格中完成線對稱圖形
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells" aria-hidden="true"></i> 重點 10：在方格中完成線對稱圖形——先找對稱點，再依序連線
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>步驟</strong>：① 找出圖形上每一個頂點的對稱點；② 照原本的連接順序，把對稱點連起來。</li>
+              <li><strong>找對稱點</strong>靠的是重點 8：對稱軸是對稱點連線的中垂線。從頂點出發，<strong>沿著與 \(L\) 垂直的方向</strong>走到 \(L\)，再往前走<strong>同樣的距離</strong>。</li>
+              <li><strong>\(L\) 是直的（或橫的）</strong>：與 \(L\) 垂直的方向是方格的橫線（或直線），數格子就好。離 \(L\) \(3\) 格，另一邊也是 \(3\) 格。</li>
+              <li><strong>\(L\) 是斜的</strong>（沿著方格的對角線）：與 \(L\) 垂直的方向也是方格的對角線，要<strong>斜著數</strong>。也可以想成「正方形對角的頂點互為對稱點」：以 \(L\) 為一條對角線畫出正方形，另一組對角的頂點就互為對稱點。</li>
+              <li><strong>在 \(L\) 上的頂點</strong>，對稱點是它自己，不必另外找。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_grid.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：方格鏡射台</h3>
+            <p class="interactive-instruction">\(L\) 的一邊是半個圖形。按「下一步」，一個頂點一個頂點找出對稱點，最後依序連線。也可以點方格上任何一個格點，看它的對稱點在哪裡：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-grid" width="540" height="550"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="gr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">對稱軸</span>
+                    <div class="btn-group" id="gr-axis-group">
+                      <button class="pick-btn active" data-gr-axis="v">直的 L</button>
+                      <button class="pick-btn" data-gr-axis="d">斜的 L</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">半個圖形</span>
+                    <div class="btn-group" id="gr-fig-group">
+                      <button class="pick-btn active" data-gr-fig="0">圖案一</button>
+                      <button class="pick-btn" data-gr-fig="1">圖案二</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="axiom-controls" style="margin-bottom: 1rem;">
+                  <button class="step-ctrl-btn secondary" id="gr-prev">上一步</button>
+                  <span class="step-counter" id="gr-step">0 / 4</span>
+                  <button class="step-ctrl-btn primary" id="gr-next">下一步</button>
+                </div>
+
+                <div class="visual-feedback" id="gr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (完成線對稱圖形)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 坐標平面上，以通過 \((2, 0)\) 的鉛垂線 \(x = 2\) 為對稱軸，點 \(P(5, 3)\) 的對稱點坐標是？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-19" value="A"><span class="option-text">A. \((-1, 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-19" value="B"><span class="option-text">B. \((-5, 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-19" value="C"><span class="option-text">C. \((5, -3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-19" value="D"><span class="option-text">D. \((1, 3)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。對稱軸是鉛垂線，與它垂直的方向是水平方向，所以 \(P\) 與對稱點一樣高，\(y\) 坐標都是 \(3\)。\(P\) 在對稱軸右邊 \(5 - 2 = 3\) 格，對稱點在左邊 \(3\) 格：\(x = 2 - 3 = -1\)。<br>
+              B 錯：那是以 \(y\) 軸為對稱軸的結果。<br>
+              C 錯：那是以 \(x\) 軸為對稱軸的結果。<br>
+              D 錯：\((1, 3)\) 在對稱軸左邊只有 \(1\) 格，兩邊距離不相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 坐標平面上，直線 \(L\) 通過 \((0, 0)\)、\((1, 1)\)、\((2, 2)\)……，\(L\) 上每一點的 \(x\)、\(y\) 坐標都相同。以 \(L\) 為對稱軸，點 \(Q(5, 2)\) 的對稱點坐標是？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-20" value="A"><span class="option-text">A. \((-5, 2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-20" value="B"><span class="option-text">B. \((5, -2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-20" value="C"><span class="option-text">C. \((-2, -5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-20" value="D"><span class="option-text">D. \((2, 5)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(L\) 沿著方格的對角線，與它垂直的方向也是對角線方向：每斜走一格，\(x\) 減 \(1\)、\(y\) 加 \(1\)。從 \(Q(5, 2)\) 斜走 \(1.5\) 格到 \(L\) 上的 \((3.5, 3.5)\)，再走 \(1.5\) 格到 \((2, 5)\)。結果剛好是 \(x\)、\(y\) 坐標互換。<br>
+              A 錯：那是以 \(y\) 軸為對稱軸的結果。<br>
+              B 錯：那是以 \(x\) 軸為對稱軸的結果。<br>
+              C 錯：坐標互換後又都變號，那是以通過 \((1, -1)\) 的另一條斜線為對稱軸。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 摺紙剪出線對稱圖形
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scissors" aria-hidden="true"></i> 重點 11：摺紙剪出線對稱圖形——倒過來一層一層攤開
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>對摺一次再剪</strong>：兩層紙被同一刀剪到，攤開後左右兩半能沿著摺痕完全疊合，所以剪出來的是線對稱圖形，<strong>摺痕就是對稱軸</strong>。只要沿著摺痕畫一半、剪好攤開就行。</li>
+              <li><strong>對摺兩次</strong>（例如先上下、再左右）：紙疊成 \(4\) 層，剪一刀同時剪到 \(4\) 層；攤開後，兩條摺痕都是對稱軸。</li>
+              <li><strong>推出展開圖</strong>：和摺的順序<strong>倒過來</strong>，一次攤開一層。每攤開一次，就以那一條摺痕為對稱軸，把剪掉的部分<strong>鏡射</strong>一份到另一邊。</li>
+              <li><strong>分清楚摺痕與紙邊</strong>：摺好的小正方形，有的邊是摺痕、有的邊是原本的紙邊。剪同樣形狀的角，剪在摺痕交會的角，攤開後會在紙的中間合成一個洞；剪在原本紙張的角，攤開後是紙的角被剪掉。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_cutout.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：剪紙展開機</h3>
+            <p class="interactive-instruction">在「摺好的樣子」點紙片的角落就剪掉那個角，點中間就打一個洞。再按「攤開一次」「全部攤開」，看剪掉的部分怎麼隨著摺痕鏡射：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cut" width="540" height="530"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ct-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">摺法</span>
+                    <div class="btn-group" id="ct-fold-group">
+                      <button class="pick-btn active" data-ct-fold="half">上下、左右各摺一次</button>
+                      <button class="pick-btn" data-ct-fold="diag">沿兩條對角線各摺一次</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">攤開</span>
+                    <div class="btn-group" id="ct-step-group">
+                      <button class="pick-btn active" data-ct-step="0">摺好的樣子</button>
+                      <button class="pick-btn" data-ct-step="1">攤開一次</button>
+                      <button class="pick-btn" data-ct-step="2">全部攤開</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <div class="btn-group">
+                      <button class="pick-btn" id="ct-clear">清除剪痕</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ct-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (摺紙剪出線對稱圖形)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 一張正方形色紙，先把上半部往下摺，再把右半部往左摺，然後在圖 ③ 的位置打一個洞。攤開後是下列哪一個圖形？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q21--><svg viewBox="0 0 330 132" role="img" aria-label="三個步驟：① 正方形紙，把上半部往下摺；② 變成下半部的長方形，再把右半部往左摺；③ 變成左下角的小正方形，在它的左上角附近打一個洞，這個洞靠近左邊的紙邊、也靠近上方的摺痕"><rect x="12" y="20" width="84" height="84" fill="#fdba74" stroke="#7c2d12" stroke-width="2"/><line x1="12" y1="62" x2="96" y2="62" stroke="#7c2d12" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M44 32 Q30 50 44 80" fill="none" stroke="#9f1239" stroke-width="2"/><polygon points="44,86 38,76 49,77" fill="#9f1239"/><text x="108" y="66" fill="#94a3b8" font-size="16" text-anchor="middle" >➜</text><rect x="122" y="62" width="84" height="42" fill="#fdba74" stroke="#7c2d12" stroke-width="2"/><rect x="122" y="20" width="84" height="42" fill="none" stroke="#94a3b8" stroke-width="1.4" stroke-dasharray="4 4"/><line x1="164" y1="62" x2="164" y2="104" stroke="#7c2d12" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M196 76 Q166 66 140 78" fill="none" stroke="#9f1239" stroke-width="2"/><polygon points="134,82 142,73 145,83" fill="#9f1239"/><text x="218" y="66" fill="#94a3b8" font-size="16" text-anchor="middle" >➜</text><rect x="232" y="20" width="84" height="84" fill="none" stroke="#94a3b8" stroke-width="1.4" stroke-dasharray="4 4"/><rect x="232" y="62" width="42" height="42" fill="#fdba74" stroke="#7c2d12" stroke-width="2"/><line x1="232" y1="62" x2="274" y2="62" stroke="#7c2d12" stroke-width="1.6" stroke-dasharray="5 4"/><line x1="274" y1="62" x2="274" y2="104" stroke="#7c2d12" stroke-width="1.6" stroke-dasharray="5 4"/><circle cx="242.08" cy="72.08" r="3.6" fill="#0f172a"/><text x="60" y="124" fill="#94a3b8" font-size="13" text-anchor="middle" >①</text><text x="170" y="124" fill="#94a3b8" font-size="13" text-anchor="middle" >②</text><text x="254" y="124" fill="#94a3b8" font-size="13" text-anchor="middle" >③ 打洞</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-21" value="A"><span class="option-text">A.<!--SVG:q21a--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="四個洞靠近上下兩邊的紙邊，也靠近中間的直摺痕"><rect x="8" y="8" width="84" height="84" fill="#fdba74" stroke="#7c2d12" stroke-width="2"/><line x1="50" y1="8" x2="50" y2="92" stroke="#7c2d12" stroke-width="1.3" stroke-dasharray="4 4"/><line x1="8" y1="50" x2="92" y2="50" stroke="#7c2d12" stroke-width="1.3" stroke-dasharray="4 4"/><circle cx="39.9" cy="18.1" r="4" fill="#0f172a"/><circle cx="60.1" cy="18.1" r="4" fill="#0f172a"/><circle cx="39.9" cy="81.9" r="4" fill="#0f172a"/><circle cx="60.1" cy="81.9" r="4" fill="#0f172a"/></svg><!--/SVG--></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-21" value="B"><span class="option-text">B.<!--SVG:q21b--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="四個洞在四個角附近"><rect x="8" y="8" width="84" height="84" fill="#fdba74" stroke="#7c2d12" stroke-width="2"/><line x1="50" y1="8" x2="50" y2="92" stroke="#7c2d12" stroke-width="1.3" stroke-dasharray="4 4"/><line x1="8" y1="50" x2="92" y2="50" stroke="#7c2d12" stroke-width="1.3" stroke-dasharray="4 4"/><circle cx="18.1" cy="18.1" r="4" fill="#0f172a"/><circle cx="81.9" cy="18.1" r="4" fill="#0f172a"/><circle cx="18.1" cy="81.9" r="4" fill="#0f172a"/><circle cx="81.9" cy="81.9" r="4" fill="#0f172a"/></svg><!--/SVG--></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-21" value="C"><span class="option-text">C.<!--SVG:q21c--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="四個洞靠近左右兩邊的紙邊，也靠近中間的橫摺痕"><rect x="8" y="8" width="84" height="84" fill="#fdba74" stroke="#7c2d12" stroke-width="2"/><line x1="50" y1="8" x2="50" y2="92" stroke="#7c2d12" stroke-width="1.3" stroke-dasharray="4 4"/><line x1="8" y1="50" x2="92" y2="50" stroke="#7c2d12" stroke-width="1.3" stroke-dasharray="4 4"/><circle cx="18.1" cy="39.9" r="4" fill="#0f172a"/><circle cx="81.9" cy="39.9" r="4" fill="#0f172a"/><circle cx="18.1" cy="60.1" r="4" fill="#0f172a"/><circle cx="81.9" cy="60.1" r="4" fill="#0f172a"/></svg><!--/SVG--></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-21" value="D"><span class="option-text">D.<!--SVG:q21d--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="四個洞聚在正中央附近"><rect x="8" y="8" width="84" height="84" fill="#fdba74" stroke="#7c2d12" stroke-width="2"/><line x1="50" y1="8" x2="50" y2="92" stroke="#7c2d12" stroke-width="1.3" stroke-dasharray="4 4"/><line x1="8" y1="50" x2="92" y2="50" stroke="#7c2d12" stroke-width="1.3" stroke-dasharray="4 4"/><circle cx="39.9" cy="39.9" r="4" fill="#0f172a"/><circle cx="60.1" cy="39.9" r="4" fill="#0f172a"/><circle cx="39.9" cy="60.1" r="4" fill="#0f172a"/><circle cx="60.1" cy="60.1" r="4" fill="#0f172a"/></svg><!--/SVG--></span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。摺好的小正方形，上邊是第一次的摺痕（橫的）、右邊是第二次的摺痕（直的），左邊和下邊是原本的紙邊。洞靠近左邊的紙邊，也靠近上方的橫摺痕。倒過來攤開：先攤開右半部，洞以直摺痕為對稱軸鏡射到右邊的紙邊附近；再攤開上半部，兩個洞以橫摺痕為對稱軸鏡射到上方。四個洞都靠近左右兩邊的紙邊，也都靠近中間的橫摺痕。<br>
+              A 錯：把橫、直兩條摺痕的角色弄反了。<br>
+              B 錯：洞離橫摺痕很近，攤開後不會跑到四個角。<br>
+              D 錯：洞離直摺痕很遠，攤開後不會聚到中央。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 邊長 \(16\) 公分的正方形色紙，上下對摺、再左右對摺，成為邊長 \(8\) 公分的小正方形。在小正方形「兩條摺痕交會的那個角」，連接這個角兩旁兩邊的中點剪一刀，剪掉一個三角形。攤開後，剩下的紙面積是多少平方公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-22" value="A"><span class="option-text">A. \(248\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-22" value="B"><span class="option-text">B. \(224\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-22" value="C"><span class="option-text">C. \(240\)</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-22" value="D"><span class="option-text">D. \(192\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。剪掉的三角形兩股都是 \(8 \div 2 = 4\) 公分，面積是 \(4 \times 4 \div 2 = 8\) 平方公分。紙疊了 \(4\) 層，一刀剪掉 \(4\) 個這樣的三角形，攤開後在中央合成一個正方形的洞：
+              \[\begin{aligned} & 16 \times 16 - 8 \times 4 \\ &= 256 - 32 \\ &= 224 \end{aligned}\]
+              A 錯：只扣了一個三角形，忘了紙有 \(4\) 層。<br>
+              C 錯：只扣了 \(2\) 個三角形。<br>
+              D 錯：扣了 \(64\)，等於把一整個小正方形都剪掉了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 三視圖
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-cubes" aria-hidden="true"></i> 重點 12：三視圖——前視圖、右視圖、上視圖
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>視圖</strong>：從某一個方向觀察立體圖形，看到的<strong>平面圖形輪廓</strong>。同一個立體從不同方向看，視圖往往不同。</li>
+              <li><strong>先約定前面</strong>：選一個方向當作立體的「前面」，就有相對的後面、左面、右面與上面。從前面看到的叫前視圖，其他依此類推。</li>
+              <li><strong>三視圖</strong>：前視圖、右視圖和上視圖，統稱為三視圖。</li>
+              <li><strong>上視圖的約定</strong>：站在立體的<strong>正前方</strong>往下俯視，所以上視圖的下方就是前面。從其他方向俯視，看到的圖會轉向。</li>
+              <li><strong>積木堆成的立體怎麼畫</strong>（本節的立體都放得進 \(3 \times 3 \times 3\) 的正方體，而且不中空）：
+                <ul>
+                  <li>前視圖：左右方向的每一欄，看<strong>最高疊到幾層</strong>。</li>
+                  <li>右視圖：前後方向的每一排，看最高疊到幾層，<strong>靠前面的畫在左邊</strong>。</li>
+                  <li>上視圖：看哪些位置<strong>有積木</strong>，不管疊了幾層。</li>
+                </ul>
+              </li>
+              <li><strong>前視圖與後視圖左右翻轉</strong>，並排是線對稱圖形；右視圖與左視圖也是。所以知道前視圖、右視圖，就能畫出後視圖、左視圖。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_blocks.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：積木三視圖工作台</h3>
+            <p class="interactive-instruction">左上角的格子擺得像上視圖（下方是前面），格子裡的數字是那一疊的高度，點一下加一層（\(3\) 層之後歸零）。改改看，前、右、上視圖怎麼跟著變？再切到「前、後視圖」「右、左視圖」並排比較：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-view" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="vw-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">顯示</span>
+                    <div class="btn-group" id="vw-show-group">
+                      <button class="pick-btn active" data-vw-show="three">三視圖</button>
+                      <button class="pick-btn" data-vw-show="fb">前、後視圖</button>
+                      <button class="pick-btn" data-vw-show="rl">右、左視圖</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">積木</span>
+                    <div class="btn-group" id="vw-preset-group">
+                      <button class="pick-btn active" data-vw-preset="a">範例一</button>
+                      <button class="pick-btn" data-vw-preset="b">範例二</button>
+                      <button class="pick-btn" data-vw-preset="empty">清空</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="vw-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (三視圖)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-23">
+            <p class="quiz-question"><strong>Q23.</strong> 如圖的立體由相同大小的正方體積木堆成。下列哪一個是它的<strong>右視圖</strong>？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q23--><svg viewBox="0 0 221 214" role="img" aria-label="正方體積木堆成的立體，前面在左下方。每一疊的高度（前排由左到右 1、1、0；中排 2、1、1；後排 3、0、1）"><line x1="34" y1="146" x2="117.1" y2="98" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="34" y1="146" x2="117.1" y2="194" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="61.7" y1="162" x2="144.8" y2="114" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="61.7" y1="130" x2="144.8" y2="178" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="89.4" y1="178" x2="172.6" y2="130" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="89.4" y1="114" x2="172.6" y2="162" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="117.1" y1="194" x2="200.3" y2="146" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="117.1" y1="98" x2="200.3" y2="146" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><polygon points="89.4,82 117.1,98 144.8,82 117.1,66" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,114 117.1,130 117.1,98 89.4,82" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,130 144.8,114 144.8,82 117.1,98" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,98 89.4,114 117.1,98 89.4,82" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,130 89.4,146 89.4,114 61.7,98" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,146 117.1,130 117.1,98 89.4,114" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,50 117.1,66 144.8,50 117.1,34" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,82 117.1,98 117.1,66 89.4,50" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,98 144.8,82 144.8,50 117.1,66" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,114 61.7,130 89.4,114 61.7,98" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,146 61.7,162 61.7,130 34,114" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,162 89.4,146 89.4,114 61.7,130" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,66 89.4,82 117.1,66 89.4,50" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,98 89.4,114 89.4,82 61.7,66" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,114 117.1,98 117.1,66 89.4,82" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,114 117.1,130 144.8,114 117.1,98" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,146 117.1,162 117.1,130 89.4,114" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,162 144.8,146 144.8,114 117.1,130" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,18 117.1,34 144.8,18 117.1,2" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,50 117.1,66 117.1,34 89.4,18" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,66 144.8,50 144.8,18 117.1,34" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,114 172.6,130 200.3,114 172.6,98" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,146 172.6,162 172.6,130 144.8,114" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="172.6,162 200.3,146 200.3,114 172.6,130" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,130 89.4,146 117.1,130 89.4,114" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,162 89.4,178 89.4,146 61.7,130" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,178 117.1,162 117.1,130 89.4,146" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,130 144.8,146 172.6,130 144.8,114" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,162 144.8,178 144.8,146 117.1,130" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,178 172.6,162 172.6,130 144.8,146" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><line x1="20.1" y1="202" x2="67.3" y2="174.8" stroke="#4ade80" stroke-width="2.4"/><polygon points="67.3,174.8 58.3,175.8 63.3,182.8" fill="#4ade80"/><text x="4.1" y="216" fill="#4ade80" font-size="13" text-anchor="middle" font-weight="800">前面</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-23" value="A"><span class="option-text">A.<!--SVG:q23a--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="3×3 格子，由左到右三欄塗色的高度是 3、2、1 格"><rect x="8" y="8" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="64" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="8" y="36" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="36" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="36" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="8" y="64" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="64" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="64" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/></svg><!--/SVG--></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-23" value="B"><span class="option-text">B.<!--SVG:q23b--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="3×3 格子，塗色的是有積木的位置（上視圖的樣子）"><rect x="8" y="8" width="28" height="28" fill="#facc15" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="64" y="8" width="28" height="28" fill="#facc15" stroke="#1e293b" stroke-width="1.2"/><rect x="8" y="36" width="28" height="28" fill="#facc15" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="36" width="28" height="28" fill="#facc15" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="36" width="28" height="28" fill="#facc15" stroke="#1e293b" stroke-width="1.2"/><rect x="8" y="64" width="28" height="28" fill="#facc15" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="64" width="28" height="28" fill="#facc15" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="64" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/></svg><!--/SVG--></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-23" value="C"><span class="option-text">C.<!--SVG:q23c--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="3×3 格子，由左到右三欄塗色的高度是 1、2、3 格"><rect x="8" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="36" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="64" y="8" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="8" y="36" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="36" y="36" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="36" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="8" y="64" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="64" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="64" width="28" height="28" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2"/></svg><!--/SVG--></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-23" value="D"><span class="option-text">D.<!--SVG:q23d--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="3×3 格子，由左到右三欄塗色的高度是 3、1、1 格"><rect x="8" y="8" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="64" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="8" y="36" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="36" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="64" y="36" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="8" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/></svg><!--/SVG--></span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。右視圖是站在右面往左看，前後方向的每一排看最高疊到幾層，<strong>靠前面的畫在左邊</strong>：前排最高 \(1\) 層、中排 \(2\) 層、後排 \(3\) 層，由左到右是 \(1\)、\(2\)、\(3\)。<br>
+              A 錯：左右翻轉了，那是左視圖。<br>
+              B 錯：那是上視圖，只看哪些位置有積木。<br>
+              D 錯：那是前視圖，左右方向每一欄最高是 \(3\)、\(1\)、\(1\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-24">
+            <p class="quiz-question"><strong>Q24.</strong> 如圖的立體由相同大小的正方體積木堆成。只拿走其中一個標示的積木，哪一個會讓<strong>前視圖</strong>的形狀改變？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q24--><svg viewBox="0 0 251 214" role="img" aria-label="正方體積木堆成的立體，前面在左下方。甲是前排最左那一疊（2 層）最上面的積木；乙是前排中間的積木（1 層）；丙是後排最右那一疊（3 層）最上面的積木；丁是前排最右的積木（1 層）"><line x1="34" y1="146" x2="117.1" y2="98" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="34" y1="146" x2="117.1" y2="194" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="61.7" y1="162" x2="144.8" y2="114" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="61.7" y1="130" x2="144.8" y2="178" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="89.4" y1="178" x2="172.6" y2="130" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="89.4" y1="114" x2="172.6" y2="162" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="117.1" y1="194" x2="200.3" y2="146" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="117.1" y1="98" x2="200.3" y2="146" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><polygon points="89.4,82 117.1,98 144.8,82 117.1,66" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,114 117.1,130 117.1,98 89.4,82" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,130 144.8,114 144.8,82 117.1,98" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,98 89.4,114 117.1,98 89.4,82" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,130 89.4,146 89.4,114 61.7,98" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,146 117.1,130 117.1,98 89.4,114" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,98 144.8,114 172.6,98 144.8,82" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,130 144.8,146 144.8,114 117.1,98" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,146 172.6,130 172.6,98 144.8,114" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,114 61.7,130 89.4,114 61.7,98" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,146 61.7,162 61.7,130 34,114" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,162 89.4,146 89.4,114 61.7,130" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,66 89.4,82 117.1,66 89.4,50" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,98 89.4,114 89.4,82 61.7,66" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,114 117.1,98 117.1,66 89.4,82" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,114 172.6,130 200.3,114 172.6,98" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,146 172.6,162 172.6,130 144.8,114" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="172.6,162 200.3,146 200.3,114 172.6,130" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,82 61.7,98 89.4,82 61.7,66" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,114 61.7,130 61.7,98 34,82" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,130 89.4,114 89.4,82 61.7,98" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,130 89.4,146 117.1,130 89.4,114" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,162 89.4,178 89.4,146 61.7,130" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,178 117.1,162 117.1,130 89.4,146" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,130 144.8,146 172.6,130 144.8,114" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,162 144.8,178 144.8,146 117.1,130" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,178 172.6,162 172.6,130 144.8,146" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,82 172.6,98 200.3,82 172.6,66" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,114 172.6,130 172.6,98 144.8,82" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="172.6,130 200.3,114 200.3,82 172.6,98" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,146 117.1,162 144.8,146 117.1,130" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,178 117.1,194 117.1,162 89.4,146" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,194 144.8,178 144.8,146 117.1,162" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,50 172.6,66 200.3,50 172.6,34" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="144.8,82 172.6,98 172.6,66 144.8,50" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="172.6,98 200.3,82 200.3,50 172.6,66" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><line x1="61.7" y1="82" x2="31.7" y2="100" stroke="#f8fafc" stroke-width="1.4"/><circle cx="61.7" cy="82" r="2.6" fill="#f8fafc"/><rect x="18.7" y="88" width="26" height="22" rx="5" fill="#0f172a" stroke="#f8fafc" stroke-width="1"/><text x="31.7" y="105" fill="#f8fafc" font-size="14" text-anchor="middle" font-weight="800">甲</text><line x1="89.4" y1="130" x2="81.4" y2="170" stroke="#f8fafc" stroke-width="1.4"/><circle cx="89.4" cy="130" r="2.6" fill="#f8fafc"/><rect x="68.4" y="158" width="26" height="22" rx="5" fill="#0f172a" stroke="#f8fafc" stroke-width="1"/><text x="81.4" y="175" fill="#f8fafc" font-size="14" text-anchor="middle" font-weight="800">乙</text><line x1="172.6" y1="50" x2="202.6" y2="32" stroke="#f8fafc" stroke-width="1.4"/><circle cx="172.6" cy="50" r="2.6" fill="#f8fafc"/><rect x="189.6" y="20" width="26" height="22" rx="5" fill="#0f172a" stroke="#f8fafc" stroke-width="1"/><text x="202.6" y="37" fill="#f8fafc" font-size="14" text-anchor="middle" font-weight="800">丙</text><line x1="117.1" y1="146" x2="151.1" y2="166" stroke="#f8fafc" stroke-width="1.4"/><circle cx="117.1" cy="146" r="2.6" fill="#f8fafc"/><rect x="138.1" y="154" width="26" height="22" rx="5" fill="#0f172a" stroke="#f8fafc" stroke-width="1"/><text x="151.1" y="171" fill="#f8fafc" font-size="14" text-anchor="middle" font-weight="800">丁</text><line x1="20.1" y1="202" x2="67.3" y2="174.8" stroke="#4ade80" stroke-width="2.4"/><polygon points="67.3,174.8 58.3,175.8 63.3,182.8" fill="#4ade80"/><text x="4.1" y="216" fill="#4ade80" font-size="13" text-anchor="middle" font-weight="800">前面</text></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-24" value="A"><span class="option-text">A. 丙</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-24" value="B"><span class="option-text">B. 甲</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-24" value="C"><span class="option-text">C. 乙</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-24" value="D"><span class="option-text">D. 丁</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。前視圖看的是左右方向每一欄最高疊到幾層。最右邊那一欄只有丙所在的那一疊有 \(3\) 層，拿走丙，這一欄最高只剩 \(2\) 層，前視圖就變了。<br>
+              B 錯：最左欄的中排還有一疊也是 \(2\) 層，拿走甲，這一欄最高仍是 \(2\) 層。<br>
+              C 錯：中間那一欄的後排還有 \(1\) 層，拿走乙，這一欄最高仍是 \(1\) 層。<br>
+              D 錯：丁也在最右欄，但這一欄最高的是丙那一疊的 \(3\) 層，拿走丁不影響。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 13: 根據視圖判斷觀察方向
+           ========================================== -->
+      <section class="concept-section" id="concept13">
+        <h2 class="section-title">
+          <i class="fa-solid fa-eye" aria-hidden="true"></i> 重點 13：根據視圖判斷觀察方向
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>反過來問</strong>：給一張視圖，判斷觀察的人是從立體的哪一面看的。</li>
+              <li><strong>先想上視圖</strong>：上視圖沒有高低，看的是哪些位置有積木；如果圖上塗色的格子正好是「有積木的位置」，就可能是從上面看。</li>
+              <li><strong>再比高低的位置</strong>：前、後、左、右視圖都是一欄一欄的高度。先比「最高的那一疊在左邊還是右邊」，就能分出是前還是後、右還是左——因為<strong>前視圖與後視圖左右翻轉，右視圖與左視圖也左右翻轉</strong>。</li>
+              <li><strong>前視圖與右視圖</strong>：前視圖每一欄對應立體左右方向的一欄，右視圖每一欄對應前後方向的一排，把立體的每一疊一欄一欄對照，就分得出來。</li>
+              <li><strong>小心</strong>：有些立體從兩個方向看到的視圖一模一樣，這時兩個方向都算對。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：craft_viewpoint.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：誰在哪一面看？</h3>
+            <p class="interactive-instruction">右上角是一張視圖。判斷它是從立體的哪一面看到的，按下方的方向作答；作答後會列出五個方向的視圖讓你對照。按「換一張視圖」再練習：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-who" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="wh-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">從哪一面看？</span>
+                    <div class="btn-group" id="wh-ans-group">
+                      <button class="pick-btn" data-wh-ans="front">前面</button>
+                      <button class="pick-btn" data-wh-ans="back">後面</button>
+                      <button class="pick-btn" data-wh-ans="left">左面</button>
+                      <button class="pick-btn" data-wh-ans="right">右面</button>
+                      <button class="pick-btn" data-wh-ans="top">上面</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">立體</span>
+                    <div class="btn-group" id="wh-shape-group">
+                      <button class="pick-btn active" data-wh-shape="c">積木一</button>
+                      <button class="pick-btn" data-wh-shape="d">積木二</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <div class="btn-group">
+                      <button class="pick-btn" id="wh-next">換一張視圖</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="wh-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (判斷觀察方向)</h3>
+
+          <div class="quiz-card" data-quiz="6-1-25">
+            <p class="quiz-question"><strong>Q25.</strong> 如圖的立體由相同大小的正方體積木堆成。小芸和阿翔分別從不同方向觀察，畫出右邊兩張視圖。他們各是從哪一面觀察的？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q25--><svg viewBox="0 0 311 240" role="img" aria-label="正方體積木堆成的立體，前面在左下方（每一疊的高度：前排由左到右 2、0、1；中排 1、1、0；後排 3、0、0）。右邊兩張視圖：小芸的三欄高度由左到右是 2、1、3 格，阿翔的是 3、1、2 格"><line x1="34" y1="146" x2="117.1" y2="98" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="34" y1="146" x2="117.1" y2="194" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="61.7" y1="162" x2="144.8" y2="114" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="61.7" y1="130" x2="144.8" y2="178" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="89.4" y1="178" x2="172.6" y2="130" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="89.4" y1="114" x2="172.6" y2="162" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="117.1" y1="194" x2="200.3" y2="146" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><line x1="117.1" y1="98" x2="200.3" y2="146" stroke="rgba(203,213,225,0.22)" stroke-width="1"/><polygon points="89.4,82 117.1,98 144.8,82 117.1,66" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,114 117.1,130 117.1,98 89.4,82" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,130 144.8,114 144.8,82 117.1,98" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,98 89.4,114 117.1,98 89.4,82" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,130 89.4,146 89.4,114 61.7,98" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,146 117.1,130 117.1,98 89.4,114" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,50 117.1,66 144.8,50 117.1,34" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,82 117.1,98 117.1,66 89.4,50" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,98 144.8,82 144.8,50 117.1,66" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,114 61.7,130 89.4,114 61.7,98" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,146 61.7,162 61.7,130 34,114" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,162 89.4,146 89.4,114 61.7,130" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,114 117.1,130 144.8,114 117.1,98" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,146 117.1,162 117.1,130 89.4,114" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,162 144.8,146 144.8,114 117.1,130" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,18 117.1,34 144.8,18 117.1,2" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,50 117.1,66 117.1,34 89.4,18" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,66 144.8,50 144.8,18 117.1,34" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,82 61.7,98 89.4,82 61.7,66" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="34,114 61.7,130 61.7,98 34,82" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="61.7,130 89.4,114 89.4,82 61.7,98" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,146 117.1,162 144.8,146 117.1,130" fill="#facc15" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="89.4,178 117.1,194 117.1,162 89.4,146" fill="#4ade80" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><polygon points="117.1,194 144.8,178 144.8,146 117.1,162" fill="#60a5fa" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/><line x1="20.1" y1="202" x2="67.3" y2="174.8" stroke="#4ade80" stroke-width="2.4"/><polygon points="67.3,174.8 58.3,175.8 63.3,182.8" fill="#4ade80"/><text x="4.1" y="216" fill="#4ade80" font-size="13" text-anchor="middle" font-weight="800">前面</text><text x="264" y="40" fill="#f8fafc" font-size="14" text-anchor="middle" font-weight="800">小芸</text><rect x="231" y="50" width="22" height="22" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="253" y="50" width="22" height="22" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="275" y="50" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="231" y="72" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="253" y="72" width="22" height="22" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="275" y="72" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="231" y="94" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="253" y="94" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="275" y="94" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><text x="264" y="150" fill="#f8fafc" font-size="14" text-anchor="middle" font-weight="800">阿翔</text><rect x="231" y="160" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="253" y="160" width="22" height="22" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="275" y="160" width="22" height="22" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="231" y="182" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="253" y="182" width="22" height="22" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="275" y="182" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="231" y="204" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="253" y="204" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/><rect x="275" y="204" width="22" height="22" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.2"/></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-25" value="A"><span class="option-text">A. 小芸從右面，阿翔從左面</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-25" value="B"><span class="option-text">B. 小芸從左面，阿翔從右面</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-25" value="C"><span class="option-text">C. 小芸從前面，阿翔從後面</span></label>
+              <label class="option-label"><input type="radio" name="q6-1-25" value="D"><span class="option-text">D. 小芸從後面，阿翔從前面</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。前視圖看左右方向每一欄的最高層數，是 \(3\)、\(1\)、\(1\)；後視圖左右翻轉成 \(1\)、\(1\)、\(3\)，兩張都和他們的圖不同。右視圖看前後方向每一排、靠前面的畫在左邊：前排最高 \(2\) 層、中排 \(1\) 層、後排 \(3\) 層，是 \(2\)、\(1\)、\(3\)，正是小芸的圖；左視圖左右翻轉成 \(3\)、\(1\)、\(2\)，是阿翔的圖。<br>
+              B 錯：左右弄反了。<br>
+              C、D 錯：前、後視圖是 \(3, 1, 1\) 與 \(1, 1, 3\)，和兩張圖都不一樣。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="6-1-26">
+            <p class="quiz-question"><strong>Q26.</strong> 某個積木立體的前視圖如下。它的<strong>後視圖</strong>是哪一個？</p>
+            <figure class="numline-fig quiz-fig"><!--SVG:q26--><svg viewBox="0 0 110 110" role="img" aria-label="前視圖：3×3 格子，由左到右三欄塗色的高度是 1、3、2 格"><rect x="10" y="10" width="30" height="30" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="40" y="10" width="30" height="30" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="70" y="10" width="30" height="30" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="10" y="40" width="30" height="30" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="40" y="40" width="30" height="30" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="70" y="40" width="30" height="30" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="10" y="70" width="30" height="30" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="40" y="70" width="30" height="30" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="70" y="70" width="30" height="30" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/></svg><!--/SVG--></figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q6-1-26" value="A"><span class="option-text">A.<!--SVG:q26a--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="3×3 格子，由左到右三欄塗色的高度是 1、3、2 格"><rect x="8" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="36" y="8" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="8" y="36" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="36" y="36" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="36" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="8" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/></svg><!--/SVG--></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-26" value="B"><span class="option-text">B.<!--SVG:q26b--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="3×3 格子，由左到右三欄塗色的高度是 2、3、1 格"><rect x="8" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="36" y="8" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="8" y="36" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="36" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="36" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="8" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/></svg><!--/SVG--></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-26" value="C"><span class="option-text">C.<!--SVG:q26c--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="3×3 格子，三欄的塗色都從最上面往下長，高度由左到右是 1、3、2 格（上下顛倒）"><rect x="8" y="8" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="8" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="8" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="8" y="36" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="36" y="36" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="36" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="8" y="64" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="36" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="64" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/></svg><!--/SVG--></span></label>
+              <label class="option-label"><input type="radio" name="q6-1-26" value="D"><span class="option-text">D.<!--SVG:q26d--><svg class="opt-fig" viewBox="0 0 100 100" role="img" aria-label="3×3 格子，由左到右三欄塗色的高度是 2、1、3 格"><rect x="8" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="36" y="8" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="64" y="8" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="8" y="36" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="36" width="28" height="28" fill="rgba(255,255,255,0.03)" stroke="rgba(203,213,225,0.35)" stroke-width="1.2"/><rect x="64" y="36" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="8" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="36" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/><rect x="64" y="64" width="28" height="28" fill="#4ade80" stroke="#1e293b" stroke-width="1.2"/></svg><!--/SVG--></span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。從後面看，原本在左邊的一疊會跑到右邊，前視圖與後視圖左右翻轉：由左到右的高度 \(1\)、\(3\)、\(2\) 變成 \(2\)、\(3\)、\(1\)，兩張並排是線對稱圖形。<br>
+              A 錯：沒有翻轉，那是前視圖本身。<br>
+              C 錯：上下顛倒了，積木是從地面疊起，不會懸在上面。<br>
+              D 錯：高度的順序打亂了，不是左右翻轉。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 垂直、線對稱與三視圖速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>直線、線段、射線</strong>：\(\overleftrightarrow{AB}\) 沒有端點，\(\overline{AB}\) 有兩個端點，\(\overrightarrow{AB}\) 的端點是 \(A\)；只有射線的字母不能對調。</li>
+              <li><strong>角</strong>：頂點字母寫中間；同一頂點有好幾個角時不能簡記。銳角、直角、鈍角、平角看度數分。</li>
+              <li><strong>正多邊形</strong>：邊都等長<strong>而且</strong>角都相等。</li>
+              <li><strong>標示與對角線</strong>：沿著邊依序寫頂點；對角線連接不相鄰的頂點，一個頂點出發有 \(n - 3\) 條。</li>
+              <li><strong>點到直線的距離</strong>：垂直線段的長，是所有連線中最短的。</li>
+              <li><strong>中垂線</strong>：通過線段中點、又與線段垂直的直線。</li>
+              <li><strong>線對稱圖形</strong>：對摺完全重疊；對稱角相等、對稱線段等長。</li>
+              <li><strong>對稱軸</strong>是任意兩對稱點連接線段的中垂線。</li>
+              <li><strong>找對稱軸</strong>：一條不漏；平行四邊形沒有，圓有無限多條，正 \(n\) 邊形有 \(n\) 條。</li>
+              <li><strong>完成對稱圖形</strong>：沿著與對稱軸垂直的方向走同樣距離找對稱點，再依序連線。</li>
+              <li><strong>摺紙剪紙</strong>：倒過來一層一層攤開，每攤開一次就以摺痕鏡射。</li>
+              <li><strong>三視圖</strong>：前視圖看每一欄最高、右視圖看每一排最高（靠前的在左）、上視圖看哪裡有積木。</li>
+              <li><strong>判斷方向</strong>：前後視圖、左右視圖都是左右翻轉的關係。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-scissors"></i> 回到美勞教室：為什麼先對摺再剪就一定對稱？</h4>
+              <h5><i class="fa-solid fa-heart"></i> 摺痕就是對稱軸</h5>
+              <p>小芸直接剪，左右兩邊是兩刀分別剪出來的，很難一模一樣。阿翔先對摺，<strong>兩層紙被同一刀剪到</strong>，攤開後左右兩半能沿著摺痕完全疊合——這正是線對稱圖形的意思，<strong>摺痕就是對稱軸</strong>。愛心左右兩邊任何一組對稱點連起來，都會被摺痕垂直平分。</p>
+              <h5><i class="fa-solid fa-cubes"></i> 把作品畫成設計圖</h5>
+              <p>布置完教室，美勞老師要大家把自己用積木堆的作品畫成設計圖。一個立體只畫一張圖說不清楚，於是約定好前面，畫出<strong>前視圖、右視圖、上視圖</strong>——後視圖和左視圖不必再畫，因為它們只是左右翻轉。</p>
+              <h5><i class="fa-solid fa-flag"></i> 第二冊完結</h5>
+              <p>第 6 章只有這一節，第二冊到這裡全部學完。下一冊從〈乘法公式與多項式〉開始。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

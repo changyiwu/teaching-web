@@ -79,7 +79,7 @@
       {
         "chapter": "第6章 生活中的幾何",
         "sections": [
-          { "code": "6-1", "title": "垂直、線對稱與三視圖" }
+          { "code": "6-1", "title": "垂直、線對稱與三視圖", "status": "completed" }
         ]
       }
     ],
