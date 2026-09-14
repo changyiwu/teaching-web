@@ -4,39 +4,1586 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>5-1 統計圖表與資料分析 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>5-1 統計圖表與資料分析 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第二冊 (1下) • 第5章 統計</div>
-    <h1>5-1 統計圖表與資料分析</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第二冊 • 第五章</span>
+        <h1>5-1 統計圖表與資料分析</h1>
+        <p>體適能檢測、小考成績、投籃測驗……全班每個人都有一個數字，一大串數字擺在一起根本看不出什麼。這一節先把資料<strong>整理成表、畫成圖</strong>：長條圖、折線圖、圓形圖、列聯表，以及分組之後的次數分配表、直方圖與折線圖。接著學三個「代表整群資料」的數：<strong>平均數、中位數、眾數</strong>——它們各有擅長的時候，也各有會騙人的時候。</p>
+      </div>
+      <!-- Progress navigation (12 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-chart-column"></i> 長條與折線</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-chart-pie"></i> 圓形圖</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-table-cells"></i> 列聯表</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-list-ol"></i> 次數分配表</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-chart-simple"></i> 直方圖</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-chart-line"></i> 次數折線圖</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 平均數</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-calculator"></i> 次數表平均</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-layer-group"></i> 分組平均</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-arrows-to-dot"></i> 中位數</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-stairs"></i> 累加找中位數</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-crown"></i> 眾數</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Showa Sports Manga)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(248, 113, 113, 0.25);">
+        <h2 class="section-title" style="color: #fca5a5; border-bottom-color: rgba(252, 165, 165, 0.2);">
+          <i class="fa-solid fa-basketball" aria-hidden="true" style="color: #fca5a5; text-shadow: 0 0 10px rgba(248, 113, 113, 0.4);"></i> 課前暖身漫畫：比平均少，就是最差的嗎？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            體育課投籃測驗，小葵這一組 \(5\) 個人各投 \(10\) 球。記錄的大志宣布：「<strong style="color:#fca5a5">平均進 \(5\) 球</strong>！」只進 \(4\) 球的小葵垂頭喪氣：比平均少，是不是全組最差？大志看了看記錄板上的 \(3, 4, 4, 4, 10\)——咦，明明有 \(3\) 個人都進 \(4\) 球。<strong style="color:#fca5a5">平均數真的能代表這一組嗎？</strong>這一節學完三個代表值，再回來回答。
+          </p>
+          <!-- 課前暖身漫畫（桌機生成後放入）：motivation_comic.webp；提示詞與對白在 comfyui/2-5-1/comic.json -->
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 長條圖與折線圖
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-column" aria-hidden="true"></i> 重點 1：長條圖與折線圖——看資料選圖，再報讀
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>長條圖</strong>：用長條的高度表示每一個類別的數量，長條之間<strong>分開</strong>。類別可以沒有先後順序，例如運動項目、上學方式。</li>
+              <li><strong>折線圖</strong>：把各點依序用線段連起來，適合看資料<strong>隨時間的變化趨勢</strong>：線往上是增加、往下是減少。</li>
+              <li><strong>報讀的順序</strong>：先看兩軸各代表什麼、單位是什麼，再讀出最多、最少、相差多少。</li>
+              <li><strong>省略記號</strong>：縱軸不從 \(0\) 畫起時，可以在底部畫一段折線表示省略。這樣畫高度就不再和數量成正比，<strong>要看刻度上的數字</strong>，不能只比高度。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>統計圖</th><th>使用時機</th><th>例子</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>長條圖</td><td>比較各類別的數量</td><td>各社團的人數</td></tr>
+                <tr><td>折線圖</td><td>看數量隨時間的變化</td><td>一年中每個月的雨量</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <!-- 插圖（桌機生成後放入）：stat_board.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：記分板選圖台</h3>
+            <p class="interactive-instruction">切換資料與圖的種類，看哪一種畫法<strong>適合</strong>；在圖上點選兩個項目比較相差多少，再試試把縱軸「省略下半段」，看高度會怎麼騙人：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-board" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">資料</span>
+                    <div class="btn-group" id="bd-data-group">
+                      <button class="pick-btn active" data-bd-data="sport">最喜歡的運動</button>
+                      <button class="pick-btn" data-bd-data="rope">一週跳繩下數</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖的種類</span>
+                    <div class="btn-group" id="bd-type-group">
+                      <button class="pick-btn active" data-bd-type="bar">長條圖</button>
+                      <button class="pick-btn" data-bd-type="line">折線圖</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">縱軸</span>
+                    <div class="btn-group" id="bd-axis-group">
+                      <button class="pick-btn active" data-bd-axis="full">從 0 開始</button>
+                      <button class="pick-btn" data-bd-axis="cut">省略下半段</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (長條圖與折線圖)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一份資料<strong>最適合</strong>用折線圖呈現？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-1" value="A"><span class="option-text">A. 全班同學最喜歡的水果與人數</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-1" value="B"><span class="option-text">B. 某城市 \(1\)～\(12\) 月每個月的平均氣溫</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-1" value="C"><span class="option-text">C. 全校各社團的人數</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-1" value="D"><span class="option-text">D. 福利社各種飲料一天的銷售杯數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。月分有先後順序，把每個月的氣溫連起來，看得出天氣是變熱還是變冷，這是折線圖擅長的<strong>變化趨勢</strong>。<br>
+              A、C、D 錯：水果、社團、飲料都是一個一個的類別，彼此沒有先後順序，連起來的線沒有意義，用長條圖比較數量才適合。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下圖是七年甲班 \(6\) 次數學小考的班平均折線圖。和<strong>前一次</strong>相比，班平均<strong>下降</strong>的是哪幾次？</p>
+            <figure class="numline-fig quiz-fig">
+              <svg viewBox="0 0 370 232" role="img" aria-label="折線圖：縱軸是班平均（分），從 60 分畫起，底部有省略記號；橫軸是第 1 次到第 6 次小考，班平均依序是 72、68、75、81、79、86 分">
+                <g stroke="rgba(148,163,184,0.18)" stroke-width="1"><path d="M50 155H352M50 130H352M50 105H352M50 80H352M50 55H352M50 30H352"/></g>
+                <path d="M50 200 V196 L45 193 L55 189 L50 186 V20" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+                <polygon points="50,8 44.5,21 55.5,21" fill="#cbd5e1"/>
+                <path d="M50 200 H352" stroke="#cbd5e1" stroke-width="2"/>
+                <polygon points="364,200 351,194.5 351,205.5" fill="#cbd5e1"/>
+                <g fill="#94a3b8" font-size="11" font-weight="700" text-anchor="end"><text x="42" y="204">0</text><text x="42" y="184">60</text><text x="42" y="159">65</text><text x="42" y="134">70</text><text x="42" y="109">75</text><text x="42" y="84">80</text><text x="42" y="59">85</text><text x="42" y="34">90</text></g>
+                <text x="22" y="14" fill="#94a3b8" font-size="11" font-weight="700" text-anchor="middle">(分)</text>
+                <polyline points="78,120 128,140 178,105 228,75 278,85 328,50" fill="none" stroke="#fcd34d" stroke-width="2.5"/>
+                <g fill="#fcd34d"><circle cx="78" cy="120" r="4"/><circle cx="128" cy="140" r="4"/><circle cx="178" cy="105" r="4"/><circle cx="228" cy="75" r="4"/><circle cx="278" cy="85" r="4"/><circle cx="328" cy="50" r="4"/></g>
+                <g fill="#f8fafc" font-size="11.5" font-weight="700" text-anchor="middle"><text x="78" y="110">72</text><text x="128" y="130">68</text><text x="178" y="95">75</text><text x="228" y="65">81</text><text x="278" y="75">79</text><text x="328" y="40">86</text></g>
+                <g fill="#94a3b8" font-size="11" font-weight="700" text-anchor="middle"><text x="78" y="220">第1次</text><text x="128" y="220">第2次</text><text x="178" y="220">第3次</text><text x="228" y="220">第4次</text><text x="278" y="220">第5次</text><text x="328" y="220">第6次</text></g>
+              </svg>
+            </figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2" value="A"><span class="option-text">A. 第 \(2\) 次與第 \(5\) 次</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2" value="B"><span class="option-text">B. 第 \(2\) 次與第 \(4\) 次</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2" value="C"><span class="option-text">C. 只有第 \(5\) 次</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2" value="D"><span class="option-text">D. 第 \(3\) 次與第 \(6\) 次</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。線段往下的地方就是比前一次低：第 \(2\) 次 \(72 \to 68\)、第 \(5\) 次 \(81 \to 79\)。<br>
+              B 錯：第 \(4\) 次是 \(75 \to 81\)，上升。<br>
+              C 錯：漏掉了第 \(2\) 次。<br>
+              D 錯：第 \(3\) 次與第 \(6\) 次都是上升，而且上升最多的是第 \(4\) 次與第 \(6\) 次。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 圓形圖
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-pie" aria-hidden="true"></i> 重點 2：圓形圖——先算百分率，再算圓心角
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>圓形圖</strong>：整個圓代表全體（\(100\%\)），每一個扇形代表一部分<strong>占全體的分量</strong>。</li>
+              <li><strong>步驟一：百分率</strong>＝這一部分 ÷ 總數 × \(100\%\)。</li>
+              <li><strong>步驟二：圓心角</strong>＝\(360^\circ\) × 百分率。所有扇形的圓心角加起來是 \(360^\circ\)。</li>
+              <li><strong>畫法</strong>：習慣從 \(12\) 點鐘的方向開始，依序畫出每一塊，並在扇形上寫出項目與百分率。</li>
+              <li><strong>反過來</strong>：知道圓心角，就能算出比例：圓心角 ÷ \(360^\circ\)。</li>
+            </ul>
+
+            <p style="margin-top: 1rem; color: #cbd5e1;">例：七年級 \(240\) 人選社團。</p>
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>社團</th><th>人數</th><th>百分率</th><th>圓心角</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>球類</td><td>\(96\)</td><td>\(40\%\)</td><td>\(144^\circ\)</td></tr>
+                <tr><td>田徑</td><td>\(60\)</td><td>\(25\%\)</td><td>\(90^\circ\)</td></tr>
+                <tr><td>舞蹈</td><td>\(54\)</td><td>\(22.5\%\)</td><td>\(81^\circ\)</td></tr>
+                <tr><td>其他</td><td>\(30\)</td><td>\(12.5\%\)</td><td>\(45^\circ\)</td></tr>
+                <tr><td>合計</td><td>\(240\)</td><td>\(100\%\)</td><td>\(360^\circ\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <!-- 插圖（桌機生成後放入）：stat_pie.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：運動會報名圓餅機</h3>
+            <p class="interactive-instruction">拉動四個項目的報名人數，看每一塊扇形怎麼跟著變；選一個項目，看它的<strong>百分率</strong>與<strong>圓心角</strong>是怎麼算出來的：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pie" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pi-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">看哪一個項目</span>
+                    <div class="btn-group" id="pi-pick-group">
+                      <button class="pick-btn" data-pi-pick="0">大隊接力</button>
+                      <button class="pick-btn active" data-pi-pick="1">拔河</button>
+                      <button class="pick-btn" data-pi-pick="2">跳繩</button>
+                      <button class="pick-btn" data-pi-pick="3">趣味競賽</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pi-0-slider">大隊接力（人）：<span id="pi-0-val" class="val-num">9</span></label>
+                    <input type="range" id="pi-0-slider" min="0" max="15" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pi-1-slider">拔河（人）：<span id="pi-1-val" class="val-num">6</span></label>
+                    <input type="range" id="pi-1-slider" min="0" max="15" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pi-2-slider">跳繩（人）：<span id="pi-2-val" class="val-num">3</span></label>
+                    <input type="range" id="pi-2-slider" min="0" max="15" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pi-3-slider">趣味競賽（人）：<span id="pi-3-val" class="val-num">2</span></label>
+                    <input type="range" id="pi-3-slider" min="0" max="15" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pi-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圓形圖)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 把運動會的報名結果畫成圓形圖，拔河所占的圓心角是 \(72^\circ\)。若報名拔河的有 \(26\) 人，全部共有多少人報名？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-3" value="A"><span class="option-text">A. \(130\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-3" value="B"><span class="option-text">B. \(72\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-3" value="C"><span class="option-text">C. \(520\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-3" value="D"><span class="option-text">D. \(104\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。圓心角 ÷ \(360^\circ\) 就是拔河占的比例：
+              \[\begin{aligned} & 72 \div 360 = \frac{1}{5} = 20\% \\ & 26 \div 20\% = 26 \times 5 = 130 \end{aligned}\]
+              B 錯：\(72\) 是角度，不是人數。<br>
+              C 錯：\(26 \times 20 = 520\)，把「\(20\%\)」的 \(20\) 直接拿來乘了。<br>
+              D 錯：\(130 - 26 = 104\) 是其他項目的人數，不是全部。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 資源回收站一天收到寶特瓶 \(105\) 個、鋁罐 \(70\) 個、紙盒 \(75\) 個。畫成圓形圖時，紙盒所占的<strong>百分率</strong>與<strong>圓心角</strong>分別為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-4" value="A"><span class="option-text">A. \(75\%\)、\(270^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-4" value="B"><span class="option-text">B. \(30\%\)、\(30^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-4" value="C"><span class="option-text">C. \(25\%\)、\(90^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-4" value="D"><span class="option-text">D. \(30\%\)、\(108^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。總數是 \(105 + 70 + 75 = 250\) 個：
+              \[\begin{aligned} & 75 \div 250 \times 100\% = 30\% \\ & 360^\circ \times 30\% = 108^\circ \end{aligned}\]
+              A 錯：把個數 \(75\) 直接當成百分率。<br>
+              B 錯：百分率對了，但圓心角要再乘上 \(360^\circ\)。<br>
+              C 錯：\(75 \div 300 = 25\%\)，總數算錯了，應該是 \(250\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 列聯表
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells" aria-hidden="true"></i> 重點 3：列聯表——兩種分類交叉，合計互相核對
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>列聯表</strong>：一群資料按<strong>兩種不同的屬性</strong>分類，例如「性別」與「午餐選哪一種」，把每一種組合的數量排成表格。</li>
+              <li><strong>合計與總計</strong>：每一橫列最右邊是那一列的合計，每一直欄最下面是那一欄的合計，<strong>右下角是總計</strong>。</li>
+              <li><strong>核對</strong>：橫列的合計加起來、直欄的合計加起來，都要等於總計。</li>
+              <li><strong>推回空格</strong>：知道合計，就能用減法算出缺少的那一格。</li>
+            </ul>
+
+            <p style="margin-top: 1rem; color: #cbd5e1;">例：七年丙班午餐的選擇。</p>
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>性別＼餐點</th><th>A 餐</th><th>B 餐</th><th>合計</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>男生</td><td>\(8\)</td><td>\(6\)</td><td>\(14\)</td></tr>
+                <tr><td>女生</td><td>\(5\)</td><td>\(8\)</td><td>\(13\)</td></tr>
+                <tr><td>合計</td><td>\(13\)</td><td>\(14\)</td><td>\(27\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>比較兩群</strong>：兩群的人數不一樣多時，要比<strong>占自己那一群的比例</strong>，不能只比人數。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：stat_cross.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：器材室分組列聯表</h3>
+            <p class="interactive-instruction">點一下同學的卡片，換他選的運動項目，看列聯表的每一格、合計與總計怎麼變。切到「遮住一格」，練習用<strong>合計</strong>把空格推回來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cross" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="cr-mode-group">
+                      <button class="pick-btn active" data-cr-mode="full">看完整的表</button>
+                      <button class="pick-btn" data-cr-mode="hide">遮住一格，用合計推回</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (列聯表)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 七年乙班做游泳測驗，男生 \(16\) 人中有 \(11\) 人及格；女生 \(14\) 人中有 \(5\) 人<strong>不及格</strong>。全班<strong>及格</strong>的共有幾人？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-5" value="A"><span class="option-text">A. \(16\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-5" value="B"><span class="option-text">B. \(25\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-5" value="C"><span class="option-text">C. \(20\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-5" value="D"><span class="option-text">D. \(10\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。先把列聯表填完：女生及格的有 \(14 - 5 = 9\) 人。</p>
+              <div class="table-scroll">
+                <table class="sign-table">
+                <thead>
+                  <tr><th>性別＼結果</th><th>及格</th><th>不及格</th><th>合計</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>男生</td><td>\(11\)</td><td>\(5\)</td><td>\(16\)</td></tr>
+                  <tr><td>女生</td><td>\(9\)</td><td>\(5\)</td><td>\(14\)</td></tr>
+                  <tr><td>合計</td><td>\(20\)</td><td>\(10\)</td><td>\(30\)</td></tr>
+                </tbody>
+                </table>
+              </div>
+              <p class="explanation-desc">全班及格 \(11 + 9 = 20\) 人。<br>
+              A 錯：\(11 + 5 = 16\)，把女生<strong>不及格</strong>的人數加進來了。<br>
+              B 錯：\(11 + 14 = 25\)，把女生全部都算成及格。<br>
+              D 錯：\(10\) 是全班<strong>不及格</strong>的人數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 甲、乙兩班參加校隊的情形如下表。就「參加校隊的人數<strong>占全班的比例</strong>」而言，下列何者正確？</p>
+            <div class="table-scroll quiz-fig">
+              <table class="sign-table">
+              <thead>
+                <tr><th>班級＼情形</th><th>參加</th><th>沒參加</th><th>合計</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>甲班</td><td>\(8\)</td><td>\(24\)</td><td>\(32\)</td></tr>
+                <tr><td>乙班</td><td>\(7\)</td><td>\(18\)</td><td>\(25\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-6" value="A"><span class="option-text">A. 甲班比例較高，因為參加的人數比較多</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-6" value="B"><span class="option-text">B. 兩班的比例一樣</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-6" value="C"><span class="option-text">C. 兩班人數不同，無法比較</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-6" value="D"><span class="option-text">D. 乙班比例較高</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。各自除以自己班的合計：
+              \[\begin{aligned} & \text{甲班：} 8 \div 32 = 25\% \\ & \text{乙班：} 7 \div 25 = 28\% \end{aligned}\]
+              A 錯：甲班全班比較多人，參加的人數多不代表比例高。<br>
+              B 錯：\(25\%\) 與 \(28\%\) 不一樣。<br>
+              C 錯：人數不同時正是要比<strong>比例</strong>，換成百分率就能比較。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 次數分配表
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-ol" aria-hidden="true"></i> 重點 4：次數分配表——組距、上下限，含下限不含上限
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>為什麼要分組</strong>：資料一多，一個一個看不出分布的情形；分成幾組、數出每組有幾個，整群資料的樣子就清楚了。</li>
+              <li><strong>組距</strong>：每一組的寬度。每 \(10\) 分一組，組距就是 \(10\) 分。組距與組數沒有一定的規定，但通常每一組的組距一樣。</li>
+              <li><strong>下限與上限</strong>：\(60\)～\(70\) 這一組的下限是 \(60\)、上限是 \(70\)。</li>
+              <li><strong>含下限、不含上限</strong>：\(60\)～\(70\) 表示「\(60\) 分以上（含）、未滿 \(70\) 分」，所以剛好 \(70\) 分要放進下一組 \(70\)～\(80\)。</li>
+              <li><strong>滿分的例外</strong>：最高是 \(100\) 分時，通常把 \(100\) 分歸到 \(90\)～\(100\) 這一組。</li>
+            </ul>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>製表步驟</strong>：
+                <ul>
+                  <li>看最小值與最大值，決定組距與從哪裡開始分組。</li>
+                  <li>逐一看每個資料屬於哪一組，在畫記欄寫「正」字記號。</li>
+                  <li>數出每組的次數，<strong>合計要等於資料的總個數</strong>。</li>
+                </ul>
+              </li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：stat_tally.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：成績分組機</h3>
+            <p class="interactive-instruction">點一下上方的分數，看它被放進哪一組、為什麼；再換組距與起點，看分組和畫記怎麼變。特別注意剛好落在<strong>分界上</strong>的分數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tally" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ta-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">組距</span>
+                    <div class="btn-group" id="ta-w-group">
+                      <button class="pick-btn active" data-ta-w="10">10 分</button>
+                      <button class="pick-btn" data-ta-w="20">20 分</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">第一組從幾分開始</span>
+                    <div class="btn-group" id="ta-s-group">
+                      <button class="pick-btn active" data-ta-s="40">40 分</button>
+                      <button class="pick-btn" data-ta-s="45">45 分</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ta-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (次數分配表)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 某次 \(50\) 公尺賽跑的次數分配表分成 \(8\)～\(9\)、\(9\)～\(10\)、\(10\)～\(11\)（秒）三組。跑了 \(9\) 秒的同學應該歸在哪一組？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-7" value="A"><span class="option-text">A. \(8\)～\(9\) 秒</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-7" value="B"><span class="option-text">B. \(9\)～\(10\) 秒</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-7" value="C"><span class="option-text">C. 兩組都要各算一次</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-7" value="D"><span class="option-text">D. 哪一組都不算</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。每一組<strong>包含下限、不包含上限</strong>：\(9\) 是 \(9\)～\(10\) 的下限，要算進這一組。<br>
+              A 錯：\(9\) 是 \(8\)～\(9\) 的上限，這一組不含 \(9\)。<br>
+              C 錯：同一個人算兩次，合計就會比總人數多。<br>
+              D 錯：分組要讓每個資料剛好屬於一組，不會有人被漏掉。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 把 \(25\) 位同學的體重分組，最輕的是 \(38\) 公斤、最重的是 \(61\) 公斤。若從 \(35\) 公斤開始、組距 \(5\) 公斤分組，共要分成幾組？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-8" value="A"><span class="option-text">A. \(4\) 組</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-8" value="B"><span class="option-text">B. \(5\) 組</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-8" value="C"><span class="option-text">C. \(6\) 組</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-8" value="D"><span class="option-text">D. \(25\) 組</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。依序寫出每一組，直到包含最重的 \(61\) 公斤：\(35\)～\(40\)、\(40\)～\(45\)、\(45\)～\(50\)、\(50\)～\(55\)、\(55\)～\(60\)、\(60\)～\(65\)，共 \(6\) 組。<br>
+              A 錯：\(61 - 38 = 23\)，\(23 \div 5\) 取整數得 \(4\)，但分組是從 \(35\) 開始，不是從 \(38\)。<br>
+              B 錯：只分到 \(55\)～\(60\)，\(61\) 公斤不含在任何一組裡。<br>
+              D 錯：\(25\) 是人數，不是組數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 次數分配直方圖
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-simple" aria-hidden="true"></i> 重點 5：直方圖——長方形相連，跨組要加總
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>次數分配直方圖</strong>（簡稱直方圖）由次數分配表畫成：橫軸標出各組的分界，縱軸是次數。</li>
+              <li><strong>畫法</strong>：以每一組在橫軸上的那一段為底、該組的次數為高畫長方形，<strong>相鄰的長方形緊緊相連</strong>。</li>
+              <li><strong>報讀跨組的範圍</strong>：「\(150\) 公分以上（含）、未滿 \(165\) 公分」包含 \(150\)～\(155\)、\(155\)～\(160\)、\(160\)～\(165\) 三組，要把三組的次數<strong>全部加起來</strong>，不能只看其中一組。</li>
+              <li><strong>全體人數</strong>：所有長方形的次數加起來。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>統計圖</th><th>資料</th><th>長方形</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>長條圖</td><td>類別，未必是數值、不一定有順序</td><td>分開</td></tr>
+                <tr><td>直方圖</td><td>數值，能由小到大排列並分組</td><td>緊緊相連</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <!-- 插圖（桌機生成後放入）：stat_histo.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：身高直方圖量尺</h3>
+            <p class="interactive-instruction">拉動兩個滑桿框出一段身高，看哪幾組被框進來、人數怎麼加；再切成「長條圖的樣子」，比較兩種圖的差別：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-histo" width="540" height="530"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="hi-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">畫法</span>
+                    <div class="btn-group" id="hi-type-group">
+                      <button class="pick-btn active" data-hi-type="histo">直方圖</button>
+                      <button class="pick-btn" data-hi-type="bar">畫成長條圖的樣子</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="hi-lo-slider">身高幾公分以上（含）：<span id="hi-lo-val" class="val-num">150</span></label>
+                    <input type="range" id="hi-lo-slider" min="145" max="175" value="150" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="hi-hi-slider">未滿幾公分：<span id="hi-hi-val" class="val-num">165</span></label>
+                    <input type="range" id="hi-hi-slider" min="145" max="175" value="165" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="hi-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (直方圖)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 下圖是七年丁班同學體重的次數分配直方圖。體重在 \(40\) 公斤以上（含）、未滿 \(55\) 公斤的有幾人？</p>
+            <figure class="numline-fig quiz-fig">
+              <svg viewBox="0 0 370 232" role="img" aria-label="直方圖：橫軸是體重（公斤），分組 35～40、40～45、45～50、50～55、55～60，次數依序是 2、5、9、6、3 人">
+                <g stroke="rgba(148,163,184,0.18)" stroke-width="1"><path d="M60 158H352M60 126H352M60 94H352M60 62H352M60 30H352"/></g>
+                <g fill="#6ee7b7" fill-opacity="0.45" stroke="#0f172a" stroke-width="1.5"><rect x="60" y="158" width="56" height="32"/><rect x="116" y="110" width="56" height="80"/><rect x="172" y="46" width="56" height="144"/><rect x="228" y="94" width="56" height="96"/><rect x="284" y="142" width="56" height="48"/></g>
+                <path d="M60 190 V20" stroke="#cbd5e1" stroke-width="2"/>
+                <polygon points="60,8 54.5,21 65.5,21" fill="#cbd5e1"/>
+                <path d="M60 190 H352" stroke="#cbd5e1" stroke-width="2"/>
+                <polygon points="364,190 351,184.5 351,195.5" fill="#cbd5e1"/>
+                <g fill="#94a3b8" font-size="11" font-weight="700" text-anchor="end"><text x="52" y="194">0</text><text x="52" y="162">2</text><text x="52" y="130">4</text><text x="52" y="98">6</text><text x="52" y="66">8</text><text x="52" y="34">10</text></g>
+                <text x="28" y="14" fill="#94a3b8" font-size="11" font-weight="700" text-anchor="middle">(人)</text>
+                <g fill="#f8fafc" font-size="11.5" font-weight="700" text-anchor="middle"><text x="88" y="151">2</text><text x="144" y="103">5</text><text x="200" y="39">9</text><text x="256" y="87">6</text><text x="312" y="135">3</text></g>
+                <g fill="#94a3b8" font-size="11" font-weight="700" text-anchor="middle"><text x="60" y="207">35</text><text x="116" y="207">40</text><text x="172" y="207">45</text><text x="228" y="207">50</text><text x="284" y="207">55</text><text x="340" y="207">60</text></g>
+                <text x="362" y="226" fill="#94a3b8" font-size="11" font-weight="700" text-anchor="end">體重（公斤）</text>
+              </svg>
+            </figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-9" value="A"><span class="option-text">A. \(20\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-9" value="B"><span class="option-text">B. \(15\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-9" value="C"><span class="option-text">C. \(25\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-9" value="D"><span class="option-text">D. \(9\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。「\(40\) 以上（含）、未滿 \(55\)」包含 \(40\)～\(45\)、\(45\)～\(50\)、\(50\)～\(55\) 三組：\(5 + 9 + 6 = 20\) 人。<br>
+              B 錯：\(9 + 6 = 15\)，漏掉了 \(40\)～\(45\) 這一組。<br>
+              C 錯：\(25\) 是全班人數，把範圍外的兩組也算進去了。<br>
+              D 錯：只看了最高的那一組。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 下列關於次數分配直方圖的敘述，何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-10" value="A"><span class="option-text">A. 各長方形之間要留空隙，才看得出是不同組</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-10" value="B"><span class="option-text">B. 橫軸可以放沒有先後順序的類別，例如顏色</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-10" value="C"><span class="option-text">C. 長方形的高代表該組的次數，相鄰的長方形緊緊相連</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-10" value="D"><span class="option-text">D. \(150\)～\(155\) 公分那一組包含 \(155\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。直方圖的橫軸是連續的數值，一組接著一組，所以長方形緊緊相連，高度是次數。<br>
+              A 錯：留空隙的是長條圖。<br>
+              B 錯：沒有順序的類別要用長條圖，直方圖的資料必須能由小到大排列。<br>
+              D 錯：每一組不含上限，\(155\) 公分屬於 \(155\)～\(160\) 那一組。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 次數分配折線圖
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-line" aria-hidden="true"></i> 重點 6：次數分配折線圖——點畫在組中點上方
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>組中點</strong>：一組的下限與上限的平均。例：\(150\)～\(160\) 的組中點是 \((150 + 160) \div 2 = 155\)。</li>
+              <li><strong>畫法</strong>：在每一組的組中點正上方、高度等於該組次數的地方描點，再依序用線段連起來。點的坐標是（組中點, 次數）。</li>
+              <li><strong>和直方圖的關係</strong>：把直方圖每個長方形<strong>上緣的中點</strong>連起來，就是同一份資料的次數分配折線圖。</li>
+              <li><strong>兩群比較</strong>：兩班畫在同一張圖上，哪一組差距最大、某個範圍內哪一班人數多，都能比較。範圍跨好幾組時，一樣要把<strong>各組的人數加起來</strong>。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：stat_polygon.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩班折線對照台</h3>
+            <p class="interactive-instruction">選一組看它的<strong>組中點</strong>與兩班的人數；拉動「未滿幾公分」比較兩班的人數；打開直方圖，看折線的點落在長方形的哪裡：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-poly" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="po-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">顯示</span>
+                    <div class="btn-group" id="po-view-group">
+                      <button class="pick-btn active" data-po-view="two">兩班比較</button>
+                      <button class="pick-btn" data-po-view="one">只看甲班</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">甲班的直方圖</span>
+                    <div class="btn-group" id="po-histo-group">
+                      <button class="pick-btn active" data-po-histo="off">不疊</button>
+                      <button class="pick-btn" data-po-histo="on">疊上去</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="po-g-slider">看哪一組：<span id="po-g-val" class="val-num">170～180</span></label>
+                    <input type="range" id="po-g-slider" min="0" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="po-t-slider">比較「未滿幾公分」的人數：<span id="po-t-val" class="val-num">170</span></label>
+                    <input type="range" id="po-t-slider" min="150" max="210" value="170" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="po-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (次數分配折線圖)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 某班小考成績的次數分配折線圖（組距 \(10\) 分）上有一個點 \((65, 7)\)。這個點表示什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-11" value="A"><span class="option-text">A. 考 \(65\) 分的有 \(7\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-11" value="B"><span class="option-text">B. \(60\)～\(70\) 分這一組有 \(7\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-11" value="C"><span class="option-text">C. 未滿 \(65\) 分的有 \(7\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-11" value="D"><span class="option-text">D. 考 \(7\) 分的有 \(65\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。折線圖的點是（組中點, 次數）。組距 \(10\) 分、組中點 \(65\) 的那一組是 \(60\)～\(70\)，這一組有 \(7\) 人。<br>
+              A 錯：組中點只是代表那一組的位置，這 \(7\) 人的分數在 \(60\) 到 \(70\) 之間，不一定剛好 \(65\) 分。<br>
+              C 錯：點的高度是<strong>這一組</strong>的人數，不是累加的人數。<br>
+              D 錯：坐標的順序反了，橫坐標是分數、縱坐標是人數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 下圖是七年忠、孝兩班一分鐘仰臥起坐的次數分配折線圖（組距 \(10\) 次）。每分鐘 \(40\) 次以上（含）的人數，哪一班比較多？多幾人？</p>
+            <figure class="numline-fig quiz-fig">
+              <svg viewBox="0 0 370 232" role="img" aria-label="兩條折線：橫軸是仰臥起坐次數，組中點 15、25、35、45、55。忠班依序 2、6、9、5、3 人；孝班依序 1、4、7、10、4 人">
+                <g stroke="rgba(148,163,184,0.18)" stroke-width="1"><path d="M60 160H352M60 130H352M60 100H352M60 70H352M60 40H352"/></g>
+                <path d="M60 190 V20" stroke="#cbd5e1" stroke-width="2"/>
+                <polygon points="60,8 54.5,21 65.5,21" fill="#cbd5e1"/>
+                <path d="M60 190 H352" stroke="#cbd5e1" stroke-width="2"/>
+                <polygon points="364,190 351,184.5 351,195.5" fill="#cbd5e1"/>
+                <g fill="#94a3b8" font-size="11" font-weight="700" text-anchor="end"><text x="52" y="194">0</text><text x="52" y="164">2</text><text x="52" y="134">4</text><text x="52" y="104">6</text><text x="52" y="74">8</text><text x="52" y="44">10</text></g>
+                <text x="28" y="14" fill="#94a3b8" font-size="11" font-weight="700" text-anchor="middle">(人)</text>
+                <polyline points="88,160 144,100 200,55 256,115 312,145" fill="none" stroke="#f87171" stroke-width="2.5"/>
+                <polyline points="88,175 144,130 200,85 256,40 312,130" fill="none" stroke="#60a5fa" stroke-width="2.5"/>
+                <g fill="#f87171"><circle cx="88" cy="160" r="4"/><circle cx="144" cy="100" r="4"/><circle cx="200" cy="55" r="4"/><circle cx="256" cy="115" r="4"/><circle cx="312" cy="145" r="4"/></g>
+                <g fill="#60a5fa"><circle cx="88" cy="175" r="4"/><circle cx="144" cy="130" r="4"/><circle cx="200" cy="85" r="4"/><circle cx="256" cy="40" r="4"/><circle cx="312" cy="130" r="4"/></g>
+                <g fill="#fca5a5" font-size="11" font-weight="700" text-anchor="middle"><text x="78" y="152">2</text><text x="134" y="92">6</text><text x="190" y="47">9</text><text x="246" y="107">5</text><text x="302" y="137">3</text></g>
+                <g fill="#93c5fd" font-size="11" font-weight="700" text-anchor="middle"><text x="98" y="167">1</text><text x="154" y="122">4</text><text x="210" y="77">7</text><text x="266" y="32">10</text><text x="322" y="122">4</text></g>
+                <g fill="#94a3b8" font-size="11" font-weight="700" text-anchor="middle"><text x="60" y="207">10</text><text x="116" y="207">20</text><text x="172" y="207">30</text><text x="228" y="207">40</text><text x="284" y="207">50</text><text x="340" y="207">60</text></g>
+                <text x="362" y="226" fill="#94a3b8" font-size="11" font-weight="700" text-anchor="end">仰臥起坐（次）</text>
+                <path d="M96 12H114" stroke="#f87171" stroke-width="2.5"/><text x="118" y="16" fill="#fca5a5" font-size="11" font-weight="700">忠班</text>
+                <path d="M160 12H178" stroke="#60a5fa" stroke-width="2.5"/><text x="182" y="16" fill="#93c5fd" font-size="11" font-weight="700">孝班</text>
+              </svg>
+            </figure>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-12" value="A"><span class="option-text">A. 忠班多 \(6\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-12" value="B"><span class="option-text">B. 孝班多 \(5\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-12" value="C"><span class="option-text">C. 兩班一樣多</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-12" value="D"><span class="option-text">D. 孝班多 \(6\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。「\(40\) 次以上（含）」包含 \(40\)～\(50\)（組中點 \(45\)）與 \(50\)～\(60\)（組中點 \(55\)）兩組：
+              \[\begin{aligned} & \text{忠班：} 5 + 3 = 8 \\ & \text{孝班：} 10 + 4 = 14 \end{aligned}\]
+              孝班多 \(14 - 8 = 6\) 人。<br>
+              A 錯：人數算對了，但多的是孝班。<br>
+              B 錯：\(10 - 5 = 5\)，只比了 \(40\)～\(50\) 這一組，漏掉 \(50\)～\(60\)。<br>
+              C 錯：兩條折線在右半邊明顯是孝班比較高。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 平均數的意義
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> 重點 7：平均數——總和 ÷ 個數，削高補低
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>平均數</strong>（算術平均數）＝資料的總和 ÷ 資料的個數。報章雜誌說的「平均」幾乎都是指它。</li>
+              <li><strong>意義</strong>：把總量平分給每一個，每一份是多少。高出平均的部分，剛好補滿不足平均的部分。</li>
+              <li><strong>基準差距法</strong>：挑一個好算的數當基準，算出每個資料和基準的差，平均數＝基準＋差的平均。</li>
+            </ul>
+
+            <p style="margin-top: 1rem; color: #cbd5e1;">例：\(4\) 次小考 \(83\)、\(91\)、\(76\)、\(90\) 分，以 \(85\) 分為基準，差距依序是 \(-2\)、\(+6\)、\(-9\)、\(+5\)：</p>
+            \[\begin{aligned} & -2 + 6 + (-9) + 5 = 0 \\ & 85 + 0 \div 4 = 85 \end{aligned}\]
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>總和＝平均數 × 個數</strong>：反過來用，可以修正記錯的資料，不必全部重算。</li>
+              <li><strong>例</strong>：\(30\) 人平均 \(48\) 公斤，後來發現一位 \(52\) 公斤的同學被記成 \(25\) 公斤。總和少算了 \(52 - 25 = 27\) 公斤，平均就少算了 \(27 \div 30 = 0.9\) 公斤，正確的平均是 \(48 + 0.9 = 48.9\) 公斤。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：stat_mean.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：平均水位槽</h3>
+            <p class="interactive-instruction">上下拖曳長條改變每一次的下數。「削高補低」看高出的部分怎麼補滿不足；「基準差距法」換不同的基準，看平均會不會變；「登記錯誤」看記錯一筆時，平均差了多少：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mean" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="me-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="me-mode-group">
+                      <button class="pick-btn active" data-me-mode="level">削高補低</button>
+                      <button class="pick-btn" data-me-mode="base">基準差距法</button>
+                      <button class="pick-btn" data-me-mode="fix">登記錯誤</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="me-base-row" hidden>
+                    <label for="me-base-slider">基準（下）：<span id="me-base-val" class="val-num">120</span></label>
+                    <input type="range" id="me-base-slider" min="100" max="140" value="120" step="1">
+                  </div>
+                  <div id="me-fix-row" hidden>
+                    <div class="slider-row">
+                      <label for="me-idx-slider">記錯的是第幾次：<span id="me-idx-val" class="val-num">2</span></label>
+                      <input type="range" id="me-idx-slider" min="1" max="6" value="2" step="1">
+                    </div>
+                    <div class="slider-row">
+                      <label for="me-d-slider">多記了幾下：<span id="me-d-val" class="val-num">12</span></label>
+                      <input type="range" id="me-d-slider" min="0" max="30" value="12" step="1">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="me-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平均數的意義)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 大志設定每天練習跑 \(3000\) 公尺。一週 \(7\) 天和目標的差距（公尺）依序是 \(+200\)、\(-150\)、\(+300\)、\(0\)、\(-250\)、\(+100\)、\(+150\)。他這一週平均每天跑幾公尺？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-13" value="A"><span class="option-text">A. \(3050\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-13" value="B"><span class="option-text">B. \(3350\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-13" value="C"><span class="option-text">C. \(3000\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-13" value="D"><span class="option-text">D. 約 \(3058\) 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。以 \(3000\) 公尺為基準，正的差距與負的差距分開加，得到差距的總和，再平分給 \(7\) 天：
+              \[\begin{aligned} & 200 + 300 + 100 + 150 \\ &= 750 \\ & -150 - 250 = -400 \\ & 750 - 400 = 350 \\ & 3000 + 350 \div 7 \\ &= 3050 \end{aligned}\]
+              B 錯：\(3000 + 350\)，差距的總和忘了除以 \(7\)。<br>
+              C 錯：正負並沒有剛好抵消，差距的總和是 \(350\)。<br>
+              D 錯：\(350 \div 6 \approx 58\)，把差距是 \(0\) 的那一天漏掉了，那一天也要算進天數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 七年丁班 \(25\) 人的平均身高是 \(158\) 公分。後來發現有一位同學的身高 \(162\) 公分被登記成 \(137\) 公分。修正後，全班的平均身高是幾公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-14" value="A"><span class="option-text">A. \(157\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-14" value="B"><span class="option-text">B. \(159\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-14" value="C"><span class="option-text">C. \(183\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-14" value="D"><span class="option-text">D. 約 \(158.2\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。登記的比實際少了 \(162 - 137 = 25\) 公分，總和少算 \(25\)，平均就少算：
+              \[\begin{aligned} & 25 \div 25 = 1 \\ & 158 + 1 = 159 \end{aligned}\]
+              A 錯：原本是<strong>少記</strong>，修正後平均要變大，不是變小。<br>
+              C 錯：\(158 + 25\)，把總和的差直接加到平均上，忘了平分給 \(25\) 人。<br>
+              D 錯：\((158 \times 25 + 162) \div 26\)，把正確的身高當成多一個人加進去，錯誤的 \(137\) 也沒有扣掉。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 次數表的平均數與計算機 M+
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> 重點 8：次數表的平均數——值 × 次數，再用 M+ 累加
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>資料用「值與次數」的表格給出時</strong>：總和＝每個值 × 它的次數，再全部相加；個數＝次數的合計。</li>
+              <li><strong>平均數</strong>＝總和 ÷ 次數的合計。</li>
+              <li><strong>常見錯誤</strong>：除以「有幾種值」。表格只有 \(3\) 欄，不代表只有 \(3\) 個資料。</li>
+            </ul>
+
+            <p style="margin-top: 1rem; color: #cbd5e1;">例：射飛鏢 \(20\) 支，\(1\) 分的有 \(5\) 支、\(2\) 分的有 \(8\) 支、\(3\) 分的有 \(7\) 支：</p>
+            \[\begin{aligned} & 1 \times 5 + 2 \times 8 + 3 \times 7 = 42 \\ & 42 \div 20 = 2.1 \end{aligned}\]
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>計算機的記憶鍵</strong>：有些計算機沒有「先乘除後加減」，要靠記憶鍵：
+                <ul>
+                  <li><span class="calc-key">M+</span>：把螢幕上的數加進記憶。</li>
+                  <li><span class="calc-key">MR</span>：把記憶裡的數叫到螢幕上。</li>
+                  <li><span class="calc-key">AC</span>：螢幕與記憶一起歸零。</li>
+                </ul>
+              </li>
+              <li><strong>例</strong>：算 \(23 \times 5 + 18 \times 4\)，依序按 <span class="calc-key">AC</span> <span class="calc-key">23</span> <span class="calc-key">×</span> <span class="calc-key">5</span> <span class="calc-key">M+</span> <span class="calc-key">18</span> <span class="calc-key">×</span> <span class="calc-key">4</span> <span class="calc-key">M+</span> <span class="calc-key">MR</span>，螢幕顯示 \(187\)。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：stat_calc.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：投籃記分板與 M+ 計算機</h3>
+            <p class="interactive-instruction">用「＋」「−」改每一種進球數的人數；按「按下一個鍵」一步一步看計算機怎麼用 <strong>M+</strong> 累加每一列的乘積。切到錯誤示範，看除以 \(6\) 種會算出什麼：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fmean" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">最後除以</span>
+                    <div class="btn-group" id="fm-mode-group">
+                      <button class="pick-btn active" data-fm-mode="right">總人數</button>
+                      <button class="pick-btn" data-fm-mode="wrong">6 種進球數（錯誤示範）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="axiom-controls" style="margin-bottom: 1rem;">
+                  <button class="step-ctrl-btn primary" id="fm-next">按下一個鍵</button>
+                  <button class="step-ctrl-btn" id="fm-all">一次按完</button>
+                  <button class="step-ctrl-btn secondary" id="fm-reset">重來</button>
+                </div>
+
+                <div class="visual-feedback" id="fm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (次數表的平均數)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 七年戊班 \(20\) 位同學做引體向上，結果如下表。平均每人做幾下？</p>
+            <div class="table-scroll quiz-fig">
+              <table class="sign-table">
+              <thead>
+                <tr><th>次數（下）</th><th>\(0\)</th><th>\(1\)</th><th>\(2\)</th><th>\(3\)</th><th>\(4\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>人數（人）</td><td>\(3\)</td><td>\(5\)</td><td>\(6\)</td><td>\(4\)</td><td>\(2\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-15" value="A"><span class="option-text">A. \(7.4\) 下</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-15" value="B"><span class="option-text">B. \(2\) 下</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-15" value="C"><span class="option-text">C. \(1.85\) 下</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-15" value="D"><span class="option-text">D. \(4\) 下</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。每一欄「次數 × 人數」再相加，除以總人數 \(20\)：
+              \[\begin{aligned} & 0 \times 3 + 1 \times 5 + 2 \times 6 \\ &{}+ 3 \times 4 + 4 \times 2 \\ &= 37 \\ & 37 \div 20 = 1.85 \end{aligned}\]
+              A 錯：\(37 \div 5\)，除以「有 \(5\) 種次數」，要除以總人數。<br>
+              B 錯：\(2\) 是表格正中間那一欄，不是平均。<br>
+              D 錯：\(20 \div 5\)，那是每一欄平均有幾個人，不是平均做幾下。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 用有記憶鍵的計算機（沒有先乘除後加減）計算 \(35 \times 4 + 26 \times 7\)。先按 <span class="calc-key">AC</span> 之後，下列哪一種按法<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-16" value="A"><span class="option-text">A. <span class="calc-key">35</span> <span class="calc-key">×</span> <span class="calc-key">4</span> <span class="calc-key">M+</span> <span class="calc-key">26</span> <span class="calc-key">×</span> <span class="calc-key">7</span> <span class="calc-key">M+</span> <span class="calc-key">MR</span></span></label>
+              <label class="option-label"><input type="radio" name="q5-1-16" value="B"><span class="option-text">B. <span class="calc-key">35</span> <span class="calc-key">×</span> <span class="calc-key">4</span> <span class="calc-key">+</span> <span class="calc-key">26</span> <span class="calc-key">×</span> <span class="calc-key">7</span> <span class="calc-key">=</span></span></label>
+              <label class="option-label"><input type="radio" name="q5-1-16" value="C"><span class="option-text">C. <span class="calc-key">35</span> <span class="calc-key">×</span> <span class="calc-key">4</span> <span class="calc-key">M+</span> <span class="calc-key">26</span> <span class="calc-key">×</span> <span class="calc-key">7</span> <span class="calc-key">MR</span></span></label>
+              <label class="option-label"><input type="radio" name="q5-1-16" value="D"><span class="option-text">D. <span class="calc-key">35</span> <span class="calc-key">M+</span> <span class="calc-key">4</span> <span class="calc-key">×</span> <span class="calc-key">26</span> <span class="calc-key">M+</span> <span class="calc-key">7</span> <span class="calc-key">MR</span></span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。每一個乘積算完就按 M+ 存進記憶：先存 \(140\)，再加上 \(182\)，最後 MR 叫出 \(322\)。<br>
+              B 錯：沒有先乘除後加減的計算機會照順序算成 \((35 \times 4 + 26) \times 7 = 1162\)。<br>
+              C 錯：第二個乘積 \(182\) 沒有按 M+，MR 叫出來的只有 \(140\)。<br>
+              D 錯：存進記憶的是 \(35\) 與 \(4 \times 26 = 104\)，算的根本不是題目的式子。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 分組資料的平均數
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 9：分組資料的平均數——用組中點代表每一組
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>只有分組的次數分配表</strong>（或直方圖、折線圖）時，不知道每個人的原始資料，就用<strong>組中點</strong>代表那一組每個人的值。</li>
+              <li><strong>每一組的總和</strong> ≈ 組中點 × 次數；<strong>資料總和</strong> ≈ 各組相加；<strong>平均數</strong> ≈ 資料總和 ÷ 總次數。</li>
+            </ul>
+
+            <p style="margin-top: 1rem; color: #cbd5e1;">例：\(20\) 位同學一分鐘跳繩，\(60\)～\(80\) 下有 \(4\) 人、\(80\)～\(100\) 下有 \(10\) 人、\(100\)～\(120\) 下有 \(6\) 人。組中點依序是 \(70\)、\(90\)、\(110\)：</p>
+            \[\begin{aligned} & 70 \times 4 + 90 \times 10 \\ &{}+ 110 \times 6 = 1840 \\ & 1840 \div 20 = 92 \end{aligned}\]
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>為什麼是估計值</strong>：這樣算等於假設每一組的資料平均分布在組距裡，所以結果和原始資料的平均很接近，但不一定相等。</li>
+              <li><strong>常見錯誤</strong>：用每一組的下限或上限代表整組、除以組數而不是總人數。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：stat_midpoint.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：組中點替身</h3>
+            <p class="interactive-instruction">每一組的人都由一個「替身」代表。換不同的代表值，看估計出來的平均偏向哪裡；打開原始資料，比一比估計值和<strong>真正的平均</strong>差多少：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-gmean" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="gm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">資料</span>
+                    <div class="btn-group" id="gm-set-group">
+                      <button class="pick-btn active" data-gm-set="situp">仰臥起坐</button>
+                      <button class="pick-btn" data-gm-set="run">1600 公尺跑走</button>
+                      <button class="pick-btn" data-gm-set="weight">體重</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">每一組的代表值</span>
+                    <div class="btn-group" id="gm-rep-group">
+                      <button class="pick-btn active" data-gm-rep="mid">組中點</button>
+                      <button class="pick-btn" data-gm-rep="low">下限（錯誤）</button>
+                      <button class="pick-btn" data-gm-rep="high">上限（錯誤）</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">原始資料</span>
+                    <div class="btn-group" id="gm-raw-group">
+                      <button class="pick-btn active" data-gm-raw="hide">不看</button>
+                      <button class="pick-btn" data-gm-raw="show">對照</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="gm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分組資料的平均數)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 下表是 \(20\) 位同學擲壘球距離的次數分配表。全班平均擲幾公尺？</p>
+            <div class="table-scroll quiz-fig">
+              <table class="sign-table">
+              <thead>
+                <tr><th>距離（公尺）</th><th>\(10\)～\(20\)</th><th>\(20\)～\(30\)</th><th>\(30\)～\(40\)</th><th>\(40\)～\(50\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>次數（人）</td><td>\(2\)</td><td>\(7\)</td><td>\(8\)</td><td>\(3\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-17" value="A"><span class="option-text">A. \(31\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-17" value="B"><span class="option-text">B. \(26\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-17" value="C"><span class="option-text">C. \(36\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-17" value="D"><span class="option-text">D. \(155\) 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。組中點依序是 \(15\)、\(25\)、\(35\)、\(45\)：
+              \[\begin{aligned} & 15 \times 2 + 25 \times 7 \\ &{}+ 35 \times 8 + 45 \times 3 \\ &= 620 \\ & 620 \div 20 = 31 \end{aligned}\]
+              B 錯：\(520 \div 20 = 26\)，用每一組的下限 \(10\)、\(20\)、\(30\)、\(40\) 代表整組。<br>
+              C 錯：\(720 \div 20 = 36\)，用每一組的上限代表整組。<br>
+              D 錯：\(620 \div 4 = 155\)，除以組數了，要除以總人數 \(20\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 下列關於「用分組的次數分配表算平均數」的敘述，何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-18" value="A"><span class="option-text">A. 算出來的平均數一定等於原始資料的平均數</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-18" value="B"><span class="option-text">B. 資料總和要除以組數</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-18" value="C"><span class="option-text">C. 每一組都用下限代表，算起來比較準</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-18" value="D"><span class="option-text">D. 每一組的總和用「組中點 × 次數」來估計</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。不知道每個人的原始資料，就讓組中點代表整組，每一組的總和估計為組中點 × 次數。<br>
+              A 錯：這是估計值，原始資料在組裡不一定平均分布，結果通常很接近但不一定相等。<br>
+              B 錯：要除以總次數（總人數），不是組數。<br>
+              C 錯：用下限代表，等於假設每個人都是組裡最小的數，平均一定偏低。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 中位數
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-to-dot" aria-hidden="true"></i> 重點 10：中位數——先排序，再取中間
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>平均數怕極端值</strong>：特別大或特別小的值會把平均數拉走。例：\(6\) 位同學的通勤時間是 \(8\)、\(10\)、\(12\)、\(12\)、\(15\)、\(65\) 分鐘，平均約 \(20.3\) 分鐘，比其中 \(5\) 個人都久，不像大家的樣子。</li>
+              <li><strong>中位數</strong>：把資料<strong>由小到大排好</strong>，取排在最中間的數。</li>
+              <li><strong>\(n\) 是奇數</strong>：中位數是第 \(\frac{n+1}{2}\) 個數。</li>
+              <li><strong>\(n\) 是偶數</strong>：中位數是第 \(\frac{n}{2}\) 個與第 \(\frac{n}{2}+1\) 個數的平均。</li>
+            </ul>
+
+            <p style="margin-top: 1rem; color: #cbd5e1;">例：\(12\)、\(5\)、\(9\)、\(20\)、\(7\)、\(15\)、\(11\) 排好是 \(5\)、\(7\)、\(9\)、\(11\)、\(12\)、\(15\)、\(20\)，共 \(7\) 個，中位數是第 \(4\) 個 \(11\)。再加入 \(30\) 變成 \(8\) 個：</p>
+            \[(11 + 12) \div 2 = 11.5\]
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>一定要先排序</strong>：沒排序就直接取中間，只是剛好站在中間的那一個。</li>
+              <li><strong>中位數不怕極端值</strong>：上面通勤時間的例子，中位數是 \((12 + 12) \div 2 = 12\) 分鐘，把 \(65\) 改成 \(95\) 也不會變。</li>
+            </ul>
+
+            <!-- 插圖（桌機生成後放入）：stat_median.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：排隊找中間</h3>
+            <p class="interactive-instruction">先看「照報名順序」時正中間的是誰，再按「由小到大排」找出真正的中位數。改變人數看奇數、偶數的取法；把最後一位的下數拉到特別大或特別小，看<strong>平均數</strong>與<strong>中位數</strong>誰被拉走：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-median" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="md-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">排列</span>
+                    <div class="btn-group" id="md-sort-group">
+                      <button class="pick-btn active" data-md-sort="raw">照報名順序</button>
+                      <button class="pick-btn" data-md-sort="sorted">由小到大排</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="md-n-slider">幾位同學：<span id="md-n-val" class="val-num">9</span></label>
+                    <input type="range" id="md-n-slider" min="5" max="10" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-x-slider"><span id="md-x-name">第 9 位</span>的下數：<span id="md-x-val" class="val-num">126</span></label>
+                    <input type="range" id="md-x-slider" min="60" max="260" value="126" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="md-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (中位數)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 資料 \(18, 7, 25, 12, 9, 31, 14, 22\) 的中位數是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-19" value="A"><span class="option-text">A. \(10.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-19" value="B"><span class="option-text">B. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-19" value="C"><span class="option-text">C. \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-19" value="D"><span class="option-text">D. \(18\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。先排序：\(7, 9, 12, 14, 18, 22, 25, 31\)，共 \(8\) 個，取第 \(4\) 個與第 \(5\) 個的平均：
+              \[(14 + 18) \div 2 = 16\]
+              A 錯：沒有排序，直接取原本的第 \(4\)、\(5\) 個 \(12\) 與 \(9\)，得到 \(10.5\)。<br>
+              B 錯：只取了第 \(4\) 個；偶數個資料要取中間兩個的平均。<br>
+              D 錯：只取了第 \(5\) 個。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> \(5\) 位同學一週的零用錢分別是 \(300\)、\(350\)、\(400\)、\(450\)、\(2500\) 元。要用一個數代表這 \(5\) 人的零用錢，下列何者<strong>最恰當</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-20" value="A"><span class="option-text">A. 平均數 \(800\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-20" value="B"><span class="option-text">B. 中位數 \(400\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-20" value="C"><span class="option-text">C. 平均數 \(400\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-20" value="D"><span class="option-text">D. 中位數 \(450\) 元</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。平均數是 \(4000 \div 5 = 800\) 元，可是 \(5\) 人裡有 \(4\) 人都不到 \(800\) 元，是 \(2500\) 這個極端值把平均拉高了。排好之後正中間的第 \(3\) 個是 \(400\) 元，比較能代表大部分的人。<br>
+              A 錯：數字算對了，但它被極端值拉走，不適合代表這群人。<br>
+              C 錯：平均數是 \(800\) 元，\(400\) 元是中位數。<br>
+              D 錯：\(450\) 是第 \(4\) 個，不在正中間。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 從次數表找中位數
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-stairs" aria-hidden="true"></i> 重點 11：從次數表找中位數——一列一列累加
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>不必一個一個寫出來</strong>：資料用次數表給出時，把次數<strong>由小到大一列一列累加</strong>。</li>
+              <li><strong>先定位置</strong>：算出總個數 \(n\)，中位數是第幾個（奇數一個位置、偶數兩個位置）。</li>
+              <li><strong>再找列</strong>：累加數<strong>第一次大於或等於</strong>那個位置的那一列，就是它所在的地方。</li>
+              <li><strong>未分組</strong>：答案是那一列的值；偶數個時兩個位置可能落在不同的兩列，要取兩個值的平均。</li>
+              <li><strong>已分組</strong>：不知道每個人確切的值，只能說中位數<strong>在哪一組</strong>。</li>
+            </ul>
+
+            <p style="margin-top: 1rem; color: #cbd5e1;">例：\(27\) 位同學一週運動的天數。\(27\) 是奇數，中位數是第 \((27 + 1) \div 2 = 14\) 個。</p>
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>天數（天）</th><th>\(1\)</th><th>\(2\)</th><th>\(3\)</th><th>\(4\)</th><th>\(5\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>人數（人）</td><td>\(3\)</td><td>\(6\)</td><td>\(8\)</td><td>\(7\)</td><td>\(3\)</td></tr>
+                <tr><td>累加</td><td>\(3\)</td><td>\(9\)</td><td>\(17\)</td><td>\(24\)</td><td>\(27\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+            <p style="margin-top: 0.75rem; color: #cbd5e1;">累加到 \(9\) 還不到第 \(14\) 個，到 \(17\) 就超過了，所以第 \(14\) 個在「\(3\) 天」那一列，中位數是 \(3\) 天。</p>
+
+            <!-- 插圖（桌機生成後放入）：stat_cumulate.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：累加量尺</h3>
+            <p class="interactive-instruction">用「＋」「−」改人數，看總人數、中位數的位置和累加數怎麼變。下方的長條把所有人由小到大排成一排，黃框就是中位數的位置。試著讓第 \(n/2\) 與第 \(n/2+1\) 個<strong>跨在兩列的交界</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cum" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cu-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">資料</span>
+                    <div class="btn-group" id="cu-mode-group">
+                      <button class="pick-btn active" data-cu-mode="value">未分組：進球數</button>
+                      <button class="pick-btn" data-cu-mode="group">已分組：立定跳遠</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cu-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (從次數表找中位數)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> \(30\) 位同學一週吃早餐的天數如下表。這群資料的中位數是幾天？</p>
+            <div class="table-scroll quiz-fig">
+              <table class="sign-table">
+              <thead>
+                <tr><th>天數（天）</th><th>\(3\)</th><th>\(4\)</th><th>\(5\)</th><th>\(6\)</th><th>\(7\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>人數（人）</td><td>\(4\)</td><td>\(5\)</td><td>\(6\)</td><td>\(9\)</td><td>\(6\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-21" value="A"><span class="option-text">A. \(5\) 天</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-21" value="B"><span class="option-text">B. \(6\) 天</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-21" value="C"><span class="option-text">C. \(15\) 天</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-21" value="D"><span class="option-text">D. \(5.5\) 天</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(30\) 是偶數，中位數是第 \(15\) 個與第 \(16\) 個的平均。累加依序是 \(4\)、\(9\)、\(15\)、\(24\)、\(30\)：第 \(15\) 個剛好是「\(5\) 天」那一列的最後一個，第 \(16\) 個已經到了「\(6\) 天」那一列。
+              \[(5 + 6) \div 2 = 5.5\]
+              A 錯：只取了第 \(15\) 個。<br>
+              B 錯：只取了第 \(16\) 個；\(6\) 天也是人數最多的天數，那是眾數。<br>
+              C 錯：\(15\) 是位置，不是天數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 某班坐姿體前彎的次數分配表如下。這群學生坐姿體前彎的中位數在哪一組？</p>
+            <div class="table-scroll quiz-fig">
+              <table class="sign-table">
+              <thead>
+                <tr><th>距離（公分）</th><th>\(15\)～\(20\)</th><th>\(20\)～\(25\)</th><th>\(25\)～\(30\)</th><th>\(30\)～\(35\)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>次數（人）</td><td>\(5\)</td><td>\(12\)</td><td>\(14\)</td><td>\(4\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-22" value="A"><span class="option-text">A. \(20\)～\(25\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-22" value="B"><span class="option-text">B. \(30\)～\(35\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-22" value="C"><span class="option-text">C. \(15\)～\(20\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-22" value="D"><span class="option-text">D. \(25\)～\(30\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。共 \(5 + 12 + 14 + 4 = 35\) 人，中位數是第 \((35 + 1) \div 2 = 18\) 個。累加依序是 \(5\)、\(17\)、\(31\)、\(35\)：到 \(17\) 還不到第 \(18\) 個，到 \(31\) 就超過了，所以第 \(18\) 個在 \(25\)～\(30\) 公分這一組。<br>
+              A 錯：累加到 \(17\) 就停下來了，但第 \(18\) 個已經進入下一組。<br>
+              B 錯：累加到 \(31\) 時已經超過第 \(18\) 個，不必再往下找。<br>
+              C 錯：這一組只有前 \(5\) 個人。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 眾數與三個代表值
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-crown" aria-hidden="true"></i> 重點 12：眾數——出現最多次的值，三個代表值怎麼選
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>眾數</strong>：一群資料中<strong>出現次數最多</strong>的值。</li>
+              <li><strong>不只一個</strong>：出現次數最多的值有兩種以上時，<strong>它們都是眾數</strong>。</li>
+              <li><strong>可以不是數值</strong>：最受歡迎的顏色、賣最好的尺寸都能用眾數描述，這時平均數與中位數算不出來。例：班服尺寸 S \(5\) 件、M \(12\) 件、L \(9\) 件、XL \(4\) 件，眾數是 M。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>代表值</th><th>怎麼找</th><th>怕極端值嗎</th><th>適合的時候</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>平均數</td><td>總和 ÷ 個數</td><td class="sign-neg">怕</td><td>資料沒有極端值</td></tr>
+                <tr><td>中位數</td><td>排序後取中間</td><td class="sign-pos">不怕</td><td>資料有極端值</td></tr>
+                <tr><td>眾數</td><td>出現最多次的值</td><td class="sign-pos">不怕</td><td>某個值特別多，或資料不是數值</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <!-- 插圖（桌機生成後放入）：stat_mode.webp -->
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：三個代表值比較台</h3>
+            <p class="interactive-instruction">每個點代表一位同學。選一組資料，或點欄位自己加減點，看<strong>眾數</strong>（紅底）、<strong>中位數</strong>（黃色菱形）、<strong>平均數</strong>（藍色三角形）落在哪裡。切到「顏色投票」，看哪些代表值算不出來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mode" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mo-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">資料</span>
+                    <div class="btn-group" id="mo-set-group">
+                      <button class="pick-btn active" data-mo-set="sym">左右對稱</button>
+                      <button class="pick-btn" data-mo-set="extreme">有極端值</button>
+                      <button class="pick-btn" data-mo-set="two">兩個眾數</button>
+                      <button class="pick-btn" data-mo-set="color">顏色投票</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">點一下欄位</span>
+                    <div class="btn-group" id="mo-tool-group">
+                      <button class="pick-btn active" data-mo-tool="add">加一個</button>
+                      <button class="pick-btn" data-mo-tool="remove">減一個</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mo-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (眾數與三個代表值)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-23">
+            <p class="quiz-question"><strong>Q23.</strong> \(9\) 位同學的鞋號是 \(23, 24, 24, 25, 22, 24, 23, 25, 23\)。這群資料的眾數是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-23" value="A"><span class="option-text">A. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-23" value="B"><span class="option-text">B. \(23\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-23" value="C"><span class="option-text">C. \(23\) 與 \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-23" value="D"><span class="option-text">D. 沒有眾數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。數一數每個鞋號出現幾次：\(22\) 號 \(1\) 次、\(23\) 號 \(3\) 次、\(24\) 號 \(3\) 次、\(25\) 號 \(2\) 次。最多的是 \(3\) 次，有 \(23\) 與 \(24\) 兩種，<strong>兩個都是眾數</strong>。<br>
+              A、B 錯：只找到其中一個；出現次數一樣多的都要算進去。<br>
+              D 錯：有兩個眾數，不是沒有眾數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-24">
+            <p class="quiz-question"><strong>Q24.</strong> 關於資料 \(6, 8, 8, 9, 10, 10, 10, 35\)，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-24" value="A"><span class="option-text">A. 平均數是 \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-24" value="B"><span class="option-text">B. 中位數是 \(9.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-24" value="C"><span class="option-text">C. 眾數是 \(35\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-24" value="D"><span class="option-text">D. 平均數比中位數小</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。資料已經排好，共 \(8\) 個，中位數是第 \(4\) 個與第 \(5\) 個的平均：\((9 + 10) \div 2 = 9.5\)。<br>
+              A 錯：平均數是 \(96 \div 8 = 12\)；\(10\) 是眾數。<br>
+              C 錯：\(35\) 只出現 \(1\) 次，它是極端值；出現最多次的是 \(10\)。<br>
+              D 錯：\(35\) 把平均數拉高到 \(12\)，比中位數 \(9.5\) 大。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 統計圖表與資料分析速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>長條圖</strong>比較各類別的數量；<strong>折線圖</strong>看隨時間的變化趨勢。縱軸有省略時要看刻度。</li>
+              <li><strong>圓形圖</strong>：百分率＝部分 ÷ 總數 × \(100\%\)，圓心角＝\(360^\circ\) × 百分率。</li>
+              <li><strong>列聯表</strong>：兩種屬性交叉分類；合計可以推回空格、核對總計；兩群人數不同時比比例。</li>
+              <li><strong>次數分配表</strong>：每一組含下限、不含上限，滿分歸最後一組；合計等於總個數。</li>
+              <li><strong>直方圖</strong>：長方形緊緊相連；跨組的範圍要把各組加起來。</li>
+              <li><strong>次數分配折線圖</strong>：點畫在（組中點, 次數）；是直方圖上緣中點的連線。</li>
+              <li><strong>平均數</strong>＝總和 ÷ 個數；可用基準差距法；總和＝平均數 × 個數。</li>
+              <li><strong>次數表的平均數</strong>：值 × 次數再相加，除以<strong>總次數</strong>；計算機用 M+ 累加、MR 叫出。</li>
+              <li><strong>分組資料的平均數</strong>：用組中點 × 次數估計總和，是估計值。</li>
+              <li><strong>中位數</strong>：先排序；奇數取第 \(\frac{n+1}{2}\) 個，偶數取中間兩個的平均；不怕極端值。</li>
+              <li><strong>從次數表找中位數</strong>：累加數第一次大於或等於位置的那一列；分組資料只說在哪一組。</li>
+              <li><strong>眾數</strong>：出現最多次的值，可以不只一個，也可以不是數值。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-basketball"></i> 回到籃球場：比平均少，就是最差的嗎？</h4>
+              <h5><i class="fa-solid fa-person-running"></i> 小葵的 4 球</h5>
+              <p>這一組的進球數是 \(3, 4, 4, 4, 10\)：總和是 \(25\) 球，平均數 \(25 \div 5 = 5\) 球；排好之後正中間的<strong>中位數是 \(4\) 球</strong>，出現最多次的<strong>眾數也是 \(4\) 球</strong>。小葵的成績剛好在正中間，也是最多人的成績——她不是最差的，平均會是 \(5\)，是因為校隊同學一個人進了 \(10\) 球，把平均拉高了。</p>
+              <h5><i class="fa-solid fa-scale-balanced"></i> 三個代表值各有用處</h5>
+              <p>平均數用上每一個資料，最常被引用，但<strong>怕極端值</strong>；中位數只看位置，不怕極端值；眾數看最多人的值，連不是數字的資料也能用。下次在新聞裡看到「平均」，先想一想：這群資料裡有沒有特別大或特別小的數？</p>
+              <h5><i class="fa-solid fa-flag"></i> 第 5 章完結</h5>
+              <p>第 5 章只有這一節。下一章換到幾何，學習<strong>垂直、線對稱與三視圖</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

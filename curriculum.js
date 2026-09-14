@@ -73,7 +73,7 @@
       {
         "chapter": "第5章 統計",
         "sections": [
-          { "code": "5-1", "title": "統計圖表與資料分析" }
+          { "code": "5-1", "title": "統計圖表與資料分析", "status": "completed" }
         ]
       },
       {
