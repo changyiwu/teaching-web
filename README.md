@@ -43,7 +43,7 @@
 ## 📂 檔案結構
 
 ```text
-c:\Users\chang\我的雲端硬碟\agents\teaching-web\
+teaching-web/
 ├── index.html          # 主網頁結構與版面佈局
 ├── style.css           # 設計系統、磨砂玻璃樣式與響應式 CSS
 ├── script.js           # 時鐘、分頁、搜尋篩選、自訂書籤與課程渲染邏輯
