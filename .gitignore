@@ -36,3 +36,7 @@ tools/_shots/
 
 # 本機 ComfyUI 生圖用的提示詞與輪次紀錄，只留在雲端硬碟，不進 repo
 comfyui/
+
+# Python 位元碼快取（本機產物）
+__pycache__/
+*.pyc

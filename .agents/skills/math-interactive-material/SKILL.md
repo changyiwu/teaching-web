@@ -14,12 +14,31 @@ description: 當使用者提供國中/高中數學教材、PDF、Word 檔，或�
   2. 確保專案具備全域的 `index.html` 入口及 `background.png` 資源。
 
 ## 2. 檔案解析與文本提取工作流
-* **對於 PDF 檔案**：
-  * 使用 Python 腳本（依賴 `PyMuPDF` / `fitz` 庫）提取全文字元。
-  * 將提取出的文本以 `utf-8` 編碼寫入臨時文字檔，以避免主控台編碼錯誤（如 Windows CP950 錯誤）。
-* **對於 Word 舊格式 (.doc)**：
-  * **關鍵注意**：為避免虛擬硬碟（如 Google Drive）網路串流延遲導致 Word COM 程式當掉，必須先將 `.doc` 複製到本地臨時目錄。
-  * 使用 `win32com.client.Dispatch("Word.Application")` 開啟檔案（設定 `Encoding=950` 繁體中文），另存為 XML 標準格式的 `.docx`，再解析 `word/document.xml` 讀取文字。
+
+**一律用 `tools/extract_material_text.py`，不要自己現寫抽取程式碼。**
+三種格式（`.pdf`／`.docx`／`.doc`）走同一個入口，輸出一律是 UTF-8 文字檔。
+
+```powershell
+$PY = & (Join-Path $HOME '.claude/skills/file-toolkit/scripts/ensure_env.ps1') | Select-Object -Last 1
+& $PY tools/extract_material_text.py "<教材檔路徑>" --out "<輸出>.txt"
+```
+
+腳本內部已處理掉三個會咬人的點，不必在這裡重述做法：
+
+* **輸出寫檔、訊息只用 ASCII**——Windows 主控台是 cp950，中文 `print` 會爛掉
+  （同〈工作約定〉那三條）。
+* **先把檔案複製到本機暫存再處理**——雲端硬碟是網路串流掛載，直接開上面的
+  檔案會卡死。
+* **`.doc`（Word 97-2003 二進位格式）依平台分流**：Windows 用 win32com 驅動
+  桌面版 Word 另存 `.docx`；**macOS 用系統內建的 `textutil`**，不必裝 Word
+  for Mac、也不必裝任何東西。兩者皆無時腳本會明確報錯並說明缺什麼，**不會
+  靜默降級**。
+
+> **刻意不用 LibreOffice 轉檔。** `cross-device-agent-skills/platform.md`
+> 把這條列為明文規則：`soffice` 在 Windows 會因 `socket.AF_UNIX` 直接
+> `AttributeError`，而且它替換字型。這個理由在 macOS 一樣成立。
+
+掃描型 PDF 抽不到文字時腳本會報錯而不是回空字串；要先做 OCR，見 `file-toolkit` 技能。
 
 ## 3. 引起動機與重點概念結構化
 分析提取出的教材文字，將其規劃為**課前引起動機**與數個**概念重點區塊**：

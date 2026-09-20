@@ -90,6 +90,7 @@ teaching-web/
 ├─ tools/                  # 驗收用小工具（不是網站的一部分）
 │  ├─ nostore.py           # 送 Cache-Control: no-store 的靜態伺服器（預設埠 8765）
 │  └─ shots.py             # 收 canvas toDataURL 存成 PNG（預設埠 8766，輸出 tools/_shots/）
+│  └─ extract_material_text.py  # 教材檔（.pdf/.docx/.doc）→ UTF-8 文字；.doc 依平台分流
 ├─ comfyui/                # 本機 ComfyUI 生圖的提示詞、每輪 seed，依節分資料夾（gitignore，只走雲端硬碟）；2-4-1 起另附 API 工作流程 workflow_api.json 與送件腳本 gen.py
 ├─ wordcloud.html          # 即時協作文字雲（Firebase；全域技能模板產生）
 ├─ README.md
@@ -154,7 +155,10 @@ teaching-web/
 - **`math-canvas.js` 的 `wbrEq()` 吃的是裸 LaTeX，不要自己包 `\( \)`**：它自己會把每一段包成 `\( … \)`，先包好再傳進去會長出 `\( \(x \)<wbr>\( {}= 24\) \)` 這種巢狀定界符，MathJax 不會報錯、console 也乾淨，畫面上只是多出幾個怪括號，很容易一路帶到上線。**同一類的還有 `drawChip` 的第 7 個參數**：它是 `bg` 色字串（`'rgba(…)'`），不是 alpha 數字，傳 `0.22` 進去會被當成無效色而靜默吃掉。改用共用檔的函式前先看一眼它的簽章，不要照著別的函式的參數順序猜。**回傳值的形狀也要看**：`drawStepRows` 的 `rows[].items` 吃的是**陣列**，而 `inkItems()` 回傳的是單一元件（`SEQ` 物件），直接塞進去會在載入時就丟 `items.forEach is not a function`、整頁互動全滅；既有頁面都寫成 `items: [inkItems(...)]`，照抄即可
 - **挑生圖候選時「比例」要量，不要用目視**：`2-1-3` 的 `ticket_reject` 要「右邊那張只有左邊兩張的一半寬」，我目視判定某張候選是 0.85 倍而差點淘汰它，**實測是 0.48**——正好就是要的一半。畫面的透視與傾斜會讓眼睛嚴重失準，尤其是斜放在檯面上的物件。作法是用亮度門檻掃出每一欄的前景像素數，取連續區段當物件邊界再算寬度比（紙張在深色木頭上實測 `r>190 and g>160 and b>90` 可用；**不要三通道共用一個門檻**，暖色紙的藍通道只有 120 左右）。這是〈開發約束 28〉「逐項比對外形」的量化版
 - 驗收 Canvas 不要用 JS 硬撐 `canvas` 的 CSS 寬度來放大（會撐破版面、截圖全黑）；改為把視窗縮到 992px 以下讓版面轉單欄，或直接讀 canvas 像素判斷內容有無溢出邊界
-- 本機沒有安裝 `PyMuPDF`／`Pillow`；PDF 與圖片處理一律走 `file-toolkit` 技能建好的共用環境：`C:\Users\chang\AppData\Local\file-toolkit\.venv\Scripts\python.exe`
+- 本機沒有安裝 `PyMuPDF`／`Pillow`；PDF 與圖片處理一律走 `file-toolkit` 技能建好的共用環境。**取直譯器路徑一律問 `ensure_env.ps1`，不要寫死**——venv 的位置兩個平台不同（Windows 在 `%LOCALAPPDATA%`、macOS 在 `~/.local/share`），寫死等於保證有一邊會壞：
+  ```powershell
+  $PY = & (Join-Path $HOME '.claude/skills/file-toolkit/scripts/ensure_env.ps1') | Select-Object -Last 1
+  ```
 - **Bash 工具的 heredoc 會把反斜線減半**——不只正規表示式，**LaTeX（`\frac`、`\left`）、CSS 註解、Windows 路徑一律中招**：`\frac` 會變成換頁字元＋`rac` 寫進檔案裡，而且 Python 只會發 SyntaxWarning 不會擋下來。任何含反斜線的內容都不要用 `cat <<'EOF'` 寫檔，也不要塞進 `python -c '...'` 的單行指令（**同樣會減半**），一律改用 Write 工具落檔再執行
 - **量版面溢出前先確認 `innerWidth` 不是 0**：預覽窗格尚未配置版面時所有 `getBoundingClientRect()` 都會回 0，掃描程式會回報幾千個假溢出。先 `resize_window` 指定寬度、確認 `innerWidth` **等於預期的那個數字**再量——不是「非 0 就好」：`resize_window` 之後若沒重新載入或沒等版面穩定，量到的可能還是上一檔寬度，2026-09-04 就有一輪 111 個狀態是在錯的寬度下掃的（`.value-display` 量到 215px，實際只有 166px），整輪等於白量。掃描迴圈開頭直接 `if (innerWidth !== 預期) throw`，讓它壞在明處
 - **掃描時要略過 `display: none` 的元素，並記得先把解析框展開**：未作答的 `.explanation-box` 是 `display: none`，`getBoundingClientRect()` 全回 0，會被誤判成「向左溢出一個卡片寬」——`1-3-2` 第一輪就這樣收到 90 筆一模一樣的假溢出。掃描前先 `style.display = 'block'` 展開全部解析框（裡面的算式本來就要量），並在迴圈裡跳過 `r.width === 0 || r.height === 0`
