@@ -15,7 +15,7 @@
 ## 目標與路線圖
 
 - [x] 階段一：首頁與 58 個教材頁骨架、GitHub Pages 自動部署
-- [x] 階段二：規則統一為跨 Agent `agents.md`
+- [x] 階段二：規則統一為跨 Agent `AGENTS.md`
 - [x] 階段三：共用元件抽出——`curriculum.js`、`annotate.css/js`、`tools-sidebar.css/js`、`lesson-nav.css/js`、`materials/pending.css`
 - [x] 階段四：小節完成狀態改為資料驅動；首頁新增跨冊搜尋與狀態篩選；修好「新增連結」自訂書籤
 - [x] 階段五：教材圖片全面轉 WebP（11.4MB → 0.89MB）
@@ -93,7 +93,7 @@ teaching-web/
 ├─ comfyui/                # 本機 ComfyUI 生圖的提示詞、每輪 seed，依節分資料夾（gitignore，只走雲端硬碟）；2-4-1 起另附 API 工作流程 workflow_api.json 與送件腳本 gen.py
 ├─ wordcloud.html          # 即時協作文字雲（Firebase；全域技能模板產生）
 ├─ README.md
-├─ agents.md               # 本檔：專案藍圖
+├─ AGENTS.md               # 本檔：專案藍圖
 ├─ handoff.md              # 交接檔（每次收工必更新）
 ├─ .agents/skills/math-interactive-material/SKILL.md
 └─ .gitignore
@@ -103,7 +103,7 @@ teaching-web/
 
 | 層級 | 平台 | 位置 | 讀取時機 |
 |------|------|------|---------|
-| L1 | 本地（GDrive） | `agents.md`＋`handoff.md` | 每個 session |
+| L1 | 本地（GDrive） | `AGENTS.md`＋`handoff.md` | 每個 session |
 | L2 | GitHub | https://github.com/changyiwu/teaching-web （公開，push `main` 自動部署 Pages） | 指定時 |
 | L3 | Obsidian | `teaching-web/專案工作流程.md` | 有需要時 |
 
@@ -112,7 +112,7 @@ teaching-web/
 | 檔案 | 時效 | 寫入方式 | 放什麼 |
 |------|------|---------|--------|
 | `handoff.md` | **只對下一個 session 有效**，過期即丟 | 每次收工整份重寫 | 做到哪、下一步、**這次**的暫時 workaround |
-| `agents.md`（本檔） | **長期有效**，每個 session 都適用 | 只有規則本身變了才改 | 目標、路線圖、常設規則、結構 |
+| `AGENTS.md`（本檔） | **長期有效**，每個 session 都適用 | 只有規則本身變了才改 | 目標、路線圖、常設規則、結構 |
 | Obsidian／`git log` | **歷史**：發生過什麼、為什麼 | 只增不刪 | 決策紀錄、踩坑完整版、逐次進度 |
 
 驗收標準：**`handoff.md` 整份刪掉，不應損失任何長期資訊**——會的話代表該升級進本檔卻沒升級。

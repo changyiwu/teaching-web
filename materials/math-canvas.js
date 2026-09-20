@@ -25,7 +25,7 @@ const MUTED = '#94a3b8';
 const INK = '#cbd5e1';
 const DIM = '#64748b';
 
-// canvas 上自己畫的指數要留的字距（agents.md 開發約束 11）
+// canvas 上自己畫的指數要留的字距（AGENTS.md 開發約束 11）
 const POW_KERN = 0.17;
 
 function f(weight, size) {
@@ -468,7 +468,7 @@ function eqLine(leftItems, rightItems, color) {
 }
 
 // 把一整條算式在每個「頂層關係／加減運算子」前斷開，接成多段 \( \)，
-// 中間用零寬的 <wbr>（agents.md 開發約束 24）。mjx-container 是不折行的
+// 中間用零寬的 <wbr>（AGENTS.md 開發約束 24）。mjx-container 是不折行的
 // inline-block，整條包成一段時窄螢幕會直接溢出互動卡；斷成多段才換得了行。
 //   - 後段以 {} 開頭，運算子才維持二元運算子的字距
 //   - 接合用 <wbr> 而不是空白，寬螢幕的排版與整條包成一段時逐像素相同

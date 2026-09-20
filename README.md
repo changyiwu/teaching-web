@@ -57,7 +57,7 @@ teaching-web/
 │   ├── 1-1-2/          # 第一冊 1-2「整數的加減」互動網頁
 │   └── 1-1-3~6-3-1/    # 其餘小節「待施工」佔位網頁
 ├── .agents/            # 專案自訂技能設定（存放 math-interactive-material 技能）
-├── agents.md          # 跨 Agent 開發規則與開收工指南
+├── AGENTS.md          # 跨 Agent 開發規則與開收工指南
 ├── README.md           # 專案說明書
 └── .gitignore          # Git 忽略設定檔
 ```
