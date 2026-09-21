@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2-3-2 圖片模型品質比較</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b111b;
+      --panel: #151e2d;
+      --panel-2: #0f1724;
+      --ink: #eef3fa;
+      --muted: #9eacbf;
+      --line: rgba(255, 255, 255, .12);
+      --local: #f0a45b;
+      --openai: #72d6bd;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(240, 164, 91, .12), transparent 34rem),
+        radial-gradient(circle at 88% 0%, rgba(114, 214, 189, .1), transparent 34rem),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    header, main { width: min(1500px, calc(100% - 32px)); margin-inline: auto; }
+    header { padding: 42px 0 24px; }
+    h1 { margin: 0 0 8px; font-size: clamp(1.7rem, 3vw, 2.8rem); }
+    header p { margin: 0; color: var(--muted); max-width: 78ch; }
+
+    .method {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 22px 0 32px;
+    }
+    .method div {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(21, 30, 45, .8);
+    }
+    .method strong { display: block; margin-bottom: 4px; }
+    .method span { color: var(--muted); font-size: .93rem; }
+
+    .pair-card {
+      margin: 0 0 32px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(21, 30, 45, .9);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, .24);
+    }
+    .pair-card h2 { margin: 0 0 14px; font-size: 1.2rem; }
+    .pair-scroll { overflow-x: auto; padding-bottom: 4px; }
+    .pair {
+      min-width: 700px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    figure {
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel-2);
+    }
+    figure.local { box-shadow: inset 0 3px 0 var(--local); }
+    figure.openai { box-shadow: inset 0 3px 0 var(--openai); }
+    figcaption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 13px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    figcaption strong { color: var(--ink); }
+    figure.local figcaption strong { color: var(--local); }
+    figure.openai figcaption strong { color: var(--openai); }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: zoom-in;
+      background: #0a0f18;
+    }
+
+    dialog {
+      width: min(96vw, 1500px);
+      max-height: 96vh;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #080d15;
+      color: var(--ink);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, .7);
+    }
+    dialog::backdrop { background: rgba(0, 0, 0, .82); }
+    dialog img { max-height: 88vh; object-fit: contain; cursor: zoom-out; }
+    dialog p { margin: 0; padding: 10px 14px; color: var(--muted); }
+
+    footer { padding: 8px 0 48px; color: var(--muted); }
+    footer a { color: var(--openai); }
+
+    @media (max-width: 760px) {
+      .method { grid-template-columns: 1fr; }
+      .pair-card { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>2-3-2 「正比與反比」圖片模型比較</h1>
+    <p>左側是原本的本地 Z-Image Turbo 版本，右側是使用 Codex 內建生圖、以相同場景規格獨立生成並已套用到正式教材的版本。點圖可放大。</p>
+    <section class="method" aria-label="比較方法">
+      <div><strong>同一教材概念</strong><span>場景、人物、關鍵道具與構圖目標一致。</span></div>
+      <div><strong>同一輸出規格</strong><span>插圖 640×640 WebP q75；漫畫 1080×1350 WebP q85。</span></div>
+      <div><strong>建議觀察</strong><span>角色一致性、手指、器材關係、風格質感、構圖與假字污染。</span></div>
+    </section>
+  </header>
+
+  <main>
+    <section class="pair-card"><h2>01．課前暖身漫畫：火車圈數、速度與時間</h2><div class="pair-scroll"><div class="pair">
+       <figure class="local"><img src="local/motivation_comic.webp" alt="本地模型版暖身漫畫"><figcaption><strong>本地 Z-Image Turbo</strong><span>原本版本</span></figcaption></figure>
+      <figure class="openai"><img src="openai/motivation_comic_v4.webp" alt="Codex 內建生圖版暖身漫畫修正版"><figcaption><strong>Codex 內建生圖</strong><span>現行教材</span></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>02．比值固定：模型屋與薄木片</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_floor.webp" alt="本地模型版模型屋與薄木片"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_floor.webp" alt="Codex 內建生圖版模型屋與薄木片"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>03．正比判斷：四個相同木箱與記錄</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_check.webp" alt="本地模型版木箱記錄"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_check.webp" alt="Codex 內建生圖版木箱記錄"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>04．求正比常數：量木條與記錄</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_find.webp" alt="本地模型版量木條"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_find.webp" alt="Codex 內建生圖版量木條"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>05．正比應用：模型火車計時</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_train.webp" alt="本地模型版火車計時"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_train.webp" alt="Codex 內建生圖版火車計時"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>06．趨勢不等於正反比：未排好的木片</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_ponder.webp" alt="本地模型版木片思考"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_ponder.webp" alt="Codex 內建生圖版木片思考"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>07．反比情境：把油漆分進四個罐子</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_pour.webp" alt="本地模型版少女倒漆"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_pour.webp" alt="Codex 內建生圖版少女倒漆"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>08．反比判斷：共同記錄與思考</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_notes.webp" alt="本地模型版共同記錄"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_notes.webp" alt="Codex 內建生圖版共同記錄"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>09．反比求值：兩人同時替模型屋上漆</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_team.webp" alt="本地模型版共同上漆"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_team.webp" alt="Codex 內建生圖版共同上漆"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>10．固定哪個量：門框量身高</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_height.webp" alt="本地模型版門框量身高"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_height.webp" alt="Codex 內建生圖版門框量身高"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <section class="pair-card"><h2>11．反比應用：同一圈鐵道上的兩台火車</h2><div class="pair-scroll"><div class="pair">
+      <figure class="local"><img src="local/prop_loop.webp" alt="本地模型版環形鐵道"><figcaption><strong>本地 Z-Image Turbo</strong></figcaption></figure>
+      <figure class="openai"><img src="openai/prop_loop.webp" alt="Codex 內建生圖版環形鐵道"><figcaption><strong>Codex 內建生圖</strong></figcaption></figure>
+    </div></div></section>
+
+    <footer>完整提示詞與修圖紀錄收在 <a href="openai/prompts.md">openai/prompts.md</a>；比較頁使用最佳化後的 WebP。</footer>
+  </main>
+
+  <dialog id="viewer"><img alt=""><p></p></dialog>
+  <script>
+    const viewer = document.getElementById('viewer');
+    const largeImage = viewer.querySelector('img');
+    const caption = viewer.querySelector('p');
+    document.querySelectorAll('figure img').forEach((img) => {
+      img.addEventListener('click', () => {
+        largeImage.src = img.src;
+        largeImage.alt = img.alt;
+        caption.textContent = img.closest('figure').querySelector('strong').textContent + ' · ' + img.alt;
+        viewer.showModal();
+      });
+    });
+    viewer.addEventListener('click', () => viewer.close());
+  </script>
+</body>
+</html>
