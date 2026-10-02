@@ -4,39 +4,1265 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-2 多項式與其加減運算 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-2 多項式與其加減運算 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第1章 乘法公式與多項式</div>
-    <h1>1-2 多項式與其加減運算</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第一章</span>
+        <h1>1-2 多項式與其加減運算</h1>
+        <p>上一節用布塊拼出了乘法公式。這一節換個角度看同一張工作桌：桌上的布塊有三種尺寸——邊長 \(x\) 的大方布、\(x \times 1\) 的長條、\(1 \times 1\) 的小方布，拼起來的面積就是 \(x\) 的<strong>多項式</strong>。我們要認識多項式的<strong>項、係數與次數</strong>，學會<strong>升冪、降冪</strong>排列，再用「同樣大小的布才能合起來」的想法做多項式的<strong>加法與減法</strong>。</p>
+      </div>
+      <!-- Progress navigation (10 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-shapes"></i> 多項式</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-tags"></i> 項與係數</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-stairs"></i> 次數</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-sliders"></i> 係數條件</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-arrow-down-wide-short"></i> 升冪降冪</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-layer-group"></i> 同類項</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-table-columns"></i> 直式與缺項</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-minus"></i> 減法</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-box-open"></i> 混合運算</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-puzzle-piece"></i> 反求多項式</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Patchwork Workshop)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(251, 113, 133, 0.25);">
+        <h2 class="section-title" style="color: #fda4af; border-bottom-color: rgba(253, 164, 175, 0.2);">
+          <i class="fa-solid fa-scissors" aria-hidden="true" style="color: #fda4af; text-shadow: 0 0 10px rgba(251, 113, 133, 0.4);"></i> 課前暖身漫畫：一共 12 塊布？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小禾和阿森各剪了一些布塊：有<strong style="color:#fda4af">大方布</strong>、<strong style="color:#fcd34d">長條</strong>，也有<strong style="color:#5eead4">小方布</strong>。小禾想知道兩人合起來有多少布，數了數說：「一共 \(12\) 塊！」阿森卻搖頭——這 \(12\) 塊大小都不一樣，可以直接加在一起嗎？這一節學完<strong style="color:#fda4af">同類項</strong>，就知道該怎麼數。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="拼布手作工坊風四格漫畫：小禾和阿森各自在工作桌上排了邊長 x 的玫瑰紅大方布、芥末黃長條與薄荷綠小方布；小禾數完說兩人一共 12 塊布，阿森指出大小不一樣的布不能直接相加，要把同樣大小的放在一起數。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 多項式的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shapes" aria-hidden="true"></i> <span>重點 1：多項式的意義——\(x\) 只做加法與乘法</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>三種布塊</strong>：邊長 \(x\) 的大方布，面積是 \(x^2\)；長 \(x\)、寬 \(1\) 的長條，面積是 \(x\)；邊長 \(1\) 的小方布，面積是 \(1\)。用它們拼成的圖形，面積都能寫成像 \(x^2 + 2x + 3\)、\(3x^2\)、\(2x\) 這樣的式子。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              由數和文字符號 \(x\) 進行<strong>加法</strong>與<strong>乘法</strong>運算所構成的式子，稱為 \(x\) 的<strong>多項式</strong>。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>減法與「除以一個數」也可以</strong>：減一個數就是加上它的相反數，除以一個數就是乘上它的倒數，所以下面這些都是 \(x\) 的多項式：
+                \[\begin{aligned} \frac{1}{2}x - 3 &= \frac{1}{2} \cdot x + (-3) \\ -x^2 &= (-1) \cdot x \cdot x \\ 4 &= 0 \cdot x + 4 \end{aligned}\]</li>
+              <li><strong>不是多項式的情形</strong>：\(x\) 出現在<strong>分母</strong>或<strong>絕對值符號</strong>裡，例如 \(\frac{1}{x - 2}\)、\(|x|\)，就不是 \(x\) 的多項式。</li>
+              <li><strong>看的是 \(x\) 的位置</strong>：分母或絕對值裡如果只有數字，例如 \(\frac{3x}{4}\)、\(|-3|x\)，一樣是多項式。要問的是「\(x\) 有沒有跑進分母或絕對值裡」，不是「式子裡有沒有分數線或絕對值」。</li>
+              <li>本節的多項式只有一個文字符號 \(x\)，像 \(xy + 3y\) 這種含兩個文字的式子先不討論。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="poly_tiles.webp" alt="拼布手作工坊風插圖：綠色切割墊上整齊排著三種布塊——兩塊玫瑰紅的大正方形、三條芥末黃的長條、四塊薄荷綠的小正方形，長條的長度和大正方形的邊一樣長；小禾指著布塊，阿森拿捲尺量大正方形的邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：多項式檢查站</h3>
+            <p class="interactive-instruction">點選一個式子。檢查站會看 \(x\) 有沒有跑進<strong>分母</strong>或<strong>絕對值</strong>裡，再判斷它是不是 \(x\) 的多項式：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-check" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要檢查的式子</span>
+                    <div class="btn-group" id="pc-cand-group">
+                      <button class="pick-btn active" data-pc="c1">\(\frac{1}{3}x + 2\)</button>
+                      <button class="pick-btn" data-pc="c2">\(-2x^2 + x\)</button>
+                      <button class="pick-btn" data-pc="c3">\(5\)</button>
+                      <button class="pick-btn" data-pc="c4">\(\frac{x}{4} - 1\)</button>
+                      <button class="pick-btn" data-pc="c5">\(\frac{2}{x} + 1\)</button>
+                      <button class="pick-btn" data-pc="c6">\(|x| + 3\)</button>
+                      <button class="pick-btn" data-pc="c7">\(\frac{1}{x + 1}\)</button>
+                      <button class="pick-btn" data-pc="c8">\(|-3|x - 1\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多項式的意義)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一個式子<strong>不是</strong> \(x\) 的多項式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-1" value="A"><span class="option-text">A. \(\frac{x - 1}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-1" value="B"><span class="option-text">B. \(-x^2 + 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-1" value="C"><span class="option-text">C. \(\frac{6}{x^2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-1" value="D"><span class="option-text">D. \(0.5x\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\frac{6}{x^2}\) 是「\(6\) 除以 \(x^2\)」，\(x\) 在分母裡，所以不是多項式。<br>
+              A 是多項式：\(\frac{x - 1}{2} = \frac{1}{2}x - \frac{1}{2}\)，分母只有數字 \(2\)。<br>
+              B 是多項式：\(-x^2 + 6 = (-1) \cdot x \cdot x + 6\)。<br>
+              D 是多項式：\(0.5x = 0.5 \cdot x\)，係數可以是小數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 小禾說：「只要式子裡有分數線或絕對值符號，就一定不是 \(x\) 的多項式。」下列哪一個式子可以說明她的說法<strong>是錯的</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-2" value="A"><span class="option-text">A. \(\frac{1}{x}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-2" value="B"><span class="option-text">B. \(|x| - 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-2" value="C"><span class="option-text">C. \(\frac{x}{x + 2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-2" value="D"><span class="option-text">D. \(\frac{x}{2} + |-5|\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\frac{x}{2} + |-5| = \frac{1}{2}x + 5\)，有分數線也有絕對值，卻是 \(x\) 的多項式——分母與絕對值裡都只有數字，\(x\) 沒有跑進去。<br>
+              A、C 的 \(x\) 在分母裡，B 的 \(x\) 在絕對值裡，這三個都不是多項式，正好<strong>符合</strong>小禾的說法，舉它們說明不了她錯。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 項、係數與常數項
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-tags" aria-hidden="true"></i> 重點 2：項、係數與常數項——負號是係數的一部分
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>項</strong>：在 \(7x^2 + x + 5\) 中，被加號隔開的每一部分 \(7x^2\)、\(x\)、\(5\)，都叫做這個多項式的<strong>項</strong>。</li>
+              <li><strong>係數</strong>：\(7x^2\) 是<strong>二次項</strong>（\(x^2\) 項），係數是 \(7\)；\(x\) 是<strong>一次項</strong>（\(x\) 項），係數是 \(1\)，\(1\) 省略不寫；\(5\) 是<strong>常數項</strong>，也叫零次項。</li>
+              <li><strong>有減號時先改寫成加法</strong>：減號連同後面的數，一起變成那一項的係數：
+                \[\begin{aligned} & 5x^3 - 3x^2 + 1 \\ &= 5x^3 + (-3)x^2 + 0x + 1 \end{aligned}\]
+                所以 \(x^2\) 項的係數是 \(-3\)，不是 \(3\)。</li>
+              <li><strong>沒出現的項，係數是 \(0\)</strong>：上式沒有 \(x\) 項，可以看成 \(0 \cdot x\)，所以 \(x\) 項的係數是 \(0\)。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>多項式</th><th>\(x^3\) 項係數</th><th>\(x^2\) 項係數</th><th>\(x\) 項係數</th><th>常數項</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(5x^3 - 3x^2 + 1\)</td><td>\(5\)</td><td>\(-3\)</td><td>\(0\)</td><td>\(1\)</td></tr>
+                <tr><td>\(-x^2 + 4x\)</td><td>\(0\)</td><td>\(-1\)</td><td>\(4\)</td><td>\(0\)</td></tr>
+                <tr><td>\(x^3 - 7\)</td><td>\(1\)</td><td>\(0\)</td><td>\(0\)</td><td>\(-7\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="poly_tags.webp" alt="拼布手作工坊風插圖：工坊牆上的掛桿掛著四捲不同花色的布，每一捲都綁著一張空白的牛皮紙吊牌；阿森正把一張吊牌綁上布捲，小禾拿著鉛筆在旁邊看。吊牌上沒有任何數字或文字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：係數標籤機</h3>
+            <p class="interactive-instruction">拉動四個係數。上面是平常的寫法，下面把每一項都寫成「<strong>係數 × \(x\) 的乘方</strong>」，藏起來的 \(1\)、負號，以及缺項的 \(0\) 都會現形：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-coef" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cf-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cf-s3">\(x^3\) 項係數：<span id="cf-v3" class="val-num">2</span></label>
+                    <input type="range" id="cf-s3" min="-5" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cf-s2">\(x^2\) 項係數：<span id="cf-v2" class="val-num">-1</span></label>
+                    <input type="range" id="cf-s2" min="-5" max="5" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cf-s1">\(x\) 項係數：<span id="cf-v1" class="val-num">0</span></label>
+                    <input type="range" id="cf-s1" min="-5" max="5" value="0" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cf-s0">常數項：<span id="cf-v0" class="val-num">4</span></label>
+                    <input type="range" id="cf-s0" min="-5" max="5" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cf-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (項、係數與常數項)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 多項式 \(4 - 7x^2 + x^3\) 中，\(x^2\) 項的係數與常數項分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-3" value="A"><span class="option-text">A. \(7\)、\(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-3" value="B"><span class="option-text">B. \(-7\)、\(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-3" value="C"><span class="option-text">C. \(-7\)、\(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-3" value="D"><span class="option-text">D. \(1\)、\(4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。改寫成加法：\(4 + (-7)x^2 + x^3\)，\(x^2\) 項的係數是 \(-7\)，常數項是 \(4\)。<br>
+              A 錯：負號是係數的一部分，不能丟掉。<br>
+              C 錯：常數項是不含 \(x\) 的那一項 \(4\)，寫在最前面也還是常數項。<br>
+              D 錯：\(1\) 是 \(x^3\) 項的係數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 關於多項式 \(8x^3 - 6x + 9\)，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-4" value="A"><span class="option-text">A. \(x^2\) 項的係數是 \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-4" value="B"><span class="option-text">B. \(x\) 項的係數是 \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-4" value="C"><span class="option-text">C. 共有 \(4\) 項</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-4" value="D"><span class="option-text">D. 常數項是 \(8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。補上缺項、改寫成加法：
+              \[ 8x^3 + 0x^2 + (-6)x + 9 \]
+              沒有 \(x^2\) 項，係數是 \(0\)。<br>
+              B 錯：\(x\) 項的係數是 \(-6\)。<br>
+              C 錯：係數為 \(0\) 的項不算，只有 \(8x^3\)、\(-6x\)、\(9\) 三項。<br>
+              D 錯：常數項是 \(9\)；\(8\) 是 \(x^3\) 項的係數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 次數、單項式、常數多項式
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-stairs" aria-hidden="true"></i> <span>重點 3：次數——看係數不是 \(0\) 的最高次項</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>最高次項</strong>：係數不為 \(0\) 且次數最高的那一項。<strong>多項式的次數</strong>就是最高次項的次數。</li>
+              <li><strong>例</strong>：\(x^3 - x + 1\) 的次數是 \(3\)，叫做 \(x\) 的<strong>三次多項式</strong>（三次式）；\(-3x^2 + 4\) 的次數是 \(2\)，是<strong>二次多項式</strong>。</li>
+              <li><strong>先確認係數不是 \(0\)</strong>：\(0x^3 + 2x^2 + 1\) 的 \(x^3\) 項係數是 \(0\)，等於沒有這一項，所以它是二次多項式。</li>
+              <li><strong>單項式</strong>：只有一項的多項式，例如 \(\frac{3}{4}x^2\)、\(-2x\)、\(13\)。</li>
+              <li><strong>常數多項式</strong>：只有常數項的單項式，例如 \(13\)、\(-\frac{1}{2}\)、\(0\)。</li>
+              <li><strong>零次多項式</strong>：<strong>不為 \(0\)</strong> 的常數多項式，次數規定為 \(0\)。\(13\)、\(-\frac{1}{2}\) 是零次多項式；\(0\) 是常數多項式，但<strong>不規定次數</strong>。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>式子</th><th>單項式</th><th>常數多項式</th><th>次數</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(-2x\)</td><td>是</td><td>否</td><td>\(1\)</td></tr>
+                <tr><td>\(13\)</td><td>是</td><td>是</td><td>\(0\)</td></tr>
+                <tr><td>\(0\)</td><td>是</td><td>是</td><td>不規定</td></tr>
+                <tr><td>\(x^2 + 1\)</td><td>否</td><td>否</td><td>\(2\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="poly_shelf.webp" alt="拼布手作工坊風插圖：靠牆的木頭布料架有四層，由上往下依序是丹寧藍、玫瑰紅、芥末黃、薄荷綠的布捲，其中一層是空的；小禾踮腳從最上層取下一捲丹寧藍布，阿森在架子旁扶著梯子。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：多項式身分證</h3>
+            <p class="interactive-instruction">拉動四個係數，看哪一項是<strong>最高次項</strong>、多項式是幾次。係數調成 \(0\)，那一格就空了；把四個係數全部調成 \(0\)，看看會發生什麼事：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-degree" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="dg-s3">\(x^3\) 項係數：<span id="dg-v3" class="val-num">0</span></label>
+                    <input type="range" id="dg-s3" min="-3" max="3" value="0" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dg-s2">\(x^2\) 項係數：<span id="dg-v2" class="val-num">2</span></label>
+                    <input type="range" id="dg-s2" min="-3" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dg-s1">\(x\) 項係數：<span id="dg-v1" class="val-num">-1</span></label>
+                    <input type="range" id="dg-s1" min="-3" max="3" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dg-s0">常數項：<span id="dg-v0" class="val-num">3</span></label>
+                    <input type="range" id="dg-s0" min="-3" max="3" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (次數與單項式)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 下列哪一個是 \(x\) 的<strong>零次多項式</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-5" value="A"><span class="option-text">A. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-5" value="B"><span class="option-text">B. \(-\frac{2}{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-5" value="C"><span class="option-text">C. \(9x\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-5" value="D"><span class="option-text">D. \(x + 1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(-\frac{2}{7}\) 是不為 \(0\) 的常數多項式，次數規定為 \(0\)。<br>
+              A 錯：\(0\) 是常數多項式，但<strong>不規定次數</strong>，所以不是零次多項式。<br>
+              C 錯：\(9x\) 是一次單項式。<br>
+              D 錯：\(x + 1\) 是一次多項式。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-6" value="A"><span class="option-text">A. \(4x^3 - 1\) 是單項式</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-6" value="B"><span class="option-text">B. \(0x^2 + 7x\) 是二次多項式</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-6" value="C"><span class="option-text">C. \(-x^2 + 5\) 的次數是 \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-6" value="D"><span class="option-text">D. \(\frac{1}{2}x^3\) 的次數是 \(\frac{1}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。最高次項是 \(-x^2\)，係數 \(-1 \ne 0\)，所以次數是 \(2\)。<br>
+              A 錯：\(4x^3\) 與 \(-1\) 是兩項，不是單項式。<br>
+              B 錯：\(x^2\) 項係數是 \(0\)，等於沒有這一項；最高次項是 \(7x\)，所以是一次多項式。<br>
+              D 錯：次數看的是 \(x\) 的指數 \(3\)，不是係數 \(\frac{1}{2}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 含未知係數的條件
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>重點 4：含未知數的係數——要消失的寫「\(= 0\)」，要留下的寫「\(\ne 0\)」</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>多項式的係數若含有未知數（例如 \(a - 2\)），題目會用「它是幾次多項式」來限制這些係數。只要逐項問：這一項要<strong>消失</strong>，還是要<strong>留下</strong>？</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>題目要求</th><th>\(x^2\) 項係數</th><th>\(x\) 項係數</th><th>常數項</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>常數多項式</td><td>\(= 0\)</td><td>\(= 0\)</td><td>任意數</td></tr>
+                <tr><td>一次多項式</td><td>\(= 0\)</td><td>\(\ne 0\)</td><td>任意數</td></tr>
+                <tr><td>二次多項式</td><td>\(\ne 0\)</td><td>任意數</td><td>任意數</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：若 \((a - 2)x^2 + (b + 3)x + 7\) 是常數多項式，則 \(x^2\) 項與 \(x\) 項的係數都要是 \(0\)：
+                \[\begin{aligned} a - 2 &= 0 \Rightarrow a = 2 \\ b + 3 &= 0 \Rightarrow b = -3 \end{aligned}\]</li>
+              <li><strong>「\(\ne\)」也是答案的一部分</strong>：若同一個式子要是<strong>一次</strong>多項式，條件是 \(a = 2\) 且 \(b \ne -3\)。只寫 \(a = 2\) 不夠——\(b = -3\) 時 \(x\) 項也消失，就退成常數多項式了。</li>
+              <li><strong>常數項不影響次數</strong>：上例的 \(7\) 不必討論；若常數項也含有未知數，題目沒限制時它可以是任意數。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="poly_dial.webp" alt="拼布手作工坊風插圖：工作桌上一台奶油白的復古縫紉機，小禾低頭轉動機身側面的圓形旋鈕，阿森彎腰盯著壓布腳下的布料。畫面上沒有任何數字或文字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：條件檢查器</h3>
+            <p class="interactive-instruction">選一個式子和一個目標，再拉動 \(a\)、\(b\)。檢查器會把數字代進去、逐條核對係數，看現在的式子<strong>是不是</strong>你要的那一種：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-param" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pa-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">式子</span>
+                    <div class="btn-group" id="pa-tpl-group">
+                      <button class="pick-btn active" data-pa-tpl="t1">式子 1</button>
+                      <button class="pick-btn" data-pa-tpl="t2">式子 2</button>
+                      <button class="pick-btn" data-pa-tpl="t3">式子 3</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">目標</span>
+                    <div class="btn-group" id="pa-goal-group">
+                      <button class="pick-btn active" data-pa-goal="0">常數多項式</button>
+                      <button class="pick-btn" data-pa-goal="1">一次多項式</button>
+                      <button class="pick-btn" data-pa-goal="2">二次多項式</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pa-a">\(a\)：<span id="pa-av" class="val-num">0</span></label>
+                    <input type="range" id="pa-a" min="-5" max="5" value="0" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pa-b">\(b\)：<span id="pa-bv" class="val-num">0</span></label>
+                    <input type="range" id="pa-b" min="-5" max="5" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pa-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (含未知數的係數)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 若多項式 \((a + 6)x^2 + (b - 7)x + 4\) 是一個<strong>常數多項式</strong>，則 \(a\)、\(b\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-7" value="A"><span class="option-text">A. \(a = 6\)、\(b = -7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-7" value="B"><span class="option-text">B. \(a = 6\)、\(b = 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-7" value="C"><span class="option-text">C. \(a = -6\)、\(b \ne 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-7" value="D"><span class="option-text">D. \(a = -6\)、\(b = 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。常數多項式的 \(x^2\) 項與 \(x\) 項係數都是 \(0\)：
+              \[\begin{aligned} a + 6 &= 0 \Rightarrow a = -6 \\ b - 7 &= 0 \Rightarrow b = 7 \end{aligned}\]
+              A 錯：兩個數的正負號都弄反了。<br>
+              B 錯：\(a = 6\) 時 \(a + 6 = 12\)，\(x^2\) 項還在。<br>
+              C 錯：\(b \ne 7\) 是「一次多項式」的條件；常數多項式要連 \(x\) 項也消失。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> 若 \((m - 8)x^2 + (n + 9)x - 2\) 是 \(x\) 的<strong>一次多項式</strong>，則 \(m\)、\(n\) 的條件為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-8" value="A"><span class="option-text">A. \(m = 8\)、\(n = -9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-8" value="B"><span class="option-text">B. \(m \ne 8\)、\(n \ne -9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-8" value="C"><span class="option-text">C. \(m = 8\)、\(n \ne -9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-8" value="D"><span class="option-text">D. \(m = -8\)、\(n \ne 9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。一次多項式：\(x^2\) 項要消失、\(x\) 項要留下：
+              \[\begin{aligned} m - 8 &= 0 \Rightarrow m = 8 \\ n + 9 &\ne 0 \Rightarrow n \ne -9 \end{aligned}\]
+              A 錯：\(n = -9\) 時 \(x\) 項也消失，只剩 \(-2\)，變成常數多項式。<br>
+              B 錯：\(m \ne 8\) 時 \(x^2\) 項還在，是二次多項式。<br>
+              D 錯：\(m = -8\) 時 \(m - 8 = -16\)，不是 \(0\)，正負號弄反了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 升冪與降冪排列
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrow-down-wide-short" aria-hidden="true"></i> 重點 5：升冪與降冪排列——符號跟著項一起搬
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>升冪排列</strong>（升次排列）：各項按 \(x\) 的次數<strong>由小到大</strong>排列。</li>
+              <li><strong>降冪排列</strong>（降次排列）：各項按 \(x\) 的次數<strong>由大到小</strong>排列。習慣上用降冪，本頁的答案也都寫成降冪。</li>
+              <li><strong>例</strong>：把 \(3x^2 + 6x^3 - 4 + 8x\) 重新排列：
+                \[\begin{aligned} \text{升冪：} & -4 + 8x + 3x^2 + 6x^3 \\ \text{降冪：} & 6x^3 + 3x^2 + 8x - 4 \end{aligned}\]</li>
+              <li><strong>符號跟著項一起搬</strong>：每一項前面的「\(+\)」或「\(-\)」都是那一項的一部分。\(-4\) 搬到最前面時負號要帶著走；原本在最前面的 \(3x^2\) 沒寫「\(+\)」，搬到後面就要補上「\(+\)」。</li>
+              <li><strong>只改順序、不改值</strong>：排好之後還是同一個多項式，項數、係數、次數都不變。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="poly_order.webp" alt="拼布手作工坊風插圖：工坊牆上一根木頭橫桿，掛著四條寬度相同的布條，由左到右一條比一條短，下緣排成往右上斜的階梯；小禾正把最短的一條掛到最右邊，阿森站在旁邊用手比著由長到短的方向。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：布條排序架</h3>
+            <p class="interactive-instruction">選一個多項式，再按「升冪」或「降冪」。每一張布條就是一項，看它們怎麼換位置——<strong>前面的正負號跟著布條一起走</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-order" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="od-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">多項式</span>
+                    <div class="btn-group" id="od-p-group">
+                      <button class="pick-btn active" data-od-p="p1">\(3x^2 - 5 + 2x^3 - x\)</button>
+                      <button class="pick-btn" data-od-p="p2">\(-x + 7 + 4x^3\)</button>
+                      <button class="pick-btn" data-od-p="p3">\(1 - 6x^2 + 2x - 3x^3\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">排列方式</span>
+                    <div class="btn-group" id="od-mode-group">
+                      <button class="pick-btn" data-od-mode="orig">原來的順序</button>
+                      <button class="pick-btn" data-od-mode="asc">升冪</button>
+                      <button class="pick-btn active" data-od-mode="desc">降冪</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="od-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (升冪與降冪)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 將 \(6 - 2x^3 + x - 9x^2\) 按<strong>降冪</strong>排列，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-9" value="A"><span class="option-text">A. \(-2x^3 - 9x^2 + x + 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-9" value="B"><span class="option-text">B. \(2x^3 + 9x^2 + x + 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-9" value="C"><span class="option-text">C. \(6 + x - 9x^2 - 2x^3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-9" value="D"><span class="option-text">D. \(-9x^2 - 2x^3 + x + 6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。次數由大到小是 \(x^3\)、\(x^2\)、\(x\)、常數，每一項帶著自己的符號：\(-2x^3\)、\(-9x^2\)、\(+x\)、\(+6\)。<br>
+              B 錯：搬動時把負號弄丟了。<br>
+              C 錯：這是升冪排列。<br>
+              D 錯：\(x^2\) 的次數比 \(x^3\) 小，不能排在它前面。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 阿森把 \(4x - 3x^3 - 8 + x^2\) 按<strong>升冪</strong>排列，寫成 \(8 + 4x + x^2 + 3x^3\)。正確的升冪排列應該是哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-10" value="A"><span class="option-text">A. \(-3x^3 + x^2 + 4x - 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-10" value="B"><span class="option-text">B. \(-8 + 4x + x^2 + 3x^3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-10" value="C"><span class="option-text">C. \(4x + x^2 - 3x^3 - 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-10" value="D"><span class="option-text">D. \(-8 + 4x + x^2 - 3x^3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。升冪是次數由小到大：常數 \(-8\)、\(4x\)、\(x^2\)、\(-3x^3\)。阿森的順序對了，卻把 \(-8\) 與 \(-3x^3\) 的負號都弄丟了。<br>
+              A 錯：這是降冪排列。<br>
+              B 錯：只把 \(-8\) 改回來，\(-3x^3\) 的負號還是丟了。<br>
+              C 錯：常數項的次數最小，升冪時要排在最前面。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 同類項與多項式的加法
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 6：同類項與加法——同樣大小的布才能合起來
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>同類項</strong>：<strong>文字符號及次數都相同</strong>的項。例如在 \(3x + x^2 - 2 + 2x^2 + 1 - 4x\) 中，\(x^2\) 和 \(2x^2\)、\(3x\) 和 \(-4x\)、\(-2\) 和 \(1\) 各是一組同類項。常數項彼此也是同類項。</li>
+              <li><strong>不是同類項</strong>：次數不同（\(x^2\) 與 \(x^3\)），或文字符號不同（\(x\) 與 \(y\)），即使係數一樣也不是同類項。</li>
+              <li><strong>用布塊想</strong>：大方布 \(x^2\)、長條 \(x\)、小方布 \(1\) 的大小都不一樣，只有同一種布塊能數在一起。合併同類項，就是把<strong>係數相加</strong>：
+                \[\begin{aligned} & (x^2 + 3x + 2) \\ &\quad + (2x^2 + 2x + 2) \\ &= (1 + 2)x^2 + (3 + 2)x \\ &\quad + (2 + 2) \\ &= 3x^2 + 5x + 4 \end{aligned}\]</li>
+              <li><strong>不同類項不能合併</strong>：\(3x^2 + 5x\) 已經是最簡，不能寫成 \(8x^2\) 或 \(8x^3\)。</li>
+              <li>兩個多項式相加，結果<strong>仍然是多項式</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="poly_sort.webp" alt="拼布手作工坊風插圖：工作桌上擺著三個藤編籃，左籃只裝玫瑰紅的大正方形布、中籃只裝芥末黃的長條、右籃只裝薄荷綠的小正方形布；小禾把一塊大正方形放進左籃，阿森手上拿著一條長條正要放進中籃。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：布塊合併桌</h3>
+            <p class="interactive-instruction">拉動滑桿決定兩人各有幾塊布。合在一起時，<strong>只有同樣大小的布塊能數在一起</strong>——數一數每一堆，就是合併後的係數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tile" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tl-a2">小禾的大方布 \(x^2\)：<span id="tl-va2" class="val-num">2</span> 塊</label>
+                    <input type="range" id="tl-a2" min="0" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tl-a1">小禾的長條 \(x\)：<span id="tl-va1" class="val-num">1</span> 條</label>
+                    <input type="range" id="tl-a1" min="0" max="4" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tl-a0">小禾的小方布 \(1\)：<span id="tl-va0" class="val-num">3</span> 塊</label>
+                    <input type="range" id="tl-a0" min="0" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tl-b2">阿森的大方布 \(x^2\)：<span id="tl-vb2" class="val-num">1</span> 塊</label>
+                    <input type="range" id="tl-b2" min="0" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tl-b1">阿森的長條 \(x\)：<span id="tl-vb1" class="val-num">3</span> 條</label>
+                    <input type="range" id="tl-b1" min="0" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tl-b0">阿森的小方布 \(1\)：<span id="tl-vb0" class="val-num">1</span> 塊</label>
+                    <input type="range" id="tl-b0" min="0" max="4" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (同類項與加法)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> 下列哪一組是<strong>同類項</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-11" value="A"><span class="option-text">A. \(3x^2\) 與 \(3x^3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-11" value="B"><span class="option-text">B. \(-5x\) 與 \(\frac{2}{3}x\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-11" value="C"><span class="option-text">C. \(4x^2\) 與 \(4x\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-11" value="D"><span class="option-text">D. \(7\) 與 \(7x\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(-5x\) 與 \(\frac{2}{3}x\) 都是 \(x\) 的一次項，文字符號與次數都相同，只是係數不同。<br>
+              A、C、D 錯：兩項的係數雖然一樣，次數卻不同（三次與二次、二次與一次、零次與一次），所以不是同類項。判斷同類項看的是文字與次數，不是係數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 計算下式，結果為何？
+              \[\begin{aligned} & (6x^2 - 4x + 2) \\ &\quad + (-2x^2 + 9x - 7) \end{aligned}\]</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-12" value="A"><span class="option-text">A. \(4x^2 + 5x + 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-12" value="B"><span class="option-text">B. \(8x^2 + 13x + 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-12" value="C"><span class="option-text">C. \(4x^2 - 13x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-12" value="D"><span class="option-text">D. \(4x^2 + 5x - 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。同類項的係數相加：
+              \[\begin{aligned} & (6 - 2)x^2 + (-4 + 9)x + (2 - 7) \\ &= 4x^2 + 5x - 5 \end{aligned}\]
+              A 錯：常數項算成 \(2 + 7\)，漏看了 \(-7\) 的負號。<br>
+              B 錯：把所有負號都當成正號。<br>
+              C 錯：\(-4 + 9 = 5\)，不是 \(-13\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 直式加法與缺項
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-columns" aria-hidden="true"></i> <span>重點 7：直式加法與缺項——缺的那一格補 \(0\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>直式</strong>：先把兩個多項式都按<strong>降冪</strong>排好，同類項<strong>上下對齊</strong>，再一欄一欄相加。用升冪也可以，只要兩列一致。</li>
+              <li><strong>缺項補 \(0\)</strong>：多項式缺少某一項，代表那一項的係數是 \(0\)。直式計算時在缺項的位置補上 \(0\)（或留空位），同類項才會排在同一欄：
+                \[\begin{array}{rrrr} & 2x^2 & +\,0x & -\,5 \\ +) & -x^2 & +\,2x & +\,1 \\ \hline & x^2 & +\,2x & -\,4 \end{array}\]</li>
+              <li><strong>橫式也可以</strong>：去括號後把同類項放在一起。直式、橫式算出來一定一樣，選一種即可：
+                \[\begin{aligned} & (2x^2 - 5) + (-x^2 + 2x + 1) \\ &= x^2 + 2x - 4 \end{aligned}\]</li>
+              <li><strong>相加後的次數</strong>：三次式加二次式一定是三次式，因為 \(x^3\) 項沒有別的項能抵消它；但<strong>兩個二次式相加，不一定是二次式</strong>——兩個 \(x^2\) 項可能互相抵消：
+                \[\begin{aligned} & (3x^2 + x) + (-3x^2 + 4) \\ &= x + 4 \end{aligned}\]</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="poly_columns.webp" alt="拼布手作工坊風插圖：印著格線的綠色切割墊上，布塊排成上下兩列，每一直欄都是同一種布塊對齊；上列中間的一格空著，只放了一張白色的空卡片。小禾把空卡片按在那一格，阿森俯身看著兩列是否對齊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：直式對齊台</h3>
+            <p class="interactive-instruction">選一題，比較「<strong>補 0 對齊</strong>」和「<strong>不補 0、直接靠右排</strong>」。不補 0 時，次數不同的項會擠進同一欄，就加不下去了：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-col" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="co-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="co-p-group">
+                      <button class="pick-btn active" data-co-p="p1">第 1 題</button>
+                      <button class="pick-btn" data-co-p="p2">第 2 題</button>
+                      <button class="pick-btn" data-co-p="p3">第 3 題</button>
+                      <button class="pick-btn" data-co-p="p4">第 4 題</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">排法</span>
+                    <div class="btn-group" id="co-mode-group">
+                      <button class="pick-btn active" data-co-mode="pad">補 0 對齊</button>
+                      <button class="pick-btn" data-co-mode="nopad">不補 0（靠右排）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="co-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (直式加法與缺項)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 計算 \((5x^3 - 2x + 4) + (-x^2 + 6x - 9)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-13" value="A"><span class="option-text">A. \(5x^3 - x^2 + 4x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-13" value="B"><span class="option-text">B. \(4x^3 + 4x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-13" value="C"><span class="option-text">C. \(5x^3 - x^2 - 8x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-13" value="D"><span class="option-text">D. \(5x^3 - x^2 + 4x + 13\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。第一個式子缺 \(x^2\) 項、第二個缺 \(x^3\) 項，補 \(0\) 之後對齊：
+              \[\begin{array}{rrrrr} & 5x^3 & +\,0x^2 & -\,2x & +\,4 \\ +) & 0x^3 & -\,x^2 & +\,6x & -\,9 \\ \hline & 5x^3 & -\,x^2 & +\,4x & -\,5 \end{array}\]
+              B 錯：沒有補 \(0\)、直接靠右排，\(5x^3\) 與 \(-x^2\) 擠在同一欄，被硬加成 \(4x^3\)。<br>
+              C 錯：\(-2x + 6x = 4x\)，不是 \(-8x\)。<br>
+              D 錯：\(4 + (-9) = -5\)，不是 \(13\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 關於「兩個 \(x\) 的二次多項式相加」的結果，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-14" value="A"><span class="option-text">A. 一定是二次多項式</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-14" value="B"><span class="option-text">B. 一定是四次多項式</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-14" value="C"><span class="option-text">C. 有可能是一次多項式</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-14" value="D"><span class="option-text">D. 一定不是常數多項式</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩個 \(x^2\) 項的係數若互為相反數，相加後 \(x^2\) 項就消失了，例如
+              \[\begin{aligned} & (4x^2 + x) + (-4x^2 + 3) \\ &= x + 3 \end{aligned}\]
+              就是一次多項式。<br>
+              A 錯：上面就是反例。<br>
+              B 錯：加法只是把同類項的係數相加，次數不會變高，\(x^2 + x^2 = 2x^2\) 還是二次。<br>
+              D 錯：\((x^2 + 1) + (-x^2 + 2) = 3\)，結果是常數多項式。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 多項式的減法
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-minus" aria-hidden="true"></i> 重點 8：多項式的減法——括號前是減號，每一項都要變號
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>減法就是加上相反數</strong>：減一個多項式，等於加上它每一項的相反數；合併同類項時就變成<strong>係數相減</strong>。</li>
+              <li><strong>去括號的符號規則</strong>（七年級學過）：
+                \[\begin{aligned} +(a + b) &= a + b \\ +(a - b) &= a - b \\ -(a + b) &= -a - b \\ -(a - b) &= -a + b \end{aligned}\]</li>
+              <li><strong>橫式</strong>：括號前是減號，括號裡<strong>每一項都要變號</strong>：
+                \[\begin{aligned} & (x^2 + 5x + 1) - (2 - 3x^2) \\ &= x^2 + 5x + 1 - 2 + 3x^2 \\ &= 4x^2 + 5x - 1 \end{aligned}\]
+                括號裡的 \(2\) 變成 \(-2\)、\(-3x^2\) 變成 \(+3x^2\)。</li>
+              <li><strong>直式</strong>：同類項對齊後，<strong>每一欄都是「上減下」</strong>。最常見的錯誤是只有第一欄記得減，後面幾欄不小心當成加法；也可以先把下面那一列<strong>全部變號</strong>，改成直式加法來算。</li>
+              <li>要減的多項式如果需要重新排列，各項的「\(+\)」「\(-\)」號也要跟著搬（重點 5）。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="poly_remove.webp" alt="拼布手作工坊風插圖：工作桌上一大疊摺好的布，阿森雙手從疊好的布堆裡抽走一部分放到旁邊的籃子裡，小禾拿著帳本與鉛筆在對面看著。畫面上沒有任何數字或文字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：減法檢查台</h3>
+            <p class="interactive-instruction">選一題，切換三種看法：<strong>橫式</strong>去括號、<strong>直式</strong>逐欄相減，以及最常見的<strong>錯誤</strong>——括號裡只有第一項變號：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sub" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sb-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="sb-p-group">
+                      <button class="pick-btn active" data-sb-p="p1">第 1 題</button>
+                      <button class="pick-btn" data-sb-p="p2">第 2 題</button>
+                      <button class="pick-btn" data-sb-p="p3">第 3 題</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">看法</span>
+                    <div class="btn-group" id="sb-mode-group">
+                      <button class="pick-btn active" data-sb-mode="h">橫式（去括號）</button>
+                      <button class="pick-btn" data-sb-mode="v">直式（上減下）</button>
+                      <button class="pick-btn" data-sb-mode="e">常見錯誤</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sb-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多項式的減法)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> 計算 \((6x^2 - x + 3) - (2x^2 - 5x - 4)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-15" value="A"><span class="option-text">A. \(4x^2 - 6x - 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-15" value="B"><span class="option-text">B. \(4x^2 + 4x + 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-15" value="C"><span class="option-text">C. \(8x^2 - 6x - 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-15" value="D"><span class="option-text">D. \(4x^2 + 4x - 1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。去括號時每一項都變號：
+              \[\begin{aligned} & (6x^2 - x + 3) - (2x^2 - 5x - 4) \\ &= 6x^2 - x + 3 \\ &\quad - 2x^2 + 5x + 4 \\ &= 4x^2 + 4x + 7 \end{aligned}\]
+              A 錯：只有第一項 \(2x^2\) 變號，\(-5x\)、\(-4\) 忘了變號。<br>
+              C 錯：把減法當成加法。<br>
+              D 錯：常數項應為 \(3 - (-4) = 7\)，不是 \(3 - 4\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 阿森用直式計算 \((-3x^2 + 4x - 2) - (2x^2 - x - 6)\)，得到 \(-5x^2 + 3x - 8\)。下列哪一個說法正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-16" value="A"><span class="option-text">A. 他的答案正確</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-16" value="B"><span class="option-text">B. \(x\) 項與常數項兩欄把減法當成加法，正確答案是 \(-5x^2 + 5x + 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-16" value="C"><span class="option-text">C. 只有 \(x^2\) 那一欄算錯，正確答案是 \(-x^2 + 3x - 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-16" value="D"><span class="option-text">D. 三欄全部算錯，正確答案是 \(5x^2 - 5x - 4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。每一欄都是「上減下」：
+              \[\begin{aligned} -3x^2 - 2x^2 &= -5x^2 \\ 4x - (-x) &= 5x \\ -2 - (-6) &= 4 \end{aligned}\]
+              阿森的 \(x\) 項算成 \(4x + (-x) = 3x\)、常數項算成 \(-2 + (-6) = -8\)，都是用加的。<br>
+              A 錯：\(x\) 項與常數項都不對。<br>
+              C 錯：\(x^2\) 那一欄 \(-3 - 2 = -5\) 是對的。<br>
+              D 錯：那是把兩式前後對調再相減的結果，每一項都差一個負號。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 加減混合運算
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-box-open" aria-hidden="true"></i> 重點 9：加減混合運算——由內而外去括號
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>一般步驟</strong>：⑴ 去括號；⑵ 合併同類項。</li>
+              <li><strong>連續加減</strong>：每一個括號前面是什麼號，就照去括號的規則處理：
+                \[\begin{aligned} & (3x^2 + 6x - 9) - (-3x^2 + 4x) \\ &\quad + (-2x + 3) \\ &= 3x^2 + 6x - 9 + 3x^2 \\ &\quad - 4x - 2x + 3 \\ &= 6x^2 - 6 \end{aligned}\]</li>
+              <li><strong>有中括號時由內而外</strong>：先把中括號裡的小括號去掉、整理成一個多項式，再去中括號：
+                \[\begin{aligned} & (-3x^2 - 7 + x) \\ &\quad - [(1 - 2x^2) - (2x + 6)] \\ &= (-3x^2 - 7 + x) \\ &\quad - (-2x^2 - 2x - 5) \\ &= -3x^2 - 7 + x \\ &\quad + 2x^2 + 2x + 5 \\ &= -x^2 + 3x - 2 \end{aligned}\]</li>
+              <li><strong>中括號前是減號</strong>：去掉中括號時，裡面<strong>每一項</strong>都要變號。先把中括號裡整理好再變號，項數比較少，比較不會漏。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="poly_boxes.webp" alt="拼布手作工坊風插圖：工作桌上一個打開的大木頭針線箱，箱子裡並排放著兩個打開的小盒子，一個裝線軸、一個裝鈕扣；小禾正從箱子裡拿出其中一個小盒子，阿森在旁邊把蓋子掀開扶著。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：去括號步驟機</h3>
+            <p class="interactive-instruction">選一題，按「下一步」一步一步去括號。注意<strong>中括號前面的符號</strong>：是減號時，整理好的每一項都要變號：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mix" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mx-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="mx-p-group">
+                      <button class="pick-btn active" data-mx-p="p1">第 1 題</button>
+                      <button class="pick-btn" data-mx-p="p2">第 2 題</button>
+                      <button class="pick-btn" data-mx-p="p3">第 3 題</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="mx-prev">上一步</button>
+                      <span class="step-counter" id="mx-step">1 / 5</span>
+                      <button class="pick-btn" id="mx-next">下一步</button>
+                      <button class="pick-btn" id="mx-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mx-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (加減混合運算)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 計算下式，結果為何？
+              \[\begin{aligned} & (4x^2 - 3) \\ &\quad - [(x^2 + 2x) - (5x - 6)] \end{aligned}\]</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-17" value="A"><span class="option-text">A. \(3x^2 + 3x - 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-17" value="B"><span class="option-text">B. \(3x^2 - 3x + 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-17" value="C"><span class="option-text">C. \(3x^2 + 3x + 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-17" value="D"><span class="option-text">D. \(5x^2 - 3x + 3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先整理中括號裡面，再去中括號：
+              \[\begin{aligned} & (4x^2 - 3) \\ &\quad - [(x^2 + 2x) - (5x - 6)] \\ &= (4x^2 - 3) - (x^2 - 3x + 6) \\ &= 4x^2 - 3 - x^2 + 3x - 6 \\ &= 3x^2 + 3x - 9 \end{aligned}\]
+              B 錯：去中括號時只有 \(x^2\) 變號，\(-3x\)、\(+6\) 忘了變號。<br>
+              C 錯：中括號裡的 \(-(5x - 6)\) 算成 \(-5x - 6\)，\(-6\) 那項忘了變號。<br>
+              D 錯：中括號前是減號，卻整個沒變號就去掉了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 計算下式，結果為何？
+              \[\begin{aligned} & (2x^2 - 5x) + (x - 4) \\ &\quad - (3x^2 - 2x - 1) \end{aligned}\]</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-18" value="A"><span class="option-text">A. \(-x^2 - 6x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-18" value="B"><span class="option-text">B. \(5x^2 - 6x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-18" value="C"><span class="option-text">C. \(-x^2 - 2x - 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-18" value="D"><span class="option-text">D. \(-x^2 + 2x - 3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。三個括號依序去掉，最後一個括號前是減號，每一項都變號：
+              \[\begin{aligned} & (2x^2 - 5x) + (x - 4) \\ &\quad - (3x^2 - 2x - 1) \\ &= 2x^2 - 5x + x - 4 \\ &\quad - 3x^2 + 2x + 1 \\ &= -x^2 - 2x - 3 \end{aligned}\]
+              A 錯：最後一個括號只有 \(3x^2\) 變號，\(-2x\)、\(-1\) 忘了變號。<br>
+              B 錯：把最後的減法當成加法。<br>
+              D 錯：\(x\) 項是 \(-5x + x + 2x = -2x\)，正負號算錯了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 反求多項式
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-puzzle-piece" aria-hidden="true"></i> <span>重點 10：反求多項式——\(A + B = C\)，所以 \(A = C - B\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>和數字一樣的道理</strong>：\(\square + 3 = 10\)，所以 \(\square = 10 - 3\)。多項式也一樣：若 \(A + B = C\)，則 \(A = C - B\)。</li>
+              <li><strong>例</strong>：若
+                \[\begin{aligned} & A + (-4x^2 + 1 + 5x) \\ &= x^3 + 5 - 2x \end{aligned}\]
+                則
+                \[\begin{aligned} A &= (x^3 + 5 - 2x) \\ &\quad - (-4x^2 + 1 + 5x) \\ &= x^3 + 5 - 2x \\ &\quad + 4x^2 - 1 - 5x \\ &= x^3 + 4x^2 - 7x + 4 \end{aligned}\]</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>已知</th><th>所以</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>\(A + B = C\)</td><td>\(A = C - B\)</td></tr>
+                <tr><td>\(A - B = C\)</td><td>\(A = C + B\)</td></tr>
+                <tr><td>\(B - A = C\)</td><td>\(A = B - C\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>算完一定要驗算</strong>：把求出的 \(A\) 代回原來的關係，加加看（或減減看）是不是等於 \(C\)。</li>
+              <li><strong>常見錯誤</strong>：明明是 \(A + B = C\)，卻寫成 \(A = B - C\)。減的順序反了，答案每一項都差一個負號。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="poly_patch.webp" alt="拼布手作工坊風插圖：一大塊拼布平鋪在工作桌上，右下角缺了一塊長方形的空位，露出底下的木頭桌面；小禾手上拿著一塊大小剛好的丹寧藍布正要補進空位，阿森拿著捲尺量空位的邊長。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：補布計算台</h3>
+            <p class="interactive-instruction">選一種關係，拉動 \(B\) 的三個係數（\(C\) 固定是 \(3x^2 + x - 2\)），看 \(A\) 怎麼求出來。最後一列會把 \(A\) 代回去<strong>驗算</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-find" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知的關係</span>
+                    <div class="btn-group" id="fd-mode-group">
+                      <button class="pick-btn active" data-fd-mode="add">\(A + B = C\)</button>
+                      <button class="pick-btn" data-fd-mode="sub">\(A - B = C\)</button>
+                      <button class="pick-btn" data-fd-mode="rsub">\(B - A = C\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fd-s2">\(B\) 的 \(x^2\) 項係數：<span id="fd-v2" class="val-num">1</span></label>
+                    <input type="range" id="fd-s2" min="-4" max="4" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fd-s1">\(B\) 的 \(x\) 項係數：<span id="fd-v1" class="val-num">-3</span></label>
+                    <input type="range" id="fd-s1" min="-5" max="5" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fd-s0">\(B\) 的常數項：<span id="fd-v0" class="val-num">4</span></label>
+                    <input type="range" id="fd-s0" min="-5" max="5" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (反求多項式)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 一個多項式與 \(3x^2 - 4x + 1\) 相加後，得到 \(-x^2 + 2x + 6\)。這個多項式為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-19" value="A"><span class="option-text">A. \(-4x^2 + 6x + 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-19" value="B"><span class="option-text">B. \(4x^2 - 6x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-19" value="C"><span class="option-text">C. \(2x^2 - 2x + 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-19" value="D"><span class="option-text">D. \(-4x^2 - 2x + 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。所求 \(= C - B\)：
+              \[\begin{aligned} & (-x^2 + 2x + 6) \\ &\quad - (3x^2 - 4x + 1) \\ &= -x^2 + 2x + 6 \\ &\quad - 3x^2 + 4x - 1 \\ &= -4x^2 + 6x + 5 \end{aligned}\]
+              驗算：
+              \[\begin{aligned} & (-4x^2 + 6x + 5) \\ &\quad + (3x^2 - 4x + 1) \\ &= -x^2 + 2x + 6 \end{aligned}\]
+              B 錯：減的順序反了，算成 \((3x^2 - 4x + 1) - (-x^2 + 2x + 6)\)。<br>
+              C 錯：把兩個式子加起來了。<br>
+              D 錯：去括號時只有 \(3x^2\) 變號，\(-4x\)、\(+1\) 忘了變號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> 若多項式 \(A\) 減去 \(2x^2 + 7x - 3\) 之後，得到 \(x^2 - 6x + 8\)，則 \(A\) 為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-20" value="A"><span class="option-text">A. \(-x^2 - 13x + 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-20" value="B"><span class="option-text">B. \(x^2 + 13x - 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-20" value="C"><span class="option-text">C. \(3x^2 - x + 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-20" value="D"><span class="option-text">D. \(3x^2 + x + 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(A - B = C\)，所以 \(A = C + B\)：
+              \[\begin{aligned} A &= (x^2 - 6x + 8) \\ &\quad + (2x^2 + 7x - 3) \\ &= 3x^2 + x + 5 \end{aligned}\]
+              驗算：
+              \[\begin{aligned} & (3x^2 + x + 5) \\ &\quad - (2x^2 + 7x - 3) \\ &= x^2 - 6x + 8 \end{aligned}\]
+              A 錯：算成 \(C - B\)；\(A\) 減掉 \(B\) 才得到 \(C\)，所以要把 \(B\) 加回去。<br>
+              B 錯：算成 \(B - C\)。<br>
+              C 錯：\(x\) 項是 \(-6x + 7x = x\)，不是 \(-x\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 多項式速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>多項式</strong>：數與 \(x\) 只做加法、乘法；\(x\) 跑進分母或絕對值就不是。</li>
+              <li><strong>項與係數</strong>：減號連同數字一起當係數；沒出現的項係數是 \(0\)。</li>
+              <li><strong>次數</strong>：看係數不為 \(0\) 的最高次項；\(0\) 不規定次數。</li>
+              <li><strong>係數條件</strong>：要消失的係數寫 \(= 0\)，要留下的寫 \(\ne 0\)。</li>
+              <li><strong>排列</strong>：升冪由小到大、降冪由大到小，符號跟著項一起搬。</li>
+              <li><strong>同類項與加法</strong>：文字與次數都相同才合併，係數相加。</li>
+              <li><strong>直式與缺項</strong>：同類項上下對齊，缺項補 \(0\)；二次加二次不一定是二次。</li>
+              <li><strong>減法</strong>：括號前是減號，每一項都變號；直式每一欄都是上減下。</li>
+              <li><strong>混合運算</strong>：由內而外去括號，再合併同類項。</li>
+              <li><strong>反求</strong>：\(A + B = C\) 時 \(A = C - B\)，算完代回去驗算。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-scissors"></i> 回到拼布工坊：一共幾塊布？</h4>
+              <h5><i class="fa-solid fa-layer-group"></i> 小禾的 12 塊</h5>
+              <p>小禾有 \(1\) 塊大方布、\(3\) 條長條、\(2\) 塊小方布，面積是 \(x^2 + 3x + 2\)；阿森有 \(2\) 塊大方布、\(2\) 條長條、\(2\) 塊小方布，面積是 \(2x^2 + 2x + 2\)。小禾把 \(12\) 塊直接加起來，等於把大小不同的布當成同一種。同樣大小的放在一起數：
+                \[\begin{aligned} & (x^2 + 3x + 2) + (2x^2 + 2x + 2) \\ &= 3x^2 + 5x + 4 \end{aligned}\]
+                也就是 \(3\) 塊大方布、\(5\) 條長條、\(4\) 塊小方布。</p>
+              <h5><i class="fa-solid fa-ruler"></i> 為什麼不能直接加？</h5>
+              <p>\(x\) 不知道是多少，大方布 \(x^2\) 和長條 \(x\) 的大小關係會跟著 \(x\) 改變，沒辦法換算成同一種單位。只有<strong>文字與次數都相同</strong>的同類項，才能把係數相加。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>這一節只做了加減。下一節〈多項式的乘除運算〉要把上一節的分配律與乘法公式用到多項式上，例如 \((2x + 1)(x^2 - 3x + 4)\)，還要學多項式的除法。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
