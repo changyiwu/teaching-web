@@ -89,7 +89,7 @@
         "sections": [
           { "code": "1-1", "title": "乘法公式", "status": "completed" },
           { "code": "1-2", "title": "多項式與其加減運算", "status": "completed" },
-          { "code": "1-3", "title": "多項式的乘除運算" }
+          { "code": "1-3", "title": "多項式的乘除運算", "status": "completed" }
         ]
       },
       {

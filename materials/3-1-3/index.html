@@ -4,39 +4,1671 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-3 多項式的乘除運算 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-3 多項式的乘除運算 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第1章 乘法公式與多項式</div>
-    <h1>1-3 多項式的乘除運算</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第一章</span>
+        <h1>1-3 多項式的乘除運算</h1>
+        <p>上一節在拼布工坊裡做了多項式的加減。這一節把<strong>乘法</strong>與<strong>除法</strong>也搬上工作桌：長乘寬是面積，那已知面積與一邊，另一邊要怎麼求？我們先學<strong>單項式與多項式的乘法</strong>（分配律、直式、乘法公式），再學<strong>多項式的除法</strong>，認識被除式、除式、商式、餘式，最後用「被除式 ＝ 商式 × 除式 ＋ 餘式」反求未知的式子，並做四則運算與面積應用。</p>
+      </div>
+      <!-- Progress navigation (13 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-xmark"></i> 單項式乘法</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-share-nodes"></i> 分配律</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-table-cells"></i> 多項式相乘</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-table-columns"></i> 直式乘法</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-square"></i> 乘法公式</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-divide"></i> 單項式除法</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-scissors"></i> 除以單項式</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-ruler-horizontal"></i> 除以一次式</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-layer-group"></i> 除以二次式</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-puzzle-piece"></i> 求被除式</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 求除式</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-list-ol"></i> 四則運算</a>
+        <a href="#concept13" class="nav-item"><i class="fa-solid fa-ruler-combined"></i> 應用</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Patchwork Workshop)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(251, 113, 133, 0.25);">
+        <h2 class="section-title" style="color: #fda4af; border-bottom-color: rgba(253, 164, 175, 0.2);">
+          <i class="fa-solid fa-scissors" aria-hidden="true" style="color: #fda4af; text-shadow: 0 0 10px rgba(251, 113, 133, 0.4);"></i> 課前暖身漫畫：桌旗要做多長？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小禾有 \(3\) 塊<strong style="color:#fda4af">大方布</strong>、\(7\) 條<strong style="color:#fcd34d">長條</strong>、\(2\) 塊<strong style="color:#5eead4">小方布</strong>，總面積是 \(3x^2 + 7x + 2\)。她想把這些布全部用上，拼成一條<strong style="color:#fda4af">寬 \(x + 2\)</strong> 的長方形桌旗。阿森問：「那長要多少？」已知面積和一邊，求另一邊——這一節學完<strong style="color:#fda4af">多項式的除法</strong>，就能直接算出來。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="拼布手作工坊風四格漫畫：小禾在工作桌上攤開 3 塊大方布、7 條長條與 2 塊小方布，想拼成一條寬 x + 2 的桌旗；阿森問長要多少，兩人把布排成長方形，量出長是 3x + 1，布剛好全部用完。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 單項式的乘法
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i> <span>重點 1：單項式的乘法——係數相乘、次數相加</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>文字也是數</strong>：\(x\) 代表一個數，所以乘法的<strong>交換律</strong>與<strong>結合律</strong>照樣能用——係數放一組、\(x\) 放一組，各自相乘。</li>
+              <li><strong>連續的 \(x\) 相乘</strong>：\(x \cdot x = x^2\)，\(x \cdot x^2 = x^3\)，數一數一共乘了幾個 \(x\) 就好。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              單項式 × 單項式：<strong>係數相乘</strong>，\(x\) 的<strong>次數相加</strong>，係數寫在前面。
+              \[ x^m \cdot x^n = x^{m + n} \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：
+                \[\begin{aligned} & 3x \cdot 4x^2 \\ &= (3 \cdot 4)(x \cdot x^2) \\ &= 12x^3 \end{aligned}\]</li>
+              <li><strong>負號跟著係數走</strong>：\((-4x) \cdot 2x = -8x^2\)。</li>
+              <li><strong>平方就是自己乘自己</strong>，負號也要一起平方：
+                \[\begin{aligned} & (-3x)^2 \\ &= (-3x)(-3x) \\ &= 9x^2 \end{aligned}\]</li>
+              <li><strong>常見錯誤</strong>：\(2x \cdot 3x^2\) 是 \(6x^3\)，不是 \((2x)^3\)。\((2x)^3 = 8x^3\)，連係數也乘了三次。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_mono.webp" alt="拼布手作工坊風插圖：一塊玫瑰紅的正方形大方布平放在綠色切割墊上，阿森把脖子上的捲尺拉開，沿著布的一邊量長度，小禾拿著粉筆在布角做記號。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：單項式乘法機</h3>
+            <p class="interactive-instruction">調整兩個單項式的<strong>係數</strong>與<strong>次數</strong>。畫面把每個 \(x\) 都拆開，看係數怎麼相乘、\(x\) 的個數怎麼相加；切到「平方」看看負號平方之後變成什麼：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mono" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mo-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">算法</span>
+                    <div class="btn-group" id="mo-mode-group">
+                      <button class="pick-btn active" data-mo-mode="mul">A × B</button>
+                      <button class="pick-btn" data-mo-mode="sq">A 的平方</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mo-a">A 的係數：<span id="mo-va" class="val-num">3</span></label>
+                    <input type="range" id="mo-a" min="-5" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mo-m">A 的次數：<span id="mo-vm" class="val-num">1</span></label>
+                    <input type="range" id="mo-m" min="1" max="2" value="1" step="1">
+                  </div>
+                  <div class="slider-row" id="mo-row-b">
+                    <label for="mo-b">B 的係數：<span id="mo-vb" class="val-num">4</span></label>
+                    <input type="range" id="mo-b" min="-5" max="5" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="mo-row-n">
+                    <label for="mo-n">B 的次數：<span id="mo-vn" class="val-num">2</span></label>
+                    <input type="range" id="mo-n" min="1" max="2" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mo-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (單項式的乘法)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 計算 \((-6x) \cdot 7x^2\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-1" value="A"><span class="option-text">A. \(x^3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-1" value="B"><span class="option-text">B. \(-42x^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-1" value="C"><span class="option-text">C. \(-42x^3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-1" value="D"><span class="option-text">D. \(42x^3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。係數相乘 \((-6) \times 7 = -42\)，次數相加 \(1 + 2 = 3\)，所以是 \(-42x^3\)。<br>
+              A 錯：把係數相加了，\(-6 + 7 = 1\)。<br>
+              B 錯：把次數相乘了，\(1 \times 2 = 2\)；\(x \cdot x^2\) 是三個 \(x\) 相乘。<br>
+              D 錯：負數乘正數是負數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列哪一個計算是<strong>正確</strong>的？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-2" value="A"><span class="option-text">A. \(8x \cdot x^2 = 8x^3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-2" value="B"><span class="option-text">B. \((-6x)^2 = -36x^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-2" value="C"><span class="option-text">C. \(6x \cdot 6x^2 = (6x)^3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-2" value="D"><span class="option-text">D. \(7x \cdot 7x = 14x^2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。係數 \(8 \times 1 = 8\)，次數 \(1 + 2 = 3\)。<br>
+              B 錯：\((-6x)^2 = (-6x)(-6x) = 36x^2\)，負號也被平方了。<br>
+              C 錯：\(6x \cdot 6x^2 = 36x^3\)，而 \((6x)^3 = 216x^3\)，兩者不相等。<br>
+              D 錯：係數要相乘，\(7 \times 7 = 49\)，結果是 \(49x^2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 單項式 × 多項式
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-share-nodes" aria-hidden="true"></i> 重點 2：單項式 × 多項式——分配律，每一項都要乘到
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分配律</strong>：\(a(b + c) = ab + ac\)。單項式乘以多項式，就是把單項式乘上括號裡的<strong>每一項</strong>，再把乘積相加。</li>
+              <li><strong>例</strong>：
+                \[\begin{aligned} & -4x(2x - 3) \\ &= (-4x)(2x) + (-4x)(-3) \\ &= -8x^2 + 12x \end{aligned}\]</li>
+              <li><strong>正負號要一起乘</strong>：上式第二項是 \((-4x) \times (-3)\)，負負得正，是 \(+12x\)。</li>
+              <li><strong>單項式寫在後面也一樣</strong>：\((5x + 1)(-2x) = -10x^2 - 2x\)。</li>
+              <li><strong>常見錯誤</strong>：只乘第一項，寫成 \(-8x^2 - 3\)；括號裡有幾項，就要乘幾次。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_spread.webp" alt="拼布手作工坊風插圖：工作桌上排成一排的三塊不同花色的布，小禾拿著熨斗一塊一塊熨平，阿森在旁邊把熨好的布摺起來。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：分配律射線</h3>
+            <p class="interactive-instruction">調整單項式與括號裡各項的係數。左邊的單項式會射出箭頭，乘到括號裡的<strong>每一項</strong>；切到「只乘第一項」看看錯在哪裡：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dist" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="di-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">算法</span>
+                    <div class="btn-group" id="di-mode-group">
+                      <button class="pick-btn active" data-di-mode="ok">每一項都乘</button>
+                      <button class="pick-btn" data-di-mode="first">只乘第一項（錯）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="di-k">單項式 \(kx\) 的 \(k\)：<span id="di-vk" class="val-num">-3</span></label>
+                    <input type="range" id="di-k" min="-4" max="4" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="di-p2">括號裡 \(x^2\) 項係數：<span id="di-v2" class="val-num">2</span></label>
+                    <input type="range" id="di-p2" min="-4" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="di-p1">括號裡 \(x\) 項係數：<span id="di-v1" class="val-num">-1</span></label>
+                    <input type="range" id="di-p1" min="-4" max="4" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="di-p0">括號裡常數項：<span id="di-v0" class="val-num">4</span></label>
+                    <input type="range" id="di-p0" min="-4" max="4" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="di-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (單項式 × 多項式)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-3">
+            <p class="quiz-question"><strong>Q3.</strong> 計算 \(-5x(6x^2 - 2x + 7)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-3" value="A"><span class="option-text">A. \(-30x^3 - 2x + 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-3" value="B"><span class="option-text">B. \(-30x^3 + 10x^2 - 35x\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-3" value="C"><span class="option-text">C. \(-30x^3 - 10x^2 - 35x\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-3" value="D"><span class="option-text">D. \(30x^3 - 10x^2 + 35x\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(-5x\) 乘上每一項：
+              \[\begin{aligned} & (-5x)(6x^2) = -30x^3 \\ & (-5x)(-2x) = 10x^2 \\ & (-5x)(7) = -35x \end{aligned}\]
+              A 錯：只乘了第一項。<br>
+              C 錯：\((-5x)(-2x)\) 負負得正，是 \(+10x^2\)。<br>
+              D 錯：把 \(-5x\) 當成 \(5x\)，每一項的正負號都反了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-4">
+            <p class="quiz-question"><strong>Q4.</strong> 計算 \((7x - 8)(-3x)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-4" value="A"><span class="option-text">A. \(-21x^2 - 24x\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-4" value="B"><span class="option-text">B. \(21x^2 - 24x\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-4" value="C"><span class="option-text">C. \(-21x^2 - 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-4" value="D"><span class="option-text">D. \(-21x^2 + 24x\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(7x \cdot (-3x) = -21x^2\)，\((-8) \cdot (-3x) = 24x\)，合起來是 \(-21x^2 + 24x\)。<br>
+              A 錯：\((-8)(-3x)\) 負負得正，不是 \(-24x\)。<br>
+              B 錯：\(7x \cdot (-3x)\) 是負的。<br>
+              C 錯：\(-8\) 也要乘上 \(-3x\)，不能照抄。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 多項式 × 多項式
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells" aria-hidden="true"></i> 重點 3：多項式 × 多項式——每一項乘每一項，再合併
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分配律用兩次</strong>：前面每一項都要乘上後面每一項。
+                \[\begin{aligned} & (a + b)(c + d) \\ &= ac + ad + bc + bd \end{aligned}\]</li>
+              <li><strong>例</strong>：
+                \[\begin{aligned} & (2x + 3)(x - 4) \\ &= 2x^2 - 8x + 3x - 12 \\ &= 2x^2 - 5x - 12 \end{aligned}\]</li>
+              <li><strong>先數乘積的個數</strong>：兩項乘三項有 \(2 \times 3 = 6\) 個乘積，乘完再合併同類項：
+                \[\begin{aligned} & (x + 2)(x^2 - 3x + 1) \\ &= x^3 - 3x^2 + x \\ &\quad + 2x^2 - 6x + 2 \\ &= x^3 - x^2 - 5x + 2 \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              \(m\) 次式 × \(n\) 次式 ＝ \((m + n)\) 次式：一次式乘一次式是二次式，一次式乘二次式是三次式。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pm_grid.webp" alt="拼布手作工坊風插圖：一大塊由兩列、每列三塊布縫成的長方形拼布，小禾與阿森各拉著一角把它攤開在工作桌上，每一塊布的花色都不一樣。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：乘法格子布</h3>
+            <p class="interactive-instruction">左邊是一次式的每一項，上面是另一個多項式的每一項，格子裡是兩項的乘積。<strong>同顏色的格子是同類項</strong>，加起來就合併完成：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-grid" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="gr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">第二個式子</span>
+                    <div class="btn-group" id="gr-mode-group">
+                      <button class="pick-btn active" data-gr-mode="quad">二次式</button>
+                      <button class="pick-btn" data-gr-mode="lin">一次式</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="gr-a1">一次式的 \(x\) 項係數：<span id="gr-va1" class="val-num">2</span></label>
+                    <input type="range" id="gr-a1" min="-4" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="gr-a0">一次式的常數項：<span id="gr-va0" class="val-num">1</span></label>
+                    <input type="range" id="gr-a0" min="-5" max="5" value="1" step="1">
+                  </div>
+                  <div class="slider-row" id="gr-row-b2">
+                    <label for="gr-b2">第二式 \(x^2\) 項係數：<span id="gr-vb2" class="val-num">1</span></label>
+                    <input type="range" id="gr-b2" min="-3" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="gr-b1">第二式 \(x\) 項係數：<span id="gr-vb1" class="val-num">-3</span></label>
+                    <input type="range" id="gr-b1" min="-5" max="5" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="gr-b0">第二式常數項：<span id="gr-vb0" class="val-num">2</span></label>
+                    <input type="range" id="gr-b0" min="-5" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="gr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多項式 × 多項式)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-5">
+            <p class="quiz-question"><strong>Q5.</strong> 計算 \((3x - 7)(-2x + 6)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-5" value="A"><span class="option-text">A. \(-6x^2 + 32x - 42\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-5" value="B"><span class="option-text">B. \(-6x^2 + 4x - 42\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-5" value="C"><span class="option-text">C. \(-6x^2 - 42\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-5" value="D"><span class="option-text">D. \(-6x^2 + 32x + 42\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。四個乘積：
+              \[\begin{aligned} & -6x^2 + 18x + 14x - 42 \\ &= -6x^2 + 32x - 42 \end{aligned}\]
+              B 錯：\((-7)(-2x)\) 是 \(+14x\)，寫成 \(-14x\) 才會得到 \(18x - 14x = 4x\)。<br>
+              C 錯：只乘了頭頭、尾尾，漏掉中間兩個乘積。<br>
+              D 錯：\((-7) \times 6 = -42\)，不是 \(+42\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-6">
+            <p class="quiz-question"><strong>Q6.</strong> 將 \((x^2 - 6x + 7)(4x - 1)\) 展開並化簡後，\(x^2\) 項的係數是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-6" value="A"><span class="option-text">A. \(-24\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-6" value="B"><span class="option-text">B. \(-1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-6" value="C"><span class="option-text">C. \(-25\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-6" value="D"><span class="option-text">D. \(23\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。乘出 \(x^2\) 的只有兩組：\(x^2 \cdot (-1) = -x^2\) 與 \((-6x)(4x) = -24x^2\)，合併得 \(-25x^2\)。<br>
+              A 錯：漏了 \(x^2 \cdot (-1)\)。<br>
+              B 錯：漏了 \((-6x)(4x)\)。<br>
+              D 錯：把 \((-6x)(4x)\) 算成 \(+24x^2\)，\(24 - 1 = 23\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 直式乘法與缺項
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-columns" aria-hidden="true"></i> <span>重點 4：直式乘法——同類項對齊，缺項補 \(0\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>直式的寫法</strong>：兩個多項式都按<strong>降冪</strong>排好，用下面那個式子的每一項去乘上面整個式子，每乘一次寫一列，<strong>同類項上下對齊</strong>，最後逐欄相加。</li>
+              <li><strong>缺項補 \(0\)</strong>：上面的式子缺了某一項，要補上 \(0\)（或留空位），乘出來的各列才對得齊。下面是 \((x^2 - 4)(2x + 3)\)：</li>
+            </ul>
+            \[\begin{array}{rrrrr} & & x^2 & +\,0x & -\,4 \\ \times) & & & 2x & +\,3 \\ \hline & 2x^3 & +\,0x^2 & -\,8x & \\ & & 3x^2 & +\,0x & -\,12 \\ \hline & 2x^3 & +\,3x^2 & -\,8x & -\,12 \end{array}\]
+            <ul class="bullet-list">
+              <li><strong>兩種順序都可以</strong>：上面是「由最高次項開始」（先乘 \(2x\)）；也可以「由常數項開始」（先乘 \(3\)），只要同類項對齊，結果一樣。</li>
+              <li><strong>不補 \(0\) 會怎樣</strong>：\(x^2 - 4\) 若直接寫成兩格，\(-4\) 會跑到 \(x\) 那一欄，乘出來的 \(-8x\) 和 \(3x^2\) 就擠進同一欄，加不下去。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_rows.webp" alt="拼布手作工坊風插圖：印著格線的綠色切割墊上，布塊排成上下三列、每一直欄對齊，其中一格空著放了一張白色空卡片；小禾按著卡片，阿森俯身比對各列是否對齊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：直式乘法台</h3>
+            <p class="interactive-instruction">選一題，切換「<strong>由最高次項開始</strong>／<strong>由常數項開始</strong>」，再比較「補 0 對齊」和「不補 0、直接靠右排」——有缺項的題目，不補 0 會出現擠錯欄的紅色問號：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-vmul" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="vm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="vm-p-group">
+                      <button class="pick-btn active" data-vm-p="p1">第 1 題</button>
+                      <button class="pick-btn" data-vm-p="p2">第 2 題</button>
+                      <button class="pick-btn" data-vm-p="p3">第 3 題</button>
+                      <button class="pick-btn" data-vm-p="p4">第 4 題</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">順序</span>
+                    <div class="btn-group" id="vm-m-group">
+                      <button class="pick-btn active" data-vm-m="high">由最高次項開始</button>
+                      <button class="pick-btn" data-vm-m="low">由常數項開始</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">排法</span>
+                    <div class="btn-group" id="vm-pad-group">
+                      <button class="pick-btn active" data-vm-pad="pad">補 0 對齊</button>
+                      <button class="pick-btn" data-vm-pad="nopad">不補 0（靠右排）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="vm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (直式乘法與缺項)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-7">
+            <p class="quiz-question"><strong>Q7.</strong> 計算 \((4x^2 - 3)(-x + 2)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-7" value="A"><span class="option-text">A. \(-4x^3 + 8x^2 - 3x - 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-7" value="B"><span class="option-text">B. \(-4x^3 + 8x^2 + 3x - 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-7" value="C"><span class="option-text">C. \(-4x^3 + 8x^2 - 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-7" value="D"><span class="option-text">D. \(4x^3 + 8x^2 - 3x - 6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。把 \(4x^2 - 3\) 寫成 \(4x^2 + 0x - 3\)：
+              \[\begin{aligned} & 4x^2 \cdot (-x) = -4x^3 \\ & 4x^2 \cdot 2 = 8x^2 \\ & (-3)(-x) = 3x \\ & (-3) \cdot 2 = -6 \end{aligned}\]
+              A 錯：\((-3)(-x)\) 負負得正，是 \(+3x\)。<br>
+              C 錯：漏了 \((-3)(-x)\) 這個乘積。<br>
+              D 錯：\(4x^2 \cdot (-x)\) 是負的。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-8">
+            <p class="quiz-question"><strong>Q8.</strong> 將 \((6x^2 + 5)(x - 8)\) 展開並化簡後，\(x\) 項的係數是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-8" value="A"><span class="option-text">A. \(-48\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-8" value="B"><span class="option-text">B. \(-40\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-8" value="C"><span class="option-text">C. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-8" value="D"><span class="option-text">D. \(5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。補上缺項 \(6x^2 + 0x + 5\)，乘開得
+              \[ 6x^3 - 48x^2 + 5x - 40 \]
+              乘出 \(x\) 的只有 \(5 \cdot x = 5x\)（\(0x \cdot (-8)\) 是 \(0\)）。<br>
+              A 錯：\(-48\) 是 \(x^2\) 項的係數。<br>
+              B 錯：\(-40\) 是常數項。<br>
+              C 錯：第一個式子缺 \(x\) 項，不代表乘開後也沒有 \(x\) 項。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 利用乘法公式
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square" aria-hidden="true"></i> <span>重點 5：利用乘法公式——把 \(3x\) 整個看成 \(a\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              \[\begin{aligned} (a + b)^2 &= a^2 + 2ab + b^2 \\ (a - b)^2 &= a^2 - 2ab + b^2 \\ (a + b)(a - b) &= a^2 - b^2 \end{aligned}\]
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>先認出 \(a\) 和 \(b\)</strong>：\((2x + 5)^2\) 把 \(2x\) 看成 \(a\)、\(5\) 看成 \(b\)：
+                \[\begin{aligned} & (2x)^2 + 2 \cdot 2x \cdot 5 + 5^2 \\ &= 4x^2 + 20x + 25 \end{aligned}\]</li>
+              <li><strong>\(a\) 要整個平方</strong>：\((2x)^2 = 4x^2\)，不是 \(2x^2\)。</li>
+              <li><strong>差的平方</strong>：\((3x - 2)^2 = 9x^2 - 12x + 4\)。</li>
+              <li><strong>平方差</strong>：\((5x + 3)(5x - 3) = 25x^2 - 9\)，中間項一正一負抵消了。</li>
+              <li><strong>前後對調也一樣</strong>：
+                \[\begin{aligned} (b - a)^2 &= [-(a - b)]^2 \\ &= (a - b)^2 \end{aligned}\]
+                所以 \((2 - 3x)^2\) 和 \((3x - 2)^2\) 相等。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_square.webp" alt="拼布手作工坊風插圖：一塊正方形拼布由四塊縫成：左上一塊玫瑰紅大正方形、右下一塊薄荷綠小正方形、另外兩角是兩條一樣大的芥末黃長方形；小禾沿著拼布的邊拉開捲尺，阿森指著兩條一樣大的長方形。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：公式代換機</h3>
+            <p class="interactive-instruction">選一個公式，調整 \(x\) 的係數 \(p\) 與常數 \(q\)。畫面先標出 \(a\)、\(b\) 各是什麼，再一步步代進公式；下方列出這組數字最容易犯的錯：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-formula" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公式</span>
+                    <div class="btn-group" id="fm-f-group">
+                      <button class="pick-btn active" data-fm-f="sum">\((px + q)^2\)</button>
+                      <button class="pick-btn" data-fm-f="diff">\((px - q)^2\)</button>
+                      <button class="pick-btn" data-fm-f="rev">\((q - px)^2\)</button>
+                      <button class="pick-btn" data-fm-f="dsq">\((px + q)(px - q)\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fm-p">\(x\) 的係數 \(p\)：<span id="fm-vp" class="val-num">3</span></label>
+                    <input type="range" id="fm-p" min="1" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fm-q">常數 \(q\)：<span id="fm-vq" class="val-num">2</span></label>
+                    <input type="range" id="fm-q" min="1" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (利用乘法公式)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-9">
+            <p class="quiz-question"><strong>Q9.</strong> 利用乘法公式計算 \((7x - 3)^2\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-9" value="A"><span class="option-text">A. \(49x^2 - 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-9" value="B"><span class="option-text">B. \(7x^2 - 42x + 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-9" value="C"><span class="option-text">C. \(49x^2 - 42x + 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-9" value="D"><span class="option-text">D. \(49x^2 - 21x + 9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。把 \(7x\) 看成 \(a\)、\(3\) 看成 \(b\)：
+              \[\begin{aligned} & (7x)^2 - 2 \cdot 7x \cdot 3 + 3^2 \\ &= 49x^2 - 42x + 9 \end{aligned}\]
+              A 錯：漏了中間項 \(-2ab\)，而且 \((a - b)^2\) 的最後一項是 \(+b^2\)。<br>
+              B 錯：\((7x)^2 = 49x^2\)，係數 \(7\) 也要平方。<br>
+              D 錯：中間項要乘 \(2\)，是 \(2 \cdot 7x \cdot 3 = 42x\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-10">
+            <p class="quiz-question"><strong>Q10.</strong> 下列哪一個式子與 \((4x - 9)^2\) <strong>相等</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-10" value="A"><span class="option-text">A. \((9 - 4x)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-10" value="B"><span class="option-text">B. \(-(9 - 4x)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-10" value="C"><span class="option-text">C. \((4x + 9)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-10" value="D"><span class="option-text">D. \(16x^2 - 81\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(9 - 4x = -(4x - 9)\)，平方之後負號消失：
+              \[\begin{aligned} & (9 - 4x)^2 \\ &= (4x - 9)^2 \\ &= 16x^2 - 72x + 81 \end{aligned}\]
+              B 錯：前面多了一個負號，是 \(-16x^2 + 72x - 81\)。<br>
+              C 錯：\((4x + 9)^2 = 16x^2 + 72x + 81\)，中間項的符號不同。<br>
+              D 錯：那是 \((4x + 9)(4x - 9)\) 的結果。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 單項式的除法
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> 重點 6：單項式的除法——係數相除、次數相減
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>除法是乘法的反運算</strong>：因為 \(3x^2 \cdot 4x = 12x^3\)，所以 \(12x^3 \div 4x = 3x^2\)。</li>
+              <li><strong>寫成分數再約分</strong>：分子、分母同時約掉相同的數與 \(x\)：
+                \[\begin{aligned} & 12x^3 \div 4x \\ &= \frac{12 \cdot x \cdot x \cdot x}{4 \cdot x} \\ &= 3x^2 \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              單項式 ÷ 單項式：<strong>係數相除</strong>，\(x\) 的<strong>次數相減</strong>。
+              \[ x^m \div x^n = x^{m - n} \quad (m \ge n) \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>商可以是分數係數</strong>：\(9x^2 \div 6x = \frac{3}{2}x\)。</li>
+              <li><strong>次數相同時 \(x\) 全部約掉</strong>：\(-10x^2 \div 4x^2 = -\frac{5}{2}\)，商是常數。</li>
+              <li><strong>括號可以省略</strong>：除式的係數是正的時，\((8x^2) \div (2x)\) 習慣寫成 \(8x^2 \div 2x\)，意思一樣是「除以 \(2x\)」。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_cut.webp" alt="拼布手作工坊風插圖：一條長長的芥末黃布條平放在綠色切割墊上，小禾握著滾刀的木柄，沿著直尺從布條上方切下一段，另一隻手按在直尺遠離刀的那一端；阿森在旁邊把切好的等長小段排成一排。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：約分刀</h3>
+            <p class="interactive-instruction">調整被除式與除式的係數、次數。上面把它寫成分數，<strong>約掉的 \(x\) 會被劃掉</strong>；下面分成係數與 \(x\) 兩部分算，最後乘回去驗算：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mdiv" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="md-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="md-a">被除式的係數：<span id="md-va" class="val-num">10</span></label>
+                    <input type="range" id="md-a" min="-12" max="12" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-m">被除式的次數：<span id="md-vm" class="val-num">2</span></label>
+                    <input type="range" id="md-m" min="1" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-b">除式的係數：<span id="md-vb" class="val-num">4</span></label>
+                    <input type="range" id="md-b" min="-6" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-n">除式的次數（不超過被除式）：<span id="md-vn" class="val-num">1</span></label>
+                    <input type="range" id="md-n" min="1" max="2" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="md-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (單項式的除法)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-11">
+            <p class="quiz-question"><strong>Q11.</strong> 計算 \((-28x^3) \div 7x\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-11" value="A"><span class="option-text">A. \(-4x^3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-11" value="B"><span class="option-text">B. \(4x^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-11" value="C"><span class="option-text">C. \(-21x^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-11" value="D"><span class="option-text">D. \(-4x^2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。係數 \((-28) \div 7 = -4\)，次數 \(3 - 1 = 2\)，商是 \(-4x^2\)。驗算：\(-4x^2 \cdot 7x = -28x^3\)。<br>
+              A 錯：分母的 \(x\) 沒有約掉，次數沒減。<br>
+              B 錯：負數除以正數是負數。<br>
+              C 錯：係數要相除，不是相減。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-12">
+            <p class="quiz-question"><strong>Q12.</strong> 計算 \(20x^2 \div (-15x^2)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-12" value="A"><span class="option-text">A. \(-\frac{4}{3}x\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-12" value="B"><span class="option-text">B. \(-\frac{4}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-12" value="C"><span class="option-text">C. \(\frac{4}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-12" value="D"><span class="option-text">D. \(-\frac{3}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。係數 \(20 \div (-15) = -\frac{4}{3}\)；\(x^2 \div x^2\) 次數相減是 \(0\)，\(x\) 全部約掉，商是常數 \(-\frac{4}{3}\)。<br>
+              A 錯：次數相同，\(x\) 要全部約掉。<br>
+              C 錯：正數除以負數是負數。<br>
+              D 錯：把除式與被除式倒過來除了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 多項式 ÷ 單項式
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scissors" aria-hidden="true"></i> 重點 7：多項式 ÷ 單項式——算到餘式的次數比除式小才停
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>四個名詞</strong>：仿照數的除法，在「\(A\) 除以 \(B\)」裡，\(A\) 是<strong>被除式</strong>、\(B\) 是<strong>除式</strong>，算出來的是<strong>商式</strong>，剩下的是<strong>餘式</strong>。</li>
+              <li><strong>直式除法</strong>：被除式按降冪排列，用它的最高次項除以除式，得到商的一項；乘回去寫在下面，上減下；再對剩下的式子重複。以 \((6x^2 - 9x + 4) \div 3x\) 為例：
+                \[\begin{aligned} & 6x^2 \div 3x = 2x \\ & \text{剩下 } {-9x} + 4 \\ & -9x \div 3x = -3 \\ & \text{剩下 } 4 \end{aligned}\]
+                商式是 \(2x - 3\)，餘式是 \(4\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              除法要做到<strong>餘式的次數比除式的次數小</strong>，或<strong>餘式為 \(0\)</strong>，才算完成。餘式為 \(0\) 時，稱除式<strong>整除</strong>被除式。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>除式是 \(x^2\) 的單項式時</strong>：\((5x^2 + 3x) \div x^2\) 只能商 \(5\)，剩下的 \(3x\) 次數是 \(1\)，已經比 \(2\) 小，所以餘式是 \(3x\)，不必再除。</li>
+              <li><strong>能整除時也可以約分</strong>：\(\frac{4x^2 + 6x}{2x} = 2x + 3\)，每一項都約掉 \(2x\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_share.webp" alt="拼布手作工坊風插圖：阿森把一籃小方布平均分進四個一樣大的藤編小籃子，小禾拿著帳本與鉛筆在旁邊點數，大籃子底部還剩下幾塊沒分完的布。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：長除法慢動作（÷ 單項式）</h3>
+            <p class="interactive-instruction">調整被除式與除式，用「上一步／下一步」一步一步看。顏色對應四個名詞：<strong>被除式、除式、商式、餘式</strong>；切換除式是 \(kx\) 或 \(kx^2\)，看看什麼時候該停：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ldiv1" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="d1-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">除式</span>
+                    <div class="btn-group" id="d1-deg-group">
+                      <button class="pick-btn active" data-d1-deg="1">\(kx\)</button>
+                      <button class="pick-btn" data-d1-deg="2">\(kx^2\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="d1-prev">上一步</button>
+                      <span class="step-counter" id="d1-step">1 / 2</span>
+                      <button class="pick-btn" id="d1-next">下一步</button>
+                      <button class="pick-btn" id="d1-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="d1-a2">被除式 \(x^2\) 項係數：<span id="d1-v2" class="val-num">8</span></label>
+                    <input type="range" id="d1-a2" min="-9" max="9" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d1-a1">被除式 \(x\) 項係數：<span id="d1-v1" class="val-num">-6</span></label>
+                    <input type="range" id="d1-a1" min="-9" max="9" value="-6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d1-a0">被除式常數項：<span id="d1-v0" class="val-num">5</span></label>
+                    <input type="range" id="d1-a0" min="-9" max="9" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d1-k">除式的係數 \(k\)：<span id="d1-vk" class="val-num">2</span></label>
+                    <input type="range" id="d1-k" min="-4" max="4" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="d1-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多項式 ÷ 單項式)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-13">
+            <p class="quiz-question"><strong>Q13.</strong> 求 \((18x^2 + 12x - 7) \div 6x\) 的商式與餘式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-13" value="A"><span class="option-text">A. 商式 \(3x + 2\)，餘式 \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-13" value="B"><span class="option-text">B. 商式 \(3x + 2\)，餘式 \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-13" value="C"><span class="option-text">C. 商式 \(3x + 2\)，餘式 \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-13" value="D"><span class="option-text">D. 商式 \(3x^2 + 2x\)，餘式 \(-7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(18x^2 \div 6x = 3x\)，乘回去減掉後剩 \(12x - 7\)；\(12x \div 6x = 2\)，再減掉後剩 \(-7\)。\(-7\) 的次數 \(0\) 比除式 \(6x\) 的次數 \(1\) 小，停止。<br>
+              B 錯：餘式是被除式剩下的 \(-7\)，負號不能丟。<br>
+              C 錯：\(-7\) 無法再被 \(6x\) 除，它就是餘式，這題沒有整除。<br>
+              D 錯：\(x\) 的次數要相減，\(18x^2 \div 6x\) 是 \(3x\)，不是 \(3x^2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-14">
+            <p class="quiz-question"><strong>Q14.</strong> 計算 \((10x^2 + 7x) \div 5x^2\)，餘式是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-14" value="A"><span class="option-text">A. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-14" value="B"><span class="option-text">B. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-14" value="C"><span class="option-text">C. \(7x\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-14" value="D"><span class="option-text">D. \(\frac{7}{5}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(10x^2 \div 5x^2 = 2\)，\(2 \cdot 5x^2 = 10x^2\)，減掉後剩 \(7x\)。\(7x\) 的次數 \(1\) 比除式 \(5x^2\) 的次數 \(2\) 小，停止，所以商式 \(2\)、餘式 \(7x\)。<br>
+              A 錯：剩下的 \(7x\) 不是 \(0\)，沒有整除。<br>
+              B 錯：餘式是 \(7x\)，\(x\) 不能丟掉。<br>
+              D 錯：那是把 \(7x\) 再除以 \(5x\) 的結果；但除式是 \(5x^2\)，\(7x\) 的次數已經比它小，不能再除。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 多項式 ÷ 一次式
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-horizontal" aria-hidden="true"></i> 重點 8：除式為一次式——上減下每一項變號，缺項補 \(0\)
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>一輪四個動作</strong>：① 最高次項相除，得到商的一項；② 這一項乘上整個除式，寫在下面；③ 上減下，下面那一列<strong>每一項都要變號</strong>；④ 剩下的式子次數還不比除式小，就再來一輪。</li>
+              <li><strong>例</strong>：\((3x^2 - 7x + 5) \div (x - 2)\)
+                \[\begin{aligned} & 3x^2 \div x = 3x \\ & 3x(x - 2) = 3x^2 - 6x \\ & \text{剩下 } {-x} + 5 \\ & -x \div x = -1 \\ & -1 \cdot (x - 2) = -x + 2 \\ & \text{剩下 } 3 \end{aligned}\]
+                商式 \(3x - 1\)，餘式 \(3\)。除式是一次式，餘式一定是常數。</li>
+              <li><strong>缺項補 \(0\)</strong>：\((2x^2 - 9) \div (x + 3)\) 要寫成 \(2x^2 + 0x - 9\)，才不會把 \(-9\) 放進 \(x\) 那一欄。算出來商式 \(2x - 6\)、餘式 \(9\)。</li>
+              <li><strong>整除求未知數</strong>：若 \(x^2 - 5x + m\) 能被 \(x - 2\) 整除，照樣做長除法，最後剩下 \(m - 6\)，整除表示 \(m - 6 = 0\)，所以 \(m = 6\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_long.webp" alt="拼布手作工坊風插圖：一條很長的丹寧藍布條沿著工作桌攤開，小禾拿捲尺一段一段量好長度，阿森用布剪沿著記號剪下一段，刀刃朝外、遠離兩人的手；剪下來的布段在桌角疊好，最後剩下短短的一小截。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：長除法慢動作（÷ 一次式）</h3>
+            <p class="interactive-instruction">調整被除式與除式 \(px + q\)，一步一步看長除法。把 \(x\) 項係數調成 \(0\) 看缺項怎麼補；有餘式時，畫面會告訴你常數項要改成多少才能<strong>整除</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ldiv2" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="d2-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="d2-prev">上一步</button>
+                      <span class="step-counter" id="d2-step">1 / 2</span>
+                      <button class="pick-btn" id="d2-next">下一步</button>
+                      <button class="pick-btn" id="d2-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="d2-a2">被除式 \(x^2\) 項係數：<span id="d2-v2" class="val-num">1</span></label>
+                    <input type="range" id="d2-a2" min="-6" max="6" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d2-a1">被除式 \(x\) 項係數：<span id="d2-v1" class="val-num">4</span></label>
+                    <input type="range" id="d2-a1" min="-6" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d2-a0">被除式常數項：<span id="d2-v0" class="val-num">-3</span></label>
+                    <input type="range" id="d2-a0" min="-6" max="6" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d2-p">除式 \(x\) 的係數 \(p\)：<span id="d2-vp" class="val-num">1</span></label>
+                    <input type="range" id="d2-p" min="1" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d2-q">除式常數 \(q\)：<span id="d2-vq" class="val-num">1</span></label>
+                    <input type="range" id="d2-q" min="-5" max="5" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="d2-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (除式為一次式)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-15">
+            <p class="quiz-question"><strong>Q15.</strong> 求 \((2x^2 + 9x - 4) \div (x + 4)\) 的商式與餘式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-15" value="A"><span class="option-text">A. 商式 \(2x + 1\)，餘式 \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-15" value="B"><span class="option-text">B. 商式 \(2x + 1\)，餘式 \(-8\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-15" value="C"><span class="option-text">C. 商式 \(2x + 17\)，餘式 \(-72\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-15" value="D"><span class="option-text">D. 商式 \(2x\)，餘式 \(x - 4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & 2x(x + 4) = 2x^2 + 8x \\ & \text{剩下 } x - 4 \\ & 1 \cdot (x + 4) = x + 4 \\ & \text{剩下 } {-4} - 4 = -8 \end{aligned}\]
+              A 錯：最後一步上減下時 \(+4\) 沒有變號，算成 \(-4 + 4 = 0\)。<br>
+              C 錯：第一步上減下時 \(+8x\) 沒有變號，算成 \(9x + 8x = 17x\)，後面就跟著錯。<br>
+              D 錯：剩下的 \(x - 4\) 是一次式，和除式一樣是一次，還要再除一次才能停。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-16">
+            <p class="quiz-question"><strong>Q16.</strong> 已知 \(6x^2 + 7x + m\) 能被 \(2x + 3\) 整除，則 \(m\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-16" value="A"><span class="option-text">A. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-16" value="B"><span class="option-text">B. \(-9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-16" value="C"><span class="option-text">C. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-16" value="D"><span class="option-text">D. \(-3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。做長除法：
+              \[\begin{aligned} & 3x(2x + 3) = 6x^2 + 9x \\ & \text{剩下 } {-2x} + m \\ & -1 \cdot (2x + 3) = -2x - 3 \\ & \text{剩下 } m + 3 \end{aligned}\]
+              整除表示餘式為 \(0\)：\(m + 3 = 0\)，\(m = -3\)。<br>
+              A 錯：最後一步 \(-3\) 沒有變號，得到 \(m - 3 = 0\)。<br>
+              B、C 錯：代回去餘式 \(m + 3\) 分別是 \(-6\)、\(12\)，都不是 \(0\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 除式為二次式
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 9：除式為二次式——商是常數，餘式可能是一次式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>二次式 ÷ 二次式只除一次</strong>：最高次項的係數相除，商式是一個<strong>常數</strong>；乘回去減掉之後，剩下的式子最多是一次，次數已經比 \(2\) 小，停止。</li>
+              <li><strong>例</strong>：\((6x^2 - x + 4) \div (2x^2 + 3x - 1)\)
+                \[\begin{aligned} & 6x^2 \div 2x^2 = 3 \\ & 3(2x^2 + 3x - 1) \\ &\quad = 6x^2 + 9x - 3 \\ & \text{剩下 } {-10x} + 7 \end{aligned}\]
+                商式 \(3\)，餘式 \(-10x + 7\)。</li>
+              <li><strong>商與餘式可以有分數係數</strong>：\((3x^2 + 2x) \div (2x^2 - x + 1)\) 的商式是 \(\frac{3}{2}\)，餘式是 \(\frac{7}{2}x - \frac{3}{2}\)。</li>
+              <li><strong>除式也要降冪</strong>：除式寫成 \(4 - 3x + x^2\) 時，先排成 \(x^2 - 3x + 4\) 再除；缺項一樣補 \(0\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              餘式的次數一定<strong>比除式小</strong>：除以一次式，餘式是常數；除以二次式，餘式可以是一次式、常數或 \(0\)。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pm_leftover.webp" alt="拼布手作工坊風插圖：兩塊一樣寬的長方形布上下疊放在工作桌上，左端對齊，上面那塊的右端多出一截窄窄的布；小禾用手指著多出來的那一截，阿森拿著布剪站在旁邊，刀刃朝下收著。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：二次 ÷ 二次，一步就停</h3>
+            <p class="interactive-instruction">調整被除式與除式的係數。不管怎麼調，商都只有一個<strong>常數</strong>，餘式的次數都<strong>比 \(2\) 小</strong>；把除式的 \(x\) 項調成 \(0\)，看缺項怎麼補：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ldiv3" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="d3-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="d3-a2">被除式 \(x^2\) 項係數：<span id="d3-va2" class="val-num">4</span></label>
+                    <input type="range" id="d3-a2" min="-6" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d3-a1">被除式 \(x\) 項係數：<span id="d3-va1" class="val-num">-2</span></label>
+                    <input type="range" id="d3-a1" min="-6" max="6" value="-2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d3-a0">被除式常數項：<span id="d3-va0" class="val-num">3</span></label>
+                    <input type="range" id="d3-a0" min="-6" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d3-b2">除式 \(x^2\) 項係數：<span id="d3-vb2" class="val-num">2</span></label>
+                    <input type="range" id="d3-b2" min="-3" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d3-b1">除式 \(x\) 項係數：<span id="d3-vb1" class="val-num">1</span></label>
+                    <input type="range" id="d3-b1" min="-5" max="5" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="d3-b0">除式常數項：<span id="d3-vb0" class="val-num">-2</span></label>
+                    <input type="range" id="d3-b0" min="-5" max="5" value="-2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="d3-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (除式為二次式)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-17">
+            <p class="quiz-question"><strong>Q17.</strong> 求 \((10x^2 - 3x + 7) \div (2x^2 + x - 1)\) 的商式與餘式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-17" value="A"><span class="option-text">A. 商式 \(5\)，餘式 \(-8x + 12\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-17" value="B"><span class="option-text">B. 商式 \(5\)，餘式 \(2x + 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-17" value="C"><span class="option-text">C. 商式 \(5\)，餘式 \(-8x + 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-17" value="D"><span class="option-text">D. 商式 \(5\)，餘式 \(8x - 12\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(10x^2 \div 2x^2 = 5\)，\(5(2x^2 + x - 1) = 10x^2 + 5x - 5\)，上減下：
+              \[\begin{aligned} & -3x - 5x = -8x \\ & 7 - (-5) = 12 \end{aligned}\]
+              B 錯：下面那一列整列沒有變號，算成 \(-3x + 5x\)、\(7 + (-5)\)。<br>
+              C 錯：常數那一欄沒有變號，算成 \(7 + (-5) = 2\)。<br>
+              D 錯：減反了，用下面減上面。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-18">
+            <p class="quiz-question"><strong>Q18.</strong> 某個多項式除以 \(x^2 - 3x + 2\)，下列哪一個<strong>不可能</strong>是它的餘式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-18" value="A"><span class="option-text">A. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-18" value="B"><span class="option-text">B. \(-6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-18" value="C"><span class="option-text">C. \(4x - 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-18" value="D"><span class="option-text">D. \(2x^2 + 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。除式是二次式，餘式的次數一定比 \(2\) 小。\(2x^2 + 5\) 是二次式，表示還可以再除一次（商再加 \(2\)），除法還沒做完。<br>
+              A 可能：整除時餘式為 \(0\)。<br>
+              B 可能：常數的次數是 \(0\)，比 \(2\) 小。<br>
+              C 可能：一次式的次數 \(1\) 比 \(2\) 小。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 被除式 = 商式 × 除式 + 餘式
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-puzzle-piece" aria-hidden="true"></i> 重點 10：求被除式——被除式 ＝ 商式 × 除式 ＋ 餘式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>從整數除法想起</strong>：\(47 \div 6\) 的商是 \(7\)、餘數是 \(5\)，可以寫成 \(47 = 7 \times 6 + 5\)。</li>
+              <li><strong>多項式也一樣</strong>：\((2x^2 - 3x + 7) \div (x - 2)\) 的商式是 \(2x + 1\)、餘式是 \(9\)，可以寫成
+                \[\begin{aligned} & 2x^2 - 3x + 7 \\ &= (2x + 1)(x - 2) + 9 \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              被除式 ＝ 商式 × 除式 ＋ 餘式
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>求被除式</strong>：若 \(A \div (x - 4)\) 的商式是 \(2x^2 - 1\)、餘式是 \(5\)，則
+                \[\begin{aligned} A &= (2x^2 - 1)(x - 4) + 5 \\ &= 2x^3 - 8x^2 - x + 4 + 5 \\ &= 2x^3 - 8x^2 - x + 9 \end{aligned}\]</li>
+              <li><strong>別忘了加餘式</strong>：只算商式 × 除式，少的就是餘式那一塊。</li>
+              <li><strong>餘式的次數要比除式小</strong>：除式是一次式，餘式只能是常數；除式是二次式，餘式可以是一次式。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_assemble.webp" alt="拼布手作工坊風插圖：工作桌上一大塊長方形拼布已經縫好，旁邊還有一小塊方形補丁；阿森坐在奶油白的復古縫紉機前，正把那塊小補丁接縫到大拼布的邊上，小禾在一旁幫忙把布攤平，手都離針很遠。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：被除式組裝台</h3>
+            <p class="interactive-instruction">自己決定<strong>除式、商式、餘式</strong>，組出被除式；最下面一行把組出來的式子真的除回去驗算。切換除式是一次式或二次式，看看餘式能有多高的次數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-build" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">除式</span>
+                    <div class="btn-group" id="bd-mode-group">
+                      <button class="pick-btn active" data-bd-mode="lin">一次式 \(x + d\)</button>
+                      <button class="pick-btn" data-bd-mode="quad">二次式 \(x^2 + d\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bd-d">除式的常數 \(d\)：<span id="bd-vd" class="val-num">-3</span></label>
+                    <input type="range" id="bd-d" min="-5" max="5" value="-3" step="1">
+                  </div>
+                  <div class="slider-row" id="bd-row-q2">
+                    <label for="bd-q2">商式 \(x^2\) 項係數：<span id="bd-vq2" class="val-num">1</span></label>
+                    <input type="range" id="bd-q2" min="-3" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bd-q1">商式 \(x\) 項係數：<span id="bd-vq1" class="val-num">2</span></label>
+                    <input type="range" id="bd-q1" min="-5" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bd-q0">商式常數項：<span id="bd-vq0" class="val-num">-1</span></label>
+                    <input type="range" id="bd-q0" min="-5" max="5" value="-1" step="1">
+                  </div>
+                  <div class="slider-row" id="bd-row-r1">
+                    <label for="bd-r1">餘式 \(x\) 項係數：<span id="bd-vr1" class="val-num">2</span></label>
+                    <input type="range" id="bd-r1" min="-5" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bd-r0">餘式常數項：<span id="bd-vr0" class="val-num">4</span></label>
+                    <input type="range" id="bd-r0" min="-6" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求被除式)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-19">
+            <p class="quiz-question"><strong>Q19.</strong> 多項式 \(A\) 除以 \(x - 7\) 的商式為 \(2x^2 + 3\)，餘式為 \(-7\)，則 \(A\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-19" value="A"><span class="option-text">A. \(2x^3 - 14x^2 + 3x - 21\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-19" value="B"><span class="option-text">B. \(2x^3 + 14x^2 + 3x + 14\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-19" value="C"><span class="option-text">C. \(2x^3 - 14x^2 + 3x - 28\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-19" value="D"><span class="option-text">D. \(2x^3 - 14x^2 + 3x - 14\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} A &= (2x^2 + 3)(x - 7) + (-7) \\ &= 2x^3 - 14x^2 + 3x - 21 - 7 \\ &= 2x^3 - 14x^2 + 3x - 28 \end{aligned}\]
+              A 錯：只算了商式 × 除式，忘了加餘式。<br>
+              B 錯：把除式當成 \(x + 7\)：\((2x^2 + 3)(x + 7) - 7\)。<br>
+              D 錯：把餘式 \(-7\) 減掉了，算成 \(-21 + 7\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-20">
+            <p class="quiz-question"><strong>Q20.</strong> 多項式 \(F\) 除以多項式 \(G\)，得商式 \(Q\)、餘式 \(R\)。那麼 \(F + G\) 除以 \(G\)，商式與餘式各是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-20" value="A"><span class="option-text">A. 商式 \(Q\)，餘式 \(R + G\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-20" value="B"><span class="option-text">B. 商式 \(Q + 1\)，餘式 \(R\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-20" value="C"><span class="option-text">C. 商式 \(Q + 1\)，餘式 \(R + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-20" value="D"><span class="option-text">D. 商式 \(Q\)，餘式 \(R\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。由 \(F = QG + R\)：
+              \[\begin{aligned} F + G &= QG + R + G \\ &= (Q + 1)G + R \end{aligned}\]
+              \(R\) 的次數本來就比 \(G\) 小，所以商式 \(Q + 1\)、餘式 \(R\)。<br>
+              A 錯：\(R + G\) 的次數和 \(G\) 一樣高，不能當餘式，還能再除。<br>
+              C 錯：餘式沒有多出 \(1\)，多出來的 \(G\) 剛好再除一次。<br>
+              D 錯：多了一個 \(G\)，商式就要多 \(1\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 求除式
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 重點 11：求除式——先減掉餘式，再除以商式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>由關係式移項</strong>：被除式 ＝ 商式 × 除式 ＋ 餘式，所以「商式 × 除式」就是「被除式 − 餘式」。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              商式不為 \(0\) 時：除式 ＝（被除式 − 餘式）÷ 商式
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：\(6x^2 + x - 16\) 除以多項式 \(B\)，商式 \(2x + 3\)、餘式 \(-4\)。先減掉餘式：
+                \[\begin{aligned} & (6x^2 + x - 16) - (-4) \\ &= 6x^2 + x - 12 \end{aligned}\]
+                再除以商式：
+                \[\begin{aligned} B &= (6x^2 + x - 12) \\ &\quad \div (2x + 3) \\ &= 3x - 4 \end{aligned}\]</li>
+              <li><strong>減完一定整除</strong>：被除式減掉餘式後，剛好是商式 × 除式，所以這次的長除法餘式一定是 \(0\)；除不盡就代表前面算錯了。</li>
+              <li><strong>「除」與「除以」</strong>：「\(A\) 除以 \(B\)」是 \(A \div B\)；「\(A\) 除 \(B\)」是 \(B \div A\)。讀題時先分清楚誰是被除式。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_detective.webp" alt="拼布手作工坊風插圖：工作桌上幾塊布已經拼成一個長方形，小禾拿著放大鏡彎腰看長方形的邊，阿森手上捧著幾塊沒拼進去的薄荷綠小方布。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：除式偵探</h3>
+            <p class="interactive-instruction">被除式就是桌上這堆布。先拿掉<strong>餘式</strong>那幾塊，剩下的排成一邊是<strong>商式</strong>的長方形，另一邊就是要找的<strong>除式</strong>。按「下一步」照順序做：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-find" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="fd-p-group">
+                      <button class="pick-btn active" data-fd-p="p1">第 1 題</button>
+                      <button class="pick-btn" data-fd-p="p2">第 2 題</button>
+                      <button class="pick-btn" data-fd-p="p3">第 3 題</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="fd-prev">上一步</button>
+                      <span class="step-counter" id="fd-step">1 / 4</span>
+                      <button class="pick-btn" id="fd-next">下一步</button>
+                      <button class="pick-btn" id="fd-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求除式)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-21">
+            <p class="quiz-question"><strong>Q21.</strong> \(12x^2 - 5x - 5\) 除以多項式 \(B\)，得商式 \(3x + 1\)、餘式 \(-2\)，則 \(B\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-21" value="A"><span class="option-text">A. \(4x - 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-21" value="B"><span class="option-text">B. \(4x + 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-21" value="C"><span class="option-text">C. \(3x + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-21" value="D"><span class="option-text">D. \(4x - 1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先減掉餘式，再除以商式：
+              \[\begin{aligned} & (12x^2 - 5x - 5) - (-2) \\ &= 12x^2 - 5x - 3 \\ B &= (12x^2 - 5x - 3) \\ &\quad \div (3x + 1) \\ &= 4x - 3 \end{aligned}\]
+              驗算：
+              \[\begin{aligned} & (3x + 1)(4x - 3) - 2 \\ &= 12x^2 - 5x - 5 \end{aligned}\]
+              B 錯：代回去
+              \[\begin{aligned} & (3x + 1)(4x + 3) - 2 \\ &= 12x^2 + 13x + 1 \end{aligned}\]
+              不是原來的被除式。<br>
+              C 錯：\(3x + 1\) 是商式，不是除式。<br>
+              D 錯：代回去
+              \[\begin{aligned} & (3x + 1)(4x - 1) - 2 \\ &= 12x^2 + x - 3 \end{aligned}\]
+              也對不上。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-22">
+            <p class="quiz-question"><strong>Q22.</strong> \(6x^2 + 5x - 1\) 除以多項式 \(B\)，得商式 \(2\)、餘式 \(x + 5\)，則 \(B\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-22" value="A"><span class="option-text">A. \(3x^2 + 3x + 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-22" value="B"><span class="option-text">B. \(12x^2 + 8x - 12\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-22" value="C"><span class="option-text">C. \(3x^2 + 2x - 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-22" value="D"><span class="option-text">D. \(3x^2 + \frac{5}{2}x - \frac{1}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & (6x^2 + 5x - 1) - (x + 5) \\ &= 6x^2 + 4x - 6 \\ B &= (6x^2 + 4x - 6) \div 2 \\ &= 3x^2 + 2x - 3 \end{aligned}\]
+              驗算：
+              \[\begin{aligned} & 2(3x^2 + 2x - 3) + (x + 5) \\ &= 6x^2 + 5x - 1 \end{aligned}\]
+              而且餘式 \(x + 5\) 是一次，比除式的二次小。<br>
+              A 錯：把餘式加上去了，\((6x^2 + 6x + 4) \div 2\)。<br>
+              B 錯：要除以商式 \(2\)，不是乘以 \(2\)。<br>
+              D 錯：忘了先減掉餘式，直接 \((6x^2 + 5x - 1) \div 2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 多項式的四則運算
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-ol" aria-hidden="true"></i> 重點 12：四則運算——先乘方、再乘除、後加減
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>規則和數一樣</strong>：由左到右、括號內先算、先乘方、再乘除、最後加減。</li>
+              <li><strong>減號後面的乘積要整組加括號</strong>：先把乘積算出來放進括號，再去括號，括號裡<strong>每一項</strong>都變號。</li>
+              <li><strong>例</strong>：
+                \[\begin{aligned} & 2(x - 3)^2 - (x + 1)(x - 4) \\ &= 2(x^2 - 6x + 9) \\ &\quad - (x^2 - 3x - 4) \\ &= 2x^2 - 12x + 18 \\ &\quad - x^2 + 3x + 4 \\ &= x^2 - 9x + 22 \end{aligned}\]</li>
+              <li><strong>常見錯誤</strong>：寫成 \(2x^2 - 12x + 18 - x^2 - 3x - 4\)，只有第一項變號，後面兩項的號都錯了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_steps.webp" alt="拼布手作工坊風插圖：工作桌上由左到右排著三個木頭托盤，依序放著熨斗、布剪、一捲縫紉線；小禾從最左邊的托盤拿起熨斗，阿森在旁邊用手指著三個托盤的順序。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：四則運算步驟機</h3>
+            <p class="interactive-instruction">選一題，按「下一步」照順序算：先乘方、再乘法，乘積整組放進括號，最後去括號合併。<strong>紅色那一步</strong>是最容易出錯的地方：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mix" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mx-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="mx-p-group">
+                      <button class="pick-btn active" data-mx-p="p1">第 1 題</button>
+                      <button class="pick-btn" data-mx-p="p2">第 2 題</button>
+                      <button class="pick-btn" data-mx-p="p3">第 3 題</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="mx-prev">上一步</button>
+                      <span class="step-counter" id="mx-step">1 / 5</span>
+                      <button class="pick-btn" id="mx-next">下一步</button>
+                      <button class="pick-btn" id="mx-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mx-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多項式的四則運算)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-23">
+            <p class="quiz-question"><strong>Q23.</strong> 計算 \((x + 5)^2 - 2(x + 3)(x - 1)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-23" value="A"><span class="option-text">A. \(-x^2 + 14x + 19\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-23" value="B"><span class="option-text">B. \(-x^2 + 6x + 31\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-23" value="C"><span class="option-text">C. \(-x^2 - 4x + 31\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-23" value="D"><span class="option-text">D. \(3x^2 + 14x + 19\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & (x^2 + 10x + 25) \\ &\quad - 2(x^2 + 2x - 3) \\ &= x^2 + 10x + 25 \\ &\quad - 2x^2 - 4x + 6 \\ &= -x^2 + 6x + 31 \end{aligned}\]
+              A 錯：減號後只有第一項變號，算成 \(-2x^2 + 4x - 6\)。<br>
+              C 錯：把 \((x + 5)^2\) 寫成 \(x^2 + 25\)，漏了中間項 \(10x\)。<br>
+              D 錯：把中間的減號當成加號了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-24">
+            <p class="quiz-question"><strong>Q24.</strong> 小禾計算 \((2x + 3)^2 - (x - 2)(x + 5)\) 的過程如下。她從第幾步開始算錯？
+              \[\begin{aligned} \text{①} \; &= (4x^2 + 12x + 9) \\ &\quad - (x^2 + 3x - 10) \\ \text{②} \; &= 4x^2 + 12x + 9 \\ &\quad - x^2 + 3x - 10 \\ \text{③} \; &= 3x^2 + 15x - 1 \end{aligned}\]</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-24" value="A"><span class="option-text">A. 第 ① 步</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-24" value="B"><span class="option-text">B. 第 ② 步</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-24" value="C"><span class="option-text">C. 第 ③ 步</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-24" value="D"><span class="option-text">D. 每一步都正確</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。第 ① 步正確：\((2x + 3)^2 = 4x^2 + 12x + 9\)，\((x - 2)(x + 5) = x^2 + 3x - 10\)。第 ② 步去括號時，減號後面每一項都要變號，應該是
+              \[ 4x^2 + 12x + 9 - x^2 - 3x + 10 \]
+              她只變了第一項。正確答案是 \(3x^2 + 9x + 19\)。<br>
+              C 錯：第 ③ 步照第 ② 步合併並沒有算錯，錯是從第 ② 步來的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 13: 多項式的應用
+           ========================================== -->
+      <section class="concept-section" id="concept13">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> 重點 13：多項式的應用——面積、周長與梯形求高
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先寫關係式，再代入多項式</strong>：長方形面積 ＝ 長 × 寬、周長 ＝ (長 ＋ 寬) × 2，把多項式代進去，用前面學的乘法化簡。</li>
+              <li><strong>周長</strong>：長 \(3x + 2\)、寬 \(x + 5\) 的長方形，周長是
+                \[\begin{aligned} & [(3x + 2) + (x + 5)] \times 2 \\ &= (4x + 7) \times 2 = 8x + 14 \end{aligned}\]</li>
+              <li><strong>挖掉一塊</strong>：剩下的面積 ＝ 大的 − 小的，小的那塊乘開後要整組加括號再減。</li>
+              <li><strong>小路平移</strong>：田裡縱橫各有一條寬 \(x\) 的小路時，把小路推到邊上，剩下的稻田就拼成一整塊長方形，長、寬各少 \(x\)。</li>
+              <li><strong>梯形求高要用除法</strong>：梯形面積 ＝ (上底 ＋ 下底) × 高 ÷ 2，所以
+                \[ \text{高} = \text{面積} \times 2 \div (\text{上底} + \text{下底}) \]</li>
+              <li><strong>代數字驗算</strong>：算完可以代一個 \(x\)（例如 \(x = 2\)）進去，用數字直接算面積，兩邊一樣才放心。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pm_tablecloth.webp" alt="拼布手作工坊風插圖：一張中間挖了一個長方形窗口的拼布桌巾平鋪在工作桌上，窗口露出底下的木頭桌面；小禾與阿森分站桌子兩側，各自把脖子上或手上的捲尺拉開量桌巾的長與寬。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：拼布工作台應用</h3>
+            <p class="interactive-instruction">選一種情境，拖動 \(x\) 的值：圖形會跟著變大變小，右上角把數字代進去，和多項式的答案對照，<strong>兩邊永遠一樣</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-app" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ap-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ap-mode-group">
+                      <button class="pick-btn active" data-ap-mode="frame">挖掉一塊</button>
+                      <button class="pick-btn" data-ap-mode="road">十字小路</button>
+                      <button class="pick-btn" data-ap-mode="trap">梯形求高</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="ap-row-move">
+                    <span class="btn-group-label">小路</span>
+                    <div class="btn-group" id="ap-move-group">
+                      <button class="pick-btn active" data-ap-move="before">原本的位置</button>
+                      <button class="pick-btn" data-ap-move="after">推到邊上</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ap-x">\(x\) 的值：<span id="ap-vx" class="val-num">3</span></label>
+                    <input type="range" id="ap-x" min="1" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ap-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多項式的應用)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-25">
+            <p class="quiz-question"><strong>Q25.</strong> 一塊長 \(5x + 2\)、寬 \(3x + 1\) 的長方形布，剪掉一塊長 \(2x\)、寬 \(x + 1\) 的長方形後，剩下的面積是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-25" value="A"><span class="option-text">A. \(13x^2 + 9x + 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-25" value="B"><span class="option-text">B. \(13x^2 + 13x + 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-25" value="C"><span class="option-text">C. \(17x^2 + 13x + 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-25" value="D"><span class="option-text">D. \(13x^2 - 2x + 2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。大的減小的：
+              \[\begin{aligned} & (5x + 2)(3x + 1) - 2x(x + 1) \\ &= (15x^2 + 11x + 2) \\ &\quad - (2x^2 + 2x) \\ &= 13x^2 + 9x + 2 \end{aligned}\]
+              B 錯：減號後只有 \(2x^2\) 變號，\(2x\) 沒有變號。<br>
+              C 錯：剪掉要用減的，這是把兩塊加起來。<br>
+              D 錯：\((5x + 2)(3x + 1)\) 漏了中間兩個乘積，寫成 \(15x^2 + 2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-26">
+            <p class="quiz-question"><strong>Q26.</strong> 一個梯形的上底是 \(2x + 1\)、下底是 \(4x + 5\)，面積是 \(3x^2 + 12x + 9\)。這個梯形的高是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-26" value="A"><span class="option-text">A. \(\frac{1}{2}x + \frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-26" value="B"><span class="option-text">B. \(\frac{1}{4}x + \frac{3}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-26" value="C"><span class="option-text">C. \(2x + 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-26" value="D"><span class="option-text">D. \(x + 3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。上底加下底是 \(6x + 6\)：
+              \[\begin{aligned} \text{高} &= (3x^2 + 12x + 9) \times 2 \\ &\quad \div (6x + 6) \\ &= (6x^2 + 24x + 18) \\ &\quad \div (6x + 6) \\ &= x + 3 \end{aligned}\]
+              A 錯：忘了乘 \(2\)，直接用面積除以 \(6x + 6\)。<br>
+              B 錯：把「乘 \(2\)」做成「除以 \(2\)」。<br>
+              C 錯：乘了兩次 \(2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 乘除運算速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>單項式乘法</strong>：係數相乘、次數相加；平方時負號也要平方。</li>
+              <li><strong>分配律</strong>：單項式乘到括號裡的每一項，正負號一起乘。</li>
+              <li><strong>多項式相乘</strong>：每一項乘每一項再合併；\(m\) 次式 × \(n\) 次式是 \((m + n)\) 次式。</li>
+              <li><strong>直式乘法</strong>：同類項對齊，缺項補 \(0\)。</li>
+              <li><strong>乘法公式</strong>：把 \(px\) 整個看成 \(a\)，\((px)^2 = p^2x^2\)。</li>
+              <li><strong>單項式除法</strong>：係數相除、次數相減，商可以有分數係數。</li>
+              <li><strong>多項式 ÷ 單項式</strong>：算到餘式的次數比除式小，或餘式為 \(0\)（整除）。</li>
+              <li><strong>除以一次式</strong>：上減下每一項變號；餘式是常數。</li>
+              <li><strong>除以二次式</strong>：二次 ÷ 二次只商一個常數，餘式最多一次。</li>
+              <li><strong>求被除式</strong>：被除式 ＝ 商式 × 除式 ＋ 餘式。</li>
+              <li><strong>求除式</strong>：除式 ＝（被除式 − 餘式）÷ 商式。</li>
+              <li><strong>四則運算</strong>：先乘方、再乘除、後加減，減號後的乘積整組加括號。</li>
+              <li><strong>應用</strong>：寫出面積、周長的關係式再代入；梯形求高要用除法。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-scissors"></i> 回到拼布工坊：桌旗要做多長？</h4>
+              <h5><i class="fa-solid fa-layer-group"></i> 面積除以寬</h5>
+              <p>小禾的布總面積是 \(3x^2 + 7x + 2\)，桌旗的寬是 \(x + 2\)。長方形的長 ＝ 面積 ÷ 寬：
+                \[ (3x^2 + 7x + 2) \div (x + 2) = 3x + 1 \]
+                餘式是 \(0\)，表示 \(x + 2\) <strong>整除</strong> \(3x^2 + 7x + 2\)——布剛好全部用完，拼成一條長 \(3x + 1\)、寬 \(x + 2\) 的桌旗。</p>
+              <h5><i class="fa-solid fa-ruler"></i> 驗算</h5>
+              <p>反過來乘回去：\((3x + 1)(x + 2) = 3x^2 + 7x + 2\)，正好是原來的面積。乘法和除法互為反運算，算完除法，用乘法驗算最放心。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一章預告</h5>
+              <p>這一節是把兩個式子「乘起來」或「除開來」。第 3 章〈因式分解〉要反過來，把 \(3x^2 + 7x + 2\) 這種式子直接拆成 \((3x + 1)(x + 2)\) 這樣的乘積。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
