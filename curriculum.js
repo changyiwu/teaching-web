@@ -87,7 +87,7 @@
       {
         "chapter": "第1章 乘法公式與多項式",
         "sections": [
-          { "code": "1-1", "title": "乘法公式" },
+          { "code": "1-1", "title": "乘法公式", "status": "completed" },
           { "code": "1-2", "title": "多項式與其加減運算" },
           { "code": "1-3", "title": "多項式的乘除運算" }
         ]

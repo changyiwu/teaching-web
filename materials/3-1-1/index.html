@@ -4,39 +4,1238 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-1 乘法公式 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-1 乘法公式 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第1章 乘法公式與多項式</div>
-    <h1>1-1 乘法公式</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第一章</span>
+        <h1>1-1 乘法公式</h1>
+        <p>七年級學過的分配律，其實就是「把一塊長方形布剪成幾小塊，面積加起來不變」。這一節走進拼布工坊，用正方形與長方形的布塊拼出三個<strong>乘法公式</strong>：<strong>和的平方</strong>、<strong>差的平方</strong>與<strong>平方差</strong>。學會之後，\(99 \times 501\)、\(504^2\) 這類大數字不用直式也能心算，還能反過來把一長串平方收回成一個簡單的式子。</p>
+      </div>
+      <!-- Progress navigation (9 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-table-cells-large"></i> 分配律面積</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-calculator"></i> 拆數計算</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-square-plus"></i> 和的平方</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-square-minus"></i> 差的平方</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-scissors"></i> 平方差</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-rotate-left"></i> 反過來用</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> 常見錯誤</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-border-all"></i> 生活應用</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-shuffle"></i> 整體代換</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Patchwork Workshop)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(251, 113, 133, 0.25);">
+        <h2 class="section-title" style="color: #fda4af; border-bottom-color: rgba(253, 164, 175, 0.2);">
+          <i class="fa-solid fa-scissors" aria-hidden="true" style="color: #fda4af; text-shadow: 0 0 10px rgba(251, 113, 133, 0.4);"></i> 課前暖身漫畫：只要多買一小塊布？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小禾在拼布工坊做了一塊<strong style="color:#fda4af">邊長 \(40\) 公分</strong>的正方形拼布，想把它加大成<strong style="color:#fda4af">邊長 \(50\) 公分</strong>。她心想：「邊長多了 \(10\)，那就再買一塊 \(10 \times 10\) 的布補上去吧！」阿森把布攤在桌上一比，發現事情沒那麼簡單——到底還缺了哪些布？這一節學完<strong style="color:#fda4af">和的平方公式</strong>，就能一眼看出來。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="拼布手作工坊風四格漫畫：小禾想把邊長 40 公分的正方形拼布加大成 50 公分，以為只要再補一塊 10 × 10 的布；阿森把布攤在桌上比對，發現右邊與上方各空出一條長條，還少了兩條 40 × 10 的長條布。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 分配律的面積模型
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells-large" aria-hidden="true"></i> 重點 1：分配律的面積模型——一塊布剪成四小塊
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>七年級的分配律</strong>：\(a(b + c) = ab + ac\)、\(a(b - c) = ab - ac\)。長是 \(a\)、寬是 \((b + c)\) 的長方形，可以剪成 \(ab\) 與 \(ac\) 兩塊，面積加起來不變。</li>
+              <li><strong>文字符號相乘</strong>：\(a \times b\) 寫成 \(ab\)，兩個文字並排就代表相乘；\(a \times a\) 寫成 \(a^2\)。因為乘法有交換律，\(ba\) 和 \(ab\) 是同一個數。</li>
+              <li><strong>兩個括號相乘</strong>：長 \((a + b)\)、寬 \((c + d)\) 的大長方形，沿一直一橫兩條線剪開，得到甲、乙、丙、丁四塊：</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>小塊</th><th>直邊</th><th>橫邊</th><th>面積</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>甲</td><td>\(a\)</td><td>\(c\)</td><td>\(ac\)</td></tr>
+                <tr><td>乙</td><td>\(a\)</td><td>\(d\)</td><td>\(ad\)</td></tr>
+                <tr><td>丙</td><td>\(b\)</td><td>\(c\)</td><td>\(bc\)</td></tr>
+                <tr><td>丁</td><td>\(b\)</td><td>\(d\)</td><td>\(bd\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              \[\begin{aligned} & (a + b)(c + d) \\ &= ac + ad + bc + bd \end{aligned}\]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用分配律也推得出來</strong>：先把 \((c + d)\) 看成一整塊，再各自分配一次：
+                \[\begin{aligned} & (a + b)(c + d) \\ &= a(c + d) + b(c + d) \\ &= ac + ad + bc + bd \end{aligned}\]</li>
+              <li><strong>前面括號的每一項，都要乘到後面括號的每一項</strong>：\(2 \times 2 = 4\) 項，一項都不能少。只寫「頭乘頭、尾乘尾」等於只算了甲、丁兩塊，乙、丙兩塊就不見了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="quilt_distribute.webp" alt="拼布手作工坊風插圖：工作桌上攤著一塊長方形的布，被一條直線和一條橫線剪成四塊大小不同的長方形，四塊各是不同的花色，彼此略微分開；小禾拿著布剪站在桌邊，阿森在旁邊用手指點著其中一塊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：拼布切割台</h3>
+            <p class="interactive-instruction">選一種剪法，拉動各邊的長度。大長方形整塊算的面積，和剪開後每一小塊加起來的面積，<strong>是不是永遠一樣</strong>？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dist" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="di-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">剪法</span>
+                    <div class="btn-group" id="di-mode-group">
+                      <button class="pick-btn" data-di-mode="plus">\(a(b + c)\)</button>
+                      <button class="pick-btn" data-di-mode="minus">\(a(b - c)\)</button>
+                      <button class="pick-btn active" data-di-mode="two">\((a + b)(c + d)\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="di-s1"><span id="di-n1">直邊 a</span>：<span id="di-v1" class="val-num">3</span></label>
+                    <input type="range" id="di-s1" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="di-r2">
+                    <label for="di-s2"><span id="di-n2">直邊 b</span>：<span id="di-v2" class="val-num">2</span></label>
+                    <input type="range" id="di-s2" min="1" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="di-s3"><span id="di-n3">橫邊 c</span>：<span id="di-v3" class="val-num">4</span></label>
+                    <input type="range" id="di-s3" min="1" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="di-s4"><span id="di-n4">橫邊 d</span>：<span id="di-v4" class="val-num">2</span></label>
+                    <input type="range" id="di-s4" min="1" max="4" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="di-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分配律的面積模型)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 一塊長方形的布，直邊長 \((x + 5)\)、橫邊長 \((y + 2)\)。沿一直一橫兩條線把它剪成四塊小長方形，四塊的面積和為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-1" value="A"><span class="option-text">A. \(xy + 10\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-1" value="B"><span class="option-text">B. \(xy + 2x + 5y + 10\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-1" value="C"><span class="option-text">C. \(xy + 5x + 2y + 10\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-1" value="D"><span class="option-text">D. \(xy + 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。前面括號的每一項乘到後面括號的每一項：
+              \[\begin{aligned} & (x + 5)(y + 2) \\ &= xy + 2x + 5y + 10 \end{aligned}\]
+              四塊分別是 \(x \times y\)、\(x \times 2\)、\(5 \times y\)、\(5 \times 2\)。<br>
+              A 錯：只算了「頭乘頭、尾乘尾」兩塊，漏掉 \(2x\) 與 \(5y\)。<br>
+              C 錯：配錯對象，\(x\) 要乘的是 \(2\)、\(5\) 要乘的是 \(y\)。<br>
+              D 錯：\(5\) 和 \(2\) 是兩條不同邊上的長度，不能直接相加。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 利用分配律展開 \((m + 3)(n - 2)\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-2" value="A"><span class="option-text">A. \(mn - 2m + 3n - 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-2" value="B"><span class="option-text">B. \(mn + 2m + 3n - 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-2" value="C"><span class="option-text">C. \(mn - 2m + 3n + 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-2" value="D"><span class="option-text">D. \(mn - 6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。把 \((n - 2)\) 看成一整塊，各分配一次：
+              \[\begin{aligned} & (m + 3)(n - 2) \\ &= m(n - 2) + 3(n - 2) \\ &= mn - 2m + 3n - 6 \end{aligned}\]
+              B 錯：\(m \times (-2) = -2m\)，負號不能丟。<br>
+              C 錯：\(3 \times (-2) = -6\)，不是 \(+6\)。<br>
+              D 錯：只乘了頭頭、尾尾，漏掉 \(-2m\) 與 \(3n\) 兩項。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 用分配律算數值
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> 重點 2：用分配律算數值——拆成整百再展開
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>拆數的想法</strong>：把不好算的數拆成「<strong>整十、整百</strong>再加減一個小數字」，然後用 \((a + b)(c + d)\) 展開成四項，每一項都很好算。</li>
+              <li><strong>例</strong>：\(99\) 可以看成 \(100 - 1\)、\(501\) 看成 \(500 + 1\)：
+                \[\begin{aligned} & 99 \times 501 \\ &= (100 - 1)(500 + 1) \\ &= 100 \times 500 + 100 \times 1 \\ &\quad - 1 \times 500 - 1 \times 1 \\ &= 50000 + 100 - 500 - 1 \\ &= 49599 \end{aligned}\]</li>
+              <li><strong>帶負號的那幾項要減掉</strong>：\((-1) \times 500 = -500\)、\((-1) \times 1 = -1\)。也可以先寫成 \([100 + (-1)](500 + 1)\)，再照四項乘開。</li>
+              <li><strong>小數也能拆</strong>：
+                \[\begin{aligned} & 9.9 \times 20.2 \\ &= (10 - 0.1)(20 + 0.2) \\ &= 200 + 2 - 2 - 0.02 \\ &= 199.98 \end{aligned}\]</li>
+              <li><strong>不必死背公式</strong>：只要記得「拆開的每一部分都要互相乘到」，算完再用計算機驗算。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="quilt_receipt.webp" alt="拼布手作工坊風插圖：工坊的木頭櫃台上堆著一捲捲布料，阿森一手按著計算機、一手拿著鉛筆在帳本上核對，小禾抱著一疊布站在櫃台另一邊看著他。畫面上沒有任何數字或文字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：拆數乘法表</h3>
+            <p class="interactive-instruction">求兩數的乘積。調整兩個數，看它們怎麼拆成「整百 + 小數字」，再把四格乘積<strong>加起來</strong>（帶負號的格子要減掉）：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-split" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">第二個數靠近</span>
+                    <div class="btn-group" id="sp-base-group">
+                      <button class="pick-btn" data-sp-base="200">\(200\)</button>
+                      <button class="pick-btn active" data-sp-base="500">\(500\)</button>
+                      <button class="pick-btn" data-sp-base="1000">\(1000\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sp-p">第一個數（靠近 100）：<span id="sp-pv" class="val-num">102</span></label>
+                    <input type="range" id="sp-p" min="96" max="104" value="102" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sp-t">第二個數比整百多（負數就是少）：<span id="sp-tv" class="val-num">-3</span></label>
+                    <input type="range" id="sp-t" min="-4" max="4" value="-3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (用分配律算數值)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 把 \(49 \times 201\) 寫成 \((50 - 1)(200 + 1)\)，再利用分配律計算，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-3" value="A"><span class="option-text">A. \(9999\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-3" value="B"><span class="option-text">B. \(10249\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-3" value="C"><span class="option-text">C. \(9849\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-3" value="D"><span class="option-text">D. \(9851\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。四項都要乘到：
+              \[\begin{aligned} & (50 - 1)(200 + 1) \\ &= 50 \times 200 + 50 \times 1 \\ &\quad - 1 \times 200 - 1 \times 1 \\ &= 10000 + 50 - 200 - 1 \\ &= 9849 \end{aligned}\]
+              A 錯：只算了 \(50 \times 200\) 與 \(-1 \times 1\)，漏掉中間兩項。<br>
+              B 錯：\((-1) \times 200\) 應該是 \(-200\)，寫成 \(+200\) 會得到 \(10249\)。<br>
+              D 錯：\((-1) \times 1\) 應該是 \(-1\)，寫成 \(+1\) 會得到 \(9851\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 利用分配律計算 \(4.9 \times 30.2\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-4" value="A"><span class="option-text">A. \(148.02\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-4" value="B"><span class="option-text">B. \(153.98\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-4" value="C"><span class="option-text">C. \(149.98\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-4" value="D"><span class="option-text">D. \(147.98\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。把 \(4.9\) 看成 \(5 - 0.1\)、\(30.2\) 看成 \(30 + 0.2\)：
+              \[\begin{aligned} & (5 - 0.1)(30 + 0.2) \\ &= 150 + 1 - 3 - 0.02 \\ &= 147.98 \end{aligned}\]
+              A 錯：\((-0.1) \times 0.2 = -0.02\)，寫成 \(+0.02\) 會得到 \(148.02\)。<br>
+              B 錯：\((-0.1) \times 30 = -3\)，寫成 \(+3\) 會得到 \(153.98\)。<br>
+              C 錯：漏掉中間兩項 \(+1\) 與 \(-3\)，只算 \(150 - 0.02\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 和的平方公式
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-plus" aria-hidden="true"></i> 重點 3：和的平方公式——別忘了中間兩條布
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>用面積看</strong>：邊長 \((a + b)\) 的大正方形，剪成一塊 \(a^2\)、兩塊 \(ab\)、一塊 \(b^2\)：
+                \[\begin{aligned} (a + b)^2 &= a^2 + ab + ab + b^2 \\ &= a^2 + 2ab + b^2 \end{aligned}\]</li>
+              <li><strong>用分配律看</strong>：\((a + b)^2\) 就是 \((a + b)(a + b)\)：
+                \[\begin{aligned} & (a + b)(a + b) \\ &= a^2 + ab + ba + b^2 \\ &= a^2 + 2ab + b^2 \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">和的平方公式</span>
+              \[(a + b)^2 = a^2 + 2ab + b^2\]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用來算平方</strong>：把 \(504\) 看成 \(500 + 4\)，令 \(a = 500\)、\(b = 4\)：
+                \[\begin{aligned} & 504^2 \\ &= 500^2 + 2 \times 500 \times 4 + 4^2 \\ &= 250000 + 4000 + 16 \\ &= 254016 \end{aligned}\]</li>
+              <li><strong>怎麼拆都對，但整百最好算</strong>：\(504\) 也可以看成 \(498 + 6\)，算出來一樣是 \(254016\)，只是 \(498^2\) 本身就很難算。拆成「整十、整百 + 小數字」最省力。</li>
+              <li><strong>最常見的錯</strong>：把 \((a + b)^2\) 寫成 \(a^2 + b^2\)。試一組數字就看得出來：\((5 + 1)^2 = 36\)，可是 \(5^2 + 1^2 = 26\)，少掉的 \(10\) 正是兩塊 \(5 \times 1\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="quilt_square.webp" alt="拼布手作工坊風插圖：工作桌上拼著一塊正方形拼布，左上角是一大塊紅色正方形，右下角是一小塊藍綠色正方形，另外兩個角各是一條芥末黃的長條，兩條長條一樣大，四塊剛好拼成一個大正方形；小禾一手拿著捲尺量拼布的邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：正方形拼布台</h3>
+            <p class="interactive-instruction">「拼布」模式：拉動 \(a\)、\(b\)，數數大正方形由哪幾塊組成。「算平方」模式：選一個三位數，比較兩種拆法，看哪一種<strong>比較好算</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sum" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="su-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="su-mode-group">
+                      <button class="pick-btn active" data-su-mode="area">拼布</button>
+                      <button class="pick-btn" data-su-mode="num">算平方</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="su-split-row" hidden>
+                    <span class="btn-group-label">拆法</span>
+                    <div class="btn-group" id="su-split-group">
+                      <button class="pick-btn active" data-su-split="round">\(200 + r\)</button>
+                      <button class="pick-btn" data-su-split="other">\(190 + (r + 10)\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="su-a-row">
+                    <label for="su-a">大正方形的邊 a：<span id="su-av" class="val-num">5</span></label>
+                    <input type="range" id="su-a" min="2" max="8" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="su-b-row">
+                    <label for="su-b">小正方形的邊 b：<span id="su-bv" class="val-num">2</span></label>
+                    <input type="range" id="su-b" min="1" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="su-n-row" hidden>
+                    <label for="su-n">要算平方的數：<span id="su-nv" class="val-num">206</span></label>
+                    <input type="range" id="su-n" min="201" max="209" value="206" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="su-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (和的平方公式)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 利用和的平方公式計算 \(403^2\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-5" value="A"><span class="option-text">A. \(160009\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-5" value="B"><span class="option-text">B. \(162409\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-5" value="C"><span class="option-text">C. \(161209\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-5" value="D"><span class="option-text">D. \(162406\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。令 \(a = 400\)、\(b = 3\)：
+              \[\begin{aligned} & (400 + 3)^2 \\ &= 400^2 + 2 \times 400 \times 3 + 3^2 \\ &= 160000 + 2400 + 9 \\ &= 162409 \end{aligned}\]
+              A 錯：寫成 \(400^2 + 3^2\)，漏掉中間的 \(2ab\)。<br>
+              C 錯：中間項少乘了 \(2\)，只加 \(400 \times 3 = 1200\)。<br>
+              D 錯：\(3^2\) 是 \(3 \times 3 = 9\)，不是 \(3 \times 2 = 6\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 利用和的平方公式計算 \(30.2^2\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-6" value="A"><span class="option-text">A. \(912.04\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-6" value="B"><span class="option-text">B. \(900.04\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-6" value="C"><span class="option-text">C. \(906.04\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-6" value="D"><span class="option-text">D. \(912.4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。把 \(30.2\) 看成 \(30 + 0.2\)：
+              \[\begin{aligned} & (30 + 0.2)^2 \\ &= 30^2 + 2 \times 30 \times 0.2 + 0.2^2 \\ &= 900 + 12 + 0.04 \\ &= 912.04 \end{aligned}\]
+              B 錯：漏掉中間的 \(2ab = 12\)。<br>
+              C 錯：中間項少乘了 \(2\)，只加 \(30 \times 0.2 = 6\)。<br>
+              D 錯：\(0.2^2 = 0.04\)，不是 \(0.4\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 差的平方公式
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-minus" aria-hidden="true"></i> 重點 4：差的平方公式——角落被剪了兩次
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>用面積看</strong>：從邊長 \(a\) 的大正方形，沿上邊和右邊各剪掉一條 \(a \times b\) 的長條，剩下邊長 \((a - b)\) 的正方形。</li>
+              <li><strong>角落的小正方形被剪了兩次</strong>：兩條長條在角落重疊了一塊 \(b^2\)，減兩個 \(ab\) 就把它多減了一次，要再加回來：
+                \[\begin{aligned} (a - b)^2 &= a^2 - ab - ab + b^2 \\ &= a^2 - 2ab + b^2 \end{aligned}\]</li>
+              <li><strong>用分配律看</strong>：
+                \[\begin{aligned} & (a - b)(a - b) \\ &= a^2 - ab - ba + b^2 \\ &= a^2 - 2ab + b^2 \end{aligned}\]
+                最後一項是 \((-b) \times (-b) = +b^2\)，負負得正。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">差的平方公式</span>
+              \[(a - b)^2 = a^2 - 2ab + b^2\]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用來算平方</strong>：把 \(199\) 看成 \(200 - 1\)：
+                \[\begin{aligned} & 199^2 \\ &= 200^2 - 2 \times 200 \times 1 + 1^2 \\ &= 40000 - 400 + 1 \\ &= 39601 \end{aligned}\]</li>
+              <li><strong>兩個符號要記牢</strong>：中間是 \(-2ab\)，最後是 \(+b^2\)。寫成 \(a^2 - b^2\) 或 \(a^2 - 2ab - b^2\) 都不對。</li>
+              <li><strong>拆法也不唯一</strong>：\(199\) 看成 \(206 - 7\) 也算得出 \(39601\)，只是 \(206^2\) 不好算；靠近整百的數，拆成「整百 − 小數字」最省力。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="quilt_trim.webp" alt="拼布手作工坊風插圖：工作桌上有一塊正方形的紅色布，上邊和右邊各被剪下一條芥末黃色的長條放在旁邊，兩條長條在原本的右上角交疊；布上剩下的是左下角一塊較小的正方形。阿森拿著布剪，小禾在一旁按住布。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：裁邊工作台</h3>
+            <p class="interactive-instruction">「裁邊」模式：一步一步剪掉兩條長條，看角落的小正方形<strong>被減了幾次</strong>。「算平方」模式：選一個靠近 \(200\) 的數，比較兩種拆法：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-diff" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="df-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="df-mode-group">
+                      <button class="pick-btn active" data-df-mode="area">裁邊</button>
+                      <button class="pick-btn" data-df-mode="num">算平方</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="df-split-row" hidden>
+                    <span class="btn-group-label">拆法</span>
+                    <div class="btn-group" id="df-split-group">
+                      <button class="pick-btn active" data-df-split="round">\(200 - r\)</button>
+                      <button class="pick-btn" data-df-split="other">\(210 - (r + 10)\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="df-a-row">
+                    <label for="df-a">大正方形的邊 a：<span id="df-av" class="val-num">7</span></label>
+                    <input type="range" id="df-a" min="3" max="9" value="7" step="1">
+                  </div>
+                  <div class="slider-row" id="df-b-row">
+                    <label for="df-b">剪掉的寬 b（比 a 小）：<span id="df-bv" class="val-num">2</span></label>
+                    <input type="range" id="df-b" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="df-step-row">
+                    <label for="df-step">剪裁步驟：<span id="df-stepv" class="val-num">1</span> / 4</label>
+                    <input type="range" id="df-step" min="1" max="4" value="1" step="1">
+                  </div>
+                  <div class="slider-row" id="df-n-row" hidden>
+                    <label for="df-n">要算平方的數：<span id="df-nv" class="val-num">196</span></label>
+                    <input type="range" id="df-n" min="191" max="199" value="196" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="df-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (差的平方公式)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 利用差的平方公式計算 \(297^2\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-7" value="A"><span class="option-text">A. \(89991\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-7" value="B"><span class="option-text">B. \(88191\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-7" value="C"><span class="option-text">C. \(88209\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-7" value="D"><span class="option-text">D. \(89109\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。令 \(a = 300\)、\(b = 3\)：
+              \[\begin{aligned} & (300 - 3)^2 \\ &= 300^2 - 2 \times 300 \times 3 + 3^2 \\ &= 90000 - 1800 + 9 \\ &= 88209 \end{aligned}\]
+              A 錯：寫成 \(300^2 - 3^2\)，把差的平方當成平方差。<br>
+              B 錯：最後一項是 \(+3^2\)，寫成 \(-9\) 會得到 \(88191\)。<br>
+              D 錯：中間項少乘了 \(2\)，只減 \(900\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 利用差的平方公式計算 \(9.8^2\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-8" value="A"><span class="option-text">A. \(96.4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-8" value="B"><span class="option-text">B. \(95.96\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-8" value="C"><span class="option-text">C. \(99.96\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-8" value="D"><span class="option-text">D. \(96.04\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。把 \(9.8\) 看成 \(10 - 0.2\)：
+              \[\begin{aligned} & (10 - 0.2)^2 \\ &= 10^2 - 2 \times 10 \times 0.2 + 0.2^2 \\ &= 100 - 4 + 0.04 \\ &= 96.04 \end{aligned}\]
+              A 錯：\(0.2^2 = 0.04\)，算成 \(0.4\) 會得到 \(96.4\)。<br>
+              B 錯：最後一項是 \(+0.04\)，寫成減號會得到 \(95.96\)。<br>
+              C 錯：寫成 \(10^2 - 0.2^2\)，把差的平方當成平方差。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 平方差公式
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scissors" aria-hidden="true"></i> 重點 5：平方差公式——剪掉一角再拼回去
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>剪拼實驗</strong>：從邊長 \(a\) 的大正方形，剪掉角落邊長 \(b\) 的小正方形，剩下的面積是 \(a^2 - b^2\)。</li>
+              <li>把剩下的 L 形剪成甲、乙兩塊，乙轉個方向接到甲的旁邊，剛好拼成長 \((a + b)\)、寬 \((a - b)\) 的長方形——<strong>面積沒有變</strong>，所以兩者相等。</li>
+              <li><strong>用分配律看</strong>：中間兩項一正一負，剛好抵消：
+                \[\begin{aligned} & (a + b)(a - b) \\ &= a^2 - ab + ba - b^2 \\ &= a^2 - b^2 \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">平方差公式</span>
+              \[(a + b)(a - b) = a^2 - b^2\]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用來算乘法</strong>：\(203\) 比 \(200\) 多 \(3\)、\(197\) 比 \(200\) 少 \(3\)，令 \(a = 200\)、\(b = 3\)：
+                \[\begin{aligned} & 203 \times 197 \\ &= (200 + 3)(200 - 3) \\ &= 200^2 - 3^2 \\ &= 39991 \end{aligned}\]</li>
+              <li><strong>什麼時候用得上</strong>：兩個數<strong>離同一個整數一樣遠</strong>，一個多、一個少。那個整數就是 \(a\)，離它多遠就是 \(b\)。</li>
+              <li><strong>不是每一題都適合</strong>：\(99 \times 94\) 的中間數是 \(96.5\)、\(b = 2.5\)，套公式反而更麻煩，這時直接算就好。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="quilt_rearrange.webp" alt="拼布手作工坊風插圖：桌上有一塊正方形的布，右上角剪掉了一個小正方形；剩下的 L 形被剪成兩塊，小禾正把較窄的那一塊轉過來，接到另一塊的右邊，拼成一個又長又扁的長方形。阿森在旁邊比著手勢。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：剪拼重組台</h3>
+            <p class="interactive-instruction">「剪拼」模式：剪掉角落的 \(b^2\)，再把「重組進度」拉到底，看乙塊怎麼轉過去拼成長方形。「算乘法」模式：兩數一個多、一個少，用平方差公式算乘積：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dsq" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ds-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="ds-mode-group">
+                      <button class="pick-btn active" data-ds-mode="area">剪拼</button>
+                      <button class="pick-btn" data-ds-mode="num">算乘法</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="ds-base-row" hidden>
+                    <span class="btn-group-label">中間的整數 a</span>
+                    <div class="btn-group" id="ds-base-group">
+                      <button class="pick-btn" data-ds-base="100">\(100\)</button>
+                      <button class="pick-btn active" data-ds-base="200">\(200\)</button>
+                      <button class="pick-btn" data-ds-base="300">\(300\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="ds-a-row">
+                    <label for="ds-a">大正方形的邊 a：<span id="ds-av" class="val-num">6</span></label>
+                    <input type="range" id="ds-a" min="3" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="ds-b-row">
+                    <label for="ds-b">剪掉的小正方形邊 b（比 a 小）：<span id="ds-bv" class="val-num">2</span></label>
+                    <input type="range" id="ds-b" min="1" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="ds-t-row">
+                    <label for="ds-t">重組進度：<span id="ds-tv" class="val-num">0</span>%</label>
+                    <input type="range" id="ds-t" min="0" max="100" value="0" step="5">
+                  </div>
+                  <div class="slider-row" id="ds-r-row" hidden>
+                    <label for="ds-r">兩數離 a 多遠（b）：<span id="ds-rv" class="val-num">3</span></label>
+                    <input type="range" id="ds-r" min="1" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ds-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平方差公式)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 利用平方差公式計算 \(405 \times 395\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-9" value="A"><span class="option-text">A. \(160025\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-9" value="B"><span class="option-text">B. \(159975\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-9" value="C"><span class="option-text">C. \(156025\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-9" value="D"><span class="option-text">D. \(159990\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。兩數離 \(400\) 一樣遠，令 \(a = 400\)、\(b = 5\)：
+              \[\begin{aligned} & (400 + 5)(400 - 5) \\ &= 400^2 - 5^2 \\ &= 160000 - 25 \\ &= 159975 \end{aligned}\]
+              A 錯：最後一項是 \(-b^2\)，寫成 \(+25\) 會得到 \(160025\)。<br>
+              C 錯：用成差的平方 \(400^2 - 2 \times 400 \times 5 + 5^2\)，那是 \(395^2\)。<br>
+              D 錯：\(5^2 = 25\)，不是 \(5 \times 2 = 10\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 從一張大正方形紙片的角落剪去一個小正方形，剩下的部分剪開後，剛好拼成一個長 \(13\) 公分、寬 \(7\) 公分的長方形。大、小正方形的邊長分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-10" value="A"><span class="option-text">A. \(10\) 公分、\(3\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-10" value="B"><span class="option-text">B. \(13\) 公分、\(7\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-10" value="C"><span class="option-text">C. \(20\) 公分、\(6\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-10" value="D"><span class="option-text">D. \(13\) 公分、\(3\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設大正方形邊長 \(a\)、小正方形邊長 \(b\)，拼成的長方形長 \((a + b)\)、寬 \((a - b)\)：
+              \[\begin{aligned} & a + b = 13 \\ & a - b = 7 \end{aligned}\]
+              兩式相加得 \(2a = 20\)，所以 \(a = 10\)、\(b = 3\)。驗算：\(10^2 - 3^2 = 91 = 13 \times 7\)。<br>
+              B 錯：\(13\) 與 \(7\) 是長方形的長與寬，不是正方形的邊。<br>
+              C 錯：\(20\) 與 \(6\) 是兩式相加、相減的結果，還要再除以 \(2\)。<br>
+              D 錯：大正方形的邊長是 \(a\)，不是 \(a + b\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 公式反過來用
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 重點 6：公式反過來用——把一長串收回去
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>等號兩邊對調</strong>，三個公式就能把展開式「收回去」：</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">反過來用</span>
+              \[\begin{aligned} a^2 + 2ab + b^2 &= (a + b)^2 \\ a^2 - 2ab + b^2 &= (a - b)^2 \\ a^2 - b^2 &= (a + b)(a - b) \end{aligned}\]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>認形狀三步驟</strong>：① 看頭尾兩個平方的底數，定出 \(a\) 與 \(b\)；② 看中間：有 \(+2ab\) 收成和的平方、有 \(-2ab\) 收成差的平方；③ 沒有中間項、兩個平方相減，就是平方差。</li>
+              <li><strong>例</strong>：\(a = 61\)、\(b = 39\)，中間是 \(+2ab\)：
+                \[\begin{aligned} & 61^2 + 2 \times 61 \times 39 + 39^2 \\ &= (61 + 39)^2 \\ &= 100^2 = 10000 \end{aligned}\]</li>
+              <li><strong>例</strong>：\(a = 161\)、\(b = 61\)，中間是 \(-2ab\)：
+                \[\begin{aligned} & 161^2 - 2 \times 161 \times 61 + 61^2 \\ &= (161 - 61)^2 \\ &= 100^2 = 10000 \end{aligned}\]</li>
+              <li><strong>例</strong>：兩個平方相減：
+                \[\begin{aligned} & 655^2 - 345^2 \\ &= (655 + 345)(655 - 345) \\ &= 1000 \times 310 = 310000 \end{aligned}\]</li>
+              <li><strong>為什麼要收回去</strong>：\(a + b\) 或 \(a - b\) 常常是整十、整百，收回去之後幾乎不用算；硬把每個平方都算出來也會得到同樣答案，只是累得多。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="quilt_shelf.webp" alt="拼布手作工坊風插圖：工坊牆邊的布料架上掛著一排排捲好的布，小禾踮腳從架上抽出一捲花布，阿森抱著幾塊零碼布站在旁邊，兩人正在挑布。畫面上沒有任何數字或文字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：形狀辨識機</h3>
+            <p class="interactive-instruction">選一種形狀，拉動兩個數 \(p\)、\(q\)。箭頭標出每個數對應到公式裡的 \(a\) 還是 \(b\)，再看收回去之後<strong>有多好算</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-rev" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">形狀</span>
+                    <div class="btn-group" id="rv-mode-group">
+                      <button class="pick-btn active" data-rv-mode="sum">\(a^2 + 2ab + b^2\)</button>
+                      <button class="pick-btn" data-rv-mode="diff">\(a^2 - 2ab + b^2\)</button>
+                      <button class="pick-btn" data-rv-mode="dsq">\(a^2 - b^2\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rv-p">第一個數 p：<span id="rv-pv" class="val-num">57</span></label>
+                    <input type="range" id="rv-p" min="51" max="69" value="57" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rv-q">第二個數 q：<span id="rv-qv" class="val-num">23</span></label>
+                    <input type="range" id="rv-q" min="11" max="29" value="23" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (公式反過來用)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> \(186^2 + 2 \times 186 \times 14 + 14^2\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-11" value="A"><span class="option-text">A. \(29584\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-11" value="B"><span class="option-text">B. \(34792\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-11" value="C"><span class="option-text">C. \(40000\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-11" value="D"><span class="option-text">D. \(400\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。頭尾的底數是 \(a = 186\)、\(b = 14\)，中間是 \(+2ab\)，收成和的平方：
+              \[\begin{aligned} & 186^2 + 2 \times 186 \times 14 + 14^2 \\ &= (186 + 14)^2 \\ &= 200^2 = 40000 \end{aligned}\]
+              A 錯：中間是加號，應該收成 \((186 + 14)^2\)，不是 \((186 - 14)^2 = 29584\)。<br>
+              B 錯：\(34792\) 只是 \(186^2 + 14^2\)，中間那一項 \(5208\) 沒有加進去。<br>
+              D 錯：\(200^2\) 是 \(200 \times 200\)，不是 \(200 \times 2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> \(756^2 - 244^2\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-12" value="A"><span class="option-text">A. \(512000\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-12" value="B"><span class="option-text">B. \(262144\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-12" value="C"><span class="option-text">C. \(1000000\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-12" value="D"><span class="option-text">D. \(512\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩個平方相減，收成平方差：
+              \[\begin{aligned} & 756^2 - 244^2 \\ &= (756 + 244)(756 - 244) \\ &= 1000 \times 512 = 512000 \end{aligned}\]
+              B 錯：\(a^2 - b^2\) 不等於 \((a - b)^2\)，\(262144\) 是 \(512^2\)。<br>
+              C 錯：\(1000000\) 是 \((756 + 244)^2\)，只用了和、沒用差。<br>
+              D 錯：只算了 \(756 - 244\)，還要再乘上 \(756 + 244\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 常見錯誤辨識
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 重點 7：常見錯誤——代數字一試就露餡
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>五種最常見的錯</strong>（左邊是錯的寫法）：
+                <ul class="bullet-list">
+                  <li>\((a + b)^2 \ne a^2 + b^2\)：<strong>漏掉兩塊 \(ab\)</strong>，應為 \(a^2 + 2ab + b^2\)。</li>
+                  <li>\((a + b)^2 \ne a^2 + ab + b^2\)：\(ab\) 有兩塊，要寫 \(2ab\)。</li>
+                  <li>\((a - b)^2 \ne a^2 - b^2\)：把差的平方當成平方差，應為 \(a^2 - 2ab + b^2\)。</li>
+                  <li>\((a - b)^2 \ne a^2 - 2ab - b^2\)：\((-b) \times (-b) = +b^2\)，最後是加。</li>
+                  <li>\((a + b)(a - b) \ne a^2 + b^2\)：\(b \times (-b) = -b^2\)，應為 \(a^2 - b^2\)。</li>
+                </ul>
+              </li>
+            </ul>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>檢查方法：代一組數字</strong>。例如 \((7 - 2)^2 = 25\)，而 \(7^2 - 2^2 = 45\)，兩邊不相等，所以 \((a - b)^2 = a^2 - b^2\) 一定是錯的。</li>
+              <li><strong>但「剛好相等」不能證明它對</strong>：代 \(b = 0\) 時，\((a + b)^2\) 和 \(a^2 + b^2\) 都等於 \(a^2\)。公式必須<strong>不論 \(a\)、\(b\) 是什麼數都成立</strong>，只要找到一組不相等就是錯的。</li>
+              <li><strong>對的等式也長得像錯的</strong>：\((a + b)^2 = (b + a)^2\) 是對的，因為 \(a + b\) 和 \(b + a\) 本來就是同一個數。</li>
+              <li><strong>課本的判斷表</strong>：\((8 + 3)^2 = 8^2 + 2 \times 8 \times 3 + 3^2\) 正確；\((2 + 4)^2 = 2^2 + 2 \times 4 + 4^2\) 錯在中間項少了一個 \(2\)，應為 \(2 \times 2 \times 4\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="quilt_mistake.webp" alt="拼布手作工坊風插圖：工作桌上攤著一張畫著正方形拼布的設計圖，設計圖上的大正方形右上角放著一塊小方布，右邊和上方各留著一條空白的長條位置沒有布；阿森拿著一塊大正方形的布對著設計圖，一臉驚訝，小禾用手指著那兩條空白。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：錯誤檢查站</h3>
+            <p class="interactive-instruction">選一個「看起來很像」的等式，拉動 \(a\)、\(b\) 代入數字。長條圖比較左右兩邊的值，<strong>差多少、差在哪一項</strong>都會標出來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-err" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="er-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">等式</span>
+                    <div class="btn-group" id="er-claim-group">
+                      <button class="pick-btn active" data-er-claim="c1">\((a + b)^2 = a^2 + b^2\)</button>
+                      <button class="pick-btn" data-er-claim="c2">\((a + b)^2 = a^2 + ab + b^2\)</button>
+                      <button class="pick-btn" data-er-claim="c3">\((a - b)^2 = a^2 - b^2\)</button>
+                      <button class="pick-btn" data-er-claim="c4">\((a - b)^2 = a^2 - 2ab - b^2\)</button>
+                      <button class="pick-btn" data-er-claim="c5">\((a + b)(a - b) = a^2 + b^2\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="er-a">代入的 a：<span id="er-av" class="val-num">5</span></label>
+                    <input type="range" id="er-a" min="0" max="9" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="er-b">代入的 b：<span id="er-bv" class="val-num">3</span></label>
+                    <input type="range" id="er-b" min="0" max="9" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="er-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (常見錯誤)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 下列哪一個等式，<strong>不論 \(a\)、\(b\) 是什麼數都成立</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-13" value="A"><span class="option-text">A. \((2a)^2 = 2a^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-13" value="B"><span class="option-text">B. \((a + b)^2 - (a - b)^2 = 2ab\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-13" value="C"><span class="option-text">C. \((a + b)(a - b) = (a - b)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-13" value="D"><span class="option-text">D. \((a - b)^2 = (b - a)^2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(b - a\) 是 \(a - b\) 的相反數，一個數和它的相反數平方之後相等（例如 \(3^2 = (-3)^2 = 9\)）。用公式也看得出來：兩邊展開都是 \(a^2 - 2ab + b^2\)。<br>
+              A 錯：\((2a)^2 = 2a \times 2a = 4a^2\)，代 \(a = 1\) 時左邊 \(4\)、右邊 \(2\)。<br>
+              B 錯：
+              \[\begin{aligned} & (a + b)^2 - (a - b)^2 \\ &= (a^2 + 2ab + b^2) \\ &\quad - (a^2 - 2ab + b^2) \\ &= 4ab \end{aligned}\]
+              不是 \(2ab\)。<br>
+              C 錯：左邊是 \(a^2 - b^2\)、右邊是 \(a^2 - 2ab + b^2\)，代 \(a = 3\)、\(b = 1\) 時左邊 \(8\)、右邊 \(4\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 小妍和小翊利用乘法公式計算 \((70 - 6)^2\)：<br>
+            小妍：\((70 - 6)^2\)<wbr>\({} = 70^2 - 6^2\)<wbr>\({} = 4864\)<br>
+            小翊：\((70 - 6)^2\)<wbr>\({} = 70^2 - 70 \times 6 + 6^2\)<wbr>\({} = 4516\)<br>
+            下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-14" value="A"><span class="option-text">A. 小妍對、小翊錯</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-14" value="B"><span class="option-text">B. 小翊對、小妍錯</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-14" value="C"><span class="option-text">C. 兩人都錯，正確答案是 \(4096\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-14" value="D"><span class="option-text">D. 兩人都錯，正確答案是 \(4024\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。差的平方公式是 \((a - b)^2 = a^2 - 2ab + b^2\)：
+              \[\begin{aligned} & (70 - 6)^2 \\ &= 70^2 - 2 \times 70 \times 6 + 6^2 \\ &= 4900 - 840 + 36 \\ &= 4096 \end{aligned}\]
+              直接算 \(64^2\) 也是 \(4096\)。小妍寫成平方差，漏掉了 \(-2ab\)；小翊的中間項少乘了 \(2\)。<br>
+              D 錯：\(4024\) 是把最後一項寫成 \(-6^2\) 算出來的，\((-6) \times (-6) = +36\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 綜合應用
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-border-all" aria-hidden="true"></i> 重點 8：生活應用——先看形狀，再挑公式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先看加了或扣了之後是什麼形狀</strong>：</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+              <thead>
+                <tr><th>情境</th><th>形狀</th><th>公式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>正方形外面加一圈 L 形</td><td>更大的正方形</td><td>\((a + b)^2\)</td></tr>
+                <tr><td>正方形裡面扣掉 L 形</td><td>更小的正方形</td><td>\((a - b)^2\)</td></tr>
+                <tr><td>兩個正方形之間的區域</td><td>大減小</td><td>\(a^2 - b^2\)</td></tr>
+              </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例：外加拼布</strong>。邊長 \(80\) 公分的正方形桌墊，外面加一條寬 \(0.5\) 公分的 L 形拼布，加完還是正方形，邊長 \(80 + 0.5\)：
+                \[\begin{aligned} & (80 + 0.5)^2 \\ &= 6400 + 80 + 0.25 \\ &= 6480.25 \text{（平方公分）} \end{aligned}\]</li>
+              <li><strong>例：內部開路</strong>。邊長 \(10\) 公尺的正方形土地，在裡面開一條寬 \(50\) 公分的 L 形水泥道路。<strong>單位先換成一樣</strong>：\(50\) 公分 \(= 0.5\) 公尺，剩下的土地是邊長 \(10 - 0.5\) 的正方形：
+                \[\begin{aligned} & (10 - 0.5)^2 \\ &= 100 - 10 + 0.25 \\ &= 90.25 \text{（平方公尺）} \end{aligned}\]</li>
+              <li><strong>例：兩個正方形之間</strong>。邊長 \(33\) 與 \(17\) 公分的兩個正方形，中間區域的面積：
+                \[\begin{aligned} & 33^2 - 17^2 \\ &= (33 + 17)(33 - 17) \\ &= 50 \times 16 = 800 \end{aligned}\]</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="quilt_border.webp" alt="拼布手作工坊風插圖：工作桌上有一塊正方形的花布桌墊，上邊和右邊接著一條細長的 L 形拼布邊條，接好之後整塊仍是正方形；小禾拿著針線縫邊條，阿森拉著捲尺沿著桌墊的一邊量長度。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：拼布面積計算台</h3>
+            <p class="interactive-instruction">選一種情境，拉動邊長與寬度，求<strong>題目要的那一塊</strong>的面積。看形狀選公式，數值列會列出完整算式：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-app" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ap-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ap-mode-group">
+                      <button class="pick-btn active" data-ap-mode="add">外加拼布</button>
+                      <button class="pick-btn" data-ap-mode="cut">內部開路</button>
+                      <button class="pick-btn" data-ap-mode="ring">兩個正方形之間</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ap-s"><span id="ap-sn">桌墊邊長（公分）</span>：<span id="ap-sv" class="val-num">16</span></label>
+                    <input type="range" id="ap-s" min="10" max="20" value="16" step="1">
+                  </div>
+                  <div class="slider-row" id="ap-w-row">
+                    <label for="ap-w"><span id="ap-wn">拼布寬（公分）</span>：<span id="ap-wv" class="val-num">1.5</span></label>
+                    <input type="range" id="ap-w" min="1" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="ap-q-row" hidden>
+                    <label for="ap-q">小正方形邊長（公分）：<span id="ap-qv" class="val-num">12</span></label>
+                    <input type="range" id="ap-q" min="1" max="15" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ap-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (生活應用)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 邊長 \(25\) 公分的正方形色紙，外面加上一條寬 \(0.4\) 公分的 L 形紙片，加完之後仍是正方形。加了紙片後的面積總和是多少平方公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-15" value="A"><span class="option-text">A. \(625.16\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-15" value="B"><span class="option-text">B. \(645.16\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-15" value="C"><span class="option-text">C. \(635.16\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-15" value="D"><span class="option-text">D. \(20.16\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。加完之後是邊長 \(25 + 0.4\) 的正方形：
+              \[\begin{aligned} & (25 + 0.4)^2 \\ &= 25^2 + 2 \times 25 \times 0.4 + 0.4^2 \\ &= 625 + 20 + 0.16 \\ &= 645.16 \end{aligned}\]
+              A 錯：漏掉中間的 \(2ab = 20\)。<br>
+              C 錯：中間項少乘了 \(2\)，只加 \(10\)。<br>
+              D 錯：\(20.16\) 只是 L 形紙片本身的面積，題目問的是加完之後的總面積。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 一個商標由兩個正方形組成，小正方形放在大正方形的裡面，邊長分別是 \(46\) 公分和 \(34\) 公分。兩個正方形之間的區域面積是多少平方公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-16" value="A"><span class="option-text">A. \(960\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-16" value="B"><span class="option-text">B. \(144\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-16" value="C"><span class="option-text">C. \(6400\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-16" value="D"><span class="option-text">D. \(80\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。中間區域 = 大正方形 − 小正方形：
+              \[\begin{aligned} & 46^2 - 34^2 \\ &= (46 + 34)(46 - 34) \\ &= 80 \times 12 = 960 \end{aligned}\]
+              B 錯：\(144\) 是 \((46 - 34)^2\)，那是邊長 \(12\) 的小正方形，不是兩個正方形之間的區域。<br>
+              C 錯：\(6400\) 是 \((46 + 34)^2\)。<br>
+              D 錯：只算了 \(46 + 34\)，還要再乘上 \(46 - 34\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 整體代換
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shuffle" aria-hidden="true"></i> 重點 9：整體代換——先化簡，再代數字
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>數字很大、但結構一樣時</strong>，把其中一個數看成 \(a\)，先用乘法公式化簡代數式，最後才代入數字。</li>
+              <li><strong>例</strong>：化簡 \((a + 1)(a - 1) - a^2\)：
+                \[\begin{aligned} & (a + 1)(a - 1) - a^2 \\ &= a^2 - 1 - a^2 \\ &= -1 \end{aligned}\]
+                不論 \(a\) 是多少，結果都是 \(-1\)。</li>
+              <li><strong>用上面的結果算</strong>：\(2007 \times 2005 - 2006^2\)，令 \(a = 2006\)，就是 \((a + 1)(a - 1) - a^2\)，答案直接是 \(-1\)，完全不必把 \(2006^2\) 算出來。</li>
+              <li><strong>相差 \(2\) 的兩數相乘再加 \(1\)</strong>：
+                \[\begin{aligned} & (n - 1)(n + 1) + 1 \\ &= n^2 - 1 + 1 = n^2 \end{aligned}\]
+                結果是<strong>中間那個數的平方</strong>，例如 \(11 \times 13 + 1 = 144 = 12^2\)。</li>
+              <li><strong>推廣</strong>：\((a + k)(a - k) - a^2 = -k^2\)。兩數離 \(a\) 越遠，乘積就比 \(a^2\) 小得越多。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="quilt_pattern.webp" alt="拼布手作工坊風插圖：工作桌上整齊排著好幾排大小相近的布樣，每一排的布樣都按照同樣的規律擺放；小禾彎腰仔細比對其中兩排，阿森拿著鉛筆在筆記本上記下規律。畫面上沒有任何數字或文字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：規律觀察表</h3>
+            <p class="interactive-instruction">選一種算式，拉動 \(n\)。表格把 \(n\) 附近的五個數一一直接算出來，看看<strong>結果有什麼規律</strong>，再對照下面的化簡過程：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sub" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sb-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">算式</span>
+                    <div class="btn-group" id="sb-mode-group">
+                      <button class="pick-btn active" data-sb-mode="m1">\((n + 1)(n - 1) - n^2\)</button>
+                      <button class="pick-btn" data-sb-mode="p1">\((n - 1)(n + 1) + 1\)</button>
+                      <button class="pick-btn" data-sb-mode="k">\((n + k)(n - k) - n^2\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sb-n">中間的數 n：<span id="sb-nv" class="val-num">12</span></label>
+                    <input type="range" id="sb-n" min="8" max="30" value="12" step="1">
+                  </div>
+                  <div class="slider-row" id="sb-k-row" hidden>
+                    <label for="sb-k">兩數離 n 多遠（k）：<span id="sb-kv" class="val-num">2</span></label>
+                    <input type="range" id="sb-k" min="1" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sb-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (整體代換)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> \(2026^2 - 2025 \times 2027\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-17" value="A"><span class="option-text">A. \(-1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-17" value="B"><span class="option-text">B. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-17" value="C"><span class="option-text">C. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-17" value="D"><span class="option-text">D. \(4051\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。令 \(a = 2026\)，則 \(2025 = a - 1\)、\(2027 = a + 1\)：
+              \[\begin{aligned} & a^2 - (a - 1)(a + 1) \\ &= a^2 - (a^2 - 1) \\ &= 1 \end{aligned}\]
+              A 錯：\(-1\) 是 \((a + 1)(a - 1) - a^2\) 的結果，這題的減法順序剛好反過來。<br>
+              C 錯：\((a - 1)(a + 1)\) 是 \(a^2 - 1\)，比 \(a^2\) 少 \(1\)，兩者並不相等。<br>
+              D 錯：\(4051\) 是 \(2026^2 - 2025^2\) 的值，算成另一題了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 若 \(m\)、\(n\) 是兩個<strong>連續的奇數</strong>（例如 \(5\) 與 \(7\)），則 \(mn + 1\) 的值可能為下列何者？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-18" value="A"><span class="option-text">A. \(45^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-18" value="B"><span class="option-text">B. \(61^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-18" value="C"><span class="option-text">C. \(73^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-18" value="D"><span class="option-text">D. \(52^2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。兩個連續奇數相差 \(2\)，中間夾著一個<strong>偶數</strong> \(k\)，可以寫成 \(m = k - 1\)、\(n = k + 1\)：
+              \[\begin{aligned} mn + 1 &= (k - 1)(k + 1) + 1 \\ &= k^2 - 1 + 1 = k^2 \end{aligned}\]
+              所以 \(mn + 1\) 一定是某個<strong>偶數的平方</strong>。四個選項中只有 \(52\) 是偶數：\(51 \times 53 + 1 = 2704 = 52^2\)。<br>
+              A、B、C 錯：\(45\)、\(61\)、\(73\) 都是奇數，它們兩旁是偶數，不是兩個連續奇數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 乘法公式速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>分配律</strong>：前面括號的每一項乘到後面括號的每一項，\((a + b)(c + d)\) 共四項。</li>
+              <li><strong>拆數計算</strong>：拆成整十、整百 ± 小數字再展開，帶負號的項要減掉。</li>
+              <li><strong>和的平方</strong>：\((a + b)^2 = a^2 + 2ab + b^2\)，中間有兩塊 \(ab\)。</li>
+              <li><strong>差的平方</strong>：\((a - b)^2 = a^2 - 2ab + b^2\)，最後是 \(+b^2\)。</li>
+              <li><strong>平方差</strong>：\((a + b)(a - b) = a^2 - b^2\)，兩數離同一個整數一樣遠時最好用。</li>
+              <li><strong>反過來用</strong>：先看頭尾定 \(a\)、\(b\)，再看中間是 \(+2ab\)、\(-2ab\) 或沒有。</li>
+              <li><strong>常見錯誤</strong>：\((a + b)^2 \ne a^2 + b^2\)；代一組數字不相等就一定錯。</li>
+              <li><strong>生活應用</strong>：外加 L 形用和的平方、內扣 L 形用差的平方、兩正方形之間用平方差；單位先統一。</li>
+              <li><strong>整體代換</strong>：把大數字看成 \(a\)，先化簡、再代入。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-scissors"></i> 回到拼布工坊：到底缺了哪些布？</h4>
+              <h5><i class="fa-solid fa-square-plus"></i> 小禾的拼布</h5>
+              <p>邊長從 \(40\) 公分加大到 \(50\) 公分，新的面積是 \(50^2 = 2500\) 平方公分。小禾以為只要原本的 \(40^2\) 再加一塊 \(10^2\)，總共 \(1700\) 平方公分，結果差了 \(800\)。差的正是<strong>兩條 \(40 \times 10\) 的長條</strong>：
+                \[\begin{aligned} & (40 + 10)^2 \\ &= 40^2 + 2 \times 40 \times 10 + 10^2 \end{aligned}\]</p>
+              <h5><i class="fa-solid fa-shapes"></i> 三個公式都是面積</h5>
+              <p>和的平方是「正方形往外長大」，差的平方是「從正方形裁掉兩條邊」，平方差是「剪掉一角再拼成長方形」。忘了公式時，<strong>畫一塊布、剪一剪</strong>，公式就回來了。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>這一節的 \(a\)、\(b\) 大多代成數字。下一節〈多項式與其加減運算〉要正式認識 \(3x^2 - 5x + 2\) 這種式子的名字與加減法，之後再把乘法公式用到多項式的乘法上。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
