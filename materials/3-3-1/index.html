@@ -4,39 +4,1404 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-1 利用提公因式與乘法公式做因式分解 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-1 利用提公因式與乘法公式做因式分解 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第3章 因式分解</div>
-    <h1>3-1 利用提公因式與乘法公式做因式分解</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第三章</span>
+        <h1>3-1 利用提公因式與乘法公式做因式分解</h1>
+        <p>走進蒙德里安的色塊拼板工作室：幾塊紅、藍、黃色塊拼成一個長方形，長和寬就是它的<strong>因式</strong>。這一節先用除法認識<strong>因式與倍式</strong>，知道什麼叫<strong>因式分解</strong>；再學三種分解的方法：<strong>提公因式</strong>（含先變號再提）、<strong>平方差公式</strong>、<strong>和的平方與差的平方公式</strong>。第一章的乘法公式，這一節要倒過來用。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-divide"></i> 因式與倍式</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-equals"></i> 從乘積讀</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-scissors"></i> 因式分解</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 求係數</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-object-group"></i> 公因式</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-arrow-up-from-bracket"></i> 提公因式</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-rotate"></i> 變號再提</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-square-minus"></i> 平方差</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-box"></i> 整組當 a</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-square-plus"></i> 和的平方</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-crop-simple"></i> 差的平方</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Mondrian Block Studio)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(253, 224, 71, 0.25);">
+        <h2 class="section-title" style="color: #fde047; border-bottom-color: rgba(253, 224, 71, 0.2);">
+          <i class="fa-solid fa-table-cells-large" aria-hidden="true" style="color: #fde047; text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);"></i> 課前暖身漫畫：六塊色塊拼成長方形
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小格在工作室的桌上倒出六塊色塊：<span style="color:#fca5a5">一塊紅色大正方形</span>（邊長 \(x\)）、<span style="color:#93c5fd">三條藍色長條</span>（\(x\) 乘 \(1\)）、<span style="color:#fde047">兩塊黃色小方塊</span>（\(1\) 乘 \(1\)），合起來的面積是 \(x^2 + 3x + 2\)。阿方試了幾次，終於把它們拼成一個完整的長方形，量出長是 \(x + 2\)、寬是 \(x + 1\)。<strong style="color:#fde047">把一個式子寫成「長 × 寬」</strong>，就是這一節要學的因式分解。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="蒙德里安色塊拼板工作室風四格漫畫：小格在桌上倒出一塊紅色大正方形、三條藍色長條、兩塊黃色小方塊；阿方第一次把它們排成一列，拼不成長方形；兩人改把兩條藍色長條直立在紅色方塊右邊、一條橫放在下面，兩塊黃色小方塊補進右下角；六塊色塊剛好拼成一個沒有缺口的長方形，小格量出長和寬。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 因式與倍式
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> <span>重點 1：因式與倍式——用除法看能不能整除</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先回想整數</strong>：\(16\) 能被 \(2\) 整除，所以 \(2\) 是 \(16\) 的因數、\(16\) 是 \(2\) 的倍數。</li>
+              <li><strong>多項式也一樣</strong>：兩個不為 \(0\) 的多項式 \(A\)、\(B\)，用長除法算 \(A \div B\)。</li>
+              <li><strong>餘式是 \(0\)</strong>（\(A\) 能被 \(B\) 整除）：\(B\) 是 \(A\) 的<strong>因式</strong>，\(A\) 是 \(B\) 的<strong>倍式</strong>。</li>
+              <li><strong>餘式不是 \(0\)</strong>：\(B\) 不是 \(A\) 的因式，\(A\) 也不是 \(B\) 的倍式。</li>
+              <li>例：\(x^2 + 7x + 12\) 除以 \(x + 3\)，商式 \(x + 4\)、餘式 \(0\)，所以 \(x + 3\) 是 \(x^2 + 7x + 12\) 的因式；除以 \(x + 2\)，商式 \(x + 5\)、餘式 \(2\)，所以 \(x + 2\) 不是它的因式。</li>
+              <li><strong>注意</strong>：多項式的整除只看餘式是不是 \(0\)，商式的係數可以是分數，這點和整數不一樣。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_divide.webp" alt="蒙德里安色塊拼板工作室風插圖：阿方把一根短的藍色木條沿著一根長的紅色木條連續量了三次，三段剛好量滿，尾端沒有剩下；小格在旁邊看著。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：長除法檢查站</h3>
+            <p class="interactive-instruction">調整被除式 \(x^2 + bx + c\) 與除式 \(x + q\)，一步一步做長除法。餘式是 \(0\) 才是因式；不是 \(0\) 時，畫面會告訴你常數項改成多少就能整除：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-div" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="dv-prev">上一步</button>
+                      <span class="step-counter" id="dv-step">2 / 2</span>
+                      <button class="pick-btn" id="dv-next">下一步</button>
+                      <button class="pick-btn" id="dv-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="dv-b">被除式 \(x\) 項係數 \(b\)：<span id="dv-vb" class="val-num">5</span></label>
+                    <input type="range" id="dv-b" min="-7" max="7" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dv-c">被除式常數項 \(c\)：<span id="dv-vc" class="val-num">6</span></label>
+                    <input type="range" id="dv-c" min="-12" max="12" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dv-q">除式 \(x + q\) 的 \(q\)：<span id="dv-vq" class="val-num">2</span></label>
+                    <input type="range" id="dv-q" min="-6" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (因式與倍式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一個是 \(2x^2 + 3x - 5\) 的因式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-1" value="A"><span class="option-text">A. \(x + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="B"><span class="option-text">B. \(2x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="C"><span class="option-text">C. \(x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="D"><span class="option-text">D. \(2x + 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。用長除法：\(2x^2 + 3x - 5\) 除以 \(2x + 5\)，商式 \(x - 1\)、餘式 \(0\)，能整除，所以 \(2x + 5\) 是因式。<br>
+              A 錯：除以 \(x + 1\)，商式 \(2x + 1\)、餘式 \(-6\)。<br>
+              B 錯：除以 \(2x - 5\)，商式 \(x + 4\)、餘式 \(15\)。<br>
+              C 錯：除以 \(x - 5\)，商式 \(2x + 13\)、餘式 \(60\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 判斷 \(x - 2\) 是不是 \(3x^2 - 5x + 4\) 的因式，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-2" value="A"><span class="option-text">A. 是，因為餘式為 \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="B"><span class="option-text">B. 不是，因為餘式為 \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="C"><span class="option-text">C. 不是，因為餘式為 \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="D"><span class="option-text">D. 是，因為商式是 \(3x + 1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。長除法的第一步，商 \(3x\)，\(3x(x - 2) = 3x^2 - 6x\)，相減剩 \(x + 4\)；第二步，商 \(1\)，相減：
+              \[\begin{aligned} & (x + 4) - (x - 2) \\ &= x + 4 - x + 2 = 6 \end{aligned}\]
+              餘式是 \(6\)，不是 \(0\)，所以 \(x - 2\) 不是因式。<br>
+              A 錯：餘式不是 \(0\)。<br>
+              C 錯：減 \((x - 2)\) 時漏了變號，寫成 \(x + 4 - x - 2 = 2\)。<br>
+              D 錯：商式確實是 \(3x + 1\)，但判斷因式要看<strong>餘式</strong>是不是 \(0\)，不是看商式。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 從乘積讀因式與倍式
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> <span>重點 2：從乘積讀出因式與倍式——A = B × C</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・因式與倍式</span>
+              若多項式 \(A\)、\(B\)、\(C\) 都不為 \(0\)，且 \(A = B \times C\)，則<br>
+              \(B\)、\(C\) 是 \(A\) 的<strong>因式</strong>；\(A\) 是 \(B\)、\(C\) 的<strong>倍式</strong>。
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li>已經寫成乘積時，<strong>不必再做除法</strong>：乘號兩邊的式子都是因式。</li>
+              <li>例：\(2x^2 - x - 6 = (2x + 3)(x - 2)\)，所以 \(2x + 3\)、\(x - 2\) 都是 \(2x^2 - x - 6\) 的因式，\(2x^2 - x - 6\) 是它們的倍式。</li>
+              <li><strong>兩個因式同時變號</strong>，乘積不變：\((-2x - 3)(-x + 2)\) 也等於 \(2x^2 - x - 6\)，所以 \(-2x - 3\) 也是因式。</li>
+              <li><strong>自己是自己的因式</strong>：\(A = A \times 1\)，所以 \(A\) 是 \(A\) 的因式，也是 \(A\) 的倍式。</li>
+              <li><strong>方向別說反</strong>：「因式」是小的那一個（乘號兩邊的），「倍式」是乘出來的那一個。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_product.webp" alt="蒙德里安色塊拼板工作室風插圖：牆上掛著一幅紅、藍、黃方格組成的長方形畫；小格把一條紅色緞帶貼齊畫的上緣，阿方把一條藍色緞帶貼齊畫的左緣，兩條緞帶的長度剛好等於畫的長和寬。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：這一張是不是因式？</h3>
+            <p class="interactive-instruction">\(A = (x + m)(x + n)\)。選一張候選式，看 \(A\) 除以它能不能整除。調 \(m\)、\(n\) 會發現：前四張永遠是因式，後兩張只有特殊的 \(m\)、\(n\) 才會是：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-prod" width="540" height="430"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">候選式</span>
+                    <div class="btn-group" id="pd-cand-group">
+                      <button class="pick-btn active" data-pd-cand="b">\(x + m\)</button>
+                      <button class="pick-btn" data-pd-cand="c">\(x + n\)</button>
+                      <button class="pick-btn" data-pd-cand="neg">\(-x - m\)</button>
+                      <button class="pick-btn" data-pd-cand="self">\(A\) 自己</button>
+                      <button class="pick-btn" data-pd-cand="flip">\(x - m\)</button>
+                      <button class="pick-btn" data-pd-cand="sum">\(x + m + n\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pd-m">\(m\)：<span id="pd-vm" class="val-num">3</span></label>
+                    <input type="range" id="pd-m" min="-5" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pd-n">\(n\)：<span id="pd-vn" class="val-num">-2</span></label>
+                    <input type="range" id="pd-n" min="-5" max="5" value="-2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (從乘積讀因式與倍式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 已知 \(3x^2 - 7x - 6 = (3x + 2)(x - 3)\)，下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-3" value="A"><span class="option-text">A. \(3x^2 - 7x - 6\) 是 \(3x + 2\) 的因式</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="B"><span class="option-text">B. \(x - 3\) 是 \(3x + 2\) 的倍式</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="C"><span class="option-text">C. \(3x + 2\) 是 \(3x^2 - 7x - 6\) 的因式</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="D"><span class="option-text">D. \(x + 3\) 是 \(3x^2 - 7x - 6\) 的因式</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。乘號兩邊的 \(3x + 2\)、\(x - 3\) 是因式，乘出來的 \(3x^2 - 7x - 6\) 是倍式。<br>
+              A 錯：方向說反了，\(3x^2 - 7x - 6\) 是 \(3x + 2\) 的<strong>倍式</strong>。<br>
+              B 錯：\(x - 3\) 和 \(3x + 2\) 是並列的兩個因式，彼此沒有倍式關係（\(x - 3\) 除以 \(3x + 2\) 的餘式不是 \(0\)）。<br>
+              D 錯：因式是 \(x - 3\)，不是 \(x + 3\)；\(3x^2 - 7x - 6\) 除以 \(x + 3\) 的餘式是 \(42\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 已知 \(2x^2 + 5x - 3 = (2x - 1)(x + 3)\)，下列何者<strong>不是</strong> \(2x^2 + 5x - 3\) 的因式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-4" value="A"><span class="option-text">A. \(2x + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="B"><span class="option-text">B. \(-2x + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="C"><span class="option-text">C. \((2x - 1)(x + 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="D"><span class="option-text">D. \(-x - 3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(2x + 1\) 和因式 \(2x - 1\) 只差一個正負號，不能混用；\(2x^2 + 5x - 3\) 除以 \(2x + 1\)，商式 \(x + 2\)、餘式 \(-5\)，不是因式。<br>
+              B 是因式：兩個因式同時變號，\((-2x + 1)(-x - 3)\)<wbr>\({}= 2x^2 + 5x - 3\)。<br>
+              C 是因式：它就是 \(2x^2 + 5x - 3\) 自己，\(A = A \times 1\)。<br>
+              D 是因式：理由同 B。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 因式分解的意義
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scissors" aria-hidden="true"></i> <span>重點 3：因式分解——寫成兩個一次式的乘積</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>因式分解</strong>：把一個二次式寫成兩個一次式的乘積。</li>
+              <li><strong>乘積展開</strong>是反方向：把乘積乘開，寫回一個多項式。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">兩個方向</span>
+              因式分解：\(x^2 + 5x + 4\)<wbr>\({}\rightarrow (x + 1)(x + 4)\)<br>
+              乘積展開：\((x + 1)(x + 4)\)<wbr>\({}\rightarrow x^2 + 5x + 4\)
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用除法分解</strong>：先判斷某個一次式是不是因式；能整除，就寫成「除式 \(\times\) 商式」。</li>
+              <li>例：\(6x^2 + 11x + 3\) 除以 \(3x + 1\)，商式 \(2x + 3\)、餘式 \(0\)，所以
+                \[\begin{aligned} & 6x^2 + 11x + 3 \\ &= (3x + 1)(2x + 3) \end{aligned}\]</li>
+              <li><strong>分解完就停</strong>：寫成乘積就是答案，<strong>不要再乘開</strong>；乘開又回到原式，等於白做。</li>
+              <li><strong>等號兩邊都要是乘積</strong>才算：\(x^2 + 5x + 4 = x(x + 5) + 4\) 最後還是「加 \(4\)」，不是乘積。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_meaning.webp" alt="蒙德里安色塊拼板工作室風插圖：工作桌左邊，小格把一個拼好的紅藍黃長方形拆開，色塊排成一列；桌子右邊，阿方把散開的同樣色塊拼回一個長方形。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：猜一個除式來分解</h3>
+            <p class="interactive-instruction">選一個二次式，調除式 \(px + q\) 的 \(p\)、\(q\)，一步一步做長除法。找到能整除的除式，就把它分解成兩個一次式的乘積：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fac" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">二次式</span>
+                    <div class="btn-group" id="fc-poly-group">
+                      <button class="pick-btn active" data-fc-poly="r1">\(6x^2 + x - 15\)</button>
+                      <button class="pick-btn" data-fc-poly="r2">\(4x^2 - 8x - 5\)</button>
+                      <button class="pick-btn" data-fc-poly="r3">\(3x^2 + 14x + 8\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="fc-prev">上一步</button>
+                      <span class="step-counter" id="fc-step">2 / 2</span>
+                      <button class="pick-btn" id="fc-next">下一步</button>
+                      <button class="pick-btn" id="fc-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fc-p">除式 \(x\) 的係數 \(p\)：<span id="fc-vp" class="val-num">1</span></label>
+                    <input type="range" id="fc-p" min="1" max="4" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fc-q">除式常數 \(q\)：<span id="fc-vq" class="val-num">2</span></label>
+                    <input type="range" id="fc-q" min="-6" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (因式分解)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 判別 \(3x - 4\) 是不是 \(6x^2 - 5x - 4\) 的因式；若是，將 \(6x^2 - 5x - 4\) 因式分解。下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-5" value="A"><span class="option-text">A. \((3x - 4)(2x - 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="B"><span class="option-text">B. \((3x - 4)(2x + 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="C"><span class="option-text">C. \(3x - 4\) 不是因式</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="D"><span class="option-text">D. \((3x + 4)(2x - 1)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。長除法：商 \(2x\)，\(2x(3x - 4) = 6x^2 - 8x\)，相減剩 \(3x - 4\)；再商 \(1\)，相減餘 \(0\)。能整除，商式是 \(2x + 1\)：
+              \[6x^2 - 5x - 4 = (3x - 4)(2x + 1)\]
+              A 錯：乘開是 \(6x^2 - 11x + 4\)，不是原式。<br>
+              C 錯：餘式是 \(0\)，\(3x - 4\) 是因式。<br>
+              D 錯：乘開是 \(6x^2 + 5x - 4\)，\(x\) 項的符號相反。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 下列哪一個式子是把 \(3x^2 + 2x - 8\) <strong>因式分解</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-6" value="A"><span class="option-text">A. \((3x - 4)(x + 2) = 3x^2 + 2x - 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="B"><span class="option-text">B. \(3x^2 + 2x - 8 = x(3x + 2) - 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="C"><span class="option-text">C. \(3x^2 + 2x - 8 = (3x - 4)(x + 2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="D"><span class="option-text">D. \(3x^2 - 2x - 8 = (3x - 4)(x + 2)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。把一個二次式寫成兩個一次式的乘積，才叫因式分解；C 的右邊是乘積，而且乘開確實等於 \(3x^2 + 2x - 8\)。<br>
+              A 錯：方向相反，這是把乘積乘開，叫<strong>乘積展開</strong>。<br>
+              B 錯：右邊最後還是「減 \(8\)」，整個式子不是乘積。<br>
+              D 錯：\((3x - 4)(x + 2)\) 乘開是 \(3x^2 + 2x - 8\)，不等於左邊的 \(3x^2 - 2x - 8\)，等式根本不成立。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 已知因式求係數
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span>重點 4：已知一個因式，求未知的係數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>題型：已知 \(3x^2 + 7x + 2\) 可以因式分解成 \((3x + 1)(x + m)\)，求 \(m\)。</li>
+              <li><strong>方法一：用除法</strong>。\(3x^2 + 7x + 2\) 能被 \(3x + 1\) 整除，做長除法得到商式 \(x + 2\)，和 \(x + m\) 比較，\(m = 2\)。</li>
+              <li><strong>方法二：比較係數</strong>。把右邊乘開，和左邊的每一項逐項比對：
+                \[\begin{aligned} & (3x + 1)(x + m) \\ &= 3x^2 + (3m + 1)x + m \end{aligned}\]
+                常數項 \(m = 2\)，再用 \(x\) 項驗算：\(3 \times 2 + 1 = 7\) ✓。</li>
+              <li>兩種方法答案一樣，<strong>挑順手的用</strong>；比較係數時，\(x^2\) 項、\(x\) 項、常數項<strong>三項都要對得上</strong>。</li>
+              <li>題目有兩個未知數（例如 \(ax^2 + bx + c\) 的 \(a\)、\(b\)）時，直接把已知的乘積乘開，再逐項讀出係數。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_coef.webp" alt="蒙德里安色塊拼板工作室風插圖：一個長方形木框裡已經嵌好紅、藍、黃色塊，只剩右下角一個空格；阿方手上拿著三塊大小不同的黃色方塊，正在比對哪一塊剛好填滿空格。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：猜猜 m 是多少</h3>
+            <p class="interactive-instruction">選一題，拉動滑桿猜 \(m\)。「比較係數」逐項比對乘開後的三個係數，「用除法」直接做長除法、讀出商式：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-coef" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cf-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="cf-prob-group">
+                      <button class="pick-btn active" data-cf-prob="k1">第 1 題</button>
+                      <button class="pick-btn" data-cf-prob="k2">第 2 題</button>
+                      <button class="pick-btn" data-cf-prob="k3">第 3 題</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方法</span>
+                    <div class="btn-group" id="cf-mode-group">
+                      <button class="pick-btn active" data-cf-mode="cmp">比較係數</button>
+                      <button class="pick-btn" data-cf-mode="div">用除法</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cf-m">猜 \(m\)：<span id="cf-vm" class="val-num">0</span></label>
+                    <input type="range" id="cf-m" min="-6" max="6" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cf-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求未知係數)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 已知多項式 \(4x^2 + 9x - 9\) 可以因式分解成 \((4x - 3)(x + m)\)，則 \(m\) 為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-7" value="A"><span class="option-text">A. \(-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="B"><span class="option-text">B. \(\frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="C"><span class="option-text">C. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="D"><span class="option-text">D. \(3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。乘開比較係數：
+              \[\begin{aligned} & (4x - 3)(x + m) \\ &= 4x^2 + (4m - 3)x - 3m \end{aligned}\]
+              常數項 \(-3m = -9\)，得 \(m = 3\)；驗算 \(x\) 項：\(4 \times 3 - 3 = 9\) ✓。<br>
+              A 錯：\(-3m = -9\) 時漏看了負號。<br>
+              B 錯：把 \(x\) 項寫成 \(4m + 3 = 9\)，常數 \(-3\) 的負號弄丟了。<br>
+              C 錯：\(4m - 3 = 9\) 得到 \(4m = 12\) 後，忘了再除以 \(4\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 已知多項式 \(ax^2 + bx - 10\) 可以因式分解成 \((2x + 5)(x - 2)\)，則 \(a + b\) 為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-8" value="A"><span class="option-text">A. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="B"><span class="option-text">B. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="C"><span class="option-text">C. \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="D"><span class="option-text">D. \(-2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。把右邊乘開：
+              \[\begin{aligned} & (2x + 5)(x - 2) \\ &= 2x^2 - 4x + 5x - 10 \\ &= 2x^2 + x - 10 \end{aligned}\]
+              所以 \(a = 2\)、\(b = 1\)，\(a + b = 3\)。<br>
+              B 錯：把 \(5\) 和 \(-2\) 直接相加當成 \(b = 3\)，那不是乘開。<br>
+              C 錯：\(5x\) 的符號弄錯，算成 \(b = -4 - 5 = -9\)。<br>
+              D 錯：漏了 \(5 \times x = 5x\) 這一項，只算到 \(b = -4\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 公因式
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-object-group" aria-hidden="true"></i> <span>重點 5：公因式——兩個式子共同的因式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・公因式</span>
+              若多項式 \(A\)、\(B\)、\(C\) 都不為 \(0\)，且 \(C\) 同時是 \(A\) 和 \(B\) 的因式，<br>
+              則 \(C\) 是 \(A\) 和 \(B\) 的<strong>公因式</strong>。
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>先拆成乘法</strong>：\(-4x^2 = (-1) \cdot 2 \cdot 2 \cdot x \cdot x\)、\(6x = 2 \cdot 3 \cdot x\)，兩邊都有的是 \(2\) 和 \(x\)。</li>
+              <li>所以 \(x\)、\(2x\)、\(-x\)、\(-2x\) 都是 \(-4x^2\) 和 \(6x\) 的公因式；把共同的積木<strong>全部</strong>乘起來的 \(2x\) 是最大的。</li>
+              <li><strong>公因式也可以是多項式</strong>：\((x + 1)(x - 3)\) 和 \((x - 3)^2\) 都有 \(x - 3\)，\(x - 3\) 就是它們的公因式。</li>
+              <li><strong>平方要拆成兩個</strong>：\((x - 3)^2 = (x - 3)(x - 3)\)，但另一個式子只有一個 \(x - 3\)，所以公因式只有一個 \(x - 3\)，不是 \((x - 3)^2\)。</li>
+              <li>公因式的係數可以是正的，也可以是負的。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_common.webp" alt="蒙德里安色塊拼板工作室風插圖：牆上並排掛著兩幅蒙德里安風格的方格畫，兩幅畫的左上角都有一塊一模一樣的紅色正方形，其餘的方格各不相同；小格用手指著兩塊紅色正方形。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：乘法積木配對</h3>
+            <p class="interactive-instruction">選一組 \(A\)、\(B\)。先把兩個式子拆成乘法積木，再按「找共同」看哪些積木兩邊都有，最後「列出公因式」：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-com" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題組</span>
+                    <div class="btn-group" id="cm-pair-group">
+                      <button class="pick-btn active" data-cm-pair="p1">第 1 組</button>
+                      <button class="pick-btn" data-cm-pair="p2">第 2 組</button>
+                      <button class="pick-btn" data-cm-pair="p3">第 3 組</button>
+                      <button class="pick-btn" data-cm-pair="p4">第 4 組</button>
+                      <button class="pick-btn" data-cm-pair="p5">第 5 組</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">看法</span>
+                    <div class="btn-group" id="cm-view-group">
+                      <button class="pick-btn active" data-cm-view="split">拆成積木</button>
+                      <button class="pick-btn" data-cm-view="match">找共同</button>
+                      <button class="pick-btn" data-cm-view="list">列出公因式</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (公因式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 下列何者<strong>不是</strong> \(8x^2\) 和 \(-12x^3\) 的公因式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-9" value="A"><span class="option-text">A. \(4x^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="B"><span class="option-text">B. \(-2x\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="C"><span class="option-text">C. \(x^3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="D"><span class="option-text">D. \(4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(8x^2\) 只有兩個 \(x\)，\(x^3\) 有三個 \(x\)，\(8x^2\) 除以 \(x^3\) 除不盡，所以 \(x^3\) 不是 \(8x^2\) 的因式，更不是公因式。<br>
+              A 是：\(8x^2 = 4x^2 \cdot 2\)，\(-12x^3 = 4x^2 \cdot (-3x)\)。<br>
+              B 是：\(8x^2 = (-2x)(-4x)\)，\(-12x^3 = (-2x)(6x^2)\)。<br>
+              D 是：\(8x^2 = 4 \cdot 2x^2\)，\(-12x^3 = 4 \cdot (-3x^3)\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 下列何者是 \((x + 2)(3x - 1)\) 和 \((3x - 1)^2\) 的公因式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-10" value="A"><span class="option-text">A. \(x + 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="B"><span class="option-text">B. \(3x - 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="C"><span class="option-text">C. \((3x - 1)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="D"><span class="option-text">D. \((x + 2)(3x - 1)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。拆成積木：\((x + 2)(3x - 1)\) 有一個 \(3x - 1\)，\((3x - 1)^2 = (3x - 1)(3x - 1)\) 有兩個，共同的只有一個 \(3x - 1\)。<br>
+              A 錯：\((3x - 1)^2\) 裡沒有 \(x + 2\)。<br>
+              C 錯：\((x + 2)(3x - 1)\) 只有一個 \(3x - 1\)，不能被 \((3x - 1)^2\) 整除。<br>
+              D 錯：\((3x - 1)^2\) 裡沒有 \(x + 2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 提公因式
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i> <span>重點 6：提公因式——分配律倒過來用</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">提公因式</span>
+              \(A \cdot B + A \cdot C \xrightarrow{\text{因式分解}} A(B + C)\)
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>步驟</strong>：找出每一項都有的公因式，把每一項寫成「公因式 × 剩下的」，再把公因式提到括號外。</li>
+              <li>例：\(6x^2 + 9x\)<wbr>\({}= 3x \cdot 2x + 3x \cdot 3\)<wbr>\({}= 3x(2x + 3)\)。</li>
+              <li><strong>通常提出最大的公因式</strong>：只提 \(x\) 寫成 \(x(6x + 9)\) 也對，但括號裡還有公因數 \(3\)，要再提出來才乾淨。</li>
+              <li><strong>整項提出時留下 \(1\)，不是 \(0\)</strong>：\(4x^2 - x\)<wbr>\({}= x \cdot 4x - x \cdot 1\)<wbr>\({}= x(4x - 1)\)，不是 \(x(4x - 0)\)。</li>
+              <li><strong>公因式可以是多項式</strong>：把整個括號當成一塊，例如
+                \[\begin{aligned} & 3(x + 2)^2 - (x + 2) \\ &= (x + 2)[3(x + 2) - 1] \\ &= (x + 2)(3x + 5) \end{aligned}\]</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_extract.webp" alt="蒙德里安色塊拼板工作室風插圖：兩幅一樣高的方格畫並排靠在一起，接成一幅更寬的畫；小格扶著左邊那幅，阿方扶著右邊那幅，兩幅畫的上緣和下緣切齊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：提公因式工作台</h3>
+            <p class="interactive-instruction">上方的長方形，高是公因式，兩塊的面積是原式的兩項。「單項式」模式比較只提 \(x\) 與提出最大公因式；「多項式」模式把整個括號提出來。把第二項調成整個被提走，看括號裡留下什麼：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ext" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ex-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公因式</span>
+                    <div class="btn-group" id="ex-mode-group">
+                      <button class="pick-btn active" data-ex-mode="mono">單項式</button>
+                      <button class="pick-btn" data-ex-mode="poly">多項式</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="ex-row-take">
+                    <span class="btn-group-label">提出</span>
+                    <div class="btn-group" id="ex-take-group">
+                      <button class="pick-btn active" data-ex-take="g">最大公因式</button>
+                      <button class="pick-btn" data-ex-take="x">只提 \(x\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="ex-row-a">
+                    <label for="ex-a">\(ax^2 + bx\) 的 \(a\)：<span id="ex-va" class="val-num">4</span></label>
+                    <input type="range" id="ex-a" min="-8" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="ex-row-b">
+                    <label for="ex-b">\(ax^2 + bx\) 的 \(b\)：<span id="ex-vb" class="val-num">-6</span></label>
+                    <input type="range" id="ex-b" min="-12" max="12" value="-6" step="1">
+                  </div>
+                  <div class="slider-row" id="ex-row-k" style="display:none">
+                    <label for="ex-k">\(k(x + p)^2 + m(x + p)\) 的 \(k\)：<span id="ex-vk" class="val-num">2</span></label>
+                    <input type="range" id="ex-k" min="1" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="ex-row-p" style="display:none">
+                    <label for="ex-p">括號裡的 \(p\)：<span id="ex-vp" class="val-num">-1</span></label>
+                    <input type="range" id="ex-p" min="-5" max="5" value="-1" step="1">
+                  </div>
+                  <div class="slider-row" id="ex-row-m" style="display:none">
+                    <label for="ex-m">第二項的 \(m\)：<span id="ex-vm" class="val-num">1</span></label>
+                    <input type="range" id="ex-m" min="-5" max="5" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ex-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (提公因式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 將 \(9x^2 - x\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-11" value="A"><span class="option-text">A. \(x(9x - 0)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="B"><span class="option-text">B. \(9x(x - 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="C"><span class="option-text">C. \(x(9x - 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="D"><span class="option-text">D. \(-x(9x + 1)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩項的公因式是 \(x\)：\(9x^2 = x \cdot 9x\)，\(x = x \cdot 1\)，所以 \(9x^2 - x = x(9x - 1)\)。<br>
+              A 錯：\(x\) 整項被提走後留下的是 \(1\)，不是 \(0\)；\(x(9x - 0) = 9x^2\)。<br>
+              B 錯：\(9\) 不是第二項 \(x\) 的因數；\(9x(x - 1) = 9x^2 - 9x\)。<br>
+              D 錯：\(-x(9x + 1) = -9x^2 - x\)，第一項的符號不對。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 將 \(2(2x - 1)^2 + 3(2x - 1)\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-12" value="A"><span class="option-text">A. \((2x - 1)(4x + 2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="B"><span class="option-text">B. \((2x - 1)(2x + 2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="C"><span class="option-text">C. \((2x - 1)(4x + 5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="D"><span class="option-text">D. \((2x - 1)(4x + 1)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。把整個 \((2x - 1)\) 當公因式提出來：
+              \[\begin{aligned} & 2(2x - 1)^2 + 3(2x - 1) \\ &= (2x - 1)[2(2x - 1) + 3] \\ &= (2x - 1)(4x - 2 + 3) \\ &= (2x - 1)(4x + 1) \end{aligned}\]
+              A 錯：\(2(2x - 1)\) 只乘到 \(2x\)，寫成 \(4x - 1\)，再加 \(3\) 變成 \(4x + 2\)。<br>
+              B 錯：提出後忘了第一項還有係數 \(2\)，寫成 \((2x - 1) + 3\)。<br>
+              C 錯：\(2 \times (-1)\) 算成 \(+2\)，得到 \(4x + 2 + 3\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 變號提公因式
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-rotate" aria-hidden="true"></i> <span>重點 7：先變號，再提公因式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>有些式子乍看沒有公因式，因為兩項的括號<strong>只差一個正負號</strong>，像 \(x - 4\) 和 \(4 - x\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">變號的兩條規則</span>
+              \(a - x = -(x - a)\)　　\((a - x)^2 = (x - a)^2\)
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>一次方</strong>：括號裡兩項都變號，括號前要多一個負號，所以前面的加減號要<strong>反過來</strong>。</li>
+              <li>例：
+                \[\begin{aligned} & (2x + 3)(x - 4) \\ & \quad - (4 - x)(x + 1) \\ &= (x - 4)(2x + 3) \\ & \quad + (x - 4)(x + 1) \\ &= (x - 4)[(2x + 3) + (x + 1)] \\ &= (x - 4)(3x + 4) \end{aligned}\]</li>
+              <li><strong>平方</strong>：平方之後負號不見，\((1 - x)^2\) 直接換成 \((x - 1)^2\)，前面的加減號<strong>不變</strong>。</li>
+              <li>例：
+                \[\begin{aligned} & (x - 1)(4x + 3) - (1 - x)^2 \\ &= (x - 1)(4x + 3) - (x - 1)^2 \\ &= (x - 1)[(4x + 3) - (x - 1)] \\ &= (x - 1)(3x + 4) \end{aligned}\]</li>
+              <li><strong>注意</strong>：三次方就不一樣了，\((a - x)^3 = -(x - a)^3\)，負號會留下來。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_flip.webp" alt="蒙德里安色塊拼板工作室風插圖：小格把一塊正面紅色、背面藍色的方形色塊翻過來，翻到一半；阿方手上拿著一塊一模一樣的方形色塊，藍色那面朝上。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：翻牌變號</h3>
+            <p class="interactive-instruction">第一項是 \((x - a)(px + b)\)，第二項帶著「倒過來寫」的 \((a - x)\)。切換「一次方」與「平方」、加號與減號，看變號時前面的加減號要不要跟著反過來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-flip" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">第二項</span>
+                    <div class="btn-group" id="fl-mode-group">
+                      <button class="pick-btn active" data-fl-mode="one">一次方</button>
+                      <button class="pick-btn" data-fl-mode="sq">平方</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">中間</span>
+                    <div class="btn-group" id="fl-sign-group">
+                      <button class="pick-btn active" data-fl-sign="plus">加號</button>
+                      <button class="pick-btn" data-fl-sign="minus">減號</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fl-a">\(a\)：<span id="fl-va" class="val-num">3</span></label>
+                    <input type="range" id="fl-a" min="1" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fl-p">\(px + b\) 的 \(p\)：<span id="fl-vp" class="val-num">2</span></label>
+                    <input type="range" id="fl-p" min="1" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fl-b">\(px + b\) 的 \(b\)：<span id="fl-vb" class="val-num">1</span></label>
+                    <input type="range" id="fl-b" min="-5" max="5" value="1" step="1">
+                  </div>
+                  <div class="slider-row" id="fl-row-c">
+                    <label for="fl-c">第二項 \(x + c\) 的 \(c\)：<span id="fl-vc" class="val-num">2</span></label>
+                    <input type="range" id="fl-c" min="-5" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (變號提公因式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 將 \((x - 6)(3x + 1) + (6 - x)(x - 4)\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-13" value="A"><span class="option-text">A. \((x - 6)(4x - 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="B"><span class="option-text">B. \((x - 6)(2x + 5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="C"><span class="option-text">C. \((x - 6)(2x - 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="D"><span class="option-text">D. \((6 - x)(2x + 5)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(6 - x = -(x - 6)\)，所以「\(+\)」要變成「\(-\)」：
+              \[\begin{aligned} & (x - 6)(3x + 1) - (x - 6)(x - 4) \\ &= (x - 6)[(3x + 1) - (x - 4)] \\ &= (x - 6)(2x + 5) \end{aligned}\]
+              A 錯：沒有變號，直接寫成 \((3x + 1) + (x - 4) = 4x - 3\)。<br>
+              C 錯：變號了，但 \(-(x - 4)\) 去括號寫成 \(-x - 4\)，得到 \(2x - 3\)。<br>
+              D 錯：\((6 - x)(2x + 5)\)<wbr>\({}= -(x - 6)(2x + 5)\)，整個差了一個負號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 將 \((2x + 3)(x - 7) - (7 - x)^2\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-14" value="A"><span class="option-text">A. \((x - 7)(x + 10)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="B"><span class="option-text">B. \((x - 7)(3x - 4)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="C"><span class="option-text">C. \((x - 7)(x - 4)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="D"><span class="option-text">D. \((7 - x)(x + 10)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。平方之後負號不見：\((7 - x)^2 = (x - 7)^2\)，前面的「\(-\)」不變：
+              \[\begin{aligned} & (x - 7)(2x + 3) - (x - 7)^2 \\ &= (x - 7)[(2x + 3) - (x - 7)] \\ &= (x - 7)(x + 10) \end{aligned}\]
+              B 錯：把 \((7 - x)^2\) 當成 \(-(x - 7)^2\)，前面的號反過來，得到 \((2x + 3) + (x - 7) = 3x - 4\)。<br>
+              C 錯：\(-(x - 7)\) 去括號寫成 \(-x - 7\)，得到 \(x - 4\)。<br>
+              D 錯：\((7 - x)(x + 10)\)<wbr>\({}= -(x - 7)(x + 10)\)，差了一個負號。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 平方差公式
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-minus" aria-hidden="true"></i> <span>重點 8：平方差公式——a² − b² = (a + b)(a − b)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>第一章的乘法公式 \((a + b)(a - b) = a^2 - b^2\)，等號兩邊<strong>對調</strong>，右邊就是左邊的因式分解。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">平方差公式</span>
+              \(a^2 - b^2 = (a + b)(a - b)\)
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>先寫成「誰的平方減誰的平方」</strong>，再看 \(a\)、\(b\) 各是什麼。\(a\)、\(b\) 可以是數字，也可以是含文字的式子。</li>
+              <li>例：\(x^2 - 49\)<wbr>\({}= x^2 - 7^2\)<wbr>\({}= (x + 7)(x - 7)\)。</li>
+              <li>例：\(9x^2 - 4y^2\)<wbr>\({}= (3x)^2 - (2y)^2\)<wbr>\({}= (3x + 2y)(3x - 2y)\)，係數也要開平方。</li>
+              <li><strong>順序不要弄反</strong>：\(16 - x^2\)<wbr>\({}= 4^2 - x^2\)<wbr>\({}= (4 + x)(4 - x)\)，這裡 \(a = 4\)、\(b = x\)。</li>
+              <li><strong>中間一定是減號</strong>：\(x^2 + 49\) 是兩個平方「相加」，不能用平方差公式。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_diffsq.webp" alt="蒙德里安色塊拼板工作室風插圖：桌上一塊紅色正方形紙板的右下角被剪掉一個小正方形；剩下的 L 形被剪成兩塊長方形，阿方把其中一塊轉向後接到另一塊的右邊，拼成一個又長又扁的長方形。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：挖一角，拼成長方形</h3>
+            <p class="interactive-instruction">\(a = kx\)、\(b = n\)（或 \(ny\)）。一步一步看：大正方形挖掉一角剩下 \(a^2 - b^2\)，剪開再拼成長 \(a + b\)、寬 \(a - b\) 的長方形，面積不變：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dsq" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ds-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">b 是</span>
+                    <div class="btn-group" id="ds-var-group">
+                      <button class="pick-btn active" data-ds-var="num">數字 \(n\)</button>
+                      <button class="pick-btn" data-ds-var="y">\(ny\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="ds-prev">上一步</button>
+                      <span class="step-counter" id="ds-step">4 / 4</span>
+                      <button class="pick-btn" id="ds-next">下一步</button>
+                      <button class="pick-btn" id="ds-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ds-k">\(a = kx\) 的 \(k\)：<span id="ds-vk" class="val-num">3</span></label>
+                    <input type="range" id="ds-k" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-n">\(b\) 的 \(n\)：<span id="ds-vn" class="val-num">2</span></label>
+                    <input type="range" id="ds-n" min="1" max="9" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ds-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平方差公式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 將 \(64x^2 - 49y^2\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-15" value="A"><span class="option-text">A. \((8x - 7y)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="B"><span class="option-text">B. \((64x + 49y)(64x - 49y)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="C"><span class="option-text">C. \((8x + 7y)(8x - 7y)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="D"><span class="option-text">D. \((8x + 7y)^2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(64x^2 - 49y^2 = (8x)^2 - (7y)^2\)，\(a = 8x\)、\(b = 7y\)：
+              \[\begin{aligned} & 64x^2 - 49y^2 \\ &= (8x + 7y)(8x - 7y) \end{aligned}\]
+              A 錯：\((8x - 7y)^2\)<wbr>\({}= 64x^2 - 112xy + 49y^2\)，多了中間項。<br>
+              B 錯：係數沒有開平方；乘開是 \(4096x^2 - 2401y^2\)。<br>
+              D 錯：\((8x + 7y)^2\)<wbr>\({}= 64x^2 + 112xy + 49y^2\)，而且中間是加號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 將 \(121 - 25x^2\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-16" value="A"><span class="option-text">A. \((5x + 11)(5x - 11)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="B"><span class="option-text">B. \((11 - 5x)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="C"><span class="option-text">C. \((121 + 25x)(121 - 25x)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="D"><span class="option-text">D. \((11 + 5x)(11 - 5x)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(121 - 25x^2 = 11^2 - (5x)^2\)，這次 \(a = 11\)、\(b = 5x\)：
+              \[\begin{aligned} & 121 - 25x^2 \\ &= (11 + 5x)(11 - 5x) \end{aligned}\]
+              A 錯：\(a\)、\(b\) 弄反了；\((5x + 11)(5x - 11)\)<wbr>\({}= 25x^2 - 121\)，和原式差一個負號。<br>
+              B 錯：\((11 - 5x)^2\) 乘開會多出中間項 \(-110x\)。<br>
+              C 錯：沒有開平方。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 平方差公式（整組括號）
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-box" aria-hidden="true"></i> <span>重點 9：平方差公式——整組括號當成一個 a</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>平方差公式的 \(a\)、\(b\) 可以是<strong>一整組括號</strong>。先把括號整組看成一塊，套公式，最後才去括號合併。</li>
+              <li>例：\((x + 2)^2 - 25\)，把 \((x + 2)\) 看成 \(a\)、\(5\) 看成 \(b\)：
+                \[\begin{aligned} & (x + 2)^2 - 5^2 \\ &= [(x + 2) + 5][(x + 2) - 5] \\ &= (x + 7)(x - 3) \end{aligned}\]</li>
+              <li><strong>數字在前時，減的是一整組</strong>：\(9 - (x + 4)^2\) 的 \(a = 3\)、\(b = (x + 4)\)，
+                \[\begin{aligned} & 3^2 - (x + 4)^2 \\ &= [3 + (x + 4)][3 - (x + 4)] \\ &= (x + 7)(3 - x - 4) \\ &= (x + 7)(-x - 1) \end{aligned}\]
+                第二個括號裡的 \(x\) 和 \(4\) <strong>都要變號</strong>。也可以把負號提到最前面，寫成 \(-(x + 7)(x + 1)\)。</li>
+              <li><strong>先寫方括號，再去括號</strong>：一下子就去掉括號，最容易漏變號。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_bracket.webp" alt="蒙德里安色塊拼板工作室風插圖：阿方用一條紅繩把一疊藍色和黃色的色塊捆成一整捆，雙手把整捆抱起來；小格在旁邊指著桌上另一塊單獨的紅色方塊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：整組代進公式</h3>
+            <p class="interactive-instruction">調整括號 \((px + q)\) 與數字 \(n\)。切換「括號在前」與「數字在前」，注意第 ③ 步：數字在前時，減的是一整組，括號裡每一項都要變號：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-brk" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bk-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">算式</span>
+                    <div class="btn-group" id="bk-mode-group">
+                      <button class="pick-btn active" data-bk-mode="minus">\((px + q)^2 - n^2\)</button>
+                      <button class="pick-btn" data-bk-mode="from">\(n^2 - (px + q)^2\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bk-p">\(p\)：<span id="bk-vp" class="val-num">1</span></label>
+                    <input type="range" id="bk-p" min="1" max="2" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bk-q">\(q\)：<span id="bk-vq" class="val-num">3</span></label>
+                    <input type="range" id="bk-q" min="-6" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bk-n">\(n\)：<span id="bk-vn" class="val-num">5</span></label>
+                    <input type="range" id="bk-n" min="1" max="8" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (整組當成 a)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 將 \((3x - 2)^2 - 36\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-17" value="A"><span class="option-text">A. \((3x + 4)(3x - 8)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="B"><span class="option-text">B. \((3x + 34)(3x - 38)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="C"><span class="option-text">C. \((3x + 6)(3x - 6)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="D"><span class="option-text">D. \((3x + 8)(3x - 4)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\((3x - 2)\) 整組看成 \(a\)，\(36 = 6^2\)：
+              \[\begin{aligned} & (3x - 2)^2 - 6^2 \\ &= [(3x - 2) + 6][(3x - 2) - 6] \\ &= (3x + 4)(3x - 8) \end{aligned}\]
+              B 錯：\(36\) 沒有寫成 \(6^2\)，直接把 \(36\) 當成 \(b\)。<br>
+              C 錯：漏掉了括號裡的 \(-2\)，算的是 \((3x)^2 - 36\)。<br>
+              D 錯：把 \(-2\) 看成 \(+2\)，算的是 \((3x + 2)^2 - 36\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 將 \(36 - (3x + 1)^2\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-18" value="A"><span class="option-text">A. \((3x + 7)(7 - 3x)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="B"><span class="option-text">B. \((3x + 7)(5 - 3x)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="C"><span class="option-text">C. \((3x + 5)(7 - 3x)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="D"><span class="option-text">D. \((6 + 3x)(6 - 3x)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(a = 6\)、\(b = (3x + 1)\)：
+              \[\begin{aligned} & 6^2 - (3x + 1)^2 \\ &= [6 + (3x + 1)][6 - (3x + 1)] \\ &= (3x + 7)(6 - 3x - 1) \\ &= (3x + 7)(5 - 3x) \end{aligned}\]
+              A 錯：減一整組時只變了 \(3x\) 的號，寫成 \(6 - 3x + 1 = 7 - 3x\)。<br>
+              C 錯：把 \(+1\) 看成 \(-1\)，算的是 \(36 - (3x - 1)^2\)。<br>
+              D 錯：漏掉了括號裡的 \(+1\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 和的平方公式
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-plus" aria-hidden="true"></i> <span>重點 10：和的平方公式——拼成一個正方形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">和的平方公式</span>
+              \(a^2 + 2ab + b^2 = (a + b)^2\)
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>三個條件都要成立</strong>：首項是某個式子 \(a\) 的平方、末項是某個數 \(b\) 的平方、中間項剛好是 \(2ab\)，而且是<strong>正的</strong>。</li>
+              <li>例：\(x^2 + 10x + 25\)<wbr>\({}= x^2 + 2 \cdot x \cdot 5 + 5^2\)<wbr>\({}= (x + 5)^2\)。</li>
+              <li>例：\(9x^2 + 30x + 25\)<wbr>\({}= (3x)^2 + 2 \cdot 3x \cdot 5 + 5^2\)<wbr>\({}= (3x + 5)^2\)，首項的係數也要開平方。</li>
+              <li><strong>中間項不是 \(2ab\) 就不行</strong>：\(x^2 + 5x + 25\) 的首末項都是平方，但 \(2 \cdot x \cdot 5 = 10x\)，不是 \(5x\)，不能用這個公式。</li>
+              <li><strong>用色塊看</strong>：\(a^2\) 是大正方形、\(2ab\) 是兩條長方形、\(b^2\) 是小正方形，長條的數量剛好時，四塊才拼得成一個大正方形。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_sumsq.webp" alt="蒙德里安色塊拼板工作室風插圖：桌上一個大正方形由四塊色塊拼成——左上是紅色大正方形，右上和左下各是一塊藍色長方形，右下角是一塊黃色小正方形；小格雙手按著拼好的大正方形。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：長條夠不夠拼成正方形？</h3>
+            <p class="interactive-instruction">\(k^2x^2 + bx + n^2\)：紅色是 \(x^2\) 方塊、藍色是 \(x\) 長條、黃色是 \(1\) 方塊。調中間項的係數 \(b\)，找出長條數量剛好、拼得成正方形的那一個：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ssq" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ss-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ss-k">首項 \((kx)^2\) 的 \(k\)：<span id="ss-vk" class="val-num">1</span></label>
+                    <input type="range" id="ss-k" min="1" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ss-n">末項 \(n^2\) 的 \(n\)：<span id="ss-vn" class="val-num">3</span></label>
+                    <input type="range" id="ss-n" min="1" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ss-b">中間項 \(bx\) 的 \(b\)：<span id="ss-vb" class="val-num">4</span></label>
+                    <input type="range" id="ss-b" min="0" max="30" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ss-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (和的平方公式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 將 \(81x^2 + 36x + 4\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-19" value="A"><span class="option-text">A. \((9x + 2)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="B"><span class="option-text">B. \((9x + 4)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="C"><span class="option-text">C. \((81x + 2)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="D"><span class="option-text">D. \((9x - 2)^2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。首項 \((9x)^2\)、末項 \(2^2\)，中間項 \(2 \cdot 9x \cdot 2 = 36x\) ✓：
+              \[81x^2 + 36x + 4 = (9x + 2)^2\]
+              B 錯：末項 \(4\) 沒有開平方；\((9x + 4)^2 = 81x^2 + 72x + 16\)。<br>
+              C 錯：首項的係數 \(81\) 沒有開平方。<br>
+              D 錯：中間項是正的，是和的平方；\((9x - 2)^2\) 的中間項是 \(-36x\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 若 \(4x^2 + kx + 49\) 可以利用和的平方公式因式分解，則 \(k\) 為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-20" value="A"><span class="option-text">A. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="B"><span class="option-text">B. \(53\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="C"><span class="option-text">C. \(98\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="D"><span class="option-text">D. \(28\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(4x^2 = (2x)^2\)、\(49 = 7^2\)，中間項要是
+              \[2 \cdot 2x \cdot 7 = 28x\]
+              所以 \(k = 28\)，\(4x^2 + 28x + 49 = (2x + 7)^2\)。<br>
+              A 錯：只算了 \(2 \times 7\)，漏乘首項的 \(2x\)。<br>
+              B 錯：把首末兩項的係數相加 \(4 + 49\)，那不是中間項。<br>
+              C 錯：算成 \(2 \times 49\)，末項要先開平方。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 差的平方公式
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-crop-simple" aria-hidden="true"></i> <span>重點 11：差的平方公式——中間項是負的</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">差的平方公式</span>
+              \(a^2 - 2ab + b^2 = (a - b)^2\)
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>和「和的平方」只差中間項的符號</strong>：首末項都是平方、而且都是正的，中間項是 \(-2ab\)。</li>
+              <li>例：\(x^2 - 8x + 16\)<wbr>\({}= x^2 - 2 \cdot x \cdot 4 + 4^2\)<wbr>\({}= (x - 4)^2\)。</li>
+              <li>例：\(4x^2 - 20x + 25\)<wbr>\({}= (2x)^2 - 2 \cdot 2x \cdot 5 + 5^2\)<wbr>\({}= (2x - 5)^2\)。</li>
+              <li><strong>末項一定是正的</strong>：\(x^2 - 8x - 16\) 的末項是負的，不是完全平方式。</li>
+              <li><strong>常見錯誤</strong>：\((a - b)^2 \ne a^2 - b^2\)。用面積看：大正方形扣掉兩條 \(ab\) 時，右下角的 \(b^2\) 被扣了兩次，要補回一次。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="md_diffsq2.webp" alt="蒙德里安色塊拼板工作室風插圖：小格用剪刀從一張紅色正方形紙的右邊剪下一條長條，下面也已經剪下一條長條，兩條長條在桌上交叉疊放，右下角重疊的那一小塊被疊了兩層；阿方指著重疊的地方。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：扣兩條，補一角</h3>
+            <p class="interactive-instruction">\(a = kx\)、\(b = n\)。一步一步看：大正方形扣掉右邊和下面兩條 \(ab\)，右下角被扣了兩次，補回 \(b^2\) 才剩下 \((a - b)^2\)：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dsq2" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dq-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="dq-prev">上一步</button>
+                      <span class="step-counter" id="dq-step">4 / 4</span>
+                      <button class="pick-btn" id="dq-next">下一步</button>
+                      <button class="pick-btn" id="dq-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="dq-k">\(a = kx\) 的 \(k\)：<span id="dq-vk" class="val-num">2</span></label>
+                    <input type="range" id="dq-k" min="1" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dq-n">\(b = n\) 的 \(n\)：<span id="dq-vn" class="val-num">3</span></label>
+                    <input type="range" id="dq-n" min="1" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dq-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (差的平方公式)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 將 \(49x^2 - 42x + 9\) 因式分解，下列何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-21" value="A"><span class="option-text">A. \((7x + 3)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="B"><span class="option-text">B. \((7x + 3)(7x - 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="C"><span class="option-text">C. \((7x - 3)^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="D"><span class="option-text">D. \((49x - 9)^2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。首項 \((7x)^2\)、末項 \(3^2\)，中間項 \(-2 \cdot 7x \cdot 3 = -42x\) ✓：
+              \[49x^2 - 42x + 9 = (7x - 3)^2\]
+              A 錯：中間項是負的，不是和的平方。<br>
+              B 錯：\((7x + 3)(7x - 3) = 49x^2 - 9\)，沒有中間項。<br>
+              D 錯：首末兩項的係數都沒有開平方。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 下列哪一個式子可以利用<strong>差的平方公式</strong>因式分解？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-22" value="A"><span class="option-text">A. \(25x^2 - 15x + 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="B"><span class="option-text">B. \(25x^2 - 30x + 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="C"><span class="option-text">C. \(25x^2 - 30x - 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="D"><span class="option-text">D. \(25x^2 + 30x + 9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(25x^2 = (5x)^2\)、\(9 = 3^2\)，中間項要是 \(-2 \cdot 5x \cdot 3 = -30x\)：
+              \[25x^2 - 30x + 9 = (5x - 3)^2\]
+              A 錯：中間項 \(-15x\) 只有 \(-30x\) 的一半。<br>
+              C 錯：末項是 \(-9\)，不是某個數的平方。<br>
+              D 錯：中間項是正的，要用<strong>和</strong>的平方公式：\((5x + 3)^2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 因式分解速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>因式與倍式</strong>：\(A \div B\) 餘式為 \(0\)，\(B\) 是因式、\(A\) 是倍式。</li>
+              <li><strong>從乘積讀</strong>：\(A = B \times C\)，\(B\)、\(C\) 是因式；同時變號也是，自己也是。</li>
+              <li><strong>因式分解</strong>：寫成兩個一次式的乘積就停，不再乘開。</li>
+              <li><strong>求係數</strong>：用除法，或乘開比較係數。</li>
+              <li><strong>公因式</strong>：拆成乘法積木，兩邊都有的乘起來。</li>
+              <li><strong>提公因式</strong>：\(AB + AC = A(B + C)\)，整項提走留下 \(1\)。</li>
+              <li><strong>變號</strong>：\(a - x = -(x - a)\)、\((a - x)^2 = (x - a)^2\)。</li>
+              <li><strong>平方差</strong>：\(a^2 - b^2 = (a + b)(a - b)\)，括號可以整組當 \(a\)。</li>
+              <li><strong>和的平方</strong>：\(a^2 + 2ab + b^2 = (a + b)^2\)。</li>
+              <li><strong>差的平方</strong>：\(a^2 - 2ab + b^2 = (a - b)^2\)。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-table-cells-large"></i> 回到色塊工作室：拼成長方形就是因式分解</h4>
+              <h5><i class="fa-solid fa-ruler-combined"></i> 長和寬就是因式</h5>
+              <p>一塊 \(x^2\)、三條 \(x\)、兩塊 \(1\)，拼成長 \(x + 2\)、寬 \(x + 1\) 的長方形，面積沒有變：<wbr>\(x^2 + 3x + 2\)<wbr>\({}= (x + 1)(x + 2)\)。把一個式子寫成「長 × 寬」，就是因式分解。</p>
+              <h5><i class="fa-solid fa-shapes"></i> 拼成正方形就是完全平方式</h5>
+              <p>長條的數量剛好是 \(2ab\) 時，四塊色塊拼得成一個正方形，邊長就是 \(a + b\)；挖掉一角再剪開重拼，則是平方差公式。這一節的三個乘法公式，都可以用色塊拼出來。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>如果色塊既不是完全平方、也沒有公因式，例如 \(x^2 + 5x + 6\)，要怎麼找出長和寬？下一節的<strong>十字交乘法</strong>會給你一套有系統的找法。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
