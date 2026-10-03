@@ -8,7 +8,7 @@
      <script src="canvas.js"></script>
 
    本檔只放「跟課程主題無關」的通用工具：
-     - 算式元件與排版：T／IT／VF／FR／PW／GRP／SEQ、measure／drawIt／drawExpr
+     - 算式元件與排版：T／IT／VF／FR／PW／GRP／SEQ／RT、measure／drawIt／drawExpr
      - 基本繪圖：roundRect／drawPanel／drawChip／drawTitle／drawNote／drawArrow
      - 數值與字串：gcd／clamp／reduce／texFrac／numStr／coefTex／signed
      - 互動與版面：canvasPos／bindPickGroup／wrapText／wrapFeedback／typeset
@@ -104,8 +104,15 @@ const GRP = (items, kind, color) => ({ t: 'grp', items, kind: kind || '()', colo
 // IT：斜體的數學變數（x、y）；SEQ：緊貼排列、不加括號的一串元件
 const IT = (s, color) => ({ t: 'txt', s: String(s), color, it: true });
 const SEQ = (items, color, gap) => ({ t: 'seq', items, color, gap });
+// RT：根號，inner 是任一元件（3-2-1 起用；長橫線會蓋過整個被開方數）
+const RT = (inner, color) => ({ t: 'sqrt', inner, color });
 
 function measure(ctx, it, size) {
+  if (it.t === 'sqrt') {
+    const mi = measure(ctx, it.inner, size);
+    const sw = size * 0.62;
+    return { w: sw + mi.w + size * 0.16, h: Math.max(mi.h, size * 1.12) + size * 0.24, inner: mi, sw };
+  }
   if (it.t === 'seq') {
     const sg = (it.gap == null) ? 6 : it.gap;
     let iw = 0, ih = size * 1.12;
@@ -193,6 +200,26 @@ function drawIt(ctx, it, x, cy, size, fallback) {
   ctx.fillStyle = color;
   ctx.textBaseline = 'middle';
   ctx.textAlign = 'left';
+
+  if (it.t === 'sqrt') {
+    const top = cy - m.h / 2 + 1;
+    const bot = cy + m.h / 2 - 1;
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = Math.max(1.8, size / 13);
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(x + m.sw * 0.06, cy + m.h * 0.10);
+    ctx.lineTo(x + m.sw * 0.26, cy + m.h * 0.01);
+    ctx.lineTo(x + m.sw * 0.54, bot);
+    ctx.lineTo(x + m.sw * 0.94, top);
+    ctx.lineTo(x + m.w, top);
+    ctx.stroke();
+    ctx.restore();
+    drawIt(ctx, it.inner, x + m.sw + size * 0.06, cy + size * 0.06, size, color);
+    return m.w;
+  }
 
   if (it.t === 'seq') {
     const sg = (it.gap == null) ? 6 : it.gap;

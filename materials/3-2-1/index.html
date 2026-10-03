@@ -4,39 +4,1363 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>2-1 平方根與近似值 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-1 平方根與近似值 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第2章 平方根與畢氏定理</div>
-    <h1>2-1 平方根與近似值</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第二章</span>
+        <h1>2-1 平方根與近似值</h1>
+        <p>歡迎來到磁磚工坊。正方形磁磚的面積是「邊長 × 邊長」，那反過來，<strong>已知面積，邊長是多少</strong>？面積 \(9\) 的磚邊長是 \(3\)，可是面積 \(2\) 的磚呢？這一節認識新符號<strong>根號 \(\sqrt{\ }\)</strong>，學會比較根號的大小、用<strong>完全平方數</strong>與<strong>標準分解式</strong>求值、用<strong>十分逼近法</strong>與<strong>計算機</strong>求近似值，最後認識<strong>平方根</strong>：哪些數平方之後會等於 \(a\)。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-square"></i> √a 的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 比大小</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-table-cells"></i> 完全平方數</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-sitemap"></i> 標準分解式</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-percent"></i> 分數與小數</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 十分逼近法</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-ruler-horizontal"></i> 數線位置</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-calculator"></i> 計算機</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-plus-minus"></i> 平方根</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-equals"></i> 求未知數</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-code-compare"></i> √a 與平方根</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Retro Tile Workshop)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(253, 186, 116, 0.25);">
+        <h2 class="section-title" style="color: #fdba74; border-bottom-color: rgba(253, 186, 116, 0.2);">
+          <i class="fa-solid fa-border-all" aria-hidden="true" style="color: #fdba74; text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);"></i> 課前暖身漫畫：兩塊磚拼成一塊大正方形
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小瓷手上有兩塊邊長 \(1\) 的方磚，她把兩塊都沿對角線切開，四個三角形剛好拼成一塊<strong style="color:#fdba74">斜放的大正方形</strong>，面積是 \(2\)。阿岩拿尺一量，邊長大約 \(1.4\)——可是 \(1.4 \times 1.4 = 1.96\)，不是 \(2\)。這塊磚的邊長到底是多少？這一節就要找出答案。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古磁磚工坊風四格漫畫：小瓷把兩塊方磚沿對角線切成四個三角形，拼成一塊斜放的大正方形；阿岩拿尺量邊長，大約 1.4；小瓷算出 1.4 乘 1.4 是 1.96，不是 2；兩人一起問這個邊長到底是多少。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: √a 的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square" aria-hidden="true"></i> <span>重點 1：√a 的意義——面積是 a 的正方形邊長</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>正方形面積 ＝ 邊長 × 邊長</strong>：面積 \(1\)、\(4\)、\(9\) 的正方形，邊長是 \(1\)、\(2\)、\(3\)。</li>
+              <li><strong>面積 \(2\) 的正方形存在</strong>：四個一樣的直角三角形就拼得出來。設它的邊長是 \(m\)，則 \(m^2 = 2\)：
+                <ul class="bullet-list">
+                  <li>\(1^2 \lt 2 \lt 2^2\)，所以 \(1 \lt m \lt 2\)，\(m\) 不是整數。</li>
+                  <li>\(1.4^2 = 1.96\)、\(1.5^2 = 2.25\)，所以 \(1.4 \lt m \lt 1.5\)，\(m\) 也不是一位小數。</li>
+                  <li>再試下去也一樣：\(m\) 不是有限小數，也不是分數。</li>
+                </ul>
+              </li>
+              <li><strong>新符號</strong>：這個邊長寫成 \(\sqrt{2}\)，讀作「根號二」。面積 \(a\) 的正方形，邊長就是 \(\sqrt{a}\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              若 \(a \gt 0\)，\(\sqrt{a}\) 是面積為 \(a\) 的正方形邊長，所以
+              \[ (\sqrt{a})^2 = a \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：\((\sqrt{7})^2 = 7\)，\(\left(\sqrt{\frac{3}{10}}\right)^2 = \frac{3}{10}\)，\((\sqrt{7.9})^2 = 7.9\)。</li>
+              <li><strong>量出來的只是近似值</strong>：用尺量面積 \(2\) 的正方形邊長約 \(1.4\)，但 \(1.4^2 \ne 2\)，所以 \(1.4\) 不是 \(\sqrt{2}\) 本身。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_meaning.webp" alt="復古磁磚工坊風插圖：工作桌上兩塊邊長相同的小方磚各沿對角線切成兩個三角形，四個三角形拼成一塊斜放的大正方形；小瓷扶著拼好的磚，阿岩拿直尺量大正方形的邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：方磚邊長試驗台</h3>
+            <p class="interactive-instruction">先選磁磚的<strong>面積 \(a\)</strong>（橘色虛線框），再調<strong>試的邊長 \(s\)</strong>（藍色框），看 \(s^2\) 能不能剛好等於 \(a\)。面積不是完全平方數時，一位小數永遠試不到剛好：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mean" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="me-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="me-a">面積 \(a\)：<span id="me-va" class="val-num">2</span></label>
+                    <input type="range" id="me-a" min="1" max="20" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="me-s">試的邊長 \(s\)：<span id="me-vs" class="val-num">1.4</span></label>
+                    <input type="range" id="me-s" min="10" max="50" value="14" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="me-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (√a 的意義)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 一塊正方形磁磚的面積是 \(31\) 平方公分，它的邊長是多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-1" value="A"><span class="option-text">A. \(31^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1" value="B"><span class="option-text">B. \(15.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1" value="C"><span class="option-text">C. \(\sqrt{31}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1" value="D"><span class="option-text">D. \(5.6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。面積 \(31\) 的正方形，邊長就是 \(\sqrt{31}\)，因為 \((\sqrt{31})^2 = 31\)。<br>
+              A 錯：\(31^2 = 961\) 是邊長為 \(31\) 的正方形面積，方向弄反了。<br>
+              B 錯：\(15.5\) 是把面積除以 \(2\)，\(15.5^2\) 遠大於 \(31\)。<br>
+              D 錯：\(5.6^2 = 31.36 \ne 31\)，\(5.6\) 只是近似值。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列哪一個式子<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-2" value="A"><span class="option-text">A. \((\sqrt{23})^2 = 529\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2" value="B"><span class="option-text">B. \(\left(\sqrt{\frac{4}{7}}\right)^2 = \frac{4}{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2" value="C"><span class="option-text">C. \((\sqrt{0.9})^2 = 0.81\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2" value="D"><span class="option-text">D. \((\sqrt{15})^2 = \sqrt{15}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(a \gt 0\) 時 \((\sqrt{a})^2 = a\)，所以 \(\left(\sqrt{\frac{4}{7}}\right)^2 = \frac{4}{7}\)。<br>
+              A 錯：\((\sqrt{23})^2 = 23\)；\(529\) 是 \(23^2\)。<br>
+              C 錯：\((\sqrt{0.9})^2 = 0.9\)；\(0.81\) 是 \(0.9^2\)。<br>
+              D 錯：根號平方之後根號就不見了，等於 \(15\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 根號比大小
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> 重點 2：根號比大小——面積大的磚，邊長也大
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>面積大，邊長就大</strong>：\(\sqrt{a}\) 與 \(\sqrt{b}\) 分別是面積 \(a\)、\(b\) 的正方形邊長。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              ⑴ 若 \(a \gt 0\)，則 \(\sqrt{a} \gt 0\)。<br>
+              ⑵ 若 \(a \gt b \gt 0\)，則 \(\sqrt{a} \gt \sqrt{b}\)。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>先比根號裡的數</strong>：\(27 \lt 36 \lt 45\)，所以 \(\sqrt{27} \lt \sqrt{36} \lt \sqrt{45}\)。</li>
+              <li><strong>分數也一樣</strong>：\(\frac{7}{9} \lt \frac{4}{5}\)（通分成 \(\frac{35}{45} \lt \frac{36}{45}\)），所以 \(\sqrt{\frac{7}{9}} \lt \sqrt{\frac{4}{5}}\)。</li>
+              <li><strong>加上負號，大小反過來</strong>：\(\sqrt{22} \lt \sqrt{24}\)，所以 \(-\sqrt{22} \gt -\sqrt{24}\)。在數線上，\(-\sqrt{22}\) 比較靠近 \(0\)。</li>
+              <li><strong>\(\sqrt{a}\) 不一定比 \(a\) 小</strong>：
+                <ul class="bullet-list">
+                  <li>\(a \gt 1\) 時，\(\sqrt{a} \lt a\)，例如 \(\sqrt{9} = 3 \lt 9\)。</li>
+                  <li>\(0 \lt a \lt 1\) 時，\(\sqrt{a} \gt a\)，例如 \(\sqrt{0.25} = 0.5 \gt 0.25\)。</li>
+                </ul>
+              </li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_compare.webp" alt="復古磁磚工坊風插圖：工作桌上並排兩塊大小不同的正方形磁磚，一塊陶土橘、一塊鈷藍；阿岩把直尺貼在兩塊磚的底邊比長短，小瓷在一旁指著比較大的那一塊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩塊磚比邊長</h3>
+            <p class="interactive-instruction">調兩塊磚的<strong>面積</strong>，看邊長的大小與數線上的位置；切到「加負號」看大小怎麼反過來，切到「√a 和 a」看看 \(a\) 比 \(1\) 小時會發生什麼事：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-compare" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">比較</span>
+                    <div class="btn-group" id="cp-mode-group">
+                      <button class="pick-btn active" data-cp-mode="pos">√a 和 √b</button>
+                      <button class="pick-btn" data-cp-mode="neg">加負號</button>
+                      <button class="pick-btn" data-cp-mode="self">√a 和 a</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="cp-row-a">
+                    <label for="cp-a">橘磚面積 \(a\)：<span id="cp-va" class="val-num">8</span></label>
+                    <input type="range" id="cp-a" min="1" max="20" value="8" step="1">
+                  </div>
+                  <div class="slider-row" id="cp-row-b">
+                    <label for="cp-b">藍磚面積 \(b\)：<span id="cp-vb" class="val-num">13</span></label>
+                    <input type="range" id="cp-b" min="1" max="20" value="13" step="1">
+                  </div>
+                  <div class="slider-row" id="cp-row-t" style="display:none">
+                    <label for="cp-t">面積 \(a\)：<span id="cp-vt" class="val-num">2.5</span></label>
+                    <input type="range" id="cp-t" min="1" max="30" value="25" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (根號比大小)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 下列哪一個大小關係<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3" value="A"><span class="option-text">A. \(\sqrt{\frac{5}{6}} \lt \sqrt{\frac{4}{5}}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3" value="B"><span class="option-text">B. \(-\sqrt{17} \gt -\sqrt{15}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3" value="C"><span class="option-text">C. \(\sqrt{8.1} \lt \sqrt{8.01}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3" value="D"><span class="option-text">D. \(-\sqrt{\frac{2}{3}} \gt -\sqrt{\frac{3}{4}}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\frac{2}{3} = \frac{8}{12} \lt \frac{9}{12} = \frac{3}{4}\)，所以 \(\sqrt{\frac{2}{3}} \lt \sqrt{\frac{3}{4}}\)，加上負號大小反過來：\(-\sqrt{\frac{2}{3}} \gt -\sqrt{\frac{3}{4}}\)。<br>
+              A 錯：\(\frac{5}{6} = \frac{25}{30} \gt \frac{24}{30} = \frac{4}{5}\)，所以 \(\sqrt{\frac{5}{6}} \gt \sqrt{\frac{4}{5}}\)。<br>
+              B 錯：\(\sqrt{17} \gt \sqrt{15}\)，加上負號後 \(-\sqrt{17} \lt -\sqrt{15}\)。<br>
+              C 錯：\(8.1 = 8.10 \gt 8.01\)，所以 \(\sqrt{8.1} \gt \sqrt{8.01}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 若 \(a = 0.49\)，則 \(a^2\)、\(a\)、\(\sqrt{a}\) 三個數中，哪一個<strong>最大</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-4" value="A"><span class="option-text">A. \(\sqrt{a}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4" value="B"><span class="option-text">B. \(a\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4" value="C"><span class="option-text">C. \(a^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4" value="D"><span class="option-text">D. 三個一樣大</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(a^2 = 0.2401\)，\(a = 0.49\)，\(\sqrt{a} = \sqrt{0.49} = 0.7\)，所以 \(a^2 \lt a \lt \sqrt{a}\)。<br>
+              \(a\) 比 \(1\) 小時，乘上自己會變小、開根號反而變大。<br>
+              B、C 錯：誤以為開根號一定變小、平方一定變大，那只在 \(a \gt 1\) 時成立。<br>
+              D 錯：只有 \(a = 1\)（或 \(0\)）時三個才一樣大。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 完全平方數
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells" aria-hidden="true"></i> 重點 3：完全平方數——排得成實心正方形的數
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>完全平方數</strong>：一個正整數若是某個整數的平方，就稱為完全平方數，例如 \(1\)、\(4\)、\(9\)、\(16\)。這麼多塊方磚剛好排得成一個實心正方形。</li>
+              <li><strong>面積 \(a^2\) 的正方形</strong>：邊長可以寫成 \(\sqrt{a^2}\)，又明明就是 \(a\)，所以兩者相等。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              若 \(a \gt 0\)，則
+              \[ \sqrt{a^2} = a \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：\(49 = 7^2\)，所以 \(\sqrt{49} = \sqrt{7^2} = 7\)。</li>
+              <li><strong>背熟前幾個</strong>：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>\(n\)</th><th>\(n^2\)</th><th>\(n\)</th><th>\(n^2\)</th><th>\(n\)</th><th>\(n^2\)</th></tr></thead>
+                <tbody>
+                  <tr><td>\(1\)</td><td>\(1\)</td><td>\(6\)</td><td>\(36\)</td><td>\(11\)</td><td>\(121\)</td></tr>
+                  <tr><td>\(2\)</td><td>\(4\)</td><td>\(7\)</td><td>\(49\)</td><td>\(12\)</td><td>\(144\)</td></tr>
+                  <tr><td>\(3\)</td><td>\(9\)</td><td>\(8\)</td><td>\(64\)</td><td>\(13\)</td><td>\(169\)</td></tr>
+                  <tr><td>\(4\)</td><td>\(16\)</td><td>\(9\)</td><td>\(81\)</td><td>\(14\)</td><td>\(196\)</td></tr>
+                  <tr><td>\(5\)</td><td>\(25\)</td><td>\(10\)</td><td>\(100\)</td><td>\(15\)</td><td>\(225\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>常見錯誤</strong>：\(\sqrt{64}\) 是 \(8\)，不是 \(64 \div 2 = 32\)；開根號是找「哪個數乘自己」，不是除以 \(2\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_perfect.webp" alt="復古磁磚工坊風插圖：小瓷把一盒小方磚平放在桌上，排成一個四列四行的實心正方形；阿岩手上還拿著幾塊排不進去的方磚，歪頭看著方陣。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：方磚排方陣</h3>
+            <p class="interactive-instruction">調整方磚的<strong>塊數 \(n\)</strong>。橘色是排得成的最大正方形，玫瑰色虛線是多出來、排不進去的。剛好排滿時，\(n\) 就是完全平方數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-perfect" width="540" height="430"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pf-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pf-n">方磚塊數 \(n\)：<span id="pf-vn" class="val-num">30</span></label>
+                    <input type="range" id="pf-n" min="1" max="100" value="30" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pf-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (完全平方數)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 求 \(\sqrt{441} + \sqrt{81} - \sqrt{289}\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-5" value="A"><span class="option-text">A. \(47\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5" value="B"><span class="option-text">B. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5" value="C"><span class="option-text">C. \(\sqrt{233}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5" value="D"><span class="option-text">D. \(29\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(441 = 21^2\)、\(81 = 9^2\)、\(289 = 17^2\)：
+              \[\begin{aligned} & \sqrt{441} + \sqrt{81} - \sqrt{289} \\ &= 21 + 9 - 17 \\ &= 13 \end{aligned}\]
+              A 錯：把減號當成加號，\(21 + 9 + 17 = 47\)。<br>
+              C 錯：根號不能合併，
+              \[\begin{aligned} & \sqrt{441} + \sqrt{81} - \sqrt{289} \\ & \ne \sqrt{441 + 81 - 289} \end{aligned}\]
+              D 錯：正負號放錯，算成 \(21 - 9 + 17\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 介於 \(300\) 與 \(400\) 之間的完全平方數有哪些？（不含 \(300\)、\(400\)）</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-6" value="A"><span class="option-text">A. \(300\)、\(400\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6" value="B"><span class="option-text">B. \(324\)、\(361\)、\(400\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6" value="C"><span class="option-text">C. \(289\)、\(324\)、\(361\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6" value="D"><span class="option-text">D. \(324\)、\(361\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(17^2 = 289\)、\(18^2 = 324\)、\(19^2 = 361\)、\(20^2 = 400\)，介於 \(300\) 與 \(400\) 之間的只有 \(324\) 和 \(361\)。<br>
+              A 錯：\(300\) 不是任何整數的平方，而且題目不含 \(300\)、\(400\)。<br>
+              B 錯：\(400\) 是端點，題目說不含。<br>
+              C 錯：\(289\) 比 \(300\) 小。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 用標準分解式求 √a
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-sitemap" aria-hidden="true"></i> 重點 4：用標準分解式求 √a——質因數平分成兩組
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>數字大、看不出是誰的平方</strong>：先用短除法寫出標準分解式，再用指數律寫成「某個數的平方」。</li>
+              <li><strong>例</strong>：\(3600 = 2^4 \times 3^2 \times 5^2\)，
+                \[\begin{aligned} & \sqrt{3600} \\ &= \sqrt{2^4 \times 3^2 \times 5^2} \\ &= \sqrt{(2^2 \times 3 \times 5)^2} \\ &= 2^2 \times 3 \times 5 = 60 \end{aligned}\]</li>
+              <li><strong>用到的指數律</strong>：\((a^m)^n = a^{m \times n}\)、\((a \times b)^m = a^m \times b^m\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              標準分解式裡<strong>每個指數都是偶數</strong> ⇔ 這個數是完全平方數。開根號時，<strong>每個指數除以 \(2\)</strong>。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>不必算出原數</strong>：\(\sqrt{3^8} = \sqrt{(3^4)^2} = 3^4 = 81\)。</li>
+              <li><strong>有指數是奇數</strong>：例如 \(72 = 2^3 \times 3^2\)，\(2\) 的指數是 \(3\)，質因數平分不成兩組，\(72\) 不是完全平方數。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_factor.webp" alt="復古磁磚工坊風插圖：工作桌上有兩個一模一樣的木頭托盤，阿岩把小方磚一塊放左盤、一塊放右盤，兩盤裡的磚數一樣；小瓷手上拿著一塊配不成對的磚。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：質因數分組台</h3>
+            <p class="interactive-instruction">選一個數，把它的質因數一顆一顆分進<strong>兩組</strong>。兩組一模一樣，每組乘起來就是根號的值；有質因數<strong>落單</strong>，就不是完全平方數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-factor" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fc-i">選一個數：<span id="fc-vi" class="val-num">576</span></label>
+                    <input type="range" id="fc-i" min="0" max="12" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (用標準分解式求 √a)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 求 \(\sqrt{2^6 \times 3^4 \times 5^2}\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-7" value="A"><span class="option-text">A. \(2^3 \times 3^2 \times 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7" value="B"><span class="option-text">B. \(2^{12} \times 3^8 \times 5^4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7" value="C"><span class="option-text">C. \(2^3 \times 3^2 \times 5^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7" value="D"><span class="option-text">D. \(2^3 \times 3^4 \times 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。每個指數除以 \(2\)：
+              \[\begin{aligned} & \sqrt{2^6 \times 3^4 \times 5^2} \\ &= \sqrt{(2^3 \times 3^2 \times 5)^2} \\ &= 2^3 \times 3^2 \times 5 \end{aligned}\]
+              B 錯：指數乘以 \(2\) 是再平方一次，不是開根號。<br>
+              C 錯：\(5^2\) 的指數也要除以 \(2\)，變成 \(5\)。<br>
+              D 錯：\(3^4\) 的指數忘了除以 \(2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 下列哪一個數是<strong>完全平方數</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-8" value="A"><span class="option-text">A. \(2^3 \times 3^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8" value="B"><span class="option-text">B. \(2^2 \times 3^4 \times 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8" value="C"><span class="option-text">C. \(3^6 \times 7^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8" value="D"><span class="option-text">D. \(2^4 \times 5^3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(3^6 \times 7^2\) 的指數 \(6\)、\(2\) 都是偶數，\(3^6 \times 7^2 = (3^3 \times 7)^2\)。<br>
+              A 錯：\(2\) 的指數 \(3\) 是奇數。<br>
+              B 錯：\(5\) 的指數是 \(1\)，是奇數。<br>
+              D 錯：\(5\) 的指數 \(3\) 是奇數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 分數、小數、帶分數的 √
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-percent" aria-hidden="true"></i> 重點 5：分數、小數、帶分數的 √——先化成分子分母都是平方
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分數</strong>：分子、分母各自是平方，就各自開根號：
+                \[ \sqrt{\frac{16}{49}} = \sqrt{\left(\frac{4}{7}\right)^2} = \frac{4}{7} \]</li>
+              <li><strong>小數</strong>：先化成分母是 \(100\)、\(10000\) 的分數：
+                \[\begin{aligned} \sqrt{0.81} &= \sqrt{\frac{81}{100}} \\ &= \frac{9}{10} = 0.9 \end{aligned}\]
+                也可以直接看出 \(0.81 = 0.9^2\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              小數開根號，<strong>小數位數減半</strong>：\(0.0064\)（\(4\) 位）開根號是 \(0.08\)（\(2\) 位）。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>帶分數先化成假分數</strong>：
+                \[\begin{aligned} \sqrt{2\frac{7}{9}} &= \sqrt{\frac{25}{9}} \\ &= \frac{5}{3} \end{aligned}\]</li>
+              <li><strong>常見錯誤</strong>：把整數部分和分數部分分開開根號，\(\sqrt{2\frac{7}{9}} \ne \sqrt{2} + \sqrt{\frac{7}{9}}\)。帶分數是「加起來」的數，加法不能拆開開根號。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_fraction.webp" alt="復古磁磚工坊風插圖：桌上放著一個邊長一公尺的正方形木框，框內用細線分成許多小方格；小瓷把一塊較小的正方形磁磚放進木框的左下角，阿岩數著磁磚邊上佔了幾格。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：小磚放進大框</h3>
+            <p class="interactive-instruction">灰色虛線是邊長 \(1\) 的框，綠色是面積為這個數的磚。選<strong>分數、小數、帶分數</strong>，再選一個數，看它怎麼化成「分子分母都是平方」：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fracdec" width="540" height="596"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">類型</span>
+                    <div class="btn-group" id="fd-mode-group">
+                      <button class="pick-btn active" data-fd-mode="frac">分數</button>
+                      <button class="pick-btn" data-fd-mode="dec">小數</button>
+                      <button class="pick-btn" data-fd-mode="mixed">帶分數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fd-i">選一個數：<span id="fd-vi" class="val-num">4/9</span></label>
+                    <input type="range" id="fd-i" min="0" max="6" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分數、小數、帶分數的 √)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 求 \(\sqrt{3\frac{1}{16}}\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-9" value="A"><span class="option-text">A. \(\frac{49}{16}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-9" value="B"><span class="option-text">B. \(\sqrt{3} + \frac{1}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-9" value="C"><span class="option-text">C. \(3\frac{1}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-9" value="D"><span class="option-text">D. \(1\frac{3}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。先化成假分數：
+              \[\begin{aligned} \sqrt{3\frac{1}{16}} &= \sqrt{\frac{49}{16}} \\ &= \frac{7}{4} = 1\frac{3}{4} \end{aligned}\]
+              A 錯：\(\frac{49}{16}\) 是化成假分數之後的數，還沒開根號。<br>
+              B 錯：整數部分與分數部分不能分開開根號。<br>
+              C 錯：整數部分照抄、只把 \(\frac{1}{16}\) 開根號，也是拆開了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 求 \(\sqrt{0.0169}\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-10" value="A"><span class="option-text">A. \(0.013\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-10" value="B"><span class="option-text">B. \(0.13\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-10" value="C"><span class="option-text">C. \(1.3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-10" value="D"><span class="option-text">D. \(0.0013\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} \sqrt{0.0169} &= \sqrt{\frac{169}{10000}} \\ &= \frac{13}{100} = 0.13 \end{aligned}\]
+              \(0.0169\) 有 \(4\) 位小數，開根號後剩 \(2\) 位。驗算：\(0.13^2 = 0.0169\)。<br>
+              A 錯：\(0.013^2 = 0.000169\)，小數位數多了兩位。<br>
+              C 錯：\(1.3^2 = 1.69\)。<br>
+              D 錯：\(0.0013^2 = 0.00000169\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 十分逼近法
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 重點 6：十分逼近法——一位一位夾出近似值
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>依據</strong>：若 \(0 \lt b \lt a\)，則 \(\sqrt{b} \lt \sqrt{a}\)。只要找到兩個平方把 \(a\) 夾住，就把 \(\sqrt{a}\) 夾住了。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              ❶ 先找 \(\sqrt{a}\) 在哪兩個相鄰<strong>整數</strong>之間。<br>
+              ❷ 把這一格分成 \(10\) 等分，決定<strong>一位小數</strong>。<br>
+              ❸ 以此類推，再決定下一位。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：求 \(\sqrt{6}\)（四捨五入到小數第 \(1\) 位）。
+                <ul class="bullet-list">
+                  <li>\(2^2 = 4 \lt 6 \lt 9 = 3^2\)，所以 \(2 \lt \sqrt{6} \lt 3\)。</li>
+                  <li>\(2.4^2 = 5.76\)、\(2.5^2 = 6.25\)，\(5.76 \lt 6 \lt 6.25\)，所以 \(2.4 \lt \sqrt{6} \lt 2.5\)。</li>
+                  <li>\(2.45^2 = 6.0025 \gt 6\)，所以 \(\sqrt{6} \lt 2.45\)，得 \(\sqrt{6} \approx 2.4\)。</li>
+                </ul>
+              </li>
+              <li><strong>為什麼算 \(2.45^2\)</strong>：四捨五入到小數第 \(1\) 位，只要知道小數第 \(2\) 位是「大於或等於 \(5\)」還是「小於 \(5\)」就好，不必把第 \(2\) 位整個算出來。</li>
+              <li><strong>算到第 \(1\) 位與四捨五入不同</strong>：\(\sqrt{2}\) 算到小數第 \(1\) 位是 \(1.4\)（真正的前幾位）；四捨五入到第 \(1\) 位要再看第 \(2\) 位。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_tenth.webp" alt="復古磁磚工坊風插圖：工作桌上攤著一把木頭長尺，兩個整數刻度之間被細分成十小格；阿岩拿著放大鏡湊近其中一小格，小瓷用粉筆在那一格旁邊做記號。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：十分逼近放大鏡</h3>
+            <p class="interactive-instruction">選一個數 \(a\)，按<strong>「下一步」</strong>：先找整數、再把那一格分成 10 等分找一位小數，最後算中點 \(x.x5\) 的平方決定四捨五入：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tenth" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="te-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="te-prev" type="button">上一步</button>
+                      <button class="pick-btn" id="te-next" type="button">下一步</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="te-a">被開方數 \(a\)：<span id="te-va" class="val-num">13</span></label>
+                    <input type="range" id="te-a" min="2" max="35" value="13" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="te-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (十分逼近法)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 已知 \(8.1^2 = 65.61\)、\(8.15^2 = 66.4225\)、\(8.2^2 = 67.24\)。以四捨五入法求 \(\sqrt{67}\) 到小數第 \(1\) 位，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-11" value="A"><span class="option-text">A. \(8.1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-11" value="B"><span class="option-text">B. \(8.15\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-11" value="C"><span class="option-text">C. \(8.2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-11" value="D"><span class="option-text">D. \(8.3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(8.1^2 \lt 67 \lt 8.2^2\)，所以 \(8.1 \lt \sqrt{67} \lt 8.2\)；又 \(8.15^2 = 66.4225 \lt 67\)，所以 \(8.15 \lt \sqrt{67} \lt 8.2\)，小數第 \(2\) 位大於或等於 \(5\)，進位得 \(8.2\)。<br>
+              A 錯：只看出夾在 \(8.1\) 與 \(8.2\) 之間就直接捨去，沒有判斷第 \(2\) 位。<br>
+              B 錯：題目要求到小數第 \(1\) 位。<br>
+              D 錯：\(8.3^2 = 68.89\)，離 \(67\) 太遠。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 已知 \(6.3^2 = 39.69\)、\(6.4^2 = 40.96\)。要以四捨五入法求 \(\sqrt{40}\) 到小數第 \(1\) 位，還需要計算下列哪一個數的平方？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-12" value="A"><span class="option-text">A. \(6.35\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-12" value="B"><span class="option-text">B. \(6.31\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-12" value="C"><span class="option-text">C. \(6.4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-12" value="D"><span class="option-text">D. \(6.5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(6.3 \lt \sqrt{40} \lt 6.4\)，四捨五入只要知道 \(\sqrt{40}\) 比 \(6.35\) 大還是小。實際算 \(6.35^2 = 40.3225 \gt 40\)，所以 \(\sqrt{40} \lt 6.35\)，得 \(\sqrt{40} \approx 6.3\)。<br>
+              B 錯：\(6.31\) 只能決定第 \(2\) 位是不是 \(0\)，判斷不了要不要進位。<br>
+              C 錯：\(6.4^2\) 題目已經給了。<br>
+              D 錯：\(6.5\) 已經在 \(6.4\) 的外面。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 估整數部分與數線位置
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-horizontal" aria-hidden="true"></i> 重點 7：估整數部分與數線位置——找兩個平方數夾住它
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              若 \(n^2 \lt a \lt (n + 1)^2\)，則 \(n \lt \sqrt{a} \lt n + 1\)，\(\sqrt{a}\) 的<strong>整數部分</strong>是 \(n\)。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：\(12^2 = 144\)、\(13^2 = 169\)，\(144 \lt 150 \lt 169\)，所以 \(12 \lt \sqrt{150} \lt 13\)，整數部分是 \(12\)。</li>
+              <li><strong>負號</strong>：同乘 \(-1\)，不等號反向：\(-13 \lt -\sqrt{150} \lt -12\)。注意 \(-13\) 在左邊，比較小。</li>
+              <li><strong>前面有係數</strong>：先把係數平方後放進根號，
+                \[\begin{aligned} 3\sqrt{7} &= \sqrt{9 \times 7} \\ &= \sqrt{63} \end{aligned}\]
+                \(7^2 \lt 63 \lt 8^2\)，所以 \(7 \lt 3\sqrt{7} \lt 8\)。</li>
+              <li><strong>數線上找最接近的點</strong>：先估整數，再用十分逼近法決定一位小數。\(5.3^2 = 28.09\)、\(5.4^2 = 29.16\)，所以 \(\sqrt{29}\) 落在 \(5.3\) 與 \(5.4\) 之間。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_numberline.webp" alt="復古磁磚工坊風插圖：工坊地板上鋪著一排長條磁磚當作數線，磚與磚的接縫就是刻度，只有右端畫著箭頭、左端平切；小瓷站在兩個相鄰刻度之間的那塊磚上，阿岩在旁邊拿著一塊小黑板。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：數線定位台</h3>
+            <p class="interactive-instruction">調整 \(a\)，看數線上 \(\sqrt{a}\) 落在哪一格。切到「\(-\sqrt{a}\)」看負號怎麼讓區間左右對調；切到「\(k\sqrt{a}\)」看係數怎麼搬進根號：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-locate" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="lo-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">估什麼</span>
+                    <div class="btn-group" id="lo-mode-group">
+                      <button class="pick-btn active" data-lo-mode="pos">√a</button>
+                      <button class="pick-btn" data-lo-mode="neg">−√a</button>
+                      <button class="pick-btn" data-lo-mode="mul">k√a</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="lo-a">\(a\)：<span id="lo-va" class="val-num">110</span></label>
+                    <input type="range" id="lo-a" min="2" max="200" value="110" step="1">
+                  </div>
+                  <div class="slider-row" id="lo-row-k" style="display:none">
+                    <label for="lo-k">係數 \(k\)：<span id="lo-vk" class="val-num">2</span></label>
+                    <input type="range" id="lo-k" min="2" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="lo-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (估整數部分與數線位置)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> \(-\sqrt{300}\) 介於哪兩個連續整數之間？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-13" value="A"><span class="option-text">A. \(-17\) 和 \(-16\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-13" value="B"><span class="option-text">B. \(17\) 和 \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-13" value="C"><span class="option-text">C. \(-19\) 和 \(-18\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-13" value="D"><span class="option-text">D. \(-18\) 和 \(-17\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(17^2 = 289 \lt 300 \lt 324 = 18^2\)，所以 \(17 \lt \sqrt{300} \lt 18\)，同乘 \(-1\) 得 \(-18 \lt -\sqrt{300} \lt -17\)。<br>
+              A 錯：\(16^2 = 256\)，\(\sqrt{300}\) 比 \(17\) 大。<br>
+              B 錯：那是 \(\sqrt{300}\) 的位置，忘了負號。<br>
+              C 錯：\(19^2 = 361 \gt 300\)，\(-\sqrt{300}\) 沒有到 \(-18\) 的左邊。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 一塊正方形地磚的面積是 \(230\) 平方公分，周長是 \(x\) 公分。\(x\) 的值介於下列哪兩個連續整數之間？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-14" value="A"><span class="option-text">A. \(15\) 和 \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-14" value="B"><span class="option-text">B. \(60\) 和 \(61\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-14" value="C"><span class="option-text">C. \(30\) 和 \(31\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-14" value="D"><span class="option-text">D. \(57\) 和 \(58\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。邊長是 \(\sqrt{230}\)，周長
+              \[\begin{aligned} x &= 4\sqrt{230} \\ &= \sqrt{16 \times 230} \\ &= \sqrt{3680} \end{aligned}\]
+              \(60^2 = 3600\)、\(61^2 = 3721\)，\(3600 \lt 3680 \lt 3721\)，所以 \(60 \lt x \lt 61\)。<br>
+              A 錯：那是邊長 \(\sqrt{230}\) 的範圍，忘了乘 \(4\)。<br>
+              C 錯：把 \(4\) 直接搬進根號、沒有先平方，算成 \(\sqrt{4 \times 230} = \sqrt{920}\)，那其實是 \(2\sqrt{230}\)。<br>
+              D 錯：把面積除以 \(4\)，\(230 \div 4 = 57.5\)，把面積和周長搞混了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 計算機求近似值
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> 重點 8：計算機求近似值——按鍵順序與四捨五入
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>根號鍵</strong>：有些計算機有 \(\sqrt{\ }\) 鍵；有些要先按 SHIFT，再按 \(x^2\) 鍵才是根號。操作方式依廠牌而不同，要看說明書。</li>
+              <li><strong>螢幕上的數只是近似值</strong>：按 \(\sqrt{2}\) 得到 \(1.414213562\)，但 \((1.414213562)^2 \ne 2\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              被開方數是算式時，<strong>先算出根號裡的值，再開根號</strong>：\(\sqrt{\frac{3}{7}} = \sqrt{3 \div 7}\)，要用括號把 \(3 \div 7\) 包起來。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>四捨五入到小數第 \(4\) 位</strong>：看第 \(5\) 位。\(\sqrt{6}\) 顯示 \(2.449489743\)，第 \(5\) 位是 \(8\)，進位得 \(\sqrt{6} \approx 2.4495\)。</li>
+              <li><strong>例</strong>：\(\sqrt{\frac{3}{7}}\)：先算 \(3 \div 7 = 0.428571428\ldots\)，再開根號，得 \(\sqrt{\frac{3}{7}} \approx 0.6547\)。</li>
+              <li><strong>常見錯誤</strong>：按成「\(\sqrt{\ }\,3 \div 7\)」，計算機會先算 \(\sqrt{3}\) 再除以 \(7\)，那是 \(\frac{\sqrt{3}}{7}\)，不是 \(\sqrt{\frac{3}{7}}\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_calculator.webp" alt="復古磁磚工坊風插圖：小瓷坐在工作桌前，一手拿著口袋型電子計算器按按鍵，另一手壓著一張寫滿數字的估價單；阿岩站在她身後，探頭看計算器的螢幕。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：根號計算機</h3>
+            <p class="interactive-instruction">選要算的類型與數字，看<strong>按鍵順序</strong>、螢幕顯示，以及四捨五入時要看哪一位（紅色那位）。切到「按錯順序」看看少了括號會算出什麼：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-calc" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ca-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要算</span>
+                    <div class="btn-group" id="ca-mode-group">
+                      <button class="pick-btn active" data-ca-mode="one">√a</button>
+                      <button class="pick-btn" data-ca-mode="frac">√(a÷b)</button>
+                      <button class="pick-btn" data-ca-mode="wrong">按錯順序</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ca-a">\(a\)：<span id="ca-va" class="val-num">5</span></label>
+                    <input type="range" id="ca-a" min="2" max="10" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="ca-row-b" style="display:none">
+                    <label for="ca-b">\(b\)：<span id="ca-vb" class="val-num">3</span></label>
+                    <input type="range" id="ca-b" min="2" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ca-d">四捨五入到小數第幾位：<span id="ca-vd" class="val-num">4</span></label>
+                    <input type="range" id="ca-d" min="1" max="4" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ca-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (計算機求近似值)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 用計算機按 \(\sqrt{11}\)，螢幕顯示 \(3.31662479\)。以四捨五入法求到小數第 \(3\) 位，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-15" value="A"><span class="option-text">A. \(3.316\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-15" value="B"><span class="option-text">B. \(3.3166\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-15" value="C"><span class="option-text">C. \(3.317\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-15" value="D"><span class="option-text">D. \(3.32\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。到小數第 \(3\) 位要看第 \(4\) 位：\(3.316\underline{6}2479\)，第 \(4\) 位是 \(6\)，進位得 \(3.317\)。<br>
+              A 錯：直接把第 \(4\) 位以後捨去，是無條件捨去法。<br>
+              B 錯：那是到小數第 \(4\) 位。<br>
+              D 錯：那是到小數第 \(2\) 位。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 小翊要用計算機求 \(\sqrt{\frac{13}{4}}\) 的近似值，他依序按「\(\sqrt{\ }\)、\(1\)、\(3\)、\(\div\)、\(4\)、\(=\)」，螢幕顯示約 \(0.9014\)。下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-16" value="A"><span class="option-text">A. 他算的是 \(\sqrt{13} \div 4\)；應該先算 \(13 \div 4\) 再開根號，約 \(1.8028\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-16" value="B"><span class="option-text">B. \(0.9014\) 就是 \(\sqrt{\frac{13}{4}}\) 的近似值</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-16" value="C"><span class="option-text">C. 應該把螢幕上的結果再平方一次</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-16" value="D"><span class="option-text">D. 他按的順序沒錯，只是還沒四捨五入</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。計算機先算 \(\sqrt{13} \approx 3.6056\)，再除以 \(4\) 得 \(0.9014\)，那是 \(\frac{\sqrt{13}}{4}\)。正確做法是先算 \(13 \div 4 = 3.25\)，再開根號：\(\sqrt{3.25} \approx 1.8028\)。<br>
+              B、D 錯：\(0.9014^2 \approx 0.81\)，離 \(3.25\) 很遠，不可能是 \(\sqrt{\frac{13}{4}}\)。<br>
+              C 錯：再平方一次得到的是 \(\frac{13}{16}\)，也不是答案。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 平方根的意義
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-plus-minus" aria-hidden="true"></i> 重點 9：平方根的意義——平方之後等於 a 的數
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>定義</strong>：若 \(a \gt 0\)，且 \(b^2 = a\)，就稱 \(b\) 是 \(a\) 的平方根。</li>
+              <li><strong>一正一負</strong>：\((\sqrt{2})^2 = 2\)，\((-\sqrt{2})^2 = 2\)，所以 \(\sqrt{2}\) 與 \(-\sqrt{2}\) 都是 \(2\) 的平方根，合寫成 \(\pm\sqrt{2}\)，讀作「正負根號 2」。兩者互為相反數。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              ⑴ \(a \gt 0\) 時，\(a\) 的平方根是 \(\pm\sqrt{a}\)：\(\sqrt{a}\) 是<strong>正平方根</strong>，\(-\sqrt{a}\) 是<strong>負平方根</strong>。<br>
+              ⑵ \(0\) 的平方根是 \(0\)。<br>
+              ⑶ <strong>負數沒有平方根</strong>。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：\(13\) 的平方根是 \(\pm\sqrt{13}\)；\(36\) 的平方根是 \(\pm\sqrt{36} = \pm 6\)；\(0.09\) 的平方根是 \(\pm 0.3\)；\(\frac{25}{64}\) 的平方根是 \(\pm\frac{5}{8}\)。</li>
+              <li><strong>為什麼負數沒有平方根</strong>：正數的平方是正數，負數的平方也是正數，\(0\) 的平方是 \(0\)——沒有任何數平方後會是負數。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_roots.webp" alt="復古磁磚工坊風插圖：牆面正中央畫著一條垂直的粉筆線，線的左右兩側各貼著一塊花紋左右鏡像的方磚，大小一模一樣、離中線一樣遠；小瓷和阿岩分別站在左右兩側，各扶著一塊磚。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：平方根對照線</h3>
+            <p class="interactive-instruction">調整 \(a\)。上面那條數線上的數平方之後，會落到下面那條數線的哪裡？找出所有平方後剛好是 \(a\) 的數；把 \(a\) 調成 \(0\) 或負數看看：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-roots" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ro-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ro-a">\(a\)：<span id="ro-va" class="val-num">7</span></label>
+                    <input type="range" id="ro-a" min="-9" max="20" value="7" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ro-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平方根的意義)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> \(0.0196\) 的平方根是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-17" value="A"><span class="option-text">A. \(0.14\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-17" value="B"><span class="option-text">B. \(\pm 0.014\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-17" value="C"><span class="option-text">C. \(-0.14\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-17" value="D"><span class="option-text">D. \(\pm 0.14\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(0.14^2 = 0.0196\)，\((-0.14)^2 = 0.0196\)，所以平方根有兩個：\(\pm 0.14\)。<br>
+              A、C 錯：平方根有正、負兩個，只寫一個不完整。<br>
+              B 錯：\(0.014^2 = 0.000196\)，小數位數錯了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-18" value="A"><span class="option-text">A. \(-9\) 的平方根是 \(\pm 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-18" value="B"><span class="option-text">B. \(21\) 的負平方根是 \(-\sqrt{21}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-18" value="C"><span class="option-text">C. \(0\) 沒有平方根</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-18" value="D"><span class="option-text">D. \(15\) 的平方根是 \(\sqrt{15}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(21\) 的平方根是 \(\pm\sqrt{21}\)，其中負的那個 \(-\sqrt{21}\) 是負平方根。<br>
+              A 錯：\(3^2\) 與 \((-3)^2\) 都是 \(9\)，不是 \(-9\)；負數沒有平方根。<br>
+              C 錯：\(0^2 = 0\)，\(0\) 的平方根是 \(0\)。<br>
+              D 錯：\(15\) 的平方根有兩個，是 \(\pm\sqrt{15}\)；\(\sqrt{15}\) 只是正平方根。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 由平方根求未知數
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> 重點 10：由平方根求未知數——先把句子翻譯成等式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              「\(b\) 是 \(E\) 的平方根」⇔ \(b^2 = E\)<br>
+              「\(\sqrt{E}\) 是 \(c\) 的正平方根」⇔ \(\sqrt{E} = \sqrt{c}\) ⇔ \(E = c\)
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例 1</strong>：若 \(-4\) 是 \(2x + 6\) 的負平方根，求 \(x\)。
+                \[\begin{aligned} (-4)^2 &= 2x + 6 \\ 16 &= 2x + 6 \\ x &= 5 \end{aligned}\]</li>
+              <li><strong>例 2</strong>：若 \(\sqrt{2x + 1}\) 是 \(9\) 的正平方根，求 \(x\)。\(9\) 的正平方根是 \(\sqrt{9}\)，所以
+                \[\begin{aligned} 2x + 1 &= 9 \\ x &= 4 \end{aligned}\]</li>
+              <li><strong>兩種句子別搞混</strong>：例 1 的 \(-4\) 要<strong>平方</strong>；例 2 的 \(9\) 已經在根號外面當「被開方的數」，<strong>不必再平方</strong>。</li>
+              <li><strong>解完要驗算</strong>：例 1 代回得 \(2 \times 5 + 6 = 16\)，\(16\) 的負平方根確實是 \(-4\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_solve.webp" alt="復古磁磚工坊風插圖：磁磚工坊的木頭櫃檯上攤著一張訂貨單，小瓷手指著訂貨單上的一行字，阿岩在旁邊對照著架上一疊一疊的方磚。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：平方根翻譯機</h3>
+            <p class="interactive-instruction">選一種句子，調整數字，看它怎麼翻譯成等式、一步一步解出 \(x\)。畫面最下面列出這種句子最常見的錯誤：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-solve" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="so-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">句子</span>
+                    <div class="btn-group" id="so-mode-group">
+                      <button class="pick-btn active" data-so-mode="sq">b 是 E 的平方根</button>
+                      <button class="pick-btn" data-so-mode="rt">√E 是 c 的正平方根</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="so-row-b">
+                    <label for="so-b">\(b\)：<span id="so-vb" class="val-num">-3</span></label>
+                    <input type="range" id="so-b" min="-6" max="6" value="-3" step="1">
+                  </div>
+                  <div class="slider-row" id="so-row-c" style="display:none">
+                    <label for="so-c">\(c\)：<span id="so-vc" class="val-num">10</span></label>
+                    <input type="range" id="so-c" min="1" max="12" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="so-p">\(x\) 的係數 \(p\)：<span id="so-vp" class="val-num">3</span></label>
+                    <input type="range" id="so-p" min="1" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="so-q">常數項 \(q\)：<span id="so-vq" class="val-num">-3</span></label>
+                    <input type="range" id="so-q" min="-5" max="5" value="-3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="so-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (由平方根求未知數)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 若 \(-7\) 是 \(3x + 4\) 的負平方根，則 \(x\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-19" value="A"><span class="option-text">A. \(-\frac{11}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-19" value="B"><span class="option-text">B. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-19" value="C"><span class="option-text">C. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-19" value="D"><span class="option-text">D. \(-\frac{53}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} (-7)^2 &= 3x + 4 \\ 49 &= 3x + 4 \\ x &= 15 \end{aligned}\]
+              驗算：\(3 \times 15 + 4 = 49\)，\(49\) 的負平方根是 \(-7\)。<br>
+              A 錯：忘了平方，寫成 \(3x + 4 = -7\)。<br>
+              B 錯：寫成 \(3x + 4 = 7\)，既沒平方、也把負號丟了。<br>
+              D 錯：把 \((-7)^2\) 算成 \(-49\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 若 \(\sqrt{5x - 2}\) 是 \(13\) 的正平方根，則 \(x\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-20" value="A"><span class="option-text">A. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-20" value="B"><span class="option-text">B. \(\frac{171}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-20" value="C"><span class="option-text">C. \(-\frac{11}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-20" value="D"><span class="option-text">D. \(\frac{13}{5}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(13\) 的正平方根是 \(\sqrt{13}\)，所以 \(\sqrt{5x - 2} = \sqrt{13}\)：
+              \[\begin{aligned} 5x - 2 &= 13 \\ x &= 3 \end{aligned}\]
+              B 錯：多平方一次，寫成 \(5x - 2 = 169\)。<br>
+              C 錯：寫成 \(5x - 2 = -13\)，正平方根不會變成負的。<br>
+              D 錯：移項時漏了 \(-2\)，寫成 \(5x = 13\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: √a 與 a 的平方根
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-compare" aria-hidden="true"></i> 重點 11：「√a」與「a 的平方根」不一樣
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              \(\sqrt{a}\) 是<strong>一個正數</strong>（面積 \(a\) 的正方形邊長）；「\(a\) 的平方根」是<strong>兩個數</strong> \(\pm\sqrt{a}\)。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>對照</strong>：
+                <ul class="bullet-list">
+                  <li>\(\sqrt{25} = 5\) ✓；\(\sqrt{25} = \pm 5\) ✗</li>
+                  <li>\(25\) 的平方根是 \(\pm 5\) ✓；\(25\) 的平方根是 \(5\) ✗</li>
+                </ul>
+              </li>
+              <li><strong>主詞別放反</strong>：\(\pm\sqrt{6}\) 是 \(6\) 的平方根；說「\(6\) 是 \(\pm\sqrt{6}\) 的平方根」就錯了。</li>
+              <li><strong>平方根不能直接比大小</strong>：若 \(a\) 是 \(80\) 的平方根、\(b\) 是 \(50\) 的平方根，\(a\) 可能是 \(\sqrt{80}\) 也可能是 \(-\sqrt{80}\)，\(b\) 也一樣，所以 <strong>\(a \gt b\) 不一定成立</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_vs.webp" alt="復古磁磚工坊風插圖：阿岩把一塊方磚舉到窗邊對著光看，小瓷站在旁邊的工作桌前，拿著鉛筆在筆記本上記錄。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一個還是兩個？</h3>
+            <p class="interactive-instruction">「對照」模式比較 \(\sqrt{n}\) 與「\(n\) 的平方根」在數線上各有幾個點。「比大小」模式列出 \(a\)、\(b\) 取正或取負的四種組合，看 \(a \gt b\) 是不是每一種都成立：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-vs" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="vs-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="vs-mode-group">
+                      <button class="pick-btn active" data-vs-mode="sym">對照</button>
+                      <button class="pick-btn" data-vs-mode="cmp">比大小</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="vs-row-n">
+                    <label for="vs-n">\(n\)：<span id="vs-vn" class="val-num">16</span></label>
+                    <input type="range" id="vs-n" min="1" max="30" value="16" step="1">
+                  </div>
+                  <div class="slider-row" id="vs-row-A" style="display:none">
+                    <label for="vs-A">\(a\) 是誰的平方根：<span id="vs-vA" class="val-num">20</span></label>
+                    <input type="range" id="vs-A" min="1" max="30" value="20" step="1">
+                  </div>
+                  <div class="slider-row" id="vs-row-B" style="display:none">
+                    <label for="vs-B">\(b\) 是誰的平方根：<span id="vs-vB" class="val-num">12</span></label>
+                    <input type="range" id="vs-B" min="1" max="30" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="vs-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (√a 與平方根)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-21" value="A"><span class="option-text">A. \(\sqrt{49} = \pm 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-21" value="B"><span class="option-text">B. \(49\) 的平方根是 \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-21" value="C"><span class="option-text">C. \(-\sqrt{49}\) 不是 \(49\) 的平方根</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-21" value="D"><span class="option-text">D. \(49\) 的平方根是 \(\pm\sqrt{49} = \pm 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(7^2 = 49\)、\((-7)^2 = 49\)，所以 \(49\) 的平方根是 \(\pm 7\)，也就是 \(\pm\sqrt{49}\)。<br>
+              A 錯：\(\sqrt{49}\) 只代表正的那一個，等於 \(7\)。<br>
+              B 錯：少了負平方根 \(-7\)。<br>
+              C 錯：\(-\sqrt{49} = -7\)，\((-7)^2 = 49\)，它正是 \(49\) 的負平方根。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 若 \(a\) 是 \(90\) 的平方根，\(b\) 是 \(70\) 的平方根，下列何者<strong>一定</strong>成立？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-22" value="A"><span class="option-text">A. \(a \gt b\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-22" value="B"><span class="option-text">B. \(a^2 \gt b^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-22" value="C"><span class="option-text">C. \(a - b \gt 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-22" value="D"><span class="option-text">D. \(a + b \gt 0\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。不管 \(a\)、\(b\) 取正或取負，都有 \(a^2 = 90\)、\(b^2 = 70\)，所以 \(a^2 \gt b^2\) 一定成立。<br>
+              A、C 錯：若 \(a = -\sqrt{90}\)、\(b = \sqrt{70}\)，則 \(a \lt b\)，\(a - b \lt 0\)。<br>
+              D 錯：若 \(a = -\sqrt{90}\)、\(b = \sqrt{70}\)，則 \(a + b \lt 0\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 平方根速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>√a 的意義</strong>：面積 \(a\) 的正方形邊長，\((\sqrt{a})^2 = a\)。</li>
+              <li><strong>比大小</strong>：\(a \gt b \gt 0\) ⇒ \(\sqrt{a} \gt \sqrt{b}\)；加負號大小反過來。</li>
+              <li><strong>完全平方數</strong>：\(a \gt 0\) 時 \(\sqrt{a^2} = a\)。</li>
+              <li><strong>標準分解式</strong>：指數都是偶數才是完全平方數，開根號時指數除以 \(2\)。</li>
+              <li><strong>分數與小數</strong>：化成分子分母都是平方；小數位數減半；帶分數先化假分數。</li>
+              <li><strong>十分逼近法</strong>：整數 → 一位小數 → 看 \(x.x5\) 決定四捨五入。</li>
+              <li><strong>數線位置</strong>：\(n^2 \lt a \lt (n + 1)^2\) ⇒ \(n \lt \sqrt{a} \lt n + 1\)；係數搬進根號要先平方。</li>
+              <li><strong>計算機</strong>：根號裡是算式要先算完；螢幕上的是近似值。</li>
+              <li><strong>平方根</strong>：\(a \gt 0\) 時是 \(\pm\sqrt{a}\)；\(0\) 的平方根是 \(0\)；負數沒有平方根。</li>
+              <li><strong>求未知數</strong>：「\(b\) 是 \(E\) 的平方根」⇒ \(b^2 = E\)。</li>
+              <li><strong>√a 與平方根</strong>：\(\sqrt{a}\) 只有一個（正的），平方根有兩個。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-border-all"></i> 回到磁磚工坊：大正方形的邊長</h4>
+              <h5><i class="fa-solid fa-square"></i> 邊長是 √2</h5>
+              <p>兩塊邊長 \(1\) 的方磚拼成的大正方形，面積是 \(2\)，所以邊長是 \(\sqrt{2}\)。它不是整數、不是有限小數、也不是分數，這正是需要新符號的原因。</p>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 它大約是多少</h5>
+              <p>\(1.4^2 = 1.96\)、\(1.5^2 = 2.25\)，所以 \(1.4 \lt \sqrt{2} \lt 1.5\)；再分十等分，\(1.41^2 = 1.9881\)、\(1.42^2 = 2.0164\)，所以 \(1.41 \lt \sqrt{2} \lt 1.42\)。計算機顯示 \(1.414213562\)，也只是近似值。阿岩量到的 \(1.4\) 沒有錯，只是不夠精確。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>這一節學會了 \(\sqrt{a}\) 是什麼、怎麼估。下一節〈根式的運算〉要把根號當成數來加減乘除，例如 \(\sqrt{2} \times \sqrt{8}\) 等於多少。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
