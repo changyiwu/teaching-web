@@ -97,7 +97,7 @@
         "sections": [
           { "code": "2-1", "title": "平方根與近似值", "status": "completed" },
           { "code": "2-2", "title": "根式的運算", "status": "completed" },
-          { "code": "2-3", "title": "畢氏定理" }
+          { "code": "2-3", "title": "畢氏定理", "status": "completed" }
         ]
       },
       {

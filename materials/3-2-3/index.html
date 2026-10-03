@@ -4,39 +4,1582 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>2-3 畢氏定理 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-3 畢氏定理 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第2章 平方根與畢氏定理</div>
-    <h1>2-3 畢氏定理</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第二章</span>
+        <h1>2-3 畢氏定理</h1>
+        <p>回到磁磚工坊，這一節的主角是<strong>直角三角形</strong>。先認識<strong>斜邊</strong>與<strong>股</strong>，用方格和拼圖發現<strong>畢氏定理</strong>；再用它求直角三角形的第三邊、斜邊上的高、等腰與<strong>正三角形</strong>的高與面積；最後走進生活（螢幕尺寸、靠牆的梯子），以及<strong>直角坐標平面上兩點的距離</strong>。上一節的根式運算會一直用到。</p>
+      </div>
+      <!-- Progress navigation (13 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-table-cells"></i> 名詞與方格</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-puzzle-piece"></i> 拼圖證明</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-ruler"></i> 求斜邊</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 求股</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-link"></i> 接力</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-arrow-down"></i> 斜邊上的高</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-mountain"></i> 等腰三角形</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-shapes"></i> 正三角形</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-star"></i> 複合圖形</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-mobile-screen"></i> 對角線</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-stairs"></i> 梯子</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-ruler-horizontal"></i> 同線兩點</a>
+        <a href="#concept13" class="nav-item"><i class="fa-solid fa-location-dot"></i> 距離公式</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Retro Tile Workshop)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(253, 186, 116, 0.25);">
+        <h2 class="section-title" style="color: #fdba74; border-bottom-color: rgba(253, 186, 116, 0.2);">
+          <i class="fa-solid fa-border-all" aria-hidden="true" style="color: #fdba74; text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);"></i> 課前暖身漫畫：打了 12 個結的繩子
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小瓷要在工坊的牆角鋪磁磚，可是牆角歪一點，整排磚就會越排越斜。阿岩拿出一條繩圈，上面等距打了 \(12\) 個結。兩人把繩圈拉成三段：\(3\) 格、\(4\) 格、\(5\) 格，拉直的瞬間，<strong style="color:#fdba74">剛好出現一個直角</strong>。古埃及的操繩師就是這樣量土地的。為什麼偏偏是 \(3\)、\(4\)、\(5\)？這一節就來回答。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古磁磚工坊風四格漫畫：小瓷擔心牆角不是直角，磁磚會排歪；阿岩拿出等距打了 12 個結的繩圈；兩人把繩圈在地上拉成 3 格、4 格、5 格的三角形；三角形的一個角剛好是直角，磁磚沿著它排得整整齊齊。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 直角三角形的名詞與方格
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells" aria-hidden="true"></i> <span>重點 1：斜邊與股——數方格發現 P + Q = R</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>直角三角形</strong>：有一個角是直角的三角形，例如一般的三角板。</li>
+              <li><strong>斜邊</strong>：直角<strong>對面</strong>的那一邊，是三邊中最長的。</li>
+              <li><strong>股</strong>：直角<strong>兩側</strong>的兩邊。</li>
+              <li><strong>等腰直角三角形</strong>：兩股一樣長的直角三角形。</li>
+              <li><strong>先找直角，再找斜邊</strong>：三角形轉了方向、字母換了名字都一樣。\(\angle C = 90^\circ\) 時斜邊是 \(\overline{AB}\)；\(\angle A = 90^\circ\) 時斜邊就變成 \(\overline{BC}\)。</li>
+            </ul>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>在方格紙上量面積</strong>：以三邊為邊長各畫一個正方形，兩股上的叫 P、Q，斜邊上的叫 R。</li>
+              <li>P、Q 是正放的，直接數格子；R 是斜放的，<strong>用外框正方形扣掉四個角落的直角三角形</strong>。</li>
+              <li>例：兩股 \(3\)、\(4\) 時，P \(= 9\)、Q \(= 16\)；R 的外框邊長 \(3 + 4 = 7\)，
+                \[\begin{aligned} & \text{R} = 7^2 - 4 \times \frac{1}{2} \times 3 \times 4 \\ &= 49 - 24 = 25 \end{aligned}\]
+                剛好 \(9 + 16 = 25\)：<strong>P + Q = R</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_names.webp" alt="復古磁磚工坊風插圖：工作桌上放著一把直角三角板；小瓷用手指著直角對面的長邊，阿岩指著直角旁邊的一條邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：方格紙上的三塊方磚</h3>
+            <p class="interactive-instruction">調兩股的長 \(a\)、\(b\)。「認名稱」看斜邊和股在哪裡；「量面積」看斜放的 R 怎麼用外框扣掉四個角落，比比看 P + Q 和 R：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-grid" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="gr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="gr-mode-group">
+                      <button class="pick-btn active" data-gr-mode="name">認名稱</button>
+                      <button class="pick-btn" data-gr-mode="measure">量面積</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="gr-a">股 \(\overline{AC}\) 的長 \(a\)：<span id="gr-va" class="val-num">3</span></label>
+                    <input type="range" id="gr-a" min="1" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="gr-b">股 \(\overline{BC}\) 的長 \(b\)：<span id="gr-vb" class="val-num">4</span></label>
+                    <input type="range" id="gr-b" min="1" max="4" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="gr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (斜邊與股)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 直角三角形 \(PQR\) 中，\(\angle Q = 90^\circ\)。下列敘述何者<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-1" value="A"><span class="option-text">A. \(\overline{PR}\) 是斜邊</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-1" value="B"><span class="option-text">B. \(\overline{PQ}\) 是斜邊</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-1" value="C"><span class="option-text">C. \(\overline{QR}\) 是最長的邊</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-1" value="D"><span class="option-text">D. \(\overline{PQ}\) 與 \(\overline{PR}\) 是兩股</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。直角是 \(\angle Q\)，它對面的邊是 \(\overline{PR}\)，所以 \(\overline{PR}\) 是斜邊；夾著 \(\angle Q\) 的 \(\overline{PQ}\)、\(\overline{QR}\) 是兩股。<br>
+              B 錯：\(\overline{PQ}\) 夾著直角，是股。<br>
+              C 錯：斜邊 \(\overline{PR}\) 才是最長的邊。<br>
+              D 錯：\(\overline{PR}\) 是斜邊，兩股是 \(\overline{PQ}\) 與 \(\overline{QR}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 在每小格面積為 \(1\) 的方格紙上，畫一個兩股長分別為 \(2\)、\(5\) 的直角三角形，並以斜邊為邊長畫正方形 R。用「外框正方形扣掉四個角落」的方法，R 的面積是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-2" value="A"><span class="option-text">A. \(49\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-2" value="B"><span class="option-text">B. \(29\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-2" value="C"><span class="option-text">C. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-2" value="D"><span class="option-text">D. \(39\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。外框正方形的邊長是 \(2 + 5 = 7\)，四個角落各是一個兩股 \(2\)、\(5\) 的直角三角形：
+              \[\begin{aligned} & 7^2 - 4 \times \frac{1}{2} \times 2 \times 5 \\ &= 49 - 20 = 29 \end{aligned}\]
+              也可以驗算：\(2^2 + 5^2 = 4 + 25 = 29\)。<br>
+              A 錯：只算了外框，沒有扣掉四個角落。<br>
+              C 錯：把兩股的長相加，那是外框的邊長，不是面積。<br>
+              D 錯：只扣了 \(2 \times 5 = 10\)，等於只扣兩個三角形；四個三角形合起來是 \(20\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 拼圖證明
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-puzzle-piece" aria-hidden="true"></i> 重點 2：畢氏定理——用四個三角形拼出來
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>拼圖</strong>：拿 \(4\) 個一模一樣、兩股為 \(a\)、\(b\)、斜邊為 \(c\) 的直角三角形，放進邊長 \(a + b\) 的大正方形。</li>
+              <li>繞一圈擺好，中間空出的四邊形四邊都是 \(c\)、四個角都是直角，是<strong>邊長 \(c\) 的正方形</strong>：
+                \[\begin{aligned} c^2 &= (a + b)^2 - 4 \times \frac{1}{2}ab \\ &= a^2 + 2ab + b^2 - 2ab \\ &= a^2 + b^2 \end{aligned}\]</li>
+              <li>換一種擺法，兩兩拼成長方形，空出的是 \(a^2\) 和 \(b^2\) 兩塊。大正方形和四個三角形都沒變，<strong>留白一定一樣大</strong>。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT　畢氏定理</span>
+              設直角三角形斜邊長為 \(c\)，兩股長為 \(a\)、\(b\)，則
+              \[ c^2 = a^2 + b^2 \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>它說的是面積</strong>：兩股上的正方形<strong>面積</strong>加起來，等於斜邊上的正方形<strong>面積</strong>；不是兩股的長加起來等於斜邊。</li>
+              <li><strong>只對直角三角形成立</strong>：沒有直角的三角形不能用。</li>
+              <li><strong>名稱</strong>：相傳由古希臘的畢達哥拉斯發現，所以叫畢氏定理。中國的《周髀算經》記載商高說「勾廣三，股修四，徑隅五」，所以也叫<strong>勾股定理</strong>或<strong>商高定理</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_proof.webp" alt="復古磁磚工坊風插圖：工作桌上一個正方形木框，裡面放著四塊一樣的直角三角形磁磚，繞成一圈，中間空出一塊斜放的正方形；阿岩把最後一塊三角形推進框裡，小瓷在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩種拼法比一比</h3>
+            <p class="interactive-instruction">調兩股 \(a\)、\(b\)，切換<strong>拼法一</strong>（中間留下 \(c^2\)）和<strong>拼法二</strong>（留下 \(a^2\)、\(b^2\)）。大正方形一樣、四個三角形一樣，留白怎麼會不一樣大？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-proof" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pf-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">拼法</span>
+                    <div class="btn-group" id="pf-mode-group">
+                      <button class="pick-btn active" data-pf-mode="one">拼法一</button>
+                      <button class="pick-btn" data-pf-mode="two">拼法二</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pf-a">股 \(a\)：<span id="pf-va" class="val-num">3</span></label>
+                    <input type="range" id="pf-a" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pf-b">股 \(b\)：<span id="pf-vb" class="val-num">5</span></label>
+                    <input type="range" id="pf-b" min="1" max="6" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pf-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (畢氏定理)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-3">
+            <p class="quiz-question"><strong>Q3.</strong> 把 \(4\) 個兩股為 \(a\)、\(b\) 的相同直角三角形，繞一圈放進邊長 \(a + b\) 的正方形，中間空出一個正方形。這個中間正方形的面積可以寫成下列哪一個式子？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-3" value="A"><span class="option-text">A. \((a + b)^2 - 4ab\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-3" value="B"><span class="option-text">B. \(a^2 + 2ab + b^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-3" value="C"><span class="option-text">C. \((a + b)^2 - ab\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-3" value="D"><span class="option-text">D. \((a + b)^2 - 2ab\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。每個三角形面積 \(\frac{1}{2}ab\)，四個合起來是 \(2ab\)，大正方形扣掉它們就是中間的正方形：\((a + b)^2 - 2ab\)，化簡後正是 \(a^2 + b^2\)。<br>
+              A 錯：忘了三角形面積要乘 \(\frac{1}{2}\)，四個三角形算成 \(4ab\)。<br>
+              B 錯：這是整個大正方形 \((a + b)^2\) 展開，沒有扣掉三角形。<br>
+              C 錯：把四個三角形當成只拼得出一個 \(a \times b\) 的長方形；其實兩個三角形就拼成一個，四個是兩個長方形。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-4">
+            <p class="quiz-question"><strong>Q4.</strong> △ABC 是以 \(\overline{AC}\) 為斜邊的直角三角形，分別以 \(\overline{AB}\)、\(\overline{BC}\)、\(\overline{AC}\) 為邊長畫正方形甲、乙、丙。下列哪一個關係<strong>一定成立</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-4" value="A"><span class="option-text">A. 甲的周長 ＋ 乙的周長 ＝ 丙的周長</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-4" value="B"><span class="option-text">B. (甲的面積)² ＋ (乙的面積)² ＝ (丙的面積)²</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-4" value="C"><span class="option-text">C. (甲的周長)² ＋ (乙的周長)² ＝ (丙的周長)²</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-4" value="D"><span class="option-text">D. 甲的邊長 ＋ 乙的邊長 ＝ 丙的邊長</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設三邊為 \(a\)、\(b\)、\(c\)，\(a^2 + b^2 = c^2\)。周長是邊長的 \(4\) 倍：
+              \[\begin{aligned} & (4a)^2 + (4b)^2 \\ &= 16(a^2 + b^2) = 16c^2 = (4c)^2 \end{aligned}\]
+              A、D 錯：兩邊相加比第三邊長（以三邊 \(3\)、\(4\)、\(5\) 為例，\(3 + 4 = 7 \ne 5\)），周長也一樣。<br>
+              B 錯：成立的是「面積相加」，面積再平方就不對了：\(9^2 + 16^2 = 337\)，\(25^2 = 625\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 已知兩股求斜邊
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler" aria-hidden="true"></i> 重點 3：已知兩股求斜邊——平方相加再開根號
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>三個步驟</strong>：① 列式 \(c^2 = a^2 + b^2\)　② 開平方 \(c = \pm\sqrt{a^2 + b^2}\)　③ <strong>邊長是正數</strong>，負的捨去。</li>
+              <li>例：兩股 \(2\)、\(3\)：\(c^2 = 4 + 9 = 13\)，\(c = \sqrt{13}\)。</li>
+              <li>例：兩股 \(6\)、\(8\)：\(c^2 = 36 + 64 = 100\)，\(c = \sqrt{100} = 10\)。</li>
+              <li><strong>答案要化成最簡根式</strong>：例如 \(c^2 = 72\) 時，\(c = \sqrt{72} = 6\sqrt{2}\)。</li>
+              <li><strong>常見錯誤</strong>：把兩股直接相加當斜邊（\(2 + 3 \ne \sqrt{13}\)）；或算出 \(c^2\) 就停下來，忘了開根號。</li>
+            </ul>
+
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>常見的整數三邊（股、股、斜邊）</th><th>驗算</th></tr></thead>
+                <tbody>
+                  <tr><td>\(3\)、\(4\)、\(5\)</td><td>\(9 + 16 = 25\)</td></tr>
+                  <tr><td>\(5\)、\(12\)、\(13\)</td><td>\(25 + 144 = 169\)</td></tr>
+                  <tr><td>\(8\)、\(15\)、\(17\)</td><td>\(64 + 225 = 289\)</td></tr>
+                  <tr><td>\(7\)、\(24\)、\(25\)</td><td>\(49 + 576 = 625\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>整數倍也成立</strong>：\(6\)、\(8\)、\(10\) 是 \(3\)、\(4\)、\(5\) 的 \(2\) 倍。</li>
+              <li><strong>反過來也對</strong>：三邊長滿足「兩邊平方和 ＝ 第三邊平方」的三角形，一定是直角三角形。操繩師的 \(3\)、\(4\)、\(5\) 繩圈拉得出直角，就是因為 \(3^2 + 4^2 = 5^2\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_hypot.webp" alt="復古磁磚工坊風插圖：地上鋪著一塊直角三角形的磁磚區，兩條直角邊貼著牆角；小瓷拿捲尺量最長的那條斜邊，阿岩在筆記本上寫數字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩股定好，斜邊就定了</h3>
+            <p class="interactive-instruction">調兩股 \(a\)、\(b\)，看斜邊 \(c\) 的三個步驟；調到右側的常見整數三邊（或它的倍數）時，斜邊剛好是整數：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-hyp" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="hy-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="hy-a">股 \(a\)：<span id="hy-va" class="val-num">6</span></label>
+                    <input type="range" id="hy-a" min="1" max="12" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="hy-b">股 \(b\)：<span id="hy-vb" class="val-num">8</span></label>
+                    <input type="range" id="hy-b" min="1" max="12" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="hy-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求斜邊)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-5">
+            <p class="quiz-question"><strong>Q5.</strong> 直角三角形的兩股長分別為 \(9\) 和 \(40\)，斜邊長是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-5" value="A"><span class="option-text">A. \(49\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-5" value="B"><span class="option-text">B. \(41\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-5" value="C"><span class="option-text">C. \(1681\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-5" value="D"><span class="option-text">D. \(\sqrt{1519}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} c^2 &= 9^2 + 40^2 \\ &= 81 + 1600 = 1681 \end{aligned}\]
+              \(c = \pm\sqrt{1681} = \pm 41\)，邊長取正，\(c = 41\)。<br>
+              A 錯：把兩股直接相加。<br>
+              C 錯：算出 \(c^2\) 就停了，忘了開根號。<br>
+              D 錯：用減的，\(40^2 - 9^2 = 1519\)；兩股求斜邊要相加。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-6">
+            <p class="quiz-question"><strong>Q6.</strong> 直角三角形的兩股長分別為 \(5\) 和 \(15\)，斜邊長化成最簡根式是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-6" value="A"><span class="option-text">A. \(5\sqrt{10}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-6" value="B"><span class="option-text">B. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-6" value="C"><span class="option-text">C. \(25\sqrt{10}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-6" value="D"><span class="option-text">D. \(10\sqrt{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\begin{aligned} c^2 &= 5^2 + 15^2 \\ &= 25 + 225 = 250 \\ c &= \sqrt{250} \\ &= \sqrt{5^2 \times 10} = 5\sqrt{10} \end{aligned}\]
+              B 錯：把兩股直接相加。<br>
+              C 錯：\(250 = 25 \times 10\)，提到根號外的是 \(\sqrt{25} = 5\)，不是 \(25\)。<br>
+              D 錯：用減的，\(15^2 - 5^2 = 200\)，\(\sqrt{200} = 10\sqrt{2}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 已知斜邊與一股求另一股
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 重點 4：求另一股——先確認誰是斜邊
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>已知斜邊 \(c\) 與一股 \(a\)</strong>：由 \(a^2 + b^2 = c^2\) 移項，
+                \[ b^2 = c^2 - a^2 \]
+                是「斜邊平方<strong>減</strong>股平方」。</li>
+              <li>例：斜邊 \(15\)、一股 \(9\)：\(b^2 = 225 - 81 = 144\)，\(b = 12\)。</li>
+              <li>例：斜邊 \(10\)、一股 \(7\)：\(b^2 = 100 - 49 = 51\)，\(b = \sqrt{51}\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">先判斷，再列式</span>
+              第三邊是斜邊 → 兩股平方<strong>相加</strong><br>
+              第三邊是股 → 斜邊平方<strong>減</strong>股平方
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>看圖找直角</strong>：直角對面的那一邊才是斜邊，跟它畫在哪裡、標什麼字母無關。</li>
+              <li><strong>沒有圖時，第三邊可能有兩種</strong>：「直角三角形的兩邊是 \(3\)、\(4\)」，第三邊不一定是 \(5\)。若 \(4\) 是斜邊，第三邊是 \(\sqrt{16 - 9} = \sqrt{7}\)。</li>
+              <li><strong>斜邊一定最長</strong>：算出來的股若比斜邊長，一定是加減用反了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_leg.webp" alt="復古磁磚工坊風插圖：工作桌上兩塊一樣大的直角三角形磁磚，一塊正放、一塊轉了方向；小瓷用手指沿著轉向那塊直角對面的長邊比劃，阿岩拿著筆記本在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：同樣兩個數，兩種答案</h3>
+            <p class="interactive-instruction">給定兩邊 \(p\)、\(q\)，切換「兩個都是股」或「\(q\) 是斜邊」，看第三邊怎麼算；下方同時列出兩種情形。試試把 \(q\) 調得比 \(p\) 小：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-leg" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="lg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情形</span>
+                    <div class="btn-group" id="lg-mode-group">
+                      <button class="pick-btn active" data-lg-mode="hyp">q 是斜邊</button>
+                      <button class="pick-btn" data-lg-mode="legs">兩個都是股</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="lg-p">股 \(p\)：<span id="lg-vp" class="val-num">3</span></label>
+                    <input type="range" id="lg-p" min="1" max="12" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="lg-q">另一邊 \(q\)：<span id="lg-vq" class="val-num">4</span></label>
+                    <input type="range" id="lg-q" min="1" max="15" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="lg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求股)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-7">
+            <p class="quiz-question"><strong>Q7.</strong> 直角三角形的斜邊長為 \(25\)，一股長為 \(20\)，另一股長是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-7" value="A"><span class="option-text">A. \(5\sqrt{41}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-7" value="B"><span class="option-text">B. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-7" value="C"><span class="option-text">C. \(225\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-7" value="D"><span class="option-text">D. \(15\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(25\) 是斜邊，另一股用減的：
+              \[\begin{aligned} b^2 &= 25^2 - 20^2 \\ &= 625 - 400 = 225 \end{aligned}\]
+              \(b = \sqrt{225} = 15\)。<br>
+              A 錯：把 \(25\) 也當成股，\(20^2 + 25^2 = 1025\)，\(\sqrt{1025} = 5\sqrt{41}\)，比斜邊還長。<br>
+              B 錯：直接把兩邊相減，\(25 - 20 = 5\)。<br>
+              C 錯：算出 \(b^2\) 就停了，忘了開根號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-8">
+            <p class="quiz-question"><strong>Q8.</strong> 已知一個直角三角形有兩邊長分別為 \(9\) 和 \(16\)，但不知道哪一邊是斜邊。第三邊的長可能是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-8" value="A"><span class="option-text">A. 只能是 \(\sqrt{337}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-8" value="B"><span class="option-text">B. 只能是 \(5\sqrt{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-8" value="C"><span class="option-text">C. \(\sqrt{337}\) 或 \(5\sqrt{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-8" value="D"><span class="option-text">D. \(7\) 或 \(25\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。分兩種情形：<br>
+              ⑴ \(9\)、\(16\) 都是股，第三邊是斜邊：\(\sqrt{81 + 256} = \sqrt{337}\)。<br>
+              ⑵ \(16\) 是斜邊，第三邊是股：\(\sqrt{256 - 81} = \sqrt{175} = 5\sqrt{7}\)。<br>
+              （\(9\) 不能當斜邊，因為斜邊要比股 \(16\) 長。）<br>
+              A、B 錯：各漏了一種情形。<br>
+              D 錯：直接把兩邊相減、相加，沒有用畢氏定理。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 兩個直角三角形接力
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> 重點 5：兩個直角三角形接力——先求共用的那一邊
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>想求的邊所在的三角形資料不夠時</strong>，找出它和另一個直角三角形<strong>共用</strong>或<strong>接在一起</strong>的邊，先在另一個三角形把它求出來。</li>
+              <li><strong>例（D 在 BC 上）</strong>：\(\angle B = 90^\circ\)，\(\overline{AB} = 4\)、\(\overline{AD} = 5\)、\(\overline{DC} = 4\)，求 \(\overline{AC}\)。
+                <ul class="bullet-list">
+                  <li>① 在 △ABD：\(\overline{BD}^2 = 5^2 - 4^2 = 9\)，\(\overline{BD} = 3\)。</li>
+                  <li>② 接起來：\(\overline{BC} = 3 + 4 = 7\)。</li>
+                  <li>③ 在 △ABC：\(\overline{AC}^2 = 4^2 + 7^2 = 65\)，\(\overline{AC} = \sqrt{65}\)。</li>
+                </ul></li>
+              <li><strong>例（四邊形）</strong>：\(\angle A = \angle C = 90^\circ\)，\(\overline{AB} = 4\)、\(\overline{AD} = 5\)、\(\overline{BC} = 3\)。對角線 \(\overline{BD}\) 是兩個三角形共用的斜邊：
+                \[\begin{aligned} \overline{BD}^2 &= 4^2 + 5^2 = 41 \\ \overline{CD}^2 &= 41 - 3^2 = 32 \end{aligned}\]
+                所以 \(\overline{CD} = \sqrt{32} = 4\sqrt{2}\)。</li>
+              <li><strong>小技巧</strong>：下一步要的若是 \(\overline{BD}^2\)，可以不必先開根號再平方回去。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_relay.webp" alt="復古磁磚工坊風插圖：地上鋪著兩塊直角三角形磁磚，共用一條邊拼在一起；小瓷拿捲尺量共用的那條邊，阿岩指著另一塊磚的長邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：接力求邊長</h3>
+            <p class="interactive-instruction">「D 在 BC 上」選一組 △ABD 的邊長、調 \(\overline{DC}\)；「四邊形」調 \(\overline{AB}\)、\(\overline{AD}\)、\(\overline{BC}\)。看哪一邊是兩個三角形之間的接力棒：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-relay" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="rl-mode-group">
+                      <button class="pick-btn active" data-rl-mode="line">D 在 BC 上</button>
+                      <button class="pick-btn" data-rl-mode="quad">四邊形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="rl-row-t">
+                    <label for="rl-t">△ABD：<span id="rl-vt" class="val-num">AB = 4、AD = 5</span></label>
+                    <input type="range" id="rl-t" min="0" max="5" value="0" step="1">
+                  </div>
+                  <div class="slider-row" id="rl-row-n">
+                    <label for="rl-n">\(\overline{DC}\)：<span id="rl-vn" class="val-num">4</span></label>
+                    <input type="range" id="rl-n" min="1" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="rl-row-p" style="display:none">
+                    <label for="rl-p">\(\overline{AB}\)：<span id="rl-vp" class="val-num">4</span></label>
+                    <input type="range" id="rl-p" min="1" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="rl-row-q" style="display:none">
+                    <label for="rl-q">\(\overline{AD}\)：<span id="rl-vq" class="val-num">5</span></label>
+                    <input type="range" id="rl-q" min="1" max="8" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="rl-row-r" style="display:none">
+                    <label for="rl-r">\(\overline{BC}\)：<span id="rl-vr" class="val-num">3</span></label>
+                    <input type="range" id="rl-r" min="1" max="10" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (接力求邊長)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-9">
+            <p class="quiz-question"><strong>Q9.</strong> △ABC 中 \(\angle B = 90^\circ\)，D 在 \(\overline{BC}\) 上。已知 \(\overline{AB} = 15\)、\(\overline{AD} = 17\)、\(\overline{DC} = 12\)，求 \(\overline{AC}\)。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-9" value="A"><span class="option-text">A. \(25\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-9" value="B"><span class="option-text">B. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-9" value="C"><span class="option-text">C. \(3\sqrt{41}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-9" value="D"><span class="option-text">D. \(17\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先在 △ABD 求 \(\overline{BD}\)，再接成 \(\overline{BC}\)：
+              \[\begin{aligned} \overline{BD}^2 &= 17^2 - 15^2 = 64 \\ \overline{BD} &= 8 \\ \overline{BC} &= 8 + 12 = 20 \\ \overline{AC}^2 &= 15^2 + 20^2 = 625 \end{aligned}\]
+              所以 \(\overline{AC} = 25\)。<br>
+              B 錯：\(20\) 是 \(\overline{BC}\)，還要再用一次畢氏定理。<br>
+              C 錯：把 \(\overline{DC}\) 當成 \(\overline{BC}\)，\(\sqrt{15^2 + 12^2} = \sqrt{369} = 3\sqrt{41}\)，漏了 \(\overline{BD}\)。<br>
+              D 錯：\(17\) 是 \(\overline{AD}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-10">
+            <p class="quiz-question"><strong>Q10.</strong> 四邊形 ABCD 中，\(\angle A = \angle C = 90^\circ\)，\(\overline{AB} = 9\)、\(\overline{AD} = 12\)、\(\overline{BC} = 12\)，求 \(\overline{CD}\)。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-10" value="A"><span class="option-text">A. \(3\sqrt{41}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-10" value="B"><span class="option-text">B. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-10" value="C"><span class="option-text">C. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-10" value="D"><span class="option-text">D. \(15\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。對角線 \(\overline{BD}\) 是兩個直角三角形共用的斜邊：
+              \[\begin{aligned} \overline{BD}^2 &= 9^2 + 12^2 = 225 \\ \overline{CD}^2 &= 225 - 12^2 = 81 \end{aligned}\]
+              所以 \(\overline{CD} = 9\)。<br>
+              A 錯：在 △BCD 把 \(\overline{BD}\) 當成股，\(15^2 + 12^2 = 369\)；\(\angle C\) 是直角，\(\overline{BD}\) 是斜邊。<br>
+              B 錯：直接相減 \(15 - 12 = 3\)，沒有平方。<br>
+              D 錯：\(15\) 是 \(\overline{BD}\)，還沒算到 \(\overline{CD}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 斜邊上的高
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrow-down" aria-hidden="true"></i> 重點 6：斜邊上的高——面積算兩次
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>同一個直角三角形，面積有兩種算法</strong>：
+                <ul class="bullet-list">
+                  <li>兩股當底和高：\(\frac{1}{2} \times \overline{AB} \times \overline{BC}\)</li>
+                  <li>斜邊當底、斜邊上的高 \(\overline{BD}\) 當高：\(\frac{1}{2} \times \overline{AC} \times \overline{BD}\)</li>
+                </ul></li>
+              <li>兩個一定相等，所以
+                \[ \overline{BD} = \frac{\overline{AB} \times \overline{BC}}{\overline{AC}} \]
+                也就是<strong>斜邊上的高 ＝ 兩股相乘 ÷ 斜邊</strong>。</li>
+              <li><strong>步驟</strong>：先用畢氏定理求斜邊，再用面積求高。</li>
+              <li>例：兩股 \(9\)、\(12\)：斜邊 \(\sqrt{81 + 144} = 15\)，高 \(= \frac{9 \times 12}{15} = \frac{36}{5}\)。</li>
+              <li><strong>斜邊是根式時</strong>，高要分母有理化：兩股 \(1\)、\(2\)，斜邊 \(\sqrt{5}\)，高 \(= \frac{2}{\sqrt{5}} = \frac{2\sqrt{5}}{5}\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_altitude.webp" alt="復古磁磚工坊風插圖：工作桌上平放一塊直角三角形磁磚，最長的邊朝向前方；阿岩把一把直角尺立在長邊上，從直角的頂點往下量，小瓷在旁邊記錄。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：同一塊三角形，兩種底和高</h3>
+            <p class="interactive-instruction">調兩股 \(\overline{AB}\)、\(\overline{BC}\)，看面積用「兩股」和用「斜邊與高」各算一次，怎麼解出 \(\overline{BD}\)：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-alt" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="al-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="al-a">股 \(\overline{AB}\)：<span id="al-va" class="val-num">3</span></label>
+                    <input type="range" id="al-a" min="1" max="10" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="al-b">股 \(\overline{BC}\)：<span id="al-vb" class="val-num">4</span></label>
+                    <input type="range" id="al-b" min="1" max="10" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="al-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (斜邊上的高)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-11">
+            <p class="quiz-question"><strong>Q11.</strong> 直角三角形的兩股長分別為 \(12\) 和 \(35\)，求斜邊上的高。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-11" value="A"><span class="option-text">A. \(\frac{210}{37}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-11" value="B"><span class="option-text">B. \(\frac{420}{37}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-11" value="C"><span class="option-text">C. \(\frac{37}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-11" value="D"><span class="option-text">D. \(\frac{420}{47}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。斜邊 \(\sqrt{144 + 1225} = \sqrt{1369} = 37\)。設斜邊上的高為 \(h\)：
+              \[\begin{aligned} \frac{1}{2} \times 12 \times 35 &= \frac{1}{2} \times 37 \times h \\ h &= \frac{420}{37} \end{aligned}\]
+              A 錯：等號左邊乘了 \(\frac{1}{2}\)、右邊忘了乘，等於把面積 \(210\) 直接除以斜邊。<br>
+              C 錯：斜邊上的高不是斜邊的一半。<br>
+              D 錯：分母用了 \(12 + 35 = 47\)，要除的是斜邊 \(37\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-12">
+            <p class="quiz-question"><strong>Q12.</strong> 直角三角形的斜邊長為 \(13\)，一股長為 \(5\)，求斜邊上的高。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-12" value="A"><span class="option-text">A. \(\frac{30}{13}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-12" value="B"><span class="option-text">B. \(\frac{65}{12}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-12" value="C"><span class="option-text">C. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-12" value="D"><span class="option-text">D. \(\frac{60}{13}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。先求另一股：\(\sqrt{169 - 25} = \sqrt{144} = 12\)。斜邊上的高
+              \[ h = \frac{5 \times 12}{13} = \frac{60}{13} \]
+              A 錯：只用了面積 \(\frac{1}{2} \times 5 \times 12 = 30\)，忘了另一邊也有 \(\frac{1}{2}\)。<br>
+              B 錯：把 \(13\) 當股、\(12\) 當斜邊來除，斜邊才是分母。<br>
+              C 錯：\(6\) 是另一股 \(12\) 的一半，跟斜邊上的高無關。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 等腰三角形底邊上的高與面積
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-mountain" aria-hidden="true"></i> 重點 7：等腰三角形的高與面積——中點把底邊切一半
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>等腰三角形是線對稱圖形</strong>：取底邊 \(\overline{BC}\) 的中點 D，連 \(\overline{AD}\)。\(\overline{AD}\) 是對稱軸，也是 \(\overline{BC}\) 的<strong>中垂線</strong>，所以 \(\overline{AD} \perp \overline{BC}\)，\(\overline{AD}\) 就是底邊上的高。</li>
+              <li><strong>切出直角三角形 ABD</strong>：斜邊是<strong>腰</strong>，一股是<strong>底的一半</strong>，另一股就是高。</li>
+              <li>例：\(\overline{AB} = \overline{AC} = 13\)，\(\overline{BC} = 10\)：
+                \[\begin{aligned} \overline{BD} &= \frac{1}{2} \times 10 = 5 \\ \overline{AD}^2 &= 13^2 - 5^2 = 144 \\ \overline{AD} &= 12 \\ \text{面積} &= \frac{1}{2} \times 10 \times 12 \\ &= 60 \end{aligned}\]</li>
+              <li><strong>常見錯誤</strong>：用整條底邊 \(10\) 去減，或把腰當成高。直角三角形 ABD 的股是 \(5\)，不是 \(10\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_isosceles.webp" alt="復古磁磚工坊風插圖：工作桌上一塊尖端朝上的等腰三角形磁磚；小瓷把一張剪成同樣形狀的描圖紙沿中線對折，兩半剛好重疊，阿岩用粉筆在磁磚底邊的中點做記號。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：等腰三角形切一半</h3>
+            <p class="interactive-instruction">調腰長與底邊長，看中點 D 把底邊切成兩半、高 \(\overline{AD}\) 怎麼算出來。試試把腰調得比底的一半還短：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-iso" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="is-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="is-s">腰 \(\overline{AB} = \overline{AC}\)：<span id="is-vs" class="val-num">13</span></label>
+                    <input type="range" id="is-s" min="2" max="15" value="13" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="is-w">底 \(\overline{BC}\)：<span id="is-vw" class="val-num">10</span></label>
+                    <input type="range" id="is-w" min="2" max="16" value="10" step="2">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="is-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等腰三角形)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-13">
+            <p class="quiz-question"><strong>Q13.</strong> 等腰三角形 ABC 中，\(\overline{AB} = \overline{AC} = 17\)，\(\overline{BC} = 16\)，求它的面積。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-13" value="A"><span class="option-text">A. \(240\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-13" value="B"><span class="option-text">B. \(136\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-13" value="C"><span class="option-text">C. \(120\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-13" value="D"><span class="option-text">D. \(60\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。取 \(\overline{BC}\) 的中點 D，\(\overline{BD} = 8\)：
+              \[\begin{aligned} \overline{AD}^2 &= 17^2 - 8^2 = 225 \\ \overline{AD} &= 15 \\ \text{面積} &= \frac{1}{2} \times 16 \times 15 \\ &= 120 \end{aligned}\]
+              A 錯：忘了乘 \(\frac{1}{2}\)。<br>
+              B 錯：把腰 \(17\) 當成高，\(\frac{1}{2} \times 16 \times 17 = 136\)。<br>
+              D 錯：底用了一半 \(8\)，又乘 \(\frac{1}{2}\)，切了兩次。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-14">
+            <p class="quiz-question"><strong>Q14.</strong> 等腰三角形 ABC 中，\(\overline{AB} = \overline{AC} = 11\)，\(\overline{BC} = 18\)，求它的面積。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-14" value="A"><span class="option-text">A. \(9\sqrt{10}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-14" value="B"><span class="option-text">B. \(18\sqrt{10}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-14" value="C"><span class="option-text">C. \(2\sqrt{10}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-14" value="D"><span class="option-text">D. \(36\sqrt{10}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{BD} = 9\)：
+              \[\begin{aligned} \overline{AD}^2 &= 11^2 - 9^2 = 40 \\ \overline{AD} &= 2\sqrt{10} \\ \text{面積} &= \frac{1}{2} \times 18 \times 2\sqrt{10} \\ &= 18\sqrt{10} \end{aligned}\]
+              A 錯：底用了一半 \(9\)，又乘 \(\frac{1}{2}\)。<br>
+              C 錯：\(2\sqrt{10}\) 是高，題目問的是面積。<br>
+              D 錯：忘了乘 \(\frac{1}{2}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 正三角形的高與面積
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shapes" aria-hidden="true"></i> 重點 8：正三角形的高與面積
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>正三角形也是等腰三角形</strong>：照重點 7 的方法，取底邊中點 D，\(\overline{AD}\) 是高。</li>
+              <li>邊長 \(a\) 時，\(\overline{BD} = \frac{a}{2}\)：
+                \[\begin{aligned} \overline{AD}^2 &= a^2 - \left(\frac{a}{2}\right)^2 = \frac{3}{4}a^2 \\ \overline{AD} &= \sqrt{\frac{3}{4}a^2} = \frac{\sqrt{3}}{2}a \end{aligned}\]</li>
+              <li>面積 \(= \frac{1}{2} \times a \times \frac{\sqrt{3}}{2}a = \frac{\sqrt{3}}{4}a^2\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT　正三角形</span>
+              邊長為 \(a\) 的正三角形<br>
+              高 \(= \frac{\sqrt{3}}{2}a\)，面積 \(= \frac{\sqrt{3}}{4}a^2\)
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li>例：邊長 \(8\)：高 \(= \frac{\sqrt{3}}{2} \times 8 = 4\sqrt{3}\)，面積 \(= \frac{\sqrt{3}}{4} \times 64 = 16\sqrt{3}\)。</li>
+              <li><strong>常見錯誤</strong>：面積公式的 \(a\) 忘了平方；或把高的 \(\frac{\sqrt{3}}{2}\) 和面積的 \(\frac{\sqrt{3}}{4}\) 用反。</li>
+              <li><strong>邊長是根式時</strong>，先算 \(a^2\)：\((k\sqrt{m})^2 = k^2 \times m\)，不要只平方前面的 \(k\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_equilateral.webp" alt="復古磁磚工坊風插圖：工作桌上一塊正三角形的翡翠綠磁磚，三邊一樣長；阿岩用直尺從頂點量到底邊中點，小瓷拿著三角板比直角。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：正三角形的高從哪裡來</h3>
+            <p class="interactive-instruction">調邊長 \(a\)。「推導」用畢氏定理一步一步算高和面積；「代公式」直接用 \(\frac{\sqrt{3}}{2}a\) 和 \(\frac{\sqrt{3}}{4}a^2\)，比比看兩邊答案一樣：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-equi" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="eq-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">算法</span>
+                    <div class="btn-group" id="eq-mode-group">
+                      <button class="pick-btn active" data-eq-mode="derive">推導</button>
+                      <button class="pick-btn" data-eq-mode="formula">代公式</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="eq-a">邊長 \(a\)：<span id="eq-va" class="val-num">6</span></label>
+                    <input type="range" id="eq-a" min="1" max="12" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="eq-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (正三角形)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-15">
+            <p class="quiz-question"><strong>Q15.</strong> 正三角形的邊長為 \(14\)，它的高與面積分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-15" value="A"><span class="option-text">A. 高 \(7\sqrt{3}\)，面積 \(98\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-15" value="B"><span class="option-text">B. 高 \(7\sqrt{5}\)，面積 \(49\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-15" value="C"><span class="option-text">C. 高 \(7\sqrt{3}\)，面積 \(\frac{49\sqrt{3}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-15" value="D"><span class="option-text">D. 高 \(7\sqrt{3}\)，面積 \(49\sqrt{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} \text{高} &= \frac{\sqrt{3}}{2} \times 14 = 7\sqrt{3} \\ \text{面積} &= \frac{\sqrt{3}}{4} \times 14^2 = 49\sqrt{3} \end{aligned}\]
+              A 錯：面積用 \(14 \times 7\sqrt{3}\)，忘了乘 \(\frac{1}{2}\)。<br>
+              B 錯：高用了 \(14^2 + 7^2 = 245\)，邊長是斜邊，要用減的。<br>
+              C 錯：\(\frac{1}{2} \times 14 \times 7\sqrt{3}\) 已經是面積，又多乘了一次 \(\frac{1}{2}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-16">
+            <p class="quiz-question"><strong>Q16.</strong> 邊長為 \(2\sqrt{3}\) 的正三角形，面積是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-16" value="A"><span class="option-text">A. \(3\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-16" value="B"><span class="option-text">B. \(\frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-16" value="C"><span class="option-text">C. \(6\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-16" value="D"><span class="option-text">D. \(\frac{3\sqrt{3}}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先算 \(a^2 = (2\sqrt{3})^2 = 4 \times 3 = 12\)：
+              \[ \text{面積} = \frac{\sqrt{3}}{4} \times 12 = 3\sqrt{3} \]
+              B 錯：邊長忘了平方，\(\frac{\sqrt{3}}{4} \times 2\sqrt{3} = \frac{3}{2}\)。<br>
+              C 錯：用了高的係數 \(\frac{\sqrt{3}}{2}\)，\(\frac{\sqrt{3}}{2} \times 12 = 6\sqrt{3}\)。<br>
+              D 錯：把 \((2\sqrt{3})^2\) 算成 \(2 \times 3 = 6\)，前面的 \(2\) 也要平方。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 複合圖形的面積
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-star" aria-hidden="true"></i> 重點 9：複合圖形——正方形與正三角形拼起來
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>拆成會算的形狀</strong>：數清楚有幾個正方形、幾個正三角形，各自算面積再加起來。</li>
+              <li><strong>邊長相同時</strong>：一個正方形是 \(s^2\)，一個正三角形是 \(\frac{\sqrt{3}}{4}s^2\)。</li>
+              <li>例：下半部 \(5\) 個邊長 \(2\) 的正方形，上半部 \(5\) 個邊長 \(2\) 的正三角形：
+                \[\begin{aligned} & 5 \times 2^2 + 5 \times \frac{\sqrt{3}}{4} \times 2^2 \\ &= 20 + 5\sqrt{3} \end{aligned}\]</li>
+              <li><strong>答案是「整數 ＋ 根式」</strong>：\(20\) 和 \(5\sqrt{3}\) 不是同類方根，不能合併成 \(25\sqrt{3}\)。</li>
+              <li><strong>常見錯誤</strong>：三角形只算一個就忘了乘個數；或三角形面積誤用高的係數 \(\frac{\sqrt{3}}{2}\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_composite.webp" alt="復古磁磚工坊風插圖：工坊地上用磁磚拼出一個圖案，中間一塊正方形鈷藍磚，四邊各接一塊同邊長的陶土橘正三角形磚，拼成星形；小瓷和阿岩蹲在兩側欣賞。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：數一數再加起來</h3>
+            <p class="interactive-instruction">「屋頂」調正方形與三角形的個數；「星形」是一個正方形四邊各接一個正三角形。調邊長 \(s\)，看面積怎麼寫成「整數 ＋ 根式」：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-comp" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="cp-mode-group">
+                      <button class="pick-btn active" data-cp-mode="roof">屋頂</button>
+                      <button class="pick-btn" data-cp-mode="star">星形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="cp-row-n">
+                    <label for="cp-n">正方形個數：<span id="cp-vn" class="val-num">5</span></label>
+                    <input type="range" id="cp-n" min="1" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="cp-row-m">
+                    <label for="cp-m">正三角形個數：<span id="cp-vm" class="val-num">5</span></label>
+                    <input type="range" id="cp-m" min="0" max="5" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cp-s">邊長 \(s\)：<span id="cp-vs" class="val-num">2</span></label>
+                    <input type="range" id="cp-s" min="1" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (複合圖形)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-17">
+            <p class="quiz-question"><strong>Q17.</strong> 一張星形色紙由 \(1\) 個正方形和 \(4\) 個正三角形組成，正方形的每一邊各接一個正三角形。若正方形的邊長為 \(8\) 公分，色紙面積是多少平方公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-17" value="A"><span class="option-text">A. \(64 + 16\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-17" value="B"><span class="option-text">B. \(256 + 64\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-17" value="C"><span class="option-text">C. \(64 + 64\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-17" value="D"><span class="option-text">D. \(64 + 128\sqrt{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。正三角形的邊長也是 \(8\)：
+              \[\begin{aligned} & 8^2 + 4 \times \frac{\sqrt{3}}{4} \times 8^2 \\ &= 64 + 64\sqrt{3} \end{aligned}\]
+              A 錯：只算了一個三角形。<br>
+              B 錯：正方形只有一個，卻算了 \(4\) 次。<br>
+              D 錯：三角形面積用了高的係數 \(\frac{\sqrt{3}}{2}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-18">
+            <p class="quiz-question"><strong>Q18.</strong> 一個圖形的下半部是 \(3\) 個邊長 \(10\) 公分的正方形，上半部是 \(2\) 個邊長 \(10\) 公分的正三角形。這個圖形的面積是多少平方公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-18" value="A"><span class="option-text">A. \(300 + 25\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-18" value="B"><span class="option-text">B. \(100 + 50\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-18" value="C"><span class="option-text">C. \(300 + 100\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-18" value="D"><span class="option-text">D. \(300 + 50\sqrt{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & 3 \times 10^2 + 2 \times \frac{\sqrt{3}}{4} \times 10^2 \\ &= 300 + 50\sqrt{3} \end{aligned}\]
+              A 錯：只算了一個三角形。<br>
+              B 錯：只算了一個正方形。<br>
+              C 錯：三角形面積用了高的係數 \(\frac{\sqrt{3}}{2}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 長方形的對角線
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-mobile-screen" aria-hidden="true"></i> 重點 10：長方形的對角線——螢幕尺寸怎麼算
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>一條對角線把長方形切成兩個直角三角形</strong>：長、寬是兩股，對角線是斜邊。
+                \[ \text{對角線} = \sqrt{\text{長}^2 + \text{寬}^2} \]</li>
+              <li><strong>螢幕的「尺寸」是對角線的長</strong>：例如長 \(6\) 吋、寬 \(3\) 吋的螢幕，尺寸是 \(\sqrt{36 + 9} = \sqrt{45} = 3\sqrt{5}\) 吋。</li>
+              <li><strong>正方形的對角線</strong>：邊長 \(s\) 時是 \(\sqrt{s^2 + s^2} = s\sqrt{2}\)，是邊長的 \(\sqrt{2}\) 倍。</li>
+              <li>例：\(5\) 個邊長 \(2\) 的正方形連成帶子，每條對角線 \(2\sqrt{2}\)，接起來 \(10\sqrt{2} \approx 14\)（取 \(\sqrt{2} \approx 1.4\)）。</li>
+              <li><strong>比較兩個螢幕</strong>：各自算出對角線再相減。\(3\sqrt{5} - 3\sqrt{2}\) 不是同類方根，不能合併；要知道大約多少就用近似值。</li>
+              <li><strong>常見錯誤</strong>：把長和寬相加當成尺寸。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_diagonal.webp" alt="復古磁磚工坊風插圖：工坊牆上掛著一台長方形的舊電視；阿岩拉著捲尺從螢幕左下角斜拉到右上角，小瓷站在旁邊看捲尺上的數字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：對角線量一量</h3>
+            <p class="interactive-instruction">「長方形」調螢幕的長和寬；「一排正方形」調正方形的個數和邊長，看對角線接成的鋸齒總長：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-diag" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="dg-mode-group">
+                      <button class="pick-btn active" data-dg-mode="rect">長方形</button>
+                      <button class="pick-btn" data-dg-mode="ribbon">一排正方形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="dg-row-w">
+                    <label for="dg-w">長：<span id="dg-vw" class="val-num">6</span></label>
+                    <input type="range" id="dg-w" min="1" max="12" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="dg-row-h">
+                    <label for="dg-h">寬：<span id="dg-vh" class="val-num">3</span></label>
+                    <input type="range" id="dg-h" min="1" max="12" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="dg-row-n" style="display:none">
+                    <label for="dg-n">正方形個數：<span id="dg-vn" class="val-num">5</span></label>
+                    <input type="range" id="dg-n" min="1" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="dg-row-s" style="display:none">
+                    <label for="dg-s">邊長：<span id="dg-vs" class="val-num">2</span></label>
+                    <input type="range" id="dg-s" min="1" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (對角線)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-19">
+            <p class="quiz-question"><strong>Q19.</strong> 平板的螢幕長 \(21\) 公分、寬 \(20\) 公分；電腦螢幕長 \(56\) 公分、寬 \(33\) 公分。螢幕尺寸是對角線的長，電腦螢幕的尺寸比平板多幾公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-19" value="A"><span class="option-text">A. \(36\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-19" value="B"><span class="option-text">B. \(48\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-19" value="C"><span class="option-text">C. \(29\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-19" value="D"><span class="option-text">D. \(65\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\begin{aligned} \text{平板} &= \sqrt{21^2 + 20^2} \\ &= \sqrt{841} = 29 \\ \text{電腦} &= \sqrt{56^2 + 33^2} \\ &= \sqrt{4225} = 65 \end{aligned}\]
+              多了 \(65 - 29 = 36\) 公分。<br>
+              B 錯：把長寬相加當尺寸，\((56 + 33) - (21 + 20) = 48\)。<br>
+              C 錯：\(29\) 是平板的尺寸。<br>
+              D 錯：\(65\) 是電腦螢幕的尺寸，題目問的是相差多少。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-20">
+            <p class="quiz-question"><strong>Q20.</strong> 一條編織帶由 \(7\) 個邊長 \(3\) 公分的正方形連成，帶子上的花紋是每個正方形各一條對角線接成的鋸齒線。這條鋸齒線大約長多少公分？（\(\sqrt{2} \approx 1.4\)）</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-20" value="A"><span class="option-text">A. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-20" value="B"><span class="option-text">B. \(4.2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-20" value="C"><span class="option-text">C. \(29.4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-20" value="D"><span class="option-text">D. \(63\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。一條對角線 \(\sqrt{3^2 + 3^2} = \sqrt{18} = 3\sqrt{2}\)，\(7\) 條接起來：
+              \[\begin{aligned} & 7 \times 3\sqrt{2} = 21\sqrt{2} \\ &\approx 21 \times 1.4 = 29.4 \end{aligned}\]
+              A 錯：把對角線當成跟邊長一樣長，\(7 \times 3 = 21\)。<br>
+              B 錯：\(4.2\) 只是一條對角線。<br>
+              D 錯：\(7 \times 3^2 = 63\) 是帶子的面積，不是長度。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 梯子靠牆
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-stairs" aria-hidden="true"></i> 重點 11：梯子靠牆——移動前後各一個直角三角形
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>牆和地面垂直</strong>：梯子（竹竿）斜靠在牆上，牆、地面、梯子圍成直角三角形，<strong>梯子是斜邊</strong>。</li>
+              <li><strong>梯子長度不變</strong>：移動前、移動後是兩個不同的直角三角形，斜邊一樣長，<strong>各用一次畢氏定理</strong>。</li>
+              <li>例：長 \(2.5\) 公尺的竹竿，底端離牆 \(1.5\) 公尺：
+                \[\begin{aligned} \text{頂端高} &= \sqrt{2.5^2 - 1.5^2} \\ &= \sqrt{4} = 2 \end{aligned}\]
+                頂端往上移 \(0.4\) 公尺變成 \(2.4\)，底端離牆 \(\sqrt{2.5^2 - 2.4^2} = \sqrt{0.49} = 0.7\)，所以底端往牆移動了 \(1.5 - 0.7 = 0.8\) 公尺。</li>
+              <li><strong>上面移動多少 ≠ 下面移動多少</strong>：頂端移了 \(0.4\)，底端卻移了 \(0.8\)，一定要分開算。</li>
+              <li><strong>小技巧</strong>：小數或大數字的平方很麻煩時，可以先換單位（例：公尺換成公寸）。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_ladder.webp" alt="復古磁磚工坊風插圖：工坊外的磚牆前，一把木梯斜靠在牆上；阿岩扶著梯子，小瓷把梯腳往牆的方向推近一點，地上用粉筆畫著梯腳原本的位置。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：梯腳移一點，梯頂移多少？</h3>
+            <p class="interactive-instruction">調梯子的長，以及梯腳移動前、後離牆的距離（每格 \(10\) 公分），看梯頂的高怎麼變，和梯腳移動的距離比一比：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-lad" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ld-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ld-L">梯長（公分）：<span id="ld-vL" class="val-num">250</span></label>
+                    <input type="range" id="ld-L" min="20" max="30" value="25" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ld-x1">移動前梯腳離牆（公分）：<span id="ld-vx1" class="val-num">150</span></label>
+                    <input type="range" id="ld-x1" min="1" max="24" value="15" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ld-x2">移動後梯腳離牆（公分）：<span id="ld-vx2" class="val-num">70</span></label>
+                    <input type="range" id="ld-x2" min="1" max="24" value="7" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ld-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (梯子與竹竿)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-21">
+            <p class="quiz-question"><strong>Q21.</strong> 一把長 \(13\) 公尺的梯子斜靠在牆上，梯腳離牆腳 \(5\) 公尺。若梯頂沿著牆往下滑 \(7\) 公尺，梯腳會往外移動多少公尺？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-21" value="A"><span class="option-text">A. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-21" value="B"><span class="option-text">B. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-21" value="C"><span class="option-text">C. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-21" value="D"><span class="option-text">D. \(5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} \text{原本梯頂高} &= \sqrt{13^2 - 5^2} = 12 \\ \text{下滑後梯頂高} &= 12 - 7 = 5 \\ \text{梯腳離牆} &= \sqrt{13^2 - 5^2} = 12 \end{aligned}\]
+              梯腳往外移動 \(12 - 5 = 7\) 公尺。<br>
+              A 錯：\(12\) 是移動後梯腳離牆的距離，要再減掉原本的 \(5\)。<br>
+              C 錯：\(13 - 5 = 8\)，直接拿梯長減梯腳距離，沒有用畢氏定理。<br>
+              D 錯：\(5\) 是下滑後的梯頂高。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-22">
+            <p class="quiz-question"><strong>Q22.</strong> 小翊把風箏線放到最長 \(65\) 公尺並拉直。第一次風箏離他的水平距離是 \(25\) 公尺，第二次是 \(39\) 公尺。不計小翊的身高，兩次風箏的高度相差多少公尺？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-22" value="A"><span class="option-text">A. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-22" value="B"><span class="option-text">B. \(26\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-22" value="C"><span class="option-text">C. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-22" value="D"><span class="option-text">D. \(112\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。風箏線是斜邊，兩次各算一次：
+              \[\begin{aligned} \text{第一次} &= \sqrt{65^2 - 25^2} \\ &= \sqrt{3600} = 60 \\ \text{第二次} &= \sqrt{65^2 - 39^2} \\ &= \sqrt{2704} = 52 \end{aligned}\]
+              相差 \(60 - 52 = 8\) 公尺。<br>
+              A 錯：\(39 - 25 = 14\) 是水平距離的差，高度的差不一樣。<br>
+              B 錯：\(65 - 39 = 26\)，沒有用畢氏定理。<br>
+              D 錯：\(60 + 52 = 112\)，要的是相差，不是相加。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 水平線、鉛垂線上兩點的距離
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-horizontal" aria-hidden="true"></i> 重點 12：水平線、鉛垂線上兩點的距離
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>回顧數線</strong>：數線上 \(A(a)\)、\(B(b)\) 的距離是 \(\overline{AB} = |a - b|\)。</li>
+              <li><strong>\(y\) 坐標相同 → 同一條水平線</strong>：距離是 <strong>\(x\) 坐標差的絕對值</strong>。\(A(x_1,\ p)\)、\(B(x_2,\ p)\) 的距離
+                \[ \overline{AB} = |x_1 - x_2| \]</li>
+              <li><strong>\(x\) 坐標相同 → 同一條鉛垂線</strong>：距離是 <strong>\(y\) 坐標差的絕對值</strong>。\(C(q,\ y_1)\)、\(D(q,\ y_2)\) 的距離
+                \[ \overline{CD} = |y_1 - y_2| \]</li>
+              <li>例：\(A(2,\ 3)\)、\(B(-4,\ 3)\)：\(y\) 坐標都是 \(3\)，\(\overline{AB} = |2 - (-4)| = 6\)。</li>
+              <li><strong>常見錯誤</strong>：減負數時漏了括號，把 \(2 - (-4)\) 算成 \(2 - 4\)；或忘了取絕對值，寫出負的距離。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_axisline.webp" alt="復古磁磚工坊風插圖：工坊地上鋪著方格磁磚，一排磚上放著兩個小陶罐；小瓷沿著那一排一格一格數過去，阿岩站在旁邊拿著記錄板。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：同一條線上數格子</h3>
+            <p class="interactive-instruction">切換「水平線」或「鉛垂線」，調兩點不同的那個坐標、以及它們共同的坐標，看距離為什麼只要一個坐標相減：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-axis" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ax-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方向</span>
+                    <div class="btn-group" id="ax-mode-group">
+                      <button class="pick-btn active" data-ax-mode="h">水平線</button>
+                      <button class="pick-btn" data-ax-mode="v">鉛垂線</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ax-p"><span id="ax-lp">A 的 x 坐標</span>：<span id="ax-vp" class="val-num">2</span></label>
+                    <input type="range" id="ax-p" min="-6" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ax-q"><span id="ax-lq">B 的 x 坐標</span>：<span id="ax-vq" class="val-num">-4</span></label>
+                    <input type="range" id="ax-q" min="-6" max="6" value="-4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ax-r"><span id="ax-lr">共同的 y 坐標</span>：<span id="ax-vr" class="val-num">3</span></label>
+                    <input type="range" id="ax-r" min="-6" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ax-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (同一條線上的兩點)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-23">
+            <p class="quiz-question"><strong>Q23.</strong> 直角坐標平面上有 \(A(-7,\ 4)\)、\(B(5,\ 4)\) 兩點，\(\overline{AB}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-23" value="A"><span class="option-text">A. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-23" value="B"><span class="option-text">B. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-23" value="C"><span class="option-text">C. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-23" value="D"><span class="option-text">D. \(-12\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。兩點的 \(y\) 坐標都是 \(4\)，在同一條水平線上：\(\overline{AB} = |-7 - 5| = |-12| = 12\)。<br>
+              A 錯：算成 \(|-7 + 5| = 2\)，把減號弄丟了。<br>
+              C 錯：拿 \(y\) 坐標相減；\(y\) 坐標相同，要相減的是 \(x\) 坐標。<br>
+              D 錯：距離不會是負的，要取絕對值。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-24">
+            <p class="quiz-question"><strong>Q24.</strong> 直角坐標平面上有 \(M(3,\ -9)\)、\(N(3,\ 2)\) 兩點，\(\overline{MN}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-24" value="A"><span class="option-text">A. \(-11\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-24" value="B"><span class="option-text">B. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-24" value="C"><span class="option-text">C. \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-24" value="D"><span class="option-text">D. \(11\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。兩點的 \(x\) 坐標都是 \(3\)，在同一條鉛垂線上：\(\overline{MN} = |-9 - 2| = 11\)。<br>
+              A 錯：沒有取絕對值。<br>
+              B 錯：算成 \(|-9 + 2| = 7\)，把減號弄丟了。<br>
+              C 錯：拿相同的 \(x\) 坐標相減。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 13: 兩點的距離公式
+           ========================================== -->
+      <section class="concept-section" id="concept13">
+        <h2 class="section-title">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i> 重點 13：直角坐標平面上兩點的距離公式
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>不在同一條水平線或鉛垂線上時</strong>：過 A 畫水平線、過 B 畫鉛垂線，交於 \(C(x_2,\ y_1)\)，△ABC 是直角三角形，\(\overline{AB}\) 是斜邊。</li>
+              <li>兩股就是重點 12 的距離：\(\overline{AC} = |x_1 - x_2|\)、\(\overline{BC} = |y_1 - y_2|\)。平方之後絕對值可以拿掉。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT　距離公式</span>
+              \(A(x_1,\ y_1)\)、\(B(x_2,\ y_2)\) 的距離為
+              \[ \overline{AB} = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2} \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li>例：\(A(6,\ 4)\)、\(B(-3,\ -7)\) 的距離
+                \[\begin{aligned} & \sqrt{[6 - (-3)]^2 + [4 - (-7)]^2} \\ &= \sqrt{9^2 + 11^2} \\ &= \sqrt{81 + 121} = \sqrt{202} \end{aligned}\]</li>
+              <li><strong>\(x\) 跟 \(x\) 減、\(y\) 跟 \(y\) 減</strong>：不要把同一點的 \(x\)、\(y\) 拿來相減。</li>
+              <li><strong>誰減誰都可以</strong>：\((x_1 - x_2)^2 = (x_2 - x_1)^2\)，平方之後一樣。</li>
+              <li><strong>同一條水平線、鉛垂線也適用</strong>：其中一項是 \(0\)，就回到重點 12。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_distance.webp" alt="復古磁磚工坊風插圖：工坊地上鋪著方格磁磚，兩個陶罐放在不同排、不同列的磚上；小瓷拉著捲尺從一個陶罐斜拉到另一個，阿岩沿著磚縫走出一個直角，比較兩條路線。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：補一點 C，拉出直角三角形</h3>
+            <p class="interactive-instruction">拖動四個滑桿移動 A、B，看 C 點跟著出現在哪裡、兩股怎麼由坐標差算出來；下方也會提醒最常見的代錯方式：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dist" width="540" height="600"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ds-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ds-x1">A 的 \(x_1\)：<span id="ds-vx1" class="val-num">-3</span></label>
+                    <input type="range" id="ds-x1" min="-6" max="6" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-y1">A 的 \(y_1\)：<span id="ds-vy1" class="val-num">-1</span></label>
+                    <input type="range" id="ds-y1" min="-6" max="6" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-x2">B 的 \(x_2\)：<span id="ds-vx2" class="val-num">2</span></label>
+                    <input type="range" id="ds-x2" min="-6" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-y2">B 的 \(y_2\)：<span id="ds-vy2" class="val-num">5</span></label>
+                    <input type="range" id="ds-y2" min="-6" max="6" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ds-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (距離公式)</h3>
+
+          <div class="quiz-card" data-quiz="2-3-25">
+            <p class="quiz-question"><strong>Q25.</strong> 直角坐標平面上有 \(A(7,\ -2)\)、\(B(-5,\ 3)\) 兩點，\(\overline{AB}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-25" value="A"><span class="option-text">A. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-25" value="B"><span class="option-text">B. \(\sqrt{29}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-25" value="C"><span class="option-text">C. \(17\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-25" value="D"><span class="option-text">D. \(169\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\begin{aligned} \overline{AB} &= \sqrt{[7 - (-5)]^2 + (-2 - 3)^2} \\ &= \sqrt{144 + 25} = \sqrt{169} = 13 \end{aligned}\]
+              B 錯：把 \(7 - (-5)\) 算成 \(7 - 5 = 2\)，\(2^2 + 5^2 = 29\)。<br>
+              C 錯：兩個坐標差 \(12\)、\(5\) 直接相加，沒有平方再開根號。<br>
+              D 錯：忘了開根號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-3-26">
+            <p class="quiz-question"><strong>Q26.</strong> 要算 \(P(8,\ 1)\)、\(Q(2,\ 9)\) 兩點的距離，下列哪一個算式<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-3-26" value="A"><span class="option-text">A. \(\sqrt{(8 - 1)^2 + (2 - 9)^2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-26" value="B"><span class="option-text">B. \(\sqrt{(8 - 2)^2 + (1 - 9)^2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-26" value="C"><span class="option-text">C. \((8 - 2) + (1 - 9)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-3-26" value="D"><span class="option-text">D. \(\sqrt{(8 + 2)^2 + (1 + 9)^2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(x\) 坐標相減、\(y\) 坐標相減，再平方相加開根號：
+              \[\begin{aligned} & \sqrt{(8 - 2)^2 + (1 - 9)^2} \\ &= \sqrt{36 + 64} = 10 \end{aligned}\]
+              A 錯：把同一點的 \(x\)、\(y\) 拿來相減（\(8 - 1\) 是 P 自己的兩個坐標）。<br>
+              C 錯：沒有平方再開根號，算出來還是負的 \(-2\)。<br>
+              D 錯：坐標要相減，不是相加。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 畢氏定理速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>名詞</strong>：直角對面是斜邊（最長），直角兩側是股。</li>
+              <li><strong>發現</strong>：兩股上的正方形面積和 ＝ 斜邊上的正方形面積。</li>
+              <li><strong>畢氏定理</strong>：\(c^2 = a^2 + b^2\)，只對直角三角形成立。</li>
+              <li><strong>求斜邊</strong>：兩股平方相加再開根號，邊長取正。</li>
+              <li><strong>求股</strong>：先確認斜邊，再用斜邊平方減股平方。</li>
+              <li><strong>接力</strong>：資料不夠就先求共用的邊。</li>
+              <li><strong>斜邊上的高</strong>：兩股相乘 ÷ 斜邊。</li>
+              <li><strong>等腰三角形</strong>：中點把底邊切一半，腰是斜邊。</li>
+              <li><strong>正三角形</strong>：高 \(\frac{\sqrt{3}}{2}a\)，面積 \(\frac{\sqrt{3}}{4}a^2\)。</li>
+              <li><strong>複合圖形</strong>：拆開各算再相加，整數和根式不能合併。</li>
+              <li><strong>對角線</strong>：\(\sqrt{\text{長}^2 + \text{寬}^2}\)；正方形是邊長的 \(\sqrt{2}\) 倍。</li>
+              <li><strong>梯子</strong>：梯長不變，移動前後各算一次。</li>
+              <li><strong>同線兩點</strong>：相同的坐標不管，另一個坐標差取絕對值。</li>
+              <li><strong>距離公式</strong>：\(\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}\)。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-border-all"></i> 回到磁磚工坊：為什麼是 3、4、5？</h4>
+              <h5><i class="fa-solid fa-equals"></i> 三段繩子剛好滿足畢氏定理</h5>
+              <p>\(12\) 個結把繩圈分成 \(12\) 等份，拉成 \(3\)、\(4\)、\(5\) 格三段，而 \(3^2 + 4^2 = 9 + 16 = 25 = 5^2\)。三邊滿足「兩邊平方和等於第三邊平方」的三角形一定是直角三角形，直角就在 \(5\) 那一段的對面。</p>
+              <h5><i class="fa-solid fa-ruler-combined"></i> 換一組也可以</h5>
+              <p>阿岩說，只要三段的長度滿足畢氏定理就行：\(5\)、\(12\)、\(13\) 格要 \(30\) 個結，\(6\)、\(8\)、\(10\) 格要 \(24\) 個結。結越多，量大面積時越準。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一章預告</h5>
+              <p>第三章〈因式分解〉會把第一章的乘法公式倒過來用。畢氏定理則會一路用到國三的幾何與高中的解析幾何，兩點距離公式就是起點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
