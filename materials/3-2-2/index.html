@@ -4,39 +4,1741 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>2-2 根式的運算 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-2 根式的運算 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第2章 平方根與畢氏定理</div>
-    <h1>2-2 根式的運算</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第二章</span>
+        <h1>2-2 根式的運算</h1>
+        <p>回到磁磚工坊。上一節認識了 \(\sqrt{a}\)，這一節要把根號當成一般的數來<strong>加、減、乘、除</strong>。學會根式的寫法、乘法與除法，把根式化成<strong>最簡根式</strong>、做<strong>分母有理化</strong>；認識<strong>同類方根</strong>，才知道哪些根式能合併；最後用<strong>分配律</strong>與<strong>乘法公式</strong>做四則運算，連分母是兩項的分數也能有理化。</p>
+      </div>
+      <!-- Progress navigation (13 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-pen-nib"></i> 根式的表示</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-xmark"></i> 乘法</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-divide"></i> 除法</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-list-check"></i> 最簡根式</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-compress"></i> 提出平方因數</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-filter"></i> 分母有理化</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-percent"></i> 分數與小數</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-layer-group"></i> 同類方根</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-plus-minus"></i> 加減</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-calculator"></i> 四則運算</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> 分配律</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-vector-square"></i> 乘法公式</a>
+        <a href="#concept13" class="nav-item"><i class="fa-solid fa-arrows-left-right"></i> 共軛有理化</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Retro Tile Workshop)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(253, 186, 116, 0.25);">
+        <h2 class="section-title" style="color: #fdba74; border-bottom-color: rgba(253, 186, 116, 0.2);">
+          <i class="fa-solid fa-border-all" aria-hidden="true" style="color: #fdba74; text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);"></i> 課前暖身漫畫：同一條邊，三種寫法
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小瓷拿到一塊面積 \(48\) 的大方磚，邊長是 \(\sqrt{48}\)。阿岩發現它其實是 \(4\) 塊面積 \(12\) 的方磚拼成的，一邊排 \(2\) 塊，所以邊長也是 \(2\sqrt{12}\)；再仔細看，又是 \(16\) 塊面積 \(3\) 的小方磚，一邊排 \(4\) 塊，邊長是 \(4\sqrt{3}\)。<strong style="color:#fdba74">同一條邊有三種寫法</strong>，哪一種最好用？這一節就來回答。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古磁磚工坊風四格漫畫：小瓷量一塊面積 48 的大方磚，邊長是根號 48；阿岩指出它由 4 塊面積 12 的方磚拼成，邊長是 2 根號 12；再看是 16 塊面積 3 的小方磚，邊長是 4 根號 3；兩人發現三種寫法是同一條邊。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 根式的表示
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-pen-nib" aria-hidden="true"></i> <span>重點 1：根式的表示——像代數式一樣省略乘號</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>根式</strong>：含有根號的算式，例如 \(3 + \sqrt{2}\)、\(4\sqrt{5}\)、\(\sqrt{10} \div 2\)。根號代表的數也能加減乘除，交換律、結合律、分配律都成立。</li>
+              <li><strong>寫法跟代數式一樣</strong>：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>代數式</th><th>根式</th></tr></thead>
+                <tbody>
+                  <tr><td>\(3 \times x\) 寫成 \(3x\)</td><td>\(3 \times \sqrt{7}\) 寫成 \(3\sqrt{7}\)</td></tr>
+                  <tr><td>\(\left(-\frac{2}{3}\right) \times x\) 寫成 \(-\frac{2}{3}x\)</td><td>寫成 \(-\frac{2}{3}\sqrt{7}\) 或 \(-\frac{2\sqrt{7}}{3}\)</td></tr>
+                  <tr><td>\(x \div 4\) 寫成 \(\frac{x}{4}\)</td><td>\(\sqrt{7} \div 4\) 寫成 \(\frac{\sqrt{7}}{4}\) 或 \(\frac{1}{4}\sqrt{7}\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              若 \(a \ne 0\)，\(b \gt 0\)，則<br>
+              ⑴ \(a \times \sqrt{b} = a\sqrt{b}\)　⑵ \(\sqrt{b} \div a = \frac{\sqrt{b}}{a}\)
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>係數相乘、根號照抄</strong>：\(5\sqrt{3} \times (-4) = -20\sqrt{3}\)；\(\frac{2}{5} \times \frac{\sqrt{6}}{3} = \frac{2\sqrt{6}}{15}\)。</li>
+              <li><strong>常見錯誤</strong>：\(\sqrt{10} \div 2\) 不能寫成 \(\sqrt{5}\)。\(2\) 在根號外面，就要除在根號外面：\(\frac{\sqrt{10}}{2} \approx 1.58\)，\(\sqrt{5} \approx 2.24\)。</li>
+              <li><strong>幾個一樣的根號相加</strong>：\(\sqrt{2} + \sqrt{2} + \sqrt{2}\) 是 \(3\) 個 \(\sqrt{2}\)，寫成 \(3\sqrt{2}\)，就像 \(x + x + x = 3x\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_notation.webp" alt="復古磁磚工坊風插圖：工作桌上三塊一樣大的正方形方磚排成一排；阿岩把最後一塊推齊，小瓷拿木頭直尺量整排的長度。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：方磚排一排</h3>
+            <p class="interactive-instruction">每塊方磚的邊長是 \(\sqrt{b}\)。切換<strong>乘</strong>、<strong>除</strong>、<strong>再乘一個數</strong>，看根式怎麼寫；切到「除」時，比比看兩種寫法的長度：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-note" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="no-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">算式</span>
+                    <div class="btn-group" id="no-mode-group">
+                      <button class="pick-btn active" data-no-mode="mul">a × √b</button>
+                      <button class="pick-btn" data-no-mode="div">√b ÷ a</button>
+                      <button class="pick-btn" data-no-mode="chain">a√b × q</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="no-a">係數 \(a\)：<span id="no-va" class="val-num">3</span></label>
+                    <input type="range" id="no-a" min="2" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="no-b">根號裡的 \(b\)：<span id="no-vb" class="val-num">5</span></label>
+                    <input type="range" id="no-b" min="2" max="10" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="no-row-q" style="display:none">
+                    <label for="no-q">再乘 \(q\)：<span id="no-vq" class="val-num">-2</span></label>
+                    <input type="range" id="no-q" min="-4" max="4" value="-2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="no-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (根式的表示)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一個寫法<strong>正確</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1" value="A"><span class="option-text">A. \(\sqrt{14} \div 7 = \sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1" value="B"><span class="option-text">B. \(\sqrt{13} + \sqrt{13} + \sqrt{13} = 3\sqrt{13}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1" value="C"><span class="option-text">C. \(5 \times \sqrt{11} = \sqrt{55}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1" value="D"><span class="option-text">D. \(\frac{1}{4}\sqrt{17} = \sqrt{\frac{17}{4}}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(3\) 個 \(\sqrt{13}\) 相加，就像 \(x + x + x = 3x\)，寫成 \(3\sqrt{13}\)。<br>
+              A 錯：\(7\) 在根號外，\(\sqrt{14} \div 7 = \frac{\sqrt{14}}{7}\)，不能除進根號裡。<br>
+              C 錯：\(5 \times \sqrt{11} = 5\sqrt{11}\)；\(\sqrt{55}\) 是 \(\sqrt{5} \times \sqrt{11}\)。<br>
+              D 錯：\(\sqrt{\frac{17}{4}} = \frac{\sqrt{17}}{\sqrt{4}} = \frac{\sqrt{17}}{2}\)，不是 \(\frac{\sqrt{17}}{4}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 計算 \(\frac{4\sqrt{19}}{9} \times (-6)\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2" value="A"><span class="option-text">A. \(-\frac{8\sqrt{19}}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2" value="B"><span class="option-text">B. \(-\frac{2\sqrt{19}}{27}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2" value="C"><span class="option-text">C. \(-\frac{4\sqrt{114}}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2" value="D"><span class="option-text">D. \(\frac{8\sqrt{19}}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。係數相乘、根號照抄：
+              \[\begin{aligned} & \frac{4}{9} \times (-6) \times \sqrt{19} \\ &= -\frac{8}{3}\sqrt{19} = -\frac{8\sqrt{19}}{3} \end{aligned}\]
+              B 錯：把 \(\times (-6)\) 算成 \(\div (-6)\)，\(\frac{4}{9} \div 6 = \frac{2}{27}\)。<br>
+              C 錯：把 \(6\) 乘進根號裡，寫成 \(\sqrt{19 \times 6} = \sqrt{114}\)，係數的 \(\frac{4}{9}\) 卻沒乘到 \(6\)。<br>
+              D 錯：正數乘負數，結果是負的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 根式的乘法
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i> 重點 2：根式的乘法——根號裡的數直接相乘
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>為什麼 \(\sqrt{2} \times \sqrt{7} = \sqrt{14}\)</strong>：
+                \[\begin{aligned} & (\sqrt{2} \times \sqrt{7})^2 \\ &= (\sqrt{2})^2 \times (\sqrt{7})^2 \\ &= 2 \times 7 = 14 \end{aligned}\]
+                而且 \(\sqrt{2} \times \sqrt{7} \gt 0\)，所以它就是 \(14\) 的正平方根 \(\sqrt{14}\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              若 \(a \ge 0\)，\(b \ge 0\)，則
+              \[ \sqrt{a} \times \sqrt{b} = \sqrt{a \times b} \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>有係數時</strong>：係數乘係數、根號乘根號，例如 \((-3\sqrt{2}) \times 4\sqrt{5} = -12\sqrt{10}\)。</li>
+              <li><strong>同一個根號相乘</strong>：\(\sqrt{a} \times \sqrt{a} = a\)，例如 \(2\sqrt{7} \times 3\sqrt{7} = 6 \times 7 = 42\)。</li>
+              <li><strong>常見錯誤</strong>：\(\sqrt{3} \times \sqrt{5}\) 是 \(\sqrt{15}\)，不是 \(\sqrt{8}\)：根號裡是相乘，不是相加。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_multiply.webp" alt="復古磁磚工坊風插圖：工作桌上三塊正方形磁磚由小到大排開，一塊小的陶土橘、一塊中的鈷藍、一塊最大的翡翠綠；小瓷用直尺量最大那塊的邊，阿岩在筆記本上記錄。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩塊磚的邊長相乘</h3>
+            <p class="interactive-instruction">調兩塊磚的<strong>面積 \(a\)、\(b\)</strong>，看 \(\sqrt{a} \times \sqrt{b}\) 為什麼等於 \(\sqrt{ab}\)；下方用近似值驗算。切到「有係數」練習係數乘係數、根號乘根號：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mul" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mu-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">算式</span>
+                    <div class="btn-group" id="mu-mode-group">
+                      <button class="pick-btn active" data-mu-mode="plain">√a × √b</button>
+                      <button class="pick-btn" data-mu-mode="coef">有係數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mu-a">\(a\)：<span id="mu-va" class="val-num">3</span></label>
+                    <input type="range" id="mu-a" min="1" max="10" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mu-b">\(b\)：<span id="mu-vb" class="val-num">7</span></label>
+                    <input type="range" id="mu-b" min="1" max="10" value="7" step="1">
+                  </div>
+                  <div class="slider-row" id="mu-row-p" style="display:none">
+                    <label for="mu-p">係數 \(p\)：<span id="mu-vp" class="val-num">2</span></label>
+                    <input type="range" id="mu-p" min="-4" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="mu-row-q" style="display:none">
+                    <label for="mu-q">係數 \(q\)：<span id="mu-vq" class="val-num">-3</span></label>
+                    <input type="range" id="mu-q" min="-4" max="4" value="-3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mu-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (根式的乘法)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 計算 \((-2\sqrt{11}) \times \frac{3}{4}\sqrt{13}\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-3" value="A"><span class="option-text">A. \(-\frac{3\sqrt{24}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3" value="B"><span class="option-text">B. \(-\frac{5\sqrt{143}}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3" value="C"><span class="option-text">C. \(\frac{3\sqrt{143}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3" value="D"><span class="option-text">D. \(-\frac{3\sqrt{143}}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。係數 \((-2) \times \frac{3}{4} = -\frac{3}{2}\)，根號 \(\sqrt{11} \times \sqrt{13} = \sqrt{143}\)（\(143 = 11 \times 13\)，沒有平方因數），合起來是 \(-\frac{3\sqrt{143}}{2}\)。<br>
+              A 錯：根號裡做成加法 \(11 + 13 = 24\)。<br>
+              B 錯：係數做成加法 \(-2 + \frac{3}{4} = -\frac{5}{4}\)。<br>
+              C 錯：負數乘正數，結果是負的。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 下列哪一個式子的值是<strong>整數</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-4" value="A"><span class="option-text">A. \(\sqrt{6} \times \sqrt{15}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4" value="B"><span class="option-text">B. \(2\sqrt{5} \times 5\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4" value="C"><span class="option-text">C. \(\sqrt{27} \times \sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4" value="D"><span class="option-text">D. \(\sqrt{14} \times \sqrt{21}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\sqrt{27} \times \sqrt{3} = \sqrt{81} = 9\)。<br>
+              A 錯：\(\sqrt{6} \times \sqrt{15} = \sqrt{90} = 3\sqrt{10}\)。<br>
+              B 錯：\(2\sqrt{5} \times 5\sqrt{2} = 10\sqrt{10}\)，係數是整數，但 \(\sqrt{10}\) 不是。<br>
+              D 錯：\(\sqrt{14} \times \sqrt{21} = \sqrt{294} = 7\sqrt{6}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 根式的除法
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> 重點 3：根式的除法——根號裡的數直接相除
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>為什麼 \(\frac{\sqrt{3}}{\sqrt{7}} = \sqrt{\frac{3}{7}}\)</strong>：\(\left(\frac{\sqrt{3}}{\sqrt{7}}\right)^2 = \frac{3}{7}\)，而且 \(\frac{\sqrt{3}}{\sqrt{7}} \gt 0\)，所以它就是 \(\frac{3}{7}\) 的正平方根。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              若 \(a \ge 0\)，\(b \gt 0\)，則
+              \[ \frac{\sqrt{a}}{\sqrt{b}} = \sqrt{\frac{a}{b}} \]
+              也就是 \(\sqrt{a} \div \sqrt{b} = \sqrt{a \div b}\)。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：\(\sqrt{56} \div \sqrt{8} = \sqrt{56 \div 8} = \sqrt{7}\)。</li>
+              <li><strong>有係數時</strong>：寫成分數，係數跟係數約分、根號跟根號約分：
+                \[\begin{aligned} & (-20\sqrt{30}) \div (8\sqrt{6}) \\ &= -\frac{20}{8} \times \sqrt{\frac{30}{6}} \\ &= -\frac{5\sqrt{5}}{2} \end{aligned}\]</li>
+              <li><strong>常見錯誤</strong>：\(\sqrt{56} \div \sqrt{8}\) 不是 \(\sqrt{48}\)：根號裡是相除，不是相減。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_divide.webp" alt="復古磁磚工坊風插圖：工作桌上一條長的陶土橘磁磚條旁，並排一塊短的鈷藍方磚；阿岩把短方磚沿著長磁磚條一格一格往前比，小瓷在旁邊用粉筆在桌上做記號。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：長邊是短邊的幾倍</h3>
+            <p class="interactive-instruction">兩塊磚的面積是 \(a = b \times k\) 與 \(b\)。看 \(\sqrt{a} \div \sqrt{b}\) 怎麼變成 \(\sqrt{k}\)，下方的兩條線段就是兩塊磚的邊長。切到「有係數」練習分開相除：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-div" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">算式</span>
+                    <div class="btn-group" id="dv-mode-group">
+                      <button class="pick-btn active" data-dv-mode="plain">√a ÷ √b</button>
+                      <button class="pick-btn" data-dv-mode="coef">有係數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="dv-b">\(b\)：<span id="dv-vb" class="val-num">3</span></label>
+                    <input type="range" id="dv-b" min="2" max="8" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dv-k">\(k\)（\(a = b \times k\)）：<span id="dv-vk" class="val-num">5</span></label>
+                    <input type="range" id="dv-k" min="2" max="9" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="dv-row-p" style="display:none">
+                    <label for="dv-p">被除數的係數 \(p\)：<span id="dv-vp" class="val-num">10</span></label>
+                    <input type="range" id="dv-p" min="-12" max="12" value="10" step="1">
+                  </div>
+                  <div class="slider-row" id="dv-row-q" style="display:none">
+                    <label for="dv-q">除數的係數 \(q\)：<span id="dv-vq" class="val-num">-4</span></label>
+                    <input type="range" id="dv-q" min="-6" max="6" value="-4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (根式的除法)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 計算 \(\sqrt{117} \div \sqrt{13}\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-5" value="A"><span class="option-text">A. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5" value="B"><span class="option-text">B. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5" value="C"><span class="option-text">C. \(\sqrt{104}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5" value="D"><span class="option-text">D. \(3\sqrt{13}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。根號裡的數直接相除：
+              \[\begin{aligned} & \sqrt{117} \div \sqrt{13} \\ &= \sqrt{117 \div 13} = \sqrt{9} = 3 \end{aligned}\]
+              B 錯：\(117 \div 13 = 9\) 之後忘了開根號。<br>
+              C 錯：把除法做成減法 \(117 - 13 = 104\)。<br>
+              D 錯：只把 \(\sqrt{117}\) 化成 \(3\sqrt{13}\)，忘了再除以 \(\sqrt{13}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 計算 \((-15\sqrt{22}) \div (6\sqrt{11})\) 的值。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-6" value="A"><span class="option-text">A. \(-\frac{5\sqrt{11}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6" value="B"><span class="option-text">B. \(-\frac{5\sqrt{242}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6" value="C"><span class="option-text">C. \(-\frac{5\sqrt{2}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6" value="D"><span class="option-text">D. \(\frac{5\sqrt{2}}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。係數 \(-15 \div 6 = -\frac{5}{2}\)，根號 \(\sqrt{22} \div \sqrt{11} = \sqrt{2}\)，合起來是 \(-\frac{5\sqrt{2}}{2}\)。<br>
+              A 錯：根號裡做成減法 \(22 - 11 = 11\)。<br>
+              B 錯：根號裡做成乘法 \(22 \times 11 = 242\)。<br>
+              D 錯：負數除以正數，結果是負的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 最簡根式
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> 重點 4：最簡根式——三個條件都要符合
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>同一個數有很多寫法</strong>：\(\sqrt{48} = 2\sqrt{12} = 4\sqrt{3}\)，三個值都一樣。我們約定化成「最簡根式」，方便比較與合併。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              \(a\sqrt{b}\) 是<strong>最簡根式</strong>：<br>
+              \(a\) 是整數、分數或小數；\(b\) 是正整數，<br>且 \(b\) 的標準分解式中，每個質因數的次數都是 \(1\)。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：\(5\sqrt{6}\)、\(-2\sqrt{11}\)、\(\frac{\sqrt{30}}{4}\)、\(0.3\sqrt{7}\) 都是最簡根式。</li>
+              <li><strong>有下列情形就不是最簡根式</strong>：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>情形</th><th>例子</th></tr></thead>
+                <tbody>
+                  <tr><td>⑴ 根號裡有質因數的次數大於 \(1\)</td><td>\(\sqrt{20} = \sqrt{2^2 \times 5}\)、\(\sqrt{24} = \sqrt{2^3 \times 3}\)</td></tr>
+                  <tr><td>⑵ 分母含有根號</td><td>\(\frac{3}{\sqrt{7}}\)、\(\frac{\sqrt{2}}{\sqrt{5}}\)</td></tr>
+                  <tr><td>⑶ 根號裡是分數或小數</td><td>\(\sqrt{\frac{2}{5}}\)、\(\sqrt{0.3}\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>根號在分子可以、在分母不行</strong>：\(\frac{\sqrt{15}}{2}\) 是最簡根式，\(\frac{2}{\sqrt{15}}\) 不是。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_simplest.webp" alt="復古磁磚工坊風插圖：小瓷拿著放大鏡仔細檢查一塊方磚的釉面，阿岩站在她旁邊，手上拿著一塊夾著檢查單的木頭夾板。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：最簡根式檢查站</h3>
+            <p class="interactive-instruction">選一種寫法、調整數字，讓根式通過<strong>三道關卡</strong>。根號裡的質因數，次數大於 \(1\) 的會變成玫瑰色；沒過關的會直接顯示化簡後的樣子：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-simp" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">寫法</span>
+                    <div class="btn-group" id="sm-mode-group">
+                      <button class="pick-btn active" data-sm-mode="int">√n</button>
+                      <button class="pick-btn" data-sm-mode="over">√n ÷ m</button>
+                      <button class="pick-btn" data-sm-mode="under">m ÷ √n</button>
+                      <button class="pick-btn" data-sm-mode="frac">√(n/m)</button>
+                      <button class="pick-btn" data-sm-mode="dec">√小數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sm-n">\(n\)（小數模式是 \(n \div 10\)）：<span id="sm-vn" class="val-num">18</span></label>
+                    <input type="range" id="sm-n" min="2" max="40" value="18" step="1">
+                  </div>
+                  <div class="slider-row" id="sm-row-m" style="display:none">
+                    <label for="sm-m">\(m\)：<span id="sm-vm" class="val-num">4</span></label>
+                    <input type="range" id="sm-m" min="2" max="9" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (最簡根式)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 下列何者是<strong>最簡根式</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-7" value="A"><span class="option-text">A. \(\sqrt{98}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7" value="B"><span class="option-text">B. \(\frac{\sqrt{51}}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7" value="C"><span class="option-text">C. \(\frac{5}{\sqrt{47}}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7" value="D"><span class="option-text">D. \(\sqrt{4.7}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(51 = 3 \times 17\)，每個質因數都只有一次；分母 \(4\) 不含根號，所以是最簡根式。<br>
+              A 錯：\(98 = 2 \times 7^2\)，\(7\) 的次數是 \(2\)，\(\sqrt{98} = 7\sqrt{2}\)。<br>
+              C 錯：分母含有根號。<br>
+              D 錯：根號裡是小數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> 小瓷說：「\(3\sqrt{75}\) 的根號裡是正整數、分母也沒有根號，所以它是最簡根式。」她的說法錯在哪裡？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-8" value="A"><span class="option-text">A. 沒有錯，\(3\sqrt{75}\) 是最簡根式</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-8" value="B"><span class="option-text">B. \(75 = 3 \times 5^2\)，根號裡有質因數的次數是 \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-8" value="C"><span class="option-text">C. 根號外的係數 \(3\) 必須是 \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-8" value="D"><span class="option-text">D. 根號裡的數必須是質數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。最簡根式還要求根號裡每個質因數的次數都是 \(1\)；\(75 = 3 \times 5^2\)，所以 \(3\sqrt{75} = 3 \times 5\sqrt{3} = 15\sqrt{3}\)。<br>
+              A 錯：理由同上，三個條件少檢查了一個。<br>
+              C 錯：係數可以是任何整數、分數或小數。<br>
+              D 錯：\(\sqrt{6}\)、\(\sqrt{15}\) 都是最簡根式，但 \(6\)、\(15\) 不是質數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 化成最簡根式（提出平方因數）
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compress" aria-hidden="true"></i> 重點 5：化成最簡根式——把平方因數提到根號外
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>作法</strong>：寫出根號裡的標準分解式，每一對相同的質因數提一個到根號外。</li>
+              <li><strong>例</strong>：\(180 = 2^2 \times 3^2 \times 5\)，
+                \[\begin{aligned} & \sqrt{180} \\ &= \sqrt{2^2 \times 3^2 \times 5} \\ &= 2 \times 3 \times \sqrt{5} = 6\sqrt{5} \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              若 \(b\)、\(c\) 都是正整數，則
+              \[ \sqrt{b^2 \times c} = b\sqrt{c} \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用磁磚看</strong>：面積 \(48\) 的大方磚可以切成 \(2 \times 2\) 塊面積 \(12\) 的方磚，也可以切成 \(4 \times 4\) 塊面積 \(3\) 的小方磚，所以 \(\sqrt{48} = 2\sqrt{12} = 4\sqrt{3}\)。\(3\) 已經切不下去了，\(4\sqrt{3}\) 是最簡根式。</li>
+              <li><strong>兩個根式相乘</strong>：可以先乘再化簡，也可以先各自化簡再乘，答案一樣。先乘再化簡：
+                \[\begin{aligned} & \sqrt{32} \times \sqrt{6} \\ &= \sqrt{192} = 8\sqrt{3} \end{aligned}\]
+                先化簡再乘：
+                \[\begin{aligned} & \sqrt{32} \times \sqrt{6} \\ &= 4\sqrt{2} \times \sqrt{6} \\ &= 4\sqrt{12} = 8\sqrt{3} \end{aligned}\]</li>
+              <li><strong>提醒</strong>：\(b\) 要是正數才能直接提出來。\(\sqrt{(-3)^2 \times 2} = \sqrt{18} = 3\sqrt{2}\)，不是 \(-3\sqrt{2}\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_extract.webp" alt="復古磁磚工坊風插圖：工作桌上一塊大正方形磁磚面板，由四列四行共 16 塊小方磚拼成，中間用粉筆畫出把它分成 2 × 2 四大塊的十字線；小瓷指著粉筆線，阿岩彎腰數小方磚。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：大方磚切小方磚</h3>
+            <p class="interactive-instruction">選大方磚的<strong>面積 \(n\)</strong>，再把每一邊切成 \(k\) 份。切出來的小方磚面積還有平方因數，就能再切；切到不能再切，就是最簡根式：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-extract" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ex-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ex-n">大方磚面積 \(n\)：<span id="ex-vn" class="val-num">48</span></label>
+                    <input type="range" id="ex-n" min="2" max="100" value="48" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ex-k">每邊切成 \(k\) 份：<span id="ex-vk" class="val-num">1</span></label>
+                    <input type="range" id="ex-k" min="0" max="2" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ex-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (提出平方因數)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 將 \(\sqrt{252}\) 化為最簡根式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-9" value="A"><span class="option-text">A. \(3\sqrt{28}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-9" value="B"><span class="option-text">B. \(2\sqrt{63}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-9" value="C"><span class="option-text">C. \(7\sqrt{6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-9" value="D"><span class="option-text">D. \(6\sqrt{7}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(252 = 2^2 \times 3^2 \times 7\)，所以 \(\sqrt{252} = 2 \times 3 \times \sqrt{7} = 6\sqrt{7}\)。<br>
+              A、B 錯：值都等於 \(6\sqrt{7}\)，但 \(28 = 2^2 \times 7\)、\(63 = 3^2 \times 7\) 還有平方因數，沒有化完。<br>
+              C 錯：根號裡外對調了，\(7\sqrt{6} = \sqrt{294}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 計算 \(\sqrt{18} \times \sqrt{60}\)，並化為最簡根式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-10" value="A"><span class="option-text">A. \(6\sqrt{30}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-10" value="B"><span class="option-text">B. \(3\sqrt{120}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-10" value="C"><span class="option-text">C. \(6\sqrt{17}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-10" value="D"><span class="option-text">D. \(6\sqrt{15}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先各自化簡再相乘：
+              \[\begin{aligned} & \sqrt{18} \times \sqrt{60} \\ &= 3\sqrt{2} \times 2\sqrt{15} \\ &= 6\sqrt{30} \end{aligned}\]
+              B 錯：值等於 \(6\sqrt{30}\)，但 \(120 = 2^2 \times 30\) 還沒化完。<br>
+              C 錯：把 \(\sqrt{2} \times \sqrt{15}\) 算成 \(\sqrt{2 + 15}\)。<br>
+              D 錯：漏乘了 \(\sqrt{2}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 分母有理化
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-filter" aria-hidden="true"></i> 重點 6：分母有理化——讓分母不再有根號
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分母有理化</strong>：分母有根號時，分子、分母同乘一個根式，讓分母變成不含根號的數。</li>
+              <li><strong>值不會變</strong>：同乘 \(\sqrt{b}\) 等於乘 \(\frac{\sqrt{b}}{\sqrt{b}} = 1\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              若 \(b \gt 0\)，則
+              \[ \frac{c}{\sqrt{b}} = \frac{c \times \sqrt{b}}{\sqrt{b} \times \sqrt{b}} = \frac{c\sqrt{b}}{b} \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：\(\frac{4}{\sqrt{6}} = \frac{4\sqrt{6}}{6} = \frac{2\sqrt{6}}{3}\)，最後記得約分。</li>
+              <li><strong>分母先化簡，乘的數比較小</strong>：
+                \[\begin{aligned} \frac{5}{\sqrt{8}} &= \frac{5}{2\sqrt{2}} \\ &= \frac{5\sqrt{2}}{2 \times 2} = \frac{5\sqrt{2}}{4} \end{aligned}\]
+                直接乘 \(\sqrt{8}\) 也可以，只是分子變成 \(5\sqrt{8}\)，還得再化簡一次。</li>
+              <li><strong>常見錯誤</strong>：只把分母乘 \(\sqrt{b}\)、分子沒乘，值就變了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_rational.webp" alt="復古磁磚工坊風插圖：小瓷把一塊正方形方磚放進桌上的正方形木框，磚剛好嵌滿木框；阿岩在旁邊扶著木框點頭。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：分母去根號</h3>
+            <p class="interactive-instruction">調整<strong>分子 \(c\)</strong> 與<strong>分母根號裡的 \(n\)</strong>。比一比「直接乘 \(\sqrt{n}\)」和「先化簡分母」兩種做法，最下面驗算值有沒有變：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-rat" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ra-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">做法</span>
+                    <div class="btn-group" id="ra-mode-group">
+                      <button class="pick-btn active" data-ra-mode="direct">直接乘 √n</button>
+                      <button class="pick-btn" data-ra-mode="simp">先化簡分母</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ra-c">分子 \(c\)：<span id="ra-vc" class="val-num">3</span></label>
+                    <input type="range" id="ra-c" min="1" max="12" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ra-n">分母根號裡的 \(n\)：<span id="ra-vn" class="val-num">12</span></label>
+                    <input type="range" id="ra-n" min="2" max="30" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ra-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分母有理化)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> 將 \(\frac{14}{\sqrt{35}}\) 化為最簡根式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-11" value="A"><span class="option-text">A. \(\frac{14\sqrt{35}}{35}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-11" value="B"><span class="option-text">B. \(\frac{2}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-11" value="C"><span class="option-text">C. \(\frac{2\sqrt{35}}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-11" value="D"><span class="option-text">D. \(2\sqrt{35}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。分子分母同乘 \(\sqrt{35}\)，再約分：
+              \[\begin{aligned} \frac{14}{\sqrt{35}} &= \frac{14\sqrt{35}}{35} \\ &= \frac{2\sqrt{35}}{5} \end{aligned}\]
+              A 錯：值相等，但 \(14\) 和 \(35\) 還能約分。<br>
+              B 錯：約分時把 \(\sqrt{35}\) 也一起約掉了。<br>
+              D 錯：\(\frac{14}{35} = \frac{2}{5}\)，分母的 \(5\) 漏掉了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 將 \(\frac{9}{2\sqrt{27}}\) 化為最簡根式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-12" value="A"><span class="option-text">A. \(\frac{3\sqrt{3}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-12" value="B"><span class="option-text">B. \(\frac{\sqrt{3}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-12" value="C"><span class="option-text">C. \(\frac{\sqrt{3}}{6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-12" value="D"><span class="option-text">D. \(\frac{9\sqrt{27}}{54}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。分母先化簡 \(2\sqrt{27} = 6\sqrt{3}\)：
+              \[\begin{aligned} \frac{9}{6\sqrt{3}} &= \frac{9\sqrt{3}}{6 \times 3} \\ &= \frac{9\sqrt{3}}{18} = \frac{\sqrt{3}}{2} \end{aligned}\]
+              A 錯：分母乘 \(\sqrt{3}\) 後忘了 \(\sqrt{3} \times \sqrt{3} = 3\)，寫成 \(\frac{9\sqrt{3}}{6} = \frac{3\sqrt{3}}{2}\)。<br>
+              C 錯：直接同乘 \(\sqrt{27}\)，分母是 \(54\)，分子卻只寫 \(9\sqrt{3}\)（\(\sqrt{27} = 3\sqrt{3}\) 的 \(3\) 漏了），得 \(\frac{9\sqrt{3}}{54} = \frac{\sqrt{3}}{6}\)。<br>
+              D 錯：值相等，但根號裡 \(27 = 3^3\) 還沒化簡，也還能約分。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 根號裡是分數或小數
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-percent" aria-hidden="true"></i> 重點 7：根號裡是分數或小數——兩種化法
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>小數先化成分數</strong>：\(0.6 = \frac{6}{10} = \frac{3}{5}\)。</li>
+              <li><strong>方法一：分開開根號，再有理化</strong>：
+                \[\begin{aligned} \sqrt{\frac{7}{12}} &= \frac{\sqrt{7}}{\sqrt{12}} = \frac{\sqrt{7}}{2\sqrt{3}} \\ &= \frac{\sqrt{21}}{6} \end{aligned}\]</li>
+              <li><strong>方法二：根號裡擴分，讓分母變成平方數</strong>：
+                \[\begin{aligned} \sqrt{\frac{7}{12}} &= \sqrt{\frac{7 \times 3}{12 \times 3}} = \sqrt{\frac{21}{36}} \\ &= \frac{\sqrt{21}}{6} \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              根號裡是分數或小數時，化到<strong>根號裡是正整數</strong>、<strong>分母沒有根號</strong>為止。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>小數的例子</strong>：\(\sqrt{0.6} = \sqrt{\frac{3}{5}} = \frac{\sqrt{3}}{\sqrt{5}} = \frac{\sqrt{15}}{5}\)。</li>
+              <li><strong>方法二要乘多少</strong>：乘「讓分母變成平方數的最小數」，數字比較小；乘分母本身也可以，只是數字大、不好算。</li>
+              <li><strong>小數位數看清楚</strong>：\(\sqrt{0.4} = \sqrt{\frac{2}{5}}\)，但 \(\sqrt{0.04} = \sqrt{\frac{4}{100}} = \frac{2}{10} = 0.2\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_fracroot.webp" alt="復古磁磚工坊風插圖：阿岩用小湯匙把釉料粉倒進工作桌上的陶碗裡調色，小瓷站在旁邊，手拿一張磁磚色票對照顏色。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩種方法化簡</h3>
+            <p class="interactive-instruction">選根號裡是<strong>分數</strong>還是<strong>小數</strong>，再切換<strong>方法一、方法二</strong>，比一比步驟；最下面驗算兩種方法答案一樣：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fracroot" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">根號裡</span>
+                    <div class="btn-group" id="fr-kind-group">
+                      <button class="pick-btn active" data-fr-kind="frac">分數</button>
+                      <button class="pick-btn" data-fr-kind="dec">小數</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方法</span>
+                    <div class="btn-group" id="fr-meth-group">
+                      <button class="pick-btn active" data-fr-meth="m1">方法一</button>
+                      <button class="pick-btn" data-fr-meth="m2">方法二</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="fr-row-p">
+                    <label for="fr-p">分子 \(p\)：<span id="fr-vp" class="val-num">3</span></label>
+                    <input type="range" id="fr-p" min="1" max="12" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="fr-row-q">
+                    <label for="fr-q">分母 \(q\)：<span id="fr-vq" class="val-num">8</span></label>
+                    <input type="range" id="fr-q" min="2" max="12" value="8" step="1">
+                  </div>
+                  <div class="slider-row" id="fr-row-t" style="display:none">
+                    <label for="fr-t">小數：<span id="fr-vt" class="val-num">1.8</span></label>
+                    <input type="range" id="fr-t" min="1" max="99" value="18" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分數與小數)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 將 \(\sqrt{0.45}\) 化為最簡根式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-13" value="A"><span class="option-text">A. \(\frac{3\sqrt{2}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-13" value="B"><span class="option-text">B. \(\frac{3\sqrt{5}}{100}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-13" value="C"><span class="option-text">C. \(\frac{\sqrt{45}}{10}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-13" value="D"><span class="option-text">D. \(\frac{3\sqrt{5}}{10}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(0.45 = \frac{45}{100}\)：
+              \[\begin{aligned} \sqrt{0.45} &= \frac{\sqrt{45}}{\sqrt{100}} \\ &= \frac{3\sqrt{5}}{10} \end{aligned}\]
+              A 錯：看成 \(\sqrt{4.5} = \sqrt{\frac{9}{2}} = \frac{3\sqrt{2}}{2}\)，小數位數看錯了。<br>
+              B 錯：分母的 \(100\) 忘了開根號。<br>
+              C 錯：值相等，但 \(45 = 3^2 \times 5\) 還沒化簡。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 將 \(\sqrt{\frac{11}{18}}\) 化為最簡根式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-14" value="A"><span class="option-text">A. \(\frac{\sqrt{22}}{6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-14" value="B"><span class="option-text">B. \(\frac{\sqrt{11}}{18}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-14" value="C"><span class="option-text">C. \(\frac{\sqrt{22}}{36}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-14" value="D"><span class="option-text">D. \(\frac{\sqrt{198}}{18}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。根號裡分子分母同乘 \(2\)，讓分母變成平方數：
+              \[\begin{aligned} \sqrt{\frac{11}{18}} &= \sqrt{\frac{22}{36}} \\ &= \frac{\sqrt{22}}{6} \end{aligned}\]
+              B 錯：分母的 \(18\) 忘了開根號。<br>
+              C 錯：擴分後分母的 \(36\) 忘了開根號。<br>
+              D 錯：值相等，但 \(198 = 3^2 \times 22\) 還能化簡，化完是 \(\frac{3\sqrt{22}}{18} = \frac{\sqrt{22}}{6}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 同類方根
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 重點 8：同類方根——化簡後根號裡一樣
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>同類方根</strong>：兩個或兩個以上的根式化成最簡根式 \(a\sqrt{b}\) 之後，根號裡的 \(b\) 相同，就稱它們是同類方根。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              <strong>先化成最簡根式</strong>，再比根號裡的數；根號外的係數不影響。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：\(\sqrt{12} = 2\sqrt{3}\)、\(\frac{\sqrt{3}}{4}\)、\(\sqrt{\frac{1}{3}} = \frac{\sqrt{3}}{3}\)、\(-5\sqrt{3}\) 都是 \(\sqrt{3}\) 的同類方根。</li>
+              <li><strong>看起來不像，化簡後才是</strong>：\(\sqrt{44} = 2\sqrt{11}\)、\(\sqrt{99} = 3\sqrt{11}\)，兩者是同類方根。</li>
+              <li><strong>看起來像，其實不是</strong>：\(\sqrt{18} = 3\sqrt{2}\)、\(\sqrt{12} = 2\sqrt{3}\)，化簡後根號裡不一樣，不是同類方根。</li>
+              <li><strong>化簡後根號不見了</strong>：例如 \(\sqrt{16} = 4\)，它就是一般的數，不是哪一個根式的同類方根。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_like.webp" alt="復古磁磚工坊風插圖：工坊牆邊釘著三個木頭分類箱，每一箱放著同一種花色的方磚；小瓷把一塊鈷藍方磚放進鈷藍那一箱，阿岩抱著一小疊混色的方磚站在旁邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：同類方根分類箱</h3>
+            <p class="interactive-instruction">調一個根式，它會先化成最簡根式，再落進根號裡那個數的箱子。放開滑桿，這塊磚就留在箱子裡；同一箱的就是<strong>同類方根</strong>：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-like" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="lk-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">寫法</span>
+                    <div class="btn-group" id="lk-mode-group">
+                      <button class="pick-btn active" data-lk-mode="int">√n</button>
+                      <button class="pick-btn" data-lk-mode="frac">√(m/n)</button>
+                      <button class="pick-btn" data-lk-mode="under">m ÷ √n</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="lk-n">\(n\)：<span id="lk-vn" class="val-num">18</span></label>
+                    <input type="range" id="lk-n" min="2" max="50" value="18" step="1">
+                  </div>
+                  <div class="slider-row" id="lk-row-m" style="display:none">
+                    <label for="lk-m">\(m\)：<span id="lk-vm" class="val-num">1</span></label>
+                    <input type="range" id="lk-m" min="1" max="9" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="lk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (同類方根)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> 下列哪一個<strong>不是</strong> \(\sqrt{7}\) 的同類方根？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-15" value="A"><span class="option-text">A. \(\sqrt{63}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-15" value="B"><span class="option-text">B. \(\sqrt{\frac{7}{64}}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-15" value="C"><span class="option-text">C. \(\sqrt{147}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-15" value="D"><span class="option-text">D. \(\frac{10}{\sqrt{7}}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(147 = 3 \times 7^2\)，\(\sqrt{147} = 7\sqrt{3}\)：\(7\) 跑到根號外，根號裡是 \(3\)，它是 \(\sqrt{3}\) 的同類方根。<br>
+              A：\(\sqrt{63} = 3\sqrt{7}\)。<br>
+              B：\(\sqrt{\frac{7}{64}} = \frac{\sqrt{7}}{8}\)。<br>
+              D：\(\frac{10}{\sqrt{7}} = \frac{10\sqrt{7}}{7}\)。這三個化簡後根號裡都是 \(7\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 下列哪一組的三個數<strong>全部</strong>是同類方根？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-16" value="A"><span class="option-text">A. \(\sqrt{75}\)、\(\sqrt{108}\)、\(\sqrt{125}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-16" value="B"><span class="option-text">B. \(\sqrt{54}\)、\(\sqrt{96}\)、\(\sqrt{60}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-16" value="C"><span class="option-text">C. \(\sqrt{63}\)、\(\sqrt{112}\)、\(\sqrt{0.7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-16" value="D"><span class="option-text">D. \(\sqrt{72}\)、\(\sqrt{98}\)、\(\sqrt{0.5}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\sqrt{72} = 6\sqrt{2}\)、\(\sqrt{98} = 7\sqrt{2}\)、\(\sqrt{0.5} = \sqrt{\frac{1}{2}} = \frac{\sqrt{2}}{2}\)，根號裡都是 \(2\)。<br>
+              A 錯：\(5\sqrt{3}\)、\(6\sqrt{3}\)、\(5\sqrt{5}\)，最後一個不同類。<br>
+              B 錯：\(3\sqrt{6}\)、\(4\sqrt{6}\)、\(2\sqrt{15}\)，最後一個不同類。<br>
+              C 錯：\(3\sqrt{7}\)、\(4\sqrt{7}\)，但 \(\sqrt{0.7} = \sqrt{\frac{7}{10}} = \frac{\sqrt{70}}{10}\)，根號裡是 \(70\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 根式的加減
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-plus-minus" aria-hidden="true"></i> 重點 9：根式的加減——同類方根才能合併
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>同類方根像同類項</strong>：就像 \(2x + 4x = 6x\)，
+                \[\begin{aligned} & 2\sqrt{5} + 4\sqrt{5} \\ &= (2 + 4)\sqrt{5} = 6\sqrt{5} \end{aligned}\]</li>
+              <li><strong>不同類不能合併</strong>：\(3\sqrt{2} + 5\sqrt{3}\) 就是最後答案，就像 \(3x + 5y\)。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              <strong>先把每一項化成最簡根式</strong>，再把同類方根的係數相加減：
+              \[ a\sqrt{r} \pm b\sqrt{r} = (a \pm b)\sqrt{r} \]
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>先化簡才看得出同類</strong>：
+                \[\begin{aligned} & 4\sqrt{6} - \sqrt{24} + \sqrt{3} \\ &= 4\sqrt{6} - 2\sqrt{6} + \sqrt{3} \\ &= 2\sqrt{6} + \sqrt{3} \end{aligned}\]</li>
+              <li><strong>有分母的先有理化</strong>：\(\frac{6}{\sqrt{3}} - \sqrt{3} = 2\sqrt{3} - \sqrt{3} = \sqrt{3}\)。</li>
+              <li><strong>常見錯誤</strong>：根號不能拆開加減，\(\sqrt{a} + \sqrt{b} \ne \sqrt{a + b}\)。例如 \(\sqrt{9} + \sqrt{16} = 3 + 4 = 7\)，但 \(\sqrt{25} = 5\)；減法也一樣，\(\sqrt{25} - \sqrt{9} = 2\)，但 \(\sqrt{16} = 4\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_addsub.webp" alt="復古磁磚工坊風插圖：工作桌上有兩排陶土橘方磚，一排 2 塊、一排 3 塊，阿岩把兩排推在一起；旁邊另有 2 塊鈷藍方磚分開放著，小瓷把它們擋在一旁。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：同一種磚才能合併</h3>
+            <p class="interactive-instruction">兩項先化成最簡根式，<strong>同一種顏色的磚</strong>（根號裡相同）才能排在一起合併；虛線的磚代表要扣掉。切到「√a + √b」看根號為什麼不能拆開加：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-add" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ad-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">看什麼</span>
+                    <div class="btn-group" id="ad-mode-group">
+                      <button class="pick-btn active" data-ad-mode="merge">合併</button>
+                      <button class="pick-btn" data-ad-mode="myth">√a + √b</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="ad-row-a">
+                    <label for="ad-a">第一項係數 \(a\)：<span id="ad-va" class="val-num">2</span></label>
+                    <input type="range" id="ad-a" min="1" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="ad-row-m">
+                    <label for="ad-m">第一項根號裡 \(m\)：<span id="ad-vm" class="val-num">12</span></label>
+                    <input type="range" id="ad-m" min="2" max="20" value="12" step="1">
+                  </div>
+                  <div class="slider-row" id="ad-row-b">
+                    <label for="ad-b">第二項係數 \(b\)：<span id="ad-vb" class="val-num">3</span></label>
+                    <input type="range" id="ad-b" min="-5" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="ad-row-n">
+                    <label for="ad-n">第二項根號裡 \(n\)：<span id="ad-vn" class="val-num">3</span></label>
+                    <input type="range" id="ad-n" min="2" max="20" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="ad-row-x" style="display:none">
+                    <label for="ad-x">\(a\)：<span id="ad-vx" class="val-num">9</span></label>
+                    <input type="range" id="ad-x" min="1" max="30" value="9" step="1">
+                  </div>
+                  <div class="slider-row" id="ad-row-y" style="display:none">
+                    <label for="ad-y">\(b\)：<span id="ad-vy" class="val-num">16</span></label>
+                    <input type="range" id="ad-y" min="1" max="30" value="16" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ad-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (根式的加減)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 化簡 \(\sqrt{50} - 3\sqrt{6} + \sqrt{54} - \sqrt{8}\)。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-17" value="A"><span class="option-text">A. \(\sqrt{42}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-17" value="B"><span class="option-text">B. \(3\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-17" value="C"><span class="option-text">C. \(7\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-17" value="D"><span class="option-text">D. \(3\sqrt{2} - 6\sqrt{6}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。每一項先化成最簡根式，再合併同類方根：
+              \[\begin{aligned} & 5\sqrt{2} - 3\sqrt{6} + 3\sqrt{6} - 2\sqrt{2} \\ &= (5 - 2)\sqrt{2} + (-3 + 3)\sqrt{6} \\ &= 3\sqrt{2} \end{aligned}\]
+              A 錯：把 \(\sqrt{50} - \sqrt{8}\) 寫成 \(\sqrt{50 - 8} = \sqrt{42}\)，根號不能拆開減。<br>
+              C 錯：\(-\sqrt{8}\) 的負號沒帶到，算成 \(5\sqrt{2} + 2\sqrt{2}\)。<br>
+              D 錯：\(+\sqrt{54}\) 看成減號，算成 \(-3\sqrt{6} - 3\sqrt{6} = -6\sqrt{6}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 下列哪一個等式<strong>成立</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-18" value="A"><span class="option-text">A. \(\sqrt{64} + \sqrt{36} = \sqrt{100}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-18" value="B"><span class="option-text">B. \(\sqrt{50} - \sqrt{18} = \sqrt{32}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-18" value="C"><span class="option-text">C. \(\sqrt{20} + \sqrt{45} = \sqrt{125}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-18" value="D"><span class="option-text">D. \(7\sqrt{2} - \sqrt{2} = 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & \sqrt{20} + \sqrt{45} \\ &= 2\sqrt{5} + 3\sqrt{5} = 5\sqrt{5} \end{aligned}\]
+              而 \(\sqrt{125} = 5\sqrt{5}\)，所以成立。注意：它成立是因為化簡後同類方根合併，<strong>不是</strong>因為根號能拆開加（\(20 + 45 = 65\)，不是 \(125\)）。<br>
+              A 錯：\(8 + 6 = 14\)，\(\sqrt{100} = 10\)。<br>
+              B 錯：\(5\sqrt{2} - 3\sqrt{2} = 2\sqrt{2}\)，但 \(\sqrt{32} = 4\sqrt{2}\)。<br>
+              D 錯：\(7\sqrt{2} - \sqrt{2} = 6\sqrt{2}\)，根號不會消失。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 根式的四則運算
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> 重點 10：根式的四則運算——先乘除、後加減
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>順序和有理數一樣</strong>：先乘方，再乘除，最後加減；有括號先算括號裡面。</li>
+              <li><strong>連乘除放進同一個根號</strong>：
+                \[\begin{aligned} & \sqrt{6} \times \sqrt{10} \div \sqrt{15} \\ &= \sqrt{\frac{6 \times 10}{15}} = \sqrt{4} = 2 \end{aligned}\]</li>
+              <li><strong>正負號先決定，再放進根號</strong>：
+                \[\begin{aligned} & (-\sqrt{12}) \times \sqrt{\frac{1}{6}} \\ &= -\sqrt{12 \times \frac{1}{6}} = -\sqrt{2} \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              乘除算完、化成最簡根式之後，<strong>再把同類方根合併</strong>。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：
+                \[\begin{aligned} & \sqrt{3} \times \sqrt{6} - 2\sqrt{2} \\ &= \sqrt{18} - 2\sqrt{2} \\ &= 3\sqrt{2} - 2\sqrt{2} = \sqrt{2} \end{aligned}\]</li>
+              <li><strong>最後的答案</strong>要化成最簡根式：根號裡沒有平方因數、分母沒有根號。</li>
+              <li><strong>整數和根式不能合併</strong>：\(5 - 3\sqrt{2}\) 已經是最後答案，不能寫成 \(2\sqrt{2}\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_mixed.webp" alt="復古磁磚工坊風插圖：小瓷手拿一塊夾著工單的木頭夾板，一步一步核對；阿岩照著她念的順序，在工作桌上把方磚一塊塊排好。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：照順序做工</h3>
+            <p class="interactive-instruction">「連乘除」把三個根號放進同一個根號；「有加減」看先乘後減的順序，最下面是先算減法的錯誤結果：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mix" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mx-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">算式</span>
+                    <div class="btn-group" id="mx-mode-group">
+                      <button class="pick-btn active" data-mx-mode="chain">連乘除</button>
+                      <button class="pick-btn" data-mx-mode="order">有加減</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mx-a">\(a\)：<span id="mx-va" class="val-num">5</span></label>
+                    <input type="range" id="mx-a" min="1" max="20" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mx-b">\(b\)：<span id="mx-vb" class="val-num">6</span></label>
+                    <input type="range" id="mx-b" min="1" max="20" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mx-c">\(c\)：<span id="mx-vc" class="val-num">10</span></label>
+                    <input type="range" id="mx-c" min="1" max="20" value="10" step="1">
+                  </div>
+                  <div class="slider-row" id="mx-row-k" style="display:none">
+                    <label for="mx-k">\(k\)：<span id="mx-vk" class="val-num">2</span></label>
+                    <input type="range" id="mx-k" min="1" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mx-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (四則運算)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 化簡 \(\sqrt{\frac{5}{6}} \times \sqrt{\frac{3}{10}} \div \sqrt{\frac{1}{8}}\)。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-19" value="A"><span class="option-text">A. \(\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-19" value="B"><span class="option-text">B. \(\frac{\sqrt{2}}{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-19" value="C"><span class="option-text">C. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-19" value="D"><span class="option-text">D. \(\frac{\sqrt{2}}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。全部放進同一個根號，除以 \(\frac{1}{8}\) 就是乘 \(8\)：
+              \[\begin{aligned} & \sqrt{\frac{5}{6} \times \frac{3}{10} \times 8} \\ &= \sqrt{\frac{1}{4} \times 8} = \sqrt{2} \end{aligned}\]
+              B 錯：把 \(\div\) 當成 \(\times\)，\(\sqrt{\frac{1}{4} \times \frac{1}{8}} = \sqrt{\frac{1}{32}} = \frac{\sqrt{2}}{8}\)。<br>
+              C 錯：\(\frac{1}{4} \times 8 = 2\) 之後忘了開根號。<br>
+              D 錯：把 \(\sqrt{\frac{1}{4}}\) 算成 \(\frac{1}{4}\)，得 \(\frac{1}{4} \times \sqrt{8} = \frac{\sqrt{2}}{2}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> 化簡 \((-2\sqrt{15}) \times \left(-\sqrt{\frac{3}{5}}\right) - 4\sqrt{3}\)。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-20" value="A"><span class="option-text">A. \(2\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-20" value="B"><span class="option-text">B. \(-6 - 4\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-20" value="C"><span class="option-text">C. \(6 + 4\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-20" value="D"><span class="option-text">D. \(6 - 4\sqrt{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。先乘：負負得正，
+              \[\begin{aligned} & 2\sqrt{15 \times \frac{3}{5}} - 4\sqrt{3} \\ &= 2\sqrt{9} - 4\sqrt{3} = 6 - 4\sqrt{3} \end{aligned}\]
+              A 錯：把 \(6\) 和 \(-4\sqrt{3}\) 合併成 \((6 - 4)\sqrt{3}\)，但 \(6\) 不是 \(\sqrt{3}\) 的同類方根。<br>
+              B 錯：負數乘負數應該是正的。<br>
+              C 錯：減號抄成加號。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 分配律
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells-large" aria-hidden="true"></i> 重點 11：分配律——每一項都要乘到
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分配律在根式照樣成立</strong>，三種常見的樣子：</li>
+              <li><strong>\(a(b + c) = ab + ac\)</strong>：
+                \[\begin{aligned} & \sqrt{3}(\sqrt{6} + \sqrt{15}) \\ &= \sqrt{18} + \sqrt{45} \\ &= 3\sqrt{2} + 3\sqrt{5} \end{aligned}\]</li>
+              <li><strong>\((b + c) \div a = \frac{b}{a} + \frac{c}{a}\)</strong>：
+                \[\begin{aligned} & (\sqrt{10} - \sqrt{15}) \div \sqrt{5} \\ &= \sqrt{2} - \sqrt{3} \end{aligned}\]</li>
+              <li><strong>\((a + b)(c + d)\)</strong>：展開成 \(ac + ad + bc + bd\)，
+                \[\begin{aligned} & (\sqrt{2} + 1)(\sqrt{2} + 3) \\ &= 2 + 3\sqrt{2} + \sqrt{2} + 3 \\ &= 5 + 4\sqrt{2} \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              展開之後<strong>逐項化成最簡根式</strong>，同類方根再合併。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>每一項都要乘到</strong>：括號外的數要乘括號裡的每一項，不能只乘第一項。</li>
+              <li><strong>除以根式也可以先有理化</strong>：\(\frac{\sqrt{10} - \sqrt{15}}{\sqrt{5}}\) 可以拆成兩個分數，也可以分子分母同乘 \(\sqrt{5}\)，答案一樣。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_distribute.webp" alt="復古磁磚工坊風插圖：工作桌上一塊長方形磁磚面板分成兩列兩行四格，四格的顏色都不一樣；小瓷指著其中一格，阿岩拿木頭直尺量面板的長邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：磁磚乘法表</h3>
+            <p class="interactive-instruction">表格的每一格是「列 × 行」。三種樣子都展開成格子，顏色相同的格子是同類方根，最後合併：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dist" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ds-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">樣子</span>
+                    <div class="btn-group" id="ds-mode-group">
+                      <button class="pick-btn active" data-ds-mode="one">k√a(√b + √c)</button>
+                      <button class="pick-btn" data-ds-mode="div">(√a + √b) ÷ √c</button>
+                      <button class="pick-btn" data-ds-mode="two">兩個括號</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ds-a">\(a\)：<span id="ds-va" class="val-num">2</span></label>
+                    <input type="range" id="ds-a" min="2" max="10" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-b">\(b\)：<span id="ds-vb" class="val-num">6</span></label>
+                    <input type="range" id="ds-b" min="2" max="10" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-c">\(c\)：<span id="ds-vc" class="val-num">3</span></label>
+                    <input type="range" id="ds-c" min="2" max="10" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="ds-row-k">
+                    <label for="ds-k">\(k\)：<span id="ds-vk" class="val-num">1</span></label>
+                    <input type="range" id="ds-k" min="1" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row" id="ds-row-p" style="display:none">
+                    <label for="ds-p">\(p\)：<span id="ds-vp" class="val-num">1</span></label>
+                    <input type="range" id="ds-p" min="1" max="3" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ds-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (分配律)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-21">
+            <p class="quiz-question"><strong>Q21.</strong> 化簡 \(2\sqrt{7}\,(\sqrt{14} - \sqrt{28})\)。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-21" value="A"><span class="option-text">A. \(14\sqrt{2} - \sqrt{28}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-21" value="B"><span class="option-text">B. \(14\sqrt{2} - 28\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-21" value="C"><span class="option-text">C. \(-14\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-21" value="D"><span class="option-text">D. \(14\sqrt{2} + 28\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。分配之後逐項化簡：
+              \[\begin{aligned} & 2\sqrt{98} - 2\sqrt{196} \\ &= 2 \times 7\sqrt{2} - 2 \times 14 \\ &= 14\sqrt{2} - 28 \end{aligned}\]
+              A 錯：只乘了第一項，\(\sqrt{28}\) 沒有乘到 \(2\sqrt{7}\)。<br>
+              C 錯：先把 \(\sqrt{14} - \sqrt{28}\) 當成 \(-\sqrt{14}\)（根號拆開減），得 \(2\sqrt{7} \times (-\sqrt{14}) = -14\sqrt{2}\)。<br>
+              D 錯：第二項的負號弄丟了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-22">
+            <p class="quiz-question"><strong>Q22.</strong> 化簡 \((\sqrt{6} + 2)(\sqrt{6} - 3)\)。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-22" value="A"><span class="option-text">A. \(12 - \sqrt{6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-22" value="B"><span class="option-text">B. \(-6\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-22" value="C"><span class="option-text">C. \(-\sqrt{6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-22" value="D"><span class="option-text">D. \(6 - \sqrt{6}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。展開成四項：
+              \[\begin{aligned} & 6 - 3\sqrt{6} + 2\sqrt{6} - 6 \\ &= -\sqrt{6} \end{aligned}\]
+              A 錯：\(2 \times (-3)\) 算成 \(+6\)，得 \(6 - \sqrt{6} + 6 = 12 - \sqrt{6}\)。<br>
+              B 錯：把 \(\sqrt{6} \times \sqrt{6}\) 算成 \(\sqrt{6}\)，得 \(\sqrt{6} - 3\sqrt{6} + 2\sqrt{6} - 6 = -6\)。<br>
+              D 錯：漏乘 \(2 \times (-3)\) 這一項。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 乘法公式
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-vector-square" aria-hidden="true"></i> 重點 12：乘法公式——根式也能套
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>第三冊 1-1 的乘法公式</strong>，把 \(a\)、\(b\) 換成根式照樣成立：</li>
+              <li><strong>和的平方</strong> \((a + b)^2 = a^2 + 2ab + b^2\)：
+                \[\begin{aligned} & (\sqrt{5} + \sqrt{2})^2 \\ &= 5 + 2\sqrt{10} + 2 \\ &= 7 + 2\sqrt{10} \end{aligned}\]</li>
+              <li><strong>差的平方</strong> \((a - b)^2 = a^2 - 2ab + b^2\)：
+                \[\begin{aligned} & (2\sqrt{3} - 1)^2 \\ &= 12 - 4\sqrt{3} + 1 \\ &= 13 - 4\sqrt{3} \end{aligned}\]</li>
+              <li><strong>平方差</strong> \((a + b)(a - b) = a^2 - b^2\)：
+                \[\begin{aligned} & (\sqrt{7} + 2)(\sqrt{7} - 2) \\ &= 7 - 4 = 3 \end{aligned}\]</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              先認出公式裡的 \(a\)、\(b\) 各是什麼，<strong>整項</strong>代進去平方。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>係數也要平方</strong>：\((2\sqrt{3})^2 = 2^2 \times 3 = 12\)，不是 \(2 \times 3 = 6\)。</li>
+              <li><strong>平方差讓根號消失</strong>：兩個括號只差中間的正負號時，乘出來沒有根號——這正是重點 13 要用的。</li>
+              <li><strong>常見錯誤</strong>：\((\sqrt{5} + \sqrt{2})^2 \ne 5 + 2\)，漏掉了中間項 \(2\sqrt{10}\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_formula.webp" alt="復古磁磚工坊風插圖：工作桌上一塊大正方形磁磚面板由四塊拼成，左上是一塊大的陶土橘正方形、右下是一塊小的翡翠綠正方形，另外兩塊是一樣大的鈷藍長方形；小瓷和阿岩一人一邊扶著面板。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：面積拼圖套公式</h3>
+            <p class="interactive-instruction">設 \(x = p\sqrt{a}\)、\(y = q\sqrt{b}\)（\(b = 1\) 時 \(y\) 是整數）。選一個公式，左邊的拼圖照實際長度畫，每一塊的面積就是公式裡的一項：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-formula" width="540" height="590"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公式</span>
+                    <div class="btn-group" id="fm-mode-group">
+                      <button class="pick-btn active" data-fm-mode="sum">和的平方</button>
+                      <button class="pick-btn" data-fm-mode="diff">差的平方</button>
+                      <button class="pick-btn" data-fm-mode="dsq">平方差</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fm-p">\(x\) 的係數 \(p\)：<span id="fm-vp" class="val-num">1</span></label>
+                    <input type="range" id="fm-p" min="1" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fm-a">\(x\) 根號裡的 \(a\)：<span id="fm-va" class="val-num">3</span></label>
+                    <input type="range" id="fm-a" min="2" max="7" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fm-q">\(y\) 的係數 \(q\)：<span id="fm-vq" class="val-num">1</span></label>
+                    <input type="range" id="fm-q" min="1" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fm-b">\(y\) 根號裡的 \(b\)：<span id="fm-vb" class="val-num">2</span></label>
+                    <input type="range" id="fm-b" min="1" max="7" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (乘法公式)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-23">
+            <p class="quiz-question"><strong>Q23.</strong> 化簡 \((\sqrt{11} - 2\sqrt{3})^2\)。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-23" value="A"><span class="option-text">A. \(23 - 4\sqrt{33}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-23" value="B"><span class="option-text">B. \(-1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-23" value="C"><span class="option-text">C. \(23 - 2\sqrt{33}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-23" value="D"><span class="option-text">D. \(23 + 4\sqrt{33}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。用差的平方 \(a^2 - 2ab + b^2\)，其中 \(a = \sqrt{11}\)、\(b = 2\sqrt{3}\)：\(a^2 = 11\)、\(b^2 = 12\)、\(2ab = 4\sqrt{33}\)，
+              \[\begin{aligned} & a^2 - 2ab + b^2 \\ &= 11 - 4\sqrt{33} + 12 \\ &= 23 - 4\sqrt{33} \end{aligned}\]
+              B 錯：寫成 \((\sqrt{11})^2 - (2\sqrt{3})^2 = 11 - 12\)，漏了中間項。<br>
+              C 錯：中間項少乘了 \(2\)。<br>
+              D 錯：差的平方，中間項是減號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-24">
+            <p class="quiz-question"><strong>Q24.</strong> 若 \(x = \sqrt{13} + 3\)、\(y = \sqrt{13} - 3\)，則 \(xy\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-24" value="A"><span class="option-text">A. \(22\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-24" value="B"><span class="option-text">B. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-24" value="C"><span class="option-text">C. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-24" value="D"><span class="option-text">D. \(\sqrt{13} - 9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。用平方差：\(xy = (\sqrt{13})^2 - 3^2 = 13 - 9 = 4\)。<br>
+              A 錯：中間應該是減號，算成 \(13 + 9\)。<br>
+              C 錯：\(3\) 忘了平方，算成 \(13 - 3\)。<br>
+              D 錯：把 \(\sqrt{13} \times \sqrt{13}\) 寫成 \(\sqrt{13}\)，它應該是 \(13\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 13: 利用共軛做分母有理化
+           ========================================== -->
+      <section class="concept-section" id="concept13">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> 重點 13：分母是兩項——乘共軛，用平方差消掉根號
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分母是兩項時</strong>，只乘一個根號消不掉根號；要乘它的<strong>共軛</strong>：兩項相同、只把中間的正負號換掉。</li>
+              <li><strong>為什麼有用</strong>：\((\sqrt{a} + \sqrt{b})(\sqrt{a} - \sqrt{b}) = a - b\)，平方差把根號全部消掉。</li>
+            </ul>
+
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT</span>
+              \(\frac{c}{\sqrt{a} + \sqrt{b}}\)：分子分母同乘 \(\sqrt{a} - \sqrt{b}\)<br>
+              \(\frac{c}{\sqrt{a} - \sqrt{b}}\)：分子分母同乘 \(\sqrt{a} + \sqrt{b}\)<br>
+              分母都會變成 \(a - b\)。
+            </div>
+
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>例</strong>：
+                \[\begin{aligned} \frac{1}{\sqrt{5} + \sqrt{3}} &= \frac{\sqrt{5} - \sqrt{3}}{5 - 3} \\ &= \frac{\sqrt{5} - \sqrt{3}}{2} \end{aligned}\]</li>
+              <li><strong>整數和根號也一樣</strong>：
+                \[\begin{aligned} \frac{4}{3 - \sqrt{5}} &= \frac{4(3 + \sqrt{5})}{9 - 5} \\ &= 3 + \sqrt{5} \end{aligned}\]</li>
+              <li><strong>常見錯誤</strong>：分母算成 \(a + b\)；或乘的時候沒有把中間的正負號換掉。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tl_conjugate.webp" alt="復古磁磚工坊風插圖：小瓷和阿岩各拿一塊花紋左右鏡像的方磚，兩塊一樣大，正要在工作桌上把兩塊並排拼在一起。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：找共軛、消根號</h3>
+            <p class="interactive-instruction">選分母的樣子（<strong>兩個根號</strong>或<strong>整數與根號</strong>）和中間的符號，上方是分母與共軛的配對，下方逐步化簡；兩項一樣時會說明為什麼不能乘共軛：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-conj" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cj-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">分母</span>
+                    <div class="btn-group" id="cj-kind-group">
+                      <button class="pick-btn active" data-cj-kind="rr">√a ± √b</button>
+                      <button class="pick-btn" data-cj-kind="ir">p ± √b</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">中間</span>
+                    <div class="btn-group" id="cj-sign-group">
+                      <button class="pick-btn active" data-cj-sign="+">＋</button>
+                      <button class="pick-btn" data-cj-sign="-">－</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cj-c">分子 \(c\)：<span id="cj-vc" class="val-num">2</span></label>
+                    <input type="range" id="cj-c" min="1" max="9" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="cj-row-a">
+                    <label for="cj-a">\(a\)：<span id="cj-va" class="val-num">7</span></label>
+                    <input type="range" id="cj-a" min="2" max="12" value="7" step="1">
+                  </div>
+                  <div class="slider-row" id="cj-row-p" style="display:none">
+                    <label for="cj-p">\(p\)：<span id="cj-vp" class="val-num">3</span></label>
+                    <input type="range" id="cj-p" min="1" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cj-b">\(b\)：<span id="cj-vb" class="val-num">5</span></label>
+                    <input type="range" id="cj-b" min="2" max="12" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cj-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (共軛有理化)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-25">
+            <p class="quiz-question"><strong>Q25.</strong> 將 \(\frac{6}{\sqrt{17} - \sqrt{11}}\) 的分母有理化。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-25" value="A"><span class="option-text">A. \(\sqrt{17} - \sqrt{11}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-25" value="B"><span class="option-text">B. \(6(\sqrt{17} + \sqrt{11})\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-25" value="C"><span class="option-text">C. \(\frac{3(\sqrt{17} + \sqrt{11})}{14}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-25" value="D"><span class="option-text">D. \(\sqrt{17} + \sqrt{11}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。分子分母同乘 \(\sqrt{17} + \sqrt{11}\)：
+              \[\begin{aligned} & \frac{6(\sqrt{17} + \sqrt{11})}{17 - 11} \\ &= \sqrt{17} + \sqrt{11} \end{aligned}\]
+              A 錯：分子寫成 \(6(\sqrt{17} - \sqrt{11})\)，共軛的正負號沒有換。<br>
+              B 錯：分母算出 \(6\) 之後忘了和分子約掉。<br>
+              C 錯：分母算成 \(17 + 11 = 28\)，得 \(\frac{6(\sqrt{17} + \sqrt{11})}{28}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-26">
+            <p class="quiz-question"><strong>Q26.</strong> 將 \(\frac{22}{5 + \sqrt{3}}\) 化為最簡根式。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-26" value="A"><span class="option-text">A. \(5 + \sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-26" value="B"><span class="option-text">B. \(\frac{11(5 - \sqrt{3})}{14}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-26" value="C"><span class="option-text">C. \(5 - \sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-26" value="D"><span class="option-text">D. \(\frac{11(5 - \sqrt{3})}{8}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。分子分母同乘 \(5 - \sqrt{3}\)，分母 \(5^2 - (\sqrt{3})^2 = 22\)：
+              \[\begin{aligned} & \frac{22(5 - \sqrt{3})}{25 - 3} \\ &= 5 - \sqrt{3} \end{aligned}\]
+              A 錯：分子寫成 \(22(5 + \sqrt{3})\)，共軛的正負號沒有換。<br>
+              B 錯：分母算成 \(25 + 3 = 28\)，得 \(\frac{22(5 - \sqrt{3})}{28}\)。<br>
+              D 錯：分母算成 \(5^2 - 3^2 = 16\)，\((\sqrt{3})^2\) 是 \(3\)，不是 \(9\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 根式運算速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>表示</strong>：\(a \times \sqrt{b} = a\sqrt{b}\)，\(\sqrt{b} \div a = \frac{\sqrt{b}}{a}\)。</li>
+              <li><strong>乘法</strong>：\(\sqrt{a} \times \sqrt{b} = \sqrt{ab}\)；係數乘係數、根號乘根號。</li>
+              <li><strong>除法</strong>：\(\sqrt{a} \div \sqrt{b} = \sqrt{a \div b}\)。</li>
+              <li><strong>最簡根式</strong>：根號裡是正整數、沒有平方因數，分母沒有根號。</li>
+              <li><strong>提出平方因數</strong>：\(\sqrt{b^2 c} = b\sqrt{c}\)。</li>
+              <li><strong>分母有理化</strong>：\(\frac{c}{\sqrt{b}} = \frac{c\sqrt{b}}{b}\)。</li>
+              <li><strong>分數與小數</strong>：小數先化分數；分開開根號，或根號裡擴分。</li>
+              <li><strong>同類方根</strong>：化成最簡根式後，根號裡相同。</li>
+              <li><strong>加減</strong>：同類方根係數相加減；\(\sqrt{a} + \sqrt{b} \ne \sqrt{a + b}\)。</li>
+              <li><strong>四則運算</strong>：先乘除、後加減，最後化成最簡根式。</li>
+              <li><strong>分配律</strong>：每一項都要乘到，再逐項化簡、合併。</li>
+              <li><strong>乘法公式</strong>：整項代入平方，別漏了中間項。</li>
+              <li><strong>共軛有理化</strong>：\(\frac{c}{\sqrt{a} \pm \sqrt{b}}\) 乘 \(\sqrt{a} \mp \sqrt{b}\)，分母變成 \(a - b\)。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-border-all"></i> 回到磁磚工坊：哪一種寫法最好用？</h4>
+              <h5><i class="fa-solid fa-equals"></i> 三種寫法一樣長</h5>
+              <p>面積 \(48\) 的大方磚，邊長寫成 \(\sqrt{48}\)、\(2\sqrt{12}\)、\(4\sqrt{3}\) 都對。\(48 = 4^2 \times 3\)，把 \(4^2\) 提到根號外，\(3\) 已經沒有平方因數，所以 \(4\sqrt{3}\) 是最簡根式。</p>
+              <h5><i class="fa-solid fa-layer-group"></i> 化簡之後才能合併</h5>
+              <p>阿岩手上還有一塊面積 \(12\) 的方磚，兩塊並排的總長是 \(\sqrt{48} + \sqrt{12}\)。直接看看不出能不能合併；化簡成 \(4\sqrt{3} + 2\sqrt{3}\)，同一種磚，合併得 \(6\sqrt{3}\)。這就是最簡根式最好用的地方。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>下一節〈畢氏定理〉要用直角三角形的三邊，算出像 \(\sqrt{2}\)、\(\sqrt{13}\) 這樣的長度，這一節的根式運算會一直用到。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
