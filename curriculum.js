@@ -110,7 +110,7 @@
       {
         "chapter": "第4章 一元二次方程式",
         "sections": [
-          { "code": "4-1", "title": "因式分解解一元二次方程式" },
+          { "code": "4-1", "title": "因式分解解一元二次方程式", "status": "completed" },
           { "code": "4-2", "title": "配方法與公式解" },
           { "code": "4-3", "title": "應用問題" }
         ]

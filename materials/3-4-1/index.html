@@ -4,39 +4,1467 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>4-1 因式分解解一元二次方程式 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>4-1 因式分解解一元二次方程式 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第4章 一元二次方程式</div>
-    <h1>4-1 因式分解解一元二次方程式</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第四章</span>
+        <h1>4-1 因式分解解一元二次方程式</h1>
+        <p>走進柑橘觀光果園：小柚出了一道猜數字的謎題，阿圃猜對了一個答案，卻漏掉了另一個。這一節先認識<strong>一元二次方程式</strong>和它的<strong>解</strong>，再用一個關鍵性質「<strong>若 \(A \times B = 0\)，則 \(A = 0\) 或 \(B = 0\)</strong>」，把上一章學的提公因式、乘法公式、十字交乘法，全部拿來解方程式；最後處理右邊不是 \(0\) 的方程式，以及已知根、反求係數的題型。</p>
+      </div>
+      <!-- Progress navigation (12 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-list-check"></i> 方程式的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 解的意義</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-xmark"></i> A×B=0</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-hand-holding"></i> 提公因式 x</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-box"></i> 提整組</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-ban"></i> 不可同除</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-shuffle"></i> 十字交乘</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-left-right"></i> 平方差</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-clone"></i> 重根</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> 先展開</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-key"></i> 已知一根</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-flag"></i> 已知兩根</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Woodcut Citrus Orchard)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(253, 186, 116, 0.25);">
+        <h2 class="section-title" style="color: #fdba74; border-bottom-color: rgba(253, 186, 116, 0.2);">
+          <i class="fa-solid fa-lemon" aria-hidden="true" style="color: #fdba74; text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);"></i> 課前暖身漫畫：答案不只一個？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            採完柑橘休息時，小柚出了一道謎題：「我想一個數，它的平方減掉它的 \(3\) 倍，剛好是 \(10\)。」阿圃試出 \(5\)：\(5^2 - 3 \times 5 = 10\)，以為答完了；小柚卻說還有另一個數也可以。設這個數是 \(x\)，謎題就是 \(x^2 - 3x = 10\)——<strong style="color:#fdba74">這種方程式往往有兩個解</strong>，這一節要學會把它們一次都找出來。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="木刻版畫風柑橘觀光果園四格漫畫：第 1 格小柚坐在柑橘樹下的木箱上，對阿圃說出猜數字的謎題；第 2 格阿圃扳著手指算，開心地喊出答案是 5；第 3 格小柚搖搖食指，說還有另一個數也可以；第 4 格阿圃抱著頭想了想，想到負 2 也成立，兩個人恍然大悟。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 一元二次方程式的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i> <span>重點 1：一元二次方程式的意義——先化簡，再判斷</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>定義</strong>：一個方程式經化簡後，可以寫成 \(ax^2 + bx + c = 0\)（其中 \(a \ne 0\)）的形式，就稱為 \(x\) 的<strong>一元二次方程式</strong>。</li>
+              <li><strong>三個條件</strong>：有<strong>等號</strong>；只有一種未知數（<strong>一元</strong>）；化簡後最高次數是 \(2\)（<strong>二次</strong>）。</li>
+              <li><strong>一定要先化簡</strong>：\(x^2 + 3x = x^2 - 8\) 移項後 \(x^2\) 互相抵消，剩 \(3x + 8 = 0\)，是一元一次方程式。</li>
+              <li><strong>方程式和多項式不同</strong>：\(x^2 + x - 3\) 沒有等號，是二次式，不是方程式。</li>
+              <li>\(b\)、\(c\) 可以是 \(0\)：\(2x^2 = 5x\)、\(6x^2 - 15 = 0\) 都是一元二次方程式。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>式子</th><th>化簡後</th><th>判斷</th></tr></thead>
+                <tbody>
+                  <tr><td>\(2x^2 = 5x\)</td><td>\(2x^2 - 5x = 0\)</td><td>是</td></tr>
+                  <tr><td>\((x + 1)(x - 6) = 4\)</td><td>\(x^2 - 5x - 10 = 0\)</td><td>是</td></tr>
+                  <tr><td>\(x^2 + 3x = x^2 - 8\)</td><td>\(3x + 8 = 0\)</td><td>一元一次</td></tr>
+                  <tr><td>\(x^2 + x - 3\)</td><td>沒有等號</td><td>不是方程式</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・一元二次方程式</span>
+              經化簡後形如
+              \[ax^2 + bx + c = 0 \quad (a \ne 0)\]
+              的等式，稱為 \(x\) 的一元二次方程式。
+            </div>
+
+            <div class="illustration-container">
+              <img src="oc_kind.webp" alt="木刻版畫風柑橘觀光果園插圖：集貨棚裡，小柚把剛採下的柑橘分別放進三個不同顏色的木箱；阿圃站在旁邊，舉起一顆柑橘仔細端詳，決定要放進哪一箱。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：方程式分類檢查站</h3>
+            <p class="interactive-instruction">選一個式子，看它逐一通過（或卡在）哪一關：有沒有等號、化簡後長什麼樣子、有幾種未知數、最高幾次。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-kind" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="kd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">式子</span>
+                    <div class="btn-group" id="kd-group">
+                      <button class="pick-btn active" data-kd="k1">\(5x^2 = 3x\)</button>
+                      <button class="pick-btn" data-kd="k2">\((x + 2)(x - 5) = 3\)</button>
+                      <button class="pick-btn" data-kd="k3">\(x^2 + 4x = x^2 - 6\)</button>
+                      <button class="pick-btn" data-kd="k4">\(x(x + 3) = x^2 - 2x + 7\)</button>
+                      <button class="pick-btn" data-kd="k5">\(3x^2 - 2x + 1\)</button>
+                      <button class="pick-btn" data-kd="k6">\(x^2 + y = 10\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="kd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (一元二次方程式的意義)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列何者是 \(x\) 的一元二次方程式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-1" value="A"><span class="option-text">A. \(x^2 - 3x + 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-1" value="B"><span class="option-text">B. \(x^2 + 2x = x^2 - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-1" value="C"><span class="option-text">C. \((x - 1)(x + 4) = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-1" value="D"><span class="option-text">D. \(x^2 + 2y = 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。展開得 \(x^2 + 3x - 4 = 0\)：有等號、只有 \(x\)、最高 \(2\) 次。<br>
+              A 錯：沒有等號，是二次式，不是方程式。<br>
+              B 錯：移項後 \(x^2\) 抵消，剩 \(2x + 5 = 0\)，是一元一次方程式。<br>
+              D 錯：有 \(x\)、\(y\) 兩種未知數，不是一元。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 方程式 \((3x - 1)^2 = 9x^2 + 4\) 化簡後，是哪一種方程式？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-2" value="A"><span class="option-text">A. 一元二次方程式，因為原式有平方</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-2" value="B"><span class="option-text">B. 一元一次方程式</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-2" value="C"><span class="option-text">C. 不是方程式</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-2" value="D"><span class="option-text">D. 二元一次方程式</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。左邊展開後移項：
+              \[\begin{aligned} & 9x^2 - 6x + 1 = 9x^2 + 4 \\ & -6x - 3 = 0 \end{aligned}\]
+              \(x^2\) 項抵消了，最高只剩 \(1\) 次，是一元一次方程式。<br>
+              A 錯：要看<strong>化簡後</strong>的次數，不是看原式有沒有平方。<br>
+              C 錯：有等號，是方程式。<br>
+              D 錯：只有 \(x\) 一種未知數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 解的意義
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>重點 2：解的意義——代入後兩邊相等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>解（根）</strong>：把某數代入方程式的未知數，使等號左右兩邊的值相等，這個數就是方程式的<strong>解</strong>，也叫做<strong>根</strong>。</li>
+              <li><strong>解方程式</strong>：求出方程式所有解的過程。</li>
+              <li><strong>判別方法</strong>：分別算出左邊、右邊的值，相等就是解。例如判別 \(x^2 - 3x = 4\)：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>代入</th><th>左邊 \(x^2 - 3x\)</th><th>右邊</th><th>是解嗎？</th></tr></thead>
+                <tbody>
+                  <tr><td>\(x = 4\)</td><td>\(16 - 12 = 4\)</td><td>\(4\)</td><td>是</td></tr>
+                  <tr><td>\(x = 2\)</td><td>\(4 - 6 = -2\)</td><td>\(4\)</td><td>不是</td></tr>
+                  <tr><td>\(x = -1\)</td><td>\(1 + 3 = 4\)</td><td>\(4\)</td><td>是</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>代入負數要加括號</strong>：\((-1)^2 = 1\)，不是 \(-1^2 = -1\)。</li>
+              <li>一元二次方程式<strong>最多有兩個解</strong>，上例的兩個解是 \(4\) 和 \(-1\)。</li>
+              <li><strong>代入法適合「判別」，不適合「求解」</strong>：係數大一點就試不完，接下來要學更有效率的方法。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_root.webp" alt="木刻版畫風柑橘觀光果園插圖：阿圃把一籃柑橘放上檯面式天平的左盤，右盤放著秤錘，天平的橫桿保持水平；小柚蹲在旁邊，視線和橫桿一樣高，正在確認兩邊是不是一樣重。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：代入檢驗天平</h3>
+            <p class="interactive-instruction">選一個方程式，拉滑桿代入不同的 \(x\)。左右兩邊的值一樣，天平才會平衡——找出全部的解：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-root" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方程式</span>
+                    <div class="btn-group" id="rt-group">
+                      <button class="pick-btn active" data-rt="e1">\(x^2 - 2x = 15\)</button>
+                      <button class="pick-btn" data-rt="e2">\(x^2 + x = 12\)</button>
+                      <button class="pick-btn" data-rt="e3">\(2x^2 - 3x = x + 6\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rt-x">代入的 \(x\)：<span id="rt-vx" class="val-num">1</span></label>
+                    <input type="range" id="rt-x" min="-6" max="6" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (解的意義)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 下列哪一個數是一元二次方程式 \(x^2 - 3x = 28\) 的解？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-3" value="A"><span class="option-text">A. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-3" value="B"><span class="option-text">B. \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-3" value="C"><span class="option-text">C. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-3" value="D"><span class="option-text">D. \(7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。代入 \(x = 7\)：左邊 \(7^2 - 3 \times 7 = 49 - 21 = 28\)，等於右邊。<br>
+              A 錯：\(4^2 - 3 \times 4 = 4\)，不是 \(28\)。<br>
+              B 錯：\((-7)^2 - 3 \times (-7)\)<wbr>\({}= 49 + 21 = 70\)。（另一個解是 \(-4\)，不是 \(-7\)。）<br>
+              C 錯：\(14^2 - 3 \times 14 = 196 - 42 = 154\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 判別 \(x = -3\) 是不是 \(2x^2 + 5x = 3\) 的解，下列哪一個計算與結論正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-4" value="A"><span class="option-text">A. \(2 \times (-3)^2 + 5 \times (-3) = 3\)，是解</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-4" value="B"><span class="option-text">B. \(2 \times (-9) + 5 \times (-3) = -33\)，不是解</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-4" value="C"><span class="option-text">C. \([2 \times (-3)]^2 + 5 \times (-3) = 21\)，不是解</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-4" value="D"><span class="option-text">D. 左邊等於 \(3\)，但負數不能當解</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\((-3)^2 = 9\)，所以左邊 \(= 2 \times 9 - 15 = 3\)，等於右邊，\(-3\) 是解。<br>
+              B 錯：把 \((-3)^2\) 算成 \(-9\)；負數的平方是正的。<br>
+              C 錯：\(2x^2\) 是先平方再乘 \(2\)，不是把 \(2x\) 整個平方。<br>
+              D 錯：只要使兩邊相等，負數也是解。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: A × B = 0
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i> <span>重點 3：若 \(A \times B = 0\)，則 \(A = 0\) 或 \(B = 0\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>兩數都不是 \(0\)</strong>，乘積一定不是 \(0\)。</li>
+              <li>反過來說：<strong>乘積是 \(0\)，兩數至少有一個是 \(0\)</strong>。</li>
+              <li>「\(A = 0\) <strong>或</strong> \(B = 0\)」包含三種情形：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>情形</th><th>\(A \times B\)</th><th>可能嗎？</th></tr></thead>
+                <tbody>
+                  <tr><td>\(A = 0\)，\(B \ne 0\)</td><td>\(0\)</td><td>可能</td></tr>
+                  <tr><td>\(A \ne 0\)，\(B = 0\)</td><td>\(0\)</td><td>可能</td></tr>
+                  <tr><td>\(A = 0\)，\(B = 0\)</td><td>\(0\)</td><td>可能</td></tr>
+                  <tr><td>\(A \ne 0\)，\(B \ne 0\)</td><td>不是 \(0\)</td><td>不可能</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>用來解方程式</strong>：\(x - 4\) 與 \(2x + 5\) 都是數，所以
+                \[\begin{aligned} & (x - 4)(2x + 5) = 0 \\ & x - 4 = 0 \text{ 或 } 2x + 5 = 0 \\ & x = 4 \text{ 或 } x = -\frac{5}{2} \end{aligned}\]
+              方程式的解為 \(4\) 和 \(-\frac{5}{2}\)。</li>
+              <li><strong>過程寫「或」、結論寫「和」</strong>：兩個都是解。</li>
+              <li><strong>只有「乘積 \(= 0\)」才能這樣拆</strong>，乘積是別的數就不行（重點 10）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・乘積為 0</span>
+              若 \(A\)、\(B\) 為兩數，且 \(A \times B = 0\)，則 \(A = 0\) 或 \(B = 0\)。
+            </div>
+
+            <div class="illustration-container">
+              <img src="oc_zero.webp" alt="木刻版畫風柑橘觀光果園插圖：小柚把一個空木箱倒過來給阿圃看，箱子裡一顆柑橘都沒有；阿圃身旁疊著三個一模一樣的空木箱。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：乘法表裡的「十」字</h3>
+            <p class="interactive-instruction">拉動 \(A\)、\(B\)，看看目前的格子落在哪裡。乘積是 \(0\) 的格子都塗成橘色，它們排成什麼形狀？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-zero" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="zr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="zr-a">\(A\)：<span id="zr-va" class="val-num">2</span></label>
+                    <input type="range" id="zr-a" min="-4" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="zr-b">\(B\)：<span id="zr-vb" class="val-num">-3</span></label>
+                    <input type="range" id="zr-b" min="-4" max="4" value="-3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="zr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (乘積為 0)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 已知 \(A\)、\(B\) 為兩數，且 \(A \times B = 0\)。下列敘述何者<strong>一定</strong>正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-5" value="A"><span class="option-text">A. \(A = 0\) 且 \(B = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-5" value="B"><span class="option-text">B. \(A = 0\) 或 \(B = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-5" value="C"><span class="option-text">C. \(A\)、\(B\) 都不是 \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-5" value="D"><span class="option-text">D. 若 \(A = 0\)，則 \(B\) 一定不是 \(0\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。乘積是 \(0\)，兩數至少有一個是 \(0\)。<br>
+              A 錯：不一定兩個都是 \(0\)，例如 \(0 \times 5 = 0\)。<br>
+              C 錯：兩數都不是 \(0\) 時，乘積不會是 \(0\)。<br>
+              D 錯：\(A = 0\) 時 \(B\) 可以是任何數，也可以是 \(0\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 方程式 \((x + 7)(3x - 2) = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-6" value="A"><span class="option-text">A. \(7\) 和 \(-\frac{2}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-6" value="B"><span class="option-text">B. \(-7\) 和 \(\frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-6" value="C"><span class="option-text">C. \(-7\) 和 \(\frac{2}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-6" value="D"><span class="option-text">D. \(-7\) 和 \(2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & x + 7 = 0 \text{ 或 } 3x - 2 = 0 \\ & x = -7 \text{ 或 } x = \frac{2}{3} \end{aligned}\]
+              A 錯：兩個解的正負號都弄反了。<br>
+              B 錯：\(3x = 2\) 要除以 \(3\)，得 \(\frac{2}{3}\)，不是 \(\frac{3}{2}\)。<br>
+              D 錯：\(3x - 2 = 0\) 只移了項，忘了除以 \(3\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 提公因式 x
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-hand-holding" aria-hidden="true"></i> <span>重點 4：提公因式 \(x\)——\(x = 0\) 一定是一個解</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>形如 \(ax^2 + bx = 0\)</strong>（沒有常數項）：每一項都有 \(x\)，提出 \(x\)。</li>
+              <li>例：
+                \[\begin{aligned} & 3x^2 + 8x = 0 \\ & x(3x + 8) = 0 \\ & x = 0 \text{ 或 } 3x + 8 = 0 \end{aligned}\]
+              解為 \(0\) 和 \(-\frac{8}{3}\)。</li>
+              <li><strong>\(x = 0\) 不能漏掉</strong>：它讓第一個因式等於 \(0\)。</li>
+              <li><strong>不可以兩邊同除以 \(x\)</strong>：\(x\) 可能是 \(0\)，除下去就把 \(x = 0\) 這個解丟掉了。</li>
+              <li><strong>係數有分數，先同乘</strong>：\(\frac{1}{2}x^2 - 3x = 0\) 同乘以 \(2\)，得 \(x^2 - 6x = 0\)，解為 \(0\) 和 \(6\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・因式分解解方程式的步驟</span>
+              ① 移項，使右邊為 \(0\)<br>
+              ② 左邊分解成兩個一次式的乘積<br>
+              ③ 令每個因式分別為 \(0\)<br>
+              ④ 解這兩個一元一次方程式
+            </div>
+
+            <div class="illustration-container">
+              <img src="oc_common.webp" alt="木刻版畫風柑橘觀光果園插圖：柑橘樹下並排放著三個竹籃，阿圃從每一個竹籃裡各拿出一顆柑橘，放進自己腰間的小布袋；小柚在旁邊扶著竹籃。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：提出 \(x\) 的工作台</h3>
+            <p class="interactive-instruction">調整 \(x^2\) 項與 \(x\) 項的係數，再切換 \(x^2\) 係數的分母，看看係數是分數時要先多做哪一步：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-common" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">分母</span>
+                    <div class="btn-group" id="cm-d-group">
+                      <button class="pick-btn active" data-cm-d="1">整數係數</button>
+                      <button class="pick-btn" data-cm-d="2">\(x^2\) 係數除以 \(2\)</button>
+                      <button class="pick-btn" data-cm-d="3">\(x^2\) 係數除以 \(3\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cm-a">\(x^2\) 項係數：<span id="cm-va" class="val-num">2</span></label>
+                    <input type="range" id="cm-a" min="-5" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cm-b">\(x\) 項係數：<span id="cm-vb" class="val-num">-5</span></label>
+                    <input type="range" id="cm-b" min="-9" max="9" value="-5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (提公因式 \(x\))</h3>
+
+          <div class="quiz-card" data-quiz="4-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 一元二次方程式 \(7x^2 + 9x = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-7" value="A"><span class="option-text">A. 只有 \(-\frac{9}{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-7" value="B"><span class="option-text">B. \(0\) 和 \(\frac{9}{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-7" value="C"><span class="option-text">C. \(0\) 和 \(-\frac{7}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-7" value="D"><span class="option-text">D. \(0\) 和 \(-\frac{9}{7}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & x(7x + 9) = 0 \\ & x = 0 \text{ 或 } 7x + 9 = 0 \end{aligned}\]
+              解為 \(0\) 和 \(-\frac{9}{7}\)。<br>
+              A 錯：兩邊同除以 \(x\)，漏掉了 \(x = 0\)。<br>
+              B 錯：\(7x = -9\)，解是負的。<br>
+              C 錯：分子分母寫反了，應該是 \(-9 \div 7\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 一元二次方程式 \(\frac{1}{4}x^2 + 5x = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-8" value="A"><span class="option-text">A. \(0\) 和 \(-20\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-8" value="B"><span class="option-text">B. \(0\) 和 \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-8" value="C"><span class="option-text">C. 只有 \(-20\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-8" value="D"><span class="option-text">D. \(0\) 和 \(-\frac{5}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩邊同乘以 \(4\)：
+              \[\begin{aligned} & x^2 + 20x = 0 \\ & x(x + 20) = 0 \end{aligned}\]
+              解為 \(0\) 和 \(-20\)。<br>
+              B 錯：\(x + 20 = 0\) 得 \(x = -20\)，不是 \(20\)。<br>
+              C 錯：漏掉了 \(x = 0\)。<br>
+              D 錯：\(\frac{1}{4}x = -5\) 要乘以 \(4\)，不是乘以 \(\frac{1}{4}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 提整組公因式
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-box" aria-hidden="true"></i> <span>重點 5：提整組公因式——括號當成一個數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>兩項都有同一組括號</strong>：把整組括號當成一個數提出來，不必展開。</li>
+              <li>例：
+                \[\begin{aligned} & 3x(2x + 1) - 4(2x + 1) = 0 \\ & (2x + 1)(3x - 4) = 0 \end{aligned}\]
+              解為 \(-\frac{1}{2}\) 和 \(\frac{4}{3}\)。</li>
+              <li><strong>前面是減號</strong>：\(-4(2x + 1)\) 提出 \((2x + 1)\) 後，留下的是 \(-4\)，正負號要跟著走。</li>
+              <li><strong>中括號裡要化簡</strong>：
+                \[\begin{aligned} & (x - 3)(x + 5) + 2(x - 3) = 0 \\ & (x - 3)[(x + 5) + 2] = 0 \\ & (x - 3)(x + 7) = 0 \end{aligned}\]
+              解為 \(3\) 和 \(-7\)。</li>
+              <li>展開再整理也算得出來，但步驟多、容易算錯。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_group.webp" alt="木刻版畫風柑橘觀光果園插圖：木架上擺著兩組一模一樣的果醬罐，每組三罐；小柚把兩組並在一起，用一條麻繩整組綁起來，阿圃在旁邊幫忙按住。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：整組提出工作台</h3>
+            <p class="interactive-instruction">調整共同的括號 \((ux + v)\)、前面那一項，以及後面那一項的係數 \(k\)。看看提出括號後，中括號裡剩下什麼：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-group" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="gp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="gp-u">括號 \(ux + v\) 的 \(u\)：<span id="gp-vu" class="val-num">2</span></label>
+                    <input type="range" id="gp-u" min="1" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="gp-v">括號 \(ux + v\) 的 \(v\)：<span id="gp-vv" class="val-num">3</span></label>
+                    <input type="range" id="gp-v" min="-6" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="gp-f">前面那一項：<span id="gp-vf" class="val-num">2x</span></label>
+                    <input type="range" id="gp-f" min="0" max="4" value="0" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="gp-k">後面那一項的係數 \(k\)：<span id="gp-vk" class="val-num">-5</span></label>
+                    <input type="range" id="gp-k" min="-6" max="6" value="-5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="gp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (提整組公因式)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 一元二次方程式 \(3x(4x - 5) + 2(4x - 5) = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-9" value="A"><span class="option-text">A. \(\frac{5}{4}\) 和 \(\frac{2}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-9" value="B"><span class="option-text">B. \(-\frac{5}{4}\) 和 \(-\frac{2}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-9" value="C"><span class="option-text">C. \(\frac{5}{4}\) 和 \(-\frac{2}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-9" value="D"><span class="option-text">D. \(\frac{4}{5}\) 和 \(-\frac{3}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。提出 \((4x - 5)\)：
+              \[\begin{aligned} & (4x - 5)(3x + 2) = 0 \\ & 4x - 5 = 0 \text{ 或 } 3x + 2 = 0 \end{aligned}\]
+              解為 \(\frac{5}{4}\) 和 \(-\frac{2}{3}\)。<br>
+              A 錯：\(3x + 2 = 0\) 得 \(x = -\frac{2}{3}\)，是負的。<br>
+              B 錯：\(4x - 5 = 0\) 得 \(x = \frac{5}{4}\)，是正的。<br>
+              D 錯：兩個分數都上下顛倒了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 一元二次方程式 \((x + 4)(x - 1) - 11(x - 1) = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-10" value="A"><span class="option-text">A. \(-1\) 和 \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-10" value="B"><span class="option-text">B. \(1\) 和 \(-15\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-10" value="C"><span class="option-text">C. \(1\) 和 \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-10" value="D"><span class="option-text">D. \(1\) 和 \(7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。提出 \((x - 1)\)，中括號裡化簡：
+              \[\begin{aligned} & (x - 1)[(x + 4) - 11] = 0 \\ & (x - 1)(x - 7) = 0 \end{aligned}\]
+              解為 \(1\) 和 \(7\)。<br>
+              A 錯：\(x - 1 = 0\) 得 \(x = 1\)，不是 \(-1\)。<br>
+              B 錯：把 \(-11\) 寫成 \(+11\)，得 \(x + 15 = 0\)。<br>
+              C 錯：\(x - 7 = 0\) 得 \(x = 7\)，不是 \(-7\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 先移項再提公因式，不可同除
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ban" aria-hidden="true"></i> <span>重點 6：兩邊有相同因式——先移項，不可以同除</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先移項使右邊為 \(0\)</strong>，再提出兩邊共同的因式。</li>
+              <li>例：解 \((x + 2)(3x - 1)\)<wbr>\({}= (x + 2)(x + 7)\)。移項後提出 \((x + 2)\)：
+                \[\begin{aligned} & (x + 2)[3x - 1 - (x + 7)] = 0 \\ & (x + 2)(2x - 8) = 0 \end{aligned}\]
+              解為 \(-2\) 和 \(4\)。</li>
+              <li><strong>中括號裡是整組相減</strong>：\(-(x + 7)\) 的每一項都要變號。</li>
+              <li><strong>為什麼不能兩邊同除以 \((x + 2)\)？</strong>同除後得 \(3x - 1 = x + 7\)，只剩 \(x = 4\)。但 \(x = -2\) 時 \(x + 2 = 0\)，兩邊都是 \(0\)，等號成立——它也是解，卻被除掉了。</li>
+              <li><strong>原因</strong>：\(0\) 不能當除數；含 \(x\) 的式子可能等於 \(0\)，就不能拿來同除。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_divide.webp" alt="木刻版畫風柑橘觀光果園插圖：果園步道在一塊木牌前分成兩條岔路，兩條路兩旁都種著柑橘樹；小柚停在木牌前，回頭指著另一條岔路，揹著竹簍的阿圃差點只往其中一條走。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：同除會丟掉哪個解？</h3>
+            <p class="interactive-instruction">選一題，先看正確的解法，再切到「兩邊同除」，比對少了哪一個解，並代回去驗證它真的是解：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-divide" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="dv-prob-group">
+                      <button class="pick-btn active" data-dv-prob="w1">\((x - 2)(3x + 1) = (x - 2)(x + 7)\)</button>
+                      <button class="pick-btn" data-dv-prob="w2">\((x + 5)(2x - 3) = (x + 5)(x + 1)\)</button>
+                      <button class="pick-btn" data-dv-prob="w3">\((2x - 1)^2 = (2x - 1)(x + 3)\)</button>
+                      <button class="pick-btn" data-dv-prob="w4">\(x(x + 6) = 7(x + 6)\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">解法</span>
+                    <div class="btn-group" id="dv-mode-group">
+                      <button class="pick-btn active" data-dv-mode="right">先移項、提公因式</button>
+                      <button class="pick-btn" data-dv-mode="wrong">兩邊同除</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (不可同除)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 小妍解方程式 \(x(x - 8) = 5(x - 8)\) 時，把兩邊同除以 \((x - 8)\)，得到 \(x = 5\)。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-11" value="A"><span class="option-text">A. 正確，方程式只有一個解 \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-11" value="B"><span class="option-text">B. 不正確，還有 \(x = 8\) 這個解</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-11" value="C"><span class="option-text">C. 不正確，解應該是 \(-5\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-11" value="D"><span class="option-text">D. 不正確，還有 \(x = 0\) 這個解</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。正確作法是先移項再提公因式：
+              \[\begin{aligned} & x(x - 8) - 5(x - 8) = 0 \\ & (x - 8)(x - 5) = 0 \end{aligned}\]
+              解為 \(8\) 和 \(5\)。\(x = 8\) 時 \(x - 8 = 0\)，兩邊都是 \(0\)，同除就把它丟掉了。<br>
+              A 錯：漏掉了 \(x = 8\)。<br>
+              C 錯：\(x = 5\) 本身是對的。<br>
+              D 錯：代入 \(0\)：左邊 \(0\)、右邊 \(5 \times (-8) = -40\)，不相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 一元二次方程式 \((2x + 3)(x - 4)\)<wbr>\({}= (2x + 3)(3x + 2)\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-12" value="A"><span class="option-text">A. \(-\frac{3}{2}\) 和 \(-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-12" value="B"><span class="option-text">B. 只有 \(-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-12" value="C"><span class="option-text">C. \(-\frac{3}{2}\) 和 \(-1\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-12" value="D"><span class="option-text">D. \(\frac{3}{2}\) 和 \(-3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。移項後提出 \((2x + 3)\)：
+              \[\begin{aligned} & (2x + 3)[x - 4 - (3x + 2)] = 0 \\ & (2x + 3)(-2x - 6) = 0 \end{aligned}\]
+              \(2x + 3 = 0\) 或 \(-2x - 6 = 0\)，解為 \(-\frac{3}{2}\) 和 \(-3\)。<br>
+              B 錯：兩邊同除以 \((2x + 3)\)，漏掉了 \(-\frac{3}{2}\)。<br>
+              C 錯：\(-(3x + 2)\) 只變了第一項的號，寫成 \(x - 4 - 3x + 2 = -2x - 2\)，得 \(x = -1\)。<br>
+              D 錯：\(2x + 3 = 0\) 得 \(x = -\frac{3}{2}\)，是負的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 十字交乘法解方程式
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shuffle" aria-hidden="true"></i> <span>重點 7：十字交乘法——先整理，再分解</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分解之前先整理</strong>：
+                <ul class="bullet-list">
+                  <li>右邊不是 \(0\)：先<strong>移項</strong>。</li>
+                  <li>各項有公因數：等號兩邊<strong>同除</strong>以它，係數變小比較好分解。</li>
+                  <li>\(x^2\) 係數是負的：同除以負數，讓它變成正的。</li>
+                </ul>
+              </li>
+              <li>例：
+                \[\begin{aligned} & 3x^2 + 3x = 18 \\ & 3x^2 + 3x - 18 = 0 \\ & x^2 + x - 6 = 0 \\ & (x + 3)(x - 2) = 0 \end{aligned}\]
+              解為 \(-3\) 和 \(2\)。</li>
+              <li>例：\(2x^2 - x - 3 = 0\)，左欄拆 \(x\)、\(2x\)，右欄 \(1\)、\(-3\)，交叉相加 \(-3x + 2x = -x\)，得 \((x + 1)(2x - 3) = 0\)，解為 \(-1\) 和 \(\frac{3}{2}\)。</li>
+              <li><strong>同除只能用在方程式</strong>：等號兩邊同除，解不變；單純分解多項式時，公因數要「提出來」，不能除掉。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_cross.webp" alt="木刻版畫風柑橘觀光果園插圖：果園工具棚的木牆前，小柚和阿圃各拉著一條麻繩，兩條麻繩在兩人中間交叉成一個叉叉的形狀，每一條都伸出交叉點的兩側。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：十字交乘解題台</h3>
+            <p class="interactive-instruction">選一題，按「下一步」逐步整理。到了分解那一步，下方會出現十字交乘的直式：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cross" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cx-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="cx-prob-group">
+                      <button class="pick-btn active" data-cx-prob="k1">\(x^2 + 2x - 24 = 0\)</button>
+                      <button class="pick-btn" data-cx-prob="k2">\(2x^2 - 7x = 15\)</button>
+                      <button class="pick-btn" data-cx-prob="k3">\(-3x^2 + 6x + 45 = 0\)</button>
+                      <button class="pick-btn" data-cx-prob="k4">\(12x^2 + 8x = 4\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="cx-prev">上一步</button>
+                      <span class="step-counter" id="cx-step">1 / 1</span>
+                      <button class="pick-btn" id="cx-next">下一步</button>
+                      <button class="pick-btn" id="cx-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cx-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (十字交乘法)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 一元二次方程式 \(x^2 - 5x - 36 = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-13" value="A"><span class="option-text">A. \(-9\) 和 \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-13" value="B"><span class="option-text">B. \(12\) 和 \(-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-13" value="C"><span class="option-text">C. \(9\) 和 \(-4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-13" value="D"><span class="option-text">D. \(9\) 和 \(4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。找相乘 \(-36\)、相加 \(-5\) 的兩數：\(-9\) 和 \(4\)。
+              \[(x - 9)(x + 4) = 0\]
+              解為 \(9\) 和 \(-4\)。<br>
+              A 錯：因式是 \((x - 9)(x + 4)\)，解要變號，是 \(9\) 和 \(-4\)。<br>
+              B 錯：\((x - 12)(x + 3) = x^2 - 9x - 36\)，中間項不合。<br>
+              D 錯：\(9 \times 4 = 36\)，常數項是正的，不合。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 一元二次方程式 \(-2x^2 + 10x = -28\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-14" value="A"><span class="option-text">A. \(-7\) 和 \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-14" value="B"><span class="option-text">B. \(7\) 和 \(-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-14" value="C"><span class="option-text">C. \(7\) 和 \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-14" value="D"><span class="option-text">D. 只有 \(7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。先移項，再同除以 \(-2\)：
+              \[\begin{aligned} & -2x^2 + 10x + 28 = 0 \\ & x^2 - 5x - 14 = 0 \\ & (x - 7)(x + 2) = 0 \end{aligned}\]
+              解為 \(7\) 和 \(-2\)。<br>
+              A 錯：同除以 \(-2\) 時 \(x\) 項沒變號，誤寫成 \(x^2 + 5x - 14 = 0\)。<br>
+              C 錯：\((x - 7)(x - 2) = x^2 - 9x + 14\)，不合。<br>
+              D 錯：負數也可以是解，\(-2\) 代回原式成立。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 平方差公式
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-left-right" aria-hidden="true"></i> <span>重點 8：平方差公式——兩根互為相反數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>形如 \(a^2x^2 - b^2 = 0\)</strong>：用平方差公式 \(A^2 - B^2 = (A + B)(A - B)\)。</li>
+              <li>例：
+                \[\begin{aligned} & 9x^2 - 25 = 0 \\ & (3x)^2 - 5^2 = 0 \\ & (3x + 5)(3x - 5) = 0 \end{aligned}\]
+              解為 \(-\frac{5}{3}\) 和 \(\frac{5}{3}\)。</li>
+              <li><strong>兩根互為相反數</strong>：不要只寫正的那一個。</li>
+              <li><strong>\(x^2\) 項是負的</strong>：\(36 - x^2 = 0\) 先同乘以 \(-1\) 得 \(x^2 - 36 = 0\)；或直接分解成 \((6 + x)(6 - x) = 0\)。解都是 \(-6\) 和 \(6\)。</li>
+              <li><strong>常數在右邊</strong>：\(4x^2 = 49\) 先移項成 \(4x^2 - 49 = 0\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・乘法公式</span>
+              平方差：\(A^2 - B^2 = (A + B)(A - B)\)<br>
+              和的平方：\(A^2 + 2AB + B^2 = (A + B)^2\)<br>
+              差的平方：\(A^2 - 2AB + B^2 = (A - B)^2\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="oc_diff.webp" alt="木刻版畫風柑橘觀光果園插圖：一棵柑橘樹的左右兩側各架著一座一模一樣的採果梯，小柚和阿圃分別站在左右兩座梯子的同一階，兩人離樹幹一樣遠，左右對稱。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：平方差與數線</h3>
+            <p class="interactive-instruction">調整 \(a\)、\(b\)，方程式是 \(a^2x^2 - b^2 = 0\)；切換三種寫法。數線上兩個根永遠在 \(0\) 的兩側、距離一樣：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-diff" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="df-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">寫法</span>
+                    <div class="btn-group" id="df-mode-group">
+                      <button class="pick-btn active" data-df-mode="std">\(a^2x^2 - b^2 = 0\)</button>
+                      <button class="pick-btn" data-df-mode="neg">\(b^2 - a^2x^2 = 0\)</button>
+                      <button class="pick-btn" data-df-mode="move">\(a^2x^2 = b^2\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="df-a">\(a\)：<span id="df-va" class="val-num">2</span></label>
+                    <input type="range" id="df-a" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="df-b">\(b\)：<span id="df-vb" class="val-num">3</span></label>
+                    <input type="range" id="df-b" min="1" max="9" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="df-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平方差公式)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 一元二次方程式 \(49x^2 - 36 = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-15" value="A"><span class="option-text">A. 只有 \(\frac{6}{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-15" value="B"><span class="option-text">B. \(\frac{36}{49}\) 和 \(-\frac{36}{49}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-15" value="C"><span class="option-text">C. \(\frac{7}{6}\) 和 \(-\frac{7}{6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-15" value="D"><span class="option-text">D. \(-\frac{6}{7}\) 和 \(\frac{6}{7}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & (7x)^2 - 6^2 = 0 \\ & (7x + 6)(7x - 6) = 0 \end{aligned}\]
+              解為 \(-\frac{6}{7}\) 和 \(\frac{6}{7}\)。<br>
+              A 錯：漏掉了負的那一個。<br>
+              B 錯：\(49\) 是 \(7^2\)、\(36\) 是 \(6^2\)，要先開出 \(7x\) 與 \(6\)。<br>
+              C 錯：\(7x = 6\) 得 \(x = \frac{6}{7}\)，分子分母寫反了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 一元二次方程式 \(9x^2 = 100\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-16" value="A"><span class="option-text">A. \(\frac{10}{3}\) 和 \(-\frac{10}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-16" value="B"><span class="option-text">B. 只有 \(\frac{10}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-16" value="C"><span class="option-text">C. \(\frac{100}{9}\) 和 \(-\frac{100}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-16" value="D"><span class="option-text">D. \(\frac{3}{10}\) 和 \(-\frac{3}{10}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先移項：
+              \[\begin{aligned} & 9x^2 - 100 = 0 \\ & (3x + 10)(3x - 10) = 0 \end{aligned}\]
+              解為 \(-\frac{10}{3}\) 和 \(\frac{10}{3}\)。<br>
+              B 錯：漏掉了負的那一個。<br>
+              C 錯：\(x^2 = \frac{100}{9}\) 是 \(x\) 的平方，還要再找平方後是 \(\frac{100}{9}\) 的數。<br>
+              D 錯：分子分母寫反了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 完全平方式與重根
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-clone" aria-hidden="true"></i> <span>重點 9：完全平方式——兩個解一樣，稱為重根</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>辨認完全平方式</strong>：首、末兩項是平方，中間項是兩者乘積的 \(2\) 倍。</li>
+              <li>例：
+                \[\begin{aligned} & x^2 - 10x + 25 = 0 \\ & x^2 - 2 \cdot x \cdot 5 + 5^2 = 0 \\ & (x - 5)^2 = 0 \\ & (x - 5)(x - 5) = 0 \end{aligned}\]
+              兩個解都是 \(5\)。</li>
+              <li><strong>重根</strong>：一元二次方程式有兩個相同的解時，稱這個解為方程式的<strong>重根</strong>，記作 \(x = 5\)（重根）。</li>
+              <li>例：\(4x^2 + 12x + 9 = 0\)，即 \((2x + 3)^2 = 0\)，解為 \(x = -\frac{3}{2}\)（重根）。</li>
+              <li><strong>用十字交乘也可以</strong>：右欄上下兩個數一樣，左欄也一樣。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_double.webp" alt="木刻版畫風柑橘觀光果園插圖：一根細枝的同一個節點上長著兩顆一模一樣大的柑橘，緊緊並在一起；小柚踮起腳尖指著它們，阿圃在旁邊抬頭看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：重根疊在同一點</h3>
+            <p class="interactive-instruction">調整 \(a\)、\(b\)，方程式是 \((ax + b)^2\) 展開後 \(= 0\)；左下是十字交乘（上下兩列一樣），右下是數線上的解：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-double" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="db-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">寫法</span>
+                    <div class="btn-group" id="db-mode-group">
+                      <button class="pick-btn active" data-db-mode="std">右邊是 \(0\)</button>
+                      <button class="pick-btn" data-db-mode="move">\(x\) 項在右邊</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="db-a">\(a\)：<span id="db-va" class="val-num">2</span></label>
+                    <input type="range" id="db-a" min="1" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="db-b">\(b\)：<span id="db-vb" class="val-num">-3</span></label>
+                    <input type="range" id="db-b" min="-6" max="6" value="-3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="db-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (重根)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 一元二次方程式 \(4x^2 - 28x + 49 = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-17" value="A"><span class="option-text">A. \(\frac{7}{2}\) 和 \(-\frac{7}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-17" value="B"><span class="option-text">B. \(x = 7\)（重根）</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-17" value="C"><span class="option-text">C. \(x = \frac{2}{7}\)（重根）</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-17" value="D"><span class="option-text">D. \(x = \frac{7}{2}\)（重根）</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & (2x)^2 - 2 \cdot 2x \cdot 7 + 7^2 = 0 \\ & (2x - 7)^2 = 0 \end{aligned}\]
+              兩個解都是 \(\frac{7}{2}\)，記作 \(x = \frac{7}{2}\)（重根）。<br>
+              A 錯：這是差的平方，不是平方差，兩根相同。<br>
+              B 錯：\(2x - 7 = 0\) 要除以 \(2\)。<br>
+              C 錯：分子分母寫反了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 下列哪一個方程式有重根？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-18" value="A"><span class="option-text">A. \(x^2 - 16 = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-18" value="B"><span class="option-text">B. \(x^2 + 14x + 49 = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-18" value="C"><span class="option-text">C. \(x^2 + 10x + 16 = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-18" value="D"><span class="option-text">D. \(x^2 - 8x = 0\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(x^2 + 14x + 49 = (x + 7)^2\)，解為 \(x = -7\)（重根）。<br>
+              A 錯：\((x + 4)(x - 4) = 0\)，解為 \(-4\) 和 \(4\)。<br>
+              C 錯：\((x + 2)(x + 8) = 0\)，解為 \(-2\) 和 \(-8\)。末項 \(16\) 雖然是平方數，但中間項不是 \(2 \times 4 = 8\) 倍。<br>
+              D 錯：\(x(x - 8) = 0\)，解為 \(0\) 和 \(8\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 先展開整理再求解
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> <span>重點 10：右邊不是 \(0\)——先展開、移項再分解</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>右邊不是 \(0\)，就不能直接拆</strong>：先展開、移項，整理成 \(ax^2 + bx + c = 0\)，再分解。</li>
+              <li>例：
+                \[\begin{aligned} & (x - 1)(x + 4) = 14 \\ & x^2 + 3x - 4 = 14 \\ & x^2 + 3x - 18 = 0 \\ & (x + 6)(x - 3) = 0 \end{aligned}\]
+              解為 \(-6\) 和 \(3\)。</li>
+              <li><strong>常見錯誤</strong>：拆成「\(x - 1 = 14\) 或 \(x + 4 = 14\)」，得 \(15\) 和 \(10\)。代回去：\(14 \times 19 = 266\)，根本不是 \(14\)。</li>
+              <li><strong>為什麼不行？</strong>乘積是 \(14\) 的兩數有無限多組（\(1 \times 14\)、\(2 \times 7\)、\(\frac{1}{2} \times 28\)……），不能說兩個都是 \(14\)。只有乘積是 \(0\) 時，才能斷定其中一個是 \(0\)。</li>
+              <li><strong>解完代回原式驗算</strong>，最能抓出這種錯。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_expand.webp" alt="木刻版畫風柑橘觀光果園插圖：阿圃把一張捲起來的果園地圖在木桌上攤開，用兩顆柑橘壓住兩個角；小柚俯身湊近，看著攤平的地圖。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：展開整理 vs 錯誤拆法</h3>
+            <p class="interactive-instruction">選一題，比較兩種作法。不論哪一種，下方都會把得到的解代回原式，檢查乘積是不是等於右邊：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-expand" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ex-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="ex-prob-group">
+                      <button class="pick-btn active" data-ex-prob="p1">\(x(x + 2) = 15\)</button>
+                      <button class="pick-btn" data-ex-prob="p2">\((x + 1)(x + 4) = 10\)</button>
+                      <button class="pick-btn" data-ex-prob="p3">\((x - 2)(2x + 3) = 4\)</button>
+                      <button class="pick-btn" data-ex-prob="p4">\((3 - x)(x + 1) = -5\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">作法</span>
+                    <div class="btn-group" id="ex-mode-group">
+                      <button class="pick-btn active" data-ex-mode="right">展開、移項再分解</button>
+                      <button class="pick-btn" data-ex-mode="wrong">拆成兩個「＝右邊」</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ex-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (先展開再求解)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 一元二次方程式 \((x + 2)(x - 3) = 50\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-19" value="A"><span class="option-text">A. \(48\) 和 \(53\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-19" value="B"><span class="option-text">B. \(-2\) 和 \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-19" value="C"><span class="option-text">C. \(8\) 和 \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-19" value="D"><span class="option-text">D. \(-8\) 和 \(7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。展開、移項：
+              \[\begin{aligned} & x^2 - x - 6 = 50 \\ & x^2 - x - 56 = 0 \\ & (x - 8)(x + 7) = 0 \end{aligned}\]
+              解為 \(8\) 和 \(-7\)。<br>
+              A 錯：拆成「\(x + 2 = 50\) 或 \(x - 3 = 50\)」；代回 \(50 \times 45\) 不是 \(50\)。<br>
+              B 錯：把右邊當成 \(0\)。<br>
+              D 錯：因式是 \((x - 8)(x + 7)\)，解要變號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 小妍解 \((x - 5)(x + 1) = 16\) 時，寫成「\(x - 5 = 16\) 或 \(x + 1 = 16\)」。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-20" value="A"><span class="option-text">A. 錯，應先整理成 \(x^2 - 4x - 21 = 0\)，解為 \(7\) 和 \(-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-20" value="B"><span class="option-text">B. 正確，解為 \(21\) 和 \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-20" value="C"><span class="option-text">C. 錯，應寫成 \(x - 5 = 0\) 或 \(x + 1 = 0\)，解為 \(5\) 和 \(-1\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-20" value="D"><span class="option-text">D. 錯，因為 \(4 \times 4 = 16\)，應寫成 \(x - 5 = 4\) 且 \(x + 1 = 4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\begin{aligned} & x^2 - 4x - 5 = 16 \\ & x^2 - 4x - 21 = 0 \\ & (x - 7)(x + 3) = 0 \end{aligned}\]
+              解為 \(7\) 和 \(-3\)。驗算：\(2 \times 8 = 16\)、\((-8) \times (-2) = 16\)。<br>
+              B 錯：代回 \(x = 21\)：\(16 \times 22\) 不是 \(16\)。<br>
+              C 錯：右邊是 \(16\)，不是 \(0\)。<br>
+              D 錯：乘積是 \(16\) 的兩數不只 \(4 \times 4\)；而且 \(x = 9\) 和 \(x = 3\) 不可能同時成立。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 已知一根，求係數與另一根
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-key" aria-hidden="true"></i> <span>重點 11：已知一根——代入求係數，再求另一根</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>根一定使等號成立</strong>：把已知的根代入，就得到一條關於未知係數的方程式。</li>
+              <li><strong>步驟</strong>：① 代入已知根　② 解出係數　③ 代回原方程式　④ 因式分解求另一根。</li>
+              <li>例：\(x^2 - mx - 10 = 0\) 的一根為 \(5\)：
+                \[\begin{aligned} & 25 - 5m - 10 = 0 \\ & m = 3 \\ & x^2 - 3x - 10 = 0 \\ & (x - 5)(x + 2) = 0 \end{aligned}\]
+              另一根為 \(-2\)。</li>
+              <li><strong>檢查</strong>：分解後一定有一個因式讓已知根成立（本例是 \(x - 5\)），對不上就是算錯了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_oneroot.webp" alt="木刻版畫風柑橘觀光果園插圖：小柚手上拿著一把鑰匙，正在打開果園工具棚木門上的鎖；阿圃揹著空竹簍站在旁邊，等著進去拿採果剪。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：已知一根解碼器</h3>
+            <p class="interactive-instruction">選一個含未知係數 \(m\) 的方程式，再拉滑桿選已知的那一根，看 \(m\) 和另一根怎麼跟著求出來：</p>
+            <div class="canvas-container">
+              <canvas id="canvas-one" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="or-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方程式</span>
+                    <div class="btn-group" id="or-fam-group">
+                      <button class="pick-btn active" data-or-fam="F1">\(x^2 + mx - 12 = 0\)</button>
+                      <button class="pick-btn" data-or-fam="F2">\(x^2 + 3x + m = 0\)</button>
+                      <button class="pick-btn" data-or-fam="F3">\(x^2 - mx - 3m = 0\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="or-r">已知的一根：<span id="or-vr" class="val-num">2</span></label>
+                    <input type="range" id="or-r" min="0" max="11" value="7" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="or-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (已知一根)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 若 \(x\) 的一元二次方程式 \(x^2 + mx - 36 = 0\) 的一根為 \(4\)，則 \(m\) 與方程式的另一根分別為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-21" value="A"><span class="option-text">A. \(m = -5\)，另一根 \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-21" value="B"><span class="option-text">B. \(m = 5\)，另一根 \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-21" value="C"><span class="option-text">C. \(m = 4\)，另一根 \(-9\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-21" value="D"><span class="option-text">D. \(m = 5\)，另一根 \(-9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。代入 \(x = 4\)：
+              \[\begin{aligned} & 16 + 4m - 36 = 0 \\ & m = 5 \\ & x^2 + 5x - 36 = 0 \\ & (x + 9)(x - 4) = 0 \end{aligned}\]
+              另一根為 \(-9\)。<br>
+              A 錯：\(4m = 20\) 得 \(m = 5\)，不是 \(-5\)；而且 \(m = -5\) 時，\(4\) 代進去不成立。<br>
+              B 錯：因式 \(x + 9\) 對應的根是 \(-9\)。<br>
+              C 錯：\(m\) 要代入後解出來，不是已知的根。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 若 \(x\) 的一元二次方程式 \(2x^2 - 7x + k = 0\) 的一根為 \(3\)，則另一根為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-22" value="A"><span class="option-text">A. \(-\frac{1}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-22" value="B"><span class="option-text">B. \(\frac{1}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-22" value="C"><span class="option-text">C. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-22" value="D"><span class="option-text">D. \(1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。代入 \(x = 3\)：
+              \[\begin{aligned} & 18 - 21 + k = 0 \\ & k = 3 \\ & 2x^2 - 7x + 3 = 0 \\ & (x - 3)(2x - 1) = 0 \end{aligned}\]
+              另一根為 \(\frac{1}{2}\)。<br>
+              A 錯：\(2x - 1 = 0\) 得 \(x = \frac{1}{2}\)，是正的。<br>
+              C 錯：\(3\) 是已知的那一根，這個方程式不是重根。<br>
+              D 錯：誤分解成 \((2x - 3)(x - 1)\)；但它展開是 \(2x^2 - 5x + 3\)，中間項不合。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 已知兩根，求方程式
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag" aria-hidden="true"></i> <span>重點 12：已知兩根——反求方程式的係數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>方法一：分別代入，解聯立</strong>。兩個根各代入一次，得到兩條式子，用加減消去法解出兩個係數。</li>
+              <li><strong>方法二：寫成兩個因式</strong>。根是 \(r\) 的因式是 \((x - r)\)，所以兩根為 \(r_1\)、\(r_2\) 的方程式可寫成 \((x - r_1)(x - r_2) = 0\)，展開後對照係數。</li>
+              <li>例：\(x^2 + px + q = 0\) 的兩根為 \(2\) 和 \(-3\)：
+                \[\begin{aligned} & (x - 2)(x + 3) = 0 \\ & x^2 + x - 6 = 0 \end{aligned}\]
+              所以 \(p = 1\)、\(q = -6\)。</li>
+              <li><strong>注意符號</strong>：根是 \(-3\)，因式寫成 \((x + 3)\)。</li>
+              <li><strong>方法二只適用 \(x^2\) 係數是 \(1\)</strong>；若 \(x^2\) 係數也是未知數，用方法一代入解聯立。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_tworoot.webp" alt="木刻版畫風柑橘觀光果園插圖：果園步道上插著兩面小旗子，一面橘色、一面綠色，相隔幾步遠；小柚和阿圃各站在一面旗子旁邊，中間牽著一條麻繩。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：由兩根反求方程式</h3>
+            <p class="interactive-instruction">拉動兩個根 \(r_1\)、\(r_2\)，方程式是 \(x^2 + px + q = 0\)。比較兩種方法——把兩根調成一樣時，方法一會發生什麼事？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-two" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方法</span>
+                    <div class="btn-group" id="tr-mode-group">
+                      <button class="pick-btn active" data-tr-mode="sub">代入解聯立</button>
+                      <button class="pick-btn" data-tr-mode="expand">寫成因式再展開</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tr-r1">\(r_1\)：<span id="tr-v1" class="val-num">3</span></label>
+                    <input type="range" id="tr-r1" min="-6" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tr-r2">\(r_2\)：<span id="tr-v2" class="val-num">-1</span></label>
+                    <input type="range" id="tr-r2" min="-6" max="6" value="-1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (已知兩根)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-23">
+            <p class="quiz-question"><strong>Q23.</strong> 若 \(x\) 的一元二次方程式 \(x^2 + px + q = 0\) 的兩個解為 \(-5\) 和 \(8\)，則 \(p\)、\(q\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-23" value="A"><span class="option-text">A. \(p = 3\)，\(q = -40\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-23" value="B"><span class="option-text">B. \(p = -3\)，\(q = 40\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-23" value="C"><span class="option-text">C. \(p = -3\)，\(q = -40\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-23" value="D"><span class="option-text">D. \(p = 3\)，\(q = 40\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。根是 \(-5\) 與 \(8\)，因式是 \((x + 5)\) 與 \((x - 8)\)：
+              \[\begin{aligned} & (x + 5)(x - 8) = 0 \\ & x^2 - 3x - 40 = 0 \end{aligned}\]
+              所以 \(p = -3\)、\(q = -40\)。<br>
+              A 錯：因式寫成 \((x - 5)(x + 8)\)，正負號弄反，那是兩根為 \(5\)、\(-8\) 的方程式。<br>
+              B 錯：一正一負的兩根相乘是負的，\(q\) 應為負數。<br>
+              D 錯：\(p\)、\(q\) 的正負號都錯了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-24">
+            <p class="quiz-question"><strong>Q24.</strong> 若 \(x\) 的一元二次方程式 \(ax^2 + bx - 6 = 0\) 的兩個解為 \(3\) 和 \(-\frac{1}{2}\)，則 \(a\)、\(b\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-24" value="A"><span class="option-text">A. \(a = 4\)，\(b = -10\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-24" value="B"><span class="option-text">B. \(a = 2\)，\(b = -5\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-24" value="C"><span class="option-text">C. \(a = 4\)，\(b = 10\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-24" value="D"><span class="option-text">D. \(a = -4\)，\(b = 10\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩根分別代入：
+              \[\begin{aligned} & 9a + 3b - 6 = 0 \\ & \frac{1}{4}a - \frac{1}{2}b - 6 = 0 \end{aligned}\]
+              整理成 \(3a + b = 2\) 與 \(a - 2b = 24\)，解得 \(a = 4\)、\(b = -10\)。驗算：
+              \[\begin{aligned} & 4x^2 - 10x - 6 \\ &= 2(x - 3)(2x + 1) \end{aligned}\]
+              B 錯：直接寫 \((x - 3)(2x + 1) = 2x^2 - 5x - 3\)，但題目的常數項是 \(-6\)，還要整個乘以 \(2\)。<br>
+              C 錯：\(b\) 的正負號錯了，代入 \(x = 3\)：\(36 + 30 - 6 \ne 0\)。<br>
+              D 錯：\(a\)、\(b\) 都差一個負號，代入 \(x = 3\)：\(-36 + 30 - 6 \ne 0\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 解一元二次方程式速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>意義</strong>：化簡後是 \(ax^2 + bx + c = 0\)（\(a \ne 0\)）；先化簡再判斷。</li>
+              <li><strong>解</strong>：代入後兩邊相等；最多兩個解。</li>
+              <li><strong>關鍵性質</strong>：\(A \times B = 0\)，則 \(A = 0\) 或 \(B = 0\)。</li>
+              <li><strong>沒有常數項</strong>：提出 \(x\)，別漏掉 \(x = 0\)。</li>
+              <li><strong>有相同括號</strong>：整組提出；兩邊都有時先移項，不可同除。</li>
+              <li><strong>一般的二次式</strong>：移項、同除公因數，再十字交乘。</li>
+              <li><strong>平方差</strong>：兩根互為相反數。</li>
+              <li><strong>完全平方式</strong>：兩個解相同，稱為重根。</li>
+              <li><strong>右邊不是 \(0\)</strong>：先展開、移項，不能拆成兩個「\(= k\)」。</li>
+              <li><strong>已知根求係數</strong>：根一定使等號成立，代入就對了。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-lemon"></i> 回到果園：謎題的另一個答案</h4>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 不必再用猜的</h5>
+              <p>小柚的謎題是 \(x^2 - 3x = 10\)。移項得 \(x^2 - 3x - 10 = 0\)，分解成 \((x - 5)(x + 2) = 0\)，解為 \(5\) 和 \(-2\)。阿圃只猜到 \(5\)；用因式分解，兩個解一次就都找到了。</p>
+              <h5><i class="fa-solid fa-route"></i> 一條路走到底</h5>
+              <p>右邊化成 \(0\) → 左邊分解成兩個一次式 → 每個因式分別等於 \(0\) → 解出兩個一次方程式。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>有些一元二次方程式沒辦法用整數係數因式分解，例如 \(x^2 + 4x - 2 = 0\)。下一節學<strong>配方法</strong>與<strong>公式解</strong>，任何一元二次方程式都解得出來。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
