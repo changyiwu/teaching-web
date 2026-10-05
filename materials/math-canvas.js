@@ -8,7 +8,9 @@
      <script src="canvas.js"></script>
 
    本檔只放「跟課程主題無關」的通用工具：
-     - 算式元件與排版：T／IT／VF／FR／PW／GRP／SEQ／RT、measure／drawIt／drawExpr
+     - 算式元件與排版：T／IT／VF／FR／PW／GRP／SEQ／RT／SB、measure／drawIt／drawExpr
+     - 算式字串解析：parseExpr／exprSeq／exprItems（含 _ 下標、^ 指數、@ 插槽）、subLabel
+     - 有理數：qOf／qAdd／qSub／qMul／qDiv／qPow、qTex／qTexP／qTexM、qIt／qOpIt／qPowIt
      - 基本繪圖：roundRect／drawPanel／drawChip／drawTitle／drawNote／drawArrow
      - 數值與字串：gcd／clamp／reduce／texFrac／numStr／coefTex／signed
      - 互動與版面：canvasPos／bindPickGroup／wrapText／wrapFeedback／typeset
@@ -106,8 +108,20 @@ const IT = (s, color) => ({ t: 'txt', s: String(s), color, it: true });
 const SEQ = (items, color, gap) => ({ t: 'seq', items, color, gap });
 // RT：根號，inner 是任一元件（3-2-1 起用；長橫線會蓋過整個被開方數）
 const RT = (inner, color) => ({ t: 'sqrt', inner, color });
+// SB：下標（4-1-2 起；數列的 a₁、Sₙ）。字級 0.68 倍、往下沉 0.3 倍字級，
+// 含小寫字母時用斜體。寫 a 下標 n 是 SEQ([IT('a'), SB('n')], color, 0)，
+// 或用 parseExpr('a_n')。Unicode 下標字（₁ₙ）在投影下太小，不要用
+const SB = (s, color) => ({ t: 'sub', s: String(s), color });
+
+function sbFont(it, size) {
+  return /[a-z]/.test(it.s) ? fi(700, size * 0.68) : f(700, size * 0.68);
+}
 
 function measure(ctx, it, size) {
+  if (it.t === 'sub') {
+    ctx.font = sbFont(it, size);
+    return { w: ctx.measureText(it.s.replace(/-/g, '−')).width + size * 0.06, h: size * 1.12 };
+  }
   if (it.t === 'sqrt') {
     const mi = measure(ctx, it.inner, size);
     const sw = size * 0.62;
@@ -200,6 +214,12 @@ function drawIt(ctx, it, x, cy, size, fallback) {
   ctx.fillStyle = color;
   ctx.textBaseline = 'middle';
   ctx.textAlign = 'left';
+
+  if (it.t === 'sub') {
+    ctx.font = sbFont(it, size);
+    ctx.fillText(it.s.replace(/-/g, '−'), x + size * 0.04, cy + size * 0.3);
+    return m.w;
+  }
 
   if (it.t === 'sqrt') {
     const top = cy - m.h / 2 + 1;
@@ -1071,5 +1091,174 @@ function numLineSeg(ctx, y, xa, xb, color, style) {
     ctx.lineTo(xb, y);
   }
   ctx.stroke();
+  ctx.restore();
+}
+
+/* --------------------------------------------------------------------------
+   有理數（4-1-1～4-1-3 抽出）：一律以化成最簡的 [分子, 分母] 表示，分母為正。
+   四則運算的第二個運算元可以直接給整數。名稱一律 q 開頭——各節早期頁面
+   各自宣告過 rq／rIt／rTex／fTex，共用檔不可以再用那些名字。
+   -------------------------------------------------------------------------- */
+function qOf(n, d) {
+  return reduce(n, d == null ? 1 : d);
+}
+
+function qPair(b) {
+  return Array.isArray(b) ? b : [b, 1];
+}
+
+function qAdd(a, b) { b = qPair(b); return reduce(a[0] * b[1] + b[0] * a[1], a[1] * b[1]); }
+function qSub(a, b) { b = qPair(b); return reduce(a[0] * b[1] - b[0] * a[1], a[1] * b[1]); }
+function qMul(a, b) { b = qPair(b); return reduce(a[0] * b[0], a[1] * b[1]); }
+function qDiv(a, b) { b = qPair(b); return reduce(a[0] * b[1], a[1] * b[0]); }
+function qEq(a, b) { return a[0] === b[0] && a[1] === b[1]; }
+function qVal(a) { return a[0] / a[1]; }
+
+function qPow(a, k) {
+  if (k < 0) return qPow(qDiv([1, 1], a), -k);
+  let r = [1, 1];
+  for (let i = 0; i < k; i++) r = qMul(r, a);
+  return r;
+}
+
+// 當底數或乘數時要不要加括號：負數、分數
+function qNeedP(a) {
+  return a[0] < 0 || a[1] !== 1;
+}
+
+// LaTeX：先化簡再輸出（texFrac 本身不化簡）。qTex([n, d]) 或 qTex(n, d) 皆可
+function qTex(a, d) {
+  const r = Array.isArray(a) ? reduce(a[0], a[1]) : reduce(a, d == null ? 1 : d);
+  return texFrac(r[0], r[1]);
+}
+
+// 次方的底數：分數加 \left( \right)，負整數加括號
+function qTexP(a) {
+  if (a[1] !== 1) return `\\left(${qTex(a)}\\right)`;
+  return a[0] < 0 ? `(${a[0]})` : String(a[0]);
+}
+
+// × 或 ÷ 後面的數：負數加括號，正分數不加
+function qTexM(a) {
+  return a[0] < 0 ? qTexP(a) : qTex(a);
+}
+
+// canvas 元件：分數或整數，負號提到分數前面
+function qIt(a, color) {
+  const [n, d] = reduce(a[0], a[1]);
+  if (d === 1) return T(String(n).replace(/-/g, '−'), color);
+  if (n < 0) return SEQ([T('−', color), FR(-n, d, color)], color, 2);
+  return FR(n, d, color);
+}
+
+// × 或 ÷ 後面的數：負數加括號
+function qOpIt(a, color) {
+  return a[0] < 0 ? GRP([qIt(a, color)], '()', color) : qIt(a, color);
+}
+
+// 次方；指數是 1 時不寫指數
+function qPowIt(a, e, color) {
+  if (e === 1) return qOpIt(a, color);
+  return PW(qIt(a, color), String(e).replace(/-/g, '−'), qNeedP(a), color);
+}
+
+/* --------------------------------------------------------------------------
+   算式字串 → canvas 元件（4-1-2 的 asParse 與 4-1-3 的 gx 合併；3-4-3 的
+   ocParse 是它的前身）。字串用 ASCII 寫，中文可以直接混在裡面：
+     「a_{12} = a_1 + 11d」 _ 下標：單一字元、連續數字，或 {…}
+     「r^{n-1}」「(x + 3)^2」 ^ 指數：連續數字或 {…}（裡面的 - 換成 −）
+     「(…)」「[…]」          會跟著長高的括號
+     「@0」「@1」            換成 slots 裡對應的元件（分數、次方這類）
+   英文字母一律畫成斜體變數。
+   -------------------------------------------------------------------------- */
+function parseExpr(str, color, slots) {
+  const out = [];
+  let buf = '';
+  const flush = () => {
+    if (buf) { out.push(T(buf.replace(/-/g, '−'), color)); buf = ''; }
+  };
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i];
+    if (ch === '@') {
+      flush();
+      out.push(slots[parseInt(str[++i], 10)]);
+      continue;
+    }
+    if (ch === '(' || ch === '[') {
+      let dep = 1, j = i + 1;
+      while (j < str.length) {
+        if (str[j] === '(' || str[j] === '[') dep++;
+        else if (str[j] === ')' || str[j] === ']') { dep--; if (dep === 0) break; }
+        j++;
+      }
+      flush();
+      out.push(GRP([SEQ(parseExpr(str.slice(i + 1, j), color, slots), color, 1)], ch === '[' ? '[]' : '()', color));
+      i = j;
+      continue;
+    }
+    if (ch === '_') {
+      let s = '';
+      if (str[i + 1] === '{') {
+        let j = i + 2;
+        while (j < str.length && str[j] !== '}') s += str[j++];
+        i = j;
+      } else {
+        s = str[++i];
+        if (/[0-9]/.test(s)) while (i + 1 < str.length && /[0-9]/.test(str[i + 1])) s += str[++i];
+      }
+      flush();
+      out.push(SB(s, color));
+      continue;
+    }
+    if (ch === '^') {
+      let e = '';
+      if (str[i + 1] === '{') {
+        let j = i + 2;
+        while (j < str.length && str[j] !== '}') e += str[j++];
+        i = j;
+      } else {
+        while (i + 1 < str.length && /[0-9]/.test(str[i + 1])) e += str[++i];
+      }
+      e = e.replace(/-/g, '−');
+      const m = buf.match(/[0-9.]+$/);
+      if (m) {
+        buf = buf.slice(0, buf.length - m[0].length);
+        flush();
+        out.push(PW(T(m[0], color), e, false, color));
+      } else {
+        flush();
+        const last = out.pop();
+        if (last && last.t === 'grp') out.push(PW(last.items[0], e, true, color));
+        else out.push(PW(last, e, false, color));
+      }
+      continue;
+    }
+    if (/[a-zA-Z]/.test(ch)) {
+      flush();
+      out.push(IT(ch, color));
+      continue;
+    }
+    buf += ch;
+  }
+  flush();
+  return out;
+}
+
+// 整條字串包成一個緊貼的 SEQ；exprItems 再包成 drawExpr／drawStepRows 吃的陣列
+function exprSeq(str, color, slots) {
+  return SEQ(parseExpr(String(str), color, slots || []), color, 1);
+}
+
+function exprItems(str, color, slots) {
+  return [exprSeq(str, color, slots)];
+}
+
+// 以 (cx, cy) 為中心畫「base 下標 idx」的小標籤（號碼牌底下的 a₃ 之類）
+function subLabel(ctx, base, idx, cx, cy, color, size) {
+  const s = size || 15;
+  const it = SEQ([IT(base, color), SB(idx, color)], color, 0);
+  ctx.save();
+  const w = measure(ctx, it, s).w;
+  drawIt(ctx, it, cx - w / 2, cy, s, color);
   ctx.restore();
 }

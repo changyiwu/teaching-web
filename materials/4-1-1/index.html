@@ -4,39 +4,1262 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-1 等差數列 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-1 等差數列 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第1章 數列與級數</div>
-    <h1>1-1 等差數列</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第一章</span>
+        <h1>1-1 等差數列</h1>
+        <p>走進一間老戲院：售票口抽出的號碼、每一排的座位數、舞台上的聚光燈，都是排成一列的數。這一節先認識<strong>數列</strong>與它的名詞，學會找規律；再認識相鄰兩項的差都相等的<strong>等差數列</strong>，用 \(a_n = a_1 + (n - 1)d\) 一步算出第 \(n\) 項、反求項數、解圖形的規律，最後用<strong>等差中項</strong>找出兩數的正中間。</p>
+      </div>
+      <!-- Progress navigation (10 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-ticket"></i> 數列名詞</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 找規律</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-code-branch"></i> 規律不唯一</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-equals"></i> 公差</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-shoe-prints"></i> 列出各項</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-arrows-left-right"></i> 填空格</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-stairs"></i> 第 n 項</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-list-ol"></i> 求項數</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-shapes"></i> 圖形規律</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-arrows-to-dot"></i> 等差中項</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Art Deco Theater)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(252, 211, 77, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-film" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);"></i> 課前暖身漫畫：最後一排有幾個座位？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            老戲院的階梯座位廳，第 \(1\) 排有 \(14\) 個座位，往後每一排都比前一排多 \(2\) 個。阿幕想知道最後的第 \(25\) 排有幾個座位，從第 \(1\) 排一排一排數上去，數到頭昏眼花——<strong style="color:#fcd34d">小映舉起手電筒：從第 1 排到第 25 排，其實只多了 24 次「2 個」！</strong>
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="Art Deco 復古戲院海報風四格漫畫（直式 4:5、2×2 四格；金色與孔雀藍的幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）。角色：小映，少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒；阿幕，少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆。四格是同一間階梯座位廳、同一個機位。第一格：小映站在第一排座位旁，舉起手電筒照向第一排，光束是一道金色扇形；空白一般對話泡在小映頭頂，尾巴指向小映，台詞「第 1 排有 14 個座位，往後每一排都比前一排多 2 個。」第二格：阿幕站在走道上，伸出右手食指往後方一排一排指過去，後方座位一排比一排寬；空白一般對話泡在阿幕頭頂，尾巴指向阿幕，台詞「最後一排是第 25 排……我從第 1 排一排一排數上去！」第三格：只畫阿幕一個人，坐在中段的座位上，雙手抱頭、眼睛畫成兩個螺旋圈，頭上冒汗；空白思考泡（泡尾是三個小圓）在阿幕頭頂，台詞「16、18、20、22……數到第幾排了？」第四格：只畫小映一個人，站在舞台的酒紅布幕前，一手叉腰、一手舉起手電筒；空白一般對話泡在小映頭頂，尾巴指向小映，台詞「從第 1 排到第 25 排，只多了 24 次『2 個』！」；畫面下方一個長方形空白旁白框，台詞「14 + 24 × 2 = 62 個座位」。座位不要求可數。畫面除了對話泡裡的空白之外不出現任何文字、數字與符號，沒有其他人物或動物。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 數列的名詞
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ticket" aria-hidden="true"></i> <span>重點 1：數列的名詞——項、項數、首項 \(a_1\)、第 \(n\) 項 \(a_n\)、末項</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>把數排成一列、以逗號分開，稱為<strong>數列</strong>。數列中的每一個數稱為<strong>項</strong>，數的個數稱為<strong>項數</strong>。</li>
+              <li>第 1 個數稱為第 1 項或<strong>首項</strong>，記為 \(a_1\)；第 2 個數記為 \(a_2\)；……；第 \(n\) 個數稱為<strong>第 \(n\) 項</strong>，記為 \(a_n\)；最後一個數稱為<strong>末項</strong>。</li>
+              <li>例：售票口依序抽出 \(14, 3, 27, 9, 30\)。項數是 \(5\)，首項 \(a_1 = 14\)，\(a_3 = 27\)，末項是 \(a_5 = 30\)。</li>
+              <li><strong>下標寫在右下方</strong>：\(a_3\) 是「第 3 項」，和 \(a \times 3\)（也就是 \(3a\)）的意義完全不同。</li>
+              <li><strong>數列不一定有規律</strong>：抽籤的號碼、樂透開獎的順序也是數列；有規律的數列才能用規律推出其他項。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・數列的名詞</span>
+              \(a_1, a_2, a_3, \cdots, a_n\)<br>
+              首項 \(a_1\)、第 \(n\) 項 \(a_n\)、末項是最後一項，項數是數的個數
+            </div>
+
+            <div class="illustration-container">
+              <img src="ad_terms.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：戲院售票口的大理石檯面上，由左到右平放一排 6 張金色空白票卡，間隔相等、不重疊、不立起。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結）站在檯面右側，右手拿小手電筒照著最左邊那一張票卡；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在檯面左側，伸出食指指著最右邊那一張。票卡上沒有任何字。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：售票口的號碼牌</h3>
+            <p class="interactive-instruction">切換兩種數列，拉動「項數」決定這個數列有幾個數，再拉動「第 \(k\) 項」指到其中一張號碼牌。看看首項、第 \(k\) 項、末項分別是誰，以及 \(a_k\) 的下標代表什麼。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-terms" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">數列</span>
+                    <div class="btn-group" id="tm-seq-group">
+                      <button class="pick-btn active" data-tm-seq="draw">抽籤號碼</button>
+                      <button class="pick-btn" data-tm-seq="row">每排座位數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tm-n">項數 \(n\)：<span id="tm-vn" class="val-num">6</span></label>
+                    <input type="range" id="tm-n" min="3" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tm-k">第 \(k\) 項：<span id="tm-vk" class="val-num">3</span></label>
+                    <input type="range" id="tm-k" min="1" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (數列的名詞)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 數列 \(12, 5, 9, 20, 3, 17, 8\) 的項數與 \(a_3\) 分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-1" value="A"><span class="option-text">A. 項數 \(7\)，\(a_3 = 20\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-1" value="B"><span class="option-text">B. 項數 \(7\)，\(a_3 = 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-1" value="C"><span class="option-text">C. 項數 \(8\)，\(a_3 = 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-1" value="D"><span class="option-text">D. 項數 \(7\)，\(a_3 = 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。依序是 \(a_1 = 12\)、\(a_2 = 5\)、\(a_3 = 9\)、\(a_4 = 20\)……共 \(7\) 個數，所以項數是 \(7\)，\(a_3 = 9\)。<br>
+              A 錯：\(20\) 是第 4 項 \(a_4\)。<br>
+              C 錯：項數是數的個數，這個數列只有 \(7\) 個數。<br>
+              D 錯：\(5\) 是第 2 項 \(a_2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 數列 \(-6, 11, 0, 25, -13, 4\) 中，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-2" value="A"><span class="option-text">A. 項數為 \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-2" value="B"><span class="option-text">B. 末項為 \(-13\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-2" value="C"><span class="option-text">C. \(a_4 = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-2" value="D"><span class="option-text">D. \(a_2 + a_5 = -2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(a_1 = -6\)、\(a_2 = 11\)、\(a_3 = 0\)、\(a_4 = 25\)、\(a_5 = -13\)、\(a_6 = 4\)，所以
+              \[\begin{aligned} & a_2 + a_5 \\ & = 11 + (-13) = -2 \end{aligned}\]
+              A 錯：共有 \(6\) 個數，項數是 \(6\)。<br>
+              B 錯：末項是最後一個數 \(4\)；\(-13\) 是第 5 項。<br>
+              C 錯：\(0\) 是第 3 項，\(a_4 = 25\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 找規律
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span>重點 2：找出數列的規律，求出空格</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>有規律的數列，可以利用規律求出其他各項。觀察時可以看相鄰兩項的<strong>差</strong>、<strong>倍數</strong>、<strong>正負號</strong>，或每一項和它的<strong>位置</strong>之間的關係。</li>
+              <li><strong>差固定</strong>：\(1, 5, 9, 13, \square\)，每次多 \(4\)，空格是 \(17\)。</li>
+              <li><strong>倍數固定</strong>：\(4, 16, 64, \square, 1024\)，每一項是前一項的 \(4\) 倍（\(4^1, 4^2, 4^3, \cdots\)），空格是 \(256\)。</li>
+              <li><strong>正負交錯</strong>：\(2, -4, 6, -8, \square\)，絕對值是 \(2, 4, 6, 8, \cdots\)，奇數項為正、偶數項為負，空格是 \(10\)。</li>
+              <li><strong>和位置有關</strong>：\(1, 4, 9, 16, \square\)，第 \(k\) 項是 \(k^2\)，空格是 \(25\)。</li>
+              <li><strong>找到規律後要回頭檢查</strong>：空格前後的每一組都要對得上，不能只看兩項就下結論。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ad_pattern.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：戲院大廳的牆上，由左到右等距排成一列 5 盞扇形壁燈，第 1、3、5 盞亮著金黃色的光，第 2、4 盞是暗的，亮暗交錯。阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在第 5 盞燈下，右手按在牆上的黃銅開關；小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在畫面左邊，抬頭看著這一排燈。壁燈只有 5 盞。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：猜空格的號碼牌</h3>
+            <p class="interactive-instruction">選一種規律，用「參數」改變數列、用「空格位置」決定哪一張牌蓋起來。先自己猜空格是多少，再按「揭曉空格」對答案。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pattern" width="540" height="410"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">規律</span>
+                    <div class="btn-group" id="pt-kind-group">
+                      <button class="pick-btn active" data-pt-kind="add">差固定</button>
+                      <button class="pick-btn" data-pt-kind="mul">倍數固定</button>
+                      <button class="pick-btn" data-pt-kind="alt">正負交錯</button>
+                      <button class="pick-btn" data-pt-kind="sq">和位置有關</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">答案</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="pt-show">揭曉空格</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pt-p">參數：<span id="pt-vp" class="val-num">1</span></label>
+                    <input type="range" id="pt-p" min="1" max="4" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pt-b">空格是第幾項：<span id="pt-vb" class="val-num">4</span></label>
+                    <input type="range" id="pt-b" min="2" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (找規律)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 觀察數列 \(2, 6, 18, \square, 162\) 的規律，空格應填入多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-3" value="A"><span class="option-text">A. \(54\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-3" value="B"><span class="option-text">B. \(30\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-3" value="C"><span class="option-text">C. \(36\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-3" value="D"><span class="option-text">D. \(81\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(6 = 2 \times 3\)、\(18 = 6 \times 3\)，每一項是前一項的 \(3\) 倍，所以空格是 \(18 \times 3 = 54\)；再檢查 \(54 \times 3 = 162\)，對得上。<br>
+              B 錯：\(30\) 是把差 \(12\) 再加一次，但 \(6 - 2 = 4\)，差並不固定。<br>
+              C 錯：\(36\) 是乘 \(2\)，規律是乘 \(3\)。<br>
+              D 錯：\(81\) 是 \(162 \div 2\)；往回推也要除以 \(3\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 觀察數列 \(4, 7, 12, 19, 28, \square\) 的規律，空格應填入多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-4" value="A"><span class="option-text">A. \(37\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-4" value="B"><span class="option-text">B. \(36\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-4" value="C"><span class="option-text">C. \(39\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-4" value="D"><span class="option-text">D. \(41\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。相鄰兩項的差是 \(3, 5, 7, 9\)，每次多 \(2\)，下一個差是 \(11\)，所以空格是 \(28 + 11 = 39\)。也可以看成第 \(k\) 項是 \(k^2 + 3\)：\(6^2 + 3 = 39\)。<br>
+              A 錯：\(28 + 9 = 37\)，以為差停在 \(9\) 不變。<br>
+              B 錯：\(6^2 = 36\)，漏了 \(+3\)。<br>
+              D 錯：\(28 + 13 = 41\)，\(9\) 的下一個差是 \(11\)，不是 \(13\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 規律不唯一
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-branch" aria-hidden="true"></i> <span>重點 3：只看前幾項，規律不一定唯一</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>從同一個數列的前幾項，可能觀察到<strong>不同的規律</strong>，進而推出不同的結果。</li>
+              <li>例：\(1, 2, 4, ?\)
+                <ul>
+                  <li>看法一：差是 \(+1, +2, +3\)，第 4 項是 \(4 + 3 = 7\)。</li>
+                  <li>看法二：每次 \(\times 2\)，第 4 項是 \(4 \times 2 = 8\)。</li>
+                </ul>
+                兩種看法都符合前三項。</li>
+              <li><strong>只憑有限幾項，不能斷定規律</strong>：要多觀察幾項，或由題目<strong>明確給出規則</strong>（例如「這是一個等差數列」），後面的項才能確定。</li>
+              <li>前幾項都相同、或前幾項看起來差固定的數列，題目若沒說它是等差數列，也不能因此斷定它就是等差數列。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ad_guess.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：放映室裡，一條電影膠卷從圓形鐵盒裡拉出來，只拉出 3 格，3 格平放在工作桌上排成一列，其餘的膠卷仍捲在鐵盒裡看不見。阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在桌子左邊，右手托著下巴歪頭思考；小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在桌子右邊，用手電筒照著還捲在鐵盒裡的膠卷。膠卷的 3 格畫面是空白的淺色方格。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：誰猜對了規律？</h3>
+            <p class="interactive-instruction">兩種看法都從同樣的前三項出發。先選「真正的規律」藏起來，再拉動滑桿一項一項公開——前三項時兩種看法都符合嗎？要公開到第幾項，才分得出誰對？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-guess" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="gs-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">數列</span>
+                    <div class="btn-group" id="gs-case-group">
+                      <button class="pick-btn active" data-gs-case="a">1, 2, 4, …</button>
+                      <button class="pick-btn" data-gs-case="b">2, 3, 5, …</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">真正的規律</span>
+                    <div class="btn-group" id="gs-truth-group">
+                      <button class="pick-btn active" data-gs-truth="0">看法一</button>
+                      <button class="pick-btn" data-gs-truth="1">看法二</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="gs-k">公開前幾項：<span id="gs-vk" class="val-num">3</span></label>
+                    <input type="range" id="gs-k" min="3" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="gs-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (規律不唯一)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 某數列的前兩項是 \(1, 3\)。甲說第 3 項是 \(5\)（每次加 \(2\)），乙說第 3 項是 \(9\)（每次乘 \(3\)）。下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-5" value="A"><span class="option-text">A. 只有甲對，數列一定是加上固定的數</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-5" value="B"><span class="option-text">B. 只有乙對，數列一定是乘上固定的數</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-5" value="C"><span class="option-text">C. 兩人都錯，第 3 項應該是 \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-5" value="D"><span class="option-text">D. 兩種規律都符合前兩項，無法確定第 3 項</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(1 + 2 = 3\)、\(1 \times 3 = 3\)，兩種規律都說得通，一個推出 \(5\)、一個推出 \(9\)。只憑前兩項沒辦法確定第 3 項。<br>
+              A、B 錯：數列不一定是加上或乘上固定的數，兩種規律在前兩項都成立。<br>
+              C 錯：沒有任何規律支持第 3 項是 \(4\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 小翊看到數列 \(5, 12, 19, 26, \cdots\)，就說：「第 5 項一定是 \(33\)。」他的說法如何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-6" value="A"><span class="option-text">A. 正確，因為相鄰兩項的差都是 \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-6" value="B"><span class="option-text">B. 正確，因為每一項都比前一項大</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-6" value="C"><span class="option-text">C. 不一定，題目沒說是等差數列，第 5 項無法確定</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-6" value="D"><span class="option-text">D. 錯誤，第 5 項一定是 \(40\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。前 4 項看起來每次加 \(7\)，但題目沒有說它是等差數列。例如「\(5, 12, 19, 26\) 四個數一再重複」的數列，前 4 項完全相同，第 5 項卻是 \(5\)。<br>
+              A、B 錯：前 4 項符合某個規律，不代表後面一定照同一個規律。<br>
+              D 錯：\(40 = 5 + 5 \times 7\)，加了 \(5\) 個公差；就算它真的是等差數列，第 5 項也是 \(5 + 4 \times 7 = 33\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 等差數列與公差
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> <span>重點 4：等差數列與公差——後項減前項都相等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>任意相鄰兩項，<strong>後項減前項的差都相等</strong>的數列，稱為<strong>等差數列</strong>；這個差稱為<strong>公差</strong>，一般記為 \(d\)。</li>
+              <li>例：火車同側靠窗的座位號碼 \(2, 6, 10, 14, \cdots\)，每一項都比前一項多 \(4\)，是公差 \(4\) 的等差數列。</li>
+              <li><strong>每一組都要算</strong>：\(1, 5, 9, 12\) 中 \(5 - 1 = 4\)、\(9 - 5 = 4\)，但 \(12 - 9 = 3\)，只要有一組不同就<strong>不是</strong>等差數列。</li>
+              <li><strong>公差可以是正數、負數或 \(0\)</strong>：\(20, 17, 14, 11\) 的公差是 \(-3\)；\(6, 6, 6, 6\) 的公差是 \(0\)。</li>
+              <li><strong>一定是「後項 \(-\) 前項」</strong>：\(20, 17\) 的公差是 \(17 - 20 = -3\)，不是 \(3\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等差數列相鄰兩項的關係</span>
+              後項 \(-\) 前項 \(=\) 公差；後項 \(=\) 前項 \(+\) 公差
+            </div>
+
+            <div class="illustration-container">
+              <img src="ad_common.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：小賣部的櫃台上，紅白條紋汽水罐疊成 3 排的金字塔：最上排 2 罐、中間一排 3 罐、最下排 4 罐，每一排都比上一排多 1 罐，所有汽水罐同樣大小、直立、並排緊貼。阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在櫃台後面，雙手正把最上排的第 2 罐放上去；小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在櫃台前，用手電筒照著金字塔。汽水罐總共只有 9 罐，罐身沒有文字。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：公差檢驗機</h3>
+            <p class="interactive-instruction">拉動首項 \(a_1\) 與差 \(d\) 排出一列數，再用「第 4 項偏移」故意改動 \(a_4\)。檢驗機會把每一組「後項 \(-\) 前項」算出來——偏移不是 \(0\) 時，有幾組差變了？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-check" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ck-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ck-a1">首項 \(a_1\)：<span id="ck-va1" class="val-num">3</span></label>
+                    <input type="range" id="ck-a1" min="0" max="12" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ck-d">差 \(d\)：<span id="ck-vd" class="val-num">2</span></label>
+                    <input type="range" id="ck-d" min="-4" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ck-e">第 4 項偏移：<span id="ck-ve" class="val-num">0</span></label>
+                    <input type="range" id="ck-e" min="-3" max="3" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ck-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等差數列與公差)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 下列哪一個數列是等差數列？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-7" value="A"><span class="option-text">A. \(-11, -4, 3, 10\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-7" value="B"><span class="option-text">B. \(1, 4, 9, 16\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-7" value="C"><span class="option-text">C. \(3, 6, 12, 24\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-7" value="D"><span class="option-text">D. \(2, -2, 2, -2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(-4 - (-11) = 7\)、\(3 - (-4) = 7\)、\(10 - 3 = 7\)，差都是 \(7\)，是公差 \(7\) 的等差數列。<br>
+              B 錯：差是 \(3, 5, 7\)，不相等。<br>
+              C 錯：差是 \(3, 6, 12\)；它是每次乘 \(2\)。<br>
+              D 錯：差是 \(-4, 4, -4\)，不相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 等差數列 \(\frac{7}{2}, 3, \frac{5}{2}, 2\) 的公差是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-8" value="A"><span class="option-text">A. \(\frac{1}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-8" value="B"><span class="option-text">B. \(-\frac{1}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-8" value="C"><span class="option-text">C. \(-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-8" value="D"><span class="option-text">D. 不是等差數列</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。把 \(3\) 寫成 \(\frac{6}{2}\)、\(2\) 寫成 \(\frac{4}{2}\)，分子依序是 \(7, 6, 5, 4\)，每次少 \(1\)，所以公差是 \(-\frac{1}{2}\)。<br>
+              A 錯：用「前項 \(-\) 後項」算，正負號相反。<br>
+              C 錯：把 \(3\) 寫成 \(\frac{3}{2}\) 再減，\(\frac{3}{2} - \frac{7}{2} = -2\)；\(3\) 應寫成 \(\frac{6}{2}\)。<br>
+              D 錯：每一組差都是 \(-\frac{1}{2}\)，是等差數列。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 列出各項
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shoe-prints" aria-hidden="true"></i> <span>重點 5：由首項與公差列出各項</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>已知首項 \(a_1\) 與公差 \(d\)，就能<strong>逐項加上公差</strong>寫出整個數列：\(a_2 = a_1 + d\)、\(a_3 = a_2 + d\)、……</li>
+              <li>例：首項 \(4\)、公差 \(5\)：\(4, 9, 14, 19, \cdots\)</li>
+              <li>例：首項 \(6\)、公差 \(-4\)：
+                \[\begin{aligned} & 6 + (-4) = 2 \\ & 2 + (-4) = -2 \\ & -2 + (-4) = -6 \end{aligned}\]
+              前 4 項是 \(6, 2, -2, -6\)。加上負的公差，數就變小。</li>
+              <li><strong>公差的正負決定方向</strong>：公差為正，後一項比前一項大（遞增）；公差為負，後一項比前一項小（遞減）；公差為 \(0\)，每一項都相同。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ad_updown.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：階梯座位廳側邊的走道台階，由畫面左下往右上共 5 級，每一級的高度與深度完全相同，台階邊緣鑲一條金色細線。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在第 2 級，面朝右上方正往上走，手電筒照著前方台階；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在第 4 級，面朝左下方正往下走。兩人的雙腳都踩在台階上。台階只有 5 級。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：數線上逐項跳</h3>
+            <p class="interactive-instruction">拉動首項 \(a_1\)、公差 \(d\) 與項數，按「下一步」每次加上一個公差，看點在數線上怎麼跳。公差改成負數或 \(0\) 時，跳的方向有什麼不同？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-list" width="540" height="420"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="li-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="li-prev">上一步</button>
+                      <span class="step-counter" id="li-step">1 / 1</span>
+                      <button class="pick-btn" id="li-next">下一步</button>
+                      <button class="pick-btn" id="li-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="li-a1">首項 \(a_1\)：<span id="li-va1" class="val-num">2</span></label>
+                    <input type="range" id="li-a1" min="-10" max="10" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="li-d">公差 \(d\)：<span id="li-vd" class="val-num">3</span></label>
+                    <input type="range" id="li-d" min="-5" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="li-n">項數：<span id="li-vn" class="val-num">6</span></label>
+                    <input type="range" id="li-n" min="4" max="8" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="li-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (列出各項)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 首項為 \(-12\)、公差為 \(7\) 的等差數列，第 4 項 \(a_4\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-9" value="A"><span class="option-text">A. \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-9" value="B"><span class="option-text">B. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-9" value="C"><span class="option-text">C. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-9" value="D"><span class="option-text">D. \(-33\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。逐項加上公差 \(7\)：
+              \[\begin{aligned} & a_2 = -12 + 7 = -5 \\ & a_3 = -5 + 7 = 2 \\ & a_4 = 2 + 7 = 9 \end{aligned}\]
+              A 錯：\(-12 + 4 \times 7 = 16\)，第 4 項只加了 \(3\) 次公差。<br>
+              B 錯：\(2\) 是第 3 項。<br>
+              D 錯：\(-12 - 3 \times 7 = -33\)，公差是 \(+7\)，要加不是減。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 首項為 \(15\)、公差為 \(-4\) 的等差數列，前 5 項依序是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-10" value="A"><span class="option-text">A. \(15, 11, 7, 3, -1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-10" value="B"><span class="option-text">B. \(15, 19, 23, 27, 31\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-10" value="C"><span class="option-text">C. \(11, 7, 3, -1, -5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-10" value="D"><span class="option-text">D. \(15, 11, 7, 3, 1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。從首項 \(15\) 開始，每次加上 \(-4\)：\(15, 11, 7, 3, -1\)。<br>
+              B 錯：把公差當成 \(+4\)。<br>
+              C 錯：首項是 \(15\)，要從 \(15\) 開始寫。<br>
+              D 錯：\(3 + (-4) = -1\)，不是 \(1\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 填空格
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> <span>重點 6：由相鄰兩項求公差，往後加、往前減</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>先用已知的<strong>相鄰兩項</strong>求公差：\(d =\) 後項 \(-\) 前項。</li>
+              <li><strong>往後</strong>：後一項 \(=\) 前一項 \(+ d\)；<strong>往前</strong>：前一項 \(=\) 後一項 \(- d\)。</li>
+              <li>例：\(\square, 9, 2, \square\)，公差 \(2 - 9 = -7\)。
+                <ul>
+                  <li>往前：\(9 - (-7) = 16\)</li>
+                  <li>往後：\(2 + (-7) = -5\)</li>
+                </ul>
+              公差是負數時，往前減反而會變大。</li>
+              <li><strong>分數也一樣</strong>：\(\frac{1}{2}, 2, \square\)，公差 \(2 - \frac{1}{2} = \frac{3}{2}\)，下一項 \(2 + \frac{3}{2} = \frac{7}{2}\)。</li>
+              <li><strong>文字式也一樣</strong>：\(b - 4, b + 1, \square\)，公差 \((b + 1) - (b - 4) = 5\)，下一項 \(b + 6\)。減括號時記得變號。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ad_fill.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：一排 5 張酒紅色絨布戲院座椅等距並排，正中間相鄰的第 2、3 張座椅的椅背上各掛著一塊空白的金色圓形號碼牌，第 1、4、5 張座椅的椅背上什麼都沒有。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在這排座椅的左端，用手電筒照著最左邊那張空座椅；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在右端，看著最右邊那兩張空座椅。座椅只有 5 張，號碼牌只有 2 塊。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：從兩張牌補齊一整排</h3>
+            <p class="interactive-instruction">五格裡只有相鄰的兩格已知。選擇整數、分數或文字模式，拉動「已知的位置」與兩格的值，再按「下一步」：先求公差，再往後加、往前減，把五格補齊。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fill" width="540" height="450"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="fl-mode-group">
+                      <button class="pick-btn active" data-fl-mode="int">整數</button>
+                      <button class="pick-btn" data-fl-mode="frac">分數</button>
+                      <button class="pick-btn" data-fl-mode="text">文字</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="fl-prev">上一步</button>
+                      <span class="step-counter" id="fl-step">1 / 1</span>
+                      <button class="pick-btn" id="fl-next">下一步</button>
+                      <button class="pick-btn" id="fl-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fl-p">已知第 \(p\) 與第 \(p + 1\) 格，\(p\)：<span id="fl-vp" class="val-num">2</span></label>
+                    <input type="range" id="fl-p" min="1" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fl-u">第 \(p\) 格：<span id="fl-vu" class="val-num">−1</span></label>
+                    <input type="range" id="fl-u" min="-9" max="9" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fl-v">第 \(p + 1\) 格：<span id="fl-vv" class="val-num">5</span></label>
+                    <input type="range" id="fl-v" min="-9" max="9" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (填空格)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 在空格中填入適當的數，使 \(\square, 13, 8, \square\) 成為等差數列。兩個空格依序是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-11" value="A"><span class="option-text">A. \(3\) 與 \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-11" value="B"><span class="option-text">B. \(8\) 與 \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-11" value="C"><span class="option-text">C. \(8\) 與 \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-11" value="D"><span class="option-text">D. \(18\) 與 \(3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。公差 \(= 8 - 13 = -5\)。往前：\(13 - (-5) = 18\)；往後：\(8 + (-5) = 3\)。<br>
+              A 錯：兩格的順序寫反了。<br>
+              B 錯：公差算成 \(13 - 8 = 5\)（前項減後項），正負號相反。<br>
+              C 錯：往前也加公差，\(13 + (-5) = 8\)；往前要減公差。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 在空格中填入適當的式子，使 \(\square, 2a + 1, 2a + 5, \square\) 成為等差數列。兩個空格依序是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-12" value="A"><span class="option-text">A. \(2a + 5\) 與 \(2a + 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-12" value="B"><span class="option-text">B. \(2a - 3\) 與 \(2a + 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-12" value="C"><span class="option-text">C. \(2a - 5\) 與 \(2a + 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-12" value="D"><span class="option-text">D. \(-3\) 與 \(9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。公差是
+              \[\begin{aligned} & (2a + 5) - (2a + 1) \\ & = 2a + 5 - 2a - 1 = 4 \end{aligned}\]
+              往前：\((2a + 1) - 4 = 2a - 3\)；往後：\((2a + 5) + 4 = 2a + 9\)。<br>
+              A 錯：往前也加公差。<br>
+              C 錯：減括號時沒變號，公差算成 \(6\)。<br>
+              D 錯：漏掉了每一項都有的 \(2a\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 第 n 項
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-stairs" aria-hidden="true"></i> <span>重點 7：第 \(n\) 項公式 \(a_n = a_1 + (n - 1)d\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>從首項出發，每往後一項就多加一個公差：
+                \[\begin{aligned} & a_2 = a_1 + 1 \times d \\ & a_3 = a_1 + 2 \times d \\ & a_4 = a_1 + 3 \times d \\ & a_{100} = a_1 + 99 \times d \end{aligned}\]
+              </li>
+              <li>第 \(n\) 項比首項多了 <strong>\((n - 1)\) 個公差</strong>：從 \(a_1\) 到 \(a_n\) 只跳了 \(n - 1\) 次。</li>
+              <li>例：首項 \(30\)、公差 \(-4\)，求第 16 項：
+                \[\begin{aligned} & a_{16} = 30 + (16 - 1) \times (-4) \\ & = 30 + (-60) = -30 \end{aligned}\]
+              </li>
+              <li><strong>常見錯誤</strong>：寫成 \(a_1 + n \times d\)，多加了一次公差。</li>
+              <li>\(a_n\) 的 \(n\) 是下標；代入時是把 \(n\) 換成「第幾項」的數字。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等差數列的第 n 項</span>
+              首項 \(a_1\)、公差 \(d\)，則 \(a_n = a_1 + (n - 1)d\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ad_nth.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：從階梯座位廳最下方往上看，一排排酒紅色座椅像階梯一樣往後方升高、延伸到遠處，越後面的排越寬，最遠處融入金色放射狀扇形的天花板裝飾。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在最前排的走道上，把手電筒的光束朝遠處最後一排照過去，光束是一道細長的金色扇形；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在她身旁，手搭在額頭上眺望。座椅不要求可數。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一步算出第 n 排</h3>
+            <p class="interactive-instruction">拉動首項 \(a_1\)、公差 \(d\) 與要求的第 \(n\) 項，按「下一步」照公式代入。注意大括號：從 \(a_1\) 到 \(a_n\) 跳了幾次公差？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-nth" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="nt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="nt-prev">上一步</button>
+                      <span class="step-counter" id="nt-step">1 / 1</span>
+                      <button class="pick-btn" id="nt-next">下一步</button>
+                      <button class="pick-btn" id="nt-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="nt-a1">首項 \(a_1\)：<span id="nt-va1" class="val-num">5</span></label>
+                    <input type="range" id="nt-a1" min="-9" max="9" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="nt-d">公差 \(d\)：<span id="nt-vd" class="val-num">3</span></label>
+                    <input type="range" id="nt-d" min="-4" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="nt-n">第 \(n\) 項：<span id="nt-vn" class="val-num">20</span></label>
+                    <input type="range" id="nt-n" min="2" max="40" value="20" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="nt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (第 n 項公式)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 首項為 \(18\)、公差為 \(-5\) 的等差數列，第 15 項 \(a_{15}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-13" value="A"><span class="option-text">A. \(-52\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-13" value="B"><span class="option-text">B. \(-57\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-13" value="C"><span class="option-text">C. \(88\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-13" value="D"><span class="option-text">D. \(-47\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\begin{aligned} & a_{15} = 18 + (15 - 1) \times (-5) \\ & = 18 + (-70) = -52 \end{aligned}\]
+              B 錯：\(18 + 15 \times (-5) = -57\)，多加了一次公差。<br>
+              C 錯：\(18 + 14 \times 5 = 88\)，公差是 \(-5\)，不是 \(5\)。<br>
+              D 錯：\(18 + 13 \times (-5) = -47\) 是第 14 項。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 等差數列 \(25, 22, 19, \cdots\) 的第 40 項是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-14" value="A"><span class="option-text">A. \(-95\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-14" value="B"><span class="option-text">B. \(142\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-14" value="C"><span class="option-text">C. \(-92\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-14" value="D"><span class="option-text">D. \(-89\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。公差 \(22 - 25 = -3\)：
+              \[\begin{aligned} & a_{40} = 25 + (40 - 1) \times (-3) \\ & = 25 + (-117) = -92 \end{aligned}\]
+              A 錯：\(25 + 40 \times (-3) = -95\)，第 40 項只加 \(39\) 個公差。<br>
+              B 錯：\(25 + 39 \times 3 = 142\)，公差是 \(-3\)，不是 \(3\)。<br>
+              D 錯：\(25 + 38 \times (-3) = -89\) 是第 39 項。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 求項數
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-ol" aria-hidden="true"></i> <span>重點 8：已知末項，求項數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>末項就是第 \(n\) 項。已知首項、公差與末項，代入 \(a_n = a_1 + (n - 1)d\)，<strong>解出 \(n\)</strong> 就是項數。</li>
+              <li>例：\(5, 11, 17, \cdots, 119\) 共有幾項？公差 \(11 - 5 = 6\)：
+                \[\begin{aligned} & 119 = 5 + (n - 1) \times 6 \\ & 114 = (n - 1) \times 6 \\ & n - 1 = 19,\ n = 20 \end{aligned}\]
+              </li>
+              <li><strong>算出 \(n - 1\) 之後別忘了 \(+1\)</strong>：首項與末項都要算進去。</li>
+              <li><strong>某範圍內有幾個倍數</strong>：先找出範圍裡<strong>第一個</strong>與<strong>最後一個</strong>倍數，它們之間排成公差就是那個數的等差數列。例：\(30\) 到 \(250\) 的整數中 \(6\) 的倍數是 \(30, 36, \cdots, 246\)，
+                \[\begin{aligned} & (246 - 30) \div 6 + 1 \\ & = 36 + 1 = 37 \text{ 個} \end{aligned}\]
+              </li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・項數</span>
+              項數 \(=\) (末項 \(-\) 首項) \(\div\) 公差 \(+ 1\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ad_count.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：放映室裡，放映機的鏡頭朝向牆上的小窗，窗外是黑暗的座位廳。阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋）坐在工作桌前，右手拿著原本夾在右耳後的那支鉛筆，在一本攤開的空白筆記本上寫字，左手按著筆記本；小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）倚在放映室門口，手電筒照著筆記本。阿幕身上只有這一支鉛筆，耳後沒有第二支。筆記本上沒有任何字。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：這一列有幾張票？</h3>
+            <p class="interactive-instruction">「已知末項」模式：拉動首項、公差與項數排出一列數，畫面只告訴你末項，跟著步驟反求項數。「倍數個數」模式：拉動範圍與倍數，先找頭、找尾，再算個數。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-count" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ct-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="ct-mode-group">
+                      <button class="pick-btn active" data-ct-mode="seq">已知末項</button>
+                      <button class="pick-btn" data-ct-mode="mult">倍數個數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper" id="ct-seq-sliders">
+                  <div class="slider-row">
+                    <label for="ct-a1">首項 \(a_1\)：<span id="ct-va1" class="val-num">3</span></label>
+                    <input type="range" id="ct-a1" min="-9" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ct-d">公差 \(d\)（不為 \(0\)）：<span id="ct-vd" class="val-num">5</span></label>
+                    <input type="range" id="ct-d" min="-6" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ct-n">（藏起來的）項數：<span id="ct-vn" class="val-num">12</span></label>
+                    <input type="range" id="ct-n" min="5" max="30" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="slider-wrapper" id="ct-mult-sliders" style="display:none;">
+                  <div class="slider-row">
+                    <label for="ct-k">倍數 \(k\)：<span id="ct-vk" class="val-num">4</span></label>
+                    <input type="range" id="ct-k" min="2" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ct-lo">範圍從：<span id="ct-vlo" class="val-num">25</span></label>
+                    <input type="range" id="ct-lo" min="10" max="60" value="25" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ct-hi">範圍到：<span id="ct-vhi" class="val-num">150</span></label>
+                    <input type="range" id="ct-hi" min="100" max="200" value="150" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ct-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求項數)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 等差數列 \(4, 11, 18, \cdots, 151\) 共有幾項？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-15" value="A"><span class="option-text">A. \(21\) 項</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-15" value="B"><span class="option-text">B. \(22\) 項</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-15" value="C"><span class="option-text">C. \(147\) 項</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-15" value="D"><span class="option-text">D. \(21\frac{4}{7}\) 項</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。公差 \(11 - 4 = 7\)，設共有 \(n\) 項：
+              \[\begin{aligned} & 151 = 4 + (n - 1) \times 7 \\ & 147 = (n - 1) \times 7 \\ & n - 1 = 21,\ n = 22 \end{aligned}\]
+              A 錯：\(21\) 是 \(n - 1\)，還要 \(+1\)。<br>
+              C 錯：\(147\) 是末項與首項的差。<br>
+              D 錯：\(151 \div 7\)，沒有先減掉首項，項數也不可能是分數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> \(50\) 到 \(300\) 的整數中，\(7\) 的倍數共有幾個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-16" value="A"><span class="option-text">A. \(42\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-16" value="B"><span class="option-text">B. \(34\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-16" value="C"><span class="option-text">C. \(36\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-16" value="D"><span class="option-text">D. \(35\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(50\) 以上第一個 \(7\) 的倍數是 \(56\)，\(300\) 以下最後一個是 \(294\)：
+              \[\begin{aligned} & 294 = 56 + (n - 1) \times 7 \\ & n - 1 = 34,\ n = 35 \end{aligned}\]
+              A 錯：\(300 \div 7\) 約是 \(42\)，那是 \(1\) 到 \(300\) 的個數，沒有扣掉 \(50\) 以下的。<br>
+              B 錯：\(34\) 是 \(n - 1\)，忘了 \(+1\)。<br>
+              C 錯：從 \(49\) 開始算，但 \(49\) 比 \(50\) 小，不在範圍內。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 圖形規律
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shapes" aria-hidden="true"></i> <span>重點 9：圖形的規律——數量排成等差數列</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>把每個圖形用到的數量依序排成數列，常常就是等差數列：<strong>首項</strong>是圖 1 的數量，<strong>公差</strong>是每多一個圖形增加的數量。</li>
+              <li>例：用吸管排相連的正方形，圖 1 到圖 4 依序用 \(4, 7, 10, 13\) 根，每多一個正方形只多 \(3\) 根（共用一根）。圖 \(n\) 需要
+                \[\begin{aligned} & 4 + (n - 1) \times 3 \\ & = 3n + 1 \text{ 根} \end{aligned}\]
+              </li>
+              <li><strong>能不能剛好用完 \(N\) 根？</strong>解 \(N = a_1 + (n - 1)d\)，\(n\) 必須是<strong>正整數</strong>。例：\(100\) 根時 \(n = 33\)，剛好排出圖 33；\(50\) 根時 \(n = \frac{49}{3}\)，不是整數，排不出完整的圖形。</li>
+              <li>注意共用的那一根：不要把每個圖形的邊數直接相乘。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="ad_straws.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：小賣部的黑色大理石櫃台上，用 10 根一樣長的金色吸管平放排成一列 3 個相連的正方形：上排 3 根首尾相接成一直線，下排 3 根首尾相接成一直線，4 根直的吸管把上下排連起來，相鄰兩個正方形共用中間那根直吸管，每個正方形的四邊等長。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結）站在櫃台左側，左手拿小手電筒照著吸管，右手捏著第 11 根吸管正要放到右端；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在櫃台右側看著。吸管只有排好的 10 根加上小映手上的 1 根。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：吸管排圖形</h3>
+            <p class="interactive-instruction">選一種圖形，拉動「圖 \(n\)」看圖形怎麼長大：藍色的吸管是比前一個圖形多出來的。再拉動「吸管數 \(N\)」，看看這些吸管能不能剛好排出一個完整的圖形。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-shape" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sh-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="sh-kind-group">
+                      <button class="pick-btn active" data-sh-kind="sq">正方形</button>
+                      <button class="pick-btn" data-sh-kind="tri">正三角形</button>
+                      <button class="pick-btn" data-sh-kind="hex">正六邊形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sh-n">圖 \(n\)：<span id="sh-vn" class="val-num">4</span></label>
+                    <input type="range" id="sh-n" min="1" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-N">吸管數 \(N\)：<span id="sh-vN" class="val-num">40</span></label>
+                    <input type="range" id="sh-N" min="10" max="60" value="40" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sh-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圖形的規律)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 用等長的吸管排一排相連的正五邊形，相鄰兩個共用一根吸管：圖 1 用 \(5\) 根、圖 2 用 \(9\) 根、圖 3 用 \(13\) 根……排出圖 12 需要幾根吸管？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-17" value="A"><span class="option-text">A. \(60\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-17" value="B"><span class="option-text">B. \(53\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-17" value="C"><span class="option-text">C. \(49\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-17" value="D"><span class="option-text">D. \(48\) 根</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。每多一個五邊形多 \(4\) 根，吸管數是首項 \(5\)、公差 \(4\) 的等差數列：
+              \[\begin{aligned} & a_{12} = 5 + (12 - 1) \times 4 \\ & = 5 + 44 = 49 \end{aligned}\]
+              A 錯：\(12 \times 5 = 60\)，沒有扣掉共用的吸管。<br>
+              B 錯：\(5 + 12 \times 4 = 53\)，多加了一次公差。<br>
+              D 錯：\(12 \times 4 = 48\)，漏了第一個五邊形多出來的那 \(1\) 根。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 承 Q17 的排法，下列哪一個吸管數可以剛好排出完整的圖形，不多也不少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-18" value="A"><span class="option-text">A. \(98\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-18" value="B"><span class="option-text">B. \(99\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-18" value="C"><span class="option-text">C. \(100\) 根</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-18" value="D"><span class="option-text">D. \(101\) 根</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。剛好排出圖 \(m\) 時，吸管數是 \(5 + (m - 1) \times 4\)，所以吸管數減 \(5\) 要是 \(4\) 的倍數：
+              \[\begin{aligned} & 101 - 5 = 96 = 4 \times 24 \\ & m - 1 = 24,\ m = 25 \end{aligned}\]
+              A、B、C 錯：\(98 - 5 = 93\)、\(99 - 5 = 94\)、\(100 - 5 = 95\) 都不是 \(4\) 的倍數，解出的 \(m\) 不是整數，會多出吸管。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 等差中項
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-to-dot" aria-hidden="true"></i> <span>重點 10：等差中項——前後兩項和的一半</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>三個數 \(a, b, c\) 成等差數列時，中間的 \(b\) 稱為 \(a\) 與 \(c\) 的<strong>等差中項</strong>。</li>
+              <li>因為 \(b - a = c - b\)，所以 \(2b = a + c\)，
+                \[ b = \frac{a + c}{2} \]
+              等差中項就是<strong>前後兩項和的一半</strong>，也就是數線上兩點的正中間。</li>
+              <li>例：\(-9\) 與 \(15\) 的等差中項是 \(\frac{-9 + 15}{2} = 3\)。和是奇數時，中項是分數。</li>
+              <li><strong>插入三個數</strong>：在 \(a\) 與 \(c\) 之間插入三個數成等差數列，先求正中間的那個（\(a\) 與 \(c\) 的中項），再分別求兩半的中項。</li>
+              <li>等差數列中，與某一項<strong>距離相同</strong>的前後兩項，它們的和是那一項的 \(2\) 倍，例如 \(a_4 + a_6 = 2a_5\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等差中項</span>
+              \(a, b, c\) 成等差數列 \(\Rightarrow b = \frac{a + c}{2}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ad_middle.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕，平面海報印刷質感）：舞台上，深酒紅布幕前的地板上，3 盞同樣大小的黃銅聚光燈由左到右排成一直線，間隔完全相等，中間那盞剛好在左右兩盞的正中間，3 道金色光束往上照。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在中間那盞聚光燈的正後方；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在舞台最右邊，雙手各抓著一段捲尺的兩端，捲尺水平拉開，從中間那盞燈量到右邊那盞燈。聚光燈只有 3 盞。畫面不出現任何文字、數字與符號，只有這兩個角色，沒有其他人或動物。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：數線上的正中間</h3>
+            <p class="interactive-instruction">拉動兩端的 \(a\) 與 \(c\)，看等差中項落在數線的哪裡。切到「插入三個數」，五個數把 \(a\) 到 \(c\) 分成四段，每一段一樣長嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mid" width="540" height="570"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="md-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="md-mode-group">
+                      <button class="pick-btn active" data-md-mode="three">三項的中項</button>
+                      <button class="pick-btn" data-md-mode="five">插入三個數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="md-a">左端 \(a\)：<span id="md-va" class="val-num">−6</span></label>
+                    <input type="range" id="md-a" min="-20" max="20" value="-6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-c">右端 \(c\)：<span id="md-vc" class="val-num">12</span></label>
+                    <input type="range" id="md-c" min="-20" max="20" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="md-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等差中項)</h3>
+
+          <div class="quiz-card" data-quiz="1-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> \(-23\) 與 \(41\) 的等差中項是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-19" value="A"><span class="option-text">A. \(32\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-19" value="B"><span class="option-text">B. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-19" value="C"><span class="option-text">C. \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-19" value="D"><span class="option-text">D. \(-32\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & \frac{-23 + 41}{2} \\ & = \frac{18}{2} = 9 \end{aligned}\]
+              驗算：\(9 - (-23) = 32\)、\(41 - 9 = 32\)，兩段的差相同。<br>
+              A 錯：\(32\) 是公差，不是中項。<br>
+              C 錯：\(18\) 是兩數的和，還要除以 \(2\)。<br>
+              D 錯：\(\frac{-23 - 41}{2} = -32\)，中項是「和」的一半，不是差的一半。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 某等差數列中 \(a_9 + a_{13} = -26\)，則 \(a_{11}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-1-20" value="A"><span class="option-text">A. \(-13\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-20" value="B"><span class="option-text">B. \(-26\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-20" value="C"><span class="option-text">C. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-1-20" value="D"><span class="option-text">D. \(-52\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(a_9\)、\(a_{11}\)、\(a_{13}\) 每兩個之間都差 \(2\) 個公差，所以它們也成等差數列，\(a_{11}\) 是 \(a_9\) 與 \(a_{13}\) 的等差中項：
+              \[\begin{aligned} & a_{11} = \frac{a_9 + a_{13}}{2} \\ & = \frac{-26}{2} = -13 \end{aligned}\]
+              B 錯：\(-26\) 是兩項的和，還要除以 \(2\)。<br>
+              C 錯：正負號弄反了。<br>
+              D 錯：和要除以 \(2\)，不是乘以 \(2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 等差數列速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>數列</strong>：數排成一列；首項 \(a_1\)、第 \(n\) 項 \(a_n\)、末項是最後一項，項數是個數。</li>
+              <li><strong>找規律</strong>：看差、倍數、正負號、位置；只憑前幾項規律不一定唯一。</li>
+              <li><strong>等差數列</strong>：後項 \(-\) 前項 \(=\) 公差 \(d\)，每一組都要相等；\(d\) 可正、可負、可為 \(0\)。</li>
+              <li><strong>填空</strong>：往後 \(+d\)，往前 \(-d\)。</li>
+              <li><strong>第 \(n\) 項</strong>：\(a_n = a_1 + (n - 1)d\)，只加 \(n - 1\) 個公差。</li>
+              <li><strong>項數</strong>：(末項 \(-\) 首項) \(\div\) 公差 \(+ 1\)。</li>
+              <li><strong>圖形</strong>：圖 1 的數量是首項，每次增加的數量是公差；能否剛好排完看 \(n\) 是不是正整數。</li>
+              <li><strong>等差中項</strong>：\(b = \frac{a + c}{2}\)。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-film"></i> 回到戲院：最後一排有幾個座位？</h4>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 不必一排一排數</h5>
+              <p>第 \(1\) 排 \(14\) 個座位、每排多 \(2\) 個，每一排的座位數是首項 \(14\)、公差 \(2\) 的等差數列。第 \(25\) 排比第 \(1\) 排多了 \(24\) 個公差：</p>
+              <p>\(a_{25} = 14 + 24 \times 2\)<wbr>\({} = 62\)，最後一排有 \(62\) 個座位。</p>
+              <h5><i class="fa-solid fa-scale-balanced"></i> 公式的意思就是「跳了幾次」</h5>
+              <p>從 \(a_1\) 走到 \(a_n\)，中間只跨過 \(n - 1\) 個間隔。記住這件事，就不會多加或少加一個公差。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>知道每一排有幾個座位之後，下一個問題是：整個座位廳<strong>一共</strong>有幾個座位？下一節「等差級數」把等差數列的每一項加起來。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

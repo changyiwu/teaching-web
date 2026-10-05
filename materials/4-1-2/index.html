@@ -4,39 +4,1256 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-2 等差級數 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-2 等差級數 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第1章 數列與級數</div>
-    <h1>1-2 等差級數</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第一章</span>
+        <h1>1-2 等差級數</h1>
+        <p>回到老戲院：經理要小映數出整個放映廳有幾個座位，每往後一排就多幾個座位。把等差數列的各項用「\(+\)」連起來，就是<strong>等差級數</strong>。這一節學高斯的<strong>倒序相加</strong>，推出兩個求和公式 \(S_n = \frac{n(a_1 + a_n)}{2}\) 與 \(S_n = \frac{n[2a_1 + (n-1)d]}{2}\)；再倒過來用公式<strong>反求</strong>公差、首項或項數，解決座位、堆疊、累積天數這些生活問題。</p>
+      </div>
+      <!-- Progress navigation (10 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-plus"></i> 級數的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-arrows-rotate"></i> 倒序相加</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-link"></i> 公式一</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-flag-checkered"></i> 先求項數</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-shoe-prints"></i> 公式二</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-rotate-left"></i> 反求公差</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-layer-group"></i> 數量問題</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-couch"></i> 座位問題</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-calendar-days"></i> 求項數</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-scale-unbalanced"></i> 和的判斷</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Art Deco Theater)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(252, 211, 77, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-masks-theater" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);"></i> 課前暖身漫畫：放映廳一共幾個座位？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            經理要小映數出第二放映廳的座位：第 \(1\) 排 \(12\) 個，往後每排多 \(1\) 個，共 \(20\) 排。阿幕拿起鉛筆一排一排加；小映卻把第 \(1\) 排和第 \(20\) 排配成一對——\(12 + 31 = 43\)，第 \(2\) 排配第 \(19\) 排也是 \(43\)……<strong style="color:#fcd34d">20 排配成 10 對，一共 430 個座位！</strong>這正是高斯小時候算 \(1 + 2 + \cdots + 100\) 的方法。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="Art Deco 復古戲院海報風四格漫畫（2×2 直式，金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感），角色：小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）。四格是同一間階梯座位廳、同一個機位。第 1 格：小映一個人站在走道最前方，舉著手電筒望向往後越來越寬的酒紅色座位排，頭頂一個一般對話泡，台詞「經理要我數這一廳有幾個座位……」。第 2 格：阿幕一個人坐在最後一排，低頭用耳後取下的鉛筆在空白小筆記本上寫，表情苦惱，頭頂一個一般對話泡，台詞「第 1 排 12 個、第 2 排 13 個……要加到第 20 排！」。第 3 格：小映一個人特寫，眼睛發亮、用手電筒指向畫面外，頭頂一個思考泡（雲朵形、小圓點尾巴），台詞「第 1 排配最後一排，第 2 排配倒數第 2 排……每一對都一樣多！」。第 4 格：兩人並肩站在走道上，阿幕驚訝張嘴、小映豎起大拇指，畫面上方一個長方形旁白框，台詞「20 排配成 10 對，每對 43 個，一共 430 個！」。座位不需要畫出可數的精確數量；畫面中除對話泡外沒有任何文字、數字、招牌。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 級數與等差級數的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-plus" aria-hidden="true"></i> <span>重點 1：級數與等差級數——用「\(+\)」連起來，而且要依序</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>級數</strong>：把一個數列的各項<strong>依次用「\(+\)」</strong>連接起來。例：\(3 + 9 + 7 + 5 + 11\) 是級數。</li>
+              <li><strong>等差級數</strong>：把一個<strong>等差數列</strong>的各項依次用「\(+\)」連接起來。例：\(2 + 7 + 12 + 17\)。</li>
+              <li><strong>數列不是級數</strong>：\(2, 7, 12, 17\) 用逗號隔開，只是數列；用「\(+\)」連起來才是級數。</li>
+              <li><strong>公差是 \(0\) 也算</strong>：\(4 + 4 + 4\) 的公差是 \(0\)，仍然是等差級數。</li>
+              <li><strong>順序不能亂</strong>：\(3 + 9 + 7 + 5 + 11\) 的五個數排好是 \(3, 5, 7, 9, 11\)，但它寫的順序相鄰兩項的差不固定，所以只是級數、<strong>不是等差級數</strong>。</li>
+              <li><strong>符號 \(S_n\)</strong>：等差級數 \(a_1 + a_2 + \cdots + a_n\) 的和記作 \(S_n\)，即 \(S_n = a_1 + a_2 + \cdots + a_n\)。\(S_n\) 是「前 \(n\) 項的和」，不是第 \(n\) 項。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_tickets.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：老戲院售票口的木質檯面上，平放一排 5 張相同大小、相同顏色的金色長方形票根，排成一直線、彼此分開不重疊、都不立起。售票口後方站著小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結），右手拿一支小手電筒照著票根；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在檯面右側，伸出食指指著最左邊那張票根。票根上與畫面中沒有任何文字、數字、符號。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：逗號、加號、換順序</h3>
+            <p class="interactive-instruction">拉動首項 \(a_1\)、公差 \(d\) 與項數 \(n\)，再切換三種寫法：用逗號隔開是什麼？用「\(+\)」連起來呢？把第 2、3 項對調之後，和變了沒有？它還是等差級數嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-kind" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="kd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">寫法</span>
+                    <div class="btn-group" id="kd-mode-group">
+                      <button class="pick-btn" data-kd-mode="list">用逗號</button>
+                      <button class="pick-btn active" data-kd-mode="series">用加號</button>
+                      <button class="pick-btn" data-kd-mode="shuffle">換順序再加</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="kd-a">首項 \(a_1\)：<span id="kd-va" class="val-num">3</span></label>
+                    <input type="range" id="kd-a" min="-5" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="kd-d">公差 \(d\)：<span id="kd-vd" class="val-num">2</span></label>
+                    <input type="range" id="kd-d" min="-4" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="kd-n">項數 \(n\)：<span id="kd-vn" class="val-num">5</span></label>
+                    <input type="range" id="kd-n" min="3" max="7" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="kd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (級數的意義)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一個是等差級數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-1" value="A"><span class="option-text">A. \(4, 9, 14, 19, 24\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-1" value="B"><span class="option-text">B. \(5 + 15 + 10 + 20 + 25\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-1" value="C"><span class="option-text">C. \(13 + 13 + 13 + 13\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-1" value="D"><span class="option-text">D. \(1 + 2 + 4 + 8 + 16\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(13 + 13 + 13 + 13\) 相鄰兩項都差 \(0\)，公差是 \(0\) 的等差數列用「\(+\)」連起來，仍是等差級數。<br>
+              A 錯：用逗號隔開，是等差數列，不是級數。<br>
+              B 錯：是級數，但依寫的順序，相鄰兩項的差是 \(10, -5, 10, 5\)，不固定。<br>
+              D 錯：相鄰兩項的差是 \(1, 2, 4, 8\)，不是等差。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 關於等差級數 \(17 + 24 + 31 + 38 + 45 + 52\)，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-2" value="A"><span class="option-text">A. 共 \(6\) 項，\(S_6 = 207\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-2" value="B"><span class="option-text">B. 公差是 \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-2" value="C"><span class="option-text">C. \(S_6\) 表示第 \(6\) 項，\(S_6 = 52\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-2" value="D"><span class="option-text">D. 寫成 \(17, 24, 31, \ldots\) 仍是等差級數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。一共 \(6\) 項，\(S_6\) 是這 \(6\) 項的和：
+              \[\begin{aligned} & 17 + 52 = 69 \\ & 24 + 45 = 69 \\ & 31 + 38 = 69 \end{aligned}\]
+              三對都是 \(69\)，所以 \(S_6 = 3 \times 69 = 207\)。<br>
+              B 錯：公差是「後項減前項」\(24 - 17 = 7\)，不是 \(17 - 24\)。<br>
+              C 錯：\(52\) 是第 \(6\) 項 \(a_6\)；\(S_6\) 是前 \(6\) 項的和。<br>
+              D 錯：用逗號隔開是數列，不是級數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 倒序相加
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> <span>重點 2：倒序相加——高斯的方法</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>問題</strong>：\(1 + 2 + 3 + \cdots + 100 = ?\)</li>
+              <li><strong>正著寫一次、倒著寫一次，再上下相加</strong>：設 \(S = 1 + 2 + \cdots + 100\)，
+                \[\begin{aligned} & S = 1 + 2 + \cdots + 100 \\ & S = 100 + 99 + \cdots + 1 \\ & 2S = 101 + 101 + \cdots + 101 \end{aligned}\]
+              上下每一對都是 \(101\)，一共 \(100\) 對，所以 \(2S = 100 \times 101\)，\(S = 5050\)。</li>
+              <li><strong>用圖來看</strong>：一排排鋼珠排成階梯，再複製一份<strong>倒過來</strong>拼上去，就成了長方形；長方形的珠子數是 \(S\) 的 <strong>\(2\) 倍</strong>。</li>
+              <li><strong>對任何等差級數都成立</strong>：後項都比前項多一個公差 \(d\)，所以
+                \[\begin{aligned} & a_1 + a_n \\ & = a_2 + a_{n-1} \\ & = a_3 + a_{n-2} = \cdots \end{aligned}\]
+              倒序相加後有 \(n\) 組 \((a_1 + a_n)\)：\(2S_n = n(a_1 + a_n)\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_flip.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：階梯座位廳的側面遠景，酒紅色絨布座椅一排排往後升高。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在最前排的走道上，舉起拿手電筒的右手揮手；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在最後一排的走道上，也舉起右手揮手回應，兩人一前一後遙遙相望。畫面中沒有任何文字、數字、招牌，座位不需要可數。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：複製一份倒過來</h3>
+            <p class="interactive-instruction">金色圓點是階梯座位：第 1 排 \(a_1\) 個，每排多 \(d\) 個，共 \(n\) 排。按「下一步」複製一份孔雀藍的倒過來，再拼在一起——每一排會變成幾個？為什麼最後要除以 \(2\)？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-flip" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="fl-prev">上一步</button>
+                      <span class="step-counter" id="fl-step">1 / 3</span>
+                      <button class="pick-btn" id="fl-next">下一步</button>
+                      <button class="pick-btn" id="fl-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fl-a">第 1 排 \(a_1\)：<span id="fl-va" class="val-num">2</span></label>
+                    <input type="range" id="fl-a" min="1" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fl-d">每排多 \(d\)：<span id="fl-vd" class="val-num">3</span></label>
+                    <input type="range" id="fl-d" min="0" max="3" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fl-n">排數 \(n\)：<span id="fl-vn" class="val-num">5</span></label>
+                    <input type="range" id="fl-n" min="2" max="7" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (倒序相加)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 用高斯的方法求 \(1 + 2 + 3 + \cdots + 80\)：把 \(S\) 正著寫一次、倒著寫一次再上下相加。下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-3" value="A"><span class="option-text">A. \(2S = 80 \times 80\)，\(S = 3200\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-3" value="B"><span class="option-text">B. \(S = 80 \times 81 = 6480\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-3" value="C"><span class="option-text">C. \(2S = 40 \times 81\)，\(S = 1620\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-3" value="D"><span class="option-text">D. \(2S = 80 \times 81\)，\(S = 3240\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & S = 1 + 2 + \cdots + 80 \\ & S = 80 + 79 + \cdots + 1 \\ & 2S = 81 + 81 + \cdots + 81 \end{aligned}\]
+              上下每一對都是 \(81\)，共 \(80\) 對，\(2S = 80 \times 81 = 6480\)，\(S = 3240\)。<br>
+              A 錯：每一對是 \(1 + 80 = 81\)，不是 \(80\)。<br>
+              B 錯：\(80 \times 81\) 是兩份的總和 \(2S\)，忘了除以 \(2\)。<br>
+              C 錯：上下相加是 \(80\) 對，不是 \(40\) 對；\(40\) 對是「同一列頭尾配對」的對數，兩種想法混在一起就少了一半。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 階梯座位第 \(1\) 排有 \(4\) 個座位，往後每排多 \(5\) 個，共 \(9\) 排。把同樣的座位圖複製一份並倒過來，拼成長方形。長方形每一排有幾個座位？原本的座位共有幾個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-4" value="A"><span class="option-text">A. 每排 \(44\) 個，共 \(198\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-4" value="B"><span class="option-text">B. 每排 \(48\) 個，共 \(216\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-4" value="C"><span class="option-text">C. 每排 \(48\) 個，共 \(432\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-4" value="D"><span class="option-text">D. 每排 \(48\) 個，共 \(192\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。最後一排是第 \(9\) 排：\(4 + 8 \times 5 = 44\) 個。倒過來拼上去後，每一排都是「第 1 排 \(+\) 最後一排」\(4 + 44 = 48\) 個，長方形共 \(9 \times 48 = 432\) 個，是原本的 \(2\) 倍，所以原本有 \(432 \div 2 = 216\) 個。<br>
+              A 錯：把最後一排的 \(44\) 當成長方形每排的個數。<br>
+              C 錯：\(432\) 是兩份拼成的長方形，忘了除以 \(2\)。<br>
+              D 錯：長方形有 \(9\) 排，不是 \(8\) 排。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 公式一
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> <span>重點 3：等差級數的和 \(S_n = \frac{n(a_1 + a_n)}{2}\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等差級數的和</span>
+              首項 \(a_1\)、末項 \(a_n\)、項數 \(n\)：
+              \[S_n = \frac{n(a_1 + a_n)}{2}\]
+              項數 \(\times\)（首項 \(+\) 末項）\(\div 2\)
+            </div>
+            <ul class="bullet-list">
+              <li><strong>三個要讀出來的量</strong>：首項、末項、<strong>項數</strong>。例：\(4 + 9 + 14 + 19 + 24 + 29\) 有 \(6\) 項，
+                \[\begin{aligned} & S_6 = \frac{6 \times (4 + 29)}{2} \\ & \phantom{S_6} = 99 \end{aligned}\]</li>
+              <li><strong>負數也一樣代</strong>：首項是負數時，\(a_1 + a_n\) 用中括號包起來，例如 \(\frac{5 \times [-14 + (-2)]}{2} = -40\)。</li>
+              <li><strong>項數是奇數</strong>：正中間那一項落單，它剛好是 \(a_1 + a_n\) 的一半，所以 \(S_n = n \times\) 中間項。例：
+                \[\begin{aligned} & 2 + 7 + 12 + 17 + 22 \\ & = 5 \times 12 = 60 \end{aligned}\]</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_pairs.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：戲院大廳的紅地毯上，小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，左手拿一支小手電筒）站在畫面左側，阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在畫面右側，兩人面對面、各伸出右手握手，像一對搭檔。背景是金色放射狀扇形的 Art Deco 牆飾。畫面中沒有任何文字、數字、符號、招牌。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：頭尾配對器</h3>
+            <p class="interactive-instruction">拉動首項 \(a_1\)、公差 \(d\) 與項數 \(n\)。同色的弧線把第 1 項和最後一項、第 2 項和倒數第 2 項配成一對——每一對的和是不是都一樣？項數是奇數時，正中間那一項怎麼辦？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pair" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pr-a">首項 \(a_1\)：<span id="pr-va" class="val-num">5</span></label>
+                    <input type="range" id="pr-a" min="-20" max="20" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pr-d">公差 \(d\)：<span id="pr-vd" class="val-num">3</span></label>
+                    <input type="range" id="pr-d" min="-4" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pr-n">項數 \(n\)：<span id="pr-vn" class="val-num">6</span></label>
+                    <input type="range" id="pr-n" min="2" max="9" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (公式一)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 求等差級數 \(-23 + (-16) + (-9) + (-2)\)<wbr>\({} + 5 + 12 + 19 + 26\) 的和。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-5" value="A"><span class="option-text">A. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-5" value="B"><span class="option-text">B. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-5" value="C"><span class="option-text">C. \(\frac{21}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-5" value="D"><span class="option-text">D. \(112\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。共 \(8\) 項，首項 \(-23\)、末項 \(26\)：
+              \[\begin{aligned} & S_8 = \frac{8 \times [-23 + 26]}{2} \\ & \phantom{S_8} = \frac{8 \times 3}{2} = 12 \end{aligned}\]
+              A 錯：\(8 \times 3 = 24\) 之後忘了除以 \(2\)。<br>
+              C 錯：把項數數成 \(7\)，\(\frac{7 \times 3}{2} = \frac{21}{2}\)。<br>
+              D 錯：把負號都丟掉，\(23 + 16 + \cdots + 26 = 112\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 某等差級數共 \(15\) 項，首項是 \(-31\)、末項是 \(53\)。這個級數的和是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-6" value="A"><span class="option-text">A. \(330\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-6" value="B"><span class="option-text">B. \(630\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-6" value="C"><span class="option-text">C. \(165\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-6" value="D"><span class="option-text">D. \(154\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & S_{15} = \frac{15 \times [-31 + 53]}{2} \\ & \phantom{S_{15}} = \frac{15 \times 22}{2} = 165 \end{aligned}\]
+              A 錯：\(15 \times 22 = 330\) 是兩份的和，忘了除以 \(2\)。<br>
+              B 錯：把 \(-31\) 當成 \(31\)，算成 \(31 + 53 = 84\)。<br>
+              D 錯：項數用了 \(14\)。題目說共 \(15\) 項，就直接用 \(15\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 先求項數再求和
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> <span>重點 4：只給首項、公差、末項——先求項數再求和</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>題目寫成 \(a_1 + a_2 + \cdots + a_n\)，項數藏起來了</strong>：先用 \(a_n = a_1 + (n - 1)d\) 求出 \(n\)，再代入 \(S_n = \frac{n(a_1 + a_n)}{2}\)。</li>
+              <li>例：\(7 + 11 + 15 + \cdots + 63\)。公差 \(d = 11 - 7 = 4\)，
+                \[\begin{aligned} & 63 = 7 + (n - 1) \times 4 \\ & n - 1 = 14，n = 15 \end{aligned}\]
+                所以 \(S_{15} = \frac{15 \times (7 + 63)}{2} = 525\)。</li>
+              <li><strong>項數比間隔多 \(1\)</strong>：從 \(7\) 走到 \(63\) 走了 \(14\) 個公差，但項有 \(15\) 個。忘了 \(+1\) 是最常見的錯。</li>
+              <li><strong>倍數的和</strong>：「\(1\) 到 \(60\) 中 \(4\) 的倍數之和」就是 \(4 + 8 + \cdots + 60\)，首項 \(4\)、末項 \(60\)、項數 \(60 \div 4 = 15\)，和是 \(\frac{15 \times 64}{2} = 480\)。範圍的端點不是倍數時，末項要往下找最大的倍數。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_lastterm.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：戲院走道的深色地板上，嵌著一直線、等間距的 5 盞圓形金色小地燈，5 盞大小相同、都亮著。阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）蹲在地燈旁邊，右手食指指著第 1 盞與第 2 盞地燈之間的空地板；小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在後方，用手電筒照著最後一盞地燈。畫面中只有 5 盞地燈，沒有任何文字、數字、符號。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：末項換算項數</h3>
+            <p class="interactive-instruction">「末項」模式：拉動首項、公差與末項，看畫面怎麼先算出項數再求和；把公差調成 \(0\) 會怎樣？「倍數」模式：求 \(1\) 到 \(N\) 之中 \(m\) 的倍數之和，末項要怎麼找？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-last" width="540" height="450"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ls-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題型</span>
+                    <div class="btn-group" id="ls-mode-group">
+                      <button class="pick-btn active" data-ls-mode="last">給末項</button>
+                      <button class="pick-btn" data-ls-mode="mult">倍數的和</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="ls-row-a">
+                    <label for="ls-a">首項 \(a_1\)：<span id="ls-va" class="val-num">8</span></label>
+                    <input type="range" id="ls-a" min="-20" max="20" value="8" step="1">
+                  </div>
+                  <div class="slider-row" id="ls-row-d">
+                    <label for="ls-d">公差 \(d\)：<span id="ls-vd" class="val-num">4</span></label>
+                    <input type="range" id="ls-d" min="-4" max="4" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="ls-row-n">
+                    <label for="ls-n">末項 \(a_n\)：<span id="ls-vn" class="val-num">44</span></label>
+                    <input type="range" id="ls-n" min="3" max="12" value="10" step="1">
+                  </div>
+                  <div class="slider-row" id="ls-row-m">
+                    <label for="ls-m">倍數 \(m\)：<span id="ls-vm" class="val-num">6</span></label>
+                    <input type="range" id="ls-m" min="2" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="ls-row-N">
+                    <label for="ls-N">範圍 \(1\) 到 \(N\)：<span id="ls-vN" class="val-num">100</span></label>
+                    <input type="range" id="ls-N" min="20" max="150" value="100" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ls-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (先求項數)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 等差級數 \(13 + 21 + 29 + \cdots + 141\) 共有幾項？和是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-7" value="A"><span class="option-text">A. \(17\) 項，和 \(1309\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-7" value="B"><span class="option-text">B. \(16\) 項，和 \(1232\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-7" value="C"><span class="option-text">C. \(17\) 項，和 \(2618\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-7" value="D"><span class="option-text">D. \(129\) 項，和 \(9933\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。公差 \(d = 21 - 13 = 8\)：
+              \[\begin{aligned} & 141 = 13 + (n - 1) \times 8 \\ & n - 1 = 16，n = 17 \\ & S_{17} = \frac{17 \times (13 + 141)}{2} \\ & \phantom{S_{17}} = 17 \times 77 = 1309 \end{aligned}\]
+              B 錯：\(n - 1 = 16\) 之後忘了 \(+1\)，少算一項。<br>
+              C 錯：\(17 \times 154 = 2618\) 是兩份的和，忘了除以 \(2\)。<br>
+              D 錯：\(141 - 13 + 1 = 129\) 是 \(13\) 到 \(141\) 之間<strong>所有整數</strong>的個數；這個級數每次跳 \(8\)，不是每個整數都在裡面。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> 求 \(100\) 到 \(300\) 之間所有 \(9\) 的倍數的和。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-8" value="A"><span class="option-text">A. \(8910\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-8" value="B"><span class="option-text">B. \(4347\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-8" value="C"><span class="option-text">C. \(5049\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-8" value="D"><span class="option-text">D. \(4455\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。比 \(100\) 大的第一個 \(9\) 的倍數是 \(108\)，比 \(300\) 小的最後一個是 \(297\)：
+              \[\begin{aligned} & 297 = 108 + (n - 1) \times 9 \\ & n - 1 = 21，n = 22 \\ & S_{22} = \frac{22 \times (108 + 297)}{2} \\ & \phantom{S_{22}} = 11 \times 405 = 4455 \end{aligned}\]
+              A 錯：\(22 \times 405 = 8910\)，忘了除以 \(2\)。<br>
+              B 錯：漏掉了首項 \(108\)，\(4455 - 108 = 4347\)。<br>
+              C 錯：從 \(9\) 開始加到 \(297\)，把 \(100\) 以下的倍數也算進去了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 公式二
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shoe-prints" aria-hidden="true"></i> <span>重點 5：不知道末項——\(S_n = \frac{n[2a_1 + (n-1)d]}{2}\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>由來</strong>：把 \(a_n = a_1 + (n - 1)d\) 代進公式一，
+                \[\begin{aligned} & S_n = \frac{n(a_1 + a_n)}{2} \\ & \phantom{S_n} = \frac{n[a_1 + a_1 + (n - 1)d]}{2} \\ & \phantom{S_n} = \frac{n[2a_1 + (n - 1)d]}{2} \end{aligned}\]</li>
+              <li><strong>什麼時候用</strong>：題目給了首項、公差、項數，<strong>沒給末項</strong>。也可以先求末項再用公式一，兩種都對。</li>
+              <li>例：\(20 + 17 + 14 + \cdots\) 的前 \(10\) 項和。\(a_1 = 20\)、\(d = -3\)、\(n = 10\)：
+                \[\begin{aligned} & S_{10} = \frac{10 \times [40 + 9 \times (-3)]}{2} \\ & \phantom{S_{10}} = 5 \times 13 = 65 \end{aligned}\]</li>
+              <li><strong>是 \(n - 1\)，不是 \(n\)</strong>：\(n\) 個項之間只有 \(n - 1\) 個公差。寫成 \(nd\) 等於讓末項多走一步。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_formula2.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：老戲院的售票口，拱形的金色窗框後面，小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）低頭看著檯面上一張攤開的空白大紙，手電筒照著紙；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）在窗外探頭過來看，一手扶著窗框。紙上是空白的，畫面中沒有任何文字、數字、符號、招牌。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：走了幾步？</h3>
+            <p class="interactive-instruction">拉動首項、公差與項數，上方的點是每一項，數數看從 \(a_1\) 走到 \(a_n\) 走了幾步。切到「錯誤寫法」：把 \(n - 1\) 寫成 \(n\)，結果差了多少？公差是 \(0\) 時為什麼看不出錯？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-f2" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="f2-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">寫法</span>
+                    <div class="btn-group" id="f2-mode-group">
+                      <button class="pick-btn active" data-f2-mode="right">正確寫法</button>
+                      <button class="pick-btn" data-f2-mode="wrong">錯誤寫法</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="f2-a">首項 \(a_1\)：<span id="f2-va" class="val-num">10</span></label>
+                    <input type="range" id="f2-a" min="-10" max="15" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="f2-d">公差 \(d\)：<span id="f2-vd" class="val-num">-3</span></label>
+                    <input type="range" id="f2-d" min="-4" max="4" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="f2-n">項數 \(n\)：<span id="f2-vn" class="val-num">9</span></label>
+                    <input type="range" id="f2-n" min="2" max="12" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="f2-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (公式二)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 求等差級數 \(41 + 37 + 33 + \cdots\) 前 \(18\) 項的和。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-9" value="A"><span class="option-text">A. \(90\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-9" value="B"><span class="option-text">B. \(252\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-9" value="C"><span class="option-text">C. \(126\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-9" value="D"><span class="option-text">D. \(1350\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(a_1 = 41\)、\(d = 37 - 41 = -4\)、\(n = 18\)：
+              \[\begin{aligned} & S_{18} = \frac{18 \times [82 + 17 \times (-4)]}{2} \\ & \phantom{S_{18}} = 9 \times 14 = 126 \end{aligned}\]
+              A 錯：把 \(17 \times (-4)\) 寫成 \(18 \times (-4)\)，得 \(9 \times 10 = 90\)。<br>
+              B 錯：\(18 \times 14 = 252\)，忘了除以 \(2\)。<br>
+              D 錯：公差算成 \(41 - 37 = 4\)，得 \(9 \times 150 = 1350\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 某等差級數首項為 \(-17\)、公差為 \(6\)，求前 \(14\) 項的和。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-10" value="A"><span class="option-text">A. \(350\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-10" value="B"><span class="option-text">B. \(308\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-10" value="C"><span class="option-text">C. \(616\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-10" value="D"><span class="option-text">D. \(-784\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & S_{14} = \frac{14 \times [-34 + 13 \times 6]}{2} \\ & \phantom{S_{14}} = 7 \times 44 = 308 \end{aligned}\]
+              A 錯：把 \(13 \times 6\) 寫成 \(14 \times 6\)，得 \(7 \times 50 = 350\)。<br>
+              C 錯：\(14 \times 44 = 616\)，忘了除以 \(2\)。<br>
+              D 錯：把公差當成 \(-6\)，得 \(7 \times (-112) = -784\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 反求公差、項數
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> <span>重點 6：已知和，倒過來求公差或項數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>四個量知道三個，就能求第四個</strong>：\(S_n\)、\(a_1\)、\(n\)、\(d\)（或 \(a_n\)）代進公式，就是一個方程式。</li>
+              <li><strong>求公差</strong>：首項 \(5\)、前 \(8\) 項和 \(124\)，設公差為 \(d\)：
+                \[\begin{aligned} & 124 = \frac{8 \times [2 \times 5 + 7d]}{2} \\ & 124 = 4(10 + 7d) \\ & 31 = 10 + 7d，d = 3 \end{aligned}\]</li>
+              <li><strong>也可以先求末項</strong>：\(124 = \frac{8(5 + a_8)}{2}\) 得 \(a_8 = 26\)，再由 \(a_8 = 5 + 7d\) 得 \(d = 3\)。兩種都對。</li>
+              <li><strong>求項數</strong>：首項 \(6\)、末項 \(30\)、和 \(162\)：\(162 = \frac{n(6 + 30)}{2}\)，\(n = 9\)；再由 \(30 = 6 + 8d\) 得 \(d = 3\)。</li>
+              <li><strong>「在兩數之間插入」</strong>：插入的個數是項數減 \(2\)，不是項數本身。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_solve.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：老戲院的放映室，一台復古的大型膠卷放映機對著牆上的小方窗。阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）雙手捧著一個大圓形膠卷盤，正要裝上放映機；小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在門口，用手電筒幫他照亮。畫面中沒有任何文字、數字、符號、招牌。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：倒推解碼器</h3>
+            <p class="interactive-instruction">「求公差」模式：拉動首項、項數與和，看畫面怎麼解一元一次方程式求出 \(d\)。「求項數」模式：給首項、末項與和，先解出項數，再求公差——公差一定是整數嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-solve" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求</span>
+                    <div class="btn-group" id="sv-mode-group">
+                      <button class="pick-btn active" data-sv-mode="d">求公差</button>
+                      <button class="pick-btn" data-sv-mode="n">求項數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="sv-row-a">
+                    <label for="sv-a">首項 \(a_1\)：<span id="sv-va" class="val-num">5</span></label>
+                    <input type="range" id="sv-a" min="-10" max="20" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="sv-row-n">
+                    <label for="sv-n">項數 \(n\)：<span id="sv-vn" class="val-num">10</span></label>
+                    <input type="range" id="sv-n" min="3" max="12" value="10" step="1">
+                  </div>
+                  <div class="slider-row" id="sv-row-k">
+                    <label for="sv-k">前 \(n\) 項和 \(S_n\)：<span id="sv-vk" class="val-num">185</span></label>
+                    <input type="range" id="sv-k" min="-4" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="sv-row-a2">
+                    <label for="sv-a2">首項 \(a_1\)：<span id="sv-va2" class="val-num">10</span></label>
+                    <input type="range" id="sv-a2" min="1" max="20" value="10" step="1">
+                  </div>
+                  <div class="slider-row" id="sv-row-b2">
+                    <label for="sv-b2">末項 \(a_n\)：<span id="sv-vb2" class="val-num">40</span></label>
+                    <input type="range" id="sv-b2" min="21" max="60" value="40" step="1">
+                  </div>
+                  <div class="slider-row" id="sv-row-m2">
+                    <label for="sv-m2">和 \(S_n\)：<span id="sv-vm2" class="val-num">175</span></label>
+                    <input type="range" id="sv-m2" min="0" max="9" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (反求公差、項數)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> 某等差級數的首項為 \(25\)，前 \(16\) 項的和為 \(160\)，則公差為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-11" value="A"><span class="option-text">A. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-11" value="B"><span class="option-text">B. \(-\frac{15}{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-11" value="C"><span class="option-text">C. \(-\frac{8}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-11" value="D"><span class="option-text">D. \(-2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設公差為 \(d\)：
+              \[\begin{aligned} & 160 = \frac{16 \times [50 + 15d]}{2} \\ & 160 = 8(50 + 15d) \\ & 20 = 50 + 15d \\ & 15d = -30，d = -2 \end{aligned}\]
+              A 錯：\(15d = -30\) 移項時漏了負號。<br>
+              B 錯：把 \(15d\) 寫成 \(16d\)，得 \(16d = -30\)。<br>
+              C 錯：忘了除以 \(2\)，列成 \(160 = 16(50 + 15d)\)，得 \(15d = -40\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 在 \(8\) 和 \(68\) 兩數之間放入若干個數，使它們成為一個等差數列。若這個等差數列的和為 \(608\)，則它的項數與公差分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-12" value="A"><span class="option-text">A. \(16\) 項，公差 \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-12" value="B"><span class="option-text">B. \(16\) 項，公差 \(\frac{15}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-12" value="C"><span class="option-text">C. \(8\) 項，公差 \(\frac{60}{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-12" value="D"><span class="option-text">D. \(16\) 項，公差 \(-4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。首項 \(8\)、末項 \(68\)：
+              \[\begin{aligned} & 608 = \frac{n(8 + 68)}{2} \\ & 1216 = 76n，n = 16 \\ & 68 = 8 + 15d，d = 4 \end{aligned}\]
+              B 錯：把 \(15d\) 寫成 \(16d\)，得 \(d = \frac{60}{16} = \frac{15}{4}\)。<br>
+              C 錯：忘了除以 \(2\)，列成 \(608 = 76n\)，得 \(n = 8\)。<br>
+              D 錯：公差是「後項減前項」，\(68\) 比 \(8\) 大，公差是正的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 數量問題
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> <span>重點 7：數量問題——層層堆疊，讀出首項、末項、層數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>每一層比上一層多固定個數</strong>：各層的個數就是等差數列，全部加起來就是等差級數。</li>
+              <li><strong>先翻譯再代公式</strong>：「第 1 層」\(\Rightarrow a_1\)、「最底層」\(\Rightarrow a_n\)、「共幾層」\(\Rightarrow n\)、「每層多幾個」\(\Rightarrow d\)。</li>
+              <li>例：汽水罐牆最上層 \(1\) 罐，往下每層多 \(2\) 罐，最下層 \(15\) 罐。由 \(15 = 1 + (n - 1) \times 2\) 得 \(n = 8\)，共 \(\frac{8 \times (1 + 15)}{2} = 64\) 罐。</li>
+              <li><strong>從哪一頭數都可以</strong>：從下往上數時首項 \(15\)、公差 \(-2\)、末項 \(1\)，和一樣是 \(64\)。</li>
+              <li><strong>每一層不是直接給的個數</strong>：例如一圈一圈的方框，要先算出每一圈有幾個，再看它們是不是等差。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_cans.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：戲院小賣部的木質櫃檯上，汽水罐疊成三層的金字塔：最上層 2 罐、中間層 3 罐、最下層 4 罐，每一罐都直立、大小相同、同一種孔雀藍色、罐身沒有字，上一層的每一罐都坐在下一層兩罐之間的縫上。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在櫃檯左邊，阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在櫃檯右邊，兩人都看著金字塔。畫面中只有這 9 罐汽水，沒有任何文字、數字、招牌、價目表。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：汽水罐金字塔</h3>
+            <p class="interactive-instruction">拉動最上層的罐數、每往下一層多幾罐，以及層數。切換「從上往下數」與「從下往上數」：\(a_1\) 與 \(a_n\) 換了位置、公差變號，總罐數有沒有變？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-stack" width="540" height="530"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sk-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">數法</span>
+                    <div class="btn-group" id="sk-mode-group">
+                      <button class="pick-btn active" data-sk-mode="down">從上往下數</button>
+                      <button class="pick-btn" data-sk-mode="up">從下往上數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sk-t">最上層：<span id="sk-vt" class="val-num">1</span> 罐</label>
+                    <input type="range" id="sk-t" min="1" max="6" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sk-d">往下每層多：<span id="sk-vd" class="val-num">2</span> 罐</label>
+                    <input type="range" id="sk-d" min="1" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sk-n">層數 \(n\)：<span id="sk-vn" class="val-num">6</span></label>
+                    <input type="range" id="sk-n" min="3" max="8" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (數量問題)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 小賣部把汽水罐疊成一面牆：最上層 \(2\) 罐，往下每層多 \(4\) 罐，最下層 \(50\) 罐。這面牆共有幾罐？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-13" value="A"><span class="option-text">A. \(312\) 罐</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-13" value="B"><span class="option-text">B. \(338\) 罐</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-13" value="C"><span class="option-text">C. \(676\) 罐</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-13" value="D"><span class="option-text">D. \(650\) 罐</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(a_1 = 2\)、\(d = 4\)、\(a_n = 50\)：
+              \[\begin{aligned} & 50 = 2 + (n - 1) \times 4 \\ & n - 1 = 12，n = 13 \\ & S_{13} = \frac{13 \times (2 + 50)}{2} = 338 \end{aligned}\]
+              A 錯：層數少算一層，\(\frac{12 \times 52}{2} = 312\)。<br>
+              C 錯：\(13 \times 52 = 676\)，忘了除以 \(2\)。<br>
+              D 錯：把每一層都當成最下層的 \(50\) 罐，\(13 \times 50 = 650\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 舞台背板用燈泡排出一圈套一圈的正方形框，由內而外共 \(7\) 圈。最內圈每邊 \(3\) 顆燈泡（四個角各 \(1\) 顆，相鄰兩邊共用），往外每圈每邊多 \(2\) 顆。完成這個圖案共需幾顆燈泡？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-14" value="A"><span class="option-text">A. \(252\) 顆</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-14" value="B"><span class="option-text">B. \(448\) 顆</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-14" value="C"><span class="option-text">C. \(224\) 顆</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-14" value="D"><span class="option-text">D. \(63\) 顆</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。每邊 \(k\) 顆的正方形框，四個角被兩邊共用，共 \(4k - 4\) 顆：
+              \[\begin{aligned} & a_1 = 4 \times 3 - 4 = 8 \\ & a_2 = 4 \times 5 - 4 = 16 \end{aligned}\]
+              每圈多 \(8\) 顆，\(d = 8\)、\(n = 7\)：
+              \[\begin{aligned} & S_7 = \frac{7 \times [16 + 6 \times 8]}{2} \\ & \phantom{S_7} = 7 \times 32 = 224 \end{aligned}\]
+              A 錯：每圈算成 \(4k\) 顆，四個角都重複算了。<br>
+              B 錯：\(7 \times 64 = 448\)，忘了除以 \(2\)。<br>
+              D 錯：只算了每圈「一邊」的顆數 \(3 + 5 + \cdots + 15\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 座位問題
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-couch" aria-hidden="true"></i> <span>重點 8：座位問題——設第一排為 \(x\)，解一元一次方程式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>題目給總數、排數、每排多幾個</strong>：\(S_n\)、\(n\)、\(d\) 都知道，只缺首項，就設第一排為 \(x\)，用 \(S_n = \frac{n[2a_1 + (n - 1)d]}{2}\) 列式。</li>
+              <li>例：放映廳 \(10\) 排、共 \(250\) 個座位，每排比前一排多 \(2\) 個。設第一排 \(x\) 個：
+                \[\begin{aligned} & 250 = \frac{10 \times [2x + 9 \times 2]}{2} \\ & 250 = 5(2x + 18) \\ & 50 = 2x + 18，x = 16 \end{aligned}\]</li>
+              <li><strong>看清楚題目問哪一排</strong>：問最後一排時，解出 \(x\) 之後還要算 \(a_{10} = 16 + 9 \times 2 = 34\)。</li>
+              <li><strong>「每一排比後一排少 \(2\) 個」</strong>就是「每一排比前一排多 \(2\) 個」，公差是 \(2\)；先想清楚哪一排是第一排。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_seats.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：從舞台往觀眾席看的放映廳，空著的酒紅色絨布座椅一排排往後升高，越後面的排越寬、座位越多，兩側是金色扇形壁燈。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結）站在第一排前方的走道，右手拿一支小手電筒，光束照在第一排的座椅上；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在最後一排後方的牆邊。畫面中沒有任何文字、數字、座位號碼、招牌，座位不需要可數。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：放映廳排座位</h3>
+            <p class="interactive-instruction">拉動排數、每排多幾個座位與總座位數，按「下一步」逐步解出第一排。切到「問最後一排」，解出 \(x\) 之後還差哪一步？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-seat" width="540" height="580"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="se-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目問</span>
+                    <div class="btn-group" id="se-ask-group">
+                      <button class="pick-btn active" data-se-ask="first">第一排</button>
+                      <button class="pick-btn" data-se-ask="last">最後一排</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="se-prev">上一步</button>
+                      <span class="step-counter" id="se-step">1 / 6</span>
+                      <button class="pick-btn" id="se-next">下一步</button>
+                      <button class="pick-btn" id="se-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="se-n">排數 \(n\)：<span id="se-vn" class="val-num">10</span></label>
+                    <input type="range" id="se-n" min="5" max="15" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="se-d">每排多 \(d\)：<span id="se-vd" class="val-num">3</span></label>
+                    <input type="range" id="se-d" min="1" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="se-a">總座位 \(S_n\)：<span id="se-va" class="val-num">255</span></label>
+                    <input type="range" id="se-a" min="4" max="20" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="se-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (座位問題)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> 戲院大廳共有 \(18\) 排座位、\(1035\) 個座位，每一排都比前一排多 \(3\) 個。第一排有幾個座位？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-15" value="A"><span class="option-text">A. \(32\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-15" value="B"><span class="option-text">B. \(83\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-15" value="C"><span class="option-text">C. \(\frac{61}{2}\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-15" value="D"><span class="option-text">D. \(\frac{115}{2}\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設第一排 \(x\) 個：
+              \[\begin{aligned} & 1035 = \frac{18 \times [2x + 17 \times 3]}{2} \\ & 1035 = 9(2x + 51) \\ & 115 = 2x + 51，x = 32 \end{aligned}\]
+              B 錯：\(83 = 32 + 51\) 是最後一排，題目問的是第一排。<br>
+              C 錯：把 \(17 \times 3\) 寫成 \(18 \times 3\)，得 \(2x = 61\)；座位數也不可能是分數。<br>
+              D 錯：\(1035 \div 18\) 是平均每排的座位數，不是第一排。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 小放映廳共 \(12\) 排、\(402\) 個座位，每一排都比前一排多 \(5\) 個。最後一排有幾個座位？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-16" value="A"><span class="option-text">A. \(6\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-16" value="B"><span class="option-text">B. \(66\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-16" value="C"><span class="option-text">C. \(\frac{67}{2}\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-16" value="D"><span class="option-text">D. \(61\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設第一排 \(x\) 個：
+              \[\begin{aligned} & 402 = \frac{12 \times [2x + 11 \times 5]}{2} \\ & 402 = 6(2x + 55) \\ & 67 = 2x + 55，x = 6 \end{aligned}\]
+              最後一排 \(a_{12} = 6 + 11 \times 5 = 61\) 個。<br>
+              A 錯：\(6\) 是第一排，還沒算到最後一排。<br>
+              B 錯：用了 \(6 + 12 \times 5\)，第 \(12\) 排只比第一排多 \(11\) 個公差。<br>
+              C 錯：\(402 \div 12\) 是平均每排的座位數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 求項數（一元二次）
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>重點 9：計數問題——求項數，列出一元二次方程式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>未知的是項數 \(n\)</strong>：\(n\) 在 \(S_n = \frac{n[2a_1 + (n - 1)d]}{2}\) 裡出現兩次，列出來是<strong>一元二次方程式</strong>。</li>
+              <li>例：小映第 \(1\) 天賣 \(3\) 桶爆米花，之後每天多 \(2\) 桶，累積 \(63\) 桶要幾天？
+                \[\begin{aligned} & 63 = \frac{n[6 + (n - 1) \times 2]}{2} \\ & n^2 + 2n - 63 = 0 \\ & (n - 7)(n + 9) = 0 \end{aligned}\]
+                \(n = -9\) 不合（天數不能是負數），所以要 \(7\) 天。</li>
+              <li><strong>兩個根都是正整數時更要檢查</strong>：每層越來越少的堆疊，另一個根會讓後面的層數變成 \(0\) 或負數，一樣要捨去。</li>
+              <li><strong>重根</strong>：最下層 \(15\) 個、往上每層少 \(2\) 個、共 \(64\) 個：\(n^2 - 16n + 64 = 0\)，\((n - 8)^2 = 0\)，只有 \(8\) 層一個答案。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_days.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：戲院小賣部的爆米花機旁，小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結）雙手捧著一桶滿滿的爆米花，小手電筒插在背心口袋裡；阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在牆上一本掛著的大月曆前，伸手翻到下一頁，月曆頁面是空白的格子、沒有任何數字或文字。畫面中沒有任何文字、數字、招牌、價目表。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：要幾天？要幾層？</h3>
+            <p class="interactive-instruction">「越賣越多」：小映第 1 天賣的桶數、每天多幾桶與累積總數。「越疊越少」：公仔展示架最下層的個數、每層少幾個與總數。按「下一步」解方程式——另一個根為什麼要捨去？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-days" width="540" height="600"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dy-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="dy-mode-group">
+                      <button class="pick-btn active" data-dy-mode="inc">越賣越多</button>
+                      <button class="pick-btn" data-dy-mode="dec">越疊越少</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="dy-prev">上一步</button>
+                      <span class="step-counter" id="dy-step">1 / 7</span>
+                      <button class="pick-btn" id="dy-next">下一步</button>
+                      <button class="pick-btn" id="dy-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="dy-a"><span id="dy-la">第 1 天</span>：<span id="dy-va" class="val-num">3</span></label>
+                    <input type="range" id="dy-a" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dy-d"><span id="dy-ld">每天多</span>：<span id="dy-vd" class="val-num">2</span></label>
+                    <input type="range" id="dy-d" min="1" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dy-n">總數：<span id="dy-vn" class="val-num">80</span></label>
+                    <input type="range" id="dy-n" min="3" max="12" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dy-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求項數)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 小映第 \(1\) 天賣出 \(7\) 桶爆米花，之後每天都比前一天多賣 \(5\) 桶。到第幾天結束時，累積賣出的桶數剛好是 \(243\) 桶？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-17" value="A"><span class="option-text">A. 第 \(8\) 天</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-17" value="B"><span class="option-text">B. 第 \(10\) 天</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-17" value="C"><span class="option-text">C. 第 \(9\) 天</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-17" value="D"><span class="option-text">D. 第 \(9\) 天或第 \(-\frac{54}{5}\) 天</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設要 \(n\) 天：
+              \[\begin{aligned} & 243 = \frac{n[14 + (n - 1) \times 5]}{2} \\ & 486 = n(5n + 9) \\ & 5n^2 + 9n - 486 = 0 \\ & (n - 9)(5n + 54) = 0 \end{aligned}\]
+              \(n = -\frac{54}{5}\) 不合（天數是正整數），所以是第 \(9\) 天。<br>
+              A 錯：前 \(8\) 天只有 \(\frac{8 \times (14 + 35)}{2} = 196\) 桶。<br>
+              B 錯：前 \(10\) 天已有 \(\frac{10 \times (14 + 45)}{2} = 295\) 桶。<br>
+              D 錯：負數不能當天數，解完要回到情境捨去。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 玩具店展示架上的公仔一層層往上疊，最下層有 \(27\) 個，往上每一層都比下一層少 \(2\) 個，共疊了 \(132\) 個公仔。這些公仔共有幾層？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-18" value="A"><span class="option-text">A. \(22\) 層</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-18" value="B"><span class="option-text">B. \(6\) 層</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-18" value="C"><span class="option-text">C. \(6\) 層或 \(22\) 層</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-18" value="D"><span class="option-text">D. 有兩個解，無法判斷</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。從最下層數起，\(a_1 = 27\)、\(d = -2\)，設共 \(n\) 層：
+              \[\begin{aligned} & 132 = \frac{n[54 + (n - 1) \times (-2)]}{2} \\ & 132 = n(28 - n) \\ & n^2 - 28n + 132 = 0 \\ & (n - 6)(n - 22) = 0 \end{aligned}\]
+              若 \(n = 22\)，第 \(22\) 層有 \(27 + 21 \times (-2) = -15\) 個，不合；所以共 \(6\) 層（最上層 \(17\) 個）。<br>
+              A、C 錯：\(22\) 層要疊到負數個公仔，不合情境。<br>
+              D 錯：兩個根都要回到情境檢查，只有 \(6\) 合理，答案是確定的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 級數和的判斷
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-unbalanced" aria-hidden="true"></i> <span>重點 10：級數和的判斷——項數多，和不一定大</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>前 \(n\) 項和比前 \(n - 1\) 項和多了一項</strong>：\(S_n = S_{n-1} + a_n\)。</li>
+              <li><strong>和會不會變大，看多加的那一項</strong>：\(a_n \gt 0\) 時 \(S_n \gt S_{n-1}\)；\(a_n \lt 0\) 時 \(S_n \lt S_{n-1}\)；\(a_n = 0\) 時兩者相等。例：\(13 + 9 + 5 + 1 + (-3)\) 的 \(S_4 = 28\)，\(S_5 = 25\)，反而變小。</li>
+              <li><strong>「項數越多和越大」不一定對</strong>：公差是負數時，加到後面的項變成負數，和就開始變小。</li>
+              <li><strong>首項與末項互為相反數，和一定是 \(0\)</strong>：\(a_1 + a_n = 0\)，所以 \(S_n = \frac{n \times 0}{2} = 0\)。例：\(-6 + (-3) + 0 + 3 + 6 = 0\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="as_signs.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）：舞台上深酒紅色的絲絨布幕剛剛拉開一半，布幕上方是金色放射狀扇形的 Art Deco 舞台框。小映（少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒）站在舞台左側，阿幕（少年，黑色短刺蝟頭，深藍色立領放映師工作服、胸前一個口袋，右耳後夾一支鉛筆）站在舞台右側，兩人一起向台下鞠躬謝幕。畫面中沒有任何文字、數字、符號、招牌。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：每一項與累加的和</h3>
+            <p class="interactive-instruction">上面的長條是每一項 \(a_k\)，下面的長條是前 \(k\) 項的和 \(S_k\)。讓公差變成負的，看第 \(n\) 項變成負數時，\(S_n\) 是變大還是變小？調出首末項互為相反數的情形，\(S_n\) 是多少？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sign" width="540" height="580"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sg-a">首項 \(a_1\)：<span id="sg-va" class="val-num">9</span></label>
+                    <input type="range" id="sg-a" min="-12" max="12" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sg-d">公差 \(d\)：<span id="sg-vd" class="val-num">-2</span></label>
+                    <input type="range" id="sg-d" min="-4" max="4" value="-2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sg-n">項數 \(n\)：<span id="sg-vn" class="val-num">6</span></label>
+                    <input type="range" id="sg-n" min="2" max="12" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (和的判斷)</h3>
+
+          <div class="quiz-card" data-quiz="1-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 關於等差級數 \(27 + 23 + 19 + 15 + \cdots\)，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-19" value="A"><span class="option-text">A. 項數越多和越大，所以 \(S_{10} \gt S_9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-19" value="B"><span class="option-text">B. \(S_8 \gt S_7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-19" value="C"><span class="option-text">C. \(S_{14} = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-19" value="D"><span class="option-text">D. 所有的 \(S_n\) 之中，\(S_7\) 最大</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。公差 \(-4\)，各項依序是 \(27, 23, 19, 15, 11,\)<wbr> \(7, 3, -1, -5, \ldots\)。前 \(7\) 項都是正數，和一路變大；從第 \(8\) 項起都是負數，和一路變小，所以 \(S_7 = \frac{7 \times (27 + 3)}{2} = 105\) 最大。<br>
+              A 錯：\(a_{10} = -9 \lt 0\)，\(S_{10} \lt S_9\)。<br>
+              B 錯：\(a_8 = -1 \lt 0\)，\(S_8 = 104 \lt S_7\)。<br>
+              C 錯：\(a_{14} = -25\)，首末項 \(27\) 與 \(-25\) 不是相反數，\(S_{14} = \frac{14 \times 2}{2} = 14\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> 某等差級數的首項是 \(-38\)、末項是 \(38\)，但不知道有幾項。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-2-20" value="A"><span class="option-text">A. 不論有幾項，和都是 \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-20" value="B"><span class="option-text">B. 要知道項數才能求出和</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-20" value="C"><span class="option-text">C. 和是 \(38\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-2-20" value="D"><span class="option-text">D. 首項是負數，所以和一定是負數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(a_1 + a_n = -38 + 38 = 0\)，所以
+              \[S_n = \frac{n \times 0}{2} = 0\]
+              不論 \(n\) 是多少都成立。<br>
+              B 錯：首末項的和已經是 \(0\)，乘上任何項數都是 \(0\)。<br>
+              C 錯：把末項當成和。<br>
+              D 錯：前面的負數與後面的正數兩兩配對抵銷，和是 \(0\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 等差級數速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>等差級數</strong>：等差數列的各項依序用「\(+\)」連起來；和記作 \(S_n\)。</li>
+              <li><strong>倒序相加</strong>：正著寫、倒著寫再相加，得 \(n\) 組 \((a_1 + a_n)\)。</li>
+              <li><strong>公式一</strong>：\(S_n = \frac{n(a_1 + a_n)}{2}\)，要首項、末項、項數。</li>
+              <li><strong>公式二</strong>：\(S_n = \frac{n[2a_1 + (n - 1)d]}{2}\)，不必知道末項；是 \(n - 1\)。</li>
+              <li><strong>先求項數</strong>：\(a_n = a_1 + (n - 1)d\)，項數比間隔多 \(1\)。</li>
+              <li><strong>反求</strong>：求公差、首項是一元一次；求項數是一元二次，解完要檢查。</li>
+              <li><strong>判斷</strong>：\(S_n = S_{n-1} + a_n\)；首末互為相反數時 \(S_n = 0\)。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-masks-theater"></i> 回到戲院：放映廳一共幾個座位？</h4>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 小映的配對</h5>
+              <p>第 \(1\) 排 \(12\) 個、每排多 \(1\) 個，第 \(20\) 排是 \(12 + 19 = 31\) 個。頭尾配對每一對都是 \(43\)，\(20\) 排配成 \(10\) 對：\(S_{20} = \frac{20 \times (12 + 31)}{2} = 430\)。</p>
+              <h5><i class="fa-solid fa-scale-balanced"></i> 公式是倒序相加的濃縮</h5>
+              <p>阿幕一排一排加要加 \(19\) 次；倒序相加只要一次乘法、一次除法。公式裡的「除以 \(2\)」，就是因為正著、倒著寫了兩份。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>相鄰兩項「相差」固定的是等差；如果是相鄰兩項「相除」固定呢？下一節認識等比數列。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

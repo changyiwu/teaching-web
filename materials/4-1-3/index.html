@@ -4,39 +4,1456 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-3 等比數列 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-3 等比數列 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第1章 數列與級數</div>
-    <h1>1-3 等比數列</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第一章</span>
+        <h1>1-3 等比數列</h1>
+        <p>回到老戲院：阿幕跟經理要的獎勵聽起來只有「幾顆爆米花」，可是每一場都要<strong>加倍</strong>。這一節認識<strong>等比數列</strong>——相鄰兩項「後項 ÷ 前項」都相等，這個比值叫<strong>公比</strong>。我們會用公比補出缺的項、用 \(a_n = a_1 \times r^{n-1}\) 直接算出第 \(n\) 項、反推首項、解決成長與衰減的應用問題，最後認識<strong>等比中項</strong>：\(a, b, c\) 成等比時 \(b^2 = ac\)。</p>
+      </div>
+      <!-- Progress navigation (12 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-divide"></i> 公比</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-link"></i> 寫出各項</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-ticket"></i> 補空格</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-stairs"></i> 第 n 項</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-backward"></i> 反求首項</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-shuffle"></i> 跳著取項</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-arrow-trend-up"></i> 成長應用</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-basketball"></i> 首項從哪算</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-chair"></i> 等比中項</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-equals"></i> 列方程式</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-arrows-left-right-to-line"></i> 對稱乘積</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 等差又等比</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Art Deco Theater)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(212, 175, 55, 0.3);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(212, 175, 55, 0.25);">
+          <i class="fa-solid fa-film" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(212, 175, 55, 0.45);"></i> 課前暖身漫畫：只要幾顆爆米花？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            戲院經理要獎勵兩位小幫手。阿幕說：「第 \(1\) 場給我 \(1\) 顆爆米花，第 \(2\) 場 \(2\) 顆，第 \(3\) 場 \(4\) 顆，每場加倍就好！」小映覺得才幾顆而已——可是算到第 \(20\) 場，竟然要 \(2^{19} = 524288\) 顆！<strong style="color:#fcd34d">課本扉頁的棋盤麥粒，也是同一回事。</strong>
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="Art Deco 復古戲院海報風四格漫畫（直式 4:5、2×2 四格；金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。角色：小映是少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒；阿幕是少年，黑色短刺蝟頭，深藍色放映師工作服（立領、胸前一個口袋），右耳後夾一支鉛筆。四格是同一間戲院小賣部、同一個機位。第 1 格：小映單獨入鏡，站在小賣部櫃檯前轉頭發問，泡在她頭頂、尾巴指向她，台詞「經理說要獎勵我們，你想要什麼？」。第 2 格：阿幕單獨入鏡，站在櫃檯後方，櫃檯上由左到右平放三個一模一樣的白色紙杯，杯裡的爆米花依序是 1 顆、2 顆、4 顆（杯口朝上看得到顆數），泡尾巴指向阿幕，台詞「第 1 場 1 顆、第 2 場 2 顆、第 3 場 4 顆，每場加倍就好！」。第 3 格：小映單獨入鏡的半身特寫，托腮微笑，思考泡在她頭旁，台詞「才幾顆而已，經理一定會答應。」。第 4 格：兩人並排、驚嚇張嘴，背後的爆米花從大廳一路堆到天花板、淹過售票口，畫面上方一個長方形旁白框，台詞「第 20 場就要 524288 顆！整間戲院都裝不下！」。對話泡一律由生圖畫出空白泡、白色內部，每格最多一個泡，泡內緣至少 240×110 像素，不遮臉；畫面不得出現任何文字、數字與浮水印。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 等比數列與公比
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> <span>重點 1：等比數列——相鄰兩項「後項 ÷ 前項」都相等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>等比數列</strong>：任意相鄰兩項，後項除以前項所得的比值都相等。這個比值叫<strong>公比</strong>，記為 \(r\)（\(r \ne 0\)）。</li>
+              <li><strong>後項 ＝ 前項 × 公比</strong>；前項 ＝ 後項 ÷ 公比。</li>
+              <li><strong>每一組都要檢查</strong>，不能只看前兩項。例：\(2, 4, 8, 14\) 的 \(\frac{4}{2} = \frac{8}{4} = 2\)，但 \(\frac{14}{8} = \frac{7}{4}\)，所以不是等比數列。</li>
+              <li><strong>公比可以是負數，也可以是分數</strong>：\(5, -10, 20, -40\) 的公比是 \(-2\)；\(48, 24, 12, 6\) 的公比是 \(\frac{1}{2}\)。</li>
+              <li><strong>等比數列裡不會出現 \(0\)</strong>：\(0\) 不能當除數；而且首項不是 \(0\)、公比不是 \(0\)，一直乘下去也不會變成 \(0\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等比與等差</span>
+              等差數列看相鄰兩項的<strong>差</strong>（公差 \(d\)）；等比數列看相鄰兩項的<strong>比</strong>（公比 \(r\)）。<br>
+              \(\dfrac{\text{後項}}{\text{前項}} = r\)，也就是 後項 ＝ 前項 \(\times r\)。
+            </div>
+
+            <div class="illustration-container">
+              <img src="gs_ratio.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。小映：少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒。場景是戲院小賣部的長櫃檯，櫃檯上由左到右並排三個圓柱形紅白直條紋爆米花桶，三個桶的底部都貼在同一條櫃檯面上、粗細相同，高度依序是一個手掌、兩個手掌、四個手掌：第二個桶剛好是第一個的兩倍高，第三個桶剛好是第二個的兩倍高。小映站在櫃檯右側，用手電筒照著最高的那一桶。畫面只有小映一個人，沒有任何文字、數字、招牌標價與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：比值檢查機</h3>
+            <p class="interactive-instruction">選首項 \(a_1\) 與公比 \(r\)，畫面算出每一組相鄰兩項的「後項 ÷ 前項」。再拉「改動第 4 項」：只要有一組比值不同，它就不是等比數列。下面一排是相鄰兩項的差，拿來對照等差數列。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-def" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="df-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公比 \(r\)</span>
+                    <div class="btn-group" id="df-r-group">
+                      <button class="pick-btn active" data-df-r="2">\(2\)</button>
+                      <button class="pick-btn" data-df-r="3">\(3\)</button>
+                      <button class="pick-btn" data-df-r="-2">\(-2\)</button>
+                      <button class="pick-btn" data-df-r="1/2">\(\frac{1}{2}\)</button>
+                      <button class="pick-btn" data-df-r="-1/2">\(-\frac{1}{2}\)</button>
+                      <button class="pick-btn" data-df-r="1">\(1\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="df-a">首項 \(a_1\)：<span id="df-va" class="val-num">3</span></label>
+                    <input type="range" id="df-a" min="0" max="9" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="df-d">改動第 4 項（加上）：<span id="df-vd" class="val-num">0</span></label>
+                    <input type="range" id="df-d" min="-3" max="3" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="df-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等比數列與公比)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列哪一個數列是等比數列？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-1" value="A"><span class="option-text">A. \(2, 6, 18, 36\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-1" value="B"><span class="option-text">B. \(81, -27, 9, -3\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-1" value="C"><span class="option-text">C. \(1, 4, 9, 16\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-1" value="D"><span class="option-text">D. \(5, 10, 15, 20\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\frac{-27}{81} = \frac{9}{-27} = \frac{-3}{9} = -\frac{1}{3}\)，每一組的比值都相等，公比是 \(-\frac{1}{3}\)。<br>
+              A 錯：\(\frac{6}{2} = \frac{18}{6} = 3\)，但 \(\frac{36}{18} = 2\)，最後一組不同。<br>
+              C 錯：\(\frac{4}{1} = 4\)，\(\frac{9}{4} \ne 4\)，這是平方數。<br>
+              D 錯：這是公差 \(5\) 的等差數列，\(\frac{10}{5} = 2\)、\(\frac{15}{10} = \frac{3}{2}\)，比值不同。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列關於等比數列的敘述，哪一個正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-2" value="A"><span class="option-text">A. 公比可以是 \(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-2" value="B"><span class="option-text">B. 數列中可以出現 \(0\) 這一項</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-2" value="C"><span class="option-text">C. 公比可以是負數，也可以是分數</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-2" value="D"><span class="option-text">D. 只要前兩項的比是 \(2\)，就是公比 \(2\) 的等比數列</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。例如 \(9, -3, 1\) 的公比是 \(-\frac{1}{3}\)，既是負數也是分數。<br>
+              A 錯：公比是 \(0\) 的話，第 \(2\) 項起都是 \(0\)，下一組就要除以 \(0\)，所以規定 \(r \ne 0\)。<br>
+              B 錯：等比數列要用「後項 ÷ 前項」檢查，\(0\) 不能當除數，所以每一項都不是 \(0\)。<br>
+              D 錯：每一組相鄰兩項都要檢查，例如 \(1, 2, 4, 6\) 的前兩項比是 \(2\)，但 \(\frac{6}{4} \ne 2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 由首項與公比寫出各項
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> <span>重點 2：由首項與公比寫出各項——一項接一項乘 \(r\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>逐項乘公比</strong>：\(a_2 = a_1 \times r\)、\(a_3 = a_2 \times r\)……。例：首項 \(-3\)、公比 \(2\)，前 \(4\) 項是 \(-3, -6, -12, -24\)。</li>
+              <li><strong>公比是負數時正負交錯</strong>：首項 \(2\)、公比 \(-3\)，前 \(4\) 項是 \(2, -6, 18, -54\)。乘負數時記得加括號：\(2 \times (-3) = -6\)。</li>
+              <li><strong>公比在 \(0\) 和 \(1\) 之間</strong>：首項 \(40\)、公比 \(\frac{1}{2}\)，是 \(40, 20, 10, 5\)，越來越接近 \(0\)，但永遠不會變成 \(0\)。</li>
+              <li><strong>不要用「公比的正負」判斷大小</strong>：公比是正的，數列也可能越來越小（\(0 \lt r \lt 1\)，或首項是負數）；公比是負的，相鄰兩項就一正一負。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>公比 \(r\)（首項為正）</th><th>數列的樣子</th></tr></thead>
+                <tbody>
+                  <tr><td>\(r \gt 1\)</td><td>越來越大</td></tr>
+                  <tr><td>\(r = 1\)</td><td>每一項都相同</td></tr>
+                  <tr><td>\(0 \lt r \lt 1\)</td><td>越來越接近 \(0\)</td></tr>
+                  <tr><td>\(r \lt 0\)</td><td>正、負交錯</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="gs_list.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。阿幕：少年，黑色短刺蝟頭，深藍色放映師工作服（立領、胸前一個口袋），右耳後夾一支鉛筆。場景是戲院大廳的展示台，台上用三片金色木板隔出三層，汽水罐疊成三層金字塔：最上層 1 罐、中間層 2 罐、最下層 4 罐，總共 7 罐，每一罐一模一樣（孔雀藍罐身、金色拉環），每一層的罐子並排、彼此貼著，罐身上沒有字。阿幕站在展示台左邊，雙手扶著最上層那一罐。畫面只有阿幕一個人，沒有任何文字、數字與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：乘法鏈</h3>
+            <p class="interactive-instruction">拉動首項 \(a_1\)、選公比 \(r\)，畫面一項接一項乘 \(r\) 寫出前 \(6\) 項；下方長條的長度和數值成正比（負數畫在 \(0\) 的下方）。比比看：負的公比、介於 \(0\) 與 \(1\) 的公比，數列分別長什麼樣子？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-list" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ls-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公比 \(r\)</span>
+                    <div class="btn-group" id="ls-r-group">
+                      <button class="pick-btn" data-ls-r="-3">\(-3\)</button>
+                      <button class="pick-btn active" data-ls-r="-2">\(-2\)</button>
+                      <button class="pick-btn" data-ls-r="-1">\(-1\)</button>
+                      <button class="pick-btn" data-ls-r="-1/2">\(-\frac{1}{2}\)</button>
+                      <button class="pick-btn" data-ls-r="1/2">\(\frac{1}{2}\)</button>
+                      <button class="pick-btn" data-ls-r="2">\(2\)</button>
+                      <button class="pick-btn" data-ls-r="3">\(3\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ls-a">首項 \(a_1\)：<span id="ls-va" class="val-num">3</span></label>
+                    <input type="range" id="ls-a" min="0" max="11" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ls-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (寫出各項)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-3">
+            <p class="quiz-question"><strong>Q3.</strong> 一個等比數列的首項是 \(7\)、公比是 \(-2\)，它的前 \(4\) 項是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-3" value="A"><span class="option-text">A. \(7, -14, 28, -56\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-3" value="B"><span class="option-text">B. \(7, 5, 3, 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-3" value="C"><span class="option-text">C. \(-14, 28, -56, 112\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-3" value="D"><span class="option-text">D. \(7, 14, 28, 56\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。首項就是 \(7\)，之後每一項乘 \(-2\)：\(7 \times (-2) = -14\)、\((-14) \times (-2) = 28\)、\(28 \times (-2) = -56\)。<br>
+              B 錯：每次減 \(2\)，那是公差 \(-2\) 的等差數列。<br>
+              C 錯：少了首項 \(7\)，從第 \(2\) 項開始寫。<br>
+              D 錯：漏了負號，那是公比 \(2\) 的數列；公比是負數時正負要交錯。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-4">
+            <p class="quiz-question"><strong>Q4.</strong> 一個等比數列的首項是 \(-64\)、公比是 \(-\frac{1}{2}\)，一項一項寫下去，它的第 \(6\) 項是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-4" value="A"><span class="option-text">A. \(-4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-4" value="B"><span class="option-text">B. \(-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-4" value="C"><span class="option-text">C. \(-1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-4" value="D"><span class="option-text">D. \(2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。每次乘 \(-\frac{1}{2}\)：\(-64, 32, -16, 8, -4, 2\)，第 \(6\) 項是 \(2\)。<br>
+              A 錯：\(-4\) 是第 \(5\) 項。<br>
+              B 錯：正負沒有交錯；公比是負數，第 \(5\) 項是負的，第 \(6\) 項一定是正的。<br>
+              C 錯：多乘了一次，\(2 \times \left(-\frac{1}{2}\right) = -1\) 是第 \(7\) 項。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 補空格
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ticket" aria-hidden="true"></i> <span>重點 3：補空格——先求公比，往後乘 \(r\)、往前除以 \(r\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先找一組已知的相鄰兩項</strong>：公比 \(r = \) 後項 \(\div\) 前項。</li>
+              <li><strong>往後一項</strong>：\(\times r\)；<strong>往前一項</strong>：\(\div r\)。</li>
+              <li>例：\(\square, 5, 20, \square\)。公比 \(\frac{20}{5} = 4\)，前一項 \(5 \div 4 = \frac{5}{4}\)，後一項 \(20 \times 4 = 80\)。</li>
+              <li><strong>有根號也一樣</strong>：\(5, 5\sqrt{2}, \square, \square\) 的公比是 \(\sqrt{2}\)，接著是 \(5\sqrt{2} \times \sqrt{2} = 10\)、再來 \(10\sqrt{2}\)。</li>
+              <li><strong>有文字也一樣</strong>：\(\square, 4a, 6a, \square\)（\(a \ne 0\)）的公比是 \(\frac{6a}{4a} = \frac{3}{2}\)，前一項 \(4a \div \frac{3}{2} = \frac{8}{3}a\)，後一項 \(9a\)。</li>
+              <li><strong>除以分數 ＝ 乘它的倒數</strong>，往前補的時候最容易在這一步出錯。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="gs_fill.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。小映：少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒。場景是戲院觀眾席的一排酒紅色絨布座椅，正面看過去並排四張一模一樣的座椅，每張椅背頂端都釘著一塊同樣大小的金色長方形銅牌。左起第二張的銅牌上刻著數字 2，第三張的銅牌上刻著數字 8，每個數字只印一次、置中在自己的銅牌上；第一張和第四張的銅牌是空白的。小映站在這排座椅的右邊，手電筒的光照在第四張的空白銅牌上。畫面只有小映一個人，除了那兩個數字之外沒有任何文字、數字與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：補上缺號的座位牌</h3>
+            <p class="interactive-instruction">五張座位牌只知道第 \(k\) 張與第 \(k + 1\) 張。拉動 \(k\) 與已知的第 \(k\) 項、選公比，再按「下一步」：先求公比，再往後乘、往前除，把空格一張一張補起來。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fill" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公比 \(r\)</span>
+                    <div class="btn-group" id="fl-r-group">
+                      <button class="pick-btn" data-fl-r="2">\(2\)</button>
+                      <button class="pick-btn" data-fl-r="-2">\(-2\)</button>
+                      <button class="pick-btn active" data-fl-r="3">\(3\)</button>
+                      <button class="pick-btn" data-fl-r="1/2">\(\frac{1}{2}\)</button>
+                      <button class="pick-btn" data-fl-r="-1/3">\(-\frac{1}{3}\)</button>
+                      <button class="pick-btn" data-fl-r="3/2">\(\frac{3}{2}\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="fl-prev">上一步</button>
+                      <span class="step-counter" id="fl-step">1 / 4</span>
+                      <button class="pick-btn" id="fl-next">下一步</button>
+                      <button class="pick-btn" id="fl-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fl-k">已知第 \(k\) 與第 \(k+1\) 項，\(k\)：<span id="fl-vk" class="val-num">2</span></label>
+                    <input type="range" id="fl-k" min="1" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fl-v">第 \(k\) 項的值：<span id="fl-vv" class="val-num">4</span></label>
+                    <input type="range" id="fl-v" min="0" max="11" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (補空格)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-5">
+            <p class="quiz-question"><strong>Q5.</strong> 在 \(\square, -12, 48, \square\) 的兩個空格中依序填入適當的數，使它成為等比數列。兩個空格依序是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-5" value="A"><span class="option-text">A. \(3\) 與 \(-192\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-5" value="B"><span class="option-text">B. \(-3\) 與 \(192\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-5" value="C"><span class="option-text">C. \(3\) 與 \(192\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-5" value="D"><span class="option-text">D. \(-72\) 與 \(108\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。公比 \(\frac{48}{-12} = -4\)。前一項 \((-12) \div (-4) = 3\)，後一項 \(48 \times (-4) = -192\)。<br>
+              B 錯：把公比算成 \(4\)，漏了負號。<br>
+              C 錯：前一項對了，後一項忘了乘負數，正負沒有交錯。<br>
+              D 錯：當成等差數列（公差 \(60\)）來補。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-6">
+            <p class="quiz-question"><strong>Q6.</strong> 在 \(\square, 10b, 4b, \square\)（\(b \ne 0\)）的兩個空格中依序填入適當的式子，使它成為等比數列。兩個空格依序是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-6" value="A"><span class="option-text">A. \(16b\) 與 \(-2b\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-6" value="B"><span class="option-text">B. \(25b\) 與 \(\frac{8}{5}b\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-6" value="C"><span class="option-text">C. \(4b\) 與 \(\frac{8}{5}b\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-6" value="D"><span class="option-text">D. \(4b\) 與 \(10b\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。公比 \(\frac{4b}{10b} = \frac{2}{5}\)。前一項 \(10b \div \frac{2}{5} = 10b \times \frac{5}{2} = 25b\)，後一項 \(4b \times \frac{2}{5} = \frac{8}{5}b\)。<br>
+              A 錯：當成等差數列（公差 \(-6b\)）來補。<br>
+              C 錯：往前補的時候也乘了 \(\frac{2}{5}\)；往前要除以公比。<br>
+              D 錯：把公比倒過來算成 \(\frac{5}{2}\)；公比是後項除以前項。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 第 n 項公式
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-stairs" aria-hidden="true"></i> <span>重點 4：第 \(n\) 項——\(a_n = a_1 \times r^{n-1}\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>觀察前幾項</strong>：\(a_2 = a_1 \times r\)、\(a_3 = a_1 \times r^2\)、\(a_4 = a_1 \times r^3\)……，\(r\) 的次方永遠比項數少 \(1\)。所以 \(a_{100} = a_1 \times r^{99}\)。</li>
+              <li><strong>從 \(a_1\) 走到 \(a_n\)，只要乘 \(n - 1\) 次 \(r\)</strong>：就像從第 \(1\) 排走到第 \(5\) 排，只要上 \(4\) 級台階。</li>
+              <li>例：首項 \(4\)、公比 \(3\)，第 \(5\) 項是 \(a_5 = 4 \times 3^4 = 4 \times 81 = 324\)。</li>
+              <li><strong>三個常見錯誤</strong>：
+                <ul>
+                  <li>寫成 \(a_1 \times r^n\)：多乘了一次。</li>
+                  <li>寫成 \(a_1 \times r \times (n - 1)\)：把次方當成乘法。</li>
+                  <li>負的公比沒加括號：\((-2)^4 = 16\)，但 \(-2^4 = -16\)。</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等比數列的第 n 項</span>
+              首項 \(a_1\)、公比 \(r\)（\(r \ne 0\)）的等比數列：\(a_n = a_1 \times r^{n-1}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gs_nth.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。小映：少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒。阿幕：少年，黑色短刺蝟頭，深藍色放映師工作服（立領、胸前一個口袋），右耳後夾一支鉛筆。從側面看的階梯式觀眾席：一共 5 排酒紅色座椅，由前往後一排比一排高，相鄰兩排之間剛好一級台階，從第 1 排到第 5 排正好 4 級台階，每一級台階的高度相同、邊緣鑲著金色條紋。小映站在最前面第 1 排旁邊的地板上，抬頭把手電筒照向後方；阿幕站在最後面第 5 排旁邊的台階上，回頭看她。畫面沒有任何文字、數字與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：數一數乘了幾次 \(r\)</h3>
+            <p class="interactive-instruction">拉動首項 \(a_1\)、項數 \(n\)，選公比 \(r\)。從第 \(1\) 項到第 \(n\) 項，畫面上一共有幾個「\(\times r\)」？再看代入公式的每一步，紅色那一列是把次方寫成 \(r^n\) 的錯誤算法。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-nth" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="nt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公比 \(r\)</span>
+                    <div class="btn-group" id="nt-r-group">
+                      <button class="pick-btn" data-nt-r="2">\(2\)</button>
+                      <button class="pick-btn active" data-nt-r="3">\(3\)</button>
+                      <button class="pick-btn" data-nt-r="-2">\(-2\)</button>
+                      <button class="pick-btn" data-nt-r="-3">\(-3\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="nt-a">首項 \(a_1\)：<span id="nt-va" class="val-num">2</span></label>
+                    <input type="range" id="nt-a" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="nt-n">項數 \(n\)：<span id="nt-vn" class="val-num">5</span></label>
+                    <input type="range" id="nt-n" min="2" max="8" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="nt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (第 n 項)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-7">
+            <p class="quiz-question"><strong>Q7.</strong> 一個等比數列的首項是 \(-7\)、公比是 \(2\)，它的第 \(6\) 項是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-7" value="A"><span class="option-text">A. \(-448\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-7" value="B"><span class="option-text">B. \(-84\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-7" value="C"><span class="option-text">C. \(-224\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-7" value="D"><span class="option-text">D. \(224\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & a_6 = (-7) \times 2^{6-1} \\ & = (-7) \times 32 = -224 \end{aligned}\]
+              A 錯：用了 \(2^6\)，多乘了一次。<br>
+              B 錯：算成 \((-7) \times 2 \times 6\)，把次方當成乘法。<br>
+              D 錯：首項是負數、公比是正數，每一項都是負的。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-8">
+            <p class="quiz-question"><strong>Q8.</strong> 等比數列 \(3, 12, 48, \dots\) 的第 \(n\) 項 \(a_n\) 是下列哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-8" value="A"><span class="option-text">A. \(3 \times 4^n\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-8" value="B"><span class="option-text">B. \(4 \times 3^{n-1}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-8" value="C"><span class="option-text">C. \(12^{n-1}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-8" value="D"><span class="option-text">D. \(3 \times 4^{n-1}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。首項 \(3\)、公比 \(\frac{12}{3} = 4\)，所以 \(a_n = 3 \times 4^{n-1}\)。代 \(n = 1\) 檢查：\(3 \times 4^0 = 3\)，正好是首項。<br>
+              A 錯：代 \(n = 1\) 得 \(12\)，指數多了 \(1\)。<br>
+              B 錯：首項與公比放反了，代 \(n = 2\) 得 \(12\) 沒錯，但 \(n = 1\) 得 \(4\)。<br>
+              C 錯：\(3 \times 4^{n-1}\) 不能合併成 \(12^{n-1}\)；代 \(n = 1\) 得 \(1\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 求公比再求第 n 項；反求首項
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-backward" aria-hidden="true"></i> <span>重點 5：先求公比——再求第 \(n\) 項，或反求首項</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>已知前幾項</strong>：公比 \(= a_2 \div a_1\)，再代入 \(a_n = a_1 \times r^{n-1}\)。例：\(5, -10, 20, \dots\) 的公比是 \(-2\)，第 \(7\) 項是 \(5 \times (-2)^6 = 320\)。</li>
+              <li><strong>已知相鄰的兩項 \(a_k\)、\(a_{k+1}\)</strong>：公比 \(r = a_{k+1} \div a_k\)。再由 \(a_k = a_1 \times r^{k-1}\) 反求首項：\(a_1 = a_k \div r^{k-1}\)。</li>
+              <li>例：\(a_3 = 12\)、\(a_4 = 6\)，公比是 \(\frac{1}{2}\)，\(a_1 = 12 \div \left(\frac{1}{2}\right)^2 = 12 \times 4 = 48\)。</li>
+              <li><strong>也可以一項一項往回除</strong>：\(12 \div \frac{1}{2} = 24\)、\(24 \div \frac{1}{2} = 48\)。往回走 \(k - 1\) 步，就除 \(k - 1\) 次。</li>
+              <li><strong>算完代回去檢查</strong>：\(48 \times \left(\frac{1}{2}\right)^2 = 12\)，確實是第 \(3\) 項。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="gs_back.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。純情境圖。阿幕：少年，黑色短刺蝟頭，深藍色放映師工作服（立領、胸前一個口袋），右耳後夾一支鉛筆。場景是戲院的放映室，牆上有一個小方窗看出去是觀眾席，房間中央是一台黃銅色的老式膠捲放映機，上方架著兩個圓形膠捲盤。阿幕站在放映機旁，用右手轉動膠捲盤的把手倒帶，眼睛看著膠捲盤。畫面只有阿幕一個人，沒有任何文字、數字、箭頭、符號與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：倒帶回第 1 項</h3>
+            <p class="interactive-instruction">只知道第 \(k\) 項和第 \(k + 1\) 項。拉動 \(k\) 與第 \(k\) 項的值、選公比，再按「下一步」：先求公比，再往回除 \(k - 1\) 次找到首項，最後寫出第 \(n\) 項的式子。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-back" width="540" height="530"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bk-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公比 \(r\)</span>
+                    <div class="btn-group" id="bk-r-group">
+                      <button class="pick-btn" data-bk-r="2">\(2\)</button>
+                      <button class="pick-btn" data-bk-r="-2">\(-2\)</button>
+                      <button class="pick-btn" data-bk-r="3">\(3\)</button>
+                      <button class="pick-btn active" data-bk-r="1/2">\(\frac{1}{2}\)</button>
+                      <button class="pick-btn" data-bk-r="-1/2">\(-\frac{1}{2}\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="bk-prev">上一步</button>
+                      <span class="step-counter" id="bk-step">1 / 5</span>
+                      <button class="pick-btn" id="bk-next">下一步</button>
+                      <button class="pick-btn" id="bk-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bk-k">已知第 \(k\) 與第 \(k+1\) 項，\(k\)：<span id="bk-vk" class="val-num">3</span></label>
+                    <input type="range" id="bk-k" min="2" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bk-v">第 \(k\) 項的值：<span id="bk-vv" class="val-num">8</span></label>
+                    <input type="range" id="bk-v" min="0" max="15" value="15" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (先求公比)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-9">
+            <p class="quiz-question"><strong>Q9.</strong> 一個等比數列的第 \(3\) 項是 \(18\)、第 \(4\) 項是 \(-54\)，它的首項是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-9" value="A"><span class="option-text">A. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-9" value="B"><span class="option-text">B. \(-2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-9" value="C"><span class="option-text">C. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-9" value="D"><span class="option-text">D. \(-6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。公比 \(\frac{-54}{18} = -3\)。
+              \[\begin{aligned} & a_1 = 18 \div (-3)^2 \\ & = 18 \div 9 = 2 \end{aligned}\]
+              檢查：\(2, -6, 18, -54\)，第 \(3\)、\(4\) 項正確。<br>
+              A 錯：用了 \(18 \div 3\)，只往回除一次，而且漏了負號。<br>
+              B 錯：\((-3)^2 = 9\) 是正數，首項和第 \(3\) 項同號。<br>
+              D 錯：\(18 \div (-3) = -6\) 是第 \(2\) 項，還要再除一次。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-10">
+            <p class="quiz-question"><strong>Q10.</strong> 等比數列 \(64, 16, 4, \dots\) 的第 \(7\) 項是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-10" value="A"><span class="option-text">A. \(\frac{1}{256}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-10" value="B"><span class="option-text">B. \(\frac{1}{16}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-10" value="C"><span class="option-text">C. \(96\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-10" value="D"><span class="option-text">D. \(\frac{1}{64}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。公比 \(\frac{16}{64} = \frac{1}{4}\)。
+              \[\begin{aligned} & a_7 = 64 \times \left(\frac{1}{4}\right)^6 \\ & = 64 \times \frac{1}{4096} = \frac{1}{64} \end{aligned}\]
+              A 錯：用了 \(\left(\frac{1}{4}\right)^7\)，多乘了一次。<br>
+              B 錯：\(\frac{1}{16}\) 是第 \(6\) 項。<br>
+              C 錯：算成 \(64 \times \frac{1}{4} \times 6\)，把次方當成乘法。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 跳著取項
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shuffle" aria-hidden="true"></i> <span>重點 6：倒過來寫、跳著取——新的公比是多少？</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>倒過來寫</strong>：仍是等比數列，公比變成 \(\frac{1}{r}\)。例：\(2, 8, 32, 128\) 的公比是 \(4\)，倒過來 \(128, 32, 8, 2\) 的公比是 \(\frac{1}{4}\)。</li>
+              <li><strong>每隔一項取</strong>（\(a_1, a_3, a_5, \dots\)）：相鄰兩項之間乘了兩次 \(r\)，公比是 \(r^2\)。</li>
+              <li><strong>每隔兩項取</strong>（\(a_1, a_4, a_7, \dots\)）：公比是 \(r^3\)。</li>
+              <li><strong>任兩項的倍數</strong>：\(a_m \div a_n = r^{m-n}\)（\(m \gt n\)），因為從 \(a_n\) 走到 \(a_m\) 乘了 \(m - n\) 次 \(r\)。例：\(a_9\) 是 \(a_6\) 的 \(r^3\) 倍。</li>
+              <li><strong>不必知道首項</strong>：上面這些只跟公比有關，首項在相除時消掉了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="gs_sub.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。小映：少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒。場景是觀眾席的一排座位，正面看過去並排 7 張一模一樣的酒紅色絨布座椅、椅面都放下。左起第 1、3、5、7 張的椅面上各平放一張一模一樣的金色長方形電影票，第 2、4、6 張的椅面是空的，所以每隔一張座椅才有一張票，總共 4 張票。小映站在這排座位的最左邊，用手電筒照著第 1 張座椅上的票。畫面只有小映一個人，票面上沒有字，畫面沒有任何文字、數字與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：跳著取項</h3>
+            <p class="interactive-instruction">上面一排是公比 \(r\) 的前 \(7\) 項。切換「倒過來」「每隔一項」「每隔兩項」，看下面一排新數列的公比；切到「比較兩項」，拉動 \(m\)、\(n\)，算出第 \(m\) 項是第 \(n\) 項的幾倍。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sub" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sb-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公比 \(r\)</span>
+                    <div class="btn-group" id="sb-r-group">
+                      <button class="pick-btn active" data-sb-r="2">\(2\)</button>
+                      <button class="pick-btn" data-sb-r="-2">\(-2\)</button>
+                      <button class="pick-btn" data-sb-r="3">\(3\)</button>
+                      <button class="pick-btn" data-sb-r="1/2">\(\frac{1}{2}\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">取法</span>
+                    <div class="btn-group" id="sb-mode-group">
+                      <button class="pick-btn" data-sb-mode="rev">倒過來</button>
+                      <button class="pick-btn active" data-sb-mode="odd">每隔一項</button>
+                      <button class="pick-btn" data-sb-mode="step3">每隔兩項</button>
+                      <button class="pick-btn" data-sb-mode="cmp">比較兩項</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sb-a">首項 \(a_1\)：<span id="sb-va" class="val-num">1</span></label>
+                    <input type="range" id="sb-a" min="1" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row" id="sb-row-m">
+                    <label for="sb-m">第 \(m\) 項，\(m\)：<span id="sb-vm" class="val-num">6</span></label>
+                    <input type="range" id="sb-m" min="1" max="7" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="sb-row-n">
+                    <label for="sb-n">第 \(n\) 項，\(n\)：<span id="sb-vn" class="val-num">3</span></label>
+                    <input type="range" id="sb-n" min="1" max="7" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sb-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (跳著取項)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-11">
+            <p class="quiz-question"><strong>Q11.</strong> 一個等比數列的公比是 \(-5\)。把它的第 \(2\)、\(4\)、\(6\)、\(8\) 項依序排成一個新數列，新數列的公比是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-11" value="A"><span class="option-text">A. \(-10\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-11" value="B"><span class="option-text">B. \(25\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-11" value="C"><span class="option-text">C. \(-25\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-11" value="D"><span class="option-text">D. \(10\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。從 \(a_2\) 到 \(a_4\) 乘了兩次公比，\(a_4 \div a_2 = (-5)^2 = 25\)；後面每一組也一樣。<br>
+              A 錯：算成 \(2 \times (-5)\)，把次方當成乘法。<br>
+              C 錯：負數的平方是正數，\((-5)^2 = 25\)。<br>
+              D 錯：把次方當成乘法，又漏了負號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-12">
+            <p class="quiz-question"><strong>Q12.</strong> 一個等比數列的公比是 \(-3\)，它的第 \(10\) 項是第 \(7\) 項的幾倍？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-12" value="A"><span class="option-text">A. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-12" value="B"><span class="option-text">B. \(-9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-12" value="C"><span class="option-text">C. \(27\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-12" value="D"><span class="option-text">D. \(-27\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。從第 \(7\) 項走到第 \(10\) 項乘了 \(10 - 7 = 3\) 次公比：\(a_{10} \div a_7 = (-3)^3 = -27\)。<br>
+              A 錯：只乘了兩次，數錯了次數。<br>
+              B 錯：算成 \((-3) \times 3\)，把次方當成乘法。<br>
+              C 錯：負數的奇數次方仍是負數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 成長型應用
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i> <span>重點 7：應用問題——第幾項會達到目標？</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>找首項與公比</strong>：「每次變成前一次的 \(r\) 倍」就是公比 \(r\)。</li>
+              <li><strong>設第 \(n\) 項等於目標</strong>：\(a_1 \times r^{n-1} = \) 目標。</li>
+              <li><strong>同除以首項，把右邊寫成 \(r\) 的次方</strong>（用短除法連除），再比較指數。</li>
+              <li>例：戲院粉絲專頁第 \(1\) 週有 \(5\) 人追蹤，之後每週變成前一週的 \(2\) 倍，第幾週剛好 \(320\) 人？
+                \[\begin{aligned} & 5 \times 2^{n-1} = 320 \\ & 2^{n-1} = 64 = 2^6 \end{aligned}\]
+              所以 \(n - 1 = 6\)，\(n = 7\)，第 \(7\) 週。</li>
+              <li><strong>答案是 \(n\)，不是 \(n - 1\)</strong>：比完指數還要再加 \(1\)，最後回到題目寫「第幾週」。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="gs_grow.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。純情境圖。小映：少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒。阿幕：少年，黑色短刺蝟頭，深藍色放映師工作服（立領、胸前一個口袋），右耳後夾一支鉛筆。夜晚的戲院門口，金色放射狀扇形的霓虹門楣下，售票口前排著一條長長的人龍一路排到畫面外，排隊的人都是剪影。小映站在售票口旁用手電筒指引隊伍，阿幕從門口探出頭來看人龍。畫面沒有任何文字、數字、招牌字與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：預告片的觀看次數</h3>
+            <p class="interactive-instruction">預告片第 \(1\) 天有 \(a_1\) 萬次觀看，之後每天變成前一天的 \(r\) 倍。拉動首項、選公比，再拉「目標」：畫面列出方程式、把目標除以首項寫成 \(r\) 的次方，比較指數求出第幾天。下方長條的長度和觀看次數成正比。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-grow" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="gr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公比 \(r\)</span>
+                    <div class="btn-group" id="gr-r-group">
+                      <button class="pick-btn active" data-gr-r="2">\(2\)</button>
+                      <button class="pick-btn" data-gr-r="3">\(3\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="gr-a">第 \(1\) 天（萬次）：<span id="gr-va" class="val-num">3</span></label>
+                    <input type="range" id="gr-a" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="gr-k">目標（萬次）：<span id="gr-vk" class="val-num">96</span></label>
+                    <input type="range" id="gr-k" min="2" max="7" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="gr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (第幾項達到目標)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-13">
+            <p class="quiz-question"><strong>Q13.</strong> 一支電影預告片第 \(1\) 天的觀看次數是 \(0.3\) 萬次，之後每天都是前一天的 \(4\) 倍。第幾天的觀看次數剛好是 \(76.8\) 萬次？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-13" value="A"><span class="option-text">A. 第 \(4\) 天</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-13" value="B"><span class="option-text">B. 第 \(5\) 天</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-13" value="C"><span class="option-text">C. 第 \(6\) 天</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-13" value="D"><span class="option-text">D. 第 \(8\) 天</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設第 \(n\) 天剛好 \(76.8\) 萬次：
+              \[\begin{aligned} & 0.3 \times 4^{n-1} = 76.8 \\ & 4^{n-1} = 256 = 4^4 \end{aligned}\]
+              \(n - 1 = 4\)，\(n = 5\)。<br>
+              A 錯：\(4\) 是 \(n - 1\)，還要加 \(1\)。<br>
+              C 錯：多算了一天；第 \(6\) 天是 \(0.3 \times 4^5 = 307.2\) 萬次。<br>
+              D 錯：\(256 = 2^8\)，但公比是 \(4\)，要寫成 \(4\) 的次方。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-14">
+            <p class="quiz-question"><strong>Q14.</strong> 戲院的優惠訊息第 \(1\) 輪有 \(2\) 人收到，之後每一輪收到的人數都是前一輪的 \(5\) 倍。第幾輪收到的人數剛好是 \(250\) 人？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-14" value="A"><span class="option-text">A. 第 \(4\) 輪</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-14" value="B"><span class="option-text">B. 第 \(3\) 輪</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-14" value="C"><span class="option-text">C. 第 \(125\) 輪</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-14" value="D"><span class="option-text">D. 第 \(25\) 輪</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設第 \(n\) 輪剛好 \(250\) 人：
+              \[\begin{aligned} & 2 \times 5^{n-1} = 250 \\ & 5^{n-1} = 125 = 5^3 \end{aligned}\]
+              \(n - 1 = 3\)，\(n = 4\)。檢查：\(2, 10, 50, 250\)。<br>
+              B 錯：\(3\) 是 \(n - 1\)。<br>
+              C 錯：\(125\) 是 \(5^{n-1}\) 的值，不是輪數。<br>
+              D 錯：\(250 \div 2 \div 5 = 25\)，只是第 \(3\) 輪除以 \(2\) 的值，與輪數無關。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 首項從哪裡算起
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-basketball" aria-hidden="true"></i> <span>重點 8：應用問題——數列的第 1 項是哪一個？</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先問「第 \(1\) 項是什麼」</strong>：彈跳題裡，第 \(1\) 次彈跳的高度是「落下高度 \(\times r\)」，不是落下的高度本身。</li>
+              <li>例：球從 \(160\) 公分落下，每次彈回原高度的 \(\frac{1}{2}\)。第 \(1\) 次彈跳 \(80\) 公分，取 \(a_1 = 80\)，第 \(n\) 次彈跳的高度就是 \(a_n = 80 \times \left(\frac{1}{2}\right)^{n-1}\)。</li>
+              <li><strong>也可以把 \(160\) 當首項</strong>，但那樣第 \(1\) 項是「還沒彈」，第 \(n\) 項是第 \(n - 1\) 次彈跳。兩種都對，只是寫答案前要翻回題目問的「第幾次」。</li>
+              <li><strong>從「第 \(0\) 格」「規模 \(0\)」開始算的題目也一樣</strong>：第 \(0\) 個是首項 \(a_1\)，第 \(k\) 個是第 \(k + 1\) 項。</li>
+              <li><strong>公比是分數時越來越小</strong>：\(\left(\frac{1}{2}\right)^{n-1} = \frac{1}{2^{n-1}}\)，比指數時把右邊寫成同一個分數的次方。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="gs_bounce.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。阿幕：少年，黑色短刺蝟頭，深藍色放映師工作服（立領、胸前一個口袋），右耳後夾一支鉛筆。場景是戲院舞台，背景是拉開的深酒紅布幕，舞台木地板是一條水平直線。阿幕站在舞台左邊，右手剛放開一顆紅色小彈力球。球的路徑用一條白色虛線畫出：先從阿幕手上筆直落到地板，然後在地板上彈起三個拱形，三個拱的底端都落在同一條地板線上，第一個拱的最高點剛好在落下高度的一半，第二個拱的最高點剛好是第一個的一半，第三個拱的最高點剛好是第二個的一半，三個拱一個比一個窄。畫面只有一顆球、只有阿幕一個人，沒有任何文字、數字、刻度與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：舞台上的彈力球</h3>
+            <p class="interactive-instruction">球從高度 \(H\) 落下，每次彈回前一次高度的 \(r\) 倍。選公比、拉動落下高度與「第 \(k\) 次彈跳」，再切換「首項取第 1 次彈跳」與「首項取落下高度」：兩種設法算出的 \(n\) 不一樣，可是答案為什麼一樣？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-bounce" width="540" height="600"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bo-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公比 \(r\)</span>
+                    <div class="btn-group" id="bo-r-group">
+                      <button class="pick-btn active" data-bo-r="1/2">\(\frac{1}{2}\)</button>
+                      <button class="pick-btn" data-bo-r="1/3">\(\frac{1}{3}\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">首項取</span>
+                    <div class="btn-group" id="bo-mode-group">
+                      <button class="pick-btn active" data-bo-mode="first">第 1 次彈跳</button>
+                      <button class="pick-btn" data-bo-mode="drop">落下高度</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bo-h">落下高度 \(H\)（公分）：<span id="bo-vh" class="val-num">128</span></label>
+                    <input type="range" id="bo-h" min="1" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bo-k">第 \(k\) 次彈跳，\(k\)：<span id="bo-vk" class="val-num">3</span></label>
+                    <input type="range" id="bo-k" min="1" max="4" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bo-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (第 1 項是哪一個)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-15">
+            <p class="quiz-question"><strong>Q15.</strong> 戲院音響的旋鈕在第 \(0\) 格時音量是 \(1\) 單位，每往右轉 \(1\) 格，音量變成原來的 \(4\) 倍。轉到第 \(4\) 格時，音量是多少單位？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-15" value="A"><span class="option-text">A. \(256\) 單位</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-15" value="B"><span class="option-text">B. \(64\) 單位</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-15" value="C"><span class="option-text">C. \(1024\) 單位</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-15" value="D"><span class="option-text">D. \(16\) 單位</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。第 \(0\) 格是首項 \(a_1 = 1\)，第 \(4\) 格是第 \(5\) 項：\(a_5 = 1 \times 4^{5-1} = 4^4 = 256\)。也可以直接數：從第 \(0\) 格轉到第 \(4\) 格乘了 \(4\) 次 \(4\)。<br>
+              B 錯：把第 \(4\) 格當成第 \(4\) 項，少乘了一次。<br>
+              C 錯：多乘了一次。<br>
+              D 錯：算成 \(4 \times 4\)，把次方當成乘法。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-16">
+            <p class="quiz-question"><strong>Q16.</strong> 一顆球從 \(250\) 公分的高度落下，每次彈起的高度都是前一次高度的 \(\frac{2}{5}\)。第幾次彈跳的高度剛好是 \(6.4\) 公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-16" value="A"><span class="option-text">A. 第 \(5\) 次</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-16" value="B"><span class="option-text">B. 第 \(3\) 次</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-16" value="C"><span class="option-text">C. 第 \(4\) 次</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-16" value="D"><span class="option-text">D. 第 \(6\) 次</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。第 \(1\) 次彈跳 \(250 \times \frac{2}{5} = 100\) 公分，取 \(a_1 = 100\)：
+              \[\begin{aligned} & 100 \times \left(\frac{2}{5}\right)^{n-1} = 6.4 \\ & \left(\frac{2}{5}\right)^{n-1} = \frac{8}{125} = \left(\frac{2}{5}\right)^3 \end{aligned}\]
+              \(n = 4\)。檢查：\(100, 40, 16, 6.4\)。<br>
+              A 錯：把落下的 \(250\) 當成第 \(1\) 次彈跳，算出的 \(n = 5\) 其實是第 \(4\) 次彈跳。<br>
+              B 錯：\(3\) 是 \(n - 1\)。<br>
+              D 錯：第 \(6\) 次彈跳只剩 \(1.024\) 公分。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 等比中項
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chair" aria-hidden="true"></i> <span>重點 9：等比中項——\(b^2 = ac\)，\(b = \pm\sqrt{ac}\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>等比中項</strong>：\(a, b, c\) 三數成等比數列時，中間的 \(b\) 叫做 \(a\) 與 \(c\) 的等比中項。</li>
+              <li><strong>推導</strong>：\(\frac{b}{a} = \frac{c}{b}\)，交叉相乘得 \(b^2 = ac\)，所以 \(b = \pm\sqrt{ac}\)。</li>
+              <li><strong>兩個答案都對</strong>：\(2\) 與 \(8\) 的等比中項是 \(\pm 4\)，因為 \(2, 4, 8\)（公比 \(2\)）與 \(2, -4, 8\)（公比 \(-2\)）都是等比數列。</li>
+              <li><strong>根號要化簡</strong>：\(2\) 與 \(6\) 的等比中項是 \(\pm\sqrt{12} = \pm 2\sqrt{3}\)。</li>
+              <li><strong>\(a\)、\(c\) 異號時沒有等比中項</strong>：例如 \(-2\) 與 \(8\)，\(b^2 = -16\)，沒有數的平方是負數。</li>
+              <li><strong>不是平均</strong>：\(\frac{a + c}{2}\) 是等差中項。\(2\) 與 \(8\) 的等差中項是 \(5\)，等比中項是 \(\pm 4\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等比中項</span>
+              \(a, b, c\) 成等比數列 \(\Rightarrow b^2 = ac\)，即 \(b = \pm\sqrt{ac}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gs_mid.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。小映：少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒。正面看過去並排三張一模一樣的酒紅色絨布座椅，小映坐在正中間那一張，左右兩張是空的、椅面放下，三張座椅一樣高、間距相同。小映雙手捧著手電筒放在膝上，看向鏡頭。畫面只有小映一個人，沒有任何文字、數字與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：中間那個座位</h3>
+            <p class="interactive-instruction">拉動 \(a\) 與 \(c\)，畫面算出 \(b^2 = ac\)，再開平方填進中間的座位——上下兩排各放一個答案，檢查兩排都是等比數列。把 \(a\)、\(c\) 調成一正一負，會發生什麼事？最後一列拿等差中項來對照。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mid" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="md-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="md-a">前項 \(a\)：<span id="md-va" class="val-num">1</span></label>
+                    <input type="range" id="md-a" min="0" max="17" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-c">後項 \(c\)：<span id="md-vc" class="val-num">9</span></label>
+                    <input type="range" id="md-c" min="0" max="17" value="17" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="md-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等比中項)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-17">
+            <p class="quiz-question"><strong>Q17.</strong> 已知 \(3, x, 48\) 成等比數列，\(x\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-17" value="A"><span class="option-text">A. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-17" value="B"><span class="option-text">B. \(\pm 12\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-17" value="C"><span class="option-text">C. \(25.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-17" value="D"><span class="option-text">D. \(-12\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(x^2 = 3 \times 48 = 144\)，所以 \(x = \pm 12\)。\(3, 12, 48\)（公比 \(4\)）與 \(3, -12, 48\)（公比 \(-4\)）都是等比數列。<br>
+              A 錯：漏了負的那一個。<br>
+              C 錯：\(\frac{3 + 48}{2} = 25.5\) 是等差中項。<br>
+              D 錯：漏了正的那一個。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-18">
+            <p class="quiz-question"><strong>Q18.</strong> 一個等比數列的第 \(4\) 項是 \(12\)、第 \(6\) 項是 \(27\)，它的第 \(5\) 項是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-18" value="A"><span class="option-text">A. \(19.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-18" value="B"><span class="option-text">B. \(\pm\sqrt{39}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-18" value="C"><span class="option-text">C. \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-18" value="D"><span class="option-text">D. \(\pm 18\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(a_4, a_5, a_6\) 成等比數列，\(a_5\) 是 \(12\) 與 \(27\) 的等比中項：\(a_5^{\,2} = 12 \times 27 = 324\)，\(a_5 = \pm 18\)。公比可以是 \(\frac{3}{2}\)，也可以是 \(-\frac{3}{2}\)，兩種都符合。<br>
+              A 錯：\(\frac{12 + 27}{2} = 19.5\) 是等差中項。<br>
+              B 錯：把 \(12 \times 27\) 算成 \(12 + 27\)。<br>
+              C 錯：漏了 \(-18\)；只給第 \(4\)、\(6\) 項，看不出公比的正負。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 用等比中項列方程式
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> <span>重點 10：三個式子成等比——用「中項² ＝ 前 × 後」列方程式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>列式依據</strong>：三個式子依序成等比數列，中間那個的平方等於前後兩個的乘積。</li>
+              <li>例：\(x, x + 2, x + 6\) 成等比數列：
+                \[\begin{aligned} & (x + 2)^2 = x(x + 6) \\ & x^2 + 4x + 4 = x^2 + 6x \\ & 4 = 2x \end{aligned}\]
+              得 \(x = 2\)，數列是 \(2, 4, 8\)，公比 \(2\)。</li>
+              <li><strong>\(x^2\) 會消掉</strong>：兩邊展開都有 \(x^2\)，剩下的是一元一次方程式。</li>
+              <li><strong>展開完全平方時別漏了中間項</strong>：\((x + 2)^2 = x^2 + 4x + 4\)，不是 \(x^2 + 4\)。</li>
+              <li><strong>解完代回去檢查</strong>：三項都不能是 \(0\)（等比數列沒有 \(0\) 這一項），再算一次公比確認。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="gs_eq.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。純情境圖。阿幕：少年，黑色短刺蝟頭，深藍色放映師工作服（立領、胸前一個口袋），右耳後夾一支鉛筆。場景是放映室角落的小木桌，桌上一盞金色扇形燈罩的檯燈。阿幕坐在桌前，右手拿著原本夾在耳後的鉛筆、在一本攤開的空白筆記本上寫字，左手扶著本子。畫面只有阿幕一個人，筆記本上看不到任何字，畫面沒有任何文字、數字、符號與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：列方程式求 \(x\)</h3>
+            <p class="interactive-instruction">三個式子 \(x + p\)、\(x + q\)、\(x + s\) 要成等比數列。拉動 \(p\)、\(q\)、\(s\)，畫面列出 \((x + q)^2 = (x + p)(x + s)\)，展開、消去 \(x^2\)、解出 \(x\)，再代回去求公比。調到哪些數字時會無解？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-eq" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="eq-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="eq-p">\(p\)：<span id="eq-vp" class="val-num">1</span></label>
+                    <input type="range" id="eq-p" min="1" max="8" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eq-q">\(q\)：<span id="eq-vq" class="val-num">3</span></label>
+                    <input type="range" id="eq-q" min="2" max="12" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eq-s">\(s\)：<span id="eq-vs" class="val-num">6</span></label>
+                    <input type="range" id="eq-s" min="3" max="20" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="eq-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (列方程式)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-19">
+            <p class="quiz-question"><strong>Q19.</strong> 已知 \(x + 3, x + 9, x + 24\) 依序成等比數列，\(x\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-19" value="A"><span class="option-text">A. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-19" value="B"><span class="option-text">B. \(\frac{1}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-19" value="C"><span class="option-text">C. 無解</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-19" value="D"><span class="option-text">D. \(-1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\begin{aligned} & (x + 9)^2 = (x + 3)(x + 24) \\ & x^2 + 18x + 81 = x^2 + 27x + 72 \\ & 9 = 9x \end{aligned}\]
+              \(x = 1\)，數列是 \(4, 10, 25\)，公比 \(\frac{5}{2}\)。<br>
+              B 錯：把 \((x + 9)^2\) 展開成 \(x^2 + 81\)，漏了中間項 \(18x\)，得 \(9 = 27x\)。<br>
+              C 錯：用了等差中項的式子 \(2(x + 9) = (x + 3) + (x + 24)\)，才會變成 \(18 = 27\) 無解。<br>
+              D 錯：移項時把 \(9 = 9x\) 寫成 \(-9 = 9x\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-20">
+            <p class="quiz-question"><strong>Q20.</strong> 已知 \(x - 2, x + 2, x + 10\) 依序成等比數列，\(x\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-20" value="A"><span class="option-text">A. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-20" value="B"><span class="option-text">B. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-20" value="C"><span class="option-text">C. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-20" value="D"><span class="option-text">D. \(-4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & (x + 2)^2 = (x - 2)(x + 10) \\ & x^2 + 4x + 4 = x^2 + 8x - 20 \\ & 24 = 4x \end{aligned}\]
+              \(x = 6\)，數列是 \(4, 8, 16\)，公比 \(2\)。<br>
+              A 錯：\(4\) 是第 \(1\) 項 \(x - 2\) 的值，不是 \(x\)。<br>
+              B 錯：\(8\) 是第 \(2\) 項 \(x + 2\) 的值。<br>
+              D 錯：把 \(-20\) 移到左邊時沒有變號，得 \(4 - 20 = 4x\)，即 \(-16 = 4x\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 對稱乘積
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right-to-line" aria-hidden="true"></i> <span>重點 11：以中間項為中心——對稱的兩項乘積都相同</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>三數成等比、中間是 \(m\)</strong>：設為 \(\frac{m}{r}, m, mr\)，三數乘積 \(\frac{m}{r} \times m \times mr = m^3\)，\(r\) 消掉了。</li>
+              <li>例：三數成等比數列，第 \(2\) 項是 \(5\)，三數乘積是 \(5^3 = 125\)，不必知道公比。</li>
+              <li><strong>五項也一樣</strong>：以第 \(3\) 項 \(m\) 為中心，\(a_1 \times a_5 = a_2 \times a_4 = m^2\)，五項乘積是 \(m^5\)。</li>
+              <li><strong>用等比中項來看</strong>：\(a_2\) 是 \(a_1\) 與 \(a_3\) 的等比中項，所以 \(a_1 \times a_3 = a_2^{\,2}\)；對稱的兩項相乘，等於中間項的平方。</li>
+              <li><strong>中間項有正負兩種時</strong>：對稱兩項的乘積是中間項的平方，正負都一樣；但連中間項一起乘的總乘積，正負兩種都要寫。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="gs_sym.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。小映：少女，黑色齊耳鮑伯短髮、齊瀏海，酒紅色引座員背心配白襯衫、金色小領結，手拿一支小手電筒。正面看過去的舞台，左右對稱：深酒紅布幕往兩側拉開，舞台上緣掛著一排 5 盞一模一樣的金色聚光燈，正中央一盞，左右各兩盞，左右兩邊的燈與中央的距離兩兩相等。中央那盞燈的光圈落在舞台中央的小映身上，小映雙手打開、面向觀眾；其餘四盞燈的光圈落在空的舞台地板上，左右對稱。畫面只有小映一個人，沒有任何文字、數字與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：對稱的座位</h3>
+            <p class="interactive-instruction">中間那一項固定是 \(m\)。拉動 \(m\)、選公比與項數，上方的弧線把左右對稱的兩項連起來，標出它們的乘積。換一個公比，乘積會變嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sym" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sy-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">公比 \(r\)</span>
+                    <div class="btn-group" id="sy-r-group">
+                      <button class="pick-btn active" data-sy-r="2">\(2\)</button>
+                      <button class="pick-btn" data-sy-r="-2">\(-2\)</button>
+                      <button class="pick-btn" data-sy-r="3">\(3\)</button>
+                      <button class="pick-btn" data-sy-r="1/2">\(\frac{1}{2}\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">項數</span>
+                    <div class="btn-group" id="sy-c-group">
+                      <button class="pick-btn" data-sy-c="3">\(3\) 項</button>
+                      <button class="pick-btn active" data-sy-c="5">\(5\) 項</button>
+                      <button class="pick-btn" data-sy-c="7">\(7\) 項</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sy-m">中間項 \(m\)：<span id="sy-vm" class="val-num">4</span></label>
+                    <input type="range" id="sy-m" min="0" max="11" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sy-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (對稱乘積)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-21">
+            <p class="quiz-question"><strong>Q21.</strong> 有三數成等比數列，已知中間那一項是 \(-7\)，這三數的乘積是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-21" value="A"><span class="option-text">A. \(49\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-21" value="B"><span class="option-text">B. \(-21\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-21" value="C"><span class="option-text">C. \(-343\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-21" value="D"><span class="option-text">D. \(343\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設三數為 \(\frac{-7}{r}, -7, -7r\)，乘積
+              \[\begin{aligned} & \frac{-7}{r} \times (-7) \times (-7r) \\ & = (-7)^3 = -343 \end{aligned}\]
+              A 錯：\(49\) 只是頭尾兩項的乘積，還要再乘中間項。<br>
+              B 錯：算成 \(3 \times (-7)\)，把次方當成乘法。<br>
+              D 錯：負數的 \(3\) 次方是負數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-22">
+            <p class="quiz-question"><strong>Q22.</strong> 已知 \(a, 6, b, 24, c\) 依序成等比數列，\(a \times c\) 的值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-22" value="A"><span class="option-text">A. \(\pm 12\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-22" value="B"><span class="option-text">B. \(\pm 144\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-22" value="C"><span class="option-text">C. \(1728\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-22" value="D"><span class="option-text">D. \(144\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(b\) 是 \(6\) 與 \(24\) 的等比中項，\(b^2 = 6 \times 24 = 144\)。\(a\) 與 \(c\) 以 \(b\) 為中心對稱，所以 \(a \times c = b^2 = 144\)。不論 \(b = 12\) 還是 \(-12\)，平方都是 \(144\)。<br>
+              A 錯：\(\pm 12\) 是 \(b\) 的值。<br>
+              B 錯：\(b^2\) 一定是正的，\(a \times c\) 只有一個值。<br>
+              C 錯：\(1728 = 144 \times 12\) 是把 \(b\) 也乘進去了，而且 \(b\) 還可能是負的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 既是等差又是等比
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>重點 12：既是等差又是等比——每一項都相同（但不能是 \(0\)）</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>設成等差數列</strong>：\(a - d, a, a + d\)。若它也是等比數列，\(a\) 就是等比中項：
+                \[\begin{aligned} & a^2 = (a - d)(a + d) \\ & a^2 = a^2 - d^2 \end{aligned}\]
+              得 \(d^2 = 0\)，\(d = 0\)。</li>
+              <li><strong>結論</strong>：既是等差又是等比的數列，每一項都相同，<strong>公差 \(0\)、公比 \(1\)</strong>，例如 \(5, 5, 5, 5\)。</li>
+              <li><strong>例外：\(0, 0, 0, \dots\)</strong> 是公差 \(0\) 的等差數列，但不是等比數列——「後項 ÷ 前項」要除以 \(0\)。</li>
+              <li><strong>公比 \(-1\) 不算</strong>：\(3, -3, 3, -3\) 是等比數列，相鄰兩項的差卻是 \(-6, 6, -6\)，不是等差數列。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="gs_both.webp" alt="Art Deco 復古戲院海報風插圖（金色與孔雀藍幾何線條、放射狀扇形、深酒紅布幕、平面海報印刷質感）。阿幕：少年，黑色短刺蝟頭，深藍色放映師工作服（立領、胸前一個口袋），右耳後夾一支鉛筆。觀眾席的一排座位，正面看過去並排 6 張完全一模一樣的酒紅色絨布座椅：形狀、顏色、大小、高度都相同，椅背頂端同高、間距相同，全部是空的。阿幕站在這排座椅的右邊，彎腰仔細看著最靠近他的那一張。畫面只有阿幕一個人，沒有任何文字、數字與浮水印。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩台檢驗機</h3>
+            <p class="interactive-instruction">拉動三個數 \(a\)、\(b\)、\(c\)，左邊的機器檢查「差」是否相等、右邊的機器檢查「比」是否相等。調調看：什麼時候兩盞燈會同時亮？把三個數都調成 \(0\) 呢？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-both" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bt-a">第 1 項 \(a\)：<span id="bt-va" class="val-num">1</span></label>
+                    <input type="range" id="bt-a" min="-6" max="6" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bt-b">第 2 項 \(b\)：<span id="bt-vb" class="val-num">2</span></label>
+                    <input type="range" id="bt-b" min="-6" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bt-c">第 3 項 \(c\)：<span id="bt-vc" class="val-num">4</span></label>
+                    <input type="range" id="bt-c" min="-6" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等差又等比)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-23">
+            <p class="quiz-question"><strong>Q23.</strong> 下列哪一個數列既是等差數列，也是等比數列？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-23" value="A"><span class="option-text">A. \(-8, -8, -8, -8\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-23" value="B"><span class="option-text">B. \(2, 6, 18, 54\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-23" value="C"><span class="option-text">C. \(9, -9, 9, -9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-23" value="D"><span class="option-text">D. \(4, 8, 12, 16\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。每一項都相同而且不是 \(0\)：相鄰兩項的差都是 \(0\)（公差 \(0\)），比都是 \(1\)（公比 \(1\)）。<br>
+              B 錯：公比 \(3\) 的等比數列，差是 \(4, 12, 36\)，不相等。<br>
+              C 錯：公比 \(-1\) 的等比數列，差是 \(-18, 18, -18\)，不相等。<br>
+              D 錯：公差 \(4\) 的等差數列，比是 \(2, \frac{3}{2}, \frac{4}{3}\)，不相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-24">
+            <p class="quiz-question"><strong>Q24.</strong> 下列哪一個敘述正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-24" value="A"><span class="option-text">A. 公差為 \(0\) 的等差數列，一定也是等比數列</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-24" value="B"><span class="option-text">B. 公比為 \(1\) 的等比數列，一定也是等差數列</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-24" value="C"><span class="option-text">C. 公比為 \(-1\) 的等比數列，一定也是等差數列</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-24" value="D"><span class="option-text">D. 既等差又等比的數列，公差可以不是 \(0\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。公比 \(1\) 表示每一項都等於前一項，而且等比數列的項都不是 \(0\)，所以相鄰兩項的差都是 \(0\)，是公差 \(0\) 的等差數列。<br>
+              A 錯：\(0, 0, 0, 0\) 的公差是 \(0\)，但不能算「後項 ÷ 前項」，不是等比數列。<br>
+              C 錯：例如 \(1, -1, 1, -1\)，差是 \(-2, 2, -2\)，不相等。<br>
+              D 錯：由 \(a^2 = (a - d)(a + d)\) 得 \(d = 0\)，公差一定是 \(0\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 等比數列速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>公比</strong>：\(r = \) 後項 \(\div\) 前項，每一組都相等；\(r \ne 0\)，數列裡沒有 \(0\)。</li>
+              <li><strong>寫出各項</strong>：一項接一項 \(\times r\)；\(r \lt 0\) 時正負交錯。</li>
+              <li><strong>補空格</strong>：往後 \(\times r\)，往前 \(\div r\)。</li>
+              <li><strong>第 \(n\) 項</strong>：\(a_n = a_1 \times r^{n-1}\)，乘 \(n - 1\) 次。</li>
+              <li><strong>反求首項</strong>：\(a_1 = a_k \div r^{k-1}\)。</li>
+              <li><strong>跳著取</strong>：倒過來 \(\frac{1}{r}\)、隔一項 \(r^2\)；\(a_m \div a_n = r^{m-n}\)。</li>
+              <li><strong>應用</strong>：先確認第 \(1\) 項是哪一個，比完指數記得 \(n = \) 指數 \(+ 1\)。</li>
+              <li><strong>等比中項</strong>：\(b^2 = ac\)，\(b = \pm\sqrt{ac}\)；對稱兩項乘積 ＝ 中間項的平方。</li>
+              <li><strong>又等差又等比</strong>：每一項相同且不為 \(0\)。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-film"></i> 回到戲院：阿幕的爆米花</h4>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 第 20 場要幾顆？</h5>
+              <p>爆米花的顆數 \(1, 2, 4, 8, \dots\) 是首項 \(1\)、公比 \(2\) 的等比數列。第 \(20\) 場是第 \(20\) 項：\(a_{20} = 1 \times 2^{19} = 524288\) 顆，光是這一場就要好幾十大桶。</p>
+              <h5><i class="fa-solid fa-chess-board"></i> 課本扉頁的棋盤</h5>
+              <p>大臣要的麥粒也是公比 \(2\)：第 \(64\) 格是 \(2^{63}\) 粒，約 \(9.22 \times 10^{18}\) 粒。等比數列只要公比大於 \(1\)，再小的首項都會長得飛快。</p>
+              <h5><i class="fa-solid fa-forward"></i> 第 1 章到這裡結束</h5>
+              <p>等差數列每次「加」同一個數，等比數列每次「乘」同一個數。到了高中，還會學到把等比數列的各項加起來的「等比級數」。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

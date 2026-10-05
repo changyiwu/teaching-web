@@ -126,9 +126,9 @@
       {
         "chapter": "第1章 數列與級數",
         "sections": [
-          { "code": "1-1", "title": "等差數列" },
-          { "code": "1-2", "title": "等差級數" },
-          { "code": "1-3", "title": "等比數列" }
+          { "code": "1-1", "title": "等差數列", "status": "completed" },
+          { "code": "1-2", "title": "等差級數", "status": "completed" },
+          { "code": "1-3", "title": "等比數列", "status": "completed" }
         ]
       },
       {
