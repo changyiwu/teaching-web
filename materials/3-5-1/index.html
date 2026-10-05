@@ -4,39 +4,1248 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>5-1 資料整理與統計圖表 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>5-1 資料整理與統計圖表 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第5章 統計資料處理</div>
-    <h1>5-1 資料整理與統計圖表</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第五章</span>
+        <h1>5-1 資料整理與統計圖表</h1>
+        <p>走進校刊社編輯室：小晏和阿樸要做「段考成績統計專題」。七年級學過的次數分配表只告訴我們<strong>每一組有幾人</strong>；這一節要學三種新的整理方式——一路往上加的<strong>累積次數</strong>、占全體百分之幾的<strong>相對次數</strong>，以及把兩者合起來的<strong>累積相對次數</strong>，再把它們畫成折線圖，用來回答「未滿幾分有多少人」「我贏過多少人」「人數不同的兩班怎麼比」。</p>
+      </div>
+      <!-- Progress navigation (9 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-layer-group"></i> 累積次數表</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-chart-line"></i> 累積折線圖</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-magnifying-glass-chart"></i> 讀累積折線圖</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 相對次數的意義</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-percent"></i> 相對次數表與圖</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-arrows-rotate"></i> 人數與百分比</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-code-branch"></i> 兩種方法</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-ranking-star"></i> 相對位置</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-code-compare"></i> 比較兩群資料</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Risograph School Newspaper)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(244, 114, 182, 0.25);">
+        <h2 class="section-title" style="color: #f9a8d4; border-bottom-color: rgba(244, 114, 182, 0.2);">
+          <i class="fa-solid fa-newspaper" aria-hidden="true" style="color: #f9a8d4; text-shadow: 0 0 10px rgba(236, 72, 153, 0.4);"></i> 課前暖身漫畫：哪一班考得比較好？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            校刊社要報導段考成績。阿樸說 A 班有 \(24\) 人及格、B 班只有 \(20\) 人，A 班比較強；小晏卻提醒他：A 班有 \(32\) 人、B 班只有 \(25\) 人——<strong style="color:#f9a8d4">人數不一樣，直接比人數公平嗎？</strong>
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="Risograph 雙色孔版印刷風校刊社四格漫畫：第 1 格阿樸穿藍綠色連帽外套、耳上夾鉛筆，舉著兩張成績單，說 A 班 24 人及格、B 班才 20 人；第 2 格小晏戴紅色圓框眼鏡、掛藍綠色識別證，推著眼鏡說 A 班有 32 人、B 班只有 25 人；第 3 格阿樸抱著頭，說人數不一樣要怎麼比；第 4 格小晏用粉紅色螢光筆指著公告欄上的海報，說看及格的人占全班的百分比。每格各有一位說話者。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 累積次數分配表
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> <span>重點 1：累積次數分配表——一組一組往上加</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分組的規則（七年級學過）</strong>：每一組<strong>包含下限、不包含上限</strong>，例如 \(70\)～\(80\) 分包含 \(70\) 分、不包含 \(80\) 分；滿分 \(100\) 分歸到 \(90\)～\(100\) 這一組。</li>
+              <li><strong>累積次數</strong>：從第一組開始，把各組的次數<strong>依序累加</strong>。某一組的累積次數＝上一組的累積次數＋這一組的次數。</li>
+              <li>某一組的累積次數，代表<strong>「未滿這一組上限」的總人數</strong>。下表 \(60\)～\(70\) 分的累積次數 \(14\)，就是未滿 \(70\) 分有 \(14\) 人。</li>
+              <li><strong>「\(a\) 以上（含）」要用總數去減</strong>：\(80\) 分以上（含）＝總數－未滿 \(80\) 分＝\(40 - 26 = 14\) 人，也可以把最後兩組直接相加 \(10 + 4 = 14\)。</li>
+              <li>最後一組的累積次數一定等於<strong>總人數</strong>，可以用來驗算。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead>
+                  <tr><th>分數（分）</th><th>次數（人）</th><th>累積次數（人）</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>\(40\)～\(50\)</td><td>\(2\)</td><td>\(2\)</td></tr>
+                  <tr><td>\(50\)～\(60\)</td><td>\(4\)</td><td>\(2 + 4 = 6\)</td></tr>
+                  <tr><td>\(60\)～\(70\)</td><td>\(8\)</td><td>\(6 + 8 = 14\)</td></tr>
+                  <tr><td>\(70\)～\(80\)</td><td>\(12\)</td><td>\(14 + 12 = 26\)</td></tr>
+                  <tr><td>\(80\)～\(90\)</td><td>\(10\)</td><td>\(26 + 10 = 36\)</td></tr>
+                  <tr><td>\(90\)～\(100\)</td><td>\(4\)</td><td>\(36 + 4 = 40\)</td></tr>
+                  <tr><td>合計</td><td>\(40\)</td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・累積次數</span>
+              這一組的累積次數＝上一組的累積次數＋這一組的次數<br>
+              未滿某分數 → 直接讀累積次數；某分數以上（含）→ 總數減去
+            </div>
+
+            <div class="illustration-container">
+              <img src="rg_cumtable.webp" alt="Risograph 雙色孔版印刷風校刊社插圖：編輯室裡，阿樸把一疊剛印好的校刊放上推車，推車上的紙堆一疊疊往上加高；小晏站在推車旁，拿著粉紅色螢光筆在夾板上做記錄。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：累加疊疊樂</h3>
+            <p class="interactive-instruction">選一個班級，拉動「累加到第幾組」，看每一根柱子怎麼由前面各組的人數疊起來；再切換「未滿」或「以上（含）」並拉動分數，找出答案是哪一根柱子、要不要用總數減。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cumtable" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cf-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">班級</span>
+                    <div class="btn-group" id="cf-ds-group">
+                      <button class="pick-btn active" data-cf-ds="0">八年 1 班</button>
+                      <button class="pick-btn" data-cf-ds="1">八年 2 班</button>
+                      <button class="pick-btn" data-cf-ds="2">八年 3 班</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要問</span>
+                    <div class="btn-group" id="cf-mode-group">
+                      <button class="pick-btn active" data-cf-mode="below">未滿 b 分</button>
+                      <button class="pick-btn" data-cf-mode="above">b 分以上（含）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cf-k">累加到第幾組：<span id="cf-vk" class="val-num">6</span></label>
+                    <input type="range" id="cf-k" min="1" max="6" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cf-b">\(b\)：<span id="cf-vb" class="val-num">70</span></label>
+                    <input type="range" id="cf-b" min="50" max="90" value="70" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cf-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (累積次數分配表)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下表是八年 6 班 \(30\) 位學生的數學小考成績。分數未滿 \(80\) 分的學生共有幾人？</p>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>分數（分）</th><th>\(50\)～\(60\)</th><th>\(60\)～\(70\)</th><th>\(70\)～\(80\)</th><th>\(80\)～\(90\)</th><th>\(90\)～\(100\)</th></tr></thead>
+                <tbody><tr><td>次數（人）</td><td>\(4\)</td><td>\(6\)</td><td>\(9\)</td><td>\(7\)</td><td>\(4\)</td></tr></tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-1" value="A"><span class="option-text">A. \(9\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-1" value="B"><span class="option-text">B. \(11\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-1" value="C"><span class="option-text">C. \(19\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-1" value="D"><span class="option-text">D. \(26\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。未滿 \(80\) 分就是 \(70\)～\(80\) 這一組的累積次數，從第一組加到這一組：\(4 + 6 + 9 = 19\) 人。<br>
+              A 錯：\(9\) 只是 \(70\)～\(80\) 這一組自己的人數，沒有往前累加。<br>
+              B 錯：\(7 + 4 = 11\) 是 \(80\) 分以上（含）的人數，方向弄反了。<br>
+              D 錯：\(4 + 6 + 9 + 7 = 26\) 是未滿 \(90\) 分，多加了一組。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下表是某班週末閱讀時數的累積次數分配表。閱讀 \(6\) 小時以上（含）的學生有幾人？</p>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>時數（小時）</th><th>\(0\)～\(2\)</th><th>\(2\)～\(4\)</th><th>\(4\)～\(6\)</th><th>\(6\)～\(8\)</th><th>\(8\)～\(10\)</th></tr></thead>
+                <tbody><tr><td>累積次數（人）</td><td>\(3\)</td><td>\(10\)</td><td>\(21\)</td><td>\(30\)</td><td>\(36\)</td></tr></tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2" value="A"><span class="option-text">A. \(15\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2" value="B"><span class="option-text">B. \(30\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2" value="C"><span class="option-text">C. \(9\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2" value="D"><span class="option-text">D. \(6\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。全班 \(36\) 人；\(4\)～\(6\) 小時的累積次數 \(21\) 代表未滿 \(6\) 小時有 \(21\) 人，所以 \(6\) 小時以上（含）有 \(36 - 21 = 15\) 人。<br>
+              B 錯：\(30\) 是未滿 \(8\) 小時的人數。<br>
+              C 錯：\(30 - 21 = 9\) 只是 \(6\)～\(8\) 小時這一組，漏了 \(8\)～\(10\) 小時。<br>
+              D 錯：\(36 - 30 = 6\) 只是 \(8\)～\(10\) 小時這一組。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 累積次數分配折線圖
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-line" aria-hidden="true"></i> <span>重點 2：累積次數分配折線圖——從 0 開始、點在組上限</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>橫軸</strong>標出各組的分界（\(40, 50, \ldots, 100\)），<strong>縱軸</strong>是累積次數（人）。</li>
+              <li><strong>從 0 開始</strong>：第一組下限以前沒有人，所以先描 \((40, 0)\) 當起點——這一點最常被漏掉。</li>
+              <li><strong>點在各組的上限</strong>：描 \((\text{組上限}, \text{累積次數})\)。累積次數是「未滿上限」的人數，所以要畫在上限的位置。用重點 1 的表就是
+                \[\begin{aligned} & (40, 0)、(50, 2)、(60, 6) \\ & (70, 14)、(80, 26) \\ & (90, 36)、(100, 40) \end{aligned}\]
+              再依序用線段連起來。</li>
+              <li><strong>對照七年級的次數分配折線圖</strong>：那是描 \((\text{組中點}, \text{次數})\)，例如 \((75, 12)\)。兩種圖的點<strong>位置不同</strong>，不要混用。</li>
+              <li>累積次數只會增加或不變，所以折線<strong>只會往上或持平，不會往下降</strong>；某一組沒有人時，那一段是水平線。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・兩種折線圖的描點</span>
+              次數分配折線圖：\((\text{組中點}, \text{次數})\)<br>
+              累積次數分配折線圖：起點 \((\text{第一組下限}, 0)\)，其餘 \((\text{組上限}, \text{累積次數})\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="rg_cumline.webp" alt="Risograph 雙色孔版印刷風校刊社插圖：小晏沿著通往校刊社的木頭樓梯一階一階往上走，樓梯只往上、沒有往下的轉折；阿樸抱著一疊校刊站在樓梯底下抬頭看她。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：描點工作台</h3>
+            <p class="interactive-instruction">同一份資料，切換「次數折線圖」與「累積次數折線圖」，看點的位置差在哪；再看兩種常見的錯誤畫法。拉動「第幾組」，畫面會標出那一組要描的點。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cumline" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">班級</span>
+                    <div class="btn-group" id="cl-ds-group">
+                      <button class="pick-btn active" data-cl-ds="0">八年 1 班</button>
+                      <button class="pick-btn" data-cl-ds="1">八年 2 班</button>
+                      <button class="pick-btn" data-cl-ds="2">八年 3 班</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">畫法</span>
+                    <div class="btn-group" id="cl-mode-group">
+                      <button class="pick-btn" data-cl-mode="freq">次數折線圖</button>
+                      <button class="pick-btn active" data-cl-mode="cum">累積次數折線圖</button>
+                      <button class="pick-btn" data-cl-mode="mid">錯誤：點在組中點</button>
+                      <button class="pick-btn" data-cl-mode="nozero">錯誤：沒從 0 開始</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cl-k">第幾組：<span id="cl-vk" class="val-num">3</span></label>
+                    <input type="range" id="cl-k" min="1" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (累積次數分配折線圖)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 某社團成員的成績：\(50\)～\(60\) 分 \(2\) 人、\(60\)～\(70\) 分 \(3\) 人、\(70\)～\(80\) 分 \(8\) 人、\(80\)～\(90\) 分 \(4\) 人。畫<strong>累積次數分配折線圖</strong>時，\(70\)～\(80\) 分這一組要描的點是哪一點？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-3" value="A"><span class="option-text">A. \((75, 8)\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-3" value="B"><span class="option-text">B. \((80, 13)\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-3" value="C"><span class="option-text">C. \((75, 13)\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-3" value="D"><span class="option-text">D. \((70, 5)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(70\)～\(80\) 分的累積次數是 \(2 + 3 + 8 = 13\)，要點在這一組的上限 \(80\)，所以是 \((80, 13)\)。<br>
+              A 錯：\((\text{組中點}, \text{次數})\) 是<strong>次數</strong>分配折線圖的畫法。<br>
+              C 錯：累積次數算對了，但橫坐標放在組中點；累積次數要點在組上限。<br>
+              D 錯：\((70, 5)\) 是 \(60\)～\(70\) 這一組的點（上限 \(70\)、累積 \(5\)），不是 \(70\)～\(80\) 這一組。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 某班 \(30\) 人的數學成績分成 \(40\)～\(50\)、\(50\)～\(60\)、……、\(90\)～\(100\) 六組，畫成累積次數分配折線圖。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-4" value="A"><span class="option-text">A. 折線的第一個點是原點 \((0, 0)\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-4" value="B"><span class="option-text">B. 各組的點要描在組中點</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-4" value="C"><span class="option-text">C. 若某一組沒有人，折線在那一段會往下降</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-4" value="D"><span class="option-text">D. 最後一個點的縱坐標是 \(30\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。最後一組的累積次數就是全班人數，所以最後一點是 \((100, 30)\)。<br>
+              A 錯：起點是第一組的下限 \((40, 0)\)，不是原點。<br>
+              B 錯：累積次數要描在<strong>組上限</strong>；描在組中點的是次數分配折線圖。<br>
+              C 錯：某組沒有人時累積次數不變，那一段是<strong>水平線</strong>；累積次數不會減少，折線不會往下降。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 報讀累積次數分配折線圖
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i> <span>重點 3：報讀累積次數分配折線圖</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>未滿 \(a\)</strong>：在橫軸找到 \(a\)，往上讀折線的高度，就是答案。</li>
+              <li><strong>\(a\) 以上（含）</strong>：總人數（最後一點的高度）減去「未滿 \(a\)」。</li>
+              <li><strong>某一組的人數</strong>：這一組上限與下限兩點的<strong>高度差</strong>。例如重點 1 那一班，\(70\)～\(80\) 分有 \(26 - 14 = 12\) 人。</li>
+              <li><strong>排名從高分往下數</strong>：第 1 名是最高分。先用總數減出最高那一組有幾人，不夠再往下一組數。用重點 1 那一班來看：\(90\)～\(100\) 分有 \(4\) 人（第 \(1\)～\(4\) 名）、\(80\)～\(90\) 分有 \(10\) 人（第 \(5\)～\(14\) 名）。</li>
+              <li><strong>看不出確切的最高分與最低分</strong>：圖只告訴我們落在哪一組。最後一組是 \(90\)～\(100\)，最高分不一定是 \(100\) 分；第一組是 \(40\)～\(50\)，最低分也不一定是 \(40\) 分。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・讀累積次數折線圖</span>
+              未滿 \(a\)＝\(a\) 處的高度；\(a\) 以上（含）＝總數－\(a\) 處的高度<br>
+              \(a\)～\(b\) 這段的人數＝\(b\) 處的高度－\(a\) 處的高度
+            </div>
+
+            <div class="illustration-container">
+              <img src="rg_cumread.webp" alt="Risograph 雙色孔版印刷風校刊社插圖：軟木公告欄上釘著一張只畫線條、沒有數字的折線圖海報，小晏舉著一把直尺水平地對在海報上，眼睛順著尺看向左邊；阿樸站在旁邊，手裡抱著一疊校刊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：折線讀數儀</h3>
+            <p class="interactive-instruction">這是八年級全年級 \(90\) 人的段考數學累積次數分配折線圖。選一種問法，拉動滑桿，畫面會畫出要讀的高度，以及要不要用總數減、兩點相減。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cumread" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要問</span>
+                    <div class="btn-group" id="cr-mode-group">
+                      <button class="pick-btn active" data-cr-mode="below">未滿 a</button>
+                      <button class="pick-btn" data-cr-mode="above">a 以上（含）</button>
+                      <button class="pick-btn" data-cr-mode="between">a～b 之間</button>
+                      <button class="pick-btn" data-cr-mode="rank">第 n 名</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="cr-row-a">
+                    <label for="cr-a">\(a\)：<span id="cr-va" class="val-num">60</span></label>
+                    <input type="range" id="cr-a" min="40" max="100" value="60" step="10">
+                  </div>
+                  <div class="slider-row" id="cr-row-b">
+                    <label for="cr-b">\(b\)：<span id="cr-vb" class="val-num">80</span></label>
+                    <input type="range" id="cr-b" min="40" max="100" value="80" step="10">
+                  </div>
+                  <div class="slider-row" id="cr-row-n">
+                    <label for="cr-n">\(n\)：<span id="cr-vn" class="val-num">20</span></label>
+                    <input type="range" id="cr-n" min="1" max="90" value="20" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (報讀累積次數分配折線圖)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 下圖是某班 \(40\) 位學生數學成績的累積次數分配折線圖。分數 \(70\) 分以上（含）的學生有幾人？</p>
+            <div class="quiz-chart-wrap"><canvas id="qc-5" class="quiz-chart" width="440" height="260"></canvas></div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-5" value="A"><span class="option-text">A. \(21\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-5" value="B"><span class="option-text">B. \(19\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-5" value="C"><span class="option-text">C. \(12\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-5" value="D"><span class="option-text">D. \(31\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。在 \(70\) 分處讀到 \(19\)，代表未滿 \(70\) 分有 \(19\) 人；全班 \(40\) 人，所以 \(70\) 分以上（含）有 \(40 - 19 = 21\) 人。<br>
+              B 錯：\(19\) 是未滿 \(70\) 分的人數。<br>
+              C 錯：\(31 - 19 = 12\) 只是 \(70\)～\(80\) 這一組。<br>
+              D 錯：\(31\) 是未滿 \(80\) 分的人數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 下圖是某年級 \(50\) 位學生數學成績的累積次數分配折線圖。若依分數<strong>由高到低</strong>排名，第 \(10\) 名的學生在哪一組？</p>
+            <div class="quiz-chart-wrap"><canvas id="qc-6" class="quiz-chart" width="440" height="260"></canvas></div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-6" value="A"><span class="option-text">A. \(90\)～\(100\) 分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-6" value="B"><span class="option-text">B. \(60\)～\(70\) 分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-6" value="C"><span class="option-text">C. \(80\)～\(90\) 分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-6" value="D"><span class="option-text">D. \(70\)～\(80\) 分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。排名從最高分開始：\(90\)～\(100\) 分有 \(50 - 42 = 8\) 人（第 \(1\)～\(8\) 名），\(80\)～\(90\) 分有 \(42 - 28 = 14\) 人（第 \(9\)～\(22\) 名），所以第 \(10\) 名在 \(80\)～\(90\) 分。<br>
+              A 錯：最高那一組只有 \(8\) 人，數不到第 \(10\) 名。<br>
+              B 錯：這是從<strong>低分</strong>往上數的第 \(10\) 位（未滿 \(60\) 有 \(6\) 人、未滿 \(70\) 有 \(15\) 人），方向弄反了。<br>
+              D 錯：\(70\)～\(80\) 分是第 \(23\)～\(35\) 名。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 相對次數的意義
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>重點 4：相對次數的意義——人數不同，比百分比才公平</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>兩群資料的總數不同時，直接比次數不公平</strong>：人數多的那一班，及格的人自然容易比較多。</li>
+              <li><strong>相對次數</strong>：某一組（或某一筆）資料的次數占全體資料次數的比例，習慣上用<strong>百分比（%）</strong>表示：
+                \[\text{相對次數} = \dfrac{\text{該組次數}}{\text{總次數}} \times 100\%\]
+              </li>
+              <li>回到漫畫：A 班 \(32\) 人中 \(24\) 人及格、B 班 \(25\) 人中 \(20\) 人及格。
+                \[\begin{aligned} & \text{A 班}：\dfrac{24}{32} \times 100\% = 75\% \\ & \text{B 班}：\dfrac{20}{25} \times 100\% = 80\% \end{aligned}\]
+              A 班及格的人比較多，但 B 班及格的<strong>比例</strong>比較高。</li>
+              <li><strong>不要和累積相對次數搞混</strong>：「某一組占全體的百分比」是相對次數；從第一組一路加到某一組的百分比，才是累積相對次數（重點 7）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・相對次數</span>
+              \[\text{相對次數} = \dfrac{\text{該組次數}}{\text{總次數}} \times 100\%\]
+            </div>
+
+            <div class="illustration-container">
+              <img src="rg_fair.webp" alt="Risograph 雙色孔版印刷風校刊社插圖：公告欄上並排釘著一大一小兩張海報，小晏用粉紅色螢光筆指著較小的那一張；阿樸站在大海報前，歪著頭想。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：公平秤</h3>
+            <p class="interactive-instruction">拉動兩班的人數與及格人數。切到「比人數」時，柱子高度是及格的人數；切到「比百分比」時，兩班都換成一樣高的 \(100\%\) 長條。試著調出「及格人數比較多、比例卻比較低」的情形。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fair" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fa-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">比較方式</span>
+                    <div class="btn-group" id="fa-mode-group">
+                      <button class="pick-btn" data-fa-mode="count">比人數</button>
+                      <button class="pick-btn active" data-fa-mode="pct">比百分比</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fa-at">甲班總人數：<span id="fa-vat" class="val-num">30</span></label>
+                    <input type="range" id="fa-at" min="20" max="30" value="30" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fa-ap">甲班及格人數：<span id="fa-vap" class="val-num">21</span></label>
+                    <input type="range" id="fa-ap" min="0" max="30" value="21" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fa-bt">乙班總人數：<span id="fa-vbt" class="val-num">20</span></label>
+                    <input type="range" id="fa-bt" min="20" max="30" value="20" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fa-bp">乙班及格人數：<span id="fa-vbp" class="val-num">16</span></label>
+                    <input type="range" id="fa-bp" min="0" max="20" value="16" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fa-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (相對次數的意義)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 甲班 \(40\) 人中有 \(30\) 人及格，乙班 \(32\) 人中有 \(26\) 人及格。若以及格的情況來比較，下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-7" value="A"><span class="option-text">A. 甲班較好，因為甲班及格的人數比較多</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-7" value="B"><span class="option-text">B. 無法比較，因為兩班的人數不同</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-7" value="C"><span class="option-text">C. 甲班較好，因為甲班不及格的比例比較低</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-7" value="D"><span class="option-text">D. 乙班較好，因為乙班及格的相對次數比較大</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。人數不同要比相對次數：
+              \[\begin{aligned} & \text{甲班}：\dfrac{30}{40} \times 100\% = 75\% \\ & \text{乙班}：\dfrac{26}{32} \times 100\% = 81.25\% \end{aligned}\]
+              乙班及格的比例比較高。<br>
+              A 錯：甲班人數本來就比較多，直接比及格人數不公平。<br>
+              B 錯：人數不同正是要換算成相對次數的原因，換算後就能比較。<br>
+              C 錯：甲班不及格占 \(25\%\)，乙班只占 \(18.75\%\)，甲班的不及格比例反而比較高。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 下列哪一種比較，最需要先把次數換算成相對次數（百分比）？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-8" value="A"><span class="option-text">A. 比較同一班兩次段考的最高分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-8" value="B"><span class="option-text">B. 比較人數不同的兩所學校，近視學生所占的多寡</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-8" value="C"><span class="option-text">C. 計算全班數學成績的總分</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-8" value="D"><span class="option-text">D. 找出全班身高最高的同學</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。兩所學校的總人數不同，近視人數多的學校不一定近視比例高，要換算成「近視人數占全校的百分比」才公平。<br>
+              A 錯：最高分是一個分數，不是「某一組有幾人」，不必換算成百分比。<br>
+              C 錯：總分是把每個人的分數加起來，和相對次數無關。<br>
+              D 錯：找最高的那一個人，只要比大小就好。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 相對次數分配表與折線圖
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-percent" aria-hidden="true"></i> <span>重點 5：相對次數分配表與相對次數分配折線圖</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>製表</strong>：每一組都算 \(\dfrac{\text{這一組的次數}}{\text{總次數}} \times 100\%\)，填進「相對次數（%）」那一欄。</li>
+              <li><strong>合計一定是 \(100\%\)</strong>：所有組加起來就是全體，可以用來驗算。</li>
+              <li><strong>製圖</strong>：橫軸是分數、縱軸是相對次數（%），描 \((\text{組中點}, \text{相對次數})\)，再依序用線段連起來——和七年級的次數分配折線圖一樣點在<strong>組中點</strong>。</li>
+              <li>同一份資料的次數折線圖與相對次數折線圖<strong>形狀完全一樣</strong>，只是縱軸的刻度換成百分比。</li>
+              <li>未滿某分數占全班的百分比＝前面各組的相對次數相加。下表未滿 \(60\) 分占 \(5\% + 10\% = 15\%\)。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead>
+                  <tr><th>分數（分）</th><th>次數（人）</th><th>相對次數（%）</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>\(40\)～\(50\)</td><td>\(2\)</td><td>\(5\)</td></tr>
+                  <tr><td>\(50\)～\(60\)</td><td>\(4\)</td><td>\(10\)</td></tr>
+                  <tr><td>\(60\)～\(70\)</td><td>\(8\)</td><td>\(20\)</td></tr>
+                  <tr><td>\(70\)～\(80\)</td><td>\(12\)</td><td>\(30\)</td></tr>
+                  <tr><td>\(80\)～\(90\)</td><td>\(10\)</td><td>\(25\)</td></tr>
+                  <tr><td>\(90\)～\(100\)</td><td>\(4\)</td><td>\(10\)</td></tr>
+                  <tr><td>合計</td><td>\(40\)</td><td>\(100\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・相對次數分配折線圖</span>
+              描點 \((\text{組中點}, \text{相對次數})\)；所有相對次數合計 \(100\%\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="rg_reltable.webp" alt="Risograph 雙色孔版印刷風校刊社插圖：阿樸站在孔版印刷機前，雙手接住剛從出紙口送出來的一張圖表海報；小晏在旁邊探頭看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：換算印刷機</h3>
+            <p class="interactive-instruction">選一個班級，切換縱軸是「次數」還是「相對次數」，或兩條一起看，觀察折線的形狀有沒有變。拉動「第幾組」看那一組的相對次數怎麼算。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-reltable" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">班級</span>
+                    <div class="btn-group" id="rt-ds-group">
+                      <button class="pick-btn active" data-rt-ds="0">\(20\) 人社團</button>
+                      <button class="pick-btn" data-rt-ds="1">\(25\) 人班級</button>
+                      <button class="pick-btn" data-rt-ds="2">\(50\) 人兩班合計</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">縱軸</span>
+                    <div class="btn-group" id="rt-mode-group">
+                      <button class="pick-btn" data-rt-mode="freq">次數</button>
+                      <button class="pick-btn active" data-rt-mode="rel">相對次數</button>
+                      <button class="pick-btn" data-rt-mode="both">兩條一起看</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rt-k">第幾組：<span id="rt-vk" class="val-num">2</span></label>
+                    <input type="range" id="rt-k" min="1" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (相對次數分配表與折線圖)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 某班 \(40\) 人的成績：\(40\)～\(50\) 分 \(2\) 人、\(50\)～\(60\) 分 \(3\) 人、\(60\)～\(70\) 分 \(8\) 人、\(70\)～\(80\) 分 \(10\) 人、\(80\)～\(90\) 分 \(12\) 人、\(90\)～\(100\) 分 \(5\) 人。\(70\)～\(80\) 分這一組的相對次數是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-9" value="A"><span class="option-text">A. \(25\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-9" value="B"><span class="option-text">B. \(10\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-9" value="C"><span class="option-text">C. \(57.5\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-9" value="D"><span class="option-text">D. \(4\%\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\dfrac{10}{40} \times 100\% = 25\%\)。<br>
+              B 錯：把次數 \(10\) 直接當成百分比，沒有除以總人數。<br>
+              C 錯：\(2 + 3 + 8 + 10 = 23\)，\(\dfrac{23}{40} \times 100\% = 57.5\%\) 是<strong>累積</strong>相對次數（未滿 \(80\) 分）。<br>
+              D 錯：分子分母顛倒，算成 \(40 \div 10 = 4\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 某相對次數分配表中，\(70\)～\(80\) 分這一組的相對次數是 \(15\%\)。畫<strong>相對次數分配折線圖</strong>時，這一組要描哪一點？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-10" value="A"><span class="option-text">A. \((70, 15)\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-10" value="B"><span class="option-text">B. \((80, 15)\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-10" value="C"><span class="option-text">C. \((75, 15)\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-10" value="D"><span class="option-text">D. \((75, 0.15)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。相對次數分配折線圖描 \((\text{組中點}, \text{相對次數})\)；\(70\)～\(80\) 的組中點是 \(\dfrac{70 + 80}{2} = 75\)，所以是 \((75, 15)\)。<br>
+              A 錯：描在組下限，沒有這種畫法。<br>
+              B 錯：描在組上限是<strong>累積</strong>（相對）次數折線圖的畫法。<br>
+              D 錯：縱軸的單位已經是 %，\(15\%\) 要描在刻度 \(15\) 的位置，不是 \(0.15\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 相對次數與人數互換
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> <span>重點 6：相對次數與人數互換——乘或除以百分比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>相對次數的定義 \(\text{相對次數} = \dfrac{\text{人數}}{\text{總人數}} \times 100\%\)，三個量知道兩個，就能求第三個。</li>
+              <li><strong>已知總人數，求人數</strong>：人數＝總人數 × 相對次數。例如全校 \(500\) 人中占 \(18\%\)，有 \(500 \times 18\% = 90\) 人。</li>
+              <li><strong>已知人數，求總人數</strong>：總人數＝人數 ÷ 相對次數。例如某一組 \(9\) 人占全班的 \(25\%\)，全班有 \(9 \div 25\% = 36\) 人。</li>
+              <li><strong>檢查方向</strong>：人數一定比總人數少。用乘的算出來比總人數大、用除的算出來比人數小，就是乘除弄反了。</li>
+              <li><strong>百分比大，人數不一定多</strong>：總人數不同時，要各自乘回人數再比較。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・人數與百分比</span>
+              人數＝總人數 × 相對次數　　總人數＝人數 ÷ 相對次數
+            </div>
+
+            <div class="illustration-container">
+              <img src="rg_convert.webp" alt="Risograph 雙色孔版印刷風校刊社插圖：小晏坐在編輯桌前，用手指按著一台口袋型電子計算器；阿樸站在她身後，探頭看計算器的螢幕。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：百格換算板</h3>
+            <p class="interactive-instruction">\(100\) 個小格代表全體（\(100\%\)），塗色的格子是某一組的相對次數。切換「求人數」或「求總人數」，拉動總人數與百分比，看哪一個量是已知、哪一個要乘、哪一個要除。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-convert" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求</span>
+                    <div class="btn-group" id="cv-mode-group">
+                      <button class="pick-btn active" data-cv-mode="count">已知總人數，求人數</button>
+                      <button class="pick-btn" data-cv-mode="total">已知人數，求總人數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cv-N">總人數：<span id="cv-vN" class="val-num">140</span></label>
+                    <input type="range" id="cv-N" min="20" max="300" value="140" step="20">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cv-p">相對次數（%）：<span id="cv-vp" class="val-num">20</span></label>
+                    <input type="range" id="cv-p" min="10" max="50" value="20" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (相對次數與人數互換)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 下圖是某班身高的相對次數分配折線圖。若人數最多的那一組有 \(14\) 人，全班共有幾人？</p>
+            <div class="quiz-chart-wrap"><canvas id="qc-11" class="quiz-chart" width="440" height="260"></canvas></div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-11" value="A"><span class="option-text">A. \(49\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-11" value="B"><span class="option-text">B. \(4.9\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-11" value="C"><span class="option-text">C. \(28\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-11" value="D"><span class="option-text">D. \(40\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。最高的點是 \(155\)～\(160\) 公分那一組，相對次數 \(35\%\)，所以全班 \(14 \div 35\% = 14 \div 0.35 = 40\) 人。<br>
+              A 錯：把 \(35\%\) 當成 \(3.5\) 去乘，算成 \(14 \times 3.5\)；而且 \(49\) 人的 \(35\%\) 不是整數，不合理。<br>
+              B 錯：算成 \(14 \times 35\%\)，比一組的人數還少，方向不對。<br>
+              C 錯：把人數最多的那一組當成占全班的一半，算成 \(14 \times 2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 甲校有 \(400\) 位學生，每天運動 \(1\) 小時以上的占 \(35\%\)；乙校有 \(300\) 位學生，占 \(45\%\)。每天運動 \(1\) 小時以上的學生，哪一校比較多？多幾人？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-12" value="A"><span class="option-text">A. 乙校多，因為 \(45\%\) 大於 \(35\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-12" value="B"><span class="option-text">B. 甲校多 \(5\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-12" value="C"><span class="option-text">C. 乙校多 \(10\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-12" value="D"><span class="option-text">D. 兩校一樣多</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。要乘回人數再比：
+              \[\begin{aligned} & \text{甲校}：400 \times 35\% = 140 \text{ 人} \\ & \text{乙校}：300 \times 45\% = 135 \text{ 人} \end{aligned}\]
+              甲校多 \(140 - 135 = 5\) 人。<br>
+              A 錯：百分比大只代表比例高；兩校總人數不同，人數要乘回來才知道。<br>
+              C 錯：\(45 - 35 = 10\) 是百分比的差，不是人數的差。<br>
+              D 錯：兩校實際人數是 \(140\) 與 \(135\)，不一樣。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 累積相對次數分配表（兩種方法）
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-branch" aria-hidden="true"></i> <span>重點 7：累積相對次數分配表——兩條路，同一個答案</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>累積相對次數</strong>：從第一組加到某一組，占全體的百分比，也就是「未滿這一組上限」的人占全體的百分比。</li>
+              <li><strong>方法一：次數 → 相對次數 → 累積相對次數</strong>：把各組的相對次數<strong>依序累加</strong>。</li>
+              <li><strong>方法二：次數 → 累積次數 → 累積相對次數</strong>：每一組都算 \(\dfrac{\text{累積次數}}{\text{總次數}} \times 100\%\)。</li>
+              <li>兩種方法的答案相同，最後一組一定是 \(100\%\)。以重點 1 那一班為例：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead>
+                  <tr><th>分數（分）</th><th>次數</th><th>累積次數</th><th>相對次數（%）</th><th>累積相對次數（%）</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>\(40\)～\(50\)</td><td>\(2\)</td><td>\(2\)</td><td>\(5\)</td><td>\(5\)</td></tr>
+                  <tr><td>\(50\)～\(60\)</td><td>\(4\)</td><td>\(6\)</td><td>\(10\)</td><td>\(15\)</td></tr>
+                  <tr><td>\(60\)～\(70\)</td><td>\(8\)</td><td>\(14\)</td><td>\(20\)</td><td>\(35\)</td></tr>
+                  <tr><td>\(70\)～\(80\)</td><td>\(12\)</td><td>\(26\)</td><td>\(30\)</td><td>\(65\)</td></tr>
+                  <tr><td>\(80\)～\(90\)</td><td>\(10\)</td><td>\(36\)</td><td>\(25\)</td><td>\(90\)</td></tr>
+                  <tr><td>\(90\)～\(100\)</td><td>\(4\)</td><td>\(40\)</td><td>\(10\)</td><td>\(100\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list" style="margin-top: 0.9rem;">
+              <li>\(70\)～\(80\) 那一列：方法一 \(35\% + 30\% = 65\%\)；方法二 \(\dfrac{26}{40} \times 100\% = 65\%\)。</li>
+              <li><strong>表格缺一格時</strong>，也可以從下一組倒推：這一組的累積相對次數＝下一組的累積相對次數－下一組的相對次數。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・累積相對次數</span>
+              方法一：各組相對次數依序累加<br>
+              方法二：\(\dfrac{\text{累積次數}}{\text{總次數}} \times 100\%\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="rg_twoways.webp" alt="Risograph 雙色孔版印刷風校刊社插圖：學校走廊分成左右兩條，兩條走廊在盡頭的同一扇校刊社木門前會合；小晏從左邊那條走過來，阿樸從右邊那條走過來。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩條路的累加表</h3>
+            <p class="interactive-instruction">選一份資料，切換方法一或方法二，拉動「填到第幾組」，看最右邊那一欄是由哪兩格算出來的。兩種方法填出來的數字一模一樣。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-twoways" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tw-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">資料</span>
+                    <div class="btn-group" id="tw-ds-group">
+                      <button class="pick-btn active" data-tw-ds="0">立定跳遠 \(40\) 人</button>
+                      <button class="pick-btn" data-tw-ds="1">跳繩 \(20\) 人</button>
+                      <button class="pick-btn" data-tw-ds="2">仰臥起坐 \(25\) 人</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方法</span>
+                    <div class="btn-group" id="tw-mode-group">
+                      <button class="pick-btn active" data-tw-mode="m1">方法一：相對次數累加</button>
+                      <button class="pick-btn" data-tw-mode="m2">方法二：累積次數 ÷ 總數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tw-k">填到第幾組：<span id="tw-vk" class="val-num">3</span></label>
+                    <input type="range" id="tw-k" min="1" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tw-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (累積相對次數分配表)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 下表是某年級 \(50\) 位學生的成績，表中 \(a\) 的值是多少？</p>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>分數（分）</th><th>次數（人）</th><th>相對次數（%）</th><th>累積相對次數（%）</th></tr></thead>
+                <tbody>
+                  <tr><td>\(40\)～\(50\)</td><td>\(6\)</td><td>\(12\)</td><td>\(12\)</td></tr>
+                  <tr><td>\(50\)～\(60\)</td><td>\(10\)</td><td>\(20\)</td><td>\(32\)</td></tr>
+                  <tr><td>\(60\)～\(70\)</td><td>\(14\)</td><td>\(28\)</td><td>\(60\)</td></tr>
+                  <tr><td>\(70\)～\(80\)</td><td>\(12\)</td><td>\(24\)</td><td>\(a\)</td></tr>
+                  <tr><td>\(80\)～\(90\)</td><td>\(6\)</td><td>\(12\)</td><td>\(96\)</td></tr>
+                  <tr><td>\(90\)～\(100\)</td><td>\(2\)</td><td>\(4\)</td><td>\(100\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-13" value="A"><span class="option-text">A. \(84\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-13" value="B"><span class="option-text">B. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-13" value="C"><span class="option-text">C. \(42\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-13" value="D"><span class="option-text">D. \(72\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。三種算法都得到 \(84\)：
+              \[\begin{aligned} & \text{上一組累加}：60 + 24 = 84 \\ & \text{下一組倒推}：96 - 12 = 84 \\ & \text{累積次數}：\dfrac{42}{50} \times 100\% = 84\% \end{aligned}\]
+              B 錯：\(24\) 是這一組自己的相對次數，沒有累加。<br>
+              C 錯：\(6 + 10 + 14 + 12 = 42\) 是累積次數，還要除以總數 \(50\) 再乘以 \(100\%\)。<br>
+              D 錯：\(60 + 12 = 72\) 加成了下一組的相對次數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 某班定點投籃的進球數整理成下表，表中 \(x\)、\(y\)、\(z\)、\(u\) 的值，下列何者正確？</p>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>進球數（球）</th><th>\(0\)～\(5\)</th><th>\(5\)～\(10\)</th><th>\(10\)～\(15\)</th><th>\(15\)～\(20\)</th></tr></thead>
+                <tbody>
+                  <tr><td>次數（人）</td><td>\(3\)</td><td>\(6\)</td><td>\(9\)</td><td>\(x\)</td></tr>
+                  <tr><td>相對次數（%）</td><td>\(10\)</td><td>\(20\)</td><td>\(30\)</td><td>\(y\)</td></tr>
+                  <tr><td>累積相對次數（%）</td><td>\(10\)</td><td>\(z\)</td><td>\(u\)</td><td>\(100\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-14" value="A"><span class="option-text">A. \(x = 40\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-14" value="B"><span class="option-text">B. \(y = 12\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-14" value="C"><span class="option-text">C. \(z = 30\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-14" value="D"><span class="option-text">D. \(u = 90\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(3\) 人占 \(10\%\)，全班有 \(3 \div 10\% = 30\) 人。
+              \[\begin{aligned} & x = 30 - 3 - 6 - 9 = 12 \\ & y = 100 - 10 - 20 - 30 = 40 \\ & z = 10 + 20 = 30 \\ & u = 30 + 30 = 60 \end{aligned}\]
+              A 錯：\(40\) 是相對次數 \(y\)，不是人數 \(x\)。<br>
+              B 錯：\(12\) 是人數 \(x\)，不是相對次數 \(y\)。<br>
+              D 錯：\(100 - 10 = 90\) 不是 \(u\)；\(u\) 是前三組的相對次數相加。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 累積相對次數分配折線圖與相對位置
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ranking-star" aria-hidden="true"></i> <span>重點 8：累積相對次數分配折線圖——我贏過多少人？</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>製圖</strong>：和累積次數折線圖一樣<strong>從 0 開始、點在組上限</strong>，縱軸換成累積相對次數（%）。重點 7 那一班就是描
+                \[\begin{aligned} & (40, 0)、(50, 5)、(60, 15) \\ & (70, 35)、(80, 65) \\ & (90, 90)、(100, 100) \end{aligned}\]
+              </li>
+              <li>折線一定<strong>結束在 \(100\%\)</strong>，而且不會往下降。</li>
+              <li><strong>相對位置</strong>：\(a\) 處的高度就是「分數未滿 \(a\) 的人占全體的百分比」。一位同學考 \(a\) 分，比他低分的人約占這個百分比，可以看出他在全體中大約排在哪裡。</li>
+              <li><strong>換回人數</strong>：比他低分的人數＝總人數 × 高度（重點 6）。</li>
+              <li><strong>\(a\) 以上（含）</strong>：\(100\% -\)（\(a\) 處的高度）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・累積相對次數折線圖</span>
+              描點：起點 \((\text{第一組下限}, 0)\)，其餘 \((\text{組上限}, \text{累積相對次數})\)<br>
+              \(a\) 處的高度＝未滿 \(a\) 的人占全體的百分比
+            </div>
+
+            <div class="illustration-container">
+              <img src="rg_position.webp" alt="Risograph 雙色孔版印刷風校刊社插圖：小晏站在學校樓梯的中段，回頭往下看自己已經走過的那一段階梯；阿樸站在更上面幾階，朝她揮手。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：相對位置尺</h3>
+            <p class="interactive-instruction">這是某次全年級模擬考的累積相對次數分配折線圖。拉動分數 \(a\) 與總人數，選一種問法，看「未滿 \(a\) 的百分比」怎麼變成「贏過幾人」。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-position" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ps-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要問</span>
+                    <div class="btn-group" id="ps-mode-group">
+                      <button class="pick-btn active" data-ps-mode="below">未滿 a 占幾 %</button>
+                      <button class="pick-btn" data-ps-mode="above">a 以上（含）占幾 %</button>
+                      <button class="pick-btn" data-ps-mode="beat">考 a 分贏過幾人</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ps-a">\(a\)：<span id="ps-va" class="val-num">70</span></label>
+                    <input type="range" id="ps-a" min="50" max="90" value="70" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ps-N">總人數：<span id="ps-vN" class="val-num">80</span></label>
+                    <input type="range" id="ps-N" min="20" max="120" value="80" step="20">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ps-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (累積相對次數折線圖與相對位置)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 下圖是某年級 \(160\) 位學生數學成績的累積相對次數分配折線圖。小翊考 \(80\) 分，而且全年級只有他考 \(80\) 分，他的分數贏過多少人？</p>
+            <div class="quiz-chart-wrap"><canvas id="qc-15" class="quiz-chart" width="440" height="260"></canvas></div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-15" value="A"><span class="option-text">A. \(40\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-15" value="B"><span class="option-text">B. \(75\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-15" value="C"><span class="option-text">C. \(152\) 人</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-15" value="D"><span class="option-text">D. \(120\) 人</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。在 \(80\) 分處讀到 \(75\%\)，代表未滿 \(80\) 分的人占 \(75\%\)，這些人都比小翊低分：\(160 \times 75\% = 120\) 人。<br>
+              A 錯：\(160 \times 25\% = 40\) 是 \(80\) 分以上（含）的人數，那是比他高分或和他同分的人。<br>
+              B 錯：\(75\) 是百分比，還要乘以總人數 \(160\)。<br>
+              C 錯：\(160 \times 95\% = 152\) 讀成了 \(90\) 分處的高度。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 下圖是某次測驗的累積相對次數分配折線圖。分數未滿 \(60\) 分與 \(90\) 分以上（含）的人，合起來占全體的多少？</p>
+            <div class="quiz-chart-wrap"><canvas id="qc-16" class="quiz-chart" width="440" height="260"></canvas></div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-16" value="A"><span class="option-text">A. \(40\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-16" value="B"><span class="option-text">B. \(110\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-16" value="C"><span class="option-text">C. \(15\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-16" value="D"><span class="option-text">D. \(25\%\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。未滿 \(60\) 分：\(60\) 分處的高度 \(25\%\)；\(90\) 分以上（含）：\(100\% - 85\% = 15\%\)。合起來 \(25\% + 15\% = 40\%\)。<br>
+              B 錯：把 \(90\) 分處的高度 \(85\%\) 直接加上去；\(85\%\) 是未滿 \(90\) 分，不是 \(90\) 分以上（含）。合計超過 \(100\%\) 本身就不合理。<br>
+              C 錯：只算了 \(90\) 分以上（含）。<br>
+              D 錯：只算了未滿 \(60\) 分。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 比較兩群資料
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-compare" aria-hidden="true"></i> <span>重點 9：用累積相對次數折線圖比較兩群資料</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>為什麼用累積相對次數</strong>：兩群的總人數不同也能放在同一張圖上比，因為兩條折線都從 \(0\%\) 走到 \(100\%\)。</li>
+              <li><strong>某一組的相對次數</strong>＝這一組上限與下限兩點的高度差。兩條線各自相減再比較，不要直接比兩點的高度。</li>
+              <li><strong>水平的一段</strong>代表那一組的相對次數是 \(0\%\)，也就是那一組沒有人。</li>
+              <li><strong>\(a\) 以上（含）的比例</strong>＝\(100\% -\)（\(a\) 處的高度）。同一個 \(a\) 處，折線<strong>比較低</strong>的那一群，\(a\) 以上（含）的比例比較高。</li>
+              <li><strong>最大值在哪一群</strong>：比較早到達 \(100\%\) 的那一條線，後面的組都沒有人；還沒到 \(100\%\) 的那一群，才有人落在最後那一組。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・比較兩群資料</span>
+              某一組的相對次數＝兩點的高度差（水平段＝\(0\%\)）<br>
+              \(a\) 以上（含）＝\(100\% -\)（\(a\) 處的高度）
+            </div>
+
+            <div class="illustration-container">
+              <img src="rg_compare.webp" alt="Risograph 雙色孔版印刷風校刊社插圖：編輯室的白牆上，一條粉紅色紙膠帶與一條藍綠色紙膠帶各自從左下往右上貼成一條折線；小晏指著粉紅色那一條，阿樸指著藍綠色那一條。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：雙色套印比較台</h3>
+            <p class="interactive-instruction">選一組資料，粉紅線是甲、藍綠線是乙。切到「某一組」並拉動 \(k\)，看兩條線各自的高度差；切到「以上（含）」並拉動 \(a\)，看哪一群的比例比較高。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-compare" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">資料</span>
+                    <div class="btn-group" id="cp-pair-group">
+                      <button class="pick-btn active" data-cp-pair="0">兩班英語成績</button>
+                      <button class="pick-btn" data-cp-pair="1">兩校每週運動時數</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要問</span>
+                    <div class="btn-group" id="cp-mode-group">
+                      <button class="pick-btn active" data-cp-mode="group">第 k 組的相對次數</button>
+                      <button class="pick-btn" data-cp-mode="above">a 以上（含）的比例</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="cp-row-k">
+                    <label for="cp-k">\(k\)：<span id="cp-vk" class="val-num">3</span></label>
+                    <input type="range" id="cp-k" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="cp-row-a">
+                    <label for="cp-a">\(a\)：<span id="cp-va" class="val-num">80</span></label>
+                    <input type="range" id="cp-a" min="1" max="5" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (比較兩群資料)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 下圖是甲、乙兩班數學成績的累積相對次數分配折線圖。哪一班 \(70\)～\(80\) 分的相對次數比較大？</p>
+            <div class="quiz-chart-wrap"><canvas id="qc-17" class="quiz-chart" width="440" height="260"></canvas></div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-17" value="A"><span class="option-text">A. 甲班，相對次數是 \(30\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-17" value="B"><span class="option-text">B. 乙班，相對次數是 \(25\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-17" value="C"><span class="option-text">C. 乙班，相對次數是 \(45\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-17" value="D"><span class="option-text">D. 兩班一樣大</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。某一組的相對次數是兩點的高度差：
+              \[\begin{aligned} & \text{甲班}：30\% - 30\% = 0\% \\ & \text{乙班}：45\% - 20\% = 25\% \end{aligned}\]
+              甲班在這一段是水平線，沒有人。<br>
+              A 錯：\(30\%\) 是甲班未滿 \(70\)（也是未滿 \(80\)）分的累積相對次數，不是這一組的相對次數。<br>
+              C 錯：\(45\%\) 是乙班未滿 \(80\) 分的累積相對次數，沒有減去 \(70\) 分處的 \(20\%\)。<br>
+              D 錯：甲班 \(0\%\)、乙班 \(25\%\)，不一樣。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 下圖是甲、乙兩班週末閱讀時數的累積相對次數分配折線圖。下列敘述何者正確？</p>
+            <div class="quiz-chart-wrap"><canvas id="qc-18" class="quiz-chart" width="440" height="260"></canvas></div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-18" value="A"><span class="option-text">A. 閱讀未滿 \(4\) 小時的比例，甲班比乙班低</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-18" value="B"><span class="option-text">B. 閱讀時數最多的學生在甲班</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-18" value="C"><span class="option-text">C. 乙班閱讀 \(8\) 小時以上（含）的占 \(10\%\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-18" value="D"><span class="option-text">D. 甲班閱讀 \(6\)～\(8\) 小時的占 \(80\%\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。乙班在 \(8\) 小時處是 \(90\%\)，所以 \(8\) 小時以上（含）占 \(100\% - 90\% = 10\%\)。<br>
+              A 錯：\(4\) 小時處甲班 \(50\%\)、乙班 \(30\%\)，甲班的比例比較高。<br>
+              B 錯：甲班在 \(8\) 小時就到 \(100\%\)，\(8\)～\(10\) 小時沒有人；乙班還有 \(10\%\) 落在 \(8\)～\(10\) 小時，閱讀最多的人在乙班。<br>
+              D 錯：甲班 \(6\)～\(8\) 小時是 \(100\% - 80\% = 20\%\)；\(80\%\) 是未滿 \(6\) 小時。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 三種表、三種折線圖速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>累積次數</strong>：各組次數依序累加；代表「未滿組上限」的人數。</li>
+              <li><strong>相對次數</strong>：\(\dfrac{\text{次數}}{\text{總次數}} \times 100\%\)；合計 \(100\%\)。</li>
+              <li><strong>累積相對次數</strong>：相對次數依序累加，或 \(\dfrac{\text{累積次數}}{\text{總次數}} \times 100\%\)。</li>
+              <li><strong>描點</strong>：次數、相對次數 → 組中點；累積（相對）次數 → 從 \(0\) 開始、點在組上限。</li>
+              <li><strong>讀圖</strong>：未滿 \(a\) 直接讀；\(a\) 以上（含）用全體去減；某一組用兩點相減。</li>
+              <li><strong>換人數</strong>：人數＝總數 × 百分比；總數＝人數 ÷ 百分比。</li>
+              <li><strong>比兩群</strong>：人數不同就比百分比；水平段代表那一組沒有人。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-newspaper"></i> 回到校刊社：專題怎麼下標？</h4>
+              <h5><i class="fa-solid fa-scale-balanced"></i> 不能只比人數</h5>
+              <p>A 班 \(32\) 人中 \(24\) 人及格，及格的相對次數是 \(75\%\)；B 班 \(25\) 人中 \(20\) 人及格，是 \(80\%\)。阿樸原本的標題「A 班比較強」不成立，應該寫「B 班及格比例較高」。</p>
+              <h5><i class="fa-solid fa-chart-line"></i> 一張圖看出相對位置</h5>
+              <p>小晏把兩班的成績各畫成累積相對次數折線圖、套印在同一張版面上：粉紅與藍綠兩條線都從 \(0\%\) 走到 \(100\%\)，讀者一眼就能比較「未滿 \(60\) 分的各占多少」，也能找到自己的分數大約贏過全班幾成的人。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一步</h5>
+              <p>累積相對次數讓我們知道一個數值在全體中的位置。到了九年級，會用同樣的想法找出「排在中間的四分之一、二分之一、四分之三」，畫成盒狀圖來描述資料的分布。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

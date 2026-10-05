@@ -112,13 +112,13 @@
         "sections": [
           { "code": "4-1", "title": "因式分解解一元二次方程式", "status": "completed" },
           { "code": "4-2", "title": "配方法與公式解", "status": "completed" },
-          { "code": "4-3", "title": "應用問題" }
+          { "code": "4-3", "title": "應用問題", "status": "completed" }
         ]
       },
       {
         "chapter": "第5章 統計資料處理",
         "sections": [
-          { "code": "5-1", "title": "資料整理與統計圖表" }
+          { "code": "5-1", "title": "資料整理與統計圖表", "status": "completed" }
         ]
       }
     ],
