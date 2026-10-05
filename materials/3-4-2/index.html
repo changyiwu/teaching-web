@@ -4,39 +4,1372 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>4-2 配方法與公式解 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>4-2 配方法與公式解 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第三冊 (2上) • 第4章 一元二次方程式</div>
-    <h1>4-2 配方法與公式解</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第三冊 • 第四章</span>
+        <h1>4-2 配方法與公式解</h1>
+        <p>回到柑橘觀光果園：小柚要把曬柑橘的正方形竹蓆加寬，列出來的方程式猜不到整數解，十字交乘也拆不開。這一節先用<strong>平方根</strong>的概念解 \((x + a)^2 = k\)，再學把任何二次式「補一角」變成完全平方的<strong>配方法</strong>，最後把配方法的過程整理成一條<strong>公式解</strong>，並用<strong>判別式</strong> \(b^2 - 4ac\) 一眼看出方程式有兩個解、重根，還是無解。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-square-root-variable"></i> 開平方取 ±</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-arrow-right-arrow-left"></i> 先移項</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-puzzle-piece"></i> 補一角</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-stairs"></i> 配方法</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-weight-hanging"></i> 常數很大</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-divide"></i> 先同除 a</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-circle-half-stroke"></i> 重根與無解</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-calculator"></i> 公式解</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-gauge"></i> 判別式</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-minus"></i> a 為負數</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-key"></i> 反求係數</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫 (Woodcut Citrus Orchard)
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(253, 186, 116, 0.25);">
+        <h2 class="section-title" style="color: #fdba74; border-bottom-color: rgba(253, 186, 116, 0.2);">
+          <i class="fa-solid fa-lemon" aria-hidden="true" style="color: #fdba74; text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);"></i> 課前暖身漫畫：猜不到、也拆不開
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小柚想把曬柑橘的正方形竹蓆，每一邊都加寬 \(2\) 公尺，加寬後的面積是 \(30\) 平方公尺。設原本的邊長是 \(x\) 公尺，就得到 \((x + 2)^2 = 30\)，展開移項是 \(x^2 + 4x - 26 = 0\)。阿圃試了 \(3\)、\(4\) 都不對，十字交乘也找不到兩個整數——<strong style="color:#fdba74">小柚說：別拆了，把它看成一個正方形就好</strong>。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="木刻版畫風柑橘觀光果園四格漫畫：第 1 格小柚戴草帽、穿橘色圍裙，指著地上的正方形竹蓆，說每邊加寬 2 公尺後面積是 30；第 2 格阿圃穿深綠色背心、肩搭白毛巾，扳著手指試 3 和 4，都不對；第 3 格阿圃抱著頭，說十字交乘也拆不開；第 4 格小柚在竹蓆旁比出一個正方形的手勢，說把它補成正方形就好。每格各有一位說話者。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 平方根概念解方程式
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-root-variable" aria-hidden="true"></i> <span>重點 1：平方根概念——開平方要取「±」</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>形如 \(x^2 = k\)（\(k \gt 0\)）</strong>：\(x\) 是 \(k\) 的平方根，所以 \(x = \pm\sqrt{k}\)。例如 \(x^2 = 36\)，\(x = \pm 6\)。</li>
+              <li><strong>形如 \((x + a)^2 = k\)（\(k \gt 0\)）</strong>：把 \(x + a\) 整組看成一個數，它是 \(k\) 的平方根：
+                \[\begin{aligned} & (x - 2)^2 = 5 \\ & x - 2 = \pm\sqrt{5} \\ & x = 2 \pm \sqrt{5} \end{aligned}\]
+              </li>
+              <li><strong>「±」一定要寫</strong>：正的平方根、負的平方根都能讓等號成立，只寫正的就漏掉一個解。</li>
+              <li>\(2 \pm \sqrt{5}\) 代表 \(2 + \sqrt{5}\) 和 \(2 - \sqrt{5}\) 兩個數；需要近似值時可以用計算機，約為 \(4.24\) 和 \(-0.24\)。</li>
+              <li>根號裡的數要<strong>化成最簡根式</strong>：\(\sqrt{12} = 2\sqrt{3}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・平方根概念</span>
+              若 \((x + a)^2 = k\) 且 \(k \gt 0\)，則
+              \[x + a = \pm\sqrt{k}, \quad x = -a \pm \sqrt{k}\]
+            </div>
+
+            <div class="illustration-container">
+              <img src="oc_sqrt.webp" alt="木刻版畫風柑橘觀光果園插圖：果園步道正中央立著一根木樁，木樁左右兩側同樣距離的地方，各放著一個一模一樣的柑橘竹籃；小柚站在木樁旁，左右手分別指向兩個竹籃。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：開平方的兩個方向</h3>
+            <p class="interactive-instruction">方程式是 \((x + a)^2 = k\)。拉動 \(a\) 與 \(k\)，看兩個解怎麼在數線上對稱地落在 \(-a\) 的兩側；再切到「只取正號」，看看漏掉了誰。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sqrt" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sq-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">開平方</span>
+                    <div class="btn-group" id="sq-mode-group">
+                      <button class="pick-btn active" data-sq-mode="pm">取 ±（正確）</button>
+                      <button class="pick-btn" data-sq-mode="plus">只取正號（錯誤示範）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sq-a">\(a\)：<span id="sq-va" class="val-num">-2</span></label>
+                    <input type="range" id="sq-a" min="-6" max="6" value="-2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sq-k">\(k\)：<span id="sq-vk" class="val-num">7</span></label>
+                    <input type="range" id="sq-k" min="1" max="30" value="7" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sq-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平方根概念)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 一元二次方程式 \((x - 4)^2 = 49\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-1" value="A"><span class="option-text">A. 只有 \(x = 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-1" value="B"><span class="option-text">B. \(11\) 和 \(-3\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-1" value="C"><span class="option-text">C. \(3\) 和 \(-11\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-1" value="D"><span class="option-text">D. \(53\) 和 \(-45\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(x - 4\) 是 \(49\) 的平方根：
+              \[\begin{aligned} & x - 4 = \pm 7 \\ & x = 4 \pm 7 \end{aligned}\]
+              所以 \(x = 11\) 或 \(x = -3\)。<br>
+              A 錯：只取了正的平方根，漏掉 \(x - 4 = -7\)。<br>
+              C 錯：把 \(-4\) 移到右邊時沒有變號，算成 \(-4 \pm 7\)。<br>
+              D 錯：忘了開平方，算成 \(x - 4 = \pm 49\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 一元二次方程式 \(x^2 = 50\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-2" value="A"><span class="option-text">A. 只有 \(x = 5\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-2" value="B"><span class="option-text">B. \(x = \pm 25\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-2" value="C"><span class="option-text">C. \(x = \pm 2\sqrt{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-2" value="D"><span class="option-text">D. \(x = \pm 5\sqrt{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(x\) 是 \(50\) 的平方根，\(x = \pm\sqrt{50} = \pm 5\sqrt{2}\)（因為 \(50 = 5^2 \times 2\)）。<br>
+              A 錯：漏掉負的平方根 \(-5\sqrt{2}\)。<br>
+              B 錯：把開平方當成除以 \(2\)；\(25^2 = 625\)，不是 \(50\)。<br>
+              C 錯：\(\left(2\sqrt{5}\right)^2 = 20\)，不是 \(50\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 先移項再開平方
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> <span>重點 2：先移項，再開平方——\((ax + b)^2 = c\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先移項</strong>：把平方那一組單獨留在左邊，整理成 \((ax + b)^2 = c\) 的形式，才能開平方。</li>
+              <li><strong>再開平方</strong>：\(ax + b = \pm\sqrt{c}\)。</li>
+              <li><strong>最後解一次方程式</strong>：移項、再<strong>整個除以</strong> \(x\) 的係數。例如：
+                \[\begin{aligned} & (2x + 1)^2 - 6 = 3 \\ & (2x + 1)^2 = 9 \\ & 2x + 1 = \pm 3 \\ & 2x = -1 \pm 3 \end{aligned}\]
+              得 \(x = 1\) 或 \(x = -2\)。</li>
+              <li><strong>除以係數時，根號那一項也要除</strong>：\(2x = 3 \pm \sqrt{7}\) 的解是 \(x = \dfrac{3 \pm \sqrt{7}}{2}\)，不是 \(\dfrac{3}{2} \pm \sqrt{7}\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_shift.webp" alt="木刻版畫風柑橘觀光果園插圖：集貨棚的工作檯上，阿圃把壓在木箱上的一袋肥料搬到旁邊的地上，讓木箱單獨留在檯面中央；小柚站在檯邊，準備打開木箱的蓋子。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：(mx + n)² + t = R 的解題路線</h3>
+            <p class="interactive-instruction">拉動四個數，方程式是 \((mx + n)^2 + t = R\)。看每一步在做什麼——把 \(m\) 調大，注意最後一步右邊的<strong>兩項都要除</strong>；把 \(R - t\) 調成 \(0\) 或負數又會怎樣？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-shift" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sh-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sh-m">\(m\)：<span id="sh-vm" class="val-num">3</span></label>
+                    <input type="range" id="sh-m" min="1" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-n">\(n\)：<span id="sh-vn" class="val-num">-2</span></label>
+                    <input type="range" id="sh-n" min="-5" max="5" value="-2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-t">\(t\)：<span id="sh-vt" class="val-num">-4</span></label>
+                    <input type="range" id="sh-t" min="-9" max="9" value="-4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-r">\(R\)：<span id="sh-vr" class="val-num">1</span></label>
+                    <input type="range" id="sh-r" min="-9" max="9" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sh-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (先移項再開平方)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 一元二次方程式 \((3x + 1)^2 - 5 = 15\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-3" value="A"><span class="option-text">A. \(\dfrac{-1 \pm 2\sqrt{5}}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-3" value="B"><span class="option-text">B. \(-\dfrac{1}{3} \pm 2\sqrt{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-3" value="C"><span class="option-text">C. \(\dfrac{1 \pm 2\sqrt{5}}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-3" value="D"><span class="option-text">D. \(\dfrac{-1 \pm \sqrt{10}}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。先移項，再開平方：
+              \[\begin{aligned} & (3x + 1)^2 = 20 \\ & 3x + 1 = \pm 2\sqrt{5} \\ & 3x = -1 \pm 2\sqrt{5} \end{aligned}\]
+              右邊整個除以 \(3\)，得 \(x = \dfrac{-1 \pm 2\sqrt{5}}{3}\)。<br>
+              B 錯：只有 \(-1\) 除以 \(3\)，\(2\sqrt{5}\) 沒有除。<br>
+              C 錯：\(1\) 移到右邊時沒有變號。<br>
+              D 錯：\(-5\) 移到右邊沒有變號，算成 \((3x + 1)^2 = 15 - 5 = 10\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 一元二次方程式 \((4x - 7)^2 + 3 = 27\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-4" value="A"><span class="option-text">A. \(\dfrac{-7 \pm 2\sqrt{6}}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-4" value="B"><span class="option-text">B. \(\dfrac{7}{4} \pm 2\sqrt{6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-4" value="C"><span class="option-text">C. \(\dfrac{7 \pm 2\sqrt{6}}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-4" value="D"><span class="option-text">D. \(\dfrac{7 \pm \sqrt{30}}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & (4x - 7)^2 = 24 \\ & 4x - 7 = \pm 2\sqrt{6} \\ & 4x = 7 \pm 2\sqrt{6} \end{aligned}\]
+              右邊整個除以 \(4\)，得 \(x = \dfrac{7 \pm 2\sqrt{6}}{4}\)。<br>
+              A 錯：\(-7\) 移到右邊沒有變號。<br>
+              B 錯：只有 \(7\) 除以 \(4\)，\(2\sqrt{6}\) 沒有除。<br>
+              D 錯：把 \(3\) 移到右邊時沒有變號，算成 \((4x - 7)^2 = 30\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 完全平方式與配方
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-puzzle-piece" aria-hidden="true"></i> <span>重點 3：完全平方式——\(x^2 \pm px\) 補上 \(\left(\frac{p}{2}\right)^2\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>完全平方式</strong>：一個一元二次式若能寫成 \((ax + b)^2\) 的形式，就稱為完全平方式。</li>
+              <li><strong>配方</strong>：利用和的平方、差的平方公式，把二次式配成完全平方式。</li>
+              <li><strong>要補的數</strong>：\(x\) 項係數<strong>取一半、再平方</strong>。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>式子</th><th>一半</th><th>補上</th><th>配成</th></tr></thead>
+                <tbody>
+                  <tr><td>\(x^2 + 10x\)</td><td>\(5\)</td><td>\(25\)</td><td>\((x + 5)^2\)</td></tr>
+                  <tr><td>\(x^2 - 8x\)</td><td>\(4\)</td><td>\(16\)</td><td>\((x - 4)^2\)</td></tr>
+                  <tr><td>\(x^2 - 3x\)</td><td>\(\frac{3}{2}\)</td><td>\(\frac{9}{4}\)</td><td>\(\left(x - \frac{3}{2}\right)^2\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>補的數一定是正的</strong>：不論 \(x\) 項是加還是減，平方之後都是正數；正負號只決定括號裡是 \(+\) 還是 \(-\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・配成完全平方式</span>
+              \[\begin{aligned} & x^2 + px + \left(\frac{p}{2}\right)^2 = \left(x + \frac{p}{2}\right)^2 \\ & x^2 - px + \left(\frac{p}{2}\right)^2 = \left(x - \frac{p}{2}\right)^2 \end{aligned}\]
+            </div>
+
+            <div class="illustration-container">
+              <img src="oc_square.webp" alt="木刻版畫風柑橘觀光果園插圖：地上鋪著一大塊正方形竹蓆和兩條長方形竹蓆，拼成缺了一個角的正方形；阿圃蹲著，正把一塊小正方形竹蓆放進缺角，小柚在旁邊壓住竹蓆邊緣。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：補一角的面積拼圖</h3>
+            <p class="interactive-instruction">拉動 \(x\) 項係數 \(p\)。\(p\) 是正數時，\(x^2 + px\) 是一個正方形加兩條長條，缺一角；\(p\) 是負數時，從正方形減掉兩條長條，角落被減了兩次。要補的那一塊多大？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-square" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sqr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sqr-p">\(x\) 項係數 \(p\)：<span id="sqr-vp" class="val-num">6</span></label>
+                    <input type="range" id="sqr-p" min="-12" max="12" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sqr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (完全平方式)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 若 \(x^2 - 14x + \square = (x - \bigstar)^2\)，則 \(\square\) 與 \(\bigstar\) 各是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-5" value="A"><span class="option-text">A. \(\square = 196\)，\(\bigstar = 14\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-5" value="B"><span class="option-text">B. \(\square = 49\)，\(\bigstar = -7\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-5" value="C"><span class="option-text">C. \(\square = 49\)，\(\bigstar = 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-5" value="D"><span class="option-text">D. \(\square = -49\)，\(\bigstar = 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(x\) 項係數 \(14\) 的一半是 \(7\)，再平方是 \(49\)：
+              \[x^2 - 14x + 49 = (x - 7)^2\]
+              A 錯：沒有取一半，直接用 \(14\)；\((x - 14)^2\) 展開的 \(x\) 項是 \(-28x\)。<br>
+              B 錯：題目已經寫好括號裡是「\(x -\)」，\(\bigstar = -7\) 會變成 \((x + 7)^2\)。<br>
+              D 錯：補的數是平方，一定是正的。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 若 \(x^2 + kx + 64\) 是完全平方式，則 \(k\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-6" value="A"><span class="option-text">A. \(16\) 或 \(-16\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-6" value="B"><span class="option-text">B. 只有 \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-6" value="C"><span class="option-text">C. \(8\) 或 \(-8\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-6" value="D"><span class="option-text">D. \(32\) 或 \(-32\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(64 = 8^2\)，所以這個完全平方式是 \((x + 8)^2\) 或 \((x - 8)^2\)：
+              \[\begin{aligned} & (x + 8)^2 = x^2 + 16x + 64 \\ & (x - 8)^2 = x^2 - 16x + 64 \end{aligned}\]
+              所以 \(k = 16\) 或 \(-16\)。<br>
+              B 錯：漏掉差的平方那一種。<br>
+              C 錯：\(8\) 是 \(k\) 的一半，\(k\) 本身是 \(2 \times 8\)。<br>
+              D 錯：\(k\) 是一半的 \(2\) 倍，不是 \(4\) 倍。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 配方法解 x² 係數為 1
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-stairs" aria-hidden="true"></i> <span>重點 4：配方法——\(x^2\) 係數為 1 的方程式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>為什麼要配方</strong>：\(x^2 + 4x - 1 = 0\) 不能用整數因式分解，但只要整理成 \((x + 2)^2 = 5\)，就能用重點 1 的平方根概念解。</li>
+              <li><strong>四個步驟</strong>：
+                <ol style="margin: 0.4rem 0 0 1.2rem; padding: 0;">
+                  <li>常數項<strong>移到右邊</strong>；</li>
+                  <li>兩邊<strong>同加</strong>「\(x\) 項係數一半的平方」；</li>
+                  <li>左邊<strong>配成</strong>完全平方式；</li>
+                  <li><strong>開平方</strong>，解出 \(x\)。</li>
+                </ol>
+              </li>
+            </ul>
+            \[\begin{aligned} & x^2 + 4x - 1 = 0 \\ & x^2 + 4x = 1 \\ & x^2 + 4x + 2^2 = 1 + 2^2 \\ & (x + 2)^2 = 5 \\ & x + 2 = \pm\sqrt{5} \end{aligned}\]
+            <ul class="bullet-list">
+              <li>所以 \(x = -2 \pm \sqrt{5}\)。</li>
+              <li><strong>兩邊都要加</strong>：只在左邊補 \(2^2\)，等式就不成立了。</li>
+              <li><strong>\(x\) 項係數是奇數</strong>：一半是分數，右邊要通分。例如 \(x^2 - x = 1\)，兩邊同加 \(\left(\frac{1}{2}\right)^2\)，得 \(\left(x - \frac{1}{2}\right)^2 = \frac{5}{4}\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_complete.webp" alt="木刻版畫風柑橘觀光果園插圖：果園邊的木製樓梯有四階，每一階放著一顆柑橘；小柚站在最上面一階向下揮手，阿圃正踏上第二階。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：配方法逐步推導</h3>
+            <p class="interactive-instruction">方程式是 \(x^2 + bx + c = 0\)。拉動 \(b\)、\(c\)，再按「下一步」一行一行推導。試試 \(b\) 是奇數的情形，以及配完之後右邊變成 \(0\) 或負數的情形。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cs1" width="540" height="580"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c1-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="c1-prev">上一步</button>
+                      <span class="step-counter" id="c1-step">1 / 1</span>
+                      <button class="pick-btn" id="c1-next">下一步</button>
+                      <button class="pick-btn" id="c1-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c1-b">\(b\)：<span id="c1-vb" class="val-num">6</span></label>
+                    <input type="range" id="c1-b" min="-8" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c1-c">\(c\)：<span id="c1-vc" class="val-num">-3</span></label>
+                    <input type="range" id="c1-c" min="-9" max="9" value="-3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c1-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (配方法)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 用配方法解 \(x^2 - 10x + 7 = 0\)，解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-7" value="A"><span class="option-text">A. \(-5 \pm 3\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-7" value="B"><span class="option-text">B. \(5 \pm 3\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-7" value="C"><span class="option-text">C. \(5 \pm 4\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-7" value="D"><span class="option-text">D. \(10 \pm \sqrt{93}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & x^2 - 10x = -7 \\ & x^2 - 10x + 5^2 = -7 + 5^2 \\ & (x - 5)^2 = 18 \\ & x - 5 = \pm 3\sqrt{2} \end{aligned}\]
+              所以 \(x = 5 \pm 3\sqrt{2}\)。<br>
+              A 錯：\((x - 5)^2\) 開平方後，\(-5\) 移到右邊要變成 \(+5\)。<br>
+              C 錯：\(7\) 移到右邊沒有變號，算成 \((x - 5)^2 = 32\)。<br>
+              D 錯：補的是 \(10^2\)，沒有取一半；\((x - 10)^2\) 也不等於 \(x^2 - 10x + 100\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> 阿圃用配方法解 \(x^2 - 9x + 4 = 0\)，過程如下：<br>
+            第一步：\(x^2 - 9x = -4\)<br>
+            第二步：\(x^2 - 9x + 9^2 = -4 + 9^2\)<br>
+            第三步：\((x - 9)^2 = 77\)<br>
+            第四步：\(x = 9 \pm \sqrt{77}\)<br>
+            他從哪一步開始出錯？正確的解是什麼？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-8" value="A"><span class="option-text">A. 第二步；\(x = \dfrac{9 \pm \sqrt{65}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-8" value="B"><span class="option-text">B. 第一步；\(x = \dfrac{9 \pm \sqrt{65}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-8" value="C"><span class="option-text">C. 第三步；\(x = 9 \pm \sqrt{85}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-8" value="D"><span class="option-text">D. 第二步；\(x = \dfrac{9}{2} \pm \sqrt{65}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。第一步移項正確；第二步應該同加 \(\left(\frac{9}{2}\right)^2\)，不是 \(9^2\)：
+              \[\begin{aligned} & \left(x - \frac{9}{2}\right)^2 = -4 + \frac{81}{4} = \frac{65}{4} \\ & x - \frac{9}{2} = \pm\frac{\sqrt{65}}{2} \end{aligned}\]
+              所以 \(x = \dfrac{9 \pm \sqrt{65}}{2}\)。<br>
+              B 錯：第一步把 \(4\) 移到右邊變成 \(-4\)，是對的。<br>
+              C 錯：錯誤從第二步就開始了，而且 \(\sqrt{85}\) 也不對。<br>
+              D 錯：\(\sqrt{\frac{65}{4}} = \frac{\sqrt{65}}{2}\)，根號那一項也要除以 \(2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 常數項很大時用配方法
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-weight-hanging" aria-hidden="true"></i> <span>重點 5：常數項很大——配方法比十字交乘快</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>十字交乘的困難</strong>：常數項的絕對值很大時，因數對很多，要一組一組試。</li>
+              <li><strong>配方法不怕數字大</strong>：只要補上 \(x\) 項係數一半的平方，右邊往往剛好是一個完全平方數。</li>
+              <li>例：\(x^2 - 8x - 609 = 0\)
+                \[\begin{aligned} & x^2 - 8x = 609 \\ & x^2 - 8x + 4^2 = 609 + 4^2 \\ & (x - 4)^2 = 625 \\ & x - 4 = \pm 25 \end{aligned}\]
+              得 \(x = 29\) 或 \(x = -21\)。</li>
+              <li><strong>要熟記常見的平方數</strong>：\(20^2 = 400\)、\(25^2 = 625\)、\(30^2 = 900\)⋯⋯，開平方時才認得出來。</li>
+              <li><strong>選方法</strong>：一元二次方程式都能用配方法解，但能直接因式分解的，用因式分解通常比較快。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_big.webp" alt="木刻版畫風柑橘觀光果園插圖：集貨場堆著好幾排高高的柑橘木箱，阿圃抱著一個木箱看著整片箱堆發愁；小柚站在一旁，手上拿著寫好數字的木板。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：配方 vs. 一組一組試</h3>
+            <p class="interactive-instruction">方程式是 \(x^2 + 2hx - N = 0\)，其中 \(N = s^2 - h^2\)。拉動 \(h\) 與 \(s\)：上面是配方法的五行，下面是十字交乘要試的因數對——要的那一組總是在最後面。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-big" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bg-h">\(h\)（\(x\) 項係數的一半）：<span id="bg-vh" class="val-num">-3</span></label>
+                    <input type="range" id="bg-h" min="-6" max="6" value="-3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bg-s">\(s\)：<span id="bg-vs" class="val-num">21</span></label>
+                    <input type="range" id="bg-s" min="15" max="35" value="21" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (常數項很大)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 一元二次方程式 \(x^2 - 14x - 1551 = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-9" value="A"><span class="option-text">A. \(33\) 和 \(-47\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-9" value="B"><span class="option-text">B. \(47\) 和 \(-33\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-9" value="C"><span class="option-text">C. \(47\) 和 \(33\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-9" value="D"><span class="option-text">D. \(7 \pm \sqrt{1502}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & x^2 - 14x = 1551 \\ & x^2 - 14x + 7^2 = 1551 + 7^2 \\ & (x - 7)^2 = 1600 \\ & x - 7 = \pm 40 \end{aligned}\]
+              所以 \(x = 47\) 或 \(x = -33\)。<br>
+              A 錯：\(-7\) 移到右邊沒有變號，算成 \(-7 \pm 40\)。<br>
+              C 錯：\(7 - 40 = -33\)，不是 \(33\)。<br>
+              D 錯：兩邊要<strong>同加</strong> \(7^2\)，右邊是 \(1551 + 49\)，不是減。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 已知方程式 \(x^2 - 3364 = 0\) 的兩根為 \(\pm 58\)。下列何者是方程式 \(x^2 + 10x - 3339 = 0\) 的解？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-10" value="A"><span class="option-text">A. \(x = 63\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-10" value="B"><span class="option-text">B. \(x = 58\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-10" value="C"><span class="option-text">C. \(x = -53\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-10" value="D"><span class="option-text">D. \(x = 53\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。配方後右邊剛好是 \(3364\)：
+              \[\begin{aligned} & x^2 + 10x + 5^2 = 3339 + 5^2 \\ & (x + 5)^2 = 3364 \\ & x + 5 = \pm 58 \end{aligned}\]
+              所以 \(x = 53\) 或 \(x = -63\)。<br>
+              A、C 錯：把 \(+5\) 移到右邊時沒有變號，算成 \(5 \pm 58\)。<br>
+              B 錯：\(58\) 是 \(x + 5\) 的值，不是 \(x\) 的值。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: x² 係數不為 1
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> <span>重點 6：\(x^2\) 係數不為 1——先同除以係數，再配方</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>為什麼要先除</strong>：\(\left(x + \frac{p}{2}\right)^2\) 展開的開頭是 \(x^2\)，所以左邊的 \(x^2\) 係數必須是 \(1\) 才配得成。</li>
+              <li><strong>利用等量公理</strong>：等號兩邊同除以 \(x^2\) 的係數，<strong>每一項都要除</strong>，包括常數項。</li>
+              <li>例：\(3x^2 - 6x - 1 = 0\)
+                \[\begin{aligned} & x^2 - 2x - \frac{1}{3} = 0 \\ & x^2 - 2x = \frac{1}{3} \\ & x^2 - 2x + 1^2 = \frac{1}{3} + 1^2 \\ & (x - 1)^2 = \frac{4}{3} \end{aligned}\]
+              開平方得 \(x - 1 = \pm\dfrac{2\sqrt{3}}{3}\)，所以 \(x = \dfrac{3 \pm 2\sqrt{3}}{3}\)。</li>
+              <li><strong>係數是負數也一樣</strong>：同除以負數時，每一項都變號。</li>
+              <li><strong>開平方遇到分數</strong>：\(\sqrt{\frac{4}{3}} = \frac{2}{\sqrt{3}} = \frac{2\sqrt{3}}{3}\)，分母要有理化。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_divide_a.webp" alt="木刻版畫風柑橘觀光果園插圖：木桌上放著一大籃柑橘和三個空的小竹籃；小柚把柑橘一顆一顆平均分進三個小竹籃，阿圃在旁邊數。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：先除再配 vs. 直接配</h3>
+            <p class="interactive-instruction">方程式是 \(ax^2 + bx + c = 0\)。選 \(a\)、拉 \(b\) 與 \(c\)，看「先同除以 \(a\)」的完整推導；再切到錯誤示範，看看直接配方為什麼配不成。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-csa" width="540" height="600"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ca-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">\(a\)</span>
+                    <div class="btn-group" id="ca-a-group">
+                      <button class="pick-btn" data-ca-a="2">\(2\)</button>
+                      <button class="pick-btn active" data-ca-a="3">\(3\)</button>
+                      <button class="pick-btn" data-ca-a="4">\(4\)</button>
+                      <button class="pick-btn" data-ca-a="-2">\(-2\)</button>
+                      <button class="pick-btn" data-ca-a="-3">\(-3\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">做法</span>
+                    <div class="btn-group" id="ca-mode-group">
+                      <button class="pick-btn active" data-ca-mode="right">先同除以 \(a\)</button>
+                      <button class="pick-btn" data-ca-mode="wrong">直接配方（錯誤示範）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ca-b">\(b\)：<span id="ca-vb" class="val-num">-6</span></label>
+                    <input type="range" id="ca-b" min="-8" max="8" value="-6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ca-c">\(c\)：<span id="ca-vc" class="val-num">-1</span></label>
+                    <input type="range" id="ca-c" min="-6" max="6" value="-1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ca-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (\(x^2\) 係數不為 1)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> 用配方法解 \(2x^2 - 12x + 5 = 0\)，解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-11" value="A"><span class="option-text">A. \(5\) 和 \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-11" value="B"><span class="option-text">B. \(\dfrac{6 \pm \sqrt{13}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-11" value="C"><span class="option-text">C. \(\dfrac{-6 \pm \sqrt{26}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-11" value="D"><span class="option-text">D. \(\dfrac{6 \pm \sqrt{26}}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。兩邊同除以 \(2\)，再配方：
+              \[\begin{aligned} & x^2 - 6x = -\frac{5}{2} \\ & x^2 - 6x + 3^2 = -\frac{5}{2} + 9 \\ & (x - 3)^2 = \frac{13}{2} \\ & x - 3 = \pm\frac{\sqrt{26}}{2} \end{aligned}\]
+              所以 \(x = 3 \pm \dfrac{\sqrt{26}}{2} = \dfrac{6 \pm \sqrt{26}}{2}\)。<br>
+              A 錯：常數項 \(5\) 沒有除以 \(2\)，算成 \((x - 3)^2 = 4\)。<br>
+              B 錯：\(\sqrt{\frac{13}{2}}\) 不等於 \(\frac{\sqrt{13}}{2}\)；分母要有理化成 \(\frac{\sqrt{26}}{2}\)。<br>
+              C 錯：\(-3\) 移到右邊沒有變號。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 小柚用配方法解 \(5x^2 + 20x - 3 = 0\)，過程如下：<br>
+            第一步：\(x^2 + 4x = 3\)<br>
+            第二步：\(x^2 + 4x + 2^2 = 3 + 2^2\)<br>
+            第三步：\((x + 2)^2 = 7\)<br>
+            第四步：\(x = -2 \pm \sqrt{7}\)<br>
+            她從哪一步開始出錯？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-12" value="A"><span class="option-text">A. 第二步</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-12" value="B"><span class="option-text">B. 第三步</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-12" value="C"><span class="option-text">C. 第一步</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-12" value="D"><span class="option-text">D. 每一步都正確</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩邊同除以 \(5\) 時，常數項也要除，第一步應該是 \(x^2 + 4x = \dfrac{3}{5}\)。正確的過程：
+              \[\begin{aligned} & \left(x + 2\right)^2 = \frac{3}{5} + 4 = \frac{23}{5} \\ & x + 2 = \pm\frac{\sqrt{115}}{5} \end{aligned}\]
+              所以 \(x = \dfrac{-10 \pm \sqrt{115}}{5}\)。<br>
+              A、B 錯：第二、三步的做法本身沒錯，錯誤是從第一步帶下來的。<br>
+              D 錯：代 \(x = -2 + \sqrt{7}\) 回原式，左邊不等於 \(0\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 配方後右邊為 0 或負數
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> <span>重點 7：配方後右邊是 0 或負數——重根與無解</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <p style="color:#cbd5e1; margin: 0 0 0.6rem;">配方後得到 \((x + h)^2 = k\)，解的情形由 \(k\) 的正負決定：</p>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>右邊 \(k\)</th><th>解的情形</th><th>例子</th></tr></thead>
+                <tbody>
+                  <tr><td>\(k \gt 0\)</td><td>兩個相異的解</td><td>\((x - 2)^2 = 5\)</td></tr>
+                  <tr><td>\(k = 0\)</td><td>兩個解相同（重根）</td><td>\((x + 1)^2 = 0\)</td></tr>
+                  <tr><td>\(k \lt 0\)</td><td>無解</td><td>\((x - 3)^2 = -4\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list" style="margin-top: 1rem;">
+              <li><strong>重根</strong>：\((x + 1)^2 = 0\) 只有 \(x + 1 = 0\)，兩個解都是 \(-1\)。</li>
+              <li><strong>無解</strong>：任何數的平方都不是負數，找不到 \(x\) 使 \((x - 3)^2 = -4\)。</li>
+              <li>所以解一元二次方程式有三種結果：<strong>兩個相異的解、重根、無解</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_sign.webp" alt="木刻版畫風柑橘觀光果園插圖：果園的小水池邊，小柚蹲著看水面上自己的倒影；阿圃站在她身後，探頭一起看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：平方的值到得了 k 嗎？</h3>
+            <p class="interactive-instruction">方程式是 \((x + h)^2 = k\)。拉動 \(k\)：上面的數線是平方可能的值（只有 \(0\) 和正數），下面是對應的解。把 \(k\) 拉過 \(0\)，看解從兩個變一個、再變成沒有。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sign" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sg-h">\(h\)：<span id="sg-vh" class="val-num">2</span></label>
+                    <input type="range" id="sg-h" min="-5" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sg-k">\(k\)：<span id="sg-vk" class="val-num">-4</span></label>
+                    <input type="range" id="sg-k" min="-9" max="9" value="-4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (重根與無解)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 甲方程式為 \((x - 7)^2 = 11\)，乙方程式為 \((x + 8)^2 = -3\)。關於兩個方程式解的情形，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-13" value="A"><span class="option-text">A. 甲有兩個相異的解，乙有兩個相異的解</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-13" value="B"><span class="option-text">B. 甲有兩個相同的解，乙無解</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-13" value="C"><span class="option-text">C. 甲有兩個相異的解，乙無解</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-13" value="D"><span class="option-text">D. 甲有兩個相同的解，乙有兩個相異的解</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。甲的右邊 \(11 \gt 0\)，\(x - 7 = \pm\sqrt{11}\)，有兩個相異的解 \(7 \pm \sqrt{11}\)。乙的右邊 \(-3 \lt 0\)，任何數的平方都不是負數，所以乙無解。<br>
+              A、D 錯：平方不可能等於 \(-3\)，乙不會有解。<br>
+              B 錯：右邊是 \(0\) 才是兩個相同的解，甲的右邊是 \(11\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 用配方法解 \(2x^2 - 28x + 98 = 0\)，結果為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-14" value="A"><span class="option-text">A. \(x = 7\)（重根）</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-14" value="B"><span class="option-text">B. \(7\) 和 \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-14" value="C"><span class="option-text">C. 無解</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-14" value="D"><span class="option-text">D. \(x = -7\)（重根）</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩邊同除以 \(2\) 再配方：
+              \[\begin{aligned} & x^2 - 14x = -49 \\ & x^2 - 14x + 7^2 = -49 + 7^2 \\ & (x - 7)^2 = 0 \end{aligned}\]
+              只有 \(x - 7 = 0\)，兩個解都是 \(7\)。<br>
+              B 錯：右邊是 \(0\)，\(\pm 0\) 只有一個值，不會出現 \(-7\)。<br>
+              C 錯：右邊是 \(0\) 不是負數，有解。<br>
+              D 錯：\(x - 7 = 0\) 移項得 \(x = 7\)，不是 \(-7\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 公式解
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> <span>重點 8：公式解——讀出 \(a\)、\(b\)、\(c\)，代入公式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>公式從配方法來</strong>：對 \(ax^2 + bx + c = 0\)（\(a \gt 0\)）做配方法，同除以 \(a\)、移項、兩邊同加 \(\left(\frac{b}{2a}\right)^2\)，得到
+                \[\left(x + \frac{b}{2a}\right)^2 = \frac{b^2 - 4ac}{4a^2}\]
+              當 \(b^2 - 4ac \gt 0\) 時開平方，就得到公式解。</li>
+              <li><strong>三個步驟</strong>：① 化成 \(ax^2 + bx + c = 0\)，讀出 \(a\)、\(b\)、\(c\)（<strong>連同正負號</strong>）；② 算 \(b^2 - 4ac\)；③ 代入公式並化簡。</li>
+              <li>例：\(2x^2 + 3x - 4 = 0\)，\(a = 2\)、\(b = 3\)、\(c = -4\)：
+                \[\begin{aligned} & b^2 - 4ac \\ &= 3^2 - 4 \times 2 \times (-4) \\ &= 41 \end{aligned}\]
+                \[\begin{aligned} x &= \frac{-3 \pm \sqrt{41}}{2 \times 2} \\ &= \frac{-3 \pm \sqrt{41}}{4} \end{aligned}\]
+              </li>
+              <li><strong>常見錯誤</strong>：\(c\) 是負數時漏掉負號；分母只寫 \(2\)，忘了是 \(2a\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・公式解</span>
+              當 \(b^2 - 4ac \gt 0\)，一元二次方程式 \(ax^2 + bx + c = 0\) 的解為
+              \[x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\]
+            </div>
+
+            <div class="illustration-container">
+              <img src="oc_formula.webp" alt="木刻版畫風柑橘觀光果園插圖：果醬工坊裡，小柚照著牆上貼的食譜，把柑橘、砂糖和檸檬依序倒進大銅鍋；阿圃拿著木勺在鍋邊攪拌。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：公式解代入台</h3>
+            <p class="interactive-instruction">拉動 \(a\)、\(b\)、\(c\)，看判別式與公式怎麼代入；再切到兩個錯誤示範，看看代錯一個數，答案代回原式會差多少。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-formula" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">代入</span>
+                    <div class="btn-group" id="fm-mode-group">
+                      <button class="pick-btn active" data-fm-mode="ok">正確代入</button>
+                      <button class="pick-btn" data-fm-mode="sign">錯誤：漏了 \(c\) 的負號</button>
+                      <button class="pick-btn" data-fm-mode="den">錯誤：分母只寫 \(2\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fm-a">\(a\)：<span id="fm-va" class="val-num">2</span></label>
+                    <input type="range" id="fm-a" min="1" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fm-b">\(b\)：<span id="fm-vb" class="val-num">3</span></label>
+                    <input type="range" id="fm-b" min="-6" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fm-c">\(c\)：<span id="fm-vc" class="val-num">-4</span></label>
+                    <input type="range" id="fm-c" min="-6" max="6" value="-4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (公式解)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> 利用公式解，一元二次方程式 \(2x^2 - 7x - 3 = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-15" value="A"><span class="option-text">A. \(\dfrac{7 \pm \sqrt{73}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-15" value="B"><span class="option-text">B. \(\dfrac{-7 \pm \sqrt{73}}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-15" value="C"><span class="option-text">C. \(3\) 和 \(\dfrac{1}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-15" value="D"><span class="option-text">D. \(\dfrac{7 \pm \sqrt{73}}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(a = 2\)、\(b = -7\)、\(c = -3\)：
+              \[\begin{aligned} & b^2 - 4ac \\ &= (-7)^2 - 4 \times 2 \times (-3) \\ &= 73 \end{aligned}\]
+              \[\begin{aligned} x &= \frac{-(-7) \pm \sqrt{73}}{2 \times 2} \\ &= \frac{7 \pm \sqrt{73}}{4} \end{aligned}\]
+              A 錯：分母是 \(2a = 4\)，不是 \(2\)。<br>
+              B 錯：\(-b = -(-7) = 7\)，不是 \(-7\)。<br>
+              C 錯：漏了 \(c\) 的負號，判別式算成 \(49 - 24 = 25\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 阿圃用公式解解 \(x^2 + 7x - 2 = 0\)，寫成
+            \[\begin{aligned} x &= \frac{-7 \pm \sqrt{49 - 8}}{2} \\ &= \frac{-7 \pm \sqrt{41}}{2} \end{aligned}\]
+            下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-16" value="A"><span class="option-text">A. 完全正確</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-16" value="B"><span class="option-text">B. 漏了 \(c\) 的負號，正解是 \(\dfrac{-7 \pm \sqrt{57}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-16" value="C"><span class="option-text">C. \(b\) 應代 \(-7\)，正解是 \(\dfrac{7 \pm \sqrt{57}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-16" value="D"><span class="option-text">D. 分母應為 \(4\)，正解是 \(\dfrac{-7 \pm \sqrt{57}}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(a = 1\)、\(b = 7\)、\(c = -2\)：
+              \[\begin{aligned} & b^2 - 4ac \\ &= 49 - 4 \times 1 \times (-2) \\ &= 57 \end{aligned}\]
+              所以 \(x = \dfrac{-7 \pm \sqrt{57}}{2}\)。<br>
+              阿圃把 \(-4 \times 1 \times (-2)\) 算成 \(-8\)，其實是 \(+8\)。<br>
+              A 錯：判別式算錯了。<br>
+              C 錯：\(b = 7\)，代入公式的 \(-b\) 才是 \(-7\)，阿圃這部分沒錯。<br>
+              D 錯：\(a = 1\)，分母 \(2a = 2\)，阿圃這部分也沒錯。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 判別式
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-gauge" aria-hidden="true"></i> <span>重點 9：判別式 \(b^2 - 4ac\)——不必解，先看正負</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>判別式</strong>：\(b^2 - 4ac\) 的正負就能判斷 \(ax^2 + bx + c = 0\) 的解的情形，所以稱它為方程式的判別式。</li>
+              <li><strong>一定要先化成一般式</strong>，才能讀出 \(a\)、\(b\)、\(c\)。</li>
+              <li><strong>重根的值</strong>：判別式為 \(0\) 時，公式的 \(\pm\sqrt{0}\) 消失，重根就是 \(x = -\dfrac{b}{2a}\)。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>判別式</th><th>解的情形</th></tr></thead>
+                <tbody>
+                  <tr><td>\(b^2 - 4ac \gt 0\)</td><td>兩個相異的根</td></tr>
+                  <tr><td>\(b^2 - 4ac = 0\)</td><td>兩根相等（重根）</td></tr>
+                  <tr><td>\(b^2 - 4ac \lt 0\)</td><td>無解</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-scroll" style="margin-top: 1rem;">
+              <table class="sign-table">
+                <thead><tr><th>方程式</th><th>判別式</th><th>情形</th></tr></thead>
+                <tbody>
+                  <tr><td>\(x^2 - 6x + 9 = 0\)</td><td>\(0\)</td><td>重根</td></tr>
+                  <tr><td>\(x^2 + 2x + 5 = 0\)</td><td>\(-16\)</td><td>無解</td></tr>
+                  <tr><td>\(3x^2 + 5x - 1 = 0\)</td><td>\(37\)</td><td>相異兩根</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="oc_disc.webp" alt="木刻版畫風柑橘觀光果園插圖：果園入口的木製分揀台上有三條滑道；阿圃把一顆柑橘放上分揀台，小柚站在滑道出口旁，看柑橘會滾向哪一條。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：判別式儀表</h3>
+            <p class="interactive-instruction">拉動 \(a\)、\(b\)、\(c\)，指針指出判別式的值落在正、零還是負；最下面把方程式真的解出來對照，判斷每次都對嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-disc" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ds-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ds-a">\(a\)：<span id="ds-va" class="val-num">1</span></label>
+                    <input type="range" id="ds-a" min="1" max="5" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-b">\(b\)：<span id="ds-vb" class="val-num">4</span></label>
+                    <input type="range" id="ds-b" min="-8" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ds-c">\(c\)：<span id="ds-vc" class="val-num">5</span></label>
+                    <input type="range" id="ds-c" min="-8" max="8" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ds-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (判別式)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 下列哪一個方程式有重根？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-17" value="A"><span class="option-text">A. \(9x^2 - 30x - 25 = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-17" value="B"><span class="option-text">B. \(9x^2 - 15x + 25 = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-17" value="C"><span class="option-text">C. \(9x^2 - 30x + 25 = 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-17" value="D"><span class="option-text">D. \(9x^2 + 30x + 24 = 0\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。逐一算判別式：<br>
+              A：\(900 + 900 = 1800 \gt 0\)，兩個相異的根。<br>
+              B：\(225 - 900 = -675 \lt 0\)，無解。<br>
+              C：\(900 - 900 = 0\)，重根（就是 \((3x - 5)^2 = 0\)）。<br>
+              D：\(900 - 864 = 36 \gt 0\)，兩個相異的根。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 方程式 \(5x^2 + 9x + 6 = 0\) 的解的情形為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-18" value="A"><span class="option-text">A. 有兩個相異的根</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-18" value="B"><span class="option-text">B. 兩根相等（重根）</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-18" value="C"><span class="option-text">C. 要先解出來才能判斷</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-18" value="D"><span class="option-text">D. 無解</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(a = 5\)、\(b = 9\)、\(c = 6\)：
+              \[\begin{aligned} & b^2 - 4ac \\ &= 81 - 120 \\ &= -39 \lt 0 \end{aligned}\]
+              所以方程式無解。<br>
+              A 錯：把 \(81 - 120\) 算成 \(81 + 120\)。<br>
+              B 錯：判別式等於 \(0\) 才是重根。<br>
+              C 錯：判別式的用途就是不必解，直接判斷。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: x² 係數為負數
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-minus" aria-hidden="true"></i> <span>重點 10：\(x^2\) 係數為負數——也能直接用公式解</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>方法一</strong>：等號兩邊同乘以 \(-1\)，把 \(x^2\) 係數變成正數，再用公式解。</li>
+              <li><strong>方法二</strong>：直接把負的 \(a\) 代入公式，最後分子、分母同乘以 \(-1\) 化簡。</li>
+              <li>例：\(-2x^2 + 3x + 1 = 0\)，\(a = -2\)、\(b = 3\)、\(c = 1\)：
+                \[\begin{aligned} & b^2 - 4ac \\ &= 9 - 4 \times (-2) \times 1 \\ &= 17 \end{aligned}\]
+                \[\begin{aligned} x &= \frac{-3 \pm \sqrt{17}}{-4} \\ &= \frac{3 \pm \sqrt{17}}{4} \end{aligned}\]
+              </li>
+              <li><strong>兩種方法答案相同</strong>：\(\pm\) 本來就包含兩個正負號，分子分母同乘以 \(-1\) 時，\(\pm\) 不變。</li>
+              <li><strong>注意分母</strong>：\(2a\) 是負數，不能寫成正的就不管。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・公式解適用的範圍</span>
+              只要 \(a \ne 0\) 且 \(b^2 - 4ac \gt 0\)，一元二次方程式 \(ax^2 + bx + c = 0\) 的解都是
+              \[x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\]
+            </div>
+
+            <div class="illustration-container">
+              <img src="oc_nega.webp" alt="木刻版畫風柑橘觀光果園插圖：果園岔路口的木製指標，兩塊箭頭木板分別指向兩條小路，兩條小路在遠處的同一間柑橘倉庫前會合；小柚和阿圃各站在一條小路的入口。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩種做法對照</h3>
+            <p class="interactive-instruction">拉動 \(a\)（負數）、\(b\)、\(c\)：左邊先同乘以 \(-1\)，右邊直接代入。兩條路的判別式一樣嗎？化簡後的答案一樣嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-nega" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ng-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ng-a">\(a\)：<span id="ng-va" class="val-num">-2</span></label>
+                    <input type="range" id="ng-a" min="-5" max="-1" value="-2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ng-b">\(b\)：<span id="ng-vb" class="val-num">3</span></label>
+                    <input type="range" id="ng-b" min="-6" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ng-c">\(c\)：<span id="ng-vc" class="val-num">1</span></label>
+                    <input type="range" id="ng-c" min="-6" max="6" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ng-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (\(x^2\) 係數為負數)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 一元二次方程式 \(-3x^2 + 8x + 2 = 0\) 的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-19" value="A"><span class="option-text">A. \(\dfrac{-4 \pm \sqrt{22}}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-19" value="B"><span class="option-text">B. \(\dfrac{4 \pm \sqrt{22}}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-19" value="C"><span class="option-text">C. \(\dfrac{4 \pm \sqrt{10}}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-19" value="D"><span class="option-text">D. \(\dfrac{4 \pm 2\sqrt{22}}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(a = -3\)、\(b = 8\)、\(c = 2\)：
+              \[\begin{aligned} & b^2 - 4ac = 64 + 24 = 88 \\ & x = \frac{-8 \pm 2\sqrt{22}}{-6} = \frac{4 \pm \sqrt{22}}{3} \end{aligned}\]
+              （分子、分母同除以 \(-2\)；\(\pm\) 不受影響。）<br>
+              A 錯：分母是 \(-6\)，同除以 \(-2\) 時分子也要變號。<br>
+              C 錯：\(-4 \times (-3) \times 2 = +24\)，判別式算成 \(64 - 24\) 就錯了。<br>
+              D 錯：\(2\sqrt{22}\) 也要除以 \(2\)，只除了 \(8\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> 小柚解 \(-4x^2 + x + 7 = 0\)，算出判別式為 \(113\)，再寫成 \(x = \dfrac{-1 \pm \sqrt{113}}{8}\)。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-20" value="A"><span class="option-text">A. 分母應為 \(2a = -8\)，正解是 \(\dfrac{1 \pm \sqrt{113}}{8}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-20" value="B"><span class="option-text">B. 完全正確</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-20" value="C"><span class="option-text">C. 判別式應為 \(1 - 112\)，方程式無解</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-20" value="D"><span class="option-text">D. \(a\) 是負數不能用公式解，要先乘以 \(-1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(a = -4\)、\(b = 1\)、\(c = 7\)，判別式 \(1 - 4 \times (-4) \times 7 = 113\) 是對的；但分母是 \(2a = -8\)：
+              \[x = \frac{-1 \pm \sqrt{113}}{-8} = \frac{1 \pm \sqrt{113}}{8}\]
+              B 錯：分母的負號弄丟了，兩個答案都差一個負號。<br>
+              C 錯：\(-4ac = -4 \times (-4) \times 7 = +112\)。<br>
+              D 錯：\(a\) 是負數也可以直接代入公式。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 已知解的情形反求係數
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-key" aria-hidden="true"></i> <span>重點 11：已知解的情形，反求係數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>把文字翻成判別式</strong>：
+                <ul style="margin-top: 0.3rem;">
+                  <li>有兩個相異的根 → \(b^2 - 4ac \gt 0\)</li>
+                  <li>有重根 → \(b^2 - 4ac = 0\)</li>
+                  <li>無解 → \(b^2 - 4ac \lt 0\)</li>
+                </ul>
+              </li>
+              <li><strong>再解出未知的係數</strong>：「有重根」得到一個等式；「相異兩根」「無解」得到不等式，答案是一個範圍。</li>
+              <li>例：\(x^2 + 6x + k = 0\)
+                <ul style="margin-top: 0.3rem;">
+                  <li>有重根：\(36 - 4k = 0\)，\(k = 9\)，此時 \((x + 3)^2 = 0\)，重根為 \(-3\)。</li>
+                  <li>有兩個相異的根：\(36 - 4k \gt 0\)，\(k \lt 9\)。</li>
+                  <li>無解：\(36 - 4k \lt 0\)，\(k \gt 9\)。</li>
+                </ul>
+              </li>
+              <li><strong>題目問「最大整數」「最小整數」</strong>時，先解出範圍，再挑範圍裡的整數；注意等號有沒有包含。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="oc_param.webp" alt="木刻版畫風柑橘觀光果園插圖：果園灌溉水管的閥門旁，阿圃慢慢轉動閥門的手輪，小柚蹲在出水口看水流的大小。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：m 的範圍在哪裡？</h3>
+            <p class="interactive-instruction">方程式是 \(x^2 + bx + m = 0\)。選一種解的情形、拉動 \(b\)，數線上標出 \(m\) 要滿足的範圍；再拉 \(m\) 實際驗證：落在範圍裡的 \(m\) 真的是那種情形嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-param" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求</span>
+                    <div class="btn-group" id="pm-cond-group">
+                      <button class="pick-btn active" data-pm-cond="two">兩個相異的根</button>
+                      <button class="pick-btn" data-pm-cond="double">重根</button>
+                      <button class="pick-btn" data-pm-cond="none">無解</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pm-b">\(b\)：<span id="pm-vb" class="val-num">6</span></label>
+                    <input type="range" id="pm-b" min="-8" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pm-m">\(m\)：<span id="pm-vm" class="val-num">5</span></label>
+                    <input type="range" id="pm-m" min="-4" max="20" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (反求係數)</h3>
+
+          <div class="quiz-card" data-quiz="4-2-21">
+            <p class="quiz-question"><strong>Q21.</strong> 已知 \(x\) 的一元二次方程式 \(x^2 - 12x + (2m + 4) = 0\) 有重根，則 \(m\) 的值與方程式的解為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-21" value="A"><span class="option-text">A. \(m = 16\)，\(x = 6\)（重根）</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-21" value="B"><span class="option-text">B. \(m = 16\)，\(x = -6\)（重根）</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-21" value="C"><span class="option-text">C. \(m = 70\)，\(x = 6\)（重根）</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-21" value="D"><span class="option-text">D. \(m = 32\)，\(x = 6\)（重根）</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。有重根，所以判別式 \(= 0\)：
+              \[\begin{aligned} & (-12)^2 - 4 \times 1 \times (2m + 4) = 0 \\ & 144 - 8m - 16 = 0 \end{aligned}\]
+              得 \(m = 16\)。代回得 \(x^2 - 12x + 36 = 0\)，即 \((x - 6)^2 = 0\)，重根為 \(6\)。<br>
+              B 錯：\((x - 6)^2 = 0\) 的解是 \(6\)，不是 \(-6\)。<br>
+              C 錯：漏了 \(4ac\) 的 \(4\)，算成 \(144 = 2m + 4\)。<br>
+              D 錯：\(4 \times (2m + 4)\) 要分配給 \(2m\)，是 \(8m\) 不是 \(4m\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-2-22">
+            <p class="quiz-question"><strong>Q22.</strong> 已知 \(x\) 的一元二次方程式 \(mx^2 - 6x + 1 = 0\) 無解，則 \(m\) 的最小整數值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-2-22" value="A"><span class="option-text">A. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-22" value="B"><span class="option-text">B. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-22" value="C"><span class="option-text">C. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-2-22" value="D"><span class="option-text">D. \(37\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。無解，所以判別式 \(\lt 0\)：
+              \[\begin{aligned} & (-6)^2 - 4 \times m \times 1 \lt 0 \\ & 36 - 4m \lt 0 \end{aligned}\]
+              得 \(m \gt 9\)，最小的整數是 \(10\)。<br>
+              A 錯：\(m = 9\) 時判別式 \(= 0\)，是重根，不是無解。<br>
+              C 錯：\(m \lt 9\) 是「兩個相異的根」的範圍，不等號方向弄反了。<br>
+              D 錯：漏了 \(4ac\) 的 \(4\)，算成 \(36 - m \lt 0\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 解一元二次方程式速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>平方根概念</strong>：\((x + a)^2 = k\)，\(k \gt 0\) 時 \(x = -a \pm \sqrt{k}\)；別漏「±」。</li>
+              <li><strong>先移項</strong>：平方那一組單獨留在左邊；最後整個除以係數。</li>
+              <li><strong>配方</strong>：補上「\(x\) 項係數一半的平方」，兩邊都要加。</li>
+              <li><strong>\(x^2\) 係數不是 \(1\)</strong>：先同除以係數，每一項都要除。</li>
+              <li><strong>配完看右邊</strong>：正數兩解、\(0\) 重根、負數無解。</li>
+              <li><strong>公式解</strong>：讀出 \(a\)、\(b\)、\(c\)（連同正負號），分母是 \(2a\)。</li>
+              <li><strong>判別式</strong>：\(b^2 - 4ac\) 的正、零、負決定兩根、重根、無解。</li>
+              <li><strong>選方法</strong>：能因式分解就分解；常數項很大用配方；其餘用公式解。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-lemon"></i> 回到果園：竹蓆原本多大？</h4>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 不必再用猜的</h5>
+              <p>小柚的竹蓆是 \((x + 2)^2 = 30\)：開平方得 \(x + 2 = \pm\sqrt{30}\)，所以 \(x = -2 \pm \sqrt{30}\)。邊長不能是負數，原本的邊長是 \(-2 + \sqrt{30}\)，約 \(3.48\) 公尺——難怪阿圃試 \(3\)、\(4\) 都不對。</p>
+              <h5><i class="fa-solid fa-route"></i> 三種方法其實是同一件事</h5>
+              <p>阿圃把它展開成 \(x^2 + 4x - 26 = 0\) 也沒關係：配方是補上 \(2^2\) 回到 \((x + 2)^2 = 30\)；用公式解，判別式 \(16 + 104 = 120\)，<wbr>\(x = \dfrac{-4 \pm \sqrt{120}}{2}\)<wbr>\({}= -2 \pm \sqrt{30}\)，答案一模一樣。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>剛剛「邊長不能是負數」就是在檢查<strong>解合不合情境</strong>。下一節的應用問題，要先列出一元二次方程式，解完還要判斷哪個解才合理。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
