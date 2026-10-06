@@ -4,39 +4,1631 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-2 尺規作圖 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-2 尺規作圖 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第3章 三角形的基本性質</div>
-    <h1>3-2 尺規作圖</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第三章</span>
+        <h1>3-2 尺規作圖</h1>
+        <p>養蜂花園的標本工作室裡，小蜜與阿蜂要在羊皮紙上畫蜂箱與花壇的設計圖，手邊只有一支黃銅圓規和一把<strong>沒有刻度</strong>的直尺。這一節學<strong>尺規作圖</strong>：圓規只畫圓或弧、直尺只畫直線、不看刻度。我們會用它複製線段與角、作線段與角的和差，再利用菱形、箏形、等腰三角形的線對稱性質，作出<strong>中垂線</strong>、<strong>角平分線</strong>與兩種<strong>垂直線</strong>，最後拿來作三角形的高。</p>
+      </div>
+      <!-- Progress navigation (13 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-compass-drafting"></i> 尺規的規則</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-ruler-horizontal"></i> 等線段</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-plus-minus"></i> 線段和差</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-draw-polygon"></i> 兩弧交點</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-clone"></i> 等角</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-layer-group"></i> 角的和差</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-arrows-left-right-to-line"></i> 中垂線</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-divide"></i> 中點與等分</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-code-fork"></i> 角平分線</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-fan"></i> 再平分</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-up-long"></i> 線上一點</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-arrow-down-up-across-line"></i> 線外一點</a>
+        <a href="#concept13" class="nav-item"><i class="fa-solid fa-shapes"></i> 三角形的高</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（銅版畫博物圖鑑風）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(212, 160, 23, 0.3);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(212, 160, 23, 0.25);">
+          <i class="fa-solid fa-compass-drafting" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(212, 160, 23, 0.45);"></i> 課前暖身漫畫：沒有刻度，怎麼比長短？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            阿蜂在羊皮紙上畫了兩條蜜蜂航線，想知道哪一條比較長，可是工作室裡的直尺一個刻度都沒有。小蜜拿出圓規：先張開到第一條航線的兩端，再把針腳搬到第二條航線的起點畫一段弧——<strong style="color:#fcd34d">弧落在哪裡，答案就在哪裡。</strong>
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="19 世紀手工上色銅版畫博物圖鑑風四格漫畫，場景是養蜂花園旁的標本工作室。第 1 格阿蜂指著羊皮紙上兩條紅色航線，問哪一條比較長；第 2 格阿蜂舉起一把完全沒有刻度的木直尺，皺眉；第 3 格小蜜把黃銅圓規的兩腳張開到第一條航線的兩端；第 4 格小蜜把圓規針腳移到第二條航線的起點畫弧，弧落在第二條航線的中間，旁白說明第一條航線比較短。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 尺規作圖的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i> <span>重點 1：尺規作圖的規則——圓規是「搬長度」的工具</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>尺規作圖</strong>：只用<strong>直尺</strong>和<strong>圓規</strong>作圖，並規定圓規只拿來畫圓或弧、直尺只拿來畫直線，<strong>不使用直尺上的刻度</strong>。</li>
+              <li><strong>保留作圖痕跡</strong>：畫過的弧與線不要擦掉，別人才看得出你是怎麼作出來的。</li>
+              <li><strong>圓規能搬長度</strong>：把圓規的兩腳張開到 \(A\)、\(B\) 兩點，兩腳之間的距離就是 \(\overline{AB}\) 的長；張開的大小不變、移到別處畫弧，弧上每一點到圓心的距離都等於 \(\overline{AB}\)。</li>
+              <li><strong>用圓規比長短</strong>：以 \(C\) 為圓心、\(\overline{AB}\) 長為半徑畫弧，看弧落在 \(\overline{CD}\) 的哪裡——
+                <ul class="bullet-list">
+                  <li>落在 \(C\)、\(D\) 之間：\(\overline{AB} \lt \overline{CD}\)</li>
+                  <li>剛好通過 \(D\)：\(\overline{AB} = \overline{CD}\)</li>
+                  <li>落在 \(D\) 的外側：\(\overline{AB} \gt \overline{CD}\)</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・圓</span>
+              以 \(O\) 為圓心、\(r\) 為半徑畫的圓，就是「到 \(O\) 的距離等於 \(r\)」的所有點。尺規作圖裡每一段弧，說的都是這件事。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cg_rules.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。標本工作室的木桌上攤著一張羊皮紙，旁邊並排放著一支黃銅圓規和一把完全沒有刻度的木直尺；別著蜜蜂髮夾、黑色齊肩短髮的小蜜站在桌後，低頭看著這兩樣工具。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：圓規比長短</h3>
+            <p class="interactive-instruction">\(\overline{AB}\) 固定，拉動滑桿改變 \(\overline{CD}\) 的長。按「下一步」看圓規怎麼先量 \(\overline{AB}\)、再搬到 \(C\) 畫弧；最後看弧落在 \(\overline{CD}\) 的哪裡，判斷誰比較長。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cmp" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cmp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="cmp-prev">上一步</button>
+                      <span class="step-counter" id="cmp-step">1 / 3</span>
+                      <button class="pick-btn" id="cmp-next">下一步</button>
+                      <button class="pick-btn" id="cmp-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cmp-cd">\(\overline{CD}\) 的長（公分）：<span id="cmp-vcd" class="val-num">4.0</span></label>
+                    <input type="range" id="cmp-cd" min="5" max="13" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cmp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (尺規作圖的規則)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列關於尺規作圖的敘述，哪一個正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-1" value="A"><span class="option-text">A. 可以用直尺上的刻度量出 \(3\) 公分再畫</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1" value="B"><span class="option-text">B. 圓規可以畫弧，也可以把一段長度搬到別處</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1" value="C"><span class="option-text">C. 直尺只能畫線段，不能畫直線</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1" value="D"><span class="option-text">D. 作圖完成後，要把弧等作圖痕跡擦乾淨</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。圓規張開的大小不變時，移到哪裡畫弧，半徑都是原來那段長，所以能「搬長度」。<br>
+              A 錯：尺規作圖不使用直尺上的刻度。<br>
+              C 錯：直尺就是拿來畫直線的，線段只是直線的一部分。<br>
+              D 錯：作圖痕跡要保留，別人才看得出作法。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 阿蜂把圓規張開成 \(\overline{MN}\) 的長，針腳固定在 \(O\) 點，畫了一整個圓。圓上任取一點 \(P\)，下列何者一定成立？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-2" value="A"><span class="option-text">A. \(\overline{OP} = \overline{MN}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2" value="B"><span class="option-text">B. \(\overline{OP} = \overline{OM}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2" value="C"><span class="option-text">C. \(\overline{MP} = \overline{NP}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2" value="D"><span class="option-text">D. \(\overline{OP} = \frac{1}{2}\overline{MN}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。圓的半徑就是圓規張開的長 \(\overline{MN}\)，圓上每一點到圓心 \(O\) 的距離都等於半徑。<br>
+              B 錯：\(M\) 不一定在這個圓上，\(\overline{OM}\) 和半徑沒有關係。<br>
+              C 錯：圓上的點到 \(M\)、\(N\) 的距離沒有規定要相等。<br>
+              D 錯：半徑是 \(\overline{MN}\) 的整段長，不是一半。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 等線段作圖
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-horizontal" aria-hidden="true"></i> <span>重點 2：等線段作圖——把一條線段複製到直線上</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>等線段作圖</strong>：利用尺規複製線段的長度。</li>
+              <li><strong>作法</strong>（已知 \(\overline{AB}\)，作 \(\overline{CD} = \overline{AB}\)）：
+                <ol class="step-list">
+                  <li>畫一直線 \(L\)，在 \(L\) 上取一點 \(C\)。</li>
+                  <li>以 \(C\) 為圓心、\(\overline{AB}\) 長為半徑畫弧，交 \(L\) 於 \(D\) 點。</li>
+                  <li>\(\overline{CD}\) 即為所求。</li>
+                </ol>
+              </li>
+              <li><strong>半徑從哪裡來</strong>：圓規先在 \(\overline{AB}\) 上張開（針腳 \(A\)、筆尖 \(B\)），再整支搬到 \(C\)，中途不能改變張開的大小。</li>
+              <li><strong>也能在已知線段上找點</strong>：已知 \(\overline{MN}\) 與一點 \(P\)，以 \(M\) 為圓心、\(\overline{MP}\) 長為半徑畫弧交 \(\overline{MN}\) 於 \(Q\)，就得到 \(\overline{MQ} = \overline{MP}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・不量數字</span>
+              尺規作圖從頭到尾不需要知道 \(\overline{AB}\) 是幾公分——圓規直接把「那一段長」搬過去。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cg_copy.webp" alt="19 世紀手工上色銅版畫博物圖鑑風插圖。戴圓框眼鏡、深棕短捲髮的阿蜂站在木桌前，右手捏著黃銅圓規頂端的握柄，圓規兩腳張開，針腳插在羊皮紙上，鉛筆腳在紙上畫出一小段弧；桌上另有一把沒有刻度的木直尺。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：線段複印機</h3>
+            <p class="interactive-instruction">調整已知線段 \(\overline{AB}\) 的長與傾斜，按「下一步」一步一步看：先畫直線 \(L\)、取點 \(C\)，圓規量 \(\overline{AB}\)，再搬到 \(C\) 畫弧得到 \(D\)。最後量一量 \(\overline{CD}\) 是不是和 \(\overline{AB}\) 一樣長。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cpy" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cpy-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="cpy-prev">上一步</button>
+                      <span class="step-counter" id="cpy-step">1 / 4</span>
+                      <button class="pick-btn" id="cpy-next">下一步</button>
+                      <button class="pick-btn" id="cpy-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cpy-len">\(\overline{AB}\) 的長（公分）：<span id="cpy-vlen" class="val-num">3.5</span></label>
+                    <input type="range" id="cpy-len" min="4" max="11" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cpy-tilt">\(\overline{AB}\) 的傾斜（度）：<span id="cpy-vtilt" class="val-num">20</span></label>
+                    <input type="range" id="cpy-tilt" min="-2" max="4" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cpy-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等線段作圖)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 已知 \(\overline{AB}\)，小蜜在直線 \(L\) 上取一點 \(C\)，要作 \(\overline{CD} = \overline{AB}\)。以 \(C\) 為圓心畫弧時，圓規的半徑應該是？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-3" value="A"><span class="option-text">A. 任意長</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3" value="B"><span class="option-text">B. \(\overline{AC}\) 的長</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3" value="C"><span class="option-text">C. \(\overline{AB}\) 的長</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3" value="D"><span class="option-text">D. \(\overline{AB}\) 長的一半</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。弧上每一點到 \(C\) 的距離都等於半徑，要讓 \(\overline{CD} = \overline{AB}\)，半徑就必須是 \(\overline{AB}\) 的長。<br>
+              A 錯：任意長畫出來的 \(\overline{CD}\) 不一定等於 \(\overline{AB}\)。<br>
+              B 錯：\(\overline{AC}\) 是兩個不相干的點連起來的長，跟 \(\overline{AB}\) 無關。<br>
+              D 錯：用一半當半徑，得到的是 \(\overline{CD} = \frac{1}{2}\overline{AB}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 承上題，以 \(C\) 為圓心、\(\overline{AB}\) 長為半徑畫一個完整的圓，這個圓和直線 \(L\) 交於幾點？哪一點可以當作 \(D\)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-4" value="A"><span class="option-text">A. \(1\) 點，只能取 \(C\) 右邊那一點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4" value="B"><span class="option-text">B. \(1\) 點，只能取 \(C\) 左邊那一點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4" value="C"><span class="option-text">C. \(0\) 點，要先用刻度量才找得到</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4" value="D"><span class="option-text">D. \(2\) 點，取哪一點當 \(D\) 都可以</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(C\) 在直線 \(L\) 上，圓心在線上的圓會在 \(C\) 的左右兩側各交 \(L\) 一次，這兩點到 \(C\) 的距離都是 \(\overline{AB}\)，取哪一點都滿足 \(\overline{CD} = \overline{AB}\)。課本只畫一側的弧，是因為只需要一個 \(D\)。<br>
+              A、B 錯：交點有兩個，不是只有一個。<br>
+              C 錯：尺規作圖不使用刻度，而且一定交得到。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 線段的和與差
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-plus-minus" aria-hidden="true"></i> <span>重點 3：線段的和與差——第二個弧往外接，還是往回切</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>作 \(\overline{AB} = a + b\)</strong>：
+                <ol class="step-list">
+                  <li>畫一直線 \(L\)，在 \(L\) 上取一點 \(A\)。</li>
+                  <li>以 \(A\) 為圓心、\(a\) 為半徑畫弧，在 \(A\) 點右側交 \(L\) 於 \(P\)。</li>
+                  <li>以 \(P\) 為圓心、\(b\) 為半徑畫弧，在 \(P\) 點<strong>右側</strong>交 \(L\) 於 \(B\)。</li>
+                </ol>
+              </li>
+              <li><strong>作 \(\overline{MN} = a - b\)</strong>（\(a \gt b\)）：先作 \(\overline{MQ} = a\)，再以 \(Q\) 為圓心、\(b\) 為半徑畫弧，在 \(Q\) 點<strong>左側</strong>交 \(\overline{MQ}\) 於 \(N\)，\(\overline{MN}\) 即為所求。</li>
+              <li><strong>關鍵是第二個弧畫在哪一側</strong>：繼續往外接，長度相加；往回切進第一段，長度相減。</li>
+              <li><strong>連續接很多段</strong>也一樣：作 \(\overline{AB} = 3a\)，就以 \(a\) 為半徑往同一個方向連畫三次弧。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>要作</th><th>第二個弧</th></tr></thead>
+                <tbody>
+                  <tr><td>\(a + b\)</td><td>在第一段的外側，接下去</td></tr>
+                  <tr><td>\(a - b\)</td><td>往回落在第一段上</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="cg_sum.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。養蜂花園的木圍籬旁，小蜜與阿蜂合力把兩段長短不同的木板頭尾相接、平放在草地上排成一直線，準備做蜂箱的支架。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：線段接接看</h3>
+            <p class="interactive-instruction">選「和」或「差」，拉動 \(a\)、\(b\) 的長。按「下一步」看第二個弧畫在 \(P\) 的哪一側：往右接下去得到 \(a + b\)，往回切進 \(\overline{AP}\) 得到 \(a - b\)。試試看 \(a\) 不比 \(b\) 長的時候，差還作得出來嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sum" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sum-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要作</span>
+                    <div class="btn-group" id="sum-mode-group">
+                      <button class="pick-btn active" data-sum-mode="add">和 \(a + b\)</button>
+                      <button class="pick-btn" data-sum-mode="sub">差 \(a - b\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="sum-prev">上一步</button>
+                      <span class="step-counter" id="sum-step">1 / 4</span>
+                      <button class="pick-btn" id="sum-next">下一步</button>
+                      <button class="pick-btn" id="sum-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sum-a">\(a\)（公分）：<span id="sum-va" class="val-num">3.0</span></label>
+                    <input type="range" id="sum-a" min="3" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sum-b">\(b\)（公分）：<span id="sum-vb" class="val-num">2.0</span></label>
+                    <input type="range" id="sum-b" min="2" max="7" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sum-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (線段的和與差)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 已知兩線段長 \(a = 7\) 公分、\(b = 4\) 公分。小蜜在直線 \(L\) 上取 \(A\) 點，依序：以 \(A\) 為圓心、\(a\) 為半徑畫弧，在 \(A\) 右側交 \(L\) 於 \(P\)；以 \(P\) 為圓心、\(a\) 為半徑畫弧，在 \(P\) 右側交 \(L\) 於 \(Q\)；以 \(Q\) 為圓心、\(b\) 為半徑畫弧，在 \(Q\) 左側交 \(L\) 於 \(B\)。則 \(\overline{AB}\) 長多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-5" value="A"><span class="option-text">A. \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5" value="B"><span class="option-text">B. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5" value="C"><span class="option-text">C. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5" value="D"><span class="option-text">D. \(14\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。前兩個弧都往右接，\(\overline{AQ} = 2a = 14\)；第三個弧往左回切 \(b\)：
+              \[ \begin{aligned} \overline{AB} &= 2a - b \\ &= 14 - 4 = 10 \text{（公分）} \end{aligned} \]
+              A 錯：\(18 = 2a + b\)，把最後一個弧也當成往右接。<br>
+              C 錯：\(3 = a - b\)，漏掉了第二段 \(a\)。<br>
+              D 錯：\(14\) 是 \(\overline{AQ}\)，忘了往回切的 \(b\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 已知兩線段長 \(a\)、\(b\)，且 \(a \gt b\)。阿蜂要作 \(\overline{MN} = a - b\)：先作 \(\overline{MQ} = a\)，再以 \(Q\) 為圓心、\(b\) 為半徑畫弧。\(N\) 應該取在哪裡？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-6" value="A"><span class="option-text">A. \(Q\) 點右側，\(\overline{MQ}\) 的延長線上</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6" value="B"><span class="option-text">B. \(M\) 點左側</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6" value="C"><span class="option-text">C. \(Q\) 點左側，落在 \(\overline{MQ}\) 上</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6" value="D"><span class="option-text">D. 應改以 \(M\) 為圓心、\(b\) 為半徑畫弧</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。從 \(Q\) 往 \(M\) 的方向回切一段 \(b\)，剩下的 \(\overline{MN}\) 才是 \(a - b\)。因為 \(a \gt b\)，\(N\) 一定落在 \(\overline{MQ}\) 上。<br>
+              A 錯：往右接下去得到的是 \(a + b\)。<br>
+              B 錯：以 \(Q\) 為圓心、\(b\) 為半徑，弧碰不到 \(M\) 的左側（因為 \(b \lt a\)）。<br>
+              D 錯：以 \(M\) 為圓心、\(b\) 為半徑，得到的 \(\overline{MN}\) 是 \(b\)，不是 \(a - b\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 兩弧的交點——作三角形
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-draw-polygon" aria-hidden="true"></i> <span>重點 4：兩弧的交點——已知三邊作三角形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>交點同時滿足兩個條件</strong>：以 \(B\) 為圓心、\(c\) 為半徑的弧，上面每一點到 \(B\) 的距離都是 \(c\)；以 \(C\) 為圓心、\(b\) 為半徑的弧，上面每一點到 \(C\) 的距離都是 \(b\)。兩弧的交點 \(A\) 就同時有 \(\overline{AB} = c\)、\(\overline{AC} = b\)。</li>
+              <li><strong>已知三邊長 \(a\)、\(b\)、\(c\) 作三角形</strong>：
+                <ol class="step-list">
+                  <li>作 \(\overline{BC} = a\)。</li>
+                  <li>以 \(B\) 為圓心、\(c\) 為半徑，在 \(\overline{BC}\) 上方畫弧。</li>
+                  <li>以 \(C\) 為圓心、\(b\) 為半徑，在 \(\overline{BC}\) 上方畫弧，兩弧交於 \(A\)。</li>
+                  <li>連接 \(\overline{AB}\)、\(\overline{AC}\)，\(\triangle ABC\) 即為所求。</li>
+                </ol>
+              </li>
+              <li><strong>正三角形</strong>：三個半徑都用同一段長 \(a\)，作出的三角形三邊都是 \(a\)。</li>
+              <li><strong>兩弧不一定相交</strong>：兩個半徑合起來不比 \(\overline{BC}\) 長，或一個圓把另一個整個包住時，兩弧碰不到，就作不出三角形（3-5 節會整理三邊要滿足的條件）。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="cg_triangle.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。小蜜坐在標本工作室的窗邊木桌前，用黃銅圓規在羊皮紙上畫弧，紙上已經有一條直線段；窗外是開滿玫瑰紅花朵的花壇與幾個木框蜂箱。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩弧找頂點</h3>
+            <p class="interactive-instruction">選「正三角形」或「已知三邊」，調整 \(a\)（\(\overline{BC}\)）、\(b\)（\(\overline{AC}\)）、\(c\)（\(\overline{AB}\)）。按「下一步」看兩個弧從 \(B\)、\(C\) 兩端各畫一次，交點就是頂點 \(A\)。把 \(b\)、\(c\) 調短一點，看看兩弧還碰得到嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tri" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tri-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要作</span>
+                    <div class="btn-group" id="tri-mode-group">
+                      <button class="pick-btn" data-tri-mode="equi">正三角形</button>
+                      <button class="pick-btn active" data-tri-mode="sss">已知三邊</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="tri-prev">上一步</button>
+                      <span class="step-counter" id="tri-step">1 / 4</span>
+                      <button class="pick-btn" id="tri-next">下一步</button>
+                      <button class="pick-btn" id="tri-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tri-a">\(a = \overline{BC}\)（公分）：<span id="tri-va" class="val-num">4.5</span></label>
+                    <input type="range" id="tri-a" min="6" max="12" value="9" step="1">
+                  </div>
+                  <div class="slider-row" id="tri-row-b">
+                    <label for="tri-b">\(b = \overline{AC}\)（公分）：<span id="tri-vb" class="val-num">4.0</span></label>
+                    <input type="range" id="tri-b" min="4" max="12" value="8" step="1">
+                  </div>
+                  <div class="slider-row" id="tri-row-c">
+                    <label for="tri-c">\(c = \overline{AB}\)（公分）：<span id="tri-vc" class="val-num">5.0</span></label>
+                    <input type="range" id="tri-c" min="4" max="12" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tri-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩弧的交點)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 已知一線段長 \(a\)。阿蜂先作 \(\overline{BC} = a\)，再以等線段作圖作出長 \(2a\) 的線段，然後分別以 \(B\)、\(C\) 為圓心、\(2a\) 為半徑，在 \(\overline{BC}\) 上方畫弧，兩弧交於 \(A\)，連接 \(\overline{AB}\)、\(\overline{AC}\)。關於 \(\triangle ABC\)，下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-7" value="A"><span class="option-text">A. 是正三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-7" value="B"><span class="option-text">B. 是直角三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-7" value="C"><span class="option-text">C. 兩弧不會相交，作不出三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-7" value="D"><span class="option-text">D. 是等腰三角形，且 \(\overline{AB} = \overline{AC} = 2\overline{BC}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(A\) 在以 \(B\) 為圓心、\(2a\) 為半徑的弧上，所以 \(\overline{AB} = 2a\)；同理 \(\overline{AC} = 2a\)，兩腰相等，而 \(\overline{BC} = a\)。<br>
+              A 錯：底邊 \(a\) 和兩腰 \(2a\) 不一樣長。<br>
+              B 錯：三邊是 \(a\)、\(2a\)、\(2a\)，\(a^2 + (2a)^2 \ne (2a)^2\)，不是直角三角形。<br>
+              C 錯：兩個半徑合起來是 \(4a\)，比 \(\overline{BC} = a\) 長，兩弧一定相交。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> \(\overline{BC} = 18\) 公分。以 \(B\) 為圓心、\(7\) 公分為半徑畫一個圓，再以 \(C\) 為圓心、\(9\) 公分為半徑畫一個圓，兩圓有幾個交點？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-8" value="A"><span class="option-text">A. \(0\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-8" value="B"><span class="option-text">B. \(1\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-8" value="C"><span class="option-text">C. \(2\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-8" value="D"><span class="option-text">D. \(4\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩個圓沿著 \(\overline{BC}\) 最多只伸出 \(7 + 9 = 16\) 公分，比 \(\overline{BC} = 18\) 公分短，兩圓中間還隔著 \(2\) 公分，碰不到。<br>
+              B 錯：要剛好 \(7 + 9 = 18\) 才會只碰一點。<br>
+              C 錯：兩個半徑合起來要比 \(18\) 長才有兩個交點。<br>
+              D 錯：兩個圓最多只有 \(2\) 個交點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 等角作圖
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-clone" aria-hidden="true"></i> <span>重點 5：等角作圖——複製一個角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>等角作圖</strong>：利用尺規複製一個角。</li>
+              <li><strong>作法</strong>（已知 \(\angle A\)）：
+                <ol class="step-list">
+                  <li>畫一直線 \(L\)，在 \(L\) 上取一點 \(S\)。</li>
+                  <li>以 \(A\) 點為圓心、適當長為半徑畫弧，交 \(\angle A\) 的兩邊於 \(B\)、\(C\)；再以 \(S\) 點為圓心、\(\overline{AB}\) 長為半徑畫弧，交 \(L\) 於 \(T\)。</li>
+                  <li>以 \(T\) 點為圓心、\(\overline{BC}\) 長為半徑畫弧，交上一步的弧於 \(R\)。</li>
+                  <li>連接 \(\overline{SR}\)，\(\angle RST\) 即為所求。</li>
+                </ol>
+              </li>
+              <li><strong>為什麼角會一樣大</strong>：\(\overline{SR} = \overline{ST} = \overline{AB} = \overline{AC}\)，而且 \(\overline{TR} = \overline{BC}\)。兩個角的「兩邊一樣長、兩端點的距離也一樣長」，張開的大小就一樣（3-3 節會用全等說明）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・角的開口</span>
+              兩根一樣長的木條固定在一點轉開，兩個末端離得愈遠，張開的角愈大；末端距離一樣，角就一樣大。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cg_angle.webp" alt="19 世紀手工上色銅版畫博物圖鑑風插圖。阿蜂雙手各握一根同樣長的細木條，兩根木條的一端用一顆黃銅鉚釘固定在一起，像剪刀一樣張開成一個角；他低頭看著木條的兩個末端。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：角的複印機</h3>
+            <p class="interactive-instruction">調整 \(\angle A\) 的大小與「適當長」半徑，按「下一步」看三次圓規：先在 \(\angle A\) 上畫弧、再用同一個半徑在 \(S\) 畫弧、最後量 \(\overline{BC}\) 從 \(T\) 畫弧找到 \(R\)。最後一步量一量 \(\angle RST\)。換一個「適當長」，角會變嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ang" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ang-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="ang-prev">上一步</button>
+                      <span class="step-counter" id="ang-step">1 / 6</span>
+                      <button class="pick-btn" id="ang-next">下一步</button>
+                      <button class="pick-btn" id="ang-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ang-t">\(\angle A\)（度）：<span id="ang-vt" class="val-num">50</span></label>
+                    <input type="range" id="ang-t" min="6" max="30" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ang-r">適當長（公分）：<span id="ang-vr" class="val-num">2.0</span></label>
+                    <input type="range" id="ang-r" min="3" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ang-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等角作圖)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 小蜜照課本的步驟作等角作圖。如果她把第一個弧的「適當長」加長，之後以 \(S\) 為圓心的弧也改用這個新長度，其餘步驟照做，作出來的 \(\angle RST\) 會怎樣？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-9" value="A"><span class="option-text">A. 變大</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-9" value="B"><span class="option-text">B. 變小</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-9" value="C"><span class="option-text">C. 無法作出 \(R\) 點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-9" value="D"><span class="option-text">D. 不變，仍然等於 \(\angle A\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。半徑加長時，\(B\)、\(C\) 兩點沿著 \(\angle A\) 的兩邊往外移，\(\overline{BC}\) 也跟著變長；在 \(S\) 那邊用的是同樣的新半徑和新的 \(\overline{BC}\)，兩邊仍然「一模一樣」，所以 \(\angle RST\) 還是等於 \(\angle A\)。「適當長」只要讓弧交得到兩邊即可，取多長都可以。<br>
+              A、B 錯：角的大小看的是開口，不是邊畫多長。<br>
+              C 錯：兩弧仍然會相交。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 阿蜂作等角作圖時，第一次以 \(A\) 為圓心、\(3\) 公分為半徑畫弧交 \(\angle A\) 兩邊於 \(B\)、\(C\)；第二次以 \(S\) 為圓心時，卻用了 \(4\) 公分為半徑。其餘步驟照做（以 \(T\) 為圓心、\(\overline{BC}\) 長為半徑），作出的 \(\angle RST\) 和 \(\angle A\) 相比如何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-10" value="A"><span class="option-text">A. 相等</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-10" value="B"><span class="option-text">B. 比 \(\angle A\) 大</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-10" value="C"><span class="option-text">C. 比 \(\angle A\) 小</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-10" value="D"><span class="option-text">D. 剛好是 \(\angle A\) 的 \(\frac{3}{4}\) 倍</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。在 \(S\) 那邊，兩邊變長成 \(4\) 公分，兩端點的距離卻還是原來的 \(\overline{BC}\)。兩根木條變長、末端距離不變，開口就變窄，所以角變小。<br>
+              A 錯：兩個半徑必須相同，角才會相等。<br>
+              B 錯：邊變長而末端距離不變，角只會變小。<br>
+              D 錯：角的大小和邊長不成正比，不會剛好變成 \(\frac{3}{4}\) 倍。例如 \(\angle A = 60^\circ\) 時，\(\overline{BC} = 3\) 公分，在 \(S\) 那邊是兩邊 \(4\)、對邊 \(3\) 的等腰三角形，頂角約 \(44^\circ\)，不是 \(45^\circ\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 角的和與差
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> <span>重點 6：角的和與差——第二個角作在哪一側</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>作 \(\angle 1 + \angle 2\)</strong>：
+                <ol class="step-list">
+                  <li>畫一直線，在直線上取一點 \(O\)。</li>
+                  <li>用等角作圖作 \(\angle POQ = \angle 1\)。</li>
+                  <li>以 \(O\) 為頂點、\(\overrightarrow{OQ}\) 為一邊，再作 \(\angle QOR = \angle 2\)，且 \(P\)、\(R\) 在 \(\overrightarrow{OQ}\) 的<strong>兩側</strong>，\(\angle POR\) 即為所求。</li>
+                </ol>
+              </li>
+              <li><strong>作 \(\angle 1 - \angle 2\)</strong>（\(\angle 1 \gt \angle 2\)）：第 3 步改成 \(P\)、\(R\) 在 \(\overrightarrow{OQ}\) 的<strong>同側</strong>，第二個角就「切進」第一個角裡。</li>
+              <li><strong>跟線段的和差同一個道理</strong>：往外接是加，往回切是減。</li>
+              <li><strong>好幾個角</strong>也是一次一次接下去，例如 \(\angle 1 + \angle 2 - \angle 3\) 就是先加、再往回減。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="cg_anglesum.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。花園一角，小蜜蹲在草地上，把兩片扇形的木片並排拼在一起，木片拼成一把半開的扇子；身後有木框蜂箱與幾隻蜜蜂。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：角的拼接台</h3>
+            <p class="interactive-instruction">選「和」或「差」，拉動 \(\angle 1\)、\(\angle 2\)。按「下一步」看兩次等角作圖：先把 \(\angle 1\) 搬到 \(O\)，再以 \(\overrightarrow{OQ}\) 為一邊把 \(\angle 2\) 作在另一側（和）或同一側（差）。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-asum" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="asum-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要作</span>
+                    <div class="btn-group" id="asum-mode-group">
+                      <button class="pick-btn active" data-asum-mode="add">和 \(\angle 1 + \angle 2\)</button>
+                      <button class="pick-btn" data-asum-mode="sub">差 \(\angle 1 - \angle 2\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="asum-prev">上一步</button>
+                      <span class="step-counter" id="asum-step">1 / 4</span>
+                      <button class="pick-btn" id="asum-next">下一步</button>
+                      <button class="pick-btn" id="asum-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="asum-1">\(\angle 1\)（度）：<span id="asum-v1" class="val-num">55</span></label>
+                    <input type="range" id="asum-1" min="4" max="20" value="11" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="asum-2">\(\angle 2\)（度）：<span id="asum-v2" class="val-num">35</span></label>
+                    <input type="range" id="asum-2" min="3" max="16" value="7" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="asum-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (角的和與差)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> 已知 \(\angle 1 = 112^\circ\)、\(\angle 2 = 47^\circ\)。先作 \(\angle POQ = \angle 1\)，再以 \(\overrightarrow{OQ}\) 為一邊作 \(\angle QOR = \angle 2\)，且 \(P\)、\(R\) 在 \(\overrightarrow{OQ}\) 的同側，則 \(\angle POR\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-11" value="A"><span class="option-text">A. \(159^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-11" value="B"><span class="option-text">B. \(65^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-11" value="C"><span class="option-text">C. \(47^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-11" value="D"><span class="option-text">D. \(133^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(P\)、\(R\) 在同側，\(\angle 2\) 切進 \(\angle 1\) 裡面：\(\angle POR = 112^\circ - 47^\circ = 65^\circ\)。<br>
+              A 錯：\(159^\circ = 112^\circ + 47^\circ\)，那是 \(P\)、\(R\) 在兩側的情形。<br>
+              C 錯：\(47^\circ\) 是 \(\angle QOR\)，不是 \(\angle POR\)。<br>
+              D 錯：\(133^\circ = 180^\circ - 47^\circ\)，和這個作法無關。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 已知 \(\triangle ABC\)。小蜜先作 \(\angle POQ = \angle A\)，再以 \(\overrightarrow{OQ}\) 為一邊作 \(\angle QOR = \angle B\)，且 \(P\)、\(R\) 在 \(\overrightarrow{OQ}\) 的兩側。接著把 \(\overrightarrow{OP}\) 反向延長成 \(\overrightarrow{OS}\)（\(P\)、\(O\)、\(S\) 在同一直線上）。\(\angle ROS\) 等於下列哪一個角？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-12" value="A"><span class="option-text">A. \(\angle A\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-12" value="B"><span class="option-text">B. \(\angle B\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-12" value="C"><span class="option-text">C. \(\angle C\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-12" value="D"><span class="option-text">D. \(\angle A - \angle B\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\angle POR = \angle A + \angle B\)，而 \(\angle POS\) 是平角 \(180^\circ\)：
+              \[ \begin{aligned} \angle ROS &= 180^\circ - (\angle A + \angle B) \\ &= \angle C \end{aligned} \]
+              這用到 3-1 節的三角形內角和 \(180^\circ\)。<br>
+              A、B、D 錯：\(\angle ROS\) 是平角扣掉 \(\angle A + \angle B\) 剩下的部分。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 中垂線作圖
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right-to-line" aria-hidden="true"></i> <span>重點 7：中垂線作圖——畫出一個菱形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>中垂線</strong>：通過 \(\overline{AB}\) 的中點、而且與 \(\overline{AB}\) 垂直的直線（七年級用對摺找過）。</li>
+              <li><strong>作法</strong>：
+                <ol class="step-list">
+                  <li>分別以 \(A\)、\(B\) 為圓心，<strong>大於 \(\frac{1}{2}\overline{AB}\) 的相同長度</strong>為半徑畫弧，兩弧相交於 \(P\)、\(Q\) 兩點。</li>
+                  <li>連接 \(P\)、\(Q\)，直線 \(PQ\) 即為所求。</li>
+                </ol>
+              </li>
+              <li><strong>想法</strong>：\(\overline{PA} = \overline{PB} = \overline{QA} = \overline{QB}\)，四邊形 \(APBQ\) 是菱形。菱形是線對稱圖形，兩條對角線互相垂直平分，所以 \(PQ\) 垂直平分 \(\overline{AB}\)。</li>
+              <li><strong>為什麼要大於一半</strong>：半徑小於 \(\frac{1}{2}\overline{AB}\) 時兩弧碰不到；剛好等於一半時兩弧只碰在中點一點，一個點畫不出一條直線。</li>
+              <li><strong>中垂線是「線段」的</strong>：直線沒有兩個端點、沒有中點，所以沒有中垂線。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="cg_perp.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。標本工作室裡，小蜜把一張畫有直線段的羊皮紙沿著中間對摺，讓線段的兩端疊在一起；阿蜂在旁邊探頭看摺痕。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：中垂線的菱形</h3>
+            <p class="interactive-instruction">調整 \(\overline{AB}\) 的長與半徑（\(\overline{AB}\) 的幾倍）。按「下一步」看兩個弧怎麼交出 \(P\)、\(Q\)。把半徑調到 \(0.50\) 倍以下看看會怎樣；再切到「兩端半徑不同」，看 \(PQ\) 還通不通過中點。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pb" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pb-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">兩端半徑</span>
+                    <div class="btn-group" id="pb-mode-group">
+                      <button class="pick-btn active" data-pb-mode="same">相同（正確作法）</button>
+                      <button class="pick-btn" data-pb-mode="diff">不同（錯誤示範）</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="pb-prev">上一步</button>
+                      <span class="step-counter" id="pb-step">1 / 4</span>
+                      <button class="pick-btn" id="pb-next">下一步</button>
+                      <button class="pick-btn" id="pb-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pb-len">\(\overline{AB}\) 的長（公分）：<span id="pb-vlen" class="val-num">5.0</span></label>
+                    <input type="range" id="pb-len" min="6" max="12" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pb-r">以 \(A\) 為圓心的半徑是 \(\overline{AB}\) 的幾倍：<span id="pb-vr" class="val-num">0.70</span></label>
+                    <input type="range" id="pb-r" min="6" max="16" value="14" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pb-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (中垂線作圖)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> \(\overline{AB} = 10\) 公分。分別以 \(A\)、\(B\) 為圓心畫弧，下列哪一組半徑可以作出 \(\overline{AB}\) 的中垂線？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-13" value="A"><span class="option-text">A. 以 \(A\) 為圓心 \(5\) 公分、以 \(B\) 為圓心 \(5\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-13" value="B"><span class="option-text">B. 以 \(A\) 為圓心 \(4\) 公分、以 \(B\) 為圓心 \(4\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-13" value="C"><span class="option-text">C. 以 \(A\) 為圓心 \(6\) 公分、以 \(B\) 為圓心 \(7\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-13" value="D"><span class="option-text">D. 以 \(A\) 為圓心 \(9\) 公分、以 \(B\) 為圓心 \(9\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。半徑要「相同」而且「大於 \(\frac{1}{2}\overline{AB} = 5\) 公分」，\(9\) 公分兩個條件都符合（半徑比 \(\overline{AB}\) 還長也可以）。<br>
+              A 錯：半徑剛好等於 \(5\)，兩弧只碰在中點一點，畫不出直線。<br>
+              B 錯：\(4 \lt 5\)，兩弧碰不到。<br>
+              C 錯：兩弧會相交，但兩個半徑不同，交點連成的直線雖然和 \(\overline{AB}\) 垂直，卻不通過中點。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 阿蜂作 \(\overline{AB}\) 的中垂線時，分別以 \(A\)、\(B\) 為圓心、都以 \(5\) 公分為半徑畫弧，兩弧交於 \(P\)、\(Q\)。四邊形 \(APBQ\) 的周長是多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-14" value="A"><span class="option-text">A. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-14" value="B"><span class="option-text">B. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-14" value="C"><span class="option-text">C. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-14" value="D"><span class="option-text">D. 不知道 \(\overline{AB}\) 的長，無法確定</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(P\)、\(Q\) 都在兩個弧上，所以 \(\overline{PA}\)、\(\overline{PB}\)、\(\overline{QA}\)、\(\overline{QB}\) 都是半徑 \(5\) 公分，周長 \(4 \times 5 = 20\) 公分。<br>
+              B 錯：只算了兩邊。C 錯：只算了三邊。<br>
+              D 錯：周長只跟四條邊有關，四條邊都是半徑，不需要知道 \(\overline{AB}\)（\(\overline{AB}\) 是對角線）。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 中點與等分點
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> <span>重點 8：用中垂線找中點——對半、再對半</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>中點</strong>：\(\overline{AB}\) 的中垂線與 \(\overline{AB}\) 的交點 \(M\) 就是中點，\(\overline{AM} = \overline{MB} = \frac{1}{2}\overline{AB}\)。</li>
+              <li><strong>對半再對半</strong>：再作 \(\overline{AM}\)（或 \(\overline{MB}\)）的中垂線，就得到 \(\frac{1}{4}\) 的位置；再作一次，得到 \(\frac{1}{8}\) 的位置……</li>
+              <li><strong>例</strong>：在 \(\overline{AB}\) 上找 \(P\)，使 \(\overline{AP} : \overline{PB} = 1 : 3\)。\(P\) 在 \(\frac{1}{4}\) 的位置：先作 \(\overline{AB}\) 的中點 \(M\)，再作 \(\overline{AM}\) 的中點，就是 \(P\)。</li>
+              <li><strong>只能對半分</strong>：每作一次中垂線，就把一段分成兩半，所以作得出的分點都在 \(\frac{1}{2}\)、\(\frac{1}{4}\)、\(\frac{3}{4}\)、\(\frac{1}{8}\)……這些分母是 \(2\)、\(4\)、\(8\)、\(16\)……的位置。</li>
+              <li><strong>算長度</strong>：每作一次，新的一小段就是上一段的一半；分點的位置可以一段一段加減出來。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="cg_halves.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。阿蜂站在花壇邊，手裡拉著一條綁在兩根木樁之間的麻繩，低頭看著麻繩的正中間；小蜜在一旁拿著一小束玫瑰紅的花，準備插在那個位置。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：分點搜尋器</h3>
+            <p class="interactive-instruction">把 \(\overline{AB}\) 看成 \(8\) 等分，拉動滑桿選目標位置。按「下一步」看每作一次中垂線，就把「包住目標」的那一段對半分，直到剛好落在目標上。看看哪些位置一次就到、哪些要作三次？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-half" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="half-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="half-prev">上一步</button>
+                      <span class="step-counter" id="half-step">1 / 3</span>
+                      <button class="pick-btn" id="half-next">下一步</button>
+                      <button class="pick-btn" id="half-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="half-k">目標：從 \(A\) 數起第幾個八分點：<span id="half-vk" class="val-num">3</span></label>
+                    <input type="range" id="half-k" min="1" max="7" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="half-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (中點與等分點)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> \(\overline{AB} = 80\) 公分。依序作圖：作 \(\overline{AB}\) 的中垂線交 \(\overline{AB}\) 於 \(M\)；作 \(\overline{MB}\) 的中垂線交 \(\overline{MB}\) 於 \(N\)；作 \(\overline{MN}\) 的中垂線交 \(\overline{MN}\) 於 \(P\)；作 \(\overline{PN}\) 的中垂線交 \(\overline{PN}\) 於 \(R\)。則 \(\overline{AR}\) 長多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-15" value="A"><span class="option-text">A. \(55\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-15" value="B"><span class="option-text">B. \(50\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-15" value="C"><span class="option-text">C. \(60\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-15" value="D"><span class="option-text">D. \(25\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。從 \(A\) 量起，一步一步找中點：
+              \[ \begin{aligned} \overline{AM} &= 40,\quad \overline{AN} = 60 \\ \overline{AP} &= \frac{40 + 60}{2} = 50 \\ \overline{AR} &= \frac{50 + 60}{2} = 55 \end{aligned} \]
+              B 錯：\(50\) 是 \(\overline{AP}\)，少作了最後一次。<br>
+              C 錯：\(60\) 是 \(\overline{AN}\)。<br>
+              D 錯：\(25 = \overline{RB}\)，量錯了端點。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 小蜜要在 \(\overline{CD}\) 上找一點 \(E\)，使 \(\overline{CE} : \overline{ED} = 1 : 15\)。只用中垂線作圖，最少要作幾次中垂線？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-16" value="A"><span class="option-text">A. \(2\) 次</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-16" value="B"><span class="option-text">B. \(3\) 次</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-16" value="C"><span class="option-text">C. \(4\) 次</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-16" value="D"><span class="option-text">D. \(15\) 次</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{CE} = \frac{1}{16}\overline{CD}\)，而 \(16 = 2 \times 2 \times 2 \times 2\)：每次都取靠近 \(C\) 的那一半，對半分 \(4\) 次得到 \(\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{16}\)。<br>
+              A 錯：\(2\) 次只到 \(\frac{1}{4}\)。B 錯：\(3\) 次只到 \(\frac{1}{8}\)。<br>
+              D 錯：不需要一份一份切，每次對半，份數就加倍。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 角平分線作圖
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-fork" aria-hidden="true"></i> <span>重點 9：角平分線作圖——畫出一個箏形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>角平分線</strong>：把 \(\angle AOB\) 平分成兩個相等的角的射線 \(\overrightarrow{OC}\)，\(\angle AOC = \angle BOC = \frac{1}{2}\angle AOB\)（七年級用對摺找過）。</li>
+              <li><strong>作法</strong>（已知 \(\angle P\)）：
+                <ol class="step-list">
+                  <li>以 \(P\) 點為圓心、適當長為半徑畫弧，交 \(\angle P\) 的兩邊於 \(A\)、\(B\)。</li>
+                  <li>分別以 \(A\)、\(B\) 為圓心、<strong>大於 \(\frac{1}{2}\overline{AB}\) 的相同長度</strong>為半徑畫弧，兩弧相交於 \(Q\)。</li>
+                  <li>連接 \(P\)、\(Q\)，\(\overrightarrow{PQ}\) 即為所求。</li>
+                </ol>
+              </li>
+              <li><strong>想法</strong>：\(\overline{PA} = \overline{PB}\)、\(\overline{QA} = \overline{QB}\)，四邊形 \(APBQ\) 是箏形。箏形是線對稱圖形，對角線 \(PQ\) 是它的對稱軸，所以 \(PQ\) 平分 \(\angle APB\)。</li>
+              <li><strong>兩次半徑可以不同</strong>：第 1 步的「適當長」和第 2 步的「大於一半」是兩件事，不必相等；但第 2 步的兩個弧一定要用同一個半徑。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="cg_bisect.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。花園小徑在前方分岔成兩條，岔路口立著一座木框蜂箱；阿蜂站在岔路口，腰間掛著養蜂人網帽，抬手指向兩條小徑正中間的方向。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：角平分線的箏形</h3>
+            <p class="interactive-instruction">調整 \(\angle P\)、第一個弧的「適當長」，以及第二步的半徑（\(\frac{1}{2}\overline{AB}\) 的幾倍）。按「下一步」看箏形 \(APBQ\) 怎麼出現；把第二步的倍數調到 \(1\) 以下，兩弧還交得到嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-bis" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bis-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="bis-prev">上一步</button>
+                      <span class="step-counter" id="bis-step">1 / 4</span>
+                      <button class="pick-btn" id="bis-next">下一步</button>
+                      <button class="pick-btn" id="bis-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bis-t">\(\angle P\)（度）：<span id="bis-vt" class="val-num">70</span></label>
+                    <input type="range" id="bis-t" min="4" max="16" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bis-r1">第一個弧的適當長（公分）：<span id="bis-vr1" class="val-num">2.0</span></label>
+                    <input type="range" id="bis-r1" min="3" max="7" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bis-r2">第二步半徑是 \(\frac{1}{2}\overline{AB}\) 的幾倍：<span id="bis-vr2" class="val-num">1.4</span></label>
+                    <input type="range" id="bis-r2" min="8" max="20" value="14" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bis-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (角平分線作圖)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 阿蜂作 \(\angle P\) 的角平分線：① 以 \(P\) 為圓心、適當長為半徑畫弧，交兩邊於 \(A\)、\(B\)；② 分別以 \(A\)、\(B\) 為圓心、大於 \(\frac{1}{2}\overline{AB}\) 的相同長度為半徑畫弧，交於 \(Q\)；③ 連接 \(\overrightarrow{PQ}\)。下列何者<strong>不一定</strong>成立？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-17" value="A"><span class="option-text">A. \(\overline{PA} = \overline{PB}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-17" value="B"><span class="option-text">B. \(\overline{QA} = \overline{QB}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-17" value="C"><span class="option-text">C. \(\angle APQ = \angle BPQ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-17" value="D"><span class="option-text">D. \(\overline{PA} = \overline{QA}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{PA}\) 是第 ① 步的半徑，\(\overline{QA}\) 是第 ② 步的半徑，兩次半徑沒有規定要相同，所以不一定相等。<br>
+              A 對：都是第 ① 步的半徑。<br>
+              B 對：都是第 ② 步的半徑。<br>
+              C 對：這正是角平分線作圖要作出的結果。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 承上題，如果第 ② 步剛好用 \(\overline{PA}\) 的長當半徑（\(\angle P\) 不是直角），那麼四邊形 \(APBQ\) 是什麼形狀？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-18" value="A"><span class="option-text">A. 菱形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-18" value="B"><span class="option-text">B. 正方形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-18" value="C"><span class="option-text">C. 長方形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-18" value="D"><span class="option-text">D. 等腰梯形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。此時 \(\overline{PA} = \overline{PB} = \overline{QA} = \overline{QB}\)，四邊都相等，是菱形；菱形的對角線也平分頂角，所以 \(\overrightarrow{PQ}\) 仍然是角平分線。<br>
+              B 錯：要四個角都是直角才是正方形，\(\angle P\) 不是直角。<br>
+              C 錯：長方形的四邊不一定相等，而且四個角要是直角。<br>
+              D 錯：四邊相等的四邊形不是梯形。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 角平分線的再平分
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-fan" aria-hidden="true"></i> <span>重點 10：角平分線的應用——再平分與角度計算</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>一次平分得到一半</strong>：作 \(\angle AOB\) 的角平分線 \(\overrightarrow{OC}\)，\(\angle AOC = \frac{1}{2}\angle AOB\)。</li>
+              <li><strong>再平分</strong>：再作 \(\angle AOC\) 的角平分線，得到 \(\frac{1}{4}\angle AOB\)；作 \(\angle COB\) 的角平分線，從 \(\overrightarrow{OA}\) 量起是 \(\frac{3}{4}\angle AOB\)。例：把 \(60^\circ\) 四等分，每一份是 \(15^\circ\)。</li>
+              <li><strong>只能對半分</strong>：只用角平分線作圖，能作出的角都是原角的 \(\frac{1}{2}\)、\(\frac{1}{4}\)、\(\frac{3}{4}\)、\(\frac{1}{8}\)……（分母是 \(2\)、\(4\)、\(8\)……），作不出原角的 \(\frac{1}{3}\)。</li>
+              <li><strong>兩條角平分線的夾角</strong>：\(\overrightarrow{OC}\) 在 \(\angle AOB\) 內部，\(\overrightarrow{OE}\)、\(\overrightarrow{OF}\) 分別平分 \(\angle AOC\)、\(\angle COB\) 時，
+                \[ \begin{aligned} & \angle EOF \\ &= \frac{1}{2}\angle AOC + \frac{1}{2}\angle COB \\ &= \frac{1}{2}\angle AOB \end{aligned} \]
+              </li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="cg_quarter.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。工作室木桌上放著一把半開的紙扇，扇面畫著淡淡的蜂巢花紋；小蜜一手扶著扇柄，一手捏著扇面，正把扇子往中間摺。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：再平分的扇子</h3>
+            <p class="interactive-instruction">選 \(\angle AOB\) 的大小，再選目標「從 \(\overrightarrow{OA}\) 量起的第幾個八分之一」。按「下一步」看每一次角平分線作圖，都把包住目標的那一個角對半分，直到剛好作出目標射線。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-qb" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="qb-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">\(\angle AOB\)</span>
+                    <div class="btn-group" id="qb-t-group">
+                      <button class="pick-btn" data-qb-t="60">\(60^\circ\)</button>
+                      <button class="pick-btn active" data-qb-t="90">\(90^\circ\)</button>
+                      <button class="pick-btn" data-qb-t="120">\(120^\circ\)</button>
+                      <button class="pick-btn" data-qb-t="140">\(140^\circ\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="qb-prev">上一步</button>
+                      <span class="step-counter" id="qb-step">1 / 3</span>
+                      <button class="pick-btn" id="qb-next">下一步</button>
+                      <button class="pick-btn" id="qb-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="qb-k">目標：從 \(\overrightarrow{OA}\) 量起第幾個 \(\frac{1}{8}\)：<span id="qb-vk" class="val-num">3</span></label>
+                    <input type="range" id="qb-k" min="1" max="7" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="qb-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (再平分與角度計算)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 已知 \(\angle A = 135^\circ\)。只用角平分線作圖（可以作很多次），下列哪一個角<strong>作不出來</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-19" value="A"><span class="option-text">A. \(67.5^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-19" value="B"><span class="option-text">B. \(101.25^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-19" value="C"><span class="option-text">C. \(45^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-19" value="D"><span class="option-text">D. \(33.75^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(45^\circ\) 是 \(135^\circ\) 的 \(\frac{1}{3}\)，對半分只能得到分母是 \(2\)、\(4\)、\(8\)……的份數，得不到 \(\frac{1}{3}\)。<br>
+              A 可以：\(67.5^\circ = \frac{1}{2} \times 135^\circ\)。<br>
+              B 可以：\(101.25^\circ = \frac{3}{4} \times 135^\circ\)，先平分，再平分靠外側的那一半。<br>
+              D 可以：\(33.75^\circ = \frac{1}{4} \times 135^\circ\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> \(\overrightarrow{OC}\) 在 \(\angle AOB\) 的內部，\(\angle AOB = 156^\circ\)。小蜜分別作 \(\angle AOC\)、\(\angle BOC\) 的角平分線 \(\overrightarrow{OE}\)、\(\overrightarrow{OF}\)，則 \(\angle EOF\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-20" value="A"><span class="option-text">A. \(78^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-20" value="B"><span class="option-text">B. \(156^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-20" value="C"><span class="option-text">C. \(39^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-20" value="D"><span class="option-text">D. 不知道 \(\angle AOC\)，無法確定</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle EOC = \frac{1}{2}\angle AOC\)、\(\angle COF = \frac{1}{2}\angle COB\)，兩者相加：
+              \[ \begin{aligned} \angle EOF &= \frac{1}{2}(\angle AOC + \angle COB) \\ &= \frac{1}{2} \times 156^\circ = 78^\circ \end{aligned} \]
+              B 錯：那是整個 \(\angle AOB\)。C 錯：\(39^\circ\) 是 \(\frac{1}{4}\angle AOB\)，多除了一次 \(2\)。<br>
+              D 錯：\(\overrightarrow{OC}\) 在哪裡都不影響，兩半各取一半，合起來永遠是全部的一半。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 過線上一點作垂線
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-up-long" aria-hidden="true"></i> <span>重點 11：過線上一點作垂線——畫出一個等腰三角形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>作法</strong>（已知直線 \(L\) 與 \(L\) 上一點 \(P\)）：
+                <ol class="step-list">
+                  <li>以 \(P\) 點為圓心、適當長為半徑畫弧，交 \(L\) 於 \(A\)、\(B\) 兩點。</li>
+                  <li>分別以 \(A\)、\(B\) 為圓心、<strong>大於 \(\frac{1}{2}\overline{AB}\) 的相同長度</strong>為半徑畫弧，兩弧交於 \(Q\)。</li>
+                  <li>連接 \(P\)、\(Q\)，直線 \(PQ\) 即為所求。</li>
+                </ol>
+              </li>
+              <li><strong>想法</strong>：\(\overline{PA} = \overline{PB}\)，\(P\) 是 \(\overline{AB}\) 的中點；\(\overline{QA} = \overline{QB}\)，\(\triangle QAB\) 是等腰三角形。等腰三角形的對稱軸垂直平分底邊，所以 \(PQ \perp L\)。</li>
+              <li><strong>另一種看法</strong>：\(\angle APB\) 是平角（\(180^\circ\)），\(PQ\) 就是它的角平分線，平分後兩邊各 \(90^\circ\)。</li>
+              <li><strong>第 2 步的半徑</strong>：若剛好用 \(\overline{PA}\)（也就是 \(\frac{1}{2}\overline{AB}\)）當半徑，兩弧只碰在 \(P\) 點，找不到另一個點 \(Q\)。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="cg_perp_on.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。花園的石板地上，阿蜂把一根細木樁插進地面，旁邊沿著地面拉著一條水平的麻繩；小蜜蹲在一旁，眯起一隻眼睛看木樁是不是站得筆直。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：線上立柱</h3>
+            <p class="interactive-instruction">拉動 \(P\) 在直線 \(L\) 上的位置、第一個弧的「適當長」，以及第二步的半徑（\(\frac{1}{2}\overline{AB}\) 的幾倍）。按「下一步」看等腰三角形 \(QAB\) 怎麼出現；把倍數調到 \(1\)，看看兩弧碰在哪裡。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pon" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pon-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="pon-prev">上一步</button>
+                      <span class="step-counter" id="pon-step">1 / 4</span>
+                      <button class="pick-btn" id="pon-next">下一步</button>
+                      <button class="pick-btn" id="pon-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pon-x">\(P\) 到 \(L\) 左端的距離（公分）：<span id="pon-vx" class="val-num">5.0</span></label>
+                    <input type="range" id="pon-x" min="8" max="19" value="11" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pon-r1">第一個弧的適當長（公分）：<span id="pon-vr1" class="val-num">2.0</span></label>
+                    <input type="range" id="pon-r1" min="2" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pon-r2">第二步半徑是 \(\frac{1}{2}\overline{AB}\) 的幾倍：<span id="pon-vr2" class="val-num">1.5</span></label>
+                    <input type="range" id="pon-r2" min="8" max="20" value="15" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pon-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (過線上一點作垂線)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-21">
+            <p class="quiz-question"><strong>Q21.</strong> 阿蜂要過直線 \(L\) 上一點 \(P\) 作 \(L\) 的垂線，他的作法如下。哪一個步驟錯了？<br>
+            步驟一：以 \(P\) 為圓心、適當長為半徑畫弧，交 \(L\) 於 \(A\)、\(B\)。<br>
+            步驟二：以 \(A\) 為圓心、\(\overline{AB}\) 長為半徑畫弧，再以 \(B\) 為圓心、\(\overline{PB}\) 長為半徑畫弧，兩弧交於 \(Q\)。<br>
+            步驟三：連接 \(P\)、\(Q\)。</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-21" value="A"><span class="option-text">A. 步驟一</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-21" value="B"><span class="option-text">B. 步驟二</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-21" value="C"><span class="option-text">C. 步驟三</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-21" value="D"><span class="option-text">D. 都沒有錯</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。步驟二的兩個半徑不同（\(\overline{AB}\) 是 \(\overline{PB}\) 的 \(2\) 倍），\(\overline{QA} \ne \overline{QB}\)，\(\triangle QAB\) 不是等腰三角形，\(Q\) 不會在過 \(P\) 的垂線上。兩個弧必須用大於 \(\frac{1}{2}\overline{AB}\) 的<strong>相同</strong>長度。<br>
+              A 錯：步驟一正確，\(\overline{PA} = \overline{PB}\)。<br>
+              C 錯：問題出在 \(Q\) 點的位置，不在連線這一步。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-22">
+            <p class="quiz-question"><strong>Q22.</strong> \(A\)、\(B\)、\(C\) 三點在同一直線上，\(B\) 在 \(A\)、\(C\) 之間（\(\angle ABC = 180^\circ\)）。下列哪一種作法可以作出 \(\angle PBC = 135^\circ\)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-22" value="A"><span class="option-text">A. 過 \(B\) 作 \(\overline{AC}\) 的垂線 \(\overrightarrow{BQ}\)，再作 \(\angle QBC\) 的角平分線 \(\overrightarrow{BP}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-22" value="B"><span class="option-text">B. 過 \(B\) 作 \(\overline{AC}\) 的垂線 \(\overrightarrow{BQ}\)，再作 \(\angle QBA\) 的角平分線 \(\overrightarrow{BP}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-22" value="C"><span class="option-text">C. 作 \(\angle ABC\) 的角平分線 \(\overrightarrow{BQ}\)，再作 \(\angle QBC\) 的角平分線 \(\overrightarrow{BP}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-22" value="D"><span class="option-text">D. 作 \(\overline{AC}\) 的中垂線，交 \(\overline{AC}\) 於 \(P\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\angle QBC = 90^\circ\)、\(\angle QBA = 90^\circ\)，\(\overrightarrow{BP}\) 平分 \(\angle QBA\)，所以
+              \[ \angle PBC = 90^\circ + 45^\circ = 135^\circ \]
+              A 錯：平分的是 \(\angle QBC\)，得到 \(\angle PBC = 45^\circ\)。<br>
+              C 錯：平角的角平分線就是垂線，再平分 \(\angle QBC\) 一樣得到 \(45^\circ\)。<br>
+              D 錯：中垂線通過 \(\overline{AC}\) 的中點，\(B\) 不一定是中點，而且這樣作不出 \(135^\circ\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 過線外一點作垂線
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrow-down-up-across-line" aria-hidden="true"></i> <span>重點 12：過線外一點作垂線——又是一個箏形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>作法</strong>（已知直線 \(L\) 與 \(L\) 外一點 \(P\)）：
+                <ol class="step-list">
+                  <li>以 \(P\) 點為圓心、適當長為半徑畫弧，交 \(L\) 於 \(A\)、\(B\) 兩點。</li>
+                  <li>分別以 \(A\)、\(B\) 為圓心、<strong>大於 \(\frac{1}{2}\overline{AB}\) 的相同長度</strong>為半徑，在 \(L\) 的另一側畫弧，兩弧交於 \(Q\)。</li>
+                  <li>連接 \(P\)、\(Q\)，直線 \(PQ\) 即為所求。</li>
+                </ol>
+              </li>
+              <li><strong>想法</strong>：\(\overline{PA} = \overline{PB}\)、\(\overline{QA} = \overline{QB}\)，四邊形 \(APBQ\) 是箏形，箏形的兩條對角線互相垂直，所以 \(PQ \perp L\)。</li>
+              <li><strong>第 1 步的「適當長」</strong>：一定要比 \(P\) 到 \(L\) 的距離長，弧才碰得到 \(L\)、而且交出兩個點。</li>
+              <li><strong>兩次半徑互不相干</strong>：第 1 步與第 2 步用的長度不一定相同，所以 \(P\)、\(Q\) 到 \(L\) 的距離通常不一樣。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="cg_perp_off.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。一隻蜜蜂停在花朵上，花朵下方的花壇邊緣是一條筆直的木條；小蜜蹲在花壇邊，手裡拿著黃銅圓規，抬頭看著那隻蜜蜂。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：線外的垂線</h3>
+            <p class="interactive-instruction">調整 \(P\) 到 \(L\) 的距離、第一個弧的「適當長」，以及第二步的半徑（\(\frac{1}{2}\overline{AB}\) 的幾倍）。按「下一步」看箏形 \(APBQ\)；最後量一量 \(\overline{PA}\) 和 \(\overline{QA}\)、\(\overline{PH}\) 和 \(\overline{QH}\) 是不是一樣長。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-poff" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="poff-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="poff-prev">上一步</button>
+                      <span class="step-counter" id="poff-step">1 / 4</span>
+                      <button class="pick-btn" id="poff-next">下一步</button>
+                      <button class="pick-btn" id="poff-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="poff-d">\(P\) 到 \(L\) 的距離（公分）：<span id="poff-vd" class="val-num">2.0</span></label>
+                    <input type="range" id="poff-d" min="2" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="poff-r1">第一個弧的適當長（公分）：<span id="poff-vr1" class="val-num">3.0</span></label>
+                    <input type="range" id="poff-r1" min="2" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="poff-r2">第二步半徑是 \(\frac{1}{2}\overline{AB}\) 的幾倍：<span id="poff-vr2" class="val-num">1.2</span></label>
+                    <input type="range" id="poff-r2" min="8" max="15" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="poff-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (過線外一點作垂線)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-23">
+            <p class="quiz-question"><strong>Q23.</strong> 小蜜過直線 \(L\) 外一點 \(P\) 作 \(L\) 的垂線：以 \(P\) 為圓心、\(13\) 公分為半徑畫弧，交 \(L\) 於 \(A\)、\(B\)，量得 \(\overline{AB} = 24\) 公分；再分別以 \(A\)、\(B\) 為圓心、同樣以 \(13\) 公分為半徑，在 \(L\) 的另一側畫弧，交於 \(Q\)。則 \(\overline{PQ}\) 長多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-23" value="A"><span class="option-text">A. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-23" value="B"><span class="option-text">B. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-23" value="C"><span class="option-text">C. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-23" value="D"><span class="option-text">D. \(24\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設 \(PQ\) 交 \(L\) 於 \(H\)，\(H\) 是 \(\overline{AB}\) 的中點，\(\overline{AH} = 12\)。直角三角形 \(PHA\) 中：
+              \[ \overline{PH} = \sqrt{13^2 - 12^2} = 5 \]
+              兩次半徑都是 \(13\)，\(Q\) 在另一側同樣距離 \(5\)，所以 \(\overline{PQ} = 5 + 5 = 10\)。<br>
+              B 錯：\(5\) 只是 \(\overline{PH}\)。<br>
+              C 錯：\(13\) 是 \(\overline{PA}\)，不是 \(\overline{PQ}\)。<br>
+              D 錯：\(24\) 是 \(\overline{AB}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-24">
+            <p class="quiz-question"><strong>Q24.</strong> \(P\) 到直線 \(L\) 的距離是 \(7\) 公分。要過 \(P\) 作 \(L\) 的垂線，第一步以 \(P\) 為圓心畫弧，下列哪一個半徑才能讓弧交 \(L\) 於兩點？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-24" value="A"><span class="option-text">A. \(4\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-24" value="B"><span class="option-text">B. \(9\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-24" value="C"><span class="option-text">C. \(7\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-24" value="D"><span class="option-text">D. \(6.5\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。弧上每一點到 \(P\) 都是半徑那麼遠，半徑要比 \(P\) 到 \(L\) 的最短距離 \(7\) 公分長，弧才會越過 \(L\)、交出兩個點。<br>
+              A、D 錯：半徑比 \(7\) 短，弧碰不到 \(L\)。<br>
+              C 錯：半徑剛好 \(7\)，弧只碰到 \(L\) 上的一點（垂足），得不到兩個點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 13: 三角形的高與作圖痕跡
+           ========================================== -->
+      <section class="concept-section" id="concept13">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shapes" aria-hidden="true"></i> <span>重點 13：三角形的高——鈍角要先延長，痕跡要會判讀</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>三角形的高</strong>：從一個頂點到對邊所在直線的垂直線段，所以是「過線外一點作垂線」。</li>
+              <li><strong>鈍角三角形</strong>：鈍角兩旁那兩邊上的高，垂足會落在邊的<strong>延長線</strong>上。作圖時要先用直尺把那一邊延長，以頂點為圓心畫的弧才交得到兩個點。</li>
+              <li><strong>四種作圖痕跡</strong>：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>作的是</th><th>痕跡的特徵</th></tr></thead>
+                <tbody>
+                  <tr><td>\(\overline{BC}\) 的中垂線</td><td>以 \(B\)、\(C\) 為圓心，同半徑畫弧交兩點；不一定通過頂點 \(A\)</td></tr>
+                  <tr><td>\(\overline{BC}\) 上的中線</td><td>先用中垂線找 \(\overline{BC}\) 的中點 \(M\)，再連 \(\overline{AM}\)</td></tr>
+                  <tr><td>\(\overline{BC}\) 上的高</td><td>以 \(A\) 為圓心畫弧交直線 \(BC\) 於兩點，再以這兩點為圓心畫弧</td></tr>
+                  <tr><td>\(\angle A\) 的角平分線</td><td>以 \(A\) 為圓心畫弧交角的兩邊，再以這兩點為圓心畫弧</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等腰三角形</span>
+              \(\overline{AB} = \overline{AC}\) 時，\(\overline{BC}\) 上的高、中線、中垂線與 \(\angle A\) 的角平分線會重合成同一條線；一般三角形四條線各不相同。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cg_height.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。標本工作室的牆邊，阿蜂踮腳把一個三角形的木框蜂巢掛到牆上的釘子，一條細繩從掛鉤垂直垂下；小蜜在下方抬頭看著那條垂下的細繩。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：三角形裡的四條線</h3>
+            <p class="interactive-instruction">拉動頂點 \(A\) 的位置（往左拉到 \(B\) 的左邊時，\(\angle B\) 會變成鈍角），再選要作哪一條線。按「下一步」看作圖痕跡；比比看四種痕跡哪裡不一樣，\(A\) 剛好在正中間時又會怎樣？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-alt" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="alt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要作</span>
+                    <div class="btn-group" id="alt-mode-group">
+                      <button class="pick-btn active" data-alt-mode="height">\(\overline{BC}\) 上的高</button>
+                      <button class="pick-btn" data-alt-mode="perp">\(\overline{BC}\) 的中垂線</button>
+                      <button class="pick-btn" data-alt-mode="median">\(\overline{BC}\) 上的中線</button>
+                      <button class="pick-btn" data-alt-mode="bisect">\(\angle A\) 的角平分線</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="alt-prev">上一步</button>
+                      <span class="step-counter" id="alt-step">1 / 4</span>
+                      <button class="pick-btn" id="alt-next">下一步</button>
+                      <button class="pick-btn" id="alt-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="alt-ax">\(A\) 在 \(B\) 右方幾公分（負數表示在左方）：<span id="alt-vax" class="val-num">-1.00</span></label>
+                    <input type="range" id="alt-ax" min="13" max="40" value="16" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="alt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (三角形的高與作圖痕跡)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-25">
+            <p class="quiz-question"><strong>Q25.</strong> \(\triangle ABC\) 中，\(\angle B\) 是鈍角。阿蜂要用尺規作 \(\overline{AB}\) 邊上的高 \(\overline{CH}\)，第一步應該怎麼做？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-25" value="A"><span class="option-text">A. 以 \(C\) 為圓心畫弧，交 \(\overline{AB}\) 於兩點（不必延長）</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-25" value="B"><span class="option-text">B. 先延長 \(\overline{AB}\)，再以 \(C\) 為圓心畫弧，交直線 \(AB\) 於兩點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-25" value="C"><span class="option-text">C. 作 \(\overline{AB}\) 的中垂線</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-25" value="D"><span class="option-text">D. 作 \(\angle C\) 的角平分線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\angle B\) 是鈍角，從 \(C\) 往直線 \(AB\) 作垂線，垂足 \(H\) 會落在 \(\overline{AB}\) 往 \(B\) 那一端的延長線上；不先延長，以 \(C\) 為圓心的弧在 \(\overline{AB}\) 上交不出兩個點。<br>
+              A 錯：弧可能只交到 \(\overline{AB}\) 一點，甚至一點也交不到。<br>
+              C 錯：中垂線通過 \(\overline{AB}\) 的中點，不一定通過 \(C\)。<br>
+              D 錯：角平分線一般不會和 \(\overline{AB}\) 垂直。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-26">
+            <p class="quiz-question"><strong>Q26.</strong> \(\triangle ABC\) 中，\(\overline{BC} \gt \overline{BA}\)。小蜜以 \(B\) 為圓心、\(\overline{BA}\) 長為半徑畫弧，交 \(\overline{BC}\) 於 \(D\)；再分別以 \(A\)、\(D\) 為圓心、大於 \(\frac{1}{2}\overline{AD}\) 的相同長度為半徑畫弧，兩弧交於 \(E\)（\(E\) 與 \(B\) 在直線 \(AD\) 的兩側）；連接 \(\overrightarrow{BE}\)。\(\overrightarrow{BE}\) 是下列哪一條線？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-26" value="A"><span class="option-text">A. \(\overline{AC}\) 的中垂線</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-26" value="B"><span class="option-text">B. \(\overline{AC}\) 邊上的高</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-26" value="C"><span class="option-text">C. \(\overline{AC}\) 邊上的中線</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-26" value="D"><span class="option-text">D. \(\angle B\) 的角平分線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(A\) 在 \(\angle B\) 的一邊 \(\overline{BA}\) 上，\(D\) 在另一邊 \(\overline{BC}\) 上，而且 \(\overline{BA} = \overline{BD}\)：這正是角平分線作圖的第 1 步，只是「適當長」剛好取 \(\overline{BA}\)。再以 \(A\)、\(D\) 作同半徑的弧，得到箏形 \(BAED\)，\(\overrightarrow{BE}\) 平分 \(\angle B\)。<br>
+              A、B、C 錯：三者都和 \(\overline{AC}\) 有關，但這些弧的圓心是 \(A\)、\(D\)，不是 \(A\)、\(C\)；而且 \(\overrightarrow{BE}\) 從頂點 \(B\) 出發，只有在 \(\overline{BA} = \overline{BC}\) 時才會同時是高與中線。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 尺規作圖速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>規則</strong>：圓規只畫圓或弧，直尺只畫直線、不看刻度；保留作圖痕跡。</li>
+              <li><strong>等線段</strong>：圓規量 \(\overline{AB}\)，搬到 \(C\) 畫弧。和是往外接，差是往回切。</li>
+              <li><strong>兩弧交點</strong>：同時到兩個圓心各有指定距離；兩弧不一定相交。</li>
+              <li><strong>等角</strong>：同一個「適當長」畫兩次弧，再量兩交點的距離。角的和差看第二個角作在哪一側。</li>
+              <li><strong>中垂線</strong>：兩端同半徑（大於一半）→ 菱形 → 對角線互相垂直平分。</li>
+              <li><strong>角平分線</strong>：頂點畫弧得兩點，兩點同半徑畫弧 → 箏形 → 對角線是對稱軸。</li>
+              <li><strong>線上一點作垂線</strong>：等腰三角形 \(QAB\)，也是平角的角平分線。</li>
+              <li><strong>線外一點作垂線</strong>：箏形 \(APBQ\)，第一個弧要比 \(P\) 到 \(L\) 的距離長。</li>
+              <li><strong>三角形的高</strong>：線外一點作垂線；鈍角那兩邊要先延長。</li>
+              <li><strong>對半分</strong>：中垂線、角平分線一再使用，只得到 \(\frac{1}{2}\)、\(\frac{1}{4}\)、\(\frac{1}{8}\)……的份數。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-seedling"></i> 回到養蜂花園：蜂巢的六邊形</h4>
+              <h5><i class="fa-solid fa-compass-drafting"></i> 一個半徑，繞一圈</h5>
+              <p>小蜜用圓規畫一個圓，圓規不動，在圓周上從任一點開始，以半徑的長連續截下去，剛好截 \(6\) 次就回到起點。把這 \(6\) 個點依序連起來，就是一個正六邊形——每一邊都等於半徑，因為每一塊都是重點 4 的正三角形。</p>
+              <h5><i class="fa-solid fa-ruler-combined"></i> 沒有刻度也能分</h5>
+              <p>阿蜂要把花壇的一邊分成 \(4\) 段種花，只要作兩次中垂線；要在蜂箱的轉角釘一根斜撐，就作一次角平分線。整張設計圖從頭到尾，沒有用到任何一個刻度。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節</h5>
+              <p>等角作圖為什麼成立？3-3 節的三角形全等性質（SSS）會給出答案，到時候也會用尺規作出指定條件的三角形。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

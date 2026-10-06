@@ -4,39 +4,1365 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-1 三角形與多邊形的內角與外角 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-1 三角形與多邊形的內角與外角 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第3章 三角形的基本性質</div>
-    <h1>3-1 三角形與多邊形的內角與外角</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第三章</span>
+        <h1>3-1 三角形與多邊形的內角與外角</h1>
+        <p>走進養蜂花園的標本工作室：羊皮紙上畫著花壇、蜂箱與蜂巢的設計圖，到處都是角。這一節先複習<strong>角的分類</strong>，認識<strong>餘角、補角、對頂角</strong>；再看三角形的<strong>內角和 \(180^\circ\)</strong>、<strong>外角和 \(360^\circ\)</strong> 與<strong>外角定理</strong>，用它們解 8 字形與鏢形；最後推廣到 \(n\) 邊形的內角和 \((n - 2) \times 180^\circ\)，求出正 \(n\) 邊形的每一個內角與外角——也就回答了「蜂巢為什麼是正六邊形」。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-compass-drafting"></i> 餘角與補角</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-xmark"></i> 對頂角</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-play"></i> 內角和</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-route"></i> 外角</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-rotate"></i> 外角和</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-plus"></i> 外角定理</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-hourglass-half"></i> 8 字形</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-location-arrow"></i> 鏢形</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-draw-polygon"></i> n 邊形內角和</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-hexagon-nodes"></i> 正 n 邊形</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 反求 n</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（銅版畫博物圖鑑・養蜂花園）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(252, 211, 77, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);"></i> 課前暖身漫畫：蜂巢為什麼是正六邊形？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小蜜捧著一片蜂巢框，每一格都是正六邊形，排得密密麻麻、沒有一點空隙。阿蜂不服氣，用紙剪了三個正五邊形在桌上拼拼看，卻怎麼拼都留下一條縫——<strong style="color:#fcd34d">小蜜拿出圓規：正六邊形的每一個內角是 120°，三個剛好圍成 360°！</strong>這一節學完，你就能自己算出每一種正多邊形的內角。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="19 世紀銅版畫博物圖鑑風四格暖身漫畫：小蜜捧著正六邊形蜂巢框；阿蜂用紙剪了三個正五邊形在桌上拼，中間留下一條縫而苦惱；小蜜舉起黃銅圓規說明正六邊形每個內角 120°，三個剛好 360°。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 角的分類、餘角與補角
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i> <span>重點 1：角的分類，餘角與補角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩條射線 \(\overrightarrow{BA}\)、\(\overrightarrow{BC}\) 相交於 \(B\) 點，夾出的角記為 \(\angle ABC\)，簡記為 \(\angle B\)；\(B\) 是<strong>頂點</strong>，兩條射線是角的<strong>邊</strong>。</li>
+              <li><strong>角的大小只看張開的程度</strong>，跟邊畫多長無關。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>名稱</th><th>度數</th></tr></thead>
+                <tbody>
+                  <tr><td>銳角</td><td>\(0^\circ \lt \angle B \lt 90^\circ\)</td></tr>
+                  <tr><td>直角</td><td>\(\angle B = 90^\circ\)</td></tr>
+                  <tr><td>鈍角</td><td>\(90^\circ \lt \angle B \lt 180^\circ\)</td></tr>
+                  <tr><td>平角</td><td>\(\angle B = 180^\circ\)</td></tr>
+                  <tr><td>周角</td><td>\(\angle B = 360^\circ\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list">
+              <li>兩個角的度數和是 \(90^\circ\)，稱這兩個角<strong>互為餘角</strong>（互餘）；和是 \(180^\circ\)，稱這兩個角<strong>互為補角</strong>（互補）。</li>
+              <li><strong>只看度數和</strong>：兩個角不必拼在一起、也不必有共同頂點。例如 \(\angle P = 25^\circ\)、\(\angle Q = 65^\circ\) 分開畫在兩處，仍然互餘。</li>
+              <li>例：\(\angle A = 40^\circ\)，\(\angle B\) 和 \(\angle A\) 互餘，\(\angle C\) 和 \(\angle B\) 互補，則
+                \[\begin{aligned} & \angle B = 90^\circ - 40^\circ = 50^\circ \\ & \angle C = 180^\circ - 50^\circ = 130^\circ \end{aligned}\]</li>
+              <li><strong>判斷三點共線</strong>：\(\angle AOC = 72^\circ\)、\(\angle BOC = 108^\circ\) 互補，但 \(A\) 點也可能落在 \(\angle BOC\) 裡面，所以 \(A\)、\(O\)、\(B\) <strong>不一定</strong>在同一直線上；要 \(\angle AOC\) 與 \(\angle BOC\) 分在 \(\overrightarrow{OC}\) 的兩側才行。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・餘角與補角</span>
+              \(\angle 1 + \angle 2 = 90^\circ\) ⇒ \(\angle 1\)、\(\angle 2\) 互為餘角<br>
+              \(\angle 3 + \angle 4 = 180^\circ\) ⇒ \(\angle 3\)、\(\angle 4\) 互為補角
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_angles.webp" alt="銅版畫博物圖鑑風插圖：小蜜在羊皮紙設計圖旁，手拿一支腳很長、只張開一點點的黃銅圓規；桌上另一支腳很短的小圓規張得很開。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：黃銅圓規張開的角</h3>
+            <p class="interactive-instruction">「分類」模式拉動角度，看它落在分類尺的哪一區；切到「互餘」「互補」，拉動 \(\angle 1\)（或 \(\angle 3\)），看另一個角怎麼跟著變，兩者的和永遠不變。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-angle" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="an-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="an-mode-group">
+                      <button class="pick-btn active" data-an-mode="cls">分類</button>
+                      <button class="pick-btn" data-an-mode="comp">互餘</button>
+                      <button class="pick-btn" data-an-mode="supp">互補</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="an-a"><span id="an-label">∠B</span>：<span id="an-va" class="val-num">55</span>°</label>
+                    <input type="range" id="an-a" min="5" max="360" value="55" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="an-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (餘角與補角)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 已知 \(\angle A = 37^\circ\)，\(\angle B\) 和 \(\angle A\) 互餘，\(\angle C\) 和 \(\angle B\) 互補，則 \(\angle C\) 是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-1" value="A"><span class="option-text">A. \(53^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="B"><span class="option-text">B. \(143^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="C"><span class="option-text">C. \(127^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="D"><span class="option-text">D. \(37^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & \angle B = 90^\circ - 37^\circ = 53^\circ \\ & \angle C = 180^\circ - 53^\circ = 127^\circ \end{aligned}\]
+              A 錯：\(53^\circ\) 是 \(\angle B\)，還要再求它的補角。<br>
+              B 錯：\(180^\circ - 37^\circ = 143^\circ\) 是 \(\angle A\) 的補角，題目要的是 \(\angle B\) 的補角。<br>
+              D 錯：\(90^\circ - 53^\circ = 37^\circ\) 是把「互補」看成「互餘」了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-2" value="A"><span class="option-text">A. 互補的兩個角一定有共同的頂點</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="B"><span class="option-text">B. 鈍角的補角一定是銳角</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="C"><span class="option-text">C. 銳角的餘角一定是鈍角</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="D"><span class="option-text">D. 任意兩個銳角都互為餘角</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。鈍角 \(\angle P\) 滿足 \(90^\circ \lt \angle P \lt 180^\circ\)，它的補角 \(180^\circ - \angle P\) 就在 \(0^\circ\) 與 \(90^\circ\) 之間，一定是銳角。<br>
+              A 錯：互補只看度數和是不是 \(180^\circ\)，兩個角可以分開畫在不同地方。<br>
+              C 錯：銳角的餘角是 \(90^\circ\) 減去一個銳角，還是銳角。<br>
+              D 錯：例如 \(30^\circ\) 與 \(40^\circ\) 都是銳角，和是 \(70^\circ\)，不互餘。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 對頂角
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i> <span>重點 2：兩直線相交——對頂角相等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>直線 \(L\) 與 \(M\) 相交於 \(O\) 點，以 \(O\) 為頂點的四個角中，<strong>不相鄰</strong>的兩個角互為<strong>對頂角</strong>：\(\angle 1\) 與 \(\angle 3\)、\(\angle 2\) 與 \(\angle 4\)。</li>
+              <li><strong>對頂角相等</strong>的理由：相鄰兩角拼成一直線，所以
+                \[\begin{aligned} & \angle 1 + \angle 2 = 180^\circ \\ & \angle 3 + \angle 2 = 180^\circ \end{aligned}\]
+                兩式比較，得 \(\angle 1 = \angle 3\)；同理 \(\angle 2 = \angle 4\)。</li>
+              <li><strong>常見誤會</strong>：兩個角共用一個頂點，不代表是對頂角。對頂角必須由<strong>同樣兩條直線</strong>相交形成、而且不相鄰。</li>
+              <li>例：三直線交於 \(O\)，依序形成 \(\angle 1\)～\(\angle 6\)。若 \(\angle 1 = 100^\circ\)、\(\angle 3 = 42^\circ\)，因為 \(\angle 1\)、\(\angle 2\)、\(\angle 3\) 拼成平角，
+                \[\begin{aligned} & \angle 2 = 180^\circ - 100^\circ - 42^\circ \\ & = 38^\circ \end{aligned}\]
+                再由對頂角相等，\(\angle 4 = 100^\circ\)、\(\angle 5 = 38^\circ\)、\(\angle 6 = 42^\circ\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・對頂角</span>
+              兩直線相交，不相鄰的兩個角互為對頂角，<br>
+              且<strong>對頂角的度數相等</strong>
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_vertical.webp" alt="銅版畫博物圖鑑風插圖：花園的木桌上平放兩根細長的直木條，交叉成一個 X；阿蜂伸出食指，指著交叉點上方的那個角。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：交叉的兩根木條</h3>
+            <p class="interactive-instruction">拉動 \(\angle 1\)，看對面的 \(\angle 3\) 怎麼跟著變；切到「三條直線」，再拉 \(\angle 2\)，找出哪幾對才是對頂角。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-vert" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="vt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">直線</span>
+                    <div class="btn-group" id="vt-mode-group">
+                      <button class="pick-btn active" data-vt-mode="two">兩條直線</button>
+                      <button class="pick-btn" data-vt-mode="three">三條直線</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="vt-a">\(\angle 1\)：<span id="vt-va" class="val-num">65</span>°</label>
+                    <input type="range" id="vt-a" min="10" max="170" value="65" step="5">
+                  </div>
+                  <div class="slider-row" id="vt-b-row">
+                    <label for="vt-b">\(\angle 2\)：<span id="vt-vb" class="val-num">50</span>°</label>
+                    <input type="range" id="vt-b" min="10" max="105" value="50" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="vt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (對頂角)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 直線 \(L\) 與 \(M\) 相交於 \(O\) 點，形成 \(\angle 1\)～\(\angle 4\)，其中 \(\angle 1\) 與 \(\angle 3\) 是對頂角，\(\angle 2\) 與 \(\angle 1\) 相鄰。若 \(\angle 1 = (4x + 12)^\circ\)、\(\angle 3 = (6x - 20)^\circ\)，則 \(\angle 2\) 是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-3" value="A"><span class="option-text">A. \(76^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="B"><span class="option-text">B. \(16^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="C"><span class="option-text">C. \(152^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="D"><span class="option-text">D. \(104^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。對頂角相等：
+              \[\begin{aligned} & 4x + 12 = 6x - 20 \\ & 32 = 2x,\ x = 16 \end{aligned}\]
+              \(\angle 1 = 4 \times 16 + 12 = 76^\circ\)，\(\angle 2\) 與 \(\angle 1\) 互補，\(\angle 2 = 180^\circ - 76^\circ = 104^\circ\)。<br>
+              A 錯：\(76^\circ\) 是 \(\angle 1\) 本身。<br>
+              B 錯：\(16\) 是 \(x\) 的值，不是角度。<br>
+              C 錯：\(\angle 1 + \angle 3 = 152^\circ\)，相鄰的 \(\angle 2\) 要和 \(\angle 1\) 互補，不是另外兩角的和。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 如圖，三條直線 \(L\)、\(M\)、\(N\) 交於 \(O\) 點，依序形成 \(\angle 1\)～\(\angle 6\)（\(\angle 1\) 與 \(\angle 4\)、\(\angle 2\) 與 \(\angle 5\)、\(\angle 3\) 與 \(\angle 6\) 分別為對頂角）。若 \(\angle 1 = 47^\circ\)、\(\angle 5 = 71^\circ\)，則 \(\angle 3\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q4" width="320" height="220" role="img" aria-label="三條直線交於 O 點形成六個角，標示角 1 等於 47 度、角 5 等於 71 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-4" value="A"><span class="option-text">A. \(62^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="B"><span class="option-text">B. \(133^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="C"><span class="option-text">C. \(109^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="D"><span class="option-text">D. \(71^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle 2\) 與 \(\angle 5\) 是對頂角，\(\angle 2 = 71^\circ\)；\(\angle 1\)、\(\angle 2\)、\(\angle 3\) 拼成平角：
+              \[\begin{aligned} & \angle 3 = 180^\circ - 47^\circ - 71^\circ \\ & = 62^\circ \end{aligned}\]
+              B 錯：\(180^\circ - 47^\circ\) 漏減了 \(\angle 2\)。<br>
+              C 錯：\(180^\circ - 71^\circ\) 漏減了 \(\angle 1\)。<br>
+              D 錯：\(71^\circ\) 是 \(\angle 2\)（也是 \(\angle 5\)），\(\angle 3\) 和 \(\angle 5\) 不是對頂角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 三角形內角和
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-play" aria-hidden="true"></i> <span>重點 3：三角形內角和定理——任意三角形的內角和是 \(180^\circ\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>摺紙驗證</strong>：在銳角 \(\triangle ABC\) 中先摺出 \(\overline{BC}\) 上的高 \(\overline{AD}\)，再把三個頂點 \(A\)、\(B\)、\(C\) 都摺到 \(D\) 點，三個角剛好拼成一個平角。直角、鈍角三角形也拼得起來。</li>
+              <li>所以<strong>任意三角形的三個內角加起來都是 \(180^\circ\)</strong>，不論三角形長什麼樣子。</li>
+              <li>已知兩個角，第三個角 \(= 180^\circ -\) 另外兩角。</li>
+              <li>三個角用代數式表示時，把三式加起來等於 \(180\) 列方程式。例：三內角為 \((2x - 10)^\circ\)、\(x^\circ\)、\((3x + 10)^\circ\)，
+                \[\begin{aligned} & (2x - 10) + x + (3x + 10) \\ & = 180 \\ & 6x = 180,\ x = 30 \end{aligned}\]</li>
+              <li><strong>看最大角分類</strong>：最大角小於 \(90^\circ\) 是銳角三角形、等於 \(90^\circ\) 是直角三角形、大於 \(90^\circ\) 是鈍角三角形。內角和只有 \(180^\circ\)，所以一個三角形<strong>最多只有一個</strong>直角或鈍角。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・三角形內角和定理</span>
+              \(\angle A + \angle B + \angle C = 180^\circ\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_trisum.webp" alt="銅版畫博物圖鑑風插圖：小蜜把一張三角形紙片的三個角撕下來，三塊三角形紙角的尖端對在同一點，沿著一把黃銅直尺的直邊排成一排。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：撕下三個角拼成平角</h3>
+            <p class="interactive-instruction">拉動 \(\angle A\)、\(\angle B\) 改變三角形的形狀，\(\angle C\) 會自動跟著變。下方把三個角撕下來、頂點對在一起，看它們是不是永遠剛好拼成一直線。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tri" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ts-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ts-a">\(\angle A\)：<span id="ts-va" class="val-num">70</span>°</label>
+                    <input type="range" id="ts-a" min="10" max="160" value="70" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ts-b">\(\angle B\)：<span id="ts-vb" class="val-num">45</span>°</label>
+                    <input type="range" id="ts-b" min="10" max="100" value="45" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ts-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (三角形內角和)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> \(\triangle ABC\) 的三個內角分別為 \((3x + 8)^\circ\)、\((5x - 4)^\circ\)、\((2x + 16)^\circ\)，則最大的內角是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-5" value="A"><span class="option-text">A. \(16^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="B"><span class="option-text">B. \(56^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="C"><span class="option-text">C. \(76^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="D"><span class="option-text">D. \(80^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & (3x + 8) + (5x - 4) \\ & \quad + (2x + 16) = 180 \\ & 10x + 20 = 180 \\ & x = 16 \end{aligned}\]
+              三個角是 \(56^\circ\)、\(76^\circ\)、\(48^\circ\)（加起來 \(180^\circ\)），最大的是 \(76^\circ\)。<br>
+              A 錯：\(16\) 是 \(x\) 的值，還要代回去。<br>
+              B 錯：\(56^\circ\) 是 \((3x + 8)^\circ\)，不是最大的角。<br>
+              D 錯：\(5 \times 16 = 80\) 忘了減 \(4\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> \(\triangle ABC\) 中，\(\angle A : \angle B : \angle C = 3 : 5 : 7\)，則 \(\triangle ABC\) 是哪一種三角形？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-6" value="A"><span class="option-text">A. 直角三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="B"><span class="option-text">B. 銳角三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="C"><span class="option-text">C. 鈍角三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="D"><span class="option-text">D. 條件不夠，無法判斷</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(180^\circ\) 分成 \(3 + 5 + 7 = 15\) 份，每份 \(12^\circ\)，三個角是 \(36^\circ\)、\(60^\circ\)、\(84^\circ\)。最大的 \(\angle C = 84^\circ \lt 90^\circ\)，所以是銳角三角形。<br>
+              A 錯：要有一個角剛好 \(90^\circ\) 才是直角三角形。<br>
+              C 錯：\(7\) 份看起來很多，實際只有 \(84^\circ\)，沒有超過 \(90^\circ\)。<br>
+              D 錯：有比例、又知道內角和是 \(180^\circ\)，三個角就都求得出來。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 外角的定義與轉彎角
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-route" aria-hidden="true"></i> <span>重點 4：外角——內角與它的外角互補，外角就是轉彎角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>三角形一個內角的<strong>一邊</strong>，與<strong>另一邊的延長線</strong>所夾的角，稱為這個內角的<strong>外角</strong>。</li>
+              <li>延長哪一邊都可以，所以<strong>每個內角有兩個外角</strong>；這兩個外角是對頂角，一樣大。</li>
+              <li><strong>每一個內角都與它的外角互補</strong>：內角 \(+\) 外角 \(= 180^\circ\)。</li>
+              <li><strong>常見誤會</strong>：把兩邊都延長，兩條延長線所夾的角是內角的對頂角，<strong>不是</strong>外角。</li>
+              <li><strong>外角就是轉彎角</strong>：沿著路線走，在轉角處前進的方向轉過的角，就是那個轉角的外角。例：遊園車從 \(P\) 經過 \(D\) 到 \(Q\)，\(\angle EDF = 70^\circ\)，在 \(D\) 點轉了
+                \[180^\circ - 70^\circ = 110^\circ\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・內角與外角</span>
+              內角 \(+\) 它的外角 \(= 180^\circ\)<br>
+              轉角處轉過的角 \(=\) 該轉角的外角
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_turn.webp" alt="銅版畫博物圖鑑風插圖：阿蜂沿著花圃間的碎石小徑走到一個轉角，小徑在這裡向左轉彎；他停在轉角處，身體已經轉向新的方向。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：花圃小徑的轉彎角</h3>
+            <p class="interactive-instruction">「轉彎」模式拉動 \(\angle ABC\)，看走到 \(B\) 點要轉幾度；切到「兩個外角」，看同一個內角延長不同的邊得到的兩個外角，以及那個「不是外角」的角。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-turn" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tn-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="tn-mode-group">
+                      <button class="pick-btn active" data-tn-mode="walk">轉彎</button>
+                      <button class="pick-btn" data-tn-mode="two">兩個外角</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tn-a">內角：<span id="tn-va" class="val-num">120</span>°</label>
+                    <input type="range" id="tn-a" min="30" max="175" value="120" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tn-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (外角與轉彎角)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 阿蜂從 \(A\) 點走到 \(B\) 點，轉彎後走到 \(C\) 點，再轉彎走到 \(D\) 點，兩次都向左轉。若 \(\angle ABC = 118^\circ\)、\(\angle BCD = 141^\circ\)，他一共轉了多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-7" value="A"><span class="option-text">A. \(101^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="B"><span class="option-text">B. \(259^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="C"><span class="option-text">C. \(62^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="D"><span class="option-text">D. \(23^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。每次轉的角是那個轉角的外角：
+              \[\begin{aligned} & (180^\circ - 118^\circ) + (180^\circ - 141^\circ) \\ & = 62^\circ + 39^\circ = 101^\circ \end{aligned}\]
+              B 錯：\(118^\circ + 141^\circ\) 是兩個轉角本身的和，不是轉過的角。<br>
+              C 錯：\(62^\circ\) 只算了在 \(B\) 點的那一次轉彎。<br>
+              D 錯：\(141^\circ - 118^\circ\) 沒有意義，轉彎角要各自用 \(180^\circ\) 減。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> \(\triangle ABC\) 中，\(\angle A = 64^\circ\)。延長 \(\overline{BA}\) 超過 \(A\) 點，與 \(\overline{AC}\) 所夾的角為 \(\angle 1\)；延長 \(\overline{CA}\) 超過 \(A\) 點，與 \(\overline{AB}\) 所夾的角為 \(\angle 2\)。下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-8" value="A"><span class="option-text">A. \(\angle 1 = 116^\circ\)，\(\angle 2 = 64^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="B"><span class="option-text">B. \(\angle 1 = \angle 2 = 26^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="C"><span class="option-text">C. \(\angle 1 + \angle 2 = 180^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="D"><span class="option-text">D. \(\angle 1 = \angle 2 = 116^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\angle 1\)、\(\angle 2\) 都是「一邊與另一邊的延長線」所夾的角，都是 \(\angle A\) 的外角，各自與 \(\angle A\) 互補：
+              \[\angle 1 = \angle 2 = 180^\circ - 64^\circ = 116^\circ\]
+              A 錯：\(\angle 2\) 也是外角，不是 \(\angle A\) 的對頂角。兩條延長線所夾的那個角才是 \(64^\circ\)。<br>
+              B 錯：\(90^\circ - 64^\circ\) 是餘角，外角與內角是互補。<br>
+              C 錯：兩個外角是對頂角，一樣大，和是 \(232^\circ\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 三角形外角和
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-rotate" aria-hidden="true"></i> <span>重點 5：三角形外角和定理——一組外角和是 \(360^\circ\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>每個頂點各取一個外角，合起來稱為三角形的<strong>一組外角</strong>。</li>
+              <li><strong>繞一圈的想法</strong>：沿三角形的邊走一圈回到出發點，每個頂點轉一次彎，轉過的就是一組外角；把三角形縮成一點，就像在原地轉一整圈，所以合起來是 \(360^\circ\)。</li>
+              <li><strong>用內角和推</strong>：每個內角與它的外角互補，三個頂點加起來是 \(3 \times 180^\circ = 540^\circ\)，扣掉內角和 \(180^\circ\)：
+                \[\begin{aligned} & \angle 1 + \angle 2 + \angle 3 \\ & = 540^\circ - 180^\circ = 360^\circ \end{aligned}\]</li>
+              <li>例：一組外角為 \(2x^\circ\)、\(3x^\circ\)、\(4x^\circ\)，則 \(9x = 360\)、\(x = 40\)，外角為 \(80^\circ\)、\(120^\circ\)、\(160^\circ\)，最大內角是 \(180^\circ - 80^\circ = 100^\circ\)——<strong>最小的外角配最大的內角</strong>。</li>
+              <li>判斷「可不可能是一組外角」：三個角的和要剛好 \(360^\circ\)，而且每一個都要小於 \(180^\circ\)（內角大於 \(0^\circ\)）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・三角形外角和定理</span>
+              任意三角形的一組外角和為 \(360^\circ\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_extsum.webp" alt="銅版畫博物圖鑑風插圖：俯瞰一座三角形的花壇，一隻蜜蜂沿著花壇的三條邊飛一圈，飛行路線以細虛線畫出；小蜜站在花壇一角抬頭看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：繞三角形花壇飛一圈</h3>
+            <p class="interactive-instruction">拉動 \(\angle A\)、\(\angle B\) 改變三角形，右邊把三個外角拼在一起；再把「縮小比例」往左拉，看三個外角越來越靠近、最後像在同一點轉了一整圈。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-xs" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="xs-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="xs-a">\(\angle A\)：<span id="xs-va" class="val-num">70</span>°</label>
+                    <input type="range" id="xs-a" min="10" max="160" value="70" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="xs-b">\(\angle B\)：<span id="xs-vb" class="val-num">45</span>°</label>
+                    <input type="range" id="xs-b" min="10" max="100" value="45" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="xs-s">縮小比例：<span id="xs-vs" class="val-num">100</span>%</label>
+                    <input type="range" id="xs-s" min="10" max="100" value="100" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="xs-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (三角形外角和)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 某三角形的一組外角為 \((3x)^\circ\)、\((4x - 6)^\circ\)、\((3x + 6)^\circ\)，則此三角形最小的內角是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-9" value="A"><span class="option-text">A. \(36^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="B"><span class="option-text">B. \(138^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="C"><span class="option-text">C. \(42^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="D"><span class="option-text">D. \(72^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & 3x + (4x - 6) + (3x + 6) = 360 \\ & 10x = 360,\ x = 36 \end{aligned}\]
+              三個外角是 \(108^\circ\)、\(138^\circ\)、\(114^\circ\)，對應的內角是 \(72^\circ\)、\(42^\circ\)、\(66^\circ\)。最大的外角 \(138^\circ\) 配最小的內角 \(42^\circ\)。<br>
+              A 錯：\(36\) 是 \(x\) 的值。<br>
+              B 錯：\(138^\circ\) 是最大的外角，還要換成內角。<br>
+              D 錯：\(72^\circ\) 是最小外角 \(108^\circ\) 對應的內角，它是最大的內角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 下列哪一組角度，可能是某一個三角形的一組外角？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-10" value="A"><span class="option-text">A. \(100^\circ\)、\(120^\circ\)、\(130^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="B"><span class="option-text">B. \(97^\circ\)、\(126^\circ\)、\(137^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="C"><span class="option-text">C. \(60^\circ\)、\(120^\circ\)、\(180^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="D"><span class="option-text">D. \(110^\circ\)、\(115^\circ\)、\(145^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(97^\circ + 126^\circ + 137^\circ = 360^\circ\)，而且每個都小於 \(180^\circ\)；對應的內角 \(83^\circ\)、\(54^\circ\)、\(43^\circ\) 加起來正好 \(180^\circ\)。<br>
+              A 錯：和是 \(350^\circ\)，不是 \(360^\circ\)。<br>
+              C 錯：和雖然是 \(360^\circ\)，但外角 \(180^\circ\) 對應的內角是 \(0^\circ\)，畫不出三角形。<br>
+              D 錯：和是 \(370^\circ\)，不是 \(360^\circ\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 三角形外角定理
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-plus" aria-hidden="true"></i> <span>重點 6：三角形外角定理——外角等於不相鄰兩內角的和</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\triangle ABC\) 中，\(\angle 1\) 是 \(\angle A\) 的外角（\(\angle 4 = \angle A\)、\(\angle 5 = \angle B\)、\(\angle 6 = \angle C\)）：
+                \[\begin{aligned} & \angle 1 + \angle 4 = 180^\circ \\ & \angle 4 + \angle 5 + \angle 6 = 180^\circ \end{aligned}\]
+                兩式比較，得 \(\angle 1 = \angle 5 + \angle 6\)。</li>
+              <li>和外角<strong>相鄰</strong>的那個內角不算；要加的是<strong>另外兩個</strong>內角。</li>
+              <li>例：\(\angle B = 30^\circ\)、\(\angle C = 45^\circ\)，\(\angle A\) 的外角 \(= 30^\circ + 45^\circ = 75^\circ\)，不必先求 \(\angle A\)。</li>
+              <li>例：\(\angle B\) 的外角為 \(120^\circ\)，且 \(\angle C = 2\angle A\)。設 \(\angle A = x^\circ\)，
+                \[\begin{aligned} & x + 2x = 120 \\ & x = 40 \end{aligned}\]</li>
+              <li>反過來也好用：外角 \(-\) 一個不相鄰的內角 \(=\) 另一個不相鄰的內角。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・三角形外角定理</span>
+              三角形的任一外角，等於其<strong>不相鄰</strong>兩內角的和<br>
+              \(\angle ACD = \angle A + \angle B\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_extthm.webp" alt="銅版畫博物圖鑑風插圖：工作桌上平放一個三角形的木框，阿蜂把一把黃銅直尺貼著木框的底邊、從右下角往外伸出去，延長了這一條邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：把兩個內角搬進外角</h3>
+            <p class="interactive-instruction">拉動 \(\angle A\)、\(\angle B\)，看外角 \(\angle ACD\) 的度數；按「搬過去看看」，過 \(C\) 作 \(\overline{BA}\) 的平行線，外角被切成剛好等於 \(\angle B\) 與 \(\angle A\) 的兩塊。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-xt" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="xt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">顯示</span>
+                    <div class="btn-group" id="xt-mode-group">
+                      <button class="pick-btn active" data-xt-mode="sep">分開看</button>
+                      <button class="pick-btn" data-xt-mode="move">搬過去看看</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="xt-a">\(\angle A\)：<span id="xt-va" class="val-num">55</span>°</label>
+                    <input type="range" id="xt-a" min="10" max="160" value="55" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="xt-b">\(\angle B\)：<span id="xt-vb" class="val-num">65</span>°</label>
+                    <input type="range" id="xt-b" min="10" max="115" value="65" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="xt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (外角定理)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> \(\triangle ABC\) 中，\(\angle C\) 的外角為 \(128^\circ\)，且 \(\angle A = 3\angle B\)，則 \(\angle A\) 是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-11" value="A"><span class="option-text">A. \(32^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="B"><span class="option-text">B. \(39^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="C"><span class="option-text">C. \(52^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="D"><span class="option-text">D. \(96^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\angle C\) 的外角等於不相鄰的 \(\angle A + \angle B\)。設 \(\angle B = x^\circ\)，
+              \[\begin{aligned} & 3x + x = 128 \\ & x = 32 \end{aligned}\]
+              \(\angle A = 3 \times 32^\circ = 96^\circ\)。<br>
+              A 錯：\(32^\circ\) 是 \(\angle B\)。<br>
+              B 錯：誤列 \(4x = 180 - 128 = 52\)、再算 \(\angle A = 3 \times 13 = 39\)。\(52^\circ\) 是 \(\angle C\) 本身，外角定理要加的是另外兩個內角。<br>
+              C 錯：\(52^\circ\) 是 \(\angle C\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 如圖，\(\triangle ABC\) 中，\(D\) 點在 \(\overline{BC}\) 上。若 \(\angle B = 47^\circ\)、\(\angle BAD = 29^\circ\)、\(\angle DAC = 38^\circ\)，則 \(\angle C\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q12" width="320" height="220" role="img" aria-label="三角形 ABC，D 點在 BC 上，標示角 B 47 度、角 BAD 29 度、角 DAC 38 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-12" value="A"><span class="option-text">A. \(66^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="B"><span class="option-text">B. \(76^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="C"><span class="option-text">C. \(104^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="D"><span class="option-text">D. \(85^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle ADC\) 是 \(\triangle ABD\) 的外角：
+              \[\begin{aligned} & \angle ADC = 47^\circ + 29^\circ = 76^\circ \\ & \angle C = 180^\circ - 76^\circ - 38^\circ = 66^\circ \end{aligned}\]
+              驗算：\(\triangle ABC\) 中 \(47^\circ + (29^\circ + 38^\circ) + 66^\circ = 180^\circ\)。<br>
+              B 錯：\(76^\circ\) 是 \(\angle ADC\)。<br>
+              C 錯：\(104^\circ\) 是 \(\angle ADB\)。<br>
+              D 錯：\(47^\circ + 38^\circ\) 把不在同一個三角形的兩個角加在一起。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 8 字形
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> <span>重點 7：8 字形——\(\angle A + \angle B = \angle C + \angle D\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\overline{AD}\) 與 \(\overline{BC}\) 交於 \(O\) 點，連接 \(\overline{AB}\) 與 \(\overline{CD}\)，得到上下兩個三角形，形狀像「8」或沙漏。</li>
+              <li><strong>解法一（外角定理）</strong>：\(\angle 1\) 同時是 \(\triangle AOB\) 與 \(\triangle COD\) 的外角，所以 \(\angle 1 = \angle A + \angle B\)，也 \(= \angle C + \angle D\)。</li>
+              <li><strong>解法二（內角和）</strong>：兩個三角形的內角和都是 \(180^\circ\)，而 \(\angle AOB = \angle COD\)（對頂角），扣掉這個相同的角，剩下的兩角和相等。</li>
+              <li>例：\(\angle A = x^\circ\)、\(\angle B = 45^\circ\)、\(\angle C = (2x - 5)^\circ\)、\(\angle D = 30^\circ\)，
+                \[\begin{aligned} & x + 45 = (2x - 5) + 30 \\ & x = 20 \end{aligned}\]</li>
+              <li><strong>五角星</strong>：連接其中兩個尖角之間的線段，就能用 8 字形把五個尖角搬進同一個三角形裡，所以五個尖角的和是 \(180^\circ\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・8 字形</span>
+              \(\overline{AD}\)、\(\overline{BC}\) 交於 \(O\) ⇒ \(\angle A + \angle B = \angle C + \angle D\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_eight.webp" alt="銅版畫博物圖鑑風插圖：花園裡兩根細長的竹竿斜插在地上交叉成 X，上端兩個竿頭之間綁了一條水平的麻繩，下端兩個竿腳之間也綁了一條麻繩，整體像一個沙漏；小蜜蹲在旁邊打繩結。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：沙漏形的竹竿架</h3>
+            <p class="interactive-instruction">拉動 \(\angle A\)、\(\angle B\)、\(\angle C\)，\(\angle D\) 會自動算出來。不論怎麼調，上下兩個三角形中間那對對頂角一樣大，所以 \(\angle A + \angle B\) 永遠等於 \(\angle C + \angle D\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-eight" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="eg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="eg-a">\(\angle A\)：<span id="eg-va" class="val-num">45</span>°</label>
+                    <input type="range" id="eg-a" min="20" max="80" value="45" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eg-b">\(\angle B\)：<span id="eg-vb" class="val-num">60</span>°</label>
+                    <input type="range" id="eg-b" min="20" max="80" value="60" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eg-c">\(\angle C\)：<span id="eg-vc" class="val-num">40</span>°</label>
+                    <input type="range" id="eg-c" min="15" max="90" value="40" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="eg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (8 字形)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 如圖，\(\overline{AD}\) 與 \(\overline{BC}\) 交於 \(O\) 點，連接 \(\overline{AB}\) 與 \(\overline{CD}\)。若 \(\angle A = x^\circ\)、\(\angle B = 58^\circ\)、\(\angle C = (2x - 26)^\circ\)、\(\angle D = 43^\circ\)，則 \(x\) 是多少？</p>
+            <canvas class="quiz-fig" data-fig="q13" width="320" height="220" role="img" aria-label="AD 與 BC 交於 O 點的 8 字形，標示角 A 為 x 度、角 B 58 度、角 C 為 2x 減 26 度、角 D 43 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-13" value="A"><span class="option-text">A. \(56\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="B"><span class="option-text">B. \(99\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="C"><span class="option-text">C. \(41\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="D"><span class="option-text">D. \(81\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。8 字形 \(\angle A + \angle B = \angle C + \angle D\)：
+              \[\begin{aligned} & x + 58 = (2x - 26) + 43 \\ & x + 58 = 2x + 17 \\ & x = 41 \end{aligned}\]
+              驗算：\(41 + 58 = 99\)、\(56 + 43 = 99\)。<br>
+              A 錯：\(56\) 是 \(\angle C\) 的度數，不是 \(x\)。<br>
+              B 錯：\(99\) 是 \(\angle A + \angle B\)。<br>
+              D 錯：\(81\) 是中間那對對頂角 \(\angle AOB\) 的度數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 如圖，五角星 \(ABCDE\) 的五個尖角中，\(\angle A = 31^\circ\)、\(\angle B = 38^\circ\)、\(\angle C = 42^\circ\)、\(\angle D = 29^\circ\)，則 \(\angle E\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q14" width="320" height="220" role="img" aria-label="五角星 ABCDE 的示意圖，四個尖角標示 31 度、38 度、42 度、29 度，第五個尖角 E 待求"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-14" value="A"><span class="option-text">A. \(220^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="B"><span class="option-text">B. \(140^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="C"><span class="option-text">C. \(400^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="D"><span class="option-text">D. \(40^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。五角星五個尖角的和是 \(180^\circ\)（用 8 字形把其中兩個尖角搬進另一個三角形）：
+              \[\begin{aligned} & 31^\circ + 38^\circ + 42^\circ + 29^\circ \\ & = 140^\circ \\ & \angle E = 180^\circ - 140^\circ \\ & = 40^\circ \end{aligned}\]
+              A 錯：誤把五個尖角的和當成 \(360^\circ\)。<br>
+              B 錯：\(140^\circ\) 是四個已知角的和。<br>
+              C 錯：誤把五個尖角的和當成五邊形的內角和 \(540^\circ\)；尖角不是五邊形的內角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 鏢形與輔助線
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-location-arrow" aria-hidden="true"></i> <span>重點 8：鏢形——\(\angle BCD = \angle A + \angle B + \angle D\)，認識輔助線</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>四邊形 \(ABCD\) 的 \(C\) 點往內凹（凹四邊形），形狀像飛鏢的箭頭，稱為<strong>鏢形</strong>。這裡的 \(\angle BCD\) 指凹口那一側、小於 \(180^\circ\) 的角。</li>
+              <li><strong>解法一（外角定理）</strong>：連接 \(\overline{AC}\) 並延長，把圖形分成 \(\triangle ABC\) 與 \(\triangle ADC\)。\(\angle 1\)、\(\angle 2\) 分別是它們的外角：
+                \[\begin{aligned} & \angle 1 = \angle B + \angle 3 \\ & \angle 2 = \angle D + \angle 4 \end{aligned}\]
+                相加得
+                \[\begin{aligned} & \angle BCD \\ & = \angle B + \angle D + (\angle 3 + \angle 4) \\ & = \angle A + \angle B + \angle D \end{aligned}\]</li>
+              <li><strong>解法二（內角和）</strong>：連接 \(\overline{BD}\)，比較 \(\triangle BCD\) 與 \(\triangle ABD\) 的內角和，也能得到同一個結果。</li>
+              <li>像 \(\overline{AC}\) 的延長線、\(\overline{BD}\) 這樣在原圖上添加的線，稱為<strong>輔助線</strong>。適當加輔助線，常能把複雜的圖拆成會算的三角形。</li>
+              <li>例：鏢形中 \(\angle A = 60^\circ\)、\(\angle B = 25^\circ\)、\(\angle D = 35^\circ\)，則 \(\angle BCD\)<wbr>\({}= 60^\circ + 25^\circ + 35^\circ\)<wbr>\({}= 120^\circ\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・鏢形</span>
+              凹進去的角 \(=\) 另外三個角的和<br>
+              \(\angle BCD = \angle A + \angle B + \angle D\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_dart.webp" alt="銅版畫博物圖鑑風插圖：阿蜂雙手舉著一只箭頭形狀的紙風箏，風箏的下緣往內凹進去一個缺口，整體像一枚鏢頭；小蜜站在一旁拉著風箏線。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：箭頭形的風箏骨架</h3>
+            <p class="interactive-instruction">拉動 \(\angle A\)、\(\angle B\)、\(\angle D\)，看凹進去的 \(\angle BCD\) 跟著怎麼變；按「連 \(\overline{AC}\) 並延長」，看輔助線把它拆成兩個三角形的外角。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dart" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">輔助線</span>
+                    <div class="btn-group" id="dt-mode-group">
+                      <button class="pick-btn active" data-dt-mode="plain">不畫</button>
+                      <button class="pick-btn" data-dt-mode="aux">連 \(\overline{AC}\) 並延長</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="dt-a">\(\angle A\)：<span id="dt-va" class="val-num">50</span>°</label>
+                    <input type="range" id="dt-a" min="30" max="90" value="50" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dt-b">\(\angle B\)：<span id="dt-vb" class="val-num">30</span>°</label>
+                    <input type="range" id="dt-b" min="10" max="60" value="30" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dt-d">\(\angle D\)：<span id="dt-vd" class="val-num">20</span>°</label>
+                    <input type="range" id="dt-d" min="10" max="60" value="20" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (鏢形)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 如圖，鏢形 \(ABCD\) 中，\(C\) 點凹進去。若 \(\angle A = 52^\circ\)、\(\angle B = 23^\circ\)、\(\angle D = 31^\circ\)，則凹口那一側的 \(\angle BCD\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q15" width="320" height="220" role="img" aria-label="鏢形 ABCD，C 點凹進去，標示角 A 52 度、角 B 23 度、角 D 31 度，角 BCD 待求"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-15" value="A"><span class="option-text">A. \(106^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="B"><span class="option-text">B. \(74^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="C"><span class="option-text">C. \(254^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="D"><span class="option-text">D. \(128^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。鏢形凹進去的角等於另外三個角的和：
+              \[\begin{aligned} & \angle BCD \\ & = 52^\circ + 23^\circ + 31^\circ \\ & = 106^\circ \end{aligned}\]
+              B 錯：\(180^\circ - 106^\circ\) 多做了一次求補角。<br>
+              C 錯：\(360^\circ - 106^\circ = 254^\circ\) 是鏢形在 \(C\) 點的內角（凹角），不是凹口那一側的 \(\angle BCD\)。<br>
+              D 錯：\(180^\circ - 52^\circ\) 只用了 \(\angle A\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 如圖，鏢形 \(ABCD\) 中，凹口那一側的 \(\angle BCD = 137^\circ\)，\(\angle A = 64^\circ\)、\(\angle B = 41^\circ\)，則 \(\angle D\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q16" width="320" height="220" role="img" aria-label="鏢形 ABCD，標示角 A 64 度、角 B 41 度、角 BCD 137 度，角 D 待求"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-16" value="A"><span class="option-text">A. \(105^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="B"><span class="option-text">B. \(32^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="C"><span class="option-text">C. \(43^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="D"><span class="option-text">D. \(73^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。由 \(\angle BCD = \angle A + \angle B + \angle D\)：
+              \[\begin{aligned} & 137^\circ = 64^\circ + 41^\circ + \angle D \\ & \angle D = 32^\circ \end{aligned}\]
+              A 錯：\(105^\circ\) 是 \(\angle A + \angle B\)，還沒扣。<br>
+              C 錯：\(180^\circ - 137^\circ\) 是把 \(\angle BCD\) 當成內角求補角。<br>
+              D 錯：\(137^\circ - 64^\circ\) 漏減了 \(\angle B\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: n 邊形內角和
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-draw-polygon" aria-hidden="true"></i> <span>重點 9：凸多邊形與 \(n\) 邊形內角和 \((n - 2) \times 180^\circ\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>把多邊形的任意一邊延長，其他各邊都在延長線的同一側，稱為<strong>凸多邊形</strong>；不是凸多邊形的稱為<strong>凹多邊形</strong>（例如鏢形）。凸多邊形的每個內角都小於 \(180^\circ\)。國中階段沒特別說明時，多邊形都指凸多邊形。</li>
+              <li>有 \(n\) 個邊的多邊形稱為 \(n\) 邊形。從一個頂點出發，連不到自己和相鄰的兩個頂點，所以能畫出 \((n - 3)\) 條對角線，把它切成 \((n - 2)\) 個三角形。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>\(n\) 邊形</th><th>對角線</th><th>三角形</th><th>內角和</th></tr></thead>
+                <tbody>
+                  <tr><td>四邊形</td><td>\(1\)</td><td>\(2\)</td><td>\(360^\circ\)</td></tr>
+                  <tr><td>五邊形</td><td>\(2\)</td><td>\(3\)</td><td>\(540^\circ\)</td></tr>
+                  <tr><td>六邊形</td><td>\(3\)</td><td>\(4\)</td><td>\(720^\circ\)</td></tr>
+                  <tr><td>七邊形</td><td>\(4\)</td><td>\(5\)</td><td>\(900^\circ\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list">
+              <li>例：十邊形的內角和 \(= (10 - 2) \times 180^\circ = 1440^\circ\)。</li>
+              <li><strong>從內部一點切</strong>：連到 \(n\) 個頂點會切出 \(n\) 個三角形，但圍著中間那一點的一整圈 \(360^\circ\) 不是內角，要扣掉：\(n \times 180^\circ - 360^\circ\)<wbr>\({}= (n - 2) \times 180^\circ\)。四邊形切成 4 個三角形，內角和不是 \(720^\circ\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・n 邊形內角和定理</span>
+              \(n\) 邊形的內角和為 \((n - 2) \times 180^\circ\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_ngon.webp" alt="銅版畫博物圖鑑風插圖：俯瞰一座五邊形的花壇，從其中一個角落的木樁拉出兩條白色細繩到對面的兩個角落，把花壇分成三塊三角形，三塊各種了不同顏色的花；小蜜握著繩頭站在那個角落。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：用繩子切開花壇</h3>
+            <p class="interactive-instruction">拉動 \(n\)，看從一個頂點畫出幾條對角線、切成幾個三角形；切到「從內部一點」，看為什麼要扣掉中間的 \(360^\circ\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ngon" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ng-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">切法</span>
+                    <div class="btn-group" id="ng-mode-group">
+                      <button class="pick-btn active" data-ng-mode="vertex">從一個頂點</button>
+                      <button class="pick-btn" data-ng-mode="inside">從內部一點</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ng-n">邊數 \(n\)：<span id="ng-vn" class="val-num">6</span></label>
+                    <input type="range" id="ng-n" min="3" max="10" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ng-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (n 邊形內角和)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 十三邊形的內角和是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-17" value="A"><span class="option-text">A. \(2340^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="B"><span class="option-text">B. \(2160^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="C"><span class="option-text">C. \(1980^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="D"><span class="option-text">D. \(1800^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & (13 - 2) \times 180^\circ \\ & = 11 \times 180^\circ = 1980^\circ \end{aligned}\]
+              A 錯：\(13 \times 180^\circ\) 沒有減 \(2\)。<br>
+              B 錯：\(12 \times 180^\circ\) 只減了 \(1\)。<br>
+              D 錯：\(10 \times 180^\circ\) 用的是對角線條數 \(13 - 3\)，三角形個數是 \(13 - 2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 一個凸 \(n\) 邊形，從其中一個頂點畫出所有的對角線，把它分成 \(14\) 個三角形。則 \(n\) 與這個 \(n\) 邊形的內角和分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-18" value="A"><span class="option-text">A. \(n = 16\)，內角和 \(2520^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="B"><span class="option-text">B. \(n = 14\)，內角和 \(2160^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="C"><span class="option-text">C. \(n = 17\)，內角和 \(2700^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="D"><span class="option-text">D. \(n = 16\)，內角和 \(2880^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。三角形個數是 \(n - 2 = 14\)，所以 \(n = 16\)；內角和就是 \(14\) 個三角形的角：\(14 \times 180^\circ = 2520^\circ\)。<br>
+              B 錯：把三角形個數當成邊數。<br>
+              C 錯：\(n - 3\) 是對角線條數，不是三角形個數。<br>
+              D 錯：\(16 \times 180^\circ\) 用的是邊數，應該乘三角形個數 \(14\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 正 n 邊形的內角與外角
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-hexagon-nodes" aria-hidden="true"></i> <span>重點 10：正 \(n\) 邊形的每一個內角與每一個外角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>正 \(n\) 邊形</strong>：每條邊都等長、每個內角都相等。內角和 \((n - 2) \times 180^\circ\) 平分給 \(n\) 個角：
+                \[\text{每一個內角} = \frac{(n - 2) \times 180^\circ}{n}\]</li>
+              <li>每個內角與它的外角互補，\(n\) 個外角也一樣大，合起來 \(360^\circ\)：
+                \[\begin{aligned} & \text{每一個外角} = \frac{360^\circ}{n} \\ & \text{每一個內角} = 180^\circ - \frac{360^\circ}{n} \end{aligned}\]</li>
+              <li>例：正五邊形每一個內角 \(108^\circ\)、外角 \(72^\circ\)；新版 1 英鎊硬幣是正十二邊形，每一個內角 \(\frac{10 \times 180^\circ}{12} = 150^\circ\)。</li>
+              <li><strong>只有「正」多邊形才能平分</strong>：六邊形的內角和是 \(720^\circ\)，但一般六邊形的六個角不一定都是 \(120^\circ\)。</li>
+              <li><strong>拼在一起的正多邊形</strong>：正五邊形與正六邊形各有一邊在同一直線上、又有一個頂點重合，兩條斜邊和直線圍成一個三角形，底角分別是兩者的外角 \(72^\circ\)、\(60^\circ\)，頂角 \(= 180^\circ - 72^\circ - 60^\circ = 48^\circ\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・正 n 邊形的內角與外角</span>
+              每一個內角 \(= \frac{(n - 2) \times 180^\circ}{n} = 180^\circ - \frac{360^\circ}{n}\)<br>
+              每一個外角 \(= \frac{360^\circ}{n}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_regular.webp" alt="銅版畫博物圖鑑風插圖：一片蜂巢框的特寫，蜂巢由大小相同的正六邊形格子緊密排列；小蜜把一只半圓形的黃銅量角器貼在其中一格的角上量角度。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：正多邊形的角規</h3>
+            <p class="interactive-instruction">拉動 \(n\)，看正 \(n\) 邊形的每一個內角與外角；切到「內角和相同、角不一樣」，看一般的 \(n\) 邊形為什麼不能用內角和除以 \(n\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-reg" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="rg-mode-group">
+                      <button class="pick-btn active" data-rg-mode="reg">正 \(n\) 邊形</button>
+                      <button class="pick-btn" data-rg-mode="irr">內角和相同、角不一樣</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rg-n">邊數 \(n\)：<span id="rg-vn" class="val-num">6</span></label>
+                    <input type="range" id="rg-n" min="3" max="12" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (正 n 邊形)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 正十八邊形的每一個內角是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-19" value="A"><span class="option-text">A. \(20^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="B"><span class="option-text">B. \(2880^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="C"><span class="option-text">C. \(170^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="D"><span class="option-text">D. \(160^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。每一個外角 \(= 360^\circ \div 18 = 20^\circ\)，所以每一個內角 \(= 180^\circ - 20^\circ = 160^\circ\)。也可以算 \(\frac{16 \times 180^\circ}{18} = 160^\circ\)。<br>
+              A 錯：\(20^\circ\) 是每一個外角。<br>
+              B 錯：\(2880^\circ\) 是內角和，還要除以 \(18\)。<br>
+              C 錯：\(180^\circ - 180^\circ \div 18\) 把外角和寫成 \(180^\circ\)，外角和是 \(360^\circ\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 如圖，正五邊形與正八邊形各有一邊在直線 \(L\) 上，且兩個圖形有一個頂點重合於 \(P\) 點，則 \(\angle 1\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q20" width="320" height="220" role="img" aria-label="正五邊形在左、正八邊形在右，各有一邊在直線 L 上，兩圖形的一個頂點重合於 P，P 點下方兩邊所夾的角為角 1"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-20" value="A"><span class="option-text">A. \(117^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="B"><span class="option-text">B. \(27^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="C"><span class="option-text">C. \(63^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="D"><span class="option-text">D. \(45^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩條斜邊與直線 \(L\) 圍成一個三角形，兩個底角分別是正五邊形與正八邊形的外角：
+              \[\begin{aligned} & 360^\circ \div 5 = 72^\circ,\ 360^\circ \div 8 = 45^\circ \\ & \angle 1 = 180^\circ - 72^\circ - 45^\circ = 63^\circ \end{aligned}\]
+              A 錯：\(72^\circ + 45^\circ\) 是兩個底角的和，還要用 \(180^\circ\) 減。<br>
+              B 錯：\(135^\circ - 108^\circ\) 是兩個內角的差，沒有意義。<br>
+              D 錯：\(45^\circ\) 只是正八邊形的外角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 由角度反求 n
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span>重點 11：已知角度，反求正 \(n\) 邊形的 \(n\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先換成外角最快</strong>：正 \(n\) 邊形的外角都一樣大、合起來 \(360^\circ\)，所以
+                \[n = 360 \div \text{每一個外角}\]</li>
+              <li>例：每一個內角 \(156^\circ\)，外角 \(= 180^\circ - 156^\circ = 24^\circ\)，\(n = 360 \div 24 = 15\)。也可以解 \(180 - \frac{360}{n} = 156\)，答案相同。</li>
+              <li><strong>內角是外角的幾倍</strong>：設外角 \(x^\circ\)，內角就是倍數乘 \(x^\circ\)，兩者互補列式。例：內角是外角的 \(3\) 倍，
+                \[\begin{aligned} & x + 3x = 180,\ x = 45 \\ & n = 360 \div 45 = 8 \end{aligned}\]</li>
+              <li><strong>算出來不是整數就不存在</strong>：每一個內角 \(130^\circ\) 時外角 \(50^\circ\)，\(360 \div 50\) 不是整數，所以沒有這樣的正多邊形。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・反求邊數</span>
+              外角 \(= 180^\circ -\) 內角，\(n = \frac{360^\circ}{\text{外角}}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ia_findn.webp" alt="銅版畫博物圖鑑風插圖：花園角落一座正八角形的木造涼亭，八根柱子撐著八角形屋頂；阿蜂站在涼亭前仰頭，伸出手指一根一根數著柱子。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：反推涼亭有幾個邊</h3>
+            <p class="interactive-instruction">「已知內角」模式拉動每一個內角的度數，跟著三個步驟求 \(n\)，也看看哪些角度根本做不出正多邊形；切到「內角是外角的 \(k\) 倍」，選一個倍數，用設未知數的方法求 \(n\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fn" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fn-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知</span>
+                    <div class="btn-group" id="fn-mode-group">
+                      <button class="pick-btn active" data-fn-mode="int">已知內角</button>
+                      <button class="pick-btn" data-fn-mode="ratio">內角是外角的 \(k\) 倍</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="fn-k-row">
+                    <span class="btn-group-label">\(k\)</span>
+                    <div class="btn-group" id="fn-k-group">
+                      <button class="pick-btn" data-fn-k="1/2">\(\frac{1}{2}\)</button>
+                      <button class="pick-btn" data-fn-k="1">\(1\)</button>
+                      <button class="pick-btn" data-fn-k="3/2">\(\frac{3}{2}\)</button>
+                      <button class="pick-btn" data-fn-k="2">\(2\)</button>
+                      <button class="pick-btn active" data-fn-k="3">\(3\)</button>
+                      <button class="pick-btn" data-fn-k="4">\(4\)</button>
+                      <button class="pick-btn" data-fn-k="5">\(5\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="fn-a-row">
+                    <label for="fn-a">每一個內角：<span id="fn-va" class="val-num">150</span>°</label>
+                    <input type="range" id="fn-a" min="60" max="175" value="150" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fn-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (反求 n)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 若正 \(n\) 邊形的每一個內角是 \(168^\circ\)，則 \(n\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-21" value="A"><span class="option-text">A. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="B"><span class="option-text">B. \(30\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="C"><span class="option-text">C. \(28\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="D"><span class="option-text">D. \(15\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。每一個外角 \(= 180^\circ - 168^\circ = 12^\circ\)，
+              \[n = 360 \div 12 = 30\]
+              驗算：\(\frac{28 \times 180^\circ}{30} = 168^\circ\)。<br>
+              A 錯：\(12\) 是外角的度數，不是邊數。<br>
+              C 錯：\(28\) 是 \(n - 2\)。<br>
+              D 錯：\(180 \div 12 = 15\) 把外角和寫成 \(180^\circ\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 某正 \(n\) 邊形的每一個內角，恰好是每一個外角的 \(9\) 倍，則 \(n\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-22" value="A"><span class="option-text">A. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="B"><span class="option-text">B. \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="C"><span class="option-text">C. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="D"><span class="option-text">D. \(162\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設每一個外角 \(x^\circ\)，內角 \(9x^\circ\)：
+              \[\begin{aligned} & x + 9x = 180,\ x = 18 \\ & n = 360 \div 18 = 20 \end{aligned}\]
+              B 錯：\(18^\circ\) 是外角的度數。<br>
+              C 錯：\(10\) 是 \(x + 9x\) 的係數，不是邊數。<br>
+              D 錯：\(162^\circ\) 是每一個內角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 內角與外角速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>互餘</strong>：和 \(90^\circ\)；<strong>互補</strong>：和 \(180^\circ\)；只看度數和。</li>
+              <li><strong>對頂角</strong>：兩直線相交、不相鄰的兩角，相等。</li>
+              <li><strong>三角形內角和</strong>：\(180^\circ\)。</li>
+              <li><strong>外角</strong>：一邊與另一邊的延長線所夾的角，與內角互補；轉彎角就是外角。</li>
+              <li><strong>三角形外角和</strong>：一組外角和 \(360^\circ\)。</li>
+              <li><strong>外角定理</strong>：外角 \(=\) 不相鄰兩內角的和。</li>
+              <li><strong>8 字形</strong>：\(\angle A + \angle B = \angle C + \angle D\)；<strong>鏢形</strong>：凹進去的角 \(=\) 另外三角的和。</li>
+              <li><strong>\(n\) 邊形內角和</strong>：\((n - 2) \times 180^\circ\)。</li>
+              <li><strong>正 \(n\) 邊形</strong>：每一個外角 \(\frac{360^\circ}{n}\)，每一個內角 \(180^\circ - \frac{360^\circ}{n}\)；反求 \(n\) 先換成外角。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到蜂巢：為什麼是正六邊形？</h4>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 圍著一個點拼一圈</h5>
+              <p>蜂巢的格子要一格挨一格、不留縫，就必須有幾個相同的角圍著一點剛好拼成 \(360^\circ\)。正六邊形每一個內角 \(180^\circ - 60^\circ = 120^\circ\)，</p>
+              <p>\(3 \times 120^\circ\)<wbr>\({} = 360^\circ\)，三格剛好圍滿。</p>
+              <h5><i class="fa-solid fa-scale-balanced"></i> 正五邊形為什麼不行？</h5>
+              <p>正五邊形每一個內角 \(108^\circ\)：三個是 \(324^\circ\)，留下 \(36^\circ\) 的縫；四個是 \(432^\circ\)，又疊在一起。能單獨拼滿平面的正多邊形只有正三角形（\(6 \times 60^\circ\)）、正方形（\(4 \times 90^\circ\)）和正六邊形；三者之中，同樣的周長，正六邊形圍出的面積最大，蜜蜂用最少的蜂蠟蓋出最大的儲藏空間。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節預告</h5>
+              <p>知道了角的關係之後，下一節「尺規作圖」只用一把沒有刻度的直尺和一支圓規，畫出等長的線段、等大的角、中垂線和角平分線。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

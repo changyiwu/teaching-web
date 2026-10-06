@@ -4,39 +4,1460 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>2-1 函數與函數圖形 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-1 函數與函數圖形 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第2章 函數</div>
-    <h1>2-1 函數與函數圖形</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第二章</span>
+        <h1>2-1 函數與函數圖形</h1>
+        <p>走進一座鐵皮玩具小鎮：投幣的販賣機、跳表的計程車、按小時計費的玩具車出租店，每一台機器都是「放進一個 \(x\)，吐出一個 \(y\)」。這一節先認識<strong>函數</strong>——給定每一個 \(x\)，都恰有一個 \(y\) 與它對應；再學<strong>一次函數</strong>、<strong>常數函數</strong>與<strong>函數值</strong>；最後把函數畫成圖形，認識圖形是直線的<strong>線型函數</strong>，並用它解決收費與計時的生活問題。</p>
+      </div>
+      <!-- Progress navigation (12 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-gears"></i> 函數的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-code-branch"></i> 不是函數</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-tags"></i> 一次與常數函數</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-calculator"></i> 函數值</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-equals"></i> 函數值相等</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-thumbtack"></i> 兩組求函數</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-mountain-sun"></i> 函數值應用</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-braille"></i> 函數圖形</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-chart-line"></i> 線型函數圖形</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-ruler-horizontal"></i> 水平線</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-road"></i> 讀圖應用</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-code-compare"></i> 兩條比較</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（復古鐵皮玩具小鎮）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(252, 165, 165, 0.25);">
+        <h2 class="section-title" style="color: #fca5a5; border-bottom-color: rgba(252, 165, 165, 0.2);">
+          <i class="fa-solid fa-robot" aria-hidden="true" style="color: #fca5a5; text-shadow: 0 0 10px rgba(248, 113, 113, 0.4);"></i> 課前暖身漫畫：投 25 元會掉出哪一瓶？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            鐵皮玩具小鎮的販賣機，每瓶汽水 \(25\) 元：買幾瓶一確定，要付多少錢也跟著確定。阿扣反過來想：「投 \(25\) 元，會掉出哪一瓶？」——<strong style="color:#fca5a5">小鈴指著那一排：25 元的有三種，光知道價錢，說不出是哪一瓶！</strong>
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古鐵皮玩具風四格暖身漫畫：小鈴在鐵皮販賣機前說每瓶汽水 25 元、買 3 瓶要付 75 元；阿扣想反過來投 25 元會掉出哪一瓶；販賣機最上排三罐不同顏色的汽水同樣 25 元，阿扣抱頭苦惱；小鈴指出同一個價錢對到三種飲料，所以說不出是哪一瓶。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 函數的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-gears" aria-hidden="true"></i> <span>重點 1：函數的意義——給定每一個 \(x\)，都恰有一個 \(y\) 與它對應</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>生活中兩種量常常有關係：一種量改變，另一種量也跟著變化。例如每瓶 \(25\) 元的汽水，<strong>買的瓶數</strong>一確定，<strong>總價</strong>就跟著確定。</li>
+              <li>把兩個變數分別用 \(x\)、\(y\) 表示。若<strong>對於給定的每一個 \(x\)，都恰有一個 \(y\) 與它對應</strong>，就說「\(y\) 是 \(x\) 的<strong>函數</strong>」。</li>
+              <li><strong>有沒有算式不是重點</strong>：一年中「月分」對應「當月天數」寫不出一條算式，但每個月分都只有一個天數，所以天數是月分的函數。</li>
+              <li>學過的<strong>正比</strong> \(y = kx\)、<strong>反比</strong> \(y = \frac{k}{x}\)（\(x \ne 0\)），給定每一個 \(x\) 都恰有一個 \(y\)，所以 \(y\) 都是 \(x\) 的函數。</li>
+              <li>本章說的函數，一律是「\(y\) 是 \(x\) 的函數」：\(x\) 是先給定的那一個，\(y\) 是跟著它確定的那一個。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>瓶數 \(x\)（瓶）</th><th>\(1\)</th><th>\(2\)</th><th>\(3\)</th><th>\(4\)</th></tr></thead>
+                <tbody><tr><td>總價 \(y\)（元）</td><td>\(25\)</td><td>\(50\)</td><td>\(75\)</td><td>\(100\)</td></tr></tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・函數</span>
+              對於給定的每一個 \(x\)，都恰有一個 \(y\) 與它對應<br>
+              \(\Rightarrow\)「\(y\) 是 \(x\) 的函數」
+            </div>
+
+            <div class="illustration-container">
+              <img src="tt_machine.webp" alt="復古鐵皮玩具風插圖：小鈴把一枚硬幣投進紅色鐵皮販賣機的投幣口，販賣機下方的取物口掉出一罐汽水，阿扣蹲在取物口前伸手接住。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：函數機</h3>
+            <p class="interactive-instruction">選一台函數機，拉動滑桿決定投進去的 \(x\)。看看每投進一個 \(x\)，是不是都只會掉出一個 \(y\)；下方的對應表裡，每一個 \(x\) 都只射出一支箭頭。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-machine" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="mc-mode-group">
+                      <button class="pick-btn active" data-mc-mode="bottle">瓶數與總價</button>
+                      <button class="pick-btn" data-mc-mode="cups">單價與杯數</button>
+                      <button class="pick-btn" data-mc-mode="month">月分與天數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mc-i">投進去的 \(x\)：<span id="mc-vi" class="val-num">3 瓶</span></label>
+                    <input type="range" id="mc-i" min="1" max="8" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (函數的意義)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 小鈴用 \(300\) 元買單價 \(x\) 元的鐵皮玩具，剛好可以買 \(y\) 個。當 \(x = 20, 25, 50, 60\) 時，對應的 \(y\) 依序為何？\(y\) 是不是 \(x\) 的函數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-1" value="A"><span class="option-text">A. \(15, 12, 6, 5\)；\(y\) 是 \(x\) 的函數</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1" value="B"><span class="option-text">B. \(15, 12, 6, 5\)；\(y\) 不是 \(x\) 的函數</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1" value="C"><span class="option-text">C. \(6000, 7500, 15000, 18000\)；\(y\) 是 \(x\) 的函數</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1" value="D"><span class="option-text">D. \(280, 275, 250, 240\)；\(y\) 是 \(x\) 的函數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。單價乘以個數等於 \(300\)，所以 \(y = \frac{300}{x}\)：\(300 \div 20 = 15\)、\(300 \div 25 = 12\)、\(300 \div 50 = 6\)、\(300 \div 60 = 5\)。每一個單價都只對應一個個數，所以 \(y\) 是 \(x\) 的函數（\(x\)、\(y\) 成反比）。<br>
+              B 錯：\(x\) 變大時 \(y\) 變小，並不影響「每個 \(x\) 恰有一個 \(y\)」。<br>
+              C 錯：把 \(300\) 乘上單價，那不是買得到的個數。<br>
+              D 錯：用 \(300\) 減去單價，那是只買一個時剩下的錢。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 已知 \(x\)、\(y\) 成反比，且 \(x = 4\) 時 \(y = 9\)。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-2" value="A"><span class="option-text">A. \(y\) 不是 \(x\) 的函數，因為 \(x\) 變大時 \(y\) 變小</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2" value="B"><span class="option-text">B. \(y = \frac{36}{x}\)（\(x \ne 0\)），\(y\) 是 \(x\) 的函數</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2" value="C"><span class="option-text">C. \(y = \frac{9}{4}x\)，\(y\) 是 \(x\) 的函數</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2" value="D"><span class="option-text">D. \(y\) 不是 \(x\) 的函數，因為關係式不是 \(y = ax + b\) 的形式</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。成反比表示 \(xy = k\)，\(k = 4 \times 9 = 36\)，所以 \(y = \frac{36}{x}\)（\(x \ne 0\)）。給定每一個 \(x\)，都恰有一個 \(y\) 與它對應，\(y\) 是 \(x\) 的函數。<br>
+              A 錯：增減的方向與是不是函數無關。<br>
+              C 錯：\(y = \frac{9}{4}x\) 是成正比的寫法。<br>
+              D 錯：函數不一定要寫成 \(y = ax + b\)，連寫不出算式的月分與天數都是函數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 不是函數
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-branch" aria-hidden="true"></i> <span>重點 2：不是函數——有一個 \(x\) 對到不只一個 \(y\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>如果<strong>不是每一個給定的 \(x\) 都恰有一個 \(y\)</strong> 與它對應，就說「\(y\) 不是 \(x\) 的函數」。只要找到<strong>一個</strong>這樣的 \(x\) 就夠了。</li>
+              <li>例：2027 年（平年）以天數為 \(x\)、月分為 \(y\)。\(x = 28\) 只對到 \(2\) 月，但 \(x = 30\) 對到 \(4, 6, 9, 11\) 月，\(y\) 不只一個，所以月分<strong>不是</strong>天數的函數。</li>
+              <li><strong>從 \(x\) 畫箭頭到 \(y\)</strong>：一對一、<strong>多對一</strong>都是函數；<strong>一對多</strong>不是函數。</li>
+              <li>最常誤判的是「多對一」：\(1\) 月、\(3\) 月都對到 \(31\) 天，是兩個 \(x\) 對到同一個 \(y\)，<strong>仍然是函數</strong>。要看的是「一個 \(x\) 有幾個 \(y\)」，不是「一個 \(y\) 被幾個 \(x\) 對到」。</li>
+              <li><strong>方向不能反過來</strong>：天數是月分的函數，月分卻不是天數的函數。誰是 \(x\)、誰是 \(y\) 要先看清楚。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>天數 \(x\)（天）</th><th>月分 \(y\)（月）</th><th>\(y\) 有幾個</th></tr></thead>
+                <tbody>
+                  <tr><td>\(28\)</td><td>\(2\)</td><td>\(1\) 個</td></tr>
+                  <tr><td>\(30\)</td><td>\(4\)、\(6\)、\(9\)、\(11\)</td><td>\(4\) 個</td></tr>
+                  <tr><td>\(31\)</td><td>\(1\)、\(3\)、\(5\)、\(7\)、\(8\)、\(10\)、\(12\)</td><td>\(7\) 個</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="tt_price.webp" alt="復古鐵皮玩具風插圖：阿扣手捏一枚硬幣站在販賣機前歪頭苦惱，販賣機最上排並排放著紅、綠、藍三罐不同的汽水；小鈴站在旁邊，用手指著這一排三罐汽水。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：座號與成績的箭頭圖</h3>
+            <p class="interactive-instruction">鐵皮玩具社 6 位社員的小考成績。先看「座號 → 成績」，再切到「成績 → 座號」。拉動 6 號的成績，讓他和別人同分或不同分，看看哪一個方向會出現「一個 \(x\) 射出兩支箭頭」。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-map" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方向</span>
+                    <div class="btn-group" id="mp-dir-group">
+                      <button class="pick-btn active" data-mp-dir="fwd">座號 → 成績</button>
+                      <button class="pick-btn" data-mp-dir="rev">成績 → 座號</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mp-s">6 號的成績：<span id="mp-vs" class="val-num">70</span></label>
+                    <input type="range" id="mp-s" min="60" max="95" value="70" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (不是函數)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 下列各組數對 \((x, y)\) 列出 \(x\)、\(y\) 之間全部的對應，哪一組的 \(y\) <strong>不是</strong> \(x\) 的函數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3" value="A"><span class="option-text">A. \((1, 7), (2, 7), (3, 7), (4, 7)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3" value="B"><span class="option-text">B. \((1, 2), (2, 4), (3, 6), (4, 8)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3" value="C"><span class="option-text">C. \((5, 1), (6, 2), (5, 3), (7, 4)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3" value="D"><span class="option-text">D. \((4, 1), (3, 2), (2, 3), (1, 4)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(x = 5\) 同時對到 \(y = 1\) 與 \(y = 3\)，一個 \(x\) 對到兩個 \(y\)（一對多），所以 \(y\) 不是 \(x\) 的函數。<br>
+              A 錯：四個 \(x\) 都對到 \(7\)，是多對一，仍是函數（而且是常數函數）。<br>
+              B 錯：每個 \(x\) 恰有一個 \(y\)，是函數。<br>
+              D 錯：\(x\) 由大排到小沒有關係，每個 \(x\) 仍恰有一個 \(y\)，是函數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 玩具小鎮的飲料攤：紅茶 \(20\) 元、綠茶 \(20\) 元、奶茶 \(35\) 元、可可 \(40\) 元、檸檬汁 \(30\) 元。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-4" value="A"><span class="option-text">A. 以品項為 \(x\)、價格為 \(y\)，\(y\) 不是 \(x\) 的函數，因為紅茶與綠茶同價</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4" value="B"><span class="option-text">B. 以價格為 \(x\)、品項為 \(y\)，\(y\) 是 \(x\) 的函數，因為每個品項都只有一個價格</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4" value="C"><span class="option-text">C. 以價格為 \(x\)、品項為 \(y\)，\(x = 30\) 時 \(y\) 有兩個值</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4" value="D"><span class="option-text">D. 以價格為 \(x\)、品項為 \(y\)，\(y\) 不是 \(x\) 的函數，因為 \(x = 20\) 對到兩種飲料</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。以價格為 \(x\) 時，\(x = 20\) 對到紅茶與綠茶兩個 \(y\)，所以品項不是價格的函數。<br>
+              A 錯：以品項為 \(x\) 時，每個品項只有一個價格；紅茶、綠茶同價是「多對一」，價格仍是品項的函數。<br>
+              B 錯：「每個品項只有一個價格」說的是另一個方向（品項為 \(x\)），題目這裡的 \(x\) 是價格。<br>
+              C 錯：\(30\) 元只有檸檬汁一種。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 一次函數與常數函數
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-tags" aria-hidden="true"></i> <span>重點 3：一次函數 \(y = ax + b\)（\(a \ne 0\)）與常數函數 \(y = b\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>形如 \(y = ax + b\)（\(a\)、\(b\) 為常數，且 \(a \ne 0\)）的關係式，\(y\) 是 \(x\) 的函數，而且 \(x\) 的最高次數是一次，稱 \(y\) 是 \(x\) 的<strong>一次函數</strong>。</li>
+              <li>例：攝氏 \(x\) 度換成華氏 \(y\) 度，\(y = \frac{9}{5}x + 32\)；兩人合力編 \(100\) 本書，一人編 \(x\) 本、另一人編 \(y\) 本，\(y = -x + 100\)。兩者都是一次函數。</li>
+              <li>形如 \(y = b\)（\(b\) 為常數）的關係式，不論 \(x\) 是多少，對應的 \(y\) 都相同，稱 \(y\) 是 \(x\) 的<strong>常數函數</strong>。</li>
+              <li>例：手機月繳 \(600\) 元不限時數上網，上網 \(x\) 分鐘、該月應繳 \(y\) 元，\(y = 600\)。每一個 \(x\) 都恰有一個 \(y\)（都是 \(600\)），所以<strong>常數函數也是函數</strong>。</li>
+              <li><strong>先化簡再判斷</strong>：\(y = 3(x + 2) - 3x\) 化簡後是 \(y = 6\)，\(x\) 消失了，是常數函數，不是一次函數。</li>
+              <li>\(y = \frac{240}{x}\) 這種反比，是函數，但既不是一次函數也不是常數函數。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tt_buffet.webp" alt="復古鐵皮玩具風插圖：鐵皮玩具迴轉壽司吧台前，小鈴面前疊著一高疊空盤子，阿扣面前只有一個盤子；兩人各把一枚同樣大小的金幣放在吧台上。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：計費機的分類</h3>
+            <p class="interactive-instruction">拉動 \(a\) 與 \(b\)，看對應表裡 \(x\) 每多 \(1\)、\(y\) 變化多少。把 \(a\) 拉到 \(0\)，看看 \(y\) 變成什麼樣子、函數換成哪一類。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-kind" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="kd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="kd-a">\(a\)：<span id="kd-va" class="val-num">3</span></label>
+                    <input type="range" id="kd-a" min="-4" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="kd-b">\(b\)：<span id="kd-vb" class="val-num">2</span></label>
+                    <input type="range" id="kd-b" min="-5" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="kd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (一次函數與常數函數)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 下列哪一個關係式中，\(y\) 是 \(x\) 的常數函數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-5" value="A"><span class="option-text">A. \(y = \frac{x}{6}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5" value="B"><span class="option-text">B. \(y = 5x - 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5" value="C"><span class="option-text">C. \(y = 4(x + 1) - 4x\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5" value="D"><span class="option-text">D. \(y = x - 9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。先化簡：
+              \[\begin{aligned} & y = 4(x + 1) - 4x \\ & = 4x + 4 - 4x = 4 \end{aligned}\]
+              \(x\) 消失了，不論 \(x\) 是多少 \(y\) 都是 \(4\)，是常數函數。<br>
+              A 錯：\(y = \frac{1}{6}x\)，\(a = \frac{1}{6} \ne 0\)，是一次函數。<br>
+              B 錯：\(a = 5 \ne 0\)，是一次函數。<br>
+              D 錯：\(a = 1 \ne 0\)，是一次函數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 某健身房的方案：每月繳 \(650\) 元，可以不限次數使用。設某月使用 \(x\) 次、該月應繳 \(y\) 元，下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-6" value="A"><span class="option-text">A. \(y = 650\)，\(y\) 是 \(x\) 的常數函數</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6" value="B"><span class="option-text">B. \(y = 650x\)，\(y\) 是 \(x\) 的一次函數</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6" value="C"><span class="option-text">C. \(y\) 不是 \(x\) 的函數，因為 \(x\) 改變時 \(y\) 沒有跟著改變</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6" value="D"><span class="option-text">D. \(y = \frac{650}{x}\)，\(y\) 是 \(x\) 的函數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。不論使用幾次，應繳金額都是 \(650\) 元，\(y = 650\)。每個 \(x\) 都恰有一個 \(y\)，是常數函數。<br>
+              B 錯：\(y = 650x\) 表示每用一次付 \(650\) 元，不是「不限次數」。<br>
+              C 錯：函數只要求每個 \(x\) 恰有一個 \(y\)，不要求 \(y\) 跟著變。<br>
+              D 錯：\(\frac{650}{x}\) 是「平均每次花多少錢」，不是應繳金額。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 函數值
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> <span>重點 4：函數值——把 \(x\) 代入，求對應的 \(y\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(y\) 是 \(x\) 的函數時，給定一個 \(x\)，恰有一個 \(y\) 與它對應，這個 \(y\) 稱為此函數在這個 \(x\) 的<strong>函數值</strong>。</li>
+              <li><strong>求法：把 \(x\) 的值代入關係式</strong>。例：一次函數 \(y = 6x - 1\) 在 \(x = -2\) 時，
+              \[\begin{aligned} & y = 6 \times (-2) - 1 \\ & = -12 - 1 = -13 \end{aligned}\]</li>
+              <li><strong>代入負數要加括號</strong>，先乘除、後加減。係數是分數時先乘再約分。</li>
+              <li><strong>常數函數不必代入</strong>：\(y = 420\) 在 \(x = 3\)、\(x = 70\)、\(x = 1000\) 的函數值全都是 \(420\)。</li>
+              <li>\(x\) 要在合適的範圍內，函數值才有意義：「\(x\) 月有 \(y\) 天」在 \(x = 13\) 時沒有函數值，因為沒有 \(13\) 月。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tt_meter.webp" alt="復古鐵皮玩具風插圖：阿扣坐在黃色鐵皮玩具計程車的後座，身體前傾看著儀表板上的圓形計費表；小鈴坐在他旁邊，望向車窗外的玩具小鎮街道。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：代入機</h3>
+            <p class="interactive-instruction">選一個函數，拉動滑桿決定 \(x\)。看代入機怎麼一步一步算出函數值：負數加括號、先乘再加減；選到常數函數時，\(x\) 根本不出現在式子裡。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-value" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="vl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">函數</span>
+                    <div class="btn-group" id="vl-fn-group">
+                      <button class="pick-btn active" data-vl-fn="p1">\(y = 4x - 9\)</button>
+                      <button class="pick-btn" data-vl-fn="p2">\(y = \frac{9}{5}x + 32\)</button>
+                      <button class="pick-btn" data-vl-fn="p3">\(y = 15\)</button>
+                      <button class="pick-btn" data-vl-fn="p4">\(y = -\frac{1}{2}x + 6\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="vl-x">\(x\)：<span id="vl-vx" class="val-num">5</span></label>
+                    <input type="range" id="vl-x" min="-10" max="10" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="vl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (函數值)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 一次函數 \(y = -5x + 8\) 在 \(x = -3\) 時的函數值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-7" value="A"><span class="option-text">A. \(-7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7" value="B"><span class="option-text">B. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7" value="C"><span class="option-text">C. \(-23\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7" value="D"><span class="option-text">D. \(23\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & y = -5 \times (-3) + 8 \\ & = 15 + 8 = 23 \end{aligned}\]
+              A 錯：把 \(x\) 代成 \(3\)：\(-15 + 8 = -7\)，負號掉了。<br>
+              B 錯：乘對了，卻把 \(+8\) 看成 \(-8\)：\(15 - 8 = 7\)。<br>
+              C 錯：把 \(-5 \times (-3)\) 算成 \(-15\)，又把 \(+8\) 看成 \(-8\)：\(-15 - 8 = -23\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 已知 \(y\) 是 \(x\) 的常數函數，且 \(x = 2\) 時 \(y = -6\)。此函數在 \(x = 50\) 時的函數值是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-8" value="A"><span class="option-text">A. \(-150\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8" value="B"><span class="option-text">B. \(-6\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8" value="C"><span class="option-text">C. \(50\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8" value="D"><span class="option-text">D. 條件不足，無法求出</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。常數函數的每一個函數值都相同，由 \(x = 2\) 時 \(y = -6\) 知道函數是 \(y = -6\)，所以 \(x = 50\) 時函數值仍是 \(-6\)。<br>
+              A 錯：當成成正比 \(y = -3x\) 來算，常數函數不會隨 \(x\) 改變。<br>
+              C 錯：\(50\) 是 \(x\)，不是函數值。<br>
+              D 錯：常數函數只要知道一個函數值，就知道全部。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 函數值相等
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> <span>重點 5：函數值相等——代入 \(x = a\)，列方程式解 \(a\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>「兩個函數在 \(x = a\) 時的函數值相等」：把 \(x = a\) <strong>分別代入</strong>兩個函數，再令兩個函數值相等，得到一條一元一次方程式。</li>
+              <li>例：\(y = 5x - 2\) 與 \(y = 2x + 7\) 在 \(x = a\) 時函數值相等：
+              \[\begin{aligned} & 5a - 2 = 2a + 7 \\ & 3a = 9,\ a = 3 \end{aligned}\]
+              驗算：兩個函數值都是 \(13\)。</li>
+              <li>和常數函數比也一樣：\(y = \frac{x + 1}{2}\) 與 \(y = 4\) 在 \(x = a\) 時相等，就解 \(\frac{a + 1}{2} = 4\)，得 \(a = 7\)。</li>
+              <li><strong>反過來由函數值求 \(x\)</strong>：\(y = 3x + 4\) 的函數值是 \(-8\)，就解 \(3x + 4 = -8\)，得 \(x = -4\)。注意 \(-8\) 是 \(y\)，不要把它當成 \(x\) 代入。</li>
+              <li>\(x\) 的係數相同、常數不同（如 \(y = 2x + 1\) 與 \(y = 2x + 5\)）時，兩個函數值永遠差 \(4\)，<strong>沒有</strong>相等的時候。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tt_bank.webp" alt="復古鐵皮玩具風插圖：小鈴與阿扣面對面站在木桌兩側，各自把一個透明圓筒的鐵皮存錢筒放在桌上，兩個筒裡平放疊起的硬幣剛好一樣高。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩台計費機比一比</h3>
+            <p class="interactive-instruction">調整甲（紅）、乙（藍）兩個函數的 \(a\)、\(b\)。上方表格裡兩個函數值相等的那一欄會發亮；下方用方程式把 \(a\) 解出來，也能找到表格外、或不是整數的答案。試試把兩個 \(x\) 的係數調成一樣。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-equal" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="eq-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">比較</span>
+                    <div class="btn-group" id="eq-mode-group">
+                      <button class="pick-btn active" data-eq-mode="two">兩個一次函數</button>
+                      <button class="pick-btn" data-eq-mode="const">和常數 \(k\) 比</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="eq-p">甲的 \(x\) 係數：<span id="eq-vp" class="val-num">2</span></label>
+                    <input type="range" id="eq-p" min="-6" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eq-q">甲的常數：<span id="eq-vq" class="val-num">1</span></label>
+                    <input type="range" id="eq-q" min="-6" max="6" value="1" step="1">
+                  </div>
+                  <div class="slider-row" id="eq-r-row">
+                    <label for="eq-r">乙的 \(x\) 係數：<span id="eq-vr" class="val-num">−1</span></label>
+                    <input type="range" id="eq-r" min="-6" max="6" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eq-s"><span id="eq-s-lab">乙的常數</span>：<span id="eq-vs" class="val-num">4</span></label>
+                    <input type="range" id="eq-s" min="-6" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="eq-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (函數值相等)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 一次函數 \(y = 3x - 11\) 與 \(y = -2x + 9\) 在 \(x = a\) 時的函數值相等，\(a\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-9" value="A"><span class="option-text">A. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-9" value="B"><span class="option-text">B. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-9" value="C"><span class="option-text">C. \(-\frac{2}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-9" value="D"><span class="option-text">D. \(-4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & 3a - 11 = -2a + 9 \\ & 5a = 20,\ a = 4 \end{aligned}\]
+              驗算：\(3 \times 4 - 11 = 1\)，\(-2 \times 4 + 9 = 1\)，相等。<br>
+              A 錯：\(-2a\) 移到左邊沒有變號，寫成 \(3a - 2a = 20\)。<br>
+              C 錯：\(-11\) 移到右邊沒有變號，寫成 \(5a = 9 - 11\)。<br>
+              D 錯：\(5a = 20\) 算成 \(5a = -20\)，正負號弄反了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 函數 \(y = -4x + 7\) 在 \(x = a\) 時的函數值是 \(-13\)，\(a\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-10" value="A"><span class="option-text">A. \(-5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-10" value="B"><span class="option-text">B. \(\frac{3}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-10" value="C"><span class="option-text">C. \(59\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-10" value="D"><span class="option-text">D. \(5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。函數值是 \(y\)，所以解
+              \[\begin{aligned} & -4a + 7 = -13 \\ & -4a = -20,\ a = 5 \end{aligned}\]
+              A 錯：\(-4a = -20\) 兩邊同除以 \(-4\) 時，正負號弄反了。<br>
+              B 錯：\(7\) 移到右邊沒有變號，寫成 \(-4a = -13 + 7 = -6\)。<br>
+              C 錯：把 \(-13\) 當成 \(x\) 代入：\(-4 \times (-13) + 7 = 59\)，那是 \(x = -13\) 時的函數值。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 兩組對應值求一次函數
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-thumbtack" aria-hidden="true"></i> <span>重點 6：由兩組對應值（圖形上的兩點）求一次函數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>一次函數 \(y = ax + b\) 有 \(a\)、\(b\) 兩個未知數，需要<strong>兩組對應值</strong>，代入後解二元一次聯立方程式。</li>
+              <li>「\(x = 2\) 時函數值是 \(8\)」與「圖形通過點 \((2, 8)\)」是<strong>同一件事</strong>：代入的方法完全一樣。</li>
+              <li>例：\(x = 1\) 時 \(y = 5\)、\(x = 4\) 時 \(y = -1\)：
+              \[\begin{cases} a + b = 5 & \cdots ① \\ 4a + b = -1 & \cdots ② \end{cases}\]
+              ② − ① 得 \(3a = -6\)，\(a = -2\)；代回 ① 得 \(b = 7\)，函數是 \(y = -2x + 7\)。</li>
+              <li>其中一組的 \(x = 0\) 最好算：代入後直接得到 \(b\)。</li>
+              <li>兩組的 \(y\) 相同時，相減得 \(a = 0\)，是<strong>常數函數</strong>；兩組的 \(x\) 相同、\(y\) 不同時，一個 \(x\) 對到兩個 \(y\)，<strong>根本不是函數</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tt_pins.webp" alt="復古鐵皮玩具風插圖：牆上一塊軟木板釘著兩枚紅色圖釘，阿扣按著其中一枚，小鈴把一條紅線從一枚圖釘拉直到另一枚圖釘，紅線兩端都繞在圖釘上。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩組求函數</h3>
+            <p class="interactive-instruction">拉動四條滑桿決定兩組對應值，看兩式相減怎麼消去 \(b\)、先求 \(a\) 再求 \(b\)。切到「圖上兩點」，同樣的兩組數就是坐標平面上的兩個點。試試讓兩組的 \(y\) 一樣，或讓兩組的 \(x\) 一樣。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-two" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tw-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">說法</span>
+                    <div class="btn-group" id="tw-mode-group">
+                      <button class="pick-btn active" data-tw-mode="value">兩個函數值</button>
+                      <button class="pick-btn" data-tw-mode="graph">圖上兩點</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tw-x1">第一組 \(x\)：<span id="tw-vx1" class="val-num">1</span></label>
+                    <input type="range" id="tw-x1" min="-5" max="5" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tw-y1">第一組 \(y\)：<span id="tw-vy1" class="val-num">−1</span></label>
+                    <input type="range" id="tw-y1" min="-5" max="5" value="-1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tw-x2">第二組 \(x\)：<span id="tw-vx2" class="val-num">3</span></label>
+                    <input type="range" id="tw-x2" min="-5" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tw-y2">第二組 \(y\)：<span id="tw-vy2" class="val-num">3</span></label>
+                    <input type="range" id="tw-y2" min="-5" max="5" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tw-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩組求函數)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 一次函數 \(y = ax + b\) 在 \(x = 2\) 時的函數值是 \(-1\)，在 \(x = 6\) 時的函數值是 \(11\)，此函數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-11" value="A"><span class="option-text">A. \(y = 3x - 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-11" value="B"><span class="option-text">B. \(y = 3x + 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-11" value="C"><span class="option-text">C. \(y = \frac{1}{3}x - \frac{5}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-11" value="D"><span class="option-text">D. \(y = -3x + 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\begin{cases} 2a + b = -1 & \cdots ① \\ 6a + b = 11 & \cdots ② \end{cases}\]
+              ② − ① 得 \(4a = 12\)，\(a = 3\)；代回 ① 得 \(6 + b = -1\)，\(b = -7\)，函數是 \(y = 3x - 7\)。<br>
+              B 錯：由 \(6 + b = -1\) 求 \(b\) 時，\(6\) 移項沒有變號，算成 \(b = 6 - 1 = 5\)。<br>
+              C 錯：把 \(a\) 算成「\(x\) 的差 \(\div\) \(y\) 的差」\(= \frac{4}{12}\)，上下顛倒了。<br>
+              D 錯：相減時一邊用 \(-1 - 11\)、另一邊用 \(6 - 2\)，順序不一致，得到 \(a = -3\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 函數 \(y = ax + b\) 的圖形是通過 \((-3, 8)\)、\((1, -4)\) 兩點的直線，此函數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-12" value="A"><span class="option-text">A. \(y = 3x - 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-12" value="B"><span class="option-text">B. \(y = -\frac{1}{3}x - \frac{11}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-12" value="C"><span class="option-text">C. \(y = -3x - 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-12" value="D"><span class="option-text">D. \(y = -3x + 1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。把兩點代入 \(y = ax + b\)：
+              \[\begin{cases} -3a + b = 8 & \cdots ① \\ a + b = -4 & \cdots ② \end{cases}\]
+              ② − ① 得 \(4a = -12\)，\(a = -3\)；代回 ② 得 \(-3 + b = -4\)，\(b = -1\)，函數是 \(y = -3x - 1\)。<br>
+              A 錯：\(a\) 的正負號弄反成 \(3\)，再由 ② 得 \(b = -7\)。<br>
+              B 錯：把 \(a\) 算成「\(x\) 的差 \(\div\) \(y\) 的差」\(= \frac{4}{-12}\)，上下顛倒了。<br>
+              D 錯：由 \(-3 + b = -4\) 求 \(b\) 時移項沒有變號，算成 \(b = 1\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 函數值的應用
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-mountain-sun" aria-hidden="true"></i> <span>重點 7：函數值的應用——列出關係式，再代入</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>四個步驟</strong>：設 \(x\)、\(y\) 代表的量 \(\rightarrow\) 由題意列出關係式（判斷是不是函數） \(\rightarrow\) 代入求函數值 \(\rightarrow\) 檢查答案合不合理。</li>
+              <li>例：網路書店把定價打九折再加運費 \(60\) 元。定價 \(x\) 元、應付 \(y\) 元，\(y = 0.9x + 60\) 是一次函數；定價 \(500\) 元時，
+              \[\begin{aligned} & y = 0.9 \times 500 + 60 \\ & = 450 + 60 = 510 \end{aligned}\]</li>
+              <li><strong>單位要先統一</strong>：每分鐘漏水 \(20\) 公升，若 \(x\) 的單位是小時，每小時漏 \(1200\) 公升，\(y = 1200x\)，不是 \(y = 20x\)。</li>
+              <li><strong>\(x\) 要在合適的範圍內</strong>：周長 \(30\) 公分的長方形，長 \(x\)、寬 \(y\)，\(y = 15 - x\)；寬必須是正數，所以 \(0 \lt x \lt 15\)，\(x = 18\) 沒有意義。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tt_mountain.webp" alt="復古鐵皮玩具風插圖：一列紅色鐵皮玩具登山小火車沿著綠色山坡往山頂爬，小鈴坐在車廂裡探出半身，手裡舉著一支沒有刻度數字的玻璃溫度計；阿扣坐在她旁邊指向山頂。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：情境計算台</h3>
+            <p class="interactive-instruction">選一個情境，第一條滑桿改變條件，第二條滑桿改變 \(x\)。看關係式怎麼從情境列出來、代入後得到函數值。長方形情境裡把長拉得太大，看看會發生什麼事。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-apply" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ap-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="ap-mode-group">
+                      <button class="pick-btn active" data-ap-mode="mount">山上的氣溫</button>
+                      <button class="pick-btn" data-ap-mode="rect">鐵絲長方形</button>
+                      <button class="pick-btn" data-ap-mode="leak">水管漏水</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ap-p"><span id="ap-lp">平地氣溫（°C）</span>：<span id="ap-vp" class="val-num">25</span></label>
+                    <input type="range" id="ap-p" min="20" max="30" value="25" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ap-x"><span id="ap-lx">高度 x（公尺）</span>：<span id="ap-vx" class="val-num">2500</span></label>
+                    <input type="range" id="ap-x" min="0" max="3900" value="2500" step="100">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ap-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (函數值的應用)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 玩具店的球鞋一律照定價打八折後再減 \(50\) 元。以 \(x\) 表示定價、\(y\) 表示售價（元），定價 \(2400\) 元的球鞋售價是多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-13" value="A"><span class="option-text">A. \(1920\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-13" value="B"><span class="option-text">B. \(430\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-13" value="C"><span class="option-text">C. \(1880\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-13" value="D"><span class="option-text">D. \(1870\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。打八折是乘以 \(0.8\)，所以 \(y = 0.8x - 50\) 是一次函數：
+              \[\begin{aligned} & y = 0.8 \times 2400 - 50 \\ & = 1920 - 50 = 1870 \end{aligned}\]
+              A 錯：只打了八折，忘了再減 \(50\) 元。<br>
+              B 錯：把八折當成乘以 \(0.2\)：\(480 - 50 = 430\)。<br>
+              C 錯：先減 \(50\) 再打八折：\(0.8 \times 2350 = 1880\)，順序反了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 用一條長 \(46\) 公分的鐵絲圍成一個長方形，長 \(x\) 公分、寬 \(y\) 公分。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-14" value="A"><span class="option-text">A. \(y = 46 - x\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-14" value="B"><span class="option-text">B. \(y = 46 - 2x\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-14" value="C"><span class="option-text">C. \(y = 23 - x\)，\(x = 15\) 時 \(y = 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-14" value="D"><span class="option-text">D. \(y = 23 - x\)，\(x\) 可以是任何正數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。周長 \(2(x + y) = 46\)，所以 \(x + y = 23\)，\(y = 23 - x\)；\(x = 15\) 時 \(y = 23 - 15 = 8\)。<br>
+              A 錯：周長是兩個長加兩個寬，\(x + y\) 只有周長的一半。<br>
+              B 錯：把周長寫成 \(2x + y\)，少算了一個寬。<br>
+              D 錯：寬必須是正數，\(x\) 只能在 \(0\) 與 \(23\) 之間；例如 \(x = 30\) 時 \(y = -7\)，長方形不存在。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 函數圖形
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-braille" aria-hidden="true"></i> <span>重點 8：函數圖形——把每一組 \((x, y)\) 描成坐標平面上的點</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(y\) 是 \(x\) 的函數時，把每一組對應的 \(x\)、\(y\) 寫成數對 \((x, y)\) 當作坐標，在坐標平面上描出所有滿足函數關係的點，得到的圖形稱為此函數的<strong>函數圖形</strong>。</li>
+              <li>例：\(x\) 月有 \(y\) 天，描出 \((1, 31)\)、\((2, 28)\)、\((3, 31)\)、……、\((12, 31)\) 共 \(12\) 個點，就是這個函數的圖形。</li>
+              <li><strong>\(x\) 只取 \(1, 2, 3, \cdots\) 時，點與點之間不連線</strong>：中間沒有「\(1.5\) 月」，連線等於畫出不存在的資料。</li>
+              <li><strong>函數圖形不一定是直線</strong>：月分與天數的圖形是一群高高低低的點。</li>
+              <li>因為每個 \(x\) 恰有一個 \(y\)，函數圖形上<strong>每一條鉛垂線最多碰到一個點</strong>。</li>
+              <li><strong>讀圖</strong>：圖形上的點 \((x, y)\) 就表示「\(x\) 的時候，\(y\) 是多少」；圖形往上表示 \(y\) 變大，水平的一段表示 \(y\) 沒有改變。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tt_dots.webp" alt="復古鐵皮玩具風插圖：小鈴站在一塊綠色方格黑板前，把第五個紅色圓形磁鐵貼到方格上；黑板上的五個磁鐵分別在不同的直行、高低不一，彼此沒有連線。阿扣在旁邊遞上下一個磁鐵。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：描點機</h3>
+            <p class="interactive-instruction">選一組資料，拉動「描到第幾組」把對應表裡的 \((x, y)\) 一組一組描成點；再拉動「檢查 \(x\)」，看那條鉛垂虛線碰到幾個點。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-plot" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">資料</span>
+                    <div class="btn-group" id="pl-data-group">
+                      <button class="pick-btn active" data-pl-data="week">一週的銷售量</button>
+                      <button class="pick-btn" data-pl-data="month">月分與天數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pl-k">描到第幾組：<span id="pl-vk" class="val-num">3</span></label>
+                    <input type="range" id="pl-k" min="1" max="7" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pl-p">檢查 \(x\)：<span id="pl-vp" class="val-num">1</span></label>
+                    <input type="range" id="pl-p" min="1" max="7" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (函數圖形)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 已知 \(y\) 是 \(x\) 的函數，對應關係如下表。下列哪一個點<strong>不在</strong>此函數的圖形上？</p>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>\(x\)</th><th>\(1\)</th><th>\(2\)</th><th>\(3\)</th><th>\(4\)</th><th>\(5\)</th></tr></thead>
+                <tbody><tr><td>\(y\)</td><td>\(2\)</td><td>\(0\)</td><td>\(3\)</td><td>\(3\)</td><td>\(1\)</td></tr></tbody>
+              </table>
+            </div>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-15" value="A"><span class="option-text">A. \((3, 2)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-15" value="B"><span class="option-text">B. \((2, 0)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-15" value="C"><span class="option-text">C. \((4, 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-15" value="D"><span class="option-text">D. \((5, 1)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。函數圖形上的點是表中的 \((1, 2)\)、\((2, 0)\)、\((3, 3)\)、\((4, 3)\)、\((5, 1)\)。\(x = 3\) 對應的是 \(y = 3\)，所以 \((3, 2)\) 不在圖形上（\(x = 3\) 的鉛垂線只碰到 \((3, 3)\) 一個點）。<br>
+              B 錯：\(x = 2\) 時 \(y = 0\)，\((2, 0)\) 在圖形上，它剛好落在 \(x\) 軸上。<br>
+              C 錯：\(x = 4\) 時 \(y = 3\)，在圖形上；和 \((3, 3)\) 同高是多對一，沒有問題。<br>
+              D 錯：\(x = 5\) 時 \(y = 1\)，在圖形上。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 小鈴從家裡出發到文具店再走回家。下圖是她離家的距離 \(y\)（公尺）與出發後時間 \(x\)（分）的函數圖形，下列敘述何者正確？</p>
+            <svg class="quiz-figure" viewBox="0 0 380 240" role="img" aria-label="函數圖形：由原點直線上升到 (10, 800)，水平到 (20, 800)，再直線下降到 (30, 0)。">
+              <g stroke="rgba(203,213,225,0.15)" stroke-width="1">
+                <line x1="60" y1="190" x2="360" y2="190"/>
+                <line x1="60" y1="110" x2="360" y2="110"/>
+                <line x1="60" y1="30" x2="360" y2="30"/>
+                <line x1="160" y1="30" x2="160" y2="190"/>
+                <line x1="260" y1="30" x2="260" y2="190"/>
+                <line x1="360" y1="30" x2="360" y2="190"/>
+              </g>
+              <g stroke="#cbd5e1" stroke-width="2" fill="none">
+                <line x1="60" y1="190" x2="364" y2="190"/>
+                <line x1="60" y1="190" x2="60" y2="14"/>
+              </g>
+              <polygon points="374,190 361,184.5 361,195.5" fill="#cbd5e1"/>
+              <polygon points="60,4 54.5,17 65.5,17" fill="#cbd5e1"/>
+              <polyline points="60,190 160,30 260,30 360,190" fill="none" stroke="#f9a8d4" stroke-width="3.2" stroke-linejoin="round"/>
+              <g fill="#f9a8d4"><circle cx="160" cy="30" r="4.5"/><circle cx="260" cy="30" r="4.5"/></g>
+              <g fill="#94a3b8" font-size="13" font-family="Outfit, 'Noto Sans TC', sans-serif" text-anchor="middle">
+                <text x="160" y="208">10</text><text x="260" y="208">20</text><text x="356" y="208">30</text>
+                <text x="48" y="114" text-anchor="end">400</text><text x="48" y="34" text-anchor="end">800</text>
+                <text x="48" y="206" text-anchor="end" font-style="italic">O</text>
+              </g>
+              <g fill="#cbd5e1" font-size="13" font-family="'Noto Sans TC', sans-serif">
+                <text x="372" y="232" text-anchor="end">時間 x（分）</text>
+                <text x="70" y="12">距離 y（公尺）</text>
+              </g>
+            </svg>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-16" value="A"><span class="option-text">A. 第 \(10\) 分到第 \(20\) 分，小鈴離家越來越遠</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-16" value="B"><span class="option-text">B. 小鈴離家最遠 \(800\) 公尺，第 \(10\) 分到第 \(20\) 分停在原地</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-16" value="C"><span class="option-text">C. 第 \(20\) 分以後，小鈴離家越來越遠</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-16" value="D"><span class="option-text">D. 小鈴來回一共只走了 \(800\) 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。圖形最高點的 \(y\) 是 \(800\)，所以最遠離家 \(800\) 公尺；第 \(10\) 分到第 \(20\) 分是水平的一段，\(y\) 一直是 \(800\)，表示距離沒有變，她停在文具店。<br>
+              A 錯：水平的一段表示 \(y\) 沒有改變，不是越來越遠。<br>
+              C 錯：第 \(20\) 分以後圖形往下，\(y\) 變小，是越來越接近家。<br>
+              D 錯：去程 \(800\) 公尺、回程又 \(800\) 公尺，共走了 \(1600\) 公尺。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 線型函數的圖形
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-line" aria-hidden="true"></i> <span>重點 9：線型函數——一次函數是斜直線，常數函數是水平線</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>形如 \(y = ax + b\) 的函數，在坐標平面上的圖形都是一條<strong>直線</strong>，稱為<strong>線型函數</strong>。一次函數與常數函數都是線型函數。</li>
+              <li>\(a \ne 0\)：<strong>一次函數</strong>，圖形是一條斜直線；其中 \(b = 0\) 時（\(y = ax\)），圖形<strong>通過原點</strong>。</li>
+              <li>\(a = 0\)：<strong>常數函數</strong> \(y = b\)，圖形是一條<strong>水平線</strong>，通過 \((0, b)\)。</li>
+              <li><strong>畫法：找兩組對應值、描兩點、連成直線</strong>。例：\(y = 2x - 3\)，取 \(x = 0\) 得 \((0, -3)\)、取 \(x = 2\) 得 \((2, 1)\)，連起來即可。係數是分數時，挑能讓 \(y\) 變成整數的 \(x\)。</li>
+              <li>反過來，函數的圖形若是一條直線，這個函數一定是一次函數或常數函數。但<strong>不是每個函數的圖形都是直線</strong>（重點 8 的月分與天數就不是）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・線型函數 y = ax + b</span>
+              \(a \ne 0\)：一次函數，斜直線（\(b = 0\) 時通過原點）<br>
+              \(a = 0\)：常數函數 \(y = b\)，水平線
+            </div>
+
+            <div class="illustration-container">
+              <img src="tt_ramp.webp" alt="復古鐵皮玩具風插圖：桌上有兩條筆直的鐵皮玩具軌道，一條斜斜架高、一條平放在桌面上；一台藍色發條小火車正沿著斜的軌道往上爬，小鈴蹲低平視斜軌道，阿扣扶著平的那條軌道。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：描兩點畫直線</h3>
+            <p class="interactive-instruction">拉動 \(a\) 與 \(b\)，黃色的兩個點是代入算出的兩組對應值，連起來就是函數圖形。按「多描一些點」看看其他點是不是也在同一條直線上；再把 \(a\) 拉到 \(0\)、把 \(b\) 拉到 \(0\)，看圖形怎麼變。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-line" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ln-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">描點</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="ln-more">多描一些點</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ln-a">\(a\)：<span id="ln-va" class="val-num">1</span></label>
+                    <input type="range" id="ln-a" min="-6" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ln-b">\(b\)：<span id="ln-vb" class="val-num">1</span></label>
+                    <input type="range" id="ln-b" min="-4" max="4" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ln-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (線型函數的圖形)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 下列哪兩個點<strong>都</strong>在函數 \(y = \frac{2}{3}x - 2\) 的圖形上？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-17" value="A"><span class="option-text">A. \((0, 2)\)、\((3, 0)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-17" value="B"><span class="option-text">B. \((0, -2)\)、\((2, 3)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-17" value="C"><span class="option-text">C. \((0, -2)\)、\((3, 0)\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-17" value="D"><span class="option-text">D. \((-3, 0)\)、\((0, -2)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(x = 0\) 時 \(y = -2\)；挑 \(x = 3\) 讓分數約掉：\(y = \frac{2}{3} \times 3 - 2 = 0\)。所以 \((0, -2)\)、\((3, 0)\) 都在圖形上，連起來就是這條直線。<br>
+              A 錯：\(x = 0\) 時 \(y = -2\)，不是 \(2\)。<br>
+              B 錯：\(x = 2\) 時 \(y = \frac{4}{3} - 2 = -\frac{2}{3}\)，不是 \(3\)；\((2, 3)\) 是把係數 \(\frac{2}{3}\) 的分子、分母當成坐標。<br>
+              D 錯：\(x = -3\) 時 \(y = -2 - 2 = -4\)，不是 \(0\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 下列關於函數圖形的敘述，何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-18" value="A"><span class="option-text">A. \(y = -7\) 的圖形是通過 \((0, -7)\) 的水平線</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-18" value="B"><span class="option-text">B. \(y = 5x\) 的圖形不通過原點</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-18" value="C"><span class="option-text">C. \(y = -x + 4\) 的圖形是水平線</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-18" value="D"><span class="option-text">D. 只要 \(y\) 是 \(x\) 的函數，它的圖形就是一條直線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(y = -7\) 是常數函數（\(a = 0\)），每個點的 \(y\) 坐標都是 \(-7\)，圖形是通過 \((0, -7)\) 的水平線。<br>
+              B 錯：\(y = 5x\) 的 \(b = 0\)，\(x = 0\) 時 \(y = 0\)，圖形通過原點。<br>
+              C 錯：\(a = -1 \ne 0\)，是一次函數，圖形是斜直線。<br>
+              D 錯：只有線型函數的圖形是直線，像月分與天數的函數圖形是一群不在同一直線上的點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 水平線與常數函數
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-horizontal" aria-hidden="true"></i> <span>重點 10：圖形平行 \(x\) 軸 \(\Rightarrow\) 常數函數；鉛垂線不是函數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>函數 \(y = ax + b\) 的圖形若是<strong>平行 \(x\) 軸</strong>的直線（水平線），它就是常數函數，\(a = 0\)。</li>
+              <li>水平線上每一點的 \(y\) 坐標都相同，所以<strong>只要一個點就夠了</strong>：通過 \((-2, 5)\) 的水平線，函數是 \(y = 5\)。看的是 \(y\) 坐標，和 \(x\) 坐標無關。</li>
+              <li><strong>鉛垂線 \(x = h\) 不是函數的圖形</strong>：給定 \(x = h\)，線上有無限多個 \(y\)，一個 \(x\) 對到不只一個 \(y\)。</li>
+              <li>只知道「線型函數的圖形通過某一點」時，通過那一點的直線有無限多條，函數有無限多種；若再知道它是常數函數，就只剩一種。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>通過 \((-2, 5)\)</th><th>水平線</th><th>鉛垂線</th></tr></thead>
+                <tbody>
+                  <tr><td>直線方程式</td><td>\(y = 5\)</td><td>\(x = -2\)</td></tr>
+                  <tr><td>是不是函數</td><td>是：常數函數</td><td>不是</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="illustration-container">
+              <img src="tt_level.webp" alt="復古鐵皮玩具風插圖：阿扣把一支黃銅水平儀平放在一條長長的木頭層架上檢查，水平儀中央的氣泡停在正中間；小鈴把三個一樣高的鐵皮機器人玩具並排擺在同一層架子上。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：通過一點的直線</h3>
+            <p class="interactive-instruction">拉動滑桿決定點的位置，再切換三種直線。看看水平線只由哪一個坐標決定、鉛垂線上同一個 \(x\) 有幾個 \(y\)，以及只給一個點時能畫出幾條線。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-horiz" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="hz-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">直線</span>
+                    <div class="btn-group" id="hz-line-group">
+                      <button class="pick-btn active" data-hz-line="h">水平線</button>
+                      <button class="pick-btn" data-hz-line="v">鉛垂線</button>
+                      <button class="pick-btn" data-hz-line="s">各種斜線</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="hz-h">點的 \(x\) 坐標：<span id="hz-vh" class="val-num">2</span></label>
+                    <input type="range" id="hz-h" min="-5" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="hz-k">點的 \(y\) 坐標：<span id="hz-vk" class="val-num">−3</span></label>
+                    <input type="range" id="hz-k" min="-5" max="5" value="-3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="hz-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (水平線與常數函數)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 函數 \(y = ax + b\) 的圖形是平行 \(x\) 軸的直線，且通過點 \((6, -8)\)，此函數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-19" value="A"><span class="option-text">A. \(x = 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-19" value="B"><span class="option-text">B. \(y = -8\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-19" value="C"><span class="option-text">C. \(y = 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-19" value="D"><span class="option-text">D. \(y = -\frac{4}{3}x\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。圖形平行 \(x\) 軸，是常數函數，\(a = 0\)；水平線上每一點的 \(y\) 坐標都是 \(-8\)，所以函數是 \(y = -8\)。<br>
+              A 錯：\(x = 6\) 是通過該點的鉛垂線，而且它不是函數的圖形。<br>
+              C 錯：用了點的 \(x\) 坐標；水平線看的是 \(y\) 坐標。<br>
+              D 錯：那是通過原點與 \((6, -8)\) 的斜直線，不平行 \(x\) 軸。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 已知某個線型函數的圖形通過點 \((9, -2)\)。小鈴說：「通過這一點的鉛垂線 \(x = 9\)，也可以是這個線型函數的圖形。」阿扣說：「如果它是常數函數，那它一定是 \(y = -2\)。」誰說得對？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-20" value="A"><span class="option-text">A. 兩人都對</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-20" value="B"><span class="option-text">B. 兩人都錯</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-20" value="C"><span class="option-text">C. 只有小鈴對</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-20" value="D"><span class="option-text">D. 只有阿扣對</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。<br>
+              小鈴錯：鉛垂線 \(x = 9\) 上，\(x = 9\) 對到無限多個 \(y\)，\(y\) 不是 \(x\) 的函數，所以它不可能是線型函數的圖形。<br>
+              阿扣對：常數函數的圖形是水平線，每一點的 \(y\) 坐標都相同；通過 \((9, -2)\) 就一定是 \(y = -2\)。<br>
+              若不知道是常數函數，通過 \((9, -2)\) 的斜直線有無限多條，函數就有無限多種。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 線型函數的應用（讀圖）
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-road" aria-hidden="true"></i> <span>重點 11：線型函數的應用——讀圖找兩點，求函數再回答問題</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>題目說兩個量「成線型函數關係」，就設 \(y = ax + b\)，從圖或文字讀出<strong>兩組對應值</strong>，代入求 \(a\)、\(b\)。</li>
+              <li><strong>與 \(y\) 軸的交點（\(x = 0\)）</strong>：\(y = b\)，常常是「什麼都還沒開始時」的量，例如空杯的重量、基本費。</li>
+              <li><strong>與 \(x\) 軸的交點（\(y = 0\)）</strong>：令 \(y = 0\) 解出 \(x\)，例如「從哪裡開始收費」「什麼時候用完」。</li>
+              <li>例：行李託運 \(10\) 公斤付 \(600\) 元、\(15\) 公斤付 \(700\) 元，且費用與重量成線型函數：
+              \[\begin{cases} 10a + b = 600 \\ 15a + b = 700 \end{cases}\]
+              得 \(a = 20\)、\(b = 400\)，\(y = 20x + 400\)：每公斤 \(20\) 元，另加 \(400\) 元手續費（\(x = 0\) 時的 \(y\)）。</li>
+              <li>讀圖時兩點要挑<strong>格線交叉處</strong>、坐標讀得準的點。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tt_toll.webp" alt="復古鐵皮玩具風插圖：一台綠色鐵皮玩具小汽車停在玩具收費站的紅白欄杆前，阿扣坐在駕駛座伸手把一枚硬幣交給收費亭窗口；小鈴坐在副駕駛座，看著前方抬起一半的欄杆。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：讀圖求函數</h3>
+            <p class="interactive-instruction">選一個情境並用滑桿改變條件。從圖上讀出黃、藍兩點，代入求出函數；通行費要問與 \(x\) 軸的交點（免費里程），果醬杯要問與 \(y\) 軸的交點（空杯重）。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-read" width="540" height="570"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="rd-mode-group">
+                      <button class="pick-btn active" data-rd-mode="toll">高速公路通行費</button>
+                      <button class="pick-btn" data-rd-mode="cup">磅秤上的果醬杯</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rd-p"><span id="rd-lp">免費里程（公里）</span>：<span id="rd-vp" class="val-num">15</span></label>
+                    <input type="range" id="rd-p" min="10" max="30" value="15" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rd-r"><span id="rd-lr">每公里費率</span>：<span id="rd-vr" class="val-num">6/5 元</span></label>
+                    <input type="range" id="rd-r" min="1" max="3" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (讀圖應用)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 某停車場前幾分鐘免費，超過之後，停車費用 \(y\)（元）與停車時間 \(x\)（分）成線型函數關係。已知停 \(50\) 分鐘付 \(20\) 元、停 \(80\) 分鐘付 \(44\) 元，免費的時間是幾分鐘？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-21" value="A"><span class="option-text">A. \(25\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-21" value="B"><span class="option-text">B. \(20\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-21" value="C"><span class="option-text">C. \(\frac{4}{5}\) 分鐘</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-21" value="D"><span class="option-text">D. \(30\) 分鐘</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設 \(y = ax + b\)：
+              \[\begin{cases} 50a + b = 20 \\ 80a + b = 44 \end{cases}\]
+              相減得 \(30a = 24\)，\(a = \frac{4}{5}\)；\(b = 20 - 40 = -20\)，\(y = \frac{4}{5}x - 20\)。令 \(y = 0\)：\(\frac{4}{5}x = 20\)，\(x = 25\)，免費 \(25\) 分鐘。<br>
+              B 錯：\(20\) 是 \(b\) 的絕對值，要令 \(y = 0\) 解出 \(x\) 才是免費時間。<br>
+              C 錯：\(\frac{4}{5}\) 是 \(a\)，表示每多停 \(1\) 分鐘多付 \(\frac{4}{5}\) 元。<br>
+              D 錯：以為每分鐘 \(1\) 元，用 \(50 - 20\) 回推；實際上每分鐘只收 \(\frac{4}{5}\) 元。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 玩具小鎮的麵店因成本上漲，用線型函數調整價格：原價 \(40\) 元的麵調成 \(50\) 元，原價 \(100\) 元的麵調成 \(140\) 元。原價 \(60\) 元的麵調漲後是多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-22" value="A"><span class="option-text">A. \(70\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-22" value="B"><span class="option-text">B. \(90\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-22" value="C"><span class="option-text">C. \(100\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-22" value="D"><span class="option-text">D. \(80\) 元</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設原價 \(x\) 元、新價 \(y\) 元，\(y = ax + b\)：
+              \[\begin{cases} 40a + b = 50 \\ 100a + b = 140 \end{cases}\]
+              相減得 \(60a = 90\)，\(a = \frac{3}{2}\)；\(b = 50 - 60 = -10\)，\(y = \frac{3}{2}x - 10\)。\(x = 60\) 時 \(y = 90 - 10 = 80\)。<br>
+              A 錯：照 \(40\) 元那碗的漲幅也加 \(10\) 元；線型函數的漲幅會隨原價改變。<br>
+              B 錯：只算了 \(\frac{3}{2} \times 60\)，忘了 \(b = -10\)。<br>
+              C 錯：照 \(100\) 元那碗的漲幅加 \(40\) 元。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 兩個線型函數的比較
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-compare" aria-hidden="true"></i> <span>重點 12：兩個線型函數的比較——圖形的交點就是函數值相等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩個線型函數的圖形相交時，交點的 \(x\) 就是「兩個函數值相等」的那個 \(x\)：<strong>令兩個關係式相等</strong>，解一元一次方程式。</li>
+              <li>例：玩具車出租，甲 \(y = 40x + 100\)、乙 \(y = 60x + 20\)（\(x\) 小時、\(y\) 元）。
+              \[\begin{aligned} & 40x + 100 = 60x + 20 \\ & 80 = 20x,\ x = 4 \end{aligned}\]
+              租 \(4\) 小時兩家都是 \(260\) 元。</li>
+              <li><strong>交點之前、之後誰比較划算</strong>：基本費低的一開始便宜；每小時便宜（\(x\) 係數小）的那一家，時間越長越划算，過了交點就換它便宜。</li>
+              <li>兩個函數的 \(x\) 係數相同、常數不同時，圖形<strong>平行</strong>，沒有交點，函數值永遠不相等。</li>
+              <li>先確認解出來的 \(x\) 合不合理：時間不會是負數。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="tt_rental.webp" alt="復古鐵皮玩具風插圖：兩間並排的鐵皮玩具車出租小攤，左攤停著紅色玩具車、右攤停著藍色玩具車；小鈴牽著紅色那台的方向盤，阿扣扶著藍色那台的車門，兩人轉頭互看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩家出租店比一比</h3>
+            <p class="interactive-instruction">調整甲（紅）、乙（藍）兩家的基本費與每小時費用，兩條圖形的交點就是費用相同的時刻。把每小時費用調成一樣，看看兩條線還會不會相交。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-compare" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cp-b1">甲的基本費（元）：<span id="cp-vb1" class="val-num">120</span></label>
+                    <input type="range" id="cp-b1" min="0" max="200" value="120" step="20">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cp-a1">甲每小時（元）：<span id="cp-va1" class="val-num">30</span></label>
+                    <input type="range" id="cp-a1" min="10" max="60" value="30" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cp-b2">乙的基本費（元）：<span id="cp-vb2" class="val-num">40</span></label>
+                    <input type="range" id="cp-b2" min="0" max="200" value="40" step="20">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cp-a2">乙每小時（元）：<span id="cp-va2" class="val-num">50</span></label>
+                    <input type="range" id="cp-a2" min="10" max="60" value="50" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩條比較)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-23">
+            <p class="quiz-question"><strong>Q23.</strong> 甲、乙兩位修理師傅的收費 \(y\)（元）與維修時間 \(x\)（小時）成線型函數：甲 \(y = 300x + 200\)，乙 \(y = 200x + 450\)。維修幾小時，兩人收費相同？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-23" value="A"><span class="option-text">A. \(-2.5\) 小時</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-23" value="B"><span class="option-text">B. \(2.5\) 小時</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-23" value="C"><span class="option-text">C. \(6.5\) 小時</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-23" value="D"><span class="option-text">D. \(0.4\) 小時</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。令兩個函數值相等：
+              \[\begin{aligned} & 300x + 200 = 200x + 450 \\ & 100x = 250,\ x = 2.5 \end{aligned}\]
+              此時兩人都收 \(950\) 元。<br>
+              A 錯：常數移項寫成 \(100x = 200 - 450\)，正負號弄反了。<br>
+              C 錯：\(200\) 移到右邊沒有變號，寫成 \(100x = 450 + 200\)。<br>
+              D 錯：寫成 \(250x = 100\)，把被除數與除數弄反了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-24">
+            <p class="quiz-question"><strong>Q24.</strong> 甲、乙兩根蠟燭同時點燃，燃燒 \(x\) 分鐘後的高度 \(y\)（公分）分別為 甲 \(y = 30 - \frac{1}{2}x\)、乙 \(y = 20 - \frac{1}{4}x\)。經過幾分鐘兩根一樣高？那時高度是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-24" value="A"><span class="option-text">A. \(40\) 分鐘，\(20\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-24" value="B"><span class="option-text">B. \(20\) 分鐘，\(20\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-24" value="C"><span class="option-text">C. \(40\) 分鐘，\(10\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-24" value="D"><span class="option-text">D. \(\frac{40}{3}\) 分鐘，\(\frac{70}{3}\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。令兩個函數值相等：
+              \[\begin{aligned} & 30 - \frac{1}{2}x = 20 - \frac{1}{4}x \\ & 10 = \frac{1}{4}x,\ x = 40 \end{aligned}\]
+              代回：\(y = 30 - \frac{1}{2} \times 40 = 10\)，乙也是 \(20 - 10 = 10\)。<br>
+              A 錯：\(x = 40\) 對了，代回時把 \(\frac{1}{2} \times 40\) 算成 \(10\)。<br>
+              B 錯：只除了甲的燃燒速度：\(10 \div \frac{1}{2} = 20\)；應該除以兩根速度的差 \(\frac{1}{4}\)。<br>
+              D 錯：把兩根的速度相加：\(10 \div \frac{3}{4} = \frac{40}{3}\)；一樣高要看兩者的差。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 函數速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>函數</strong>：給定每一個 \(x\)，都恰有一個 \(y\)；一對一、多對一是函數，一對多不是。</li>
+              <li><strong>一次函數</strong>：\(y = ax + b\)，\(a \ne 0\)；<strong>常數函數</strong>：\(y = b\)。</li>
+              <li><strong>函數值</strong>：把 \(x\) 代入；負數加括號，常數函數不必代。</li>
+              <li><strong>函數值相等</strong>：兩個關係式相等，解一元一次方程式。</li>
+              <li><strong>求一次函數</strong>：兩組對應值（兩點）代入，解聯立方程式。</li>
+              <li><strong>函數圖形</strong>：描出所有 \((x, y)\)；不一定是直線。</li>
+              <li><strong>線型函數</strong>：圖形是直線；斜直線是一次函數，水平線是常數函數，鉛垂線不是函數。</li>
+              <li><strong>讀圖應用</strong>：\(x = 0\) 讀基本量，\(y = 0\) 讀開始或結束；兩條線的交點是函數值相等。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-robot"></i> 回到販賣機：投 25 元會掉出哪一瓶？</h4>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 方向決定是不是函數</h5>
+              <p>以瓶數為 \(x\)、總價為 \(y\)，\(y = 25x\)：每個瓶數都只有一個總價，是函數。反過來以價錢為 \(x\)、飲料為 \(y\)，\(x = 25\) 對到三種飲料，就不是函數。</p>
+              <h5><i class="fa-solid fa-chart-line"></i> 從表格、算式到圖形</h5>
+              <p>同一個函數可以用對應表、關係式或圖形來表示；線型函數的圖形是直線，描兩點就畫得出來，也能從圖上兩點反求關係式。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一章預告</h5>
+              <p>下一章「三角形的基本性質」換到幾何：先從三角形與多邊形的內角和、外角和開始。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
