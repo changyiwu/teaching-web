@@ -55,24 +55,9 @@ const RD_TONE = ['#f4c430', '#7fb0ea', '#fdba74', '#f08a78', '#f1f1ec', '#5eead4
    1. 本節工具（sq 前綴）
    ========================================================================== */
 
-// 正整數 n → √n 的最簡根式 k√r
-function sqRoot(n) {
-  let k = 1, r = n;
-  for (let d = 2; d * d <= r; d++) {
-    while (r % (d * d) === 0) { r /= d * d; k *= d; }
-  }
-  const exact = (r === 1);
-  const c = k > 1 ? String(k) : '';
-  return {
-    n, k, r, exact, val: Math.sqrt(n),
-    tex: exact ? String(k) : `${c}\\sqrt{${r}}`,
-    txt: exact ? String(k) : `${c}√${r}`
-  };
-}
-
 // √n ÷ 2（n 為正整數）：k 是偶數就約掉，否則寫成分數或 .5
 function sqHalfRoot(n) {
-  const R = sqRoot(n);
+  const R = hbRoot(n);
   if (R.exact) {
     const v = R.k / 2;
     return { val: v, exact: true, tex: numStr(v), txt: numStr(v) };
@@ -105,51 +90,6 @@ function sqMap(ox, oy, k) {
   return (x, y) => hbV(ox + x * k, oy - y * k);
 }
 
-// 畫布的一行字，太長時自動縮字級（最小 12.5px）
-function sqLine(ctx, text, y, color, size) {
-  const W = ctx.canvas.width;
-  let s = size || 16;
-  ctx.save();
-  ctx.font = f(800, s);
-  while (ctx.measureText(text).width > W - 24 && s > 12.5) {
-    s -= 0.5;
-    ctx.font = f(800, s);
-  }
-  ctx.restore();
-  textCenter(ctx, text, W / 2, y, color, f(800, s));
-}
-
-// 邊長標示畫在圖形外側（開發約束 18）：沿邊的法向、遠離 G 推出去
-function sqSideLabel(ctx, P, Q, G, text, color, off, font) {
-  const m = hbV((P.x + Q.x) / 2, (P.y + Q.y) / 2);
-  const d = hbDist(P, Q) || 1;
-  let nx = -(Q.y - P.y) / d, ny = (Q.x - P.x) / d;
-  if ((m.x - G.x) * nx + (m.y - G.y) * ny < 0) { nx = -nx; ny = -ny; }
-  const k = off || 18;
-  cgLabel(ctx, m, text, color, nx * k, ny * k, font || f(800, 15));
-}
-
-// 等長記號：在線段中點畫 n 條短橫線
-function sqTick(ctx, P, Q, n, color) {
-  const m = hbV((P.x + Q.x) / 2, (P.y + Q.y) / 2);
-  const d = hbDist(P, Q) || 1;
-  const ux = (Q.x - P.x) / d, uy = (Q.y - P.y) / d;
-  const nx = -uy, ny = ux;
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2.6;
-  ctx.lineCap = 'round';
-  for (let i = 0; i < n; i++) {
-    const t = (i - (n - 1) / 2) * 6;
-    const c = hbV(m.x + ux * t, m.y + uy * t);
-    ctx.beginPath();
-    ctx.moveTo(c.x - nx * 7, c.y - ny * 7);
-    ctx.lineTo(c.x + nx * 7, c.y + ny * 7);
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
 // 直角記號：頂點 V、兩邊各往 P、Q
 function sqRight(ctx, V, P, Q, color, s) {
   cgRight(ctx, V, cgUnit(V, P), cgUnit(V, Q), s || 11, color);
@@ -168,15 +108,6 @@ function sqQuad(ctx, pts, names, o) {
 }
 
 // 多邊形面積（鞋帶公式，數學座標）
-function sqArea(pts) {
-  let s = 0;
-  for (let i = 0; i < pts.length; i++) {
-    const p = pts[i], q = pts[(i + 1) % pts.length];
-    s += p.x * q.y - q.x * p.y;
-  }
-  return Math.abs(s) / 2;
-}
-
 // 多邊形與半平面 x ≤ X 的交集（數學座標）
 function sqClipLeft(pts, X) {
   const res = [];
@@ -313,10 +244,10 @@ const SQ_QUIZ_FIGS = {
     hbSeg(ctx, B, D, RD_BLUE_LT, 2, [5, 4]);
     sqRight(ctx, O, A, D, RD_WHITE, 9);
     const fnt = f(800, 13);
-    sqSideLabel(ctx, A, B, G, '13', RD_WHITE, 14, fnt);
-    sqSideLabel(ctx, A, D, G, '13', RD_WHITE, 14, fnt);
-    sqSideLabel(ctx, C, B, G, '20', RD_WHITE, 14, fnt);
-    sqSideLabel(ctx, C, D, G, '20', RD_WHITE, 14, fnt);
+    hbSideLabel(ctx, A, B, G, '13', RD_WHITE, 14, fnt);
+    hbSideLabel(ctx, A, D, G, '13', RD_WHITE, 14, fnt);
+    hbSideLabel(ctx, C, B, G, '20', RD_WHITE, 14, fnt);
+    hbSideLabel(ctx, C, D, G, '20', RD_WHITE, 14, fnt);
     cgLabel(ctx, hbV((B.x + O.x) / 2, O.y), '12', RD_BLUE_LT, 0, 12, fnt);
     ['A', 'B', 'C', 'D'].forEach((s, i) => hbVLabel(ctx, p[i], G, s, RD_WHITE, 15));
     cgLabel(ctx, O, 'O', RD_WHITE, 12, -11, fi(800, 14));
@@ -337,8 +268,8 @@ const SQ_QUIZ_FIGS = {
       cgLabel(ctx, L, lab[i - 1][0], RD_WHITE, -14, 0, fi(800, 13));
       cgLabel(ctx, R, lab[i - 1][1], RD_WHITE, 14, 0, fi(800, 13));
     }
-    sqSideLabel(ctx, A, D, G, '6', RD_WHITE, 14, f(800, 13));
-    sqSideLabel(ctx, B, C, G, '34', RD_WHITE, 14, f(800, 13));
+    hbSideLabel(ctx, A, D, G, '6', RD_WHITE, 14, f(800, 13));
+    hbSideLabel(ctx, B, C, G, '34', RD_WHITE, 14, f(800, 13));
     ['A', 'B', 'C', 'D'].forEach((s, i) => hbVLabel(ctx, p[i], G, s, RD_WHITE, 15));
   },
   // 梯形 ABCD：AD = 5、BC = 17、高 8，EF 為兩腰中點連線段
@@ -356,8 +287,8 @@ const SQ_QUIZ_FIGS = {
     cgLabel(ctx, hbV(A.x, (A.y + Hf.y) / 2), '8', RD_BLUE_LT, 11, 26, f(800, 13));
     cgLabel(ctx, E, 'E', RD_WHITE, -13, 0, fi(800, 13));
     cgLabel(ctx, F, 'F', RD_WHITE, 13, 0, fi(800, 13));
-    sqSideLabel(ctx, A, D, G, '5', RD_WHITE, 14, f(800, 13));
-    sqSideLabel(ctx, B, C, G, '17', RD_WHITE, 14, f(800, 13));
+    hbSideLabel(ctx, A, D, G, '5', RD_WHITE, 14, f(800, 13));
+    hbSideLabel(ctx, B, C, G, '17', RD_WHITE, 14, f(800, 13));
     ['A', 'B', 'C', 'D'].forEach((s, i) => hbVLabel(ctx, p[i], G, s, RD_WHITE, 15));
   },
   // 等腰梯形 ABCD：AD = 7、BC = 17、AP = DQ = 12
@@ -374,7 +305,7 @@ const SQ_QUIZ_FIGS = {
     cgLabel(ctx, hbV(Pp.x, (A.y + Pp.y) / 2), '12', RD_BLUE_LT, 14, 0, f(800, 13));
     cgLabel(ctx, Pp, 'P', RD_WHITE, 0, 14, fi(800, 13));
     cgLabel(ctx, Q, 'Q', RD_WHITE, 0, 14, fi(800, 13));
-    sqSideLabel(ctx, A, D, G, '7', RD_WHITE, 14, f(800, 13));
+    hbSideLabel(ctx, A, D, G, '7', RD_WHITE, 14, f(800, 13));
     cgLabel(ctx, hbV((B.x + C.x) / 2, B.y), '17', RD_WHITE, -16, 14, f(800, 13));
     ['A', 'B', 'C', 'D'].forEach((s, i) => hbVLabel(ctx, p[i], G, s, RD_WHITE, 15));
   }
@@ -414,7 +345,7 @@ function initRectCanvas() {
     const P = sqMap(270, 178, 24);
     const A = P(-w / 2, h / 2), B = P(-w / 2, -h / 2), C = P(w / 2, -h / 2), D = P(w / 2, h / 2), O = P(0, 0);
     const n = w * w + h * h;
-    const R = sqRoot(n), Hf = sqHalfRoot(n);
+    const R = hbRoot(n), Hf = sqHalfRoot(n);
 
     if (mode === 'tri') {
       const quads = [[A, O, B], [B, O, C], [C, O, D], [D, O, A]];
@@ -434,18 +365,18 @@ function initRectCanvas() {
     [[A, B, D], [B, C, A], [C, D, B], [D, A, C]].forEach(v => sqRight(ctx, v[0], v[1], v[2], 'rgba(241,241,236,0.7)', 10));
     hbSeg(ctx, A, C, RD_YELLOW, 3);
     hbSeg(ctx, B, D, RD_BLUE_LT, 3);
-    [A, B, C, D].forEach(V => sqTick(ctx, O, V, 1, RD_YELLOW));
+    [A, B, C, D].forEach(V => hbTick(ctx, O, V, 1, RD_YELLOW));
     hbDot(ctx, O, RD_WHITE, 4.5);
     cgLabel(ctx, O, 'O', RD_WHITE, 0, -16, fi(800, 16));
     ['A', 'B', 'C', 'D'].forEach((s, i) => hbVLabel(ctx, [A, B, C, D][i], G, s, RD_WHITE, 18));
-    sqSideLabel(ctx, B, C, G, String(w), RD_WHITE, 20);
-    sqSideLabel(ctx, C, D, G, String(h), RD_WHITE, 20);
+    hbSideLabel(ctx, B, C, G, String(w), RD_WHITE, 20);
+    hbSideLabel(ctx, C, D, G, String(h), RD_WHITE, 20);
 
     if (mode === 'diag') {
-      sqLine(ctx, `BD² = BC² + CD² = ${w}² + ${h}² = ${n}（畢氏定理）`, 334, RD_WHITE, 16);
-      sqLine(ctx, `AC = BD = ${sqApprox(R)}`, 366, RD_YELLOW, 17);
-      sqLine(ctx, `OA = OB = OC = OD = ½BD = ${Hf.txt}`, 398, RD_BLUE_LT, 16);
-      sqLine(ctx, '四段一樣長：以 O 為圓心，一個圓剛好通過四個頂點', 432, MUTED, 14.5);
+      hbFitLine(ctx, `BD² = BC² + CD² = ${w}² + ${h}² = ${n}（畢氏定理）`, 334, RD_WHITE, 16);
+      hbFitLine(ctx, `AC = BD = ${sqApprox(R)}`, 366, RD_YELLOW, 17);
+      hbFitLine(ctx, `OA = OB = OC = OD = ½BD = ${Hf.txt}`, 398, RD_BLUE_LT, 16);
+      hbFitLine(ctx, '四段一樣長：以 O 為圓心，一個圓剛好通過四個頂點', 432, MUTED, 14.5);
       out.innerHTML = wbrEq(`\\overline{AC} = \\overline{BD} = \\sqrt{${w}^2 + ${h}^2} = ${R.tex}`);
       fb.innerHTML = wrapFeedback(w === h
         ? '四個邊一樣長時它是正方形；正方形也是長方形，對角線照樣<strong>等長且互相平分</strong>。'
@@ -453,10 +384,10 @@ function initRectCanvas() {
     } else {
       const per = R.exact ? `${R.txt} + ${w} = ${R.k + w}` : `${R.txt} + ${w}`;
       const area = numStr(w * h / 4);
-      sqLine(ctx, `OB = OC = ½BD = ${Hf.txt}，OB + OC = BD = ${R.txt}`, 334, RD_BLUE_LT, 15.5);
-      sqLine(ctx, `△BOC 周長 = OB + OC + BC = ${per}`, 366, RD_WHITE, 16);
-      sqLine(ctx, `△BOC 面積 = ¼ × 長方形 = ¼ × ${w} × ${h} = ${area}`, 398, C0, 17);
-      sqLine(ctx, `（底 BC = ${w}，高是 CD 的一半 ${numStr(h / 2)}：½ × ${w} × ${numStr(h / 2)} = ${area}）`, 432, MUTED, 14);
+      hbFitLine(ctx, `OB = OC = ½BD = ${Hf.txt}，OB + OC = BD = ${R.txt}`, 334, RD_BLUE_LT, 15.5);
+      hbFitLine(ctx, `△BOC 周長 = OB + OC + BC = ${per}`, 366, RD_WHITE, 16);
+      hbFitLine(ctx, `△BOC 面積 = ¼ × 長方形 = ¼ × ${w} × ${h} = ${area}`, 398, C0, 17);
+      hbFitLine(ctx, `（底 BC = ${w}，高是 CD 的一半 ${numStr(h / 2)}：½ × ${w} × ${numStr(h / 2)} = ${area}）`, 432, MUTED, 14);
       out.innerHTML = `△\\(BOC\\) 面積：<wbr>` + wbrEq(`\\frac{1}{4} \\times ${w} \\times ${h} = ${area}`);
       fb.innerHTML = wrapFeedback('對角線把長方形切成四個小三角形，<strong>面積都是長方形的 \\(\\frac{1}{4}\\)</strong>；△\\(BOC\\) 的兩腰 \\(\\overline{OB}\\)、\\(\\overline{OC}\\) 各是對角線的一半。');
     }
@@ -511,20 +442,20 @@ function initRhombCanvas() {
     cgLabel(ctx, O, 'O', RD_WHITE, -13, -13, fi(800, 15));
 
     if (mode === 'len') {
-      [A, B, C, D].forEach((V, i) => sqTick(ctx, V, [B, C, D, A][i], 1, C0));
-      sqTick(ctx, O, A, 2, RD_YELLOW);
-      sqTick(ctx, O, C, 2, RD_YELLOW);
-      sqTick(ctx, O, B, 3, RD_BLUE_LT);
-      sqTick(ctx, O, D, 3, RD_BLUE_LT);
+      [A, B, C, D].forEach((V, i) => hbTick(ctx, V, [B, C, D, A][i], 1, C0));
+      hbTick(ctx, O, A, 2, RD_YELLOW);
+      hbTick(ctx, O, C, 2, RD_YELLOW);
+      hbTick(ctx, O, B, 3, RD_BLUE_LT);
+      hbTick(ctx, O, D, 3, RD_BLUE_LT);
       cgLabel(ctx, hbV((A.x + O.x) / 2, O.y), String(p), RD_YELLOW, 0, -14, f(800, 15));
       cgLabel(ctx, hbV(O.x, (B.y + O.y) / 2), String(q), RD_BLUE_LT, 14, 0, f(800, 15));
       const n = p * p + q * q;
-      const R = sqRoot(n);
+      const R = hbRoot(n);
       const per = R.exact ? String(4 * R.k) : `${4 * R.k}√${R.r}`;
-      sqLine(ctx, `AO = OC = ${p}，BO = OD = ${q}（互相平分）`, 344, RD_WHITE, 16);
-      sqLine(ctx, `∠AOB = 90° ⇒ AB² = ${p}² + ${q}² = ${n}`, 374, RD_WHITE, 16);
-      sqLine(ctx, `AB = BC = CD = DA = ${sqApprox(R)}`, 404, C0, 17);
-      sqLine(ctx, `AC = ${2 * p}，BD = ${2 * q}，周長 = 4 × ${R.txt} = ${per}`, 436, RD_YELLOW, 15.5);
+      hbFitLine(ctx, `AO = OC = ${p}，BO = OD = ${q}（互相平分）`, 344, RD_WHITE, 16);
+      hbFitLine(ctx, `∠AOB = 90° ⇒ AB² = ${p}² + ${q}² = ${n}`, 374, RD_WHITE, 16);
+      hbFitLine(ctx, `AB = BC = CD = DA = ${sqApprox(R)}`, 404, C0, 17);
+      hbFitLine(ctx, `AC = ${2 * p}，BD = ${2 * q}，周長 = 4 × ${R.txt} = ${per}`, 436, RD_YELLOW, 15.5);
       out.innerHTML = wbrEq(`\\overline{AB} = \\sqrt{${p}^2 + ${q}^2} = ${R.tex}`);
       fb.innerHTML = wrapFeedback(p === q
         ? '\\(\\overline{AO} = \\overline{BO}\\) 時兩條對角線也一樣長，這個菱形就是<strong>正方形</strong>。'
@@ -535,10 +466,10 @@ function initRhombCanvas() {
       hbAngle(ctx, A, B, O, 30, C0, { alpha: 0.32, label: `${numStr(h1)}°`, lr: 52, font: lf });
       hbAngle(ctx, A, O, D, 36, C0, { alpha: 0.32, label: `${numStr(h1)}°`, lr: 56, font: lf });
       hbAngle(ctx, B, A, O, 24, RD_YELLOW, { alpha: 0.3, label: `${numStr(b1)}°`, lr: 44, font: lf });
-      sqLine(ctx, `∠BAO = ∠DAO = ½ × ${a}° = ${numStr(h1)}°（AC 平分 ∠A）`, 344, C0, 16);
-      sqLine(ctx, `∠AOB = 90° ⇒ ∠ABO = 180° − 90° − ${numStr(h1)}° = ${numStr(b1)}°`, 374, RD_WHITE, 16);
-      sqLine(ctx, `∠ABC = 2 × ${numStr(b1)}° = ${180 - a}°（也等於 180° − ∠BAD）`, 404, RD_YELLOW, 16);
-      sqLine(ctx, '菱形是平行四邊形：相鄰兩角互補', 436, MUTED, 14.5);
+      hbFitLine(ctx, `∠BAO = ∠DAO = ½ × ${a}° = ${numStr(h1)}°（AC 平分 ∠A）`, 344, C0, 16);
+      hbFitLine(ctx, `∠AOB = 90° ⇒ ∠ABO = 180° − 90° − ${numStr(h1)}° = ${numStr(b1)}°`, 374, RD_WHITE, 16);
+      hbFitLine(ctx, `∠ABC = 2 × ${numStr(b1)}° = ${180 - a}°（也等於 180° − ∠BAD）`, 404, RD_YELLOW, 16);
+      hbFitLine(ctx, '菱形是平行四邊形：相鄰兩角互補', 436, MUTED, 14.5);
       out.innerHTML = wbrEq(`\\angle ABO = 90^\\circ - ${numStr(h1)}^\\circ = ${numStr(b1)}^\\circ`);
       fb.innerHTML = wrapFeedback(a === 90
         ? '\\(\\angle BAD = 90^\\circ\\) 的菱形就是<strong>正方形</strong>，對角線把直角平分成兩個 \\(45^\\circ\\)。'
@@ -608,10 +539,10 @@ function initAreaCanvas() {
     else if (bisA || bisB) name = '箏形';
     else name = '對角線互相垂直的一般四邊形';
     const area = numStr(d1 * d2 / 2);
-    sqLine(ctx, `外框長方形 = AC × BD = ${d1} × ${d2} = ${d1 * d2}`, 360, RD_WHITE, 16);
-    sqLine(ctx, '每一小塊長方形，都被四邊形的一邊切成兩個全等三角形', 390, MUTED, 14);
-    sqLine(ctx, `四邊形 ABCD = ½ × ${d1} × ${d2} = ${area}`, 420, C0, 17.5);
-    sqLine(ctx, `現在的 ABCD 是：${name}`, 452, RD_YELLOW, 15);
+    hbFitLine(ctx, `外框長方形 = AC × BD = ${d1} × ${d2} = ${d1 * d2}`, 360, RD_WHITE, 16);
+    hbFitLine(ctx, '每一小塊長方形，都被四邊形的一邊切成兩個全等三角形', 390, MUTED, 14);
+    hbFitLine(ctx, `四邊形 ABCD = ½ × ${d1} × ${d2} = ${area}`, 420, C0, 17.5);
+    hbFitLine(ctx, `現在的 ABCD 是：${name}`, 452, RD_YELLOW, 15);
     out.innerHTML = `面積：<wbr>` + wbrEq(`\\frac{1}{2} \\times ${d1} \\times ${d2} = ${area}`);
     fb.innerHTML = wrapFeedback(name === '箏形'
       ? '箏形只有一條對角線被平分，但<strong>兩條對角線仍互相垂直</strong>，所以面積同樣是乘積的一半。'
@@ -656,21 +587,21 @@ function initKiteCanvas() {
     sqRight(ctx, O, D, A, RD_WHITE, 10);
     hbDot(ctx, O, RD_WHITE, 4);
     cgLabel(ctx, O, 'O', RD_WHITE, 12, 14, fi(800, 14));
-    const R1 = sqRoot(p * p + q * q), R2 = sqRoot(q * q + r * r);
+    const R1 = hbRoot(p * p + q * q), R2 = hbRoot(q * q + r * r);
     const bAO = Math.atan2(q, p) / HB_RAD, bCO = Math.atan2(q, r) / HB_RAD;
     const angB = 180 - bAO - bCO;
 
     if (mode === 'len') {
-      sqTick(ctx, A, B, 1, C0);
-      sqTick(ctx, A, D, 1, C0);
-      sqTick(ctx, C, B, 2, RD_WHITE);
-      sqTick(ctx, C, D, 2, RD_WHITE);
-      sqTick(ctx, O, B, 3, RD_BLUE_LT);
-      sqTick(ctx, O, D, 3, RD_BLUE_LT);
-      sqLine(ctx, `AB = AD = √(${p}² + ${q}²) = ${R1.txt}`, 342, C0, 16);
-      sqLine(ctx, `CB = CD = √(${q}² + ${r}²) = ${R2.txt}`, 372, RD_WHITE, 16);
-      sqLine(ctx, `BO = OD = ${q}，AC = ${p} + ${r} = ${p + r}`, 402, RD_BLUE_LT, 16);
-      sqLine(ctx, `面積 = ½ × AC × BD = ½ × ${p + r} × ${2 * q} = ${(p + r) * q}`, 434, RD_YELLOW, 16.5);
+      hbTick(ctx, A, B, 1, C0);
+      hbTick(ctx, A, D, 1, C0);
+      hbTick(ctx, C, B, 2, RD_WHITE);
+      hbTick(ctx, C, D, 2, RD_WHITE);
+      hbTick(ctx, O, B, 3, RD_BLUE_LT);
+      hbTick(ctx, O, D, 3, RD_BLUE_LT);
+      hbFitLine(ctx, `AB = AD = √(${p}² + ${q}²) = ${R1.txt}`, 342, C0, 16);
+      hbFitLine(ctx, `CB = CD = √(${q}² + ${r}²) = ${R2.txt}`, 372, RD_WHITE, 16);
+      hbFitLine(ctx, `BO = OD = ${q}，AC = ${p} + ${r} = ${p + r}`, 402, RD_BLUE_LT, 16);
+      hbFitLine(ctx, `面積 = ½ × AC × BD = ½ × ${p + r} × ${2 * q} = ${(p + r) * q}`, 434, RD_YELLOW, 16.5);
       out.innerHTML = `面積：<wbr>` + wbrEq(`\\frac{1}{2} \\times ${p + r} \\times ${2 * q} = ${(p + r) * q}`);
     } else {
       hbAngle(ctx, A, B, C, 30, C0, { alpha: 0.32 });
@@ -679,10 +610,10 @@ function initKiteCanvas() {
       hbAngle(ctx, C, A, D, 36, RD_BLUE_LT, { alpha: 0.3 });
       hbAngle(ctx, B, A, C, 22, RD_YELLOW, { alpha: 0.3 });
       hbAngle(ctx, D, C, A, 22, RD_YELLOW, { alpha: 0.3 });
-      sqLine(ctx, `∠BAC = ∠DAC ≈ ${sqD1(bAO)}°（AC 平分 ∠A）`, 342, C0, 16);
-      sqLine(ctx, `∠BCA = ∠DCA ≈ ${sqD1(bCO)}°（AC 平分 ∠C）`, 372, RD_BLUE_LT, 16);
-      sqLine(ctx, `∠ABC = ∠ADC ≈ ${sqD1(angB)}°`, 402, RD_YELLOW, 16.5);
-      sqLine(ctx, '△ABC ≅ △ADC（SSS）：兩邊的角對應相等', 434, MUTED, 14.5);
+      hbFitLine(ctx, `∠BAC = ∠DAC ≈ ${sqD1(bAO)}°（AC 平分 ∠A）`, 342, C0, 16);
+      hbFitLine(ctx, `∠BCA = ∠DCA ≈ ${sqD1(bCO)}°（AC 平分 ∠C）`, 372, RD_BLUE_LT, 16);
+      hbFitLine(ctx, `∠ABC = ∠ADC ≈ ${sqD1(angB)}°`, 402, RD_YELLOW, 16.5);
+      hbFitLine(ctx, '△ABC ≅ △ADC（SSS）：兩邊的角對應相等', 434, MUTED, 14.5);
       out.innerHTML = `\\(\\angle ABC = \\angle ADC \\approx ${sqD1(angB)}^\\circ\\)`;
     }
     let msg;
@@ -740,7 +671,7 @@ function initSquareCanvas() {
     textLeft(ctx, 'y', ye.x + 9, ye.y + 2, MUTED, fi(700, 13));
 
     if (u === 0 && v === 0) {
-      sqLine(ctx, 'A 和 O 重合了：對角線長 0，畫不出正方形', 360, RD_NO, 16);
+      hbFitLine(ctx, 'A 和 O 重合了：對角線長 0，畫不出正方形', 360, RD_NO, 16);
       out.innerHTML = '請把 \\(A\\) 移離 \\(O\\)';
       fb.innerHTML = wrapFeedback('對角線至少要有長度，正方形才存在。');
       typeset([out, fb]);
@@ -771,11 +702,11 @@ function initSquareCanvas() {
     });
 
     const n = u * u + v * v;
-    const Rd = sqRoot(4 * n), Rs = sqRoot(2 * n);
-    sqLine(ctx, `O 是 AC 的中點：O(${OX}, ${OY})`, 340, RD_WHITE, 15.5);
-    sqLine(ctx, `O→A：x ${sqSg(u)}、y ${sqSg(v)}；轉 90° 得 O→B：x ${sqSg(-v)}、y ${sqSg(u)}`, 370, RD_WHITE, 15);
-    sqLine(ctx, `B(${b[0]}, ${b[1]})、D(${d[0]}, ${d[1]})`, 400, RD_BLUE_LT, 17);
-    sqLine(ctx, `AC = BD = ${Rd.txt}，邊長 = ${Rs.txt}，面積 = ½ × AC × BD = ${2 * n}`, 434, C0, 14.5);
+    const Rd = hbRoot(4 * n), Rs = hbRoot(2 * n);
+    hbFitLine(ctx, `O 是 AC 的中點：O(${OX}, ${OY})`, 340, RD_WHITE, 15.5);
+    hbFitLine(ctx, `O→A：x ${sqSg(u)}、y ${sqSg(v)}；轉 90° 得 O→B：x ${sqSg(-v)}、y ${sqSg(u)}`, 370, RD_WHITE, 15);
+    hbFitLine(ctx, `B(${b[0]}, ${b[1]})、D(${d[0]}, ${d[1]})`, 400, RD_BLUE_LT, 17);
+    hbFitLine(ctx, `AC = BD = ${Rd.txt}，邊長 = ${Rs.txt}，面積 = ½ × AC × BD = ${2 * n}`, 434, C0, 14.5);
     out.innerHTML = `\\(B(${b[0]}, ${b[1]})\\)、<wbr>\\(D(${d[0]}, ${d[1]})\\)`;
     fb.innerHTML = wrapFeedback(u === 0 || v === 0
       ? '\\(\\overline{AC}\\) 是水平或鉛垂時，\\(B\\)、\\(D\\) 就在 \\(O\\) 的正上下方（或正左右方），而且到 \\(O\\) 的距離和 \\(\\overline{OA}\\) 一樣。'
@@ -834,8 +765,8 @@ function initJudgeCanvas() {
     const G = sqQuad(ctx, [A, B, C, D], ['A', 'B', 'C', 'D'], { alpha: 0.08, ref: O });
     hbSeg(ctx, A, C, RD_YELLOW, 3);
     hbSeg(ctx, B, D, RD_BLUE_LT, 3);
-    if (a === c) { sqTick(ctx, O, A, 1, RD_YELLOW); sqTick(ctx, O, C, 1, RD_YELLOW); }
-    if (b === d) { sqTick(ctx, O, B, 2, RD_BLUE_LT); sqTick(ctx, O, D, 2, RD_BLUE_LT); }
+    if (a === c) { hbTick(ctx, O, A, 1, RD_YELLOW); hbTick(ctx, O, C, 1, RD_YELLOW); }
+    if (b === d) { hbTick(ctx, O, B, 2, RD_BLUE_LT); hbTick(ctx, O, D, 2, RD_BLUE_LT); }
     if (J.perp) sqRight(ctx, O, C, D, RD_WHITE, 11);
     else hbAngle(ctx, O, C, D, 22, RD_WHITE, { alpha: 0.2, label: `${t}°`, lr: 38, font: f(800, 13) });
     hbDot(ctx, O, RD_WHITE, 4);
@@ -849,10 +780,10 @@ function initJudgeCanvas() {
       const x = 95 + i * 175, y = 336;
       drawChip(ctx, x - 75, y - 15, 150, 30, `${it[1] ? '✓' : '✗'} ${it[0]}`, it[1] ? RD_OK : RD_NO, it[1] ? 'rgba(134,239,172,0.12)' : 'rgba(251,113,133,0.10)');
     });
-    sqLine(ctx, `AC = ${a} + ${c} = ${a + c}，BD = ${b} + ${d} = ${b + d}`, 374, RD_WHITE, 15.5);
-    sqLine(ctx, `判別：${J.name}`, 406, J.name === '一般四邊形' ? RD_NO : C0, 18);
-    sqLine(ctx, J.why, 436, MUTED, 14.5);
-    sqLine(ctx, `量一量四個內角：∠A ≈ ${sqD1(ang[0])}°、∠B ≈ ${sqD1(ang[1])}°、∠C ≈ ${sqD1(ang[2])}°、∠D ≈ ${sqD1(ang[3])}°`, 460, DIM, 13);
+    hbFitLine(ctx, `AC = ${a} + ${c} = ${a + c}，BD = ${b} + ${d} = ${b + d}`, 374, RD_WHITE, 15.5);
+    hbFitLine(ctx, `判別：${J.name}`, 406, J.name === '一般四邊形' ? RD_NO : C0, 18);
+    hbFitLine(ctx, J.why, 436, MUTED, 14.5);
+    hbFitLine(ctx, `量一量四個內角：∠A ≈ ${sqD1(ang[0])}°、∠B ≈ ${sqD1(ang[1])}°、∠C ≈ ${sqD1(ang[2])}°、∠D ≈ ${sqD1(ang[3])}°`, 460, DIM, 13);
 
     out.innerHTML = `\\(\\overline{AC} = ${a + c}\\)、<wbr>\\(\\overline{BD} = ${b + d}\\)，<wbr>${J.name}`;
     let msg;
@@ -975,7 +906,7 @@ function initFamilyCanvas() {
       sqNode(ctx, nd.x, nd.y, key === 'para' ? 104 : 84, 28, nd.t, !!(F && F.lit[key]), C0);
     });
     const names = F ? Object.keys(SQ_NODES).filter(k2 => F.lit[k2]).map(k2 => SQ_NODES[k2].t) : [];
-    sqLine(ctx, F ? `它是${F.name}，也是：${names.filter(t => t !== F.name).join('、')}` : '畫不出來的四邊形，哪個家族都不屬於', 446, F ? RD_YELLOW : RD_NO, 15.5);
+    hbFitLine(ctx, F ? `它是${F.name}，也是：${names.filter(t => t !== F.name).join('、')}` : '畫不出來的四邊形，哪個家族都不屬於', 446, F ? RD_YELLOW : RD_NO, 15.5);
 
     out.innerHTML = F ? `目前：${F.name}` : '目前：畫不出來';
     let msg;
@@ -1049,16 +980,16 @@ function initMidCanvas() {
       cgLabel(ctx, E2, "E'", RD_BLUE_LT, 16, 0, fi(800, 15));
       const G = sqQuad(ctx, [A, B, C, D], ['A', 'B', 'C', 'D'], { fill: C0, alpha: 0.16 });
       hbSeg(ctx, E, F, C0, 3.2);
-      sqTick(ctx, A, E, 1, RD_WHITE); sqTick(ctx, E, B, 1, RD_WHITE);
-      sqTick(ctx, D, F, 2, RD_WHITE); sqTick(ctx, F, C, 2, RD_WHITE);
+      hbTick(ctx, A, E, 1, RD_WHITE); hbTick(ctx, E, B, 1, RD_WHITE);
+      hbTick(ctx, D, F, 2, RD_WHITE); hbTick(ctx, F, C, 2, RD_WHITE);
       cgLabel(ctx, E, 'E', RD_WHITE, -16, 0, fi(800, 15));
       cgLabel(ctx, F, 'F', RD_WHITE, -2, -16, fi(800, 15));
-      sqSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
-      sqSideLabel(ctx, B, C, G, String(b), RD_WHITE, 16);
-      sqLine(ctx, '藍色是把梯形繞 F 轉半圈的那一份：C、D 對調，A、B 跑到右邊', 340, MUTED, 13.5);
-      sqLine(ctx, `拼起來的平行四邊形，底 = AD + BC = ${a} + ${b} = ${a + b}`, 370, RD_BLUE_LT, 15.5);
-      sqLine(ctx, `EE' 也是 ${a + b}，而 EF 剛好是它的一半`, 400, RD_WHITE, 15.5);
-      sqLine(ctx, `EF ∥ BC，EF = ½(${a} + ${b}) = ${numStr(m)}`, 434, C0, 17.5);
+      hbSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
+      hbSideLabel(ctx, B, C, G, String(b), RD_WHITE, 16);
+      hbFitLine(ctx, '藍色是把梯形繞 F 轉半圈的那一份：C、D 對調，A、B 跑到右邊', 340, MUTED, 13.5);
+      hbFitLine(ctx, `拼起來的平行四邊形，底 = AD + BC = ${a} + ${b} = ${a + b}`, 370, RD_BLUE_LT, 15.5);
+      hbFitLine(ctx, `EE' 也是 ${a + b}，而 EF 剛好是它的一半`, 400, RD_WHITE, 15.5);
+      hbFitLine(ctx, `EF ∥ BC，EF = ½(${a} + ${b}) = ${numStr(m)}`, 434, C0, 17.5);
       out.innerHTML = wbrEq(`\\overline{EF} = \\frac{${a} + ${b}}{2} = ${numStr(m)}`);
       fb.innerHTML = wrapFeedback('兩腰中點的連線段<strong>平行上下底</strong>，長度是<strong>兩底和的一半</strong>——不是兩底差的一半。');
     } else {
@@ -1074,12 +1005,12 @@ function initMidCanvas() {
         cgLabel(ctx, R, names[i - 1][1], RD_WHITE, 15, 0, fi(800, 14));
         cgLabel(ctx, hbV((L.x + R.x) / 2, L.y), numStr(len[i - 1]), i === 2 ? C0 : RD_YELLOW, 0, -10, f(800, 13));
       }
-      sqSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
-      sqSideLabel(ctx, B, C, G, String(b), RD_WHITE, 16);
-      sqLine(ctx, `FI = ½(AD + BC) = ½(${a} + ${b}) = ${numStr(len[1])}`, 340, C0, 16);
-      sqLine(ctx, `EH 是梯形 AFID 的中點連線：½(${a} + ${numStr(len[1])}) = ${numStr(len[0])}`, 372, RD_YELLOW, 15);
-      sqLine(ctx, `GJ 是梯形 FBCI 的中點連線：½(${numStr(len[1])} + ${b}) = ${numStr(len[2])}`, 404, RD_YELLOW, 15);
-      sqLine(ctx, `由上往下：${a}、${numStr(len[0])}、${numStr(len[1])}、${numStr(len[2])}、${b}，每次多 ${numStr((b - a) / 4)}`, 436, MUTED, 14.5);
+      hbSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
+      hbSideLabel(ctx, B, C, G, String(b), RD_WHITE, 16);
+      hbFitLine(ctx, `FI = ½(AD + BC) = ½(${a} + ${b}) = ${numStr(len[1])}`, 340, C0, 16);
+      hbFitLine(ctx, `EH 是梯形 AFID 的中點連線：½(${a} + ${numStr(len[1])}) = ${numStr(len[0])}`, 372, RD_YELLOW, 15);
+      hbFitLine(ctx, `GJ 是梯形 FBCI 的中點連線：½(${numStr(len[1])} + ${b}) = ${numStr(len[2])}`, 404, RD_YELLOW, 15);
+      hbFitLine(ctx, `由上往下：${a}、${numStr(len[0])}、${numStr(len[1])}、${numStr(len[2])}、${b}，每次多 ${numStr((b - a) / 4)}`, 436, MUTED, 14.5);
       out.innerHTML = `\\(\\overline{EH} = ${numStr(len[0])}\\)、<wbr>\\(\\overline{FI} = ${numStr(len[1])}\\)、<wbr>\\(\\overline{GJ} = ${numStr(len[2])}\\)`;
       fb.innerHTML = wrapFeedback('先算正中間的 \\(\\overline{FI}\\)，再把上半、下半各看成一個新的梯形，<strong>再用一次中點連線段性質</strong>。');
     }
@@ -1144,13 +1075,13 @@ function initTareaCanvas() {
       cgLabel(ctx, E, 'E', RD_WHITE, -15, 0, fi(800, 15));
       cgLabel(ctx, F, 'F', RD_WHITE, 15, 0, fi(800, 15));
       cgLabel(ctx, hbV((E.x + F.x) / 2, E.y), `m = ${numStr(m)}`, RD_YELLOW, 0, -12, f(800, 14));
-      sqSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
-      sqSideLabel(ctx, B, C, G, String(b), RD_WHITE, 16);
+      hbSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
+      hbSideLabel(ctx, B, C, G, String(b), RD_WHITE, 16);
       cgLabel(ctx, hbV(Math.max(Q2.x, C.x, D.x), (P2.y + Q2.y) / 2), `h = ${h}`, C0, 38, 0, f(800, 14));
-      sqLine(ctx, `m = EF = ½(${a} + ${b}) = ${numStr(m)}`, 344, RD_YELLOW, 16);
-      sqLine(ctx, `面積 = (上底 + 下底) × 高 ÷ 2 = (${a} + ${b}) × ${h} ÷ 2 = ${numStr(S)}`, 374, RD_WHITE, 15);
-      sqLine(ctx, `= 中點連線段 × 高 = ${numStr(m)} × ${h} = ${numStr(S)}`, 404, C0, 17);
-      sqLine(ctx, `反過來：BC = 2EF − AD = 2 × ${numStr(m)} − ${a} = ${b}`, 436, MUTED, 14.5);
+      hbFitLine(ctx, `m = EF = ½(${a} + ${b}) = ${numStr(m)}`, 344, RD_YELLOW, 16);
+      hbFitLine(ctx, `面積 = (上底 + 下底) × 高 ÷ 2 = (${a} + ${b}) × ${h} ÷ 2 = ${numStr(S)}`, 374, RD_WHITE, 15);
+      hbFitLine(ctx, `= 中點連線段 × 高 = ${numStr(m)} × ${h} = ${numStr(S)}`, 404, C0, 17);
+      hbFitLine(ctx, `反過來：BC = 2EF − AD = 2 × ${numStr(m)} − ${a} = ${b}`, 436, MUTED, 14.5);
       out.innerHTML = `面積：<wbr>` + wbrEq(`${numStr(m)} \\times ${h} = ${numStr(S)}`);
       fb.innerHTML = wrapFeedback('紅、藍兩對三角形各自全等：剪下來繞 \\(E\\)、\\(F\\) 轉半圈補上去，梯形就變成<strong>寬 \\(m\\)、高 \\(h\\) 的長方形</strong>。');
     } else {
@@ -1165,16 +1096,16 @@ function initTareaCanvas() {
       cgLabel(ctx, Qm, 'Q', RD_YELLOW, 0, 16, fi(800, 15));
       // BC 的中垂線（紅虛線）
       const pv = sqClipLeft(raw, b / 2);
-      const L = sqArea(pv), Rr = S - L;
+      const L = hbPolyArea(pv), Rr = S - L;
       hbSeg(ctx, P(b / 2, 0), P(b / 2, h + 0.6), RD_RED_LT, 2, [6, 5]);
       sqRight(ctx, Qm, C, P(b / 2, h), RD_RED_LT, 9);
-      sqSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
-      sqSideLabel(ctx, B, C, G, String(b), RD_WHITE, 26);
+      hbSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
+      hbSideLabel(ctx, B, C, G, String(b), RD_WHITE, 26);
       const iso = (2 * s === b - a);
-      sqLine(ctx, `PQ 連接兩底中點：兩塊都是上底 ${numStr(a / 2)}、下底 ${numStr(b / 2)}、高 ${h} 的梯形`, 344, RD_YELLOW, 14.5);
-      sqLine(ctx, `兩塊面積都是 ½ × (${numStr(a / 2)} + ${numStr(b / 2)}) × ${h} = ${numStr(S / 2)}`, 374, C0, 16.5);
-      sqLine(ctx, `BC 的中垂線（紅虛線）：左 ${numStr(Math.round(L * 100) / 100)}、右 ${numStr(Math.round(Rr * 100) / 100)}，${iso ? '相等' : '不相等'}`, 406, RD_RED_LT, 15);
-      sqLine(ctx, iso ? '兩腰相等（等腰梯形）時，中垂線剛好就是 PQ' : '兩腰不相等時，中垂線不會經過上底的中點', 436, MUTED, 14.5);
+      hbFitLine(ctx, `PQ 連接兩底中點：兩塊都是上底 ${numStr(a / 2)}、下底 ${numStr(b / 2)}、高 ${h} 的梯形`, 344, RD_YELLOW, 14.5);
+      hbFitLine(ctx, `兩塊面積都是 ½ × (${numStr(a / 2)} + ${numStr(b / 2)}) × ${h} = ${numStr(S / 2)}`, 374, C0, 16.5);
+      hbFitLine(ctx, `BC 的中垂線（紅虛線）：左 ${numStr(Math.round(L * 100) / 100)}、右 ${numStr(Math.round(Rr * 100) / 100)}，${iso ? '相等' : '不相等'}`, 406, RD_RED_LT, 15);
+      hbFitLine(ctx, iso ? '兩腰相等（等腰梯形）時，中垂線剛好就是 PQ' : '兩腰不相等時，中垂線不會經過上底的中點', 436, MUTED, 14.5);
       out.innerHTML = `兩塊各 \\(${numStr(S / 2)}\\)，<wbr>中垂線分出 \\(${numStr(Math.round(L * 100) / 100)}\\) 與 \\(${numStr(Math.round(Rr * 100) / 100)}\\)`;
       fb.innerHTML = wrapFeedback('連接<strong>上底中點與下底中點</strong>，兩塊的高一樣、上下底的和也一樣，面積一定相等；只取下底的中垂線，上底不一定被平分。');
     }
@@ -1220,18 +1151,18 @@ function initIsoCanvas() {
       hbPoly(ctx, [D, C, F], RD_BLUE_LT, 0.3, 0.01);
     }
     sqQuad(ctx, [A, B, C, D], ['A', 'B', 'C', 'D'], { fill: C0, alpha: 0.1 });
-    sqTick(ctx, A, B, 1, C0);
-    sqTick(ctx, D, C, 1, C0);
+    hbTick(ctx, A, B, 1, C0);
+    hbTick(ctx, D, C, 1, C0);
     if (mode === 'ang') {
       const big = 180 - x;
       hbAngle(ctx, B, C, A, 26, RD_YELLOW, { alpha: 0.32, label: `${x}°`, lr: 46, font: f(800, 14) });
       hbAngle(ctx, C, D, B, 26, RD_YELLOW, { alpha: 0.32, label: `${x}°`, lr: 46, font: f(800, 14) });
       hbAngle(ctx, A, B, D, 22, RD_BLUE_LT, { alpha: 0.32, label: `${big}°`, lr: 42, font: f(800, 14) });
       hbAngle(ctx, D, A, C, 22, RD_BLUE_LT, { alpha: 0.32, label: `${big}°`, lr: 42, font: f(800, 14) });
-      sqLine(ctx, `∠B = ∠C = ${x}°`, 334, RD_YELLOW, 17);
-      sqLine(ctx, `AD ∥ BC ⇒ ∠A = 180° − ∠B = 180° − ${x}° = ${big}°`, 366, RD_BLUE_LT, 15.5);
-      sqLine(ctx, `∠D = ∠A = ${big}°（上底的兩個角也相等）`, 398, RD_BLUE_LT, 15.5);
-      sqLine(ctx, `四個角的和：2 × ${x}° + 2 × ${big}° = 360°`, 432, MUTED, 14.5);
+      hbFitLine(ctx, `∠B = ∠C = ${x}°`, 334, RD_YELLOW, 17);
+      hbFitLine(ctx, `AD ∥ BC ⇒ ∠A = 180° − ∠B = 180° − ${x}° = ${big}°`, 366, RD_BLUE_LT, 15.5);
+      hbFitLine(ctx, `∠D = ∠A = ${big}°（上底的兩個角也相等）`, 398, RD_BLUE_LT, 15.5);
+      hbFitLine(ctx, `四個角的和：2 × ${x}° + 2 × ${big}° = 360°`, 432, MUTED, 14.5);
       out.innerHTML = wbrEq(`\\angle A = \\angle D = 180^\\circ - ${x}^\\circ = ${big}^\\circ`);
       fb.innerHTML = wrapFeedback('等腰梯形的定義是「兩腰相等」；<strong>兩底角相等</strong>是由全等推出來的性質。');
     } else {
@@ -1244,13 +1175,13 @@ function initIsoCanvas() {
       sqRight(ctx, F, D, B, RD_WHITE, 9);
       cgLabel(ctx, E, 'E', RD_WHITE, 0, 18, fi(800, 15));
       cgLabel(ctx, F, 'F', RD_WHITE, 0, 18, fi(800, 15));
-      sqTick(ctx, B, E, 2, RD_BLUE_LT);
-      sqTick(ctx, F, C, 2, RD_BLUE_LT);
+      hbTick(ctx, B, E, 2, RD_BLUE_LT);
+      hbTick(ctx, F, C, 2, RD_BLUE_LT);
       const be = numStr(e);
-      sqLine(ctx, 'AE = DF（平行線間的距離處處相等）', 334, RD_WHITE, 15.5);
-      sqLine(ctx, 'AB = DC、∠AEB = ∠DFC = 90° ⇒ △ABE ≅ △DCF（RHS）', 366, RD_BLUE_LT, 15);
-      sqLine(ctx, `得 ∠B = ∠C，BE = CF = (${c} − ${a}) ÷ 2 = ${be}`, 398, RD_YELLOW, 16);
-      sqLine(ctx, 'L 是對稱軸，也是上底、下底的中垂線', 432, MUTED, 14.5);
+      hbFitLine(ctx, 'AE = DF（平行線間的距離處處相等）', 334, RD_WHITE, 15.5);
+      hbFitLine(ctx, 'AB = DC、∠AEB = ∠DFC = 90° ⇒ △ABE ≅ △DCF（RHS）', 366, RD_BLUE_LT, 15);
+      hbFitLine(ctx, `得 ∠B = ∠C，BE = CF = (${c} − ${a}) ÷ 2 = ${be}`, 398, RD_YELLOW, 16);
+      hbFitLine(ctx, 'L 是對稱軸，也是上底、下底的中垂線', 432, MUTED, 14.5);
       out.innerHTML = wbrEq(`\\overline{BE} = \\overline{CF} = \\frac{${c} - ${a}}{2} = ${be}`);
       fb.innerHTML = wrapFeedback('從上底兩端作高，兩邊切下的直角三角形<strong>全等</strong>：\\(\\overline{BE} = \\overline{CF}\\) 是兩底差的一半，解題時很常用。');
     }
@@ -1297,8 +1228,8 @@ function initIsodCanvas() {
     if (mode === 'len') {
       hbPoly(ctx, [B, Q, D], C0, 0.3, 0.01);
       const G = sqQuad(ctx, [A, B, C, D], ['A', 'B', 'C', 'D'], { alpha: 0.05 });
-      sqTick(ctx, A, B, 1, RD_WHITE);
-      sqTick(ctx, D, C, 1, RD_WHITE);
+      hbTick(ctx, A, B, 1, RD_WHITE);
+      hbTick(ctx, D, C, 1, RD_WHITE);
       hbSeg(ctx, A, C, RD_YELLOW, 2.4);
       hbSeg(ctx, B, D, C0, 3);
       hbSeg(ctx, A, Pp, RD_BLUE_LT, 2, [4, 4]);
@@ -1308,12 +1239,12 @@ function initIsodCanvas() {
       cgLabel(ctx, Pp, 'P', RD_WHITE, 0, 18, fi(800, 15));
       cgLabel(ctx, Q, 'Q', RD_WHITE, 0, 18, fi(800, 15));
       cgLabel(ctx, hbV(Q.x, (Q.y + D.y) / 2), String(h), RD_BLUE_LT, 13, 0, f(800, 14));
-      sqSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
+      hbSideLabel(ctx, A, D, G, String(a), RD_WHITE, 16);
       cgLabel(ctx, hbV((B.x + C.x) / 2, B.y), String(b), RD_WHITE, 0, 38, f(800, 15));
-      sqLine(ctx, `BP = CQ = (${b} − ${a}) ÷ 2 = ${numStr(bp)}`, 344, RD_BLUE_LT, 16);
-      sqLine(ctx, `BQ = BP + PQ = ${numStr(bp)} + ${a} = ${numStr(bq)}`, 374, RD_WHITE, 16);
-      sqLine(ctx, `BD² = DQ² + BQ² = ${h}² + ${numStr(bq)}² = ${numStr(N)}`, 404, RD_WHITE, 16);
-      sqLine(ctx, `AC = BD = ${R.exact ? R.txt : `${R.txt} ≈ ${R.val.toFixed(2)}`}`, 436, C0, 17.5);
+      hbFitLine(ctx, `BP = CQ = (${b} − ${a}) ÷ 2 = ${numStr(bp)}`, 344, RD_BLUE_LT, 16);
+      hbFitLine(ctx, `BQ = BP + PQ = ${numStr(bp)} + ${a} = ${numStr(bq)}`, 374, RD_WHITE, 16);
+      hbFitLine(ctx, `BD² = DQ² + BQ² = ${h}² + ${numStr(bq)}² = ${numStr(N)}`, 404, RD_WHITE, 16);
+      hbFitLine(ctx, `AC = BD = ${R.exact ? R.txt : `${R.txt} ≈ ${R.val.toFixed(2)}`}`, 436, C0, 17.5);
       out.innerHTML = wbrEq(`\\overline{AC} = \\overline{BD} = \\sqrt{${h}^2 + ${numStr(bq)}^2} = ${R.tex}`);
       fb.innerHTML = wrapFeedback('\\(\\overline{BQ}\\) 剛好等於<strong>兩底和的一半</strong>；畫出高之後，對角線就是直角三角形的斜邊。');
     } else {
@@ -1322,14 +1253,14 @@ function initIsodCanvas() {
       const G = sqQuad(ctx, [A, B, C, D], ['A', 'B', 'C', 'D'], { alpha: 0 });
       hbSeg(ctx, A, C, RD_YELLOW, 3);
       hbSeg(ctx, B, D, RD_BLUE_LT, 3);
-      sqTick(ctx, A, B, 1, RD_WHITE);
-      sqTick(ctx, D, C, 1, RD_WHITE);
+      hbTick(ctx, A, B, 1, RD_WHITE);
+      hbTick(ctx, D, C, 1, RD_WHITE);
       hbAngle(ctx, B, C, A, 24, C0, { alpha: 0.35 });
       hbAngle(ctx, C, D, B, 24, C0, { alpha: 0.35 });
-      sqLine(ctx, 'AB = DC（等腰）', 344, RD_WHITE, 16);
-      sqLine(ctx, '∠ABC = ∠DCB（兩底角相等）', 374, C0, 16);
-      sqLine(ctx, 'BC = CB（共用邊）', 404, RD_WHITE, 16);
-      sqLine(ctx, `⇒ △ABC ≅ △DCB（SAS），AC = DB = ${R.exact ? R.txt : `${R.txt} ≈ ${R.val.toFixed(2)}`}`, 436, RD_YELLOW, 16);
+      hbFitLine(ctx, 'AB = DC（等腰）', 344, RD_WHITE, 16);
+      hbFitLine(ctx, '∠ABC = ∠DCB（兩底角相等）', 374, C0, 16);
+      hbFitLine(ctx, 'BC = CB（共用邊）', 404, RD_WHITE, 16);
+      hbFitLine(ctx, `⇒ △ABC ≅ △DCB（SAS），AC = DB = ${R.exact ? R.txt : `${R.txt} ≈ ${R.val.toFixed(2)}`}`, 436, RD_YELLOW, 16);
       out.innerHTML = wbrEq(`\\overline{AC} = \\overline{DB} = ${R.tex}`);
       fb.innerHTML = wrapFeedback('等腰梯形的<strong>兩條對角線等長</strong>；但它們<strong>不互相平分</strong>（交點不在對角線的中點）。');
     }
@@ -1372,8 +1303,8 @@ function initIsojCanvas() {
       hbSeg(ctx, B, C, RD_WHITE, 3);
       cgLabel(ctx, B, 'B', RD_WHITE, -12, 12, fi(800, 16));
       cgLabel(ctx, C, 'C', RD_WHITE, 12, 12, fi(800, 16));
-      sqLine(ctx, `∠B = ${bb}°、∠C = ${cc}° 太小：兩腰在碰到上底之前就交在一起了`, 330, RD_NO, 15.5);
-      sqLine(ctx, '畫不出梯形——把其中一個角調大一點', 366, MUTED, 15);
+      hbFitLine(ctx, `∠B = ${bb}°、∠C = ${cc}° 太小：兩腰在碰到上底之前就交在一起了`, 330, RD_NO, 15.5);
+      hbFitLine(ctx, '畫不出梯形——把其中一個角調大一點', 366, MUTED, 15);
       out.innerHTML = '畫不出梯形';
       fb.innerHTML = wrapFeedback('兩腰往上延伸、在高 \\(4\\) 以內就相交，得到的是三角形，不是梯形。');
       typeset([out, fb]);
@@ -1397,22 +1328,22 @@ function initIsojCanvas() {
     hbSeg(ctx, A, D, RD_WHITE, 3);
     hbAngle(ctx, B, C, A, 24, RD_BLUE_LT, { alpha: 0.32, label: `${bb}°`, lr: 42, font: f(800, 13.5) });
     hbAngle(ctx, C, D, B, 24, RD_RED_LT, { alpha: 0.32, label: `${cc}°`, lr: 42, font: f(800, 13.5) });
-    if (iso) { sqTick(ctx, A, B, 1, RD_YELLOW); sqTick(ctx, D, C, 1, RD_YELLOW); }
+    if (iso) { hbTick(ctx, A, B, 1, RD_YELLOW); hbTick(ctx, D, C, 1, RD_YELLOW); }
 
     const tup = `${180 - bb}°, ${bb}°, ${cc}°, ${180 - cc}°`;
     let verdict;
     if (para) {
-      sqLine(ctx, `∠B + ∠C = ${bb}° + ${cc}° = 180° ⇒ AB ∥ DC`, 330, RD_RED_LT, 15.5);
-      sqLine(ctx, '兩雙對邊都平行：這是平行四邊形，不是梯形', 362, RD_NO, 16);
+      hbFitLine(ctx, `∠B + ∠C = ${bb}° + ${cc}° = 180° ⇒ AB ∥ DC`, 330, RD_RED_LT, 15.5);
+      hbFitLine(ctx, '兩雙對邊都平行：這是平行四邊形，不是梯形', 362, RD_NO, 16);
       verdict = '平行四邊形';
     } else {
-      sqLine(ctx, `ABED 是平行四邊形 ⇒ DE = AB，∠DEC = ∠B = ${bb}°（同位角）`, 330, RD_WHITE, 14.5);
-      sqLine(ctx, iso ? `∠DEC = ∠C = ${cc}° ⇒ △DEC 是等腰三角形 ⇒ DE = DC` : `∠DEC = ${bb}° ≠ ∠C = ${cc}° ⇒ DE ≠ DC`, 362, iso ? RD_OK : RD_RED_LT, 15);
+      hbFitLine(ctx, `ABED 是平行四邊形 ⇒ DE = AB，∠DEC = ∠B = ${bb}°（同位角）`, 330, RD_WHITE, 14.5);
+      hbFitLine(ctx, iso ? `∠DEC = ∠C = ${cc}° ⇒ △DEC 是等腰三角形 ⇒ DE = DC` : `∠DEC = ${bb}° ≠ ∠C = ${cc}° ⇒ DE ≠ DC`, 362, iso ? RD_OK : RD_RED_LT, 15);
       verdict = iso ? '等腰梯形' : '不是等腰梯形';
     }
-    sqLine(ctx, `AB ≈ ${AB.toFixed(2)}、DC ≈ ${DC.toFixed(2)}：${verdict}`, 394, iso ? RD_OK : RD_YELLOW, 16.5);
-    sqLine(ctx, `依 ∠A、∠B、∠C、∠D 的順序：${tup}`, 426, MUTED, 14.5);
-    sqLine(ctx, `對角線 AC ≈ ${AC.toFixed(2)}、BD ≈ ${BD.toFixed(2)}`, 454, DIM, 13.5);
+    hbFitLine(ctx, `AB ≈ ${AB.toFixed(2)}、DC ≈ ${DC.toFixed(2)}：${verdict}`, 394, iso ? RD_OK : RD_YELLOW, 16.5);
+    hbFitLine(ctx, `依 ∠A、∠B、∠C、∠D 的順序：${tup}`, 426, MUTED, 14.5);
+    hbFitLine(ctx, `對角線 AC ≈ ${AC.toFixed(2)}、BD ≈ ${BD.toFixed(2)}`, 454, DIM, 13.5);
     out.innerHTML = `\\(\\angle B = ${bb}^\\circ\\)、<wbr>\\(\\angle C = ${cc}^\\circ\\)，<wbr>${verdict}`;
     fb.innerHTML = wrapFeedback(para
       ? '兩個「底角」互補時兩腰平行，四邊形變成平行四邊形——<strong>梯形只能有一雙對邊平行</strong>。'

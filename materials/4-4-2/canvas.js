@@ -83,16 +83,6 @@ function pqPar(P, Q, R, S) {
 
 function pqEq(a, b) { return Math.abs(a - b) < 1e-6; }
 
-// 鞋帶公式（數學座標的面積，取正值）
-function pqArea(pts) {
-  let s = 0;
-  pts.forEach((p, i) => {
-    const q = pts[(i + 1) % pts.length];
-    s += p.x * q.y - q.x * p.y;
-  });
-  return Math.abs(s) / 2;
-}
-
 // 凸多邊形被直線切開：保留 n·X ≤ c 的那一半（Sutherland–Hodgman）
 function pqClip(poly, n, c) {
   const out = [];
@@ -146,52 +136,6 @@ function pqD2(v) {
   return Number.isInteger(r) ? String(r) : String(r);
 }
 
-// 邊長平方 n（正整數）→ 最簡根式 k√r
-function pqRoot(n) {
-  let k = 1, r = n;
-  for (let d = 2; d * d <= r; d++) {
-    while (r % (d * d) === 0) { r /= d * d; k *= d; }
-  }
-  const exact = (r === 1);
-  return {
-    exact,
-    txt: exact ? String(k) : (k > 1 ? `${k}√${r}` : `√${r}`),
-    tex: exact ? String(k) : (k > 1 ? `${k}\\sqrt{${r}}` : `\\sqrt{${r}}`)
-  };
-}
-
-// 邊長標示畫在圖形外側（開發約束 18）：沿邊的法向、遠離 G 推出去
-function pqSideLabel(ctx, P, Q, G, text, color, off, font) {
-  const m = hbV((P.x + Q.x) / 2, (P.y + Q.y) / 2);
-  const d = hbDist(P, Q) || 1;
-  let nx = -(Q.y - P.y) / d, ny = (Q.x - P.x) / d;
-  if ((m.x - G.x) * nx + (m.y - G.y) * ny < 0) { nx = -nx; ny = -ny; }
-  const k = off || 18;
-  cgLabel(ctx, m, text, color, nx * k, ny * k, font || f(800, 15));
-}
-
-// 等長記號：在線段中點畫 n 條短橫線（t 指定沿線的位置，預設 0.5）
-function pqTick(ctx, P, Q, n, color, t) {
-  const tt = t == null ? 0.5 : t;
-  const m = hbV(P.x + (Q.x - P.x) * tt, P.y + (Q.y - P.y) * tt);
-  const d = hbDist(P, Q) || 1;
-  const ux = (Q.x - P.x) / d, uy = (Q.y - P.y) / d;
-  const nx = -uy, ny = ux;
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2.6;
-  ctx.lineCap = 'round';
-  for (let i = 0; i < n; i++) {
-    const s = (i - (n - 1) / 2) * 6;
-    const c = hbV(m.x + ux * s, m.y + uy * s);
-    ctx.beginPath();
-    ctx.moveTo(c.x - nx * 8, c.y - ny * 8);
-    ctx.lineTo(c.x + nx * 8, c.y + ny * 8);
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
 // 平行記號：在線段中點畫 n 個朝 P→Q 方向的箭頭（「>」「>>」）
 function pqChev(ctx, P, Q, n, color) {
   const d = hbDist(P, Q) || 1;
@@ -213,20 +157,6 @@ function pqChev(ctx, P, Q, n, color) {
     ctx.stroke();
   }
   ctx.restore();
-}
-
-// 畫布底部的一行字，太長時自動縮字級（最小 12.5px）
-function pqLine(ctx, text, y, color, size) {
-  const W = ctx.canvas.width;
-  let s = size || 16;
-  ctx.save();
-  ctx.font = f(800, s);
-  while (ctx.measureText(text).width > W - 24 && s > 12.5) {
-    s -= 0.5;
-    ctx.font = f(800, s);
-  }
-  ctx.restore();
-  textCenter(ctx, text, W / 2, y, color, f(800, s));
 }
 
 // 淡淡的格點
@@ -395,10 +325,10 @@ const PQ_QUIZ_FIGS = {
     hbPoly(ctx, [a, b, c, d], RD_WHITE, 0.05, 2.4);
     hbSeg(ctx, a, fp, RD_YELLOW, 2.2);
     hbSeg(ctx, e, c, RD_YELLOW, 2.2);
-    pqTick(ctx, a, e, 1, RD_BLUE_LT);
-    pqTick(ctx, e, d, 1, RD_BLUE_LT);
-    pqTick(ctx, b, fp, 2, RD_BLUE_LT);
-    pqTick(ctx, fp, c, 2, RD_BLUE_LT);
+    hbTick(ctx, a, e, 1, RD_BLUE_LT);
+    hbTick(ctx, e, d, 1, RD_BLUE_LT);
+    hbTick(ctx, b, fp, 2, RD_BLUE_LT);
+    hbTick(ctx, fp, c, 2, RD_BLUE_LT);
     pqNames(ctx, [a, b, c, d], ['A', 'B', 'C', 'D'], RD_WHITE, 16);
     textCenter(ctx, 'E', e.x, e.y - 16, RD_WHITE, fi(800, 16));
     textCenter(ctx, 'F', fp.x, fp.y + 16, RD_WHITE, fi(800, 16));
@@ -497,13 +427,13 @@ function initAngleCanvas() {
     pqNames(ctx, [A, B, C, D], ['A', 'B', 'C', 'D'], RD_WHITE, 22);
 
     if (mode === 'opp') {
-      pqLine(ctx, `∠A = ∠C = ${aA}°`, 384, RD_YELLOW, 17);
-      pqLine(ctx, `∠B = ∠D = ${aB}°`, 412, RD_BLUE_LT, 17);
-      pqLine(ctx, '對角相等：∠A、∠C 都等於 180° − ∠B', 442, INK, 15.5);
+      hbFitLine(ctx, `∠A = ∠C = ${aA}°`, 384, RD_YELLOW, 17);
+      hbFitLine(ctx, `∠B = ∠D = ${aB}°`, 412, RD_BLUE_LT, 17);
+      hbFitLine(ctx, '對角相等：∠A、∠C 都等於 180° − ∠B', 442, INK, 15.5);
     } else {
-      pqLine(ctx, 'AD // BC，AB 是截線：∠A、∠B 是同側內角', 384, INK, 15.5);
-      pqLine(ctx, `∠A + ∠B = ${aA}° + ${aB}° = ${aA + aB}°`, 412, RD_YELLOW, 17);
-      pqLine(ctx, '換一條邊當截線也一樣：任兩個鄰角的和都是 180°', 442, INK, 15.5);
+      hbFitLine(ctx, 'AD // BC，AB 是截線：∠A、∠B 是同側內角', 384, INK, 15.5);
+      hbFitLine(ctx, `∠A + ∠B = ${aA}° + ${aB}° = ${aA + aB}°`, 412, RD_YELLOW, 17);
+      hbFitLine(ctx, '換一條邊當截線也一樣：任兩個鄰角的和都是 180°', 442, INK, 15.5);
     }
 
     out.innerHTML = `\\(\\angle A = \\angle C = ${aA}^\\circ\\)，<wbr>\\(\\angle B = \\angle D = ${aB}^\\circ\\)，<wbr>\\(\\angle A + \\angle B = ${aA + aB}^\\circ\\)`;
@@ -576,16 +506,16 @@ function initTileCanvas() {
 
     const r3 = a + b - 180;
     if (ok) {
-      pqLine(ctx, `① 磁磚 2 對角相等：它在 O 的角 = ∠2 = ${b}°`, 384, RD_BLUE_LT, 15.5);
-      pqLine(ctx, `② 周角 360°：磁磚 3 在 O 的角 = 360° − ${a}° − ${b}° = ${gm}°`, 412, INK, 15.5);
-      pqLine(ctx, `③ 磁磚 3 鄰角互補：∠3 = 180° − ${gm}° = ${a3}°`, 440, RD_RED_LT, 16);
-      pqLine(ctx, '一次只看一塊磁磚，把角一路「搬」過去', 466, MUTED, 14);
+      hbFitLine(ctx, `① 磁磚 2 對角相等：它在 O 的角 = ∠2 = ${b}°`, 384, RD_BLUE_LT, 15.5);
+      hbFitLine(ctx, `② 周角 360°：磁磚 3 在 O 的角 = 360° − ${a}° − ${b}° = ${gm}°`, 412, INK, 15.5);
+      hbFitLine(ctx, `③ 磁磚 3 鄰角互補：∠3 = 180° − ${gm}° = ${a3}°`, 440, RD_RED_LT, 16);
+      hbFitLine(ctx, '一次只看一塊磁磚，把角一路「搬」過去', 466, MUTED, 14);
       out.innerHTML = `\\(\\angle 3 = 180^\\circ\\)<wbr>\\({} - (360^\\circ - ${a}^\\circ - ${b}^\\circ)\\)<wbr>\\({} = ${a3}^\\circ\\)`;
       fb.innerHTML = wrapFeedback(`\\(\\angle 2\\) 先用<strong>對角相等</strong>搬到 \\(O\\)，三個角湊成周角 \\(360^\\circ\\)，再用<strong>鄰角互補</strong>搬到 \\(\\angle 3\\)。<br>合起來就是 \\(\\angle 3 = \\angle 1 + \\angle 2 - 180^\\circ\\)。`);
     } else {
-      pqLine(ctx, `∠1 + ∠2 = ${a + b}°，第三塊磁磚在 O 的角要 ${gm}°`, 392, RD_NO, 16);
-      pqLine(ctx, '平行四邊形的角都小於 180°：第三塊拼不進去', 420, RD_NO, 16);
-      pqLine(ctx, '把 ∠1 或 ∠2 調大，讓兩個角的和超過 180°', 448, INK, 15);
+      hbFitLine(ctx, `∠1 + ∠2 = ${a + b}°，第三塊磁磚在 O 的角要 ${gm}°`, 392, RD_NO, 16);
+      hbFitLine(ctx, '平行四邊形的角都小於 180°：第三塊拼不進去', 420, RD_NO, 16);
+      hbFitLine(ctx, '把 ∠1 或 ∠2 調大，讓兩個角的和超過 180°', 448, INK, 15);
       out.innerHTML = `\\(\\angle 1 + \\angle 2 = ${a + b}^\\circ\\)，<wbr>第三塊磁磚拼不進去（情境不成立）`;
       fb.innerHTML = wrapFeedback(`三塊磁磚在 \\(O\\) 的角要湊成 \\(360^\\circ\\)，第三塊就得是 \\(${gm}^\\circ\\)——但平行四邊形的每個角都小於 \\(180^\\circ\\)。<br>現在 \\(\\angle 1 = ${a}^\\circ\\)、\\(\\angle 2 = ${b}^\\circ\\)，把其中一個調大就拼得起來。`);
     }
@@ -664,14 +594,14 @@ function initFlipCanvas() {
 
     const lAB = pqLen(mA, mB), lCD = pqLen(mC, mD), lBC = pqLen(mB, mC), lDA = pqLen(mD, mA);
     if (t === 180) {
-      pqLine(ctx, '轉半圈：B 落在 D，AB 疊在 CD 上、BC 疊在 DA 上', 448, RD_OK, 15.5);
+      hbFitLine(ctx, '轉半圈：B 落在 D，AB 疊在 CD 上、BC 疊在 DA 上', 448, RD_OK, 15.5);
     } else if (t === 0) {
-      pqLine(ctx, '∠1 = ∠2、∠3 = ∠4（內錯角），AC 共用 → △ABC ≅ △CDA', 448, INK, 15);
+      hbFitLine(ctx, '∠1 = ∠2、∠3 = ∠4（內錯角），AC 共用 → △ABC ≅ △CDA', 448, INK, 15);
     } else {
-      pqLine(ctx, `已經轉了 ${t}°，再轉 ${180 - t}° 就疊上 △CDA`, 448, INK, 15.5);
+      hbFitLine(ctx, `已經轉了 ${t}°，再轉 ${180 - t}° 就疊上 △CDA`, 448, INK, 15.5);
     }
-    pqLine(ctx, `AB = CD = ${pqD2(lAB)}，BC = DA = ${pqD2(lBC)}`, 476, RD_YELLOW, 16.5);
-    pqLine(ctx, `周長 = 2 × (${pqD2(lAB)} + ${pqD2(lBC)}) = ${pqD2(lAB + lBC + lCD + lDA)}`, 504, RD_BLUE_LT, 16.5);
+    hbFitLine(ctx, `AB = CD = ${pqD2(lAB)}，BC = DA = ${pqD2(lBC)}`, 476, RD_YELLOW, 16.5);
+    hbFitLine(ctx, `周長 = 2 × (${pqD2(lAB)} + ${pqD2(lBC)}) = ${pqD2(lAB + lBC + lCD + lDA)}`, 504, RD_BLUE_LT, 16.5);
 
     out.innerHTML = `\\(\\overline{AB} = \\overline{CD} = ${pqD2(lCD)}\\)，<wbr>\\(\\overline{BC} = \\overline{DA} = ${pqD2(lDA)}\\)，<wbr>周長 \\(= 2(${ab} + ${bc})\\)<wbr>\\({} = ${2 * (ab + bc)}\\)`;
     fb.innerHTML = wrapFeedback(t === 180
@@ -711,10 +641,10 @@ function initDiagCanvas() {
     hbPoly(ctx, [A, B, C, D], RD_WHITE, 0.06, 2.8);
     hbSeg(ctx, A, C, RD_YELLOW, 3);
     hbSeg(ctx, B, D, RD_BLUE_LT, 3);
-    pqTick(ctx, O, A, 1, RD_YELLOW);
-    pqTick(ctx, O, C, 1, RD_YELLOW);
-    pqTick(ctx, O, B, 2, RD_BLUE_LT);
-    pqTick(ctx, O, D, 2, RD_BLUE_LT);
+    hbTick(ctx, O, A, 1, RD_YELLOW);
+    hbTick(ctx, O, C, 1, RD_YELLOW);
+    hbTick(ctx, O, B, 2, RD_BLUE_LT);
+    hbTick(ctx, O, D, 2, RD_BLUE_LT);
     const ang = Math.round(hbAngleDeg(O, A, B));
     if (ang === 90) {
       hbAngle(ctx, O, A, B, 16, RD_RED_LT, { right: true, alpha: 0.25 });
@@ -727,15 +657,15 @@ function initDiagCanvas() {
 
     const lOA = pqLen(mO, mA), lOC = pqLen(mO, mC), lOB = pqLen(mO, mB), lOD = pqLen(mO, mD);
     const lAC = pqLen(mA, mC), lBD = pqLen(mB, mD);
-    pqLine(ctx, `OA = OC = ${pqD2(lOA)}，OB = OD = ${pqD2(lOB)}：互相平分`, 400, INK, 16);
-    pqLine(ctx, `AC = ${pqD2(lAC)}，BD = ${pqD2(lBD)}${pqEq(lAC, lBD) ? '：一樣長（這時是長方形）' : '：不一樣長'}`, 428, pqEq(lAC, lBD) ? RD_OK : RD_YELLOW, 16);
+    hbFitLine(ctx, `OA = OC = ${pqD2(lOA)}，OB = OD = ${pqD2(lOB)}：互相平分`, 400, INK, 16);
+    hbFitLine(ctx, `AC = ${pqD2(lAC)}，BD = ${pqD2(lBD)}${pqEq(lAC, lBD) ? '：一樣長（這時是長方形）' : '：不一樣長'}`, 428, pqEq(lAC, lBD) ? RD_OK : RD_YELLOW, 16);
     let tex = `\\(\\overline{OA} = \\overline{OC} = ${pqD2(lOC)}\\)，<wbr>\\(\\overline{OB} = \\overline{OD} = ${pqD2(lOD)}\\)，<wbr>\\(\\overline{AC} + \\overline{BD} = 2(${p} + ${q})\\)<wbr>\\({} = ${2 * (p + q)}\\)`;
     if (ang === 90) {
-      const rt = pqRoot(p * p + q * q);
-      pqLine(ctx, `AC ⊥ BD：BC² = OB² + OC² = ${q * q} + ${p * p} = ${p * p + q * q}，BC = ${rt.txt}`, 456, RD_RED_LT, 15.5);
+      const rt = hbRoot(p * p + q * q);
+      hbFitLine(ctx, `AC ⊥ BD：BC² = OB² + OC² = ${q * q} + ${p * p} = ${p * p + q * q}，BC = ${rt.txt}`, 456, RD_RED_LT, 15.5);
       tex += `，<wbr>\\(\\overline{BC} = \\sqrt{${q}^2 + ${p}^2}\\)<wbr>\\({} = ${rt.tex}\\)`;
     } else {
-      pqLine(ctx, '把夾角調成 90°，看看能不能用畢氏定理算邊長', 456, MUTED, 14.5);
+      hbFitLine(ctx, '把夾角調成 90°，看看能不能用畢氏定理算邊長', 456, MUTED, 14.5);
     }
     out.innerHTML = tex;
     fb.innerHTML = wrapFeedback(pqEq(lAC, lBD)
@@ -801,7 +731,7 @@ function initAreaCanvas() {
       hbPoly(ctx, [A, B, C, D], RD_WHITE, 0, 2.8);
       hbSeg(ctx, A, C, INK, 2);
       hbSeg(ctx, B, D, INK, 2);
-      const areas = mtris.map(pqArea);
+      const areas = mtris.map(hbPolyArea);
       tris.forEach((tr, i) => {
         const G = hbCentroid(tr);
         drawExpr(ctx, [fracItem(Math.round(areas[i] * 4), 4, cols[i])], G.x, G.y, 15, cols[i]);
@@ -809,9 +739,9 @@ function initAreaCanvas() {
       hbDot(ctx, O, RD_WHITE, 4);
       cgLabel(ctx, O, 'O', RD_WHITE, 14, -10, fi(800, 14));
       pqNames(ctx, [A, B, C, D], ['A', 'B', 'C', 'D'], RD_WHITE, 20);
-      pqLine(ctx, `停車格面積 = 底 × 高 = ${b} × ${h} = ${S}`, 392, INK, 16);
+      hbFitLine(ctx, `停車格面積 = 底 × 高 = ${b} × ${h} = ${S}`, 392, INK, 16);
       drawExpr(ctx, [T('四塊的面積都 =', RD_YELLOW), fracItem(S, 1, RD_YELLOW), T('的四分之一 =', RD_YELLOW), fracItem(S, 4, RD_YELLOW)], W / 2, 428, 16, RD_YELLOW, { gap: 6 });
-      pqLine(ctx, '全等＋等底同高：四個三角形一樣大', 462, MUTED, 14.5);
+      hbFitLine(ctx, '全等＋等底同高：四個三角形一樣大', 462, MUTED, 14.5);
       tex = `\\(\\triangle AOB\\)、\\(\\triangle BOC\\)、\\(\\triangle COD\\)、\\(\\triangle DOA\\) 的面積都是 \\(${fracTex(S, 4)}\\)`;
       fb.innerHTML = wrapFeedback('\\(\\triangle AOB\\) 和 \\(\\triangle COB\\) 的底 \\(\\overline{OA} = \\overline{OC}\\)、高相同（都從 \\(B\\) 畫到 \\(\\overline{AC}\\)），所以面積相等；再加上兩組全等三角形，<strong>四塊一樣大</strong>。');
     } else {
@@ -821,7 +751,7 @@ function initAreaCanvas() {
       const poly = [mA, mB, mC, mD];
       const P1 = pqClip(poly, n, c);
       const P2 = pqClip(poly, pqMul(n, -1), -c);
-      const a1 = P1.length >= 3 ? pqArea(P1) : 0, a2 = P2.length >= 3 ? pqArea(P2) : 0;
+      const a1 = P1.length >= 3 ? hbPolyArea(P1) : 0, a2 = P2.length >= 3 ? hbPolyArea(P2) : 0;
       if (P1.length >= 3) hbPoly(ctx, P1.map(map), RD_YELLOW, 0.25, 0.01);
       if (P2.length >= 3) hbPoly(ctx, P2.map(map), RD_BLUE_LT, 0.25, 0.01);
       hbPoly(ctx, [A, B, C, D], RD_WHITE, 0, 2.8);
@@ -838,16 +768,16 @@ function initAreaCanvas() {
       pqNames(ctx, [A, B, C, D], ['A', 'B', 'C', 'D'], RD_WHITE, 20);
       const miss = (a1 < 1e-9 || a2 < 1e-9);
       const same = pqEq(a1, a2);
-      pqLine(ctx, `停車格面積 = ${b} × ${h} = ${S}`, 392, INK, 16);
+      hbFitLine(ctx, `停車格面積 = ${b} × ${h} = ${S}`, 392, INK, 16);
       if (miss) {
-        pqLine(ctx, '直線沒有穿過停車格，切不出兩塊', 424, RD_NO, 16);
+        hbFitLine(ctx, '直線沒有穿過停車格，切不出兩塊', 424, RD_NO, 16);
         tex = `直線沒有穿過停車格`;
       } else {
         const ap = x => (Math.abs(x * 100 - Math.round(x * 100)) < 1e-6 ? '=' : '≈');
-        pqLine(ctx, `黃色 ${ap(a1)} ${pqD2(a1)}，藍色 ${ap(a2)} ${pqD2(a2)}${same ? '：一樣大' : '：不一樣大'}`, 424, same ? RD_OK : RD_YELLOW, 16);
+        hbFitLine(ctx, `黃色 ${ap(a1)} ${pqD2(a1)}，藍色 ${ap(a2)} ${pqD2(a2)}${same ? '：一樣大' : '：不一樣大'}`, 424, same ? RD_OK : RD_YELLOW, 16);
         tex = `黃色 \\(${ap(a1) === '=' ? '=' : '\\approx'} ${pqD2(a1)}\\)，<wbr>藍色 \\(${ap(a2) === '=' ? '=' : '\\approx'} ${pqD2(a2)}\\)`;
       }
-      pqLine(ctx, off === 0 ? '直線通過 O：轉到哪個方向都平分面積' : `直線離開 O ${off} 格：兩塊就不一樣大了`, 458, off === 0 ? RD_OK : RD_RED_LT, 15);
+      hbFitLine(ctx, off === 0 ? '直線通過 O：轉到哪個方向都平分面積' : `直線離開 O ${off} 格：兩塊就不一樣大了`, 458, off === 0 ? RD_OK : RD_RED_LT, 15);
       fb.innerHTML = wrapFeedback(off === 0
         ? '平行四邊形繞 \\(O\\) 轉半圈會疊回自己，所以<strong>過 \\(O\\) 的直線</strong>切下的兩塊也會互相疊合——面積一定相等。'
         : '直線沒有通過對角線交點 \\(O\\)，兩塊轉半圈後疊不回彼此，面積通常不相等。把「離開 \\(O\\)」調回 \\(0\\) 試試。');
@@ -961,7 +891,7 @@ function initJudgeCanvas() {
     }
 
     if (bad) {
-      bad.forEach((s, i) => pqLine(ctx, s, 200 + i * 34, i === 2 ? INK : RD_NO, 16));
+      bad.forEach((s, i) => hbFitLine(ctx, s, 200 + i * 34, i === 2 ? INK : RD_NO, 16));
       out.innerHTML = tex;
       fb.innerHTML = wrapFeedback('目前的設定圍不出凸四邊形，先把它調回能圍起來的樣子，再來判斷是不是平行四邊形。');
       typeset([out, fb]);
@@ -994,7 +924,7 @@ function initJudgeCanvas() {
     } else {
       const segs = [[A, B], [B, C], [C, D], [D, A]];
       const cols = [RD_YELLOW, RD_BLUE_LT, RD_YELLOW, RD_BLUE_LT];
-      segs.forEach((s, i) => pqSideLabel(ctx, s[0], s[1], G, pqD2(lens[i]), cols[i], 18));
+      segs.forEach((s, i) => hbSideLabel(ctx, s[0], s[1], G, pqD2(lens[i]), cols[i], 18));
       const e1 = pqEq(lens[0], lens[2]), e2 = pqEq(lens[1], lens[3]);
       lines = [
         [`AB 對 CD：${pqD2(lens[0])} 和 ${pqD2(lens[2])} ${e1 ? '相等' : '不相等'}`, e1 ? RD_OK : RD_NO],
@@ -1002,9 +932,9 @@ function initJudgeCanvas() {
       ];
       tex = `\\(\\overline{AB} = ${pqD2(lens[0])}\\)、<wbr>\\(\\overline{BC} = ${pqD2(lens[1])}\\)、<wbr>\\(\\overline{CD} = ${pqD2(lens[2])}\\)、<wbr>\\(\\overline{DA} = ${pqD2(lens[3])}\\)`;
     }
-    lines.forEach((ln, i) => pqLine(ctx, ln[0], 352 + i * 28, ln[1], 16));
-    pqLine(ctx, `AD 與 BC ${par1 ? '平行' : '不平行'}，AB 與 DC ${par2 ? '平行' : '不平行'}`, 412, INK, 15.5);
-    pqLine(ctx, verdictOk ? '兩雙對邊都平行：是平行四邊形' : (Q.concave ? '凹進去了：不是平行四邊形' : '不是平行四邊形'), 444, verdictOk ? RD_OK : RD_NO, 17);
+    lines.forEach((ln, i) => hbFitLine(ctx, ln[0], 352 + i * 28, ln[1], 16));
+    hbFitLine(ctx, `AD 與 BC ${par1 ? '平行' : '不平行'}，AB 與 DC ${par2 ? '平行' : '不平行'}`, 412, INK, 15.5);
+    hbFitLine(ctx, verdictOk ? '兩雙對邊都平行：是平行四邊形' : (Q.concave ? '凹進去了：不是平行四邊形' : '不是平行四邊形'), 444, verdictOk ? RD_OK : RD_NO, 17);
 
     out.innerHTML = tex;
     if (verdictOk) {
@@ -1072,15 +1002,15 @@ function initFindCanvas() {
     hbDot(ctx, D, RD_RED_LT, 6);
     cgLabel(ctx, D, 'D', RD_RED_LT, same ? 18 : 0, -20, fi(800, 17));
 
-    pqLine(ctx, 'AB 在 M 上、CD 在 L 上，L // M：AB // CD 一定成立', 372, INK, 15.5);
+    hbFitLine(ctx, 'AB 在 M 上、CD 在 L 上，L // M：AB // CD 一定成立', 372, INK, 15.5);
     if (same) {
-      pqLine(ctx, 'D 和 C 疊在一起，只剩三個點', 404, RD_NO, 16);
+      hbFitLine(ctx, 'D 和 C 疊在一起，只剩三個點', 404, RD_NO, 16);
       out.innerHTML = `\\(D\\) 與 \\(C\\) 重合`;
       fb.innerHTML = wrapFeedback('把 \\(D\\) 往左或往右移，讓 \\(\\overline{CD}\\) 跟 \\(\\overline{AB}\\) 一樣長。');
       return;
     }
-    pqLine(ctx, `AB = ${ab}，CD = ${cdLen}${isPG ? '：平行且相等' : '：平行但不相等'}`, 404, isPG ? RD_OK : RD_YELLOW, 16.5);
-    pqLine(ctx, isPG ? `是平行四邊形 ${name}` : '只是梯形，不是平行四邊形', 436, isPG ? RD_OK : RD_NO, 17);
+    hbFitLine(ctx, `AB = ${ab}，CD = ${cdLen}${isPG ? '：平行且相等' : '：平行但不相等'}`, 404, isPG ? RD_OK : RD_YELLOW, 16.5);
+    hbFitLine(ctx, isPG ? `是平行四邊形 ${name}` : '只是梯形，不是平行四邊形', 436, isPG ? RD_OK : RD_NO, 17);
     out.innerHTML = `\\(\\overline{AB} = ${ab}\\)，<wbr>\\(\\overline{CD} = ${cdLen}\\)，<wbr>\\(\\overline{AB} \\parallel \\overline{CD}\\)`;
     fb.innerHTML = wrapFeedback(isPG
       ? `<strong>一雙對邊平行且相等</strong>：\\(\\overline{AB} \\parallel \\overline{CD}\\) 且 \\(\\overline{AB} = \\overline{CD}\\)，這是平行四邊形 ${name}。<br>\\(D\\) 在 \\(C\\) 的左右兩邊各有一個位置。`
@@ -1124,7 +1054,7 @@ function initFindCanvas() {
       const y = 372 + i * 30;
       drawExpr(ctx, [SEQ([IT('D', r[1]), SB(String(i + 1), r[1])], r[1], 0), T(r[0].slice(2), r[1])], W / 2, y, 15.5, r[1], { gap: 0 });
     });
-    pqLine(ctx, '三點各當一次「對角線的一端」，D 就有三個位置', 460, MUTED, 14);
+    hbFitLine(ctx, '三點各當一次「對角線的一端」，D 就有三個位置', 460, MUTED, 14);
     out.innerHTML = `\\(D_1(${D1.x}, ${D1.y})\\)、<wbr>\\(D_2(${D2.x}, ${D2.y})\\)、<wbr>\\(D_3(${D3.x}, ${D3.y})\\)`;
     fb.innerHTML = wrapFeedback('從 \\(B\\) 走到 \\(A\\) 的那一段位移，從 \\(C\\) 再走一次就到 \\(D_1\\)：\\(\\overline{CD_1}\\) 與 \\(\\overline{BA}\\) <strong>平行且相等</strong>。另外兩點也一樣。');
   }
@@ -1171,9 +1101,9 @@ function initChopCanvas() {
 
     const half2 = l2 / 2;
     if (Math.abs(off) >= half2) {
-      pqLine(ctx, `交叉點離 BD 的中點 ${Math.abs(off)}，已經超出筷子的一半 ${half2}`, 220, RD_NO, 16);
-      pqLine(ctx, '兩根筷子根本沒有交叉，圍不出四邊形', 254, RD_NO, 16);
-      pqLine(ctx, '把偏移量調小，或把 BD 調長', 288, INK, 15);
+      hbFitLine(ctx, `交叉點離 BD 的中點 ${Math.abs(off)}，已經超出筷子的一半 ${half2}`, 220, RD_NO, 16);
+      hbFitLine(ctx, '兩根筷子根本沒有交叉，圍不出四邊形', 254, RD_NO, 16);
+      hbFitLine(ctx, '把偏移量調小，或把 BD 調長', 288, INK, 15);
       out.innerHTML = `交叉點跑到筷子外面（情境不成立）`;
       fb.innerHTML = wrapFeedback(`\\(\\overline{BD}\\) 只有 \\(${l2}\\) 長，交叉點最多只能偏離中點不到 \\(${half2}\\)。`);
       typeset([out, fb]);
@@ -1191,10 +1121,10 @@ function initChopCanvas() {
     hbPoly(ctx, [A, B, C, D], ok ? RD_OK : RD_WHITE, ok ? 0.14 : 0.06, 2.4);
     stick(ctx, A, C);
     stick(ctx, B, D);
-    pqTick(ctx, O, A, 1, RD_YELLOW);
-    pqTick(ctx, O, C, 1, RD_YELLOW);
+    hbTick(ctx, O, A, 1, RD_YELLOW);
+    hbTick(ctx, O, C, 1, RD_YELLOW);
     const lOB = pqLen(mO, mB), lOD = pqLen(mO, mD);
-    if (pqEq(lOB, lOD)) { pqTick(ctx, O, B, 2, RD_BLUE_LT); pqTick(ctx, O, D, 2, RD_BLUE_LT); }
+    if (pqEq(lOB, lOD)) { hbTick(ctx, O, B, 2, RD_BLUE_LT); hbTick(ctx, O, D, 2, RD_BLUE_LT); }
     // BD 自己的中點
     const midBD = map(pqMid(mB, mD));
     if (!pqEq(lOB, lOD)) {
@@ -1206,9 +1136,9 @@ function initChopCanvas() {
     pqNames(ctx, [A, B, C, D], ['A', 'B', 'C', 'D'], RD_WHITE, 20);
 
     const lAD = pqLen(mA, mD), lBC = pqLen(mB, mC);
-    pqLine(ctx, `OA = OC = ${pqD2(l1 / 2)}，OB = ${pqD2(lOB)}，OD = ${pqD2(lOD)}`, 396, INK, 16);
-    pqLine(ctx, `AD = ${pqD2(lAD)}，BC = ${pqD2(lBC)}，AD 與 BC ${par1 ? '平行' : '不平行'}`, 426, par1 ? RD_OK : RD_YELLOW, 15.5);
-    pqLine(ctx, ok ? '兩條對角線互相平分：是平行四邊形' : '只有 AC 被平分，BD 沒有：不是平行四邊形', 458, ok ? RD_OK : RD_NO, 16.5);
+    hbFitLine(ctx, `OA = OC = ${pqD2(l1 / 2)}，OB = ${pqD2(lOB)}，OD = ${pqD2(lOD)}`, 396, INK, 16);
+    hbFitLine(ctx, `AD = ${pqD2(lAD)}，BC = ${pqD2(lBC)}，AD 與 BC ${par1 ? '平行' : '不平行'}`, 426, par1 ? RD_OK : RD_YELLOW, 15.5);
+    hbFitLine(ctx, ok ? '兩條對角線互相平分：是平行四邊形' : '只有 AC 被平分，BD 沒有：不是平行四邊形', 458, ok ? RD_OK : RD_NO, 16.5);
 
     out.innerHTML = `\\(\\overline{OA} = \\overline{OC} = ${pqD2(l1 / 2)}\\)，<wbr>\\(\\overline{OB} = ${pqD2(lOB)}\\)，<wbr>\\(\\overline{OD} = ${pqD2(lOD)}\\)`;
     fb.innerHTML = wrapFeedback(ok
@@ -1347,9 +1277,9 @@ function initTrapCanvas() {
     textCenter(ctx, okR ? '是平行四邊形' : '不是平行四邊形', 401, 340, okR ? RD_OK : RD_NO, f(800, 15.5));
 
     const enough = okR;
-    pqLine(ctx, enough ? '怎麼變形都還是平行四邊形：這組條件夠' : '符合條件卻不是平行四邊形：這組條件不夠', 392, enough ? RD_OK : RD_NO, 17);
-    pqLine(ctx, enough ? '∠A + ∠B = 180° 又 ∠A = ∠C ⇒ ∠B + ∠C = 180° ⇒ AB // DC' : '舉出一個反例，就能說明「不一定」', 424, INK, 15);
-    pqLine(ctx, '拉動「變形」滑桿，看右邊的四邊形怎麼變', 456, MUTED, 14);
+    hbFitLine(ctx, enough ? '怎麼變形都還是平行四邊形：這組條件夠' : '符合條件卻不是平行四邊形：這組條件不夠', 392, enough ? RD_OK : RD_NO, 17);
+    hbFitLine(ctx, enough ? '∠A + ∠B = 180° 又 ∠A = ∠C ⇒ ∠B + ∠C = 180° ⇒ AB // DC' : '舉出一個反例，就能說明「不一定」', 424, INK, 15);
+    hbFitLine(ctx, '拉動「變形」滑桿，看右邊的四邊形怎麼變', 456, MUTED, 14);
 
     out.innerHTML = enough
       ? `這組條件<strong>一定</strong>是平行四邊形`

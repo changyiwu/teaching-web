@@ -65,20 +65,6 @@ const EK_SMALL = '#7dd3fc';
 const EK_OK = '#86efac';
 const EK_NO = '#fb7185';
 
-// 邊長平方 n（正整數）→ 最簡根式：k√r
-function ekRoot(n) {
-  let k = 1, r = n;
-  for (let d = 2; d * d <= r; d++) {
-    while (r % (d * d) === 0) { r /= d * d; k *= d; }
-  }
-  const val = Math.sqrt(n);
-  const exact = (r === 1);
-  const txt = exact ? String(k) : (k > 1 ? `${k}√${r}` : `√${r}`);
-  const tex = exact ? String(k) : (k > 1 ? `${k}\\sqrt{${r}}` : `\\sqrt{${r}}`);
-  const dec = exact ? k : Math.round(val * 100) / 100;
-  return { n, k, r, val, exact, txt, tex, dec };
-}
-
 // 兩位小數（整數不留小數點）
 function ekD2(v) {
   const r = Math.round(v * 100) / 100;
@@ -97,37 +83,6 @@ function ekHalf(n2) {
 
 function ekMid(P, Q) {
   return hbV((P.x + Q.x) / 2, (P.y + Q.y) / 2);
-}
-
-// 邊長標示畫在三角形外側（開發約束 18）：沿邊的法向、遠離重心 G 推出去
-function ekSideLabel(ctx, P, Q, G, text, color, off, font) {
-  const m = ekMid(P, Q);
-  const d = hbDist(P, Q) || 1;
-  let nx = -(Q.y - P.y) / d, ny = (Q.x - P.x) / d;
-  if ((m.x - G.x) * nx + (m.y - G.y) * ny < 0) { nx = -nx; ny = -ny; }
-  const k = off || 18;
-  cgLabel(ctx, m, text, color, nx * k, ny * k, font || f(800, 15));
-}
-
-// 等長記號：在邊的中點畫 n 條短橫線
-function ekTick(ctx, P, Q, n, color) {
-  const m = ekMid(P, Q);
-  const d = hbDist(P, Q) || 1;
-  const ux = (Q.x - P.x) / d, uy = (Q.y - P.y) / d;
-  const nx = -uy, ny = ux;
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2.6;
-  ctx.lineCap = 'round';
-  for (let i = 0; i < n; i++) {
-    const t = (i - (n - 1) / 2) * 6;
-    const c = hbV(m.x + ux * t, m.y + uy * t);
-    ctx.beginPath();
-    ctx.moveTo(c.x - nx * 8, c.y - ny * 8);
-    ctx.lineTo(c.x + nx * 8, c.y + ny * 8);
-    ctx.stroke();
-  }
-  ctx.restore();
 }
 
 // 等角記號：n 條弧（第一條帶填色）
@@ -157,20 +112,6 @@ function ekChain(groups, names, sep) {
   return groups.map(g => g.map(i => names[i]).join(sep ? sep.eq : ' = ')).join(sep ? sep.gt : ' > ');
 }
 
-// 畫布底部的一行字，太長時自動縮字級（最小 13px）
-function ekLine(ctx, text, y, color, size) {
-  const W = ctx.canvas.width;
-  let s = size || 16;
-  ctx.save();
-  ctx.font = f(800, s);
-  while (ctx.measureText(text).width > W - 24 && s > 13) {
-    s -= 0.5;
-    ctx.font = f(800, s);
-  }
-  ctx.restore();
-  textCenter(ctx, text, W / 2, y, color, f(800, s));
-}
-
 // 淡淡的格點（格點三角形用）
 function ekGrid(ctx, px, x0, x1, y0, y1) {
   ctx.save();
@@ -196,7 +137,7 @@ function ekTri(ctx, T, o) {
   const cols = opt.sideColor || [INK, INK, INK];
   segs.forEach((s, i) => hbSeg(ctx, s[0], s[1], cols[i], opt.width || 3));
   const G = hbCentroid(pts);
-  if (opt.sides) segs.forEach((s, i) => { if (opt.sides[i]) ekSideLabel(ctx, s[0], s[1], G, opt.sides[i], cols[i], opt.sideOff || 20); });
+  if (opt.sides) segs.forEach((s, i) => { if (opt.sides[i]) hbSideLabel(ctx, s[0], s[1], G, opt.sides[i], cols[i], opt.sideOff || 20); });
   const names = opt.names || ['A', 'B', 'C'];
   pts.forEach((P, i) => hbVLabel(ctx, P, G, names[i], HB_IVORY, 20));
   return G;
@@ -334,10 +275,10 @@ const EK_QUIZ_FIGS = {
     hbPoly(ctx, [q.A, q.B, q.C, q.D], INK, 0.05, 2.4);
     hbSeg(ctx, q.A, q.C, HB_GOLD, 2.2, [7, 5]);
     const G = hbCentroid([q.A, q.B, q.C, q.D]);
-    ekSideLabel(ctx, q.A, q.B, G, '13', HB_ROSE, 16, f(800, 14));
-    ekSideLabel(ctx, q.B, q.C, G, '6', HB_ROSE, 16, f(800, 14));
-    ekSideLabel(ctx, q.C, q.D, G, '11', HB_SKY, 16, f(800, 14));
-    ekSideLabel(ctx, q.D, q.A, G, '5', HB_SKY, 16, f(800, 14));
+    hbSideLabel(ctx, q.A, q.B, G, '13', HB_ROSE, 16, f(800, 14));
+    hbSideLabel(ctx, q.B, q.C, G, '6', HB_ROSE, 16, f(800, 14));
+    hbSideLabel(ctx, q.C, q.D, G, '11', HB_SKY, 16, f(800, 14));
+    hbSideLabel(ctx, q.D, q.A, G, '5', HB_SKY, 16, f(800, 14));
     ['A', 'B', 'C', 'D'].forEach(s => hbVLabel(ctx, q[s], G, s, HB_IVORY, 16));
     textLeft(ctx, '（示意圖）', 8, H - 12, MUTED, f(600, 11));
   },
@@ -378,7 +319,7 @@ const EK_QUIZ_FIGS = {
     hbSector(ctx, E, hbHead(E, B), 90, 14, HB_GOLD, { right: true, alpha: 0.2 });
     hbSector(ctx, F, hbHead(F, A), 90, 14, HB_SKY, { right: true, alpha: 0.2 });
     const G = hbCentroid([A, B, C, D]);
-    ekSideLabel(ctx, A, E, G, '7', HB_GOLD, 12, f(800, 14));
+    hbSideLabel(ctx, A, E, G, '7', HB_GOLD, 12, f(800, 14));
     textCenter(ctx, '12', (A.x + F.x) / 2, (A.y + F.y) / 2 - 12, HB_SKY, f(800, 14));
     ['A', 'B', 'C', 'D'].forEach((n, i) => hbVLabel(ctx, [A, B, C, D][i], G, n, HB_IVORY, 16));
     textCenter(ctx, 'E', E.x, E.y + 16, HB_IVORY, fi(800, 16));
@@ -402,9 +343,9 @@ function initQuizFigs() {
    ========================================================================== */
 function ekPathData(x, h) {
   const L = {
-    AB: ekRoot(x * x + h * h),
-    AC: ekRoot((8 - x) * (8 - x) + h * h),
-    BC: ekRoot(64)
+    AB: hbRoot(x * x + h * h),
+    AC: hbRoot((8 - x) * (8 - x) + h * h),
+    BC: hbRoot(64)
   };
   return L;
 }
@@ -466,10 +407,10 @@ function initPathCanvas() {
     const G = flat ? hbV((A.x + B.x + C.x) / 3, OY - 40) : hbCentroid([A, B, C]);
     if (!same) {
       if (!flat) {
-        ekSideLabel(ctx, A, B, G, L.AB.txt, HB_ROSE, 18);
-        ekSideLabel(ctx, A, C, G, L.AC.txt, HB_SKY, 18);
+        hbSideLabel(ctx, A, B, G, L.AB.txt, HB_ROSE, 18);
+        hbSideLabel(ctx, A, C, G, L.AC.txt, HB_SKY, 18);
       }
-      ekSideLabel(ctx, B, C, flat ? hbV(G.x, OY - 80) : G, `BC = ${L.BC.txt}`, HB_MOSS, flat ? 34 : 20);
+      hbSideLabel(ctx, B, C, flat ? hbV(G.x, OY - 80) : G, `BC = ${L.BC.txt}`, HB_MOSS, flat ? 34 : 20);
     }
     if (flat) {
       cgLabel(ctx, A, 'A', HB_IVORY, 0, -22, fi(800, 18));
@@ -484,13 +425,13 @@ function initPathCanvas() {
     const pairs = [['AB', 'AC', 'BC'], ['AB', 'BC', 'AC'], ['AC', 'BC', 'AB']];
     const rows = pairs.map(p => (mode === 'sum' ? ekSumRow(L, p[0], p[1], p[2]) : ekDiffRow(L, p[0], p[1], p[2])));
     const want = mode === 'sum' ? '>' : '<';
-    rows.forEach((r, i) => ekLine(ctx, r.txt, 356 + i * 30, r.rel === want ? INK : EK_NO, 16));
+    rows.forEach((r, i) => hbFitLine(ctx, r.txt, 356 + i * 30, r.rel === want ? INK : EK_NO, 16));
     const bad = rows.filter(r => r.rel !== want).length;
     let msg;
     if (same) msg = `A 和 ${x === 0 ? 'B' : 'C'} 疊在同一點：根本沒有三角形`;
     else if (flat) msg = '三點在同一直線上：有一組變成「=」，圍不成三角形';
     else msg = mode === 'sum' ? '三組都是「>」：任意兩邊的和大於第三邊' : '三組都是「<」：任意兩邊的差小於第三邊';
-    ekLine(ctx, msg, 450, bad ? EK_NO : HB_GOLD, 16.5);
+    hbFitLine(ctx, msg, 450, bad ? EK_NO : HB_GOLD, 16.5);
 
     out.innerHTML = [`\\(\\overline{AB} ${L.AB.exact ? '=' : '\\approx'} ${ekD2(L.AB.dec)}\\)`,
       `\\(\\overline{AC} ${L.AC.exact ? '=' : '\\approx'} ${ekD2(L.AC.dec)}\\)`,
@@ -565,8 +506,8 @@ function initMakeCanvas() {
       hbSeg(ctx, P0, apex, HB_MOSS, 3);
       hbSeg(ctx, P1, apex, HB_MOSS, 3);
       const G = hbCentroid([T.A, T.B, T.C]);
-      ekSideLabel(ctx, P0, apex, G, `${NM[oth[0]]} = ${p}`, HB_MOSS, 18);
-      ekSideLabel(ctx, P1, apex, G, `${NM[oth[1]]} = ${q}`, HB_MOSS, 18);
+      hbSideLabel(ctx, P0, apex, G, `${NM[oth[0]]} = ${p}`, HB_MOSS, 18);
+      hbSideLabel(ctx, P1, apex, G, `${NM[oth[1]]} = ${q}`, HB_MOSS, 18);
       hbDot(ctx, apex, HB_MOSS, 5);
     } else if (sum === L) {
       const T0 = hbV(P0.x + p * s, Y);
@@ -587,10 +528,10 @@ function initMakeCanvas() {
     rows.forEach((r, i) => {
       const key = (r.k === li);
       const col = r.ok ? (key ? HB_GOLD : MUTED) : EK_NO;
-      ekLine(ctx, r.txt + (key ? '　← 關鍵' : ''), 352 + i * 28, col, key ? 16.5 : 15);
+      hbFitLine(ctx, r.txt + (key ? '　← 關鍵' : ''), 352 + i * 28, col, key ? 16.5 : 15);
     });
     const ok = sum > L;
-    ekLine(ctx, ok ? '最長邊比另外兩邊的和短 ⇒ 可以構成三角形'
+    hbFitLine(ctx, ok ? '最長邊比另外兩邊的和短 ⇒ 可以構成三角形'
       : (sum === L ? '另外兩邊的和剛好等於最長邊 ⇒ 壓成一直線，不行'
         : '另外兩邊的和比最長邊短 ⇒ 兩弧碰不到，不行'), 448, ok ? EK_OK : EK_NO, 16.5);
 
@@ -639,8 +580,8 @@ function initIsoCanvas() {
       ekArcs(ctx, B, A, C, r, 1, HB_SKY, { alpha: 0.3 });
       ekArcs(ctx, C, A, B, r, 1, HB_SKY, { alpha: 0.3 });
       ekTri(ctx, T, { sides: [`${base}`, `${leg}`, `${leg}`], sideColor: [HB_GOLD, HB_MOSS, HB_MOSS] });
-      ekTick(ctx, A, B, 1, HB_MOSS);
-      ekTick(ctx, A, C, 1, HB_MOSS);
+      hbTick(ctx, A, B, 1, HB_MOSS);
+      hbTick(ctx, A, C, 1, HB_MOSS);
     } else {
       const s = Math.min(30, 420 / base);
       const B = hbV(W / 2 - base * s / 2, Y), C = hbV(W / 2 + base * s / 2, Y);
@@ -671,11 +612,11 @@ function initIsoCanvas() {
       return { ok: s2 > B0, txt: `腰 ${L0}：${L0} + ${L0} = ${s2} ${rel} ${B0}` + (s2 > B0 ? `，周長 ${L0} + ${L0} + ${B0} = ${s2 + B0}` : '，不合') };
     };
     const r1 = lineFor(p, q), r2 = lineFor(q, p);
-    ekLine(ctx, r1.txt, 372, mode === 'p' ? (r1.ok ? HB_GOLD : EK_NO) : MUTED, mode === 'p' ? 16.5 : 15);
-    if (p !== q) ekLine(ctx, r2.txt, 402, mode === 'q' ? (r2.ok ? HB_GOLD : EK_NO) : MUTED, mode === 'q' ? 16.5 : 15);
+    hbFitLine(ctx, r1.txt, 372, mode === 'p' ? (r1.ok ? HB_GOLD : EK_NO) : MUTED, mode === 'p' ? 16.5 : 15);
+    if (p !== q) hbFitLine(ctx, r2.txt, 402, mode === 'q' ? (r2.ok ? HB_GOLD : EK_NO) : MUTED, mode === 'q' ? 16.5 : 15);
     const nOk = (p === q) ? 1 : [r1, r2].filter(r => r.ok).length;
     const sumTxt = p === q ? `三邊都是 ${p}：正三角形，只有一種` : `兩種當腰的方法中，有 ${nOk} 種圍得起來`;
-    ekLine(ctx, sumTxt, 440, HB_IVORY, 16);
+    hbFitLine(ctx, sumTxt, 440, HB_IVORY, 16);
 
     out.innerHTML = ok
       ? wbrEq(`${leg} + ${leg} = ${2 * leg} \\gt ${base}`) + `，<wbr>周長 \\(${2 * leg + base}\\)`
@@ -726,9 +667,9 @@ function initRangeCanvas() {
     hbDot(ctx, O, '#d4a017', 6.5);
     const G = flat ? hbV(O.x, O.y - 60) : hbCentroid([O, P, Q]);
     if (!flat) {
-      ekSideLabel(ctx, O, P, G, ekHalf(a2), HB_SKY, 16);
-      ekSideLabel(ctx, O, Q, G, ekHalf(b2), HB_MOSS, 16);
-      ekSideLabel(ctx, P, Q, G, `x ≈ ${ekD2(x)}`, HB_GOLD, 18);
+      hbSideLabel(ctx, O, P, G, ekHalf(a2), HB_SKY, 16);
+      hbSideLabel(ctx, O, Q, G, ekHalf(b2), HB_MOSS, 16);
+      hbSideLabel(ctx, P, Q, G, `x ≈ ${ekD2(x)}`, HB_GOLD, 18);
     } else {
       cgLabel(ctx, O, t === 0 ? `疊在一起：x = ${ekHalf(lo2)}` : `拉成一直線：x = ${ekHalf(hi2)}`, EK_NO, 0, -34, f(800, 15));
     }
@@ -752,9 +693,9 @@ function initRangeCanvas() {
     ctx.closePath();
     ctx.fill();
     ctx.restore();
-    ekLine(ctx, `${ekHalf(b2 > a2 ? b2 : a2)} − ${ekHalf(b2 > a2 ? a2 : b2)} < x < ${ekHalf(a2)} + ${ekHalf(b2)}，即 ${ekHalf(lo2)} < x < ${ekHalf(hi2)}`, 402, HB_ROSE, 16.5);
-    ekLine(ctx, `x 是整數：${ints.length ? (ints.length <= 8 ? ints.join('、') : `${ints[0]}、${ints[1]}、…、${ints[ints.length - 1]}`) : '沒有'}，共 ${ints.length} 個`, 434, HB_GOLD, 15.5);
-    ekLine(ctx, flat ? `現在 x = ${ekHalf(t === 0 ? lo2 : hi2)}，碰到端點：三點共線，不是三角形` : `現在 x ≈ ${ekD2(x)}，落在範圍裡`, 462, flat ? EK_NO : INK, 14.5);
+    hbFitLine(ctx, `${ekHalf(b2 > a2 ? b2 : a2)} − ${ekHalf(b2 > a2 ? a2 : b2)} < x < ${ekHalf(a2)} + ${ekHalf(b2)}，即 ${ekHalf(lo2)} < x < ${ekHalf(hi2)}`, 402, HB_ROSE, 16.5);
+    hbFitLine(ctx, `x 是整數：${ints.length ? (ints.length <= 8 ? ints.join('、') : `${ints[0]}、${ints[1]}、…、${ints[ints.length - 1]}`) : '沒有'}，共 ${ints.length} 個`, 434, HB_GOLD, 15.5);
+    hbFitLine(ctx, flat ? `現在 x = ${ekHalf(t === 0 ? lo2 : hi2)}，碰到端點：三點共線，不是三角形` : `現在 x ≈ ${ekD2(x)}，落在範圍裡`, 462, flat ? EK_NO : INK, 14.5);
 
     out.innerHTML = `\\(${ekHalf(lo2)} \\lt x \\lt ${ekHalf(hi2)}\\)，<wbr>整數 \\(x\\) 共 \\(${ints.length}\\) 個`;
     fb.innerHTML = wrapFeedback(flat
@@ -808,8 +749,8 @@ function initShareCanvas() {
       hbPoly(ctx, [A, B, C], HB_ROSE, 0.1, 0.01);
       hbSeg(ctx, A, B, HB_ROSE, 3); hbSeg(ctx, B, C, HB_ROSE, 3);
       const G = hbCentroid([A, B, C]);
-      ekSideLabel(ctx, A, B, G, String(ab), HB_ROSE, 15, f(800, 14));
-      ekSideLabel(ctx, B, C, G, String(bc), HB_ROSE, 15, f(800, 14));
+      hbSideLabel(ctx, A, B, G, String(ab), HB_ROSE, 15, f(800, 14));
+      hbSideLabel(ctx, B, C, G, String(bc), HB_ROSE, 15, f(800, 14));
       hbVLabel(ctx, B, G, 'B', HB_IVORY, 18);
     } else {
       textCenter(ctx, `△ABC 圍不起來：AC 要在 ${I1[0]} 與 ${I1[1]} 之間`, W / 2, 62, EK_NO, f(700, 14));
@@ -818,8 +759,8 @@ function initShareCanvas() {
       hbPoly(ctx, [A, D, C], HB_SKY, 0.1, 0.01);
       hbSeg(ctx, A, D, HB_SKY, 3); hbSeg(ctx, D, C, HB_SKY, 3);
       const G = hbCentroid([A, D, C]);
-      ekSideLabel(ctx, A, D, G, String(da), HB_SKY, 15, f(800, 14));
-      ekSideLabel(ctx, D, C, G, String(cd), HB_SKY, 15, f(800, 14));
+      hbSideLabel(ctx, A, D, G, String(da), HB_SKY, 15, f(800, 14));
+      hbSideLabel(ctx, D, C, G, String(cd), HB_SKY, 15, f(800, 14));
       hbVLabel(ctx, D, G, 'D', HB_IVORY, 18);
     } else {
       textCenter(ctx, `△ACD 圍不起來：AC 要在 ${I2[0]} 與 ${I2[1]} 之間`, W / 2, 344, EK_NO, f(700, 14));
@@ -919,7 +860,7 @@ function initBigCanvas() {
     vx.textContent = ax; vy.textContent = ay; vc.textContent = cx;
     const n = ekLatticeTri(ax, ay, cx);
     const sq = [n.a, n.b, n.c];                 // BC、CA、AB 的平方
-    const len = sq.map(ekRoot);
+    const len = sq.map(hbRoot);
     const T = { A: px(ax, ay), B: px(0, 0), C: px(cx, 0) };
     const ang = [hbAngleDeg(T.A, T.B, T.C), hbAngleDeg(T.B, T.C, T.A), hbAngleDeg(T.C, T.A, T.B)];
     const rk = ekRank(sq, (i, j) => sq[i] === sq[j]);
@@ -938,18 +879,18 @@ function initBigCanvas() {
     });
     ekTri(ctx, T, { sides: len.map(l => l.txt), sideColor: rk.color, names });
     const segs = [[T.B, T.C], [T.C, T.A], [T.A, T.B]];
-    rk.groups.forEach(gp => { if (gp.length > 1) gp.forEach(i => ekTick(ctx, segs[i][0], segs[i][1], gp.length === 3 ? 1 : 2, rk.color[i])); });
+    rk.groups.forEach(gp => { if (gp.length > 1) gp.forEach(i => hbTick(ctx, segs[i][0], segs[i][1], gp.length === 3 ? 1 : 2, rk.color[i])); });
 
     const sideN = ['BC', 'CA', 'AB'], angN = ['∠A', '∠B', '∠C'];
     const sideTxt = rk.groups.map(gp => gp.map(i => `${sideN[i]} = ${len[i].txt}`).join(' = ')).join(' > ');
     const angTxt = rk.groups.map(gp => gp.map(i => `${angN[i]} ≈ ${ekD1(ang[i])}°`).join(' = ')).join(' > ');
-    ekLine(ctx, '邊：' + sideTxt, 372, HB_IVORY, 15.5);
-    ekLine(ctx, '角：' + angTxt, 404, HB_IVORY, 15.5);
+    hbFitLine(ctx, '邊：' + sideTxt, 372, HB_IVORY, 15.5);
+    hbFitLine(ctx, '角：' + angTxt, 404, HB_IVORY, 15.5);
     const big = rk.groups[0], small = rk.groups[rk.groups.length - 1];
     let msg;
     if (rk.groups.length === 1) msg = '三邊都相等 ⇒ 三個角都相等（正三角形）';
     else msg = `最長的 ${big.map(i => sideN[i]).join('、')} 對著最大的 ${big.map(i => angN[i]).join('、')}；最短的 ${small.map(i => sideN[i]).join('、')} 對著最小的 ${small.map(i => angN[i]).join('、')}`;
-    ekLine(ctx, msg, 440, HB_GOLD, 15);
+    hbFitLine(ctx, msg, 440, HB_GOLD, 15);
 
     const texSide = ['\\overline{BC}', '\\overline{CA}', '\\overline{AB}'];
     const texAng = ['\\angle A', '\\angle B', '\\angle C'];
@@ -993,7 +934,7 @@ function initWhyCanvas() {
     const T = { A: px(ax, ay), B: px(0, 0), C: px(10, 0) };
     const H = px(ax, 0);
     const ab2 = ax * ax + ay * ay, ac2 = (10 - ax) * (10 - ax) + ay * ay;
-    const AB = ekRoot(ab2), AC = ekRoot(ac2);
+    const AB = hbRoot(ab2), AC = hbRoot(ac2);
     const aB = hbAngleDeg(T.B, T.A, T.C), aC = hbAngleDeg(T.C, T.A, T.B);
     const a1 = hbAngleDeg(T.A, T.B, H), a2 = hbAngleDeg(T.A, H, T.C);
     const rel = ab2 > ac2 ? '>' : (ab2 < ac2 ? '<' : '=');
@@ -1008,11 +949,11 @@ function initWhyCanvas() {
     hbSeg(ctx, T.A, H, HB_IVORY, 2, [6, 5]);
     hbSector(ctx, H, 0, 90, 14, HB_IVORY, { right: true, alpha: 0.15 });
     textCenter(ctx, 'H', H.x, H.y + 20, HB_IVORY, fi(800, 17));
-    if (rel === '=') { ekTick(ctx, T.A, T.B, 1, EK_MID); ekTick(ctx, T.A, T.C, 1, EK_MID); }
-    ekLine(ctx, `① AB = ${AB.txt} ${rel} AC = ${AC.txt}`, 352, HB_IVORY, 15.5);
-    ekLine(ctx, `② 大邊對大角：∠C ${rel} ∠B（∠B ≈ ${ekD1(aB)}°，∠C ≈ ${ekD1(aC)}°）`, 382, HB_IVORY, 15.5);
-    ekLine(ctx, `③ ∠BAH = 90° − ∠B ${rel} 90° − ∠C = ∠CAH`, 412, HB_GOLD, 15.5);
-    ekLine(ctx, `量一量：∠BAH ≈ ${ekD1(a1)}°，∠CAH ≈ ${ekD1(a2)}°`, 442, MUTED, 14.5);
+    if (rel === '=') { hbTick(ctx, T.A, T.B, 1, EK_MID); hbTick(ctx, T.A, T.C, 1, EK_MID); }
+    hbFitLine(ctx, `① AB = ${AB.txt} ${rel} AC = ${AC.txt}`, 352, HB_IVORY, 15.5);
+    hbFitLine(ctx, `② 大邊對大角：∠C ${rel} ∠B（∠B ≈ ${ekD1(aB)}°，∠C ≈ ${ekD1(aC)}°）`, 382, HB_IVORY, 15.5);
+    hbFitLine(ctx, `③ ∠BAH = 90° − ∠B ${rel} 90° − ∠C = ∠CAH`, 412, HB_GOLD, 15.5);
+    hbFitLine(ctx, `量一量：∠BAH ≈ ${ekD1(a1)}°，∠CAH ≈ ${ekD1(a2)}°`, 442, MUTED, 14.5);
     const lt = { '>': '\\gt', '<': '\\lt', '=': '=' };
     out.innerHTML = `\\(\\overline{AB} ${lt[rel]} \\overline{AC}\\)<wbr> ⇒ \\(\\angle C ${lt[rel]} \\angle B\\)<wbr> ⇒ \\(\\angle BAH ${lt[rel]} \\angle CAH\\)`;
     fb.innerHTML = wrapFeedback(rel === '='
@@ -1028,7 +969,7 @@ function initWhyCanvas() {
     const A = hbV(x0, y0), B = hbV(x0, y0 + 6 * s), C = hbV(x0 + 6 * s, y0 + 6 * s), D = hbV(x0 + 6 * s, y0);
     const E = hbV(x0 + e * s, y0);
     const ce2 = 36 + (6 - e) * (6 - e);
-    const CE = ekRoot(ce2);
+    const CE = hbRoot(ce2);
     const aCBE = hbAngleDeg(B, C, E), aCEB = hbAngleDeg(E, B, C);
     drawTitle(ctx, '正方形 ABCD，E 在 AD 上，連 BE、CE', C0);
     hbPoly(ctx, [A, B, C, D], INK, 0.03, 2.4);
@@ -1039,21 +980,21 @@ function initWhyCanvas() {
     if (e < 6) hbSector(ctx, D, 180, 90, 16, HB_IVORY, { right: true, alpha: 0.15 });
     hbAngle(ctx, B, C, E, 30, e === 6 ? EK_MID : EK_BIG, { alpha: 0.3 });
     hbAngle(ctx, E, B, C, 26, e === 6 ? EK_MID : EK_SMALL, { alpha: 0.3 });
-    ekTick(ctx, B, C, 1, INK);
-    ekTick(ctx, C, D, 1, INK);
+    hbTick(ctx, B, C, 1, INK);
+    hbTick(ctx, C, D, 1, INK);
     const G = hbCentroid([A, B, C, D]);
     [['A', A], ['B', B], ['C', C], ['D', D]].forEach(([n, P]) => hbVLabel(ctx, P, G, n, HB_IVORY, 18));
     if (e > 0 && e < 6) textCenter(ctx, 'E', E.x, E.y - 18, HB_GOLD, fi(800, 18));
     else cgLabel(ctx, E, `E（與 ${e === 0 ? 'A' : 'D'} 重合）`, HB_GOLD, e === 0 ? 62 : -62, 24, f(800, 13));
     cgLabel(ctx, ekMid(C, E), `CE = ${CE.txt}`, e === 6 ? EK_MID : EK_BIG, 34, 6, f(800, 14));
     if (e < 6) {
-      ekLine(ctx, `① △CDE 中 ∠D = 90°，斜邊 CE 最長：CE > CD = BC = 6`, 380, HB_IVORY, 15.5);
-      ekLine(ctx, '② △BCE 中 CE > BC ⇒ ∠CBE > ∠CEB（大邊對大角）', 410, HB_GOLD, 15.5);
+      hbFitLine(ctx, `① △CDE 中 ∠D = 90°，斜邊 CE 最長：CE > CD = BC = 6`, 380, HB_IVORY, 15.5);
+      hbFitLine(ctx, '② △BCE 中 CE > BC ⇒ ∠CBE > ∠CEB（大邊對大角）', 410, HB_GOLD, 15.5);
     } else {
-      ekLine(ctx, '① E 與 D 重合：CE 就是 CD，CE = CD = BC = 6', 380, HB_IVORY, 15.5);
-      ekLine(ctx, '② 等邊對等角：∠CBE = ∠CEB', 410, HB_GOLD, 15.5);
+      hbFitLine(ctx, '① E 與 D 重合：CE 就是 CD，CE = CD = BC = 6', 380, HB_IVORY, 15.5);
+      hbFitLine(ctx, '② 等邊對等角：∠CBE = ∠CEB', 410, HB_GOLD, 15.5);
     }
-    ekLine(ctx, `量一量：∠CBE ≈ ${ekD1(aCBE)}°，∠CEB ≈ ${ekD1(aCEB)}°`, 440, MUTED, 14.5);
+    hbFitLine(ctx, `量一量：∠CBE ≈ ${ekD1(aCBE)}°，∠CEB ≈ ${ekD1(aCEB)}°`, 440, MUTED, 14.5);
     out.innerHTML = e < 6
       ? `\\(\\overline{CE} = ${CE.tex} \\gt \\overline{BC} = 6\\)<wbr> ⇒ \\(\\angle CBE \\gt \\angle CEB\\)`
       : `\\(\\overline{CE} = \\overline{BC} = 6\\)<wbr> ⇒ \\(\\angle CBE = \\angle CEB\\)`;
@@ -1108,12 +1049,12 @@ function initAngCanvas() {
     });
     ekTri(ctx, T, { sides: len.map(v => ekD2(v)), sideColor: rk.color, sideOff: 22 });
     const segs = [[T.B, T.C], [T.C, T.A], [T.A, T.B]];
-    rk.groups.forEach(gp => { if (gp.length > 1) gp.forEach(i => ekTick(ctx, segs[i][0], segs[i][1], gp.length === 3 ? 1 : 2, rk.color[i])); });
+    rk.groups.forEach(gp => { if (gp.length > 1) gp.forEach(i => hbTick(ctx, segs[i][0], segs[i][1], gp.length === 3 ? 1 : 2, rk.color[i])); });
     const angN = ['∠A', '∠B', '∠C'], sideN = ['BC', 'CA', 'AB'];
-    ekLine(ctx, '角：' + rk.groups.map(gp => gp.map(i => `${angN[i]} = ${deg[i]}°`).join(' = ')).join(' > '), 356, HB_IVORY, 15.5);
-    ekLine(ctx, '⇒ 邊：' + ekChain(rk.groups, sideN), 388, HB_GOLD, 17);
-    ekLine(ctx, '量一量：' + rk.groups.map(gp => gp.map(i => `${sideN[i]} ≈ ${ekD2(len[i])}`).join(' = ')).join(' > '), 420, MUTED, 14.5);
-    ekLine(ctx, '找對邊：不在這條邊上的那個頂點，就是它對著的角', 450, MUTED, 13.5);
+    hbFitLine(ctx, '角：' + rk.groups.map(gp => gp.map(i => `${angN[i]} = ${deg[i]}°`).join(' = ')).join(' > '), 356, HB_IVORY, 15.5);
+    hbFitLine(ctx, '⇒ 邊：' + ekChain(rk.groups, sideN), 388, HB_GOLD, 17);
+    hbFitLine(ctx, '量一量：' + rk.groups.map(gp => gp.map(i => `${sideN[i]} ≈ ${ekD2(len[i])}`).join(' = ')).join(' > '), 420, MUTED, 14.5);
+    hbFitLine(ctx, '找對邊：不在這條邊上的那個頂點，就是它對著的角', 450, MUTED, 13.5);
 
     const texAng = ['\\angle A', '\\angle B', '\\angle C'];
     const texSide = ['\\overline{BC}', '\\overline{CA}', '\\overline{AB}'];
@@ -1158,8 +1099,8 @@ function initChainCanvas() {
     const q = ekKiteFig(ctx, W, cv.height, [a, b1, b2, c], [`${a}°`, `${b1}°`, `${b2}°`, `${c}°`], { x: 60, y: 50, w: 420, h: 250 });
     const r1 = ekCmp(a, b1);    // DB 對 ∠DAB、DA 對 ∠DBA
     const r2 = ekCmp(b2, c);    // DC 對 ∠DBC、DB 對 ∠DCB
-    ekLine(ctx, `△DAB：∠DAB = ${a}° ${r1} ∠DBA = ${b1}° ⇒ DB ${r1} DA`, 340, HB_ROSE, 15.5);
-    ekLine(ctx, `△DBC：∠DBC = ${b2}° ${r2} ∠DCB = ${c}° ⇒ DC ${r2} DB`, 370, HB_MOSS, 15.5);
+    hbFitLine(ctx, `△DAB：∠DAB = ${a}° ${r1} ∠DBA = ${b1}° ⇒ DB ${r1} DA`, 340, HB_ROSE, 15.5);
+    hbFitLine(ctx, `△DBC：∠DBC = ${b2}° ${r2} ∠DCB = ${c}° ⇒ DC ${r2} DB`, 370, HB_MOSS, 15.5);
     // 以 DB 為 0：比 DB 長記 +1、短記 −1、相等記 0
     const sg = { '>': 1, '<': -1, '=': 0 };
     const vDA = -sg[r1], vDC = sg[r2];
@@ -1171,10 +1112,10 @@ function initChainCanvas() {
     } else {
       concl = vDA > 0 ? 'DB 最短；只靠這兩次比較，DA、DC 分不出大小' : 'DB 最長；只靠這兩次比較，DA、DC 分不出大小';
     }
-    ekLine(ctx, can ? `串起來：${concl}` : concl, 404, can ? HB_GOLD : EK_NO, 17);
+    hbFitLine(ctx, can ? `串起來：${concl}` : concl, 404, can ? HB_GOLD : EK_NO, 17);
     const mDA = hbDist(q.D, q.A), mDB = hbDist(q.D, q.B), mDC = hbDist(q.D, q.C);
     const k = 40;
-    ekLine(ctx, `量一量：DA ≈ ${ekD2(mDA / k)}，DB ≈ ${ekD2(mDB / k)}，DC ≈ ${ekD2(mDC / k)}（畫布單位）`, 436, MUTED, 13.5);
+    hbFitLine(ctx, `量一量：DA ≈ ${ekD2(mDA / k)}，DB ≈ ${ekD2(mDB / k)}，DC ≈ ${ekD2(mDC / k)}（畫布單位）`, 436, MUTED, 13.5);
 
     const lt = { '>': '\\gt', '<': '\\lt', '=': '=' };
     out.innerHTML = `\\(\\overline{DB} ${lt[r1]} \\overline{DA}\\)，<wbr>\\(\\overline{DC} ${lt[r2]} \\overline{DB}\\)`;
@@ -1223,20 +1164,20 @@ function initTwoCanvas() {
       hbAngle(ctx, T.A, T.B, T.C, rr, INK, { alpha: 0.12 });
       hbAngle(ctx, T.B, T.C, T.A, rr, INK, { alpha: 0.12 });
       ekTri(ctx, T, { names: nm, sides: [null, null, `${base}`], sideColor: [INK, INK, col], sideOff: 20 });
-      ekTick(ctx, T.B, T.C, 1, INK);
-      ekTick(ctx, T.C, T.A, 1, INK);
+      hbTick(ctx, T.B, T.C, 1, INK);
+      hbTick(ctx, T.C, T.A, 1, INK);
     };
     one(t1, c, ab, ['A', 'B', 'C'], HB_ROSE);
     one(t2, r, pq, ['P', 'Q', 'R'], HB_SKY);
     const rs = ekCmp(ab, pq), ra = ekCmp(c, r);
-    ekLine(ctx, `AB = ${ab} ${rs} PQ = ${pq}　　∠C = ${c}° ${ra} ∠R = ${r}°`, 350, HB_IVORY, 16);
+    hbFitLine(ctx, `AB = ${ab} ${rs} PQ = ${pq}　　∠C = ${c}° ${ra} ∠R = ${r}°`, 350, HB_IVORY, 16);
     const agree = (rs === ra);
-    ekLine(ctx, agree ? '這一次邊和角的大小方向一樣——只是剛好' : '邊大的那一個，角反而不大：跨三角形比不出結論', 378, agree ? HB_GOLD : EK_NO, 15.5);
+    hbFitLine(ctx, agree ? '這一次邊和角的大小方向一樣——只是剛好' : '邊大的那一個，角反而不大：跨三角形比不出結論', 378, agree ? HB_GOLD : EK_NO, 15.5);
     const in1 = ekCmp(c, base1), in2 = ekCmp(r, base2);
     const side1 = in1 === '>' ? 'AB > BC' : (in1 === '<' ? 'AB < BC' : 'AB = BC');
     const side2 = in2 === '>' ? 'PQ > QR' : (in2 === '<' ? 'PQ < QR' : 'PQ = QR');
-    ekLine(ctx, `同一個三角形裡：∠C ${in1} ∠A ⇒ ${side1}；∠R ${in2} ∠P ⇒ ${side2}`, 414, HB_MOSS, 14.5);
-    ekLine(ctx, '（兩個三角形都是等腰：∠A、∠B 一樣大，∠P、∠Q 一樣大）', 444, MUTED, 13);
+    hbFitLine(ctx, `同一個三角形裡：∠C ${in1} ∠A ⇒ ${side1}；∠R ${in2} ∠P ⇒ ${side2}`, 414, HB_MOSS, 14.5);
+    hbFitLine(ctx, '（兩個三角形都是等腰：∠A、∠B 一樣大，∠P、∠Q 一樣大）', 444, MUTED, 13);
 
     const lt = { '>': '\\gt', '<': '\\lt', '=': '=' };
     out.innerHTML = `\\(\\overline{AB} ${lt[rs]} \\overline{PQ}\\)，<wbr>\\(\\angle C ${lt[ra]} \\angle R\\)`;
@@ -1335,11 +1276,11 @@ function initRngCanvas() {
       l2 = `∠A = ${180 - B}° − ∠C > ∠B = ${B}° ⇒ ∠C < ${hi}°`;
       l3 = `${ekNumTxt(lo)}° < ∠C < ${hi}°`;
     }
-    ekLine(ctx, l1, 356, HB_IVORY, 14.5);
-    ekLine(ctx, l2, 384, HB_IVORY, 14.5);
-    ekLine(ctx, '範圍：' + l3, 414, HB_GOLD, 17);
+    hbFitLine(ctx, l1, 356, HB_IVORY, 14.5);
+    hbFitLine(ctx, l2, 384, HB_IVORY, 14.5);
+    hbFitLine(ctx, '範圍：' + l3, 414, HB_GOLD, 17);
     const why = A <= 0 ? '三個角加起來超過 180°' : (ok ? '三個角的順序是 ∠C > ∠A > ∠B，符合' : `∠A = ${A}°，順序變成 ${ekChain(ekRank([A, B, C], (i, j) => [A, B, C][i] === [A, B, C][j]).groups, ['∠A', '∠B', '∠C'])}，不符合`);
-    ekLine(ctx, `試的 ${mode === 'max' ? '∠B' : '∠C'} = ${test}°：${why}`, 446, ok ? EK_OK : EK_NO, 14.5);
+    hbFitLine(ctx, `試的 ${mode === 'max' ? '∠B' : '∠C'} = ${test}°：${why}`, 446, ok ? EK_OK : EK_NO, 14.5);
 
     const tl = l3.replace(/°/g, '^\\circ').replace(/∠/g, '\\angle ').replace(/</g, '\\lt');
     out.innerHTML = `\\(${tl}\\)`;
@@ -1409,15 +1350,15 @@ function initRightCanvas() {
     } else {
       textCenter(ctx, `${v[oth[0]]} + ${v[oth[1]]} ${v[oth[0]] + v[oth[1]] === v[li] ? '=' : '<'} ${v[li]}：連三角形都圍不起來`, W / 2, 160, EK_NO, f(800, 16));
     }
-    ekLine(ctx, `最長邊 ${NM[li]} = ${v[li]}（${SN[li]}，對著 ∠${VN[li]}）`, 336, HB_IVORY, 15.5);
+    hbFitLine(ctx, `最長邊 ${NM[li]} = ${v[li]}（${SN[li]}，對著 ∠${VN[li]}）`, 336, HB_IVORY, 15.5);
     const relS = s2 === L2 ? '=' : (s2 > L2 ? '>' : '<');
-    ekLine(ctx, `${NM[oth[0]]}² + ${NM[oth[1]]}² = ${v[oth[0]] * v[oth[0]]} + ${v[oth[1]] * v[oth[1]]} = ${s2} ${relS} ${NM[li]}² = ${L2}`, 368, HB_GOLD, 16);
+    hbFitLine(ctx, `${NM[oth[0]]}² + ${NM[oth[1]]}² = ${v[oth[0]] * v[oth[0]]} + ${v[oth[1]] * v[oth[1]]} = ${s2} ${relS} ${NM[li]}² = ${L2}`, 368, HB_GOLD, 16);
     let msg;
     if (!tri) msg = '不是三角形，就談不上直角三角形';
     else if (relS === '=') msg = `相等 ⇒ 直角三角形，∠${VN[li]} = 90°`;
     else msg = `不相等 ⇒ 不是直角三角形`;
-    ekLine(ctx, msg, 402, tri && relS === '=' ? EK_OK : EK_NO, 17);
-    if (tri) ekLine(ctx, `量一量：最大角 ∠${VN[li]} ≈ ${ekD1(mAng)}°`, 436, MUTED, 14.5);
+    hbFitLine(ctx, msg, 402, tri && relS === '=' ? EK_OK : EK_NO, 17);
+    if (tri) hbFitLine(ctx, `量一量：最大角 ∠${VN[li]} ≈ ${ekD1(mAng)}°`, 436, MUTED, 14.5);
 
     const tex = `${NM[oth[0]]}^2 + ${NM[oth[1]]}^2 = ${s2}`;
     out.innerHTML = wbrEq(tex) + `，<wbr>\\(${NM[li]}^2 = ${L2}\\)`;

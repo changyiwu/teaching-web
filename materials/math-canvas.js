@@ -1508,6 +1508,77 @@ function hbDegTex(n, d) {
   return `\\frac{${r[0]}}{${r[1]}}^\\circ`;
 }
 
+// 長度與多邊形的小工具（4-3-5、4-4-2、4-4-3 原本各自一份，逐字相同或只差參數，抽出來共用）。
+// hbRoot(n)：√n 化成最簡根式。回傳 { n, k, r, val, exact, txt, tex, dec }，√n = k√r。
+function hbRoot(n) {
+  let k = 1, r = n;
+  for (let d = 2; d * d <= r; d++) {
+    while (r % (d * d) === 0) { r /= d * d; k *= d; }
+  }
+  const val = Math.sqrt(n);
+  const exact = (r === 1);
+  const txt = exact ? String(k) : (k > 1 ? `${k}√${r}` : `√${r}`);
+  const tex = exact ? String(k) : (k > 1 ? `${k}\\sqrt{${r}}` : `\\sqrt{${r}}`);
+  const dec = exact ? k : Math.round(val * 100) / 100;
+  return { n, k, r, val, exact, txt, tex, dec };
+}
+
+// 鞋帶公式求多邊形面積（頂點依序排列，順逆時針皆可）。
+function hbPolyArea(pts) {
+  let s = 0;
+  for (let i = 0; i < pts.length; i++) {
+    const p = pts[i], q = pts[(i + 1) % pts.length];
+    s += p.x * q.y - q.x * p.y;
+  }
+  return Math.abs(s) / 2;
+}
+
+// 邊長標籤：放在線段 PQ 中點、朝遠離 G（圖形內部一點）的那一側外推 off px（〈開發約束 18〉）。
+function hbSideLabel(ctx, P, Q, G, text, color, off, font) {
+  const m = hbV((P.x + Q.x) / 2, (P.y + Q.y) / 2);
+  const d = hbDist(P, Q) || 1;
+  let nx = -(Q.y - P.y) / d, ny = (Q.x - P.x) / d;
+  if ((m.x - G.x) * nx + (m.y - G.y) * ny < 0) { nx = -nx; ny = -ny; }
+  const k = off || 18;
+  cgLabel(ctx, m, text, color, nx * k, ny * k, font || f(800, 15));
+}
+
+// 等長記號：在 PQ 上比例 t（預設 0.5，即中點）的位置畫 n 條垂直短刻痕。
+function hbTick(ctx, P, Q, n, color, t) {
+  const tt = t == null ? 0.5 : t;
+  const m = hbV(P.x + (Q.x - P.x) * tt, P.y + (Q.y - P.y) * tt);
+  const d = hbDist(P, Q) || 1;
+  const ux = (Q.x - P.x) / d, uy = (Q.y - P.y) / d;
+  const nx = -uy, ny = ux;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.6;
+  ctx.lineCap = 'round';
+  for (let i = 0; i < n; i++) {
+    const s = (i - (n - 1) / 2) * 6;
+    const c = hbV(m.x + ux * s, m.y + uy * s);
+    ctx.beginPath();
+    ctx.moveTo(c.x - nx * 8, c.y - ny * 8);
+    ctx.lineTo(c.x + nx * 8, c.y + ny * 8);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// 置中的一行說明字：寬度超過畫布（左右各留 12px）就以 0.5px 為一級縮字，最小 12.5px。
+function hbFitLine(ctx, text, y, color, size) {
+  const W = ctx.canvas.width;
+  let s = size || 16;
+  ctx.save();
+  ctx.font = f(800, s);
+  while (ctx.measureText(text).width > W - 24 && s > 12.5) {
+    s -= 0.5;
+    ctx.font = f(800, s);
+  }
+  ctx.restore();
+  textCenter(ctx, text, W / 2, y, color, f(800, s));
+}
+
 // 尺規播放引擎（cgCompass／cgBand／cgRender）的配色：由頁面在 canvas.js 開頭
 // 呼叫一次 cgUsePalette() 登記，共用檔不放主題色。欄位：
 //   ink（點與點名的預設色）、honey（圓規的半徑虛線與標籤）、brass／brassDk（圓規本體）、
