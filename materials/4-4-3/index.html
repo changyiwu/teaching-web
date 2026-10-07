@@ -764,7 +764,7 @@
             <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
             <ul class="bullet-list">
               <li><strong>長方形</strong>、<strong>菱形</strong>都是平行四邊形；<strong>正方形</strong>既是長方形（四個直角），也是菱形（四邊相等）。</li>
-              <li>菱形的兩雙鄰邊也分別等長，所以<strong>菱形（包括正方形）也是箏形</strong>。</li>
+              <li><strong>箏形</strong>自成一個家族：兩雙<strong>鄰邊</strong>分別等長，不一定是平行四邊形。</li>
               <li><strong>梯形</strong>只有一雙對邊平行；平行四邊形有兩雙，所以平行四邊形<strong>不是</strong>梯形。等腰梯形是梯形的一種。</li>
               <li>下面是各種四邊形的對角線性質（✓ 表示一定成立）：</li>
             </ul>
@@ -793,7 +793,7 @@
 
           <div class="interactive-card">
             <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：它屬於哪幾個家族？</h3>
-            <p class="interactive-instruction">從一般的平行四邊形（或箏形）開始調整。下方的家族圖會亮起它所屬的每一個家族——箭頭往下讀作「是一種」。試著讓「正方形」亮起來，看看它同時屬於幾個家族。</p>
+            <p class="interactive-instruction">從一般的平行四邊形開始調整（也可以切到箏形看看）。下方的家族圖會亮起它所屬的每一個家族——箭頭往下讀作「是一種」。試著讓「正方形」亮起來，看看它同時屬於幾個家族。</p>
             <div class="canvas-container">
               <canvas id="canvas-family" width="540" height="470"></canvas>
               <div class="control-panel">
@@ -841,7 +841,7 @@
               <label class="option-label"><input type="radio" name="q4-3-13" value="A"><span class="option-text">A. 正方形是長方形</span></label>
               <label class="option-label"><input type="radio" name="q4-3-13" value="B"><span class="option-text">B. 菱形是平行四邊形</span></label>
               <label class="option-label"><input type="radio" name="q4-3-13" value="C"><span class="option-text">C. 四個邊都相等的四邊形一定是正方形</span></label>
-              <label class="option-label"><input type="radio" name="q4-3-13" value="D"><span class="option-text">D. 正方形也是箏形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-13" value="D"><span class="option-text">D. 正方形是菱形</span></label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
@@ -849,25 +849,25 @@
               <p class="explanation-desc"><strong>解析：</strong>答案為 C。四個邊都相等只能確定是菱形；還要四個角都是直角，才是正方形。<br>
               A 對：正方形四個角都是直角，符合長方形的定義。<br>
               B 對：菱形兩雙對邊分別相等，是平行四邊形。<br>
-              D 對：正方形四邊相等，兩雙鄰邊當然分別等長。</p>
+              D 對：正方形四個邊都相等，符合菱形的定義。</p>
             </div>
           </div>
 
           <div class="quiz-card" data-quiz="4-3-14">
-            <p class="quiz-question"><strong>Q14.</strong> 下列哪一種四邊形，<strong>一定</strong>同時是平行四邊形，也是箏形？</p>
+            <p class="quiz-question"><strong>Q14.</strong> 下列哪一個性質，菱形<strong>一定</strong>有，長方形卻<strong>不一定</strong>有？</p>
             <div class="options-container">
-              <label class="option-label"><input type="radio" name="q4-3-14" value="A"><span class="option-text">A. 長方形</span></label>
-              <label class="option-label"><input type="radio" name="q4-3-14" value="B"><span class="option-text">B. 菱形</span></label>
-              <label class="option-label"><input type="radio" name="q4-3-14" value="C"><span class="option-text">C. 等腰梯形</span></label>
-              <label class="option-label"><input type="radio" name="q4-3-14" value="D"><span class="option-text">D. 一般的平行四邊形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-14" value="A"><span class="option-text">A. 兩條對角線互相平分</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-14" value="B"><span class="option-text">B. 兩條對角線互相垂直</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-14" value="C"><span class="option-text">C. 兩條對角線等長</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-14" value="D"><span class="option-text">D. 兩雙對邊分別平行</span></label>
             </div>
             <button class="btn-check-ans" disabled>提交答案</button>
             <div class="explanation-box">
               <div class="explanation-title"></div>
-              <p class="explanation-desc"><strong>解析：</strong>答案為 B。菱形四邊相等：兩雙對邊相等，是平行四邊形；兩雙鄰邊也分別等長，是箏形。<br>
-              A 錯：長方形的鄰邊不一定相等（相等時是正方形），所以不一定是箏形。<br>
-              C 錯：等腰梯形只有一雙對邊平行，不是平行四邊形。<br>
-              D 錯：一般的平行四邊形鄰邊不相等，不是箏形。</p>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。菱形的對角線互相垂直平分；長方形的對角線只保證等長且互相平分，要鄰邊也相等（也就是正方形）才會互相垂直。<br>
+              A 錯：長方形和菱形都是平行四邊形，對角線都互相平分。<br>
+              C 錯：方向相反，這是長方形一定有、菱形不一定有的性質。<br>
+              D 錯：兩者都是平行四邊形，兩雙對邊都分別平行。</p>
             </div>
           </div>
         </div>
@@ -1445,7 +1445,7 @@
               <li><strong>長方形</strong>：對角線等長且互相平分；反過來也能判別。</li>
               <li><strong>菱形</strong>：對角線互相垂直平分、平分內角；反過來也能判別。</li>
               <li><strong>箏形</strong>：一條對角線垂直平分另一條；不一定是平行四邊形。</li>
-              <li><strong>正方形</strong>：對角線等長且互相垂直平分；它是長方形、菱形，也是箏形。</li>
+              <li><strong>正方形</strong>：對角線等長且互相垂直平分；它是長方形，也是菱形。</li>
               <li><strong>面積</strong>：對角線互相垂直的四邊形 \(=\) 兩對角線乘積 \(\div 2\)；梯形 \(=\) 兩腰中點的連線段 \(\times\) 高。</li>
               <li><strong>兩腰中點的連線段</strong>：平行兩底，長度是兩底和的一半。</li>
               <li><strong>等腰梯形</strong>：兩底角相等、對角線等長、線對稱；兩底角相等的梯形是等腰梯形。</li>

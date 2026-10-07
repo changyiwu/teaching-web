@@ -160,7 +160,7 @@ function initQuizSystem() {
     '4-3-11': 'D',   // 等長又垂直，不一定互相平分
     '4-3-12': 'A',   // AC 是 BD 的中垂線
     '4-3-13': 'C',   // 四邊相等是菱形，不一定是正方形
-    '4-3-14': 'B',   // 菱形同時是平行四邊形與箏形
+    '4-3-14': 'B',   // 菱形的對角線一定互相垂直，長方形不一定
     '4-3-15': 'A',   // (9 + 23) ÷ 2 = 16
     '4-3-16': 'C',   // FI 20 → GJ = (20 + 34) ÷ 2 = 27
     '4-3-17': 'B',   // m = h，m² = 121 → m = 11 → 兩底和 22
@@ -618,7 +618,7 @@ function initKiteCanvas() {
     }
     let msg;
     if (p === r && p === q) msg = '\\(\\overline{AO} = \\overline{OC} = \\overline{BO}\\)：四邊相等又四角相等，這時是<strong>正方形</strong>。';
-    else if (p === r) msg = '\\(\\overline{AO} = \\overline{OC}\\) 時四邊都相等，變成<strong>菱形</strong>——菱形也符合「兩雙鄰邊分別等長」，是特別的箏形。';
+    else if (p === r) msg = '\\(\\overline{AO} = \\overline{OC}\\) 時四邊都相等，變成<strong>菱形</strong>：兩條對角線不只互相垂直，還互相平分。';
     else msg = '兩雙<strong>鄰邊</strong>各自相等，但對邊 \\(\\overline{AB}\\) 與 \\(\\overline{DC}\\) 不相等，所以箏形<strong>不一定是平行四邊形</strong>。';
     fb.innerHTML = wrapFeedback(msg);
     typeset([out, fb]);
@@ -727,7 +727,7 @@ function sqJudge(a, c, b, d, t) {
   let name, why;
   if (bis && eq && perp) { name = '正方形'; why = '互相平分＋等長＋垂直：三個條件全到齊'; }
   else if (bis && eq) { name = '長方形'; why = '互相平分＋等長'; }
-  else if (bis && perp) { name = '菱形'; why = '互相平分＋垂直（菱形也是箏形）'; }
+  else if (bis && perp) { name = '菱形'; why = '互相平分＋垂直'; }
   else if (bis) { name = '平行四邊形'; why = '只有互相平分'; }
   else if (perp && b === d) { name = '箏形'; why = 'AC 垂直平分 BD'; }
   else if (perp && a === c) { name = '箏形'; why = 'BD 垂直平分 AC'; }
@@ -818,7 +818,7 @@ const SQ_NODES = {
   square: { x: 278, y: 404, t: '正方形' }
 };
 const SQ_EDGES = [['quad', 'trap'], ['quad', 'para'], ['quad', 'kite'], ['trap', 'iso'],
-  ['para', 'rect'], ['para', 'rhomb'], ['kite', 'rhomb'], ['rect', 'square'], ['rhomb', 'square']];
+  ['para', 'rect'], ['para', 'rhomb'], ['rect', 'square'], ['rhomb', 'square']];
 
 function sqFamily(mode, s1, s2, s3) {
   // 回傳「它也是」的集合
@@ -826,11 +826,11 @@ function sqFamily(mode, s1, s2, s3) {
   if (mode === 'para') {
     lit.para = true;
     if (s3 === 90) lit.rect = true;
-    if (s1 === s2) { lit.rhomb = true; lit.kite = true; }
+    if (s1 === s2) lit.rhomb = true;
     if (lit.rect && lit.rhomb) lit.square = true;
   } else {
-    lit.kite = true;
-    if (s1 === s2) { lit.rhomb = true; lit.para = true; }
+    // 依課本的包含關係，箏形自成一支；四邊都相等時改歸平行四邊形那一支的菱形
+    if (s1 === s2) { lit.rhomb = true; lit.para = true; } else lit.kite = true;
     if (lit.rhomb && s3 === 90) { lit.square = true; lit.rect = true; }
   }
   const name = lit.square ? '正方形' : lit.rect ? '長方形' : lit.rhomb ? '菱形' : lit.para ? '平行四邊形' : '箏形';
@@ -911,9 +911,9 @@ function initFamilyCanvas() {
     out.innerHTML = F ? `目前：${F.name}` : '目前：畫不出來';
     let msg;
     if (!F) msg = '箏形的下半邊要夠長，才接得起來。';
-    else if (F.name === '正方形') msg = '正方形同時是<strong>長方形、菱形、平行四邊形，也是箏形</strong>：上面每個家族的性質它都有。';
+    else if (F.name === '正方形') msg = '正方形同時是<strong>長方形、菱形，也是平行四邊形</strong>：這三個家族的性質它都有。';
     else if (F.name === '長方形') msg = '長方形是平行四邊形；要再加上<strong>四邊相等</strong>才是正方形。';
-    else if (F.name === '菱形') msg = '菱形四邊相等：它是<strong>平行四邊形</strong>，也符合兩雙鄰邊分別等長，所以<strong>也是箏形</strong>。';
+    else if (F.name === '菱形') msg = mode === 'kite' ? '把兩組鄰邊調成一樣長，四個邊都相等，就成了菱形：兩雙對邊分別相等，所以它是<strong>平行四邊形</strong>。' : '菱形四邊相等：兩雙對邊分別相等，所以它是<strong>平行四邊形</strong>；要再加上四個直角才是正方形。';
     else if (F.name === '平行四邊形') msg = '一般的平行四邊形：對邊相等、對角線互相平分，但不是長方形也不是菱形。';
     else msg = '一般的箏形只有兩雙<strong>鄰邊</strong>相等，對邊不平行，不是平行四邊形。梯形只有一雙對邊平行，所以平行四邊形也不是梯形。';
     fb.innerHTML = wrapFeedback(msg);

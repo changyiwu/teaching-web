@@ -1040,8 +1040,8 @@ function initEqCanvas() {
 
   function draw() {
     const W = cv.width, H = cv.height;
-    const a = hbClampSlider(sa, 1, 4), b = hbClampSlider(sb, -20, 40);
-    const c = hbClampSlider(sc, 1, 4), d = hbClampSlider(sd, -20, 40);
+    const a = hbClampSlider(sa, 4, 6), b = hbClampSlider(sb, -30, 20);
+    const c = hbClampSlider(sc, 1, 2), d = hbClampSlider(sd, 30, 70);
     va.textContent = a; vb.textContent = b; vc.textContent = c; vd.textContent = d;
     ctx.clearRect(0, 0, W, H);
     drawTitle(ctx, 'L // M：兩個角用 x 表示，列方程式', C0);

@@ -670,7 +670,7 @@
 
           <div class="interactive-card">
             <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：列式解角度</h3>
-            <p class="interactive-instruction">選兩個角的關係，調整兩個式子的係數與常數。畫布會列式、解出 \(x\)、代回去，並依解出的角度畫出截線；調到不合理的組合時，看看哪一步出問題。</p>
+            <p class="interactive-instruction">選兩個角的關係，調整兩個式子的係數與常數。畫布會列式、解出 \(x\)、代回去，並依解出的角度畫出截線。注意題目問的是 \(x\) 還是角度。</p>
             <div class="canvas-container">
               <canvas id="canvas-eq" width="540" height="470"></canvas>
               <div class="control-panel">
@@ -691,20 +691,20 @@
 
                 <div class="slider-wrapper">
                   <div class="slider-row">
-                    <label for="eq-a">藍色角的 \(x\) 係數：<span id="eq-va" class="val-num">2</span></label>
-                    <input type="range" id="eq-a" min="1" max="4" value="2" step="1">
+                    <label for="eq-a">藍色角的 \(x\) 係數：<span id="eq-va" class="val-num">4</span></label>
+                    <input type="range" id="eq-a" min="4" max="6" value="4" step="1">
                   </div>
                   <div class="slider-row">
                     <label for="eq-b">藍色角的常數：<span id="eq-vb" class="val-num">20</span></label>
-                    <input type="range" id="eq-b" min="-20" max="40" value="20" step="10">
+                    <input type="range" id="eq-b" min="-30" max="20" value="20" step="10">
                   </div>
                   <div class="slider-row">
-                    <label for="eq-c">紅色角的 \(x\) 係數：<span id="eq-vc" class="val-num">3</span></label>
-                    <input type="range" id="eq-c" min="1" max="4" value="3" step="1">
+                    <label for="eq-c">紅色角的 \(x\) 係數：<span id="eq-vc" class="val-num">2</span></label>
+                    <input type="range" id="eq-c" min="1" max="2" value="2" step="1">
                   </div>
                   <div class="slider-row">
-                    <label for="eq-d">紅色角的常數：<span id="eq-vd" class="val-num">10</span></label>
-                    <input type="range" id="eq-d" min="-20" max="40" value="10" step="10">
+                    <label for="eq-d">紅色角的常數：<span id="eq-vd" class="val-num">40</span></label>
+                    <input type="range" id="eq-d" min="30" max="70" value="40" step="10">
                   </div>
                 </div>
 
