@@ -638,7 +638,7 @@ function initMonoCanvas() {
 
   [sa, sm, sb, sn].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(mG, 'data-mo-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -734,7 +734,7 @@ function initDistCanvas() {
 
   [sk].concat(S).forEach(s => s.addEventListener('input', draw));
   bindPickGroup(mG, 'data-di-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -826,7 +826,7 @@ function initGridCanvas() {
 
   [sa1, sa0, sb2, sb1, sb0].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(mG, 'data-gr-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -974,7 +974,7 @@ function initVmulCanvas() {
   bindPickGroup(pG, 'data-vm-p', v => { set = v; draw(); });
   bindPickGroup(methG, 'data-vm-m', v => { meth = v; draw(); });
   bindPickGroup(padG, 'data-vm-pad', v => { pad = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1074,7 +1074,7 @@ function initFormulaCanvas() {
 
   [sp, sq].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(fG, 'data-fm-f', v => { type = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1166,7 +1166,7 @@ function initMdivCanvas() {
   }
 
   [sa, sm, sb, sn].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1265,7 +1265,7 @@ function initLdiv1Canvas() {
   S.concat([sk]).forEach(s => s.addEventListener('input', () => { st.step = 99; draw(); }));
   bindPickGroup(dG, 'data-d1-deg', v => { st.deg = parseInt(v, 10); st.step = 99; draw(); });
   bindSteps('d1', () => (L ? L.steps.length : 1), st, draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 // 重點 8：多項式 ÷ 一次式
@@ -1327,7 +1327,7 @@ function initLdiv2Canvas() {
 
   S.concat([sp, sq]).forEach(s => s.addEventListener('input', () => { st.step = 99; draw(); }));
   bindSteps('d2', () => (L ? L.steps.length : 1), st, draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 // 重點 9：二次式 ÷ 二次式
@@ -1384,7 +1384,7 @@ function initLdiv3Canvas() {
   }
 
   SA.concat(SB).forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1456,7 +1456,7 @@ function initBuildCanvas() {
 
   [sd, sq2, sq1, sq0, sr1, sr0].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(mG, 'data-bd-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1572,7 +1572,7 @@ function initFindCanvas() {
 
   bindPickGroup(pG, 'data-fd-p', v => { st.set = v; st.step = 1; draw(); });
   bindSteps('fd', () => NSTEP, st, draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1653,7 +1653,7 @@ function initMixCanvas() {
 
   bindPickGroup(pG, 'data-mx-p', v => { st.set = v; st.step = 1; draw(); });
   bindSteps('mx', () => MX_SETS[st.set].length, st, draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1793,5 +1793,5 @@ function initAppCanvas() {
   sx.addEventListener('input', draw);
   bindPickGroup(mG, 'data-ap-mode', v => { mode = v; draw(); });
   bindPickGroup(moveG, 'data-ap-move', v => { moved = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }

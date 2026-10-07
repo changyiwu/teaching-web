@@ -427,7 +427,7 @@ function initBoardCanvas() {
   bindPickGroup(dataG, 'data-bd-data', v => { set = v; sel = v === 'sport' ? [0, 3] : [1, 2]; draw(); });
   bindPickGroup(typeG, 'data-bd-type', v => { type = v; draw(); });
   bindPickGroup(axisG, 'data-bd-axis', v => { axis = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -567,7 +567,7 @@ function initPieCanvas() {
 
   sliders.forEach(s => s.addEventListener('input', draw));
   bindPickGroup(pickG, 'data-pi-pick', v => { pick = parseInt(v, 10); draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -734,7 +734,7 @@ function initCrossCanvas() {
     draw();
   });
   bindPickGroup(modeG, 'data-cr-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -871,7 +871,7 @@ function initTallyCanvas() {
   });
   bindPickGroup(wG, 'data-ta-w', v => { w = parseInt(v, 10); draw(); });
   bindPickGroup(sG, 'data-ta-s', v => { s = parseInt(v, 10); draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -971,7 +971,7 @@ function initHistoCanvas() {
 
   [loS, hiS].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(typeG, 'data-hi-type', v => { type = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1112,7 +1112,7 @@ function initPolyCanvas() {
   [gS, tS].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(viewG, 'data-po-view', v => { view = v; draw(); });
   bindPickGroup(histoG, 'data-po-histo', v => { histo = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1297,7 +1297,7 @@ function initMeanCanvas() {
   cv.addEventListener('pointercancel', end);
   [baseS, idxS, dS].forEach(s => s.addEventListener('input', () => draw()));
   bindPickGroup(modeG, 'data-me-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1461,7 +1461,7 @@ function initFreqMeanCanvas() {
   allB.addEventListener('click', () => { ks = keys().length; draw(); });
   resetB.addEventListener('click', () => { ks = 0; draw(); });
   bindPickGroup(modeG, 'data-fm-mode', v => { mode = v; ks = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1610,7 +1610,7 @@ function initGroupMeanCanvas() {
   bindPickGroup(setG, 'data-gm-set', v => { set = v; draw(); });
   bindPickGroup(repG, 'data-gm-rep', v => { rep = v; draw(); });
   bindPickGroup(rawG, 'data-gm-raw', v => { raw = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1731,7 +1731,7 @@ function initMedianCanvas() {
   });
   xS.addEventListener('input', draw);
   bindPickGroup(sortG, 'data-md-sort', v => { sorted = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1896,7 +1896,7 @@ function initCumCanvas() {
     draw();
   });
   bindPickGroup(modeG, 'data-cu-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -2080,5 +2080,5 @@ function initModeCanvas() {
     draw();
   });
   bindPickGroup(toolG, 'data-mo-tool', v => { tool = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }

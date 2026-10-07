@@ -283,7 +283,7 @@ function initExpressCanvas() {
   if (sA) { a = parseInt(sA.value, 10); if (vA) vA.textContent = a; }
   if (sB) { b = parseInt(sB.value, 10); if (vB) vB.textContent = b; }
   syncNames();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -400,7 +400,7 @@ function initValueCanvas() {
   if (sY) sY.addEventListener('input', () => { yv = parseInt(sY.value, 10); if (vY) vY.textContent = yv; draw(); });
   if (sX) { xv = parseInt(sX.value, 10); if (vX) vX.textContent = xv; }
   if (sY) { yv = parseInt(sY.value, 10); if (vY) vY.textContent = yv; }
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -552,7 +552,7 @@ function initTermsCanvas() {
   if (btnNext) btnNext.addEventListener('click', () => { if (step < STEP_MAX) { step++; draw(); } });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (step > 0) { step--; draw(); } });
   if (btnReset) btnReset.addEventListener('click', () => { step = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -742,7 +742,7 @@ function initBracketCanvas() {
   if (sB) sB.addEventListener('input', () => { b = parseInt(sB.value, 10); if (vB) vB.textContent = b; draw(); });
   if (sA) { a = parseInt(sA.value, 10); if (vA) vA.textContent = a; }
   if (sB) { b = parseInt(sB.value, 10); if (vB) vB.textContent = b; }
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -910,7 +910,7 @@ function initSimplifyCanvas() {
   if (btnPrev) btnPrev.addEventListener('click', () => { if (step > 0) { step--; draw(); } });
   if (btnReset) btnReset.addEventListener('click', () => { step = 0; draw(); });
   syncRows();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1049,7 +1049,7 @@ function initEqCheckCanvas() {
   if (btnNext) btnNext.addEventListener('click', () => { if (step < STEP_MAX) { step++; draw(); } });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (step > 0) { step--; draw(); } });
   if (btnReset) btnReset.addEventListener('click', () => { step = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1145,7 +1145,7 @@ function initSolutionCanvas() {
   if (sY) sY.addEventListener('input', () => { yv = parseInt(sY.value, 10); if (vY) vY.textContent = yv; draw(); });
   if (sX) { xv = parseInt(sX.value, 10); if (vX) vX.textContent = xv; }
   if (sY) { yv = parseInt(sY.value, 10); if (vY) vY.textContent = yv; }
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1333,5 +1333,5 @@ function initInfiniteCanvas() {
   if (btnNext) btnNext.addEventListener('click', () => { if (step <= X_MAX) { step++; draw(); } });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (step > 0) { step--; draw(); } });
   if (btnReset) btnReset.addEventListener('click', () => { step = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }

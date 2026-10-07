@@ -1,3 +1,16 @@
+// 與 math-canvas.js 的 drawWithFonts 相同（本頁沒有載入共用檔）。
+// 先畫一次，之後每當有網頁字型下載完成就重畫。canvas 用到的字重（fi(800, 18)
+// 這類）與 Noto Sans TC 的中文字段，要等第一次被畫到才開始下載，
+// document.fonts.ready 不會等它們；只畫一次的話，字型晚到時初次畫面會停在
+// 替代字型，直到使用者動了控制項才換過來。draw 必須只依目前狀態重畫
+// （多畫幾次結果相同）——各頁的 draw 本來就會在每次操作時被重複呼叫。
+function drawWithFonts(draw) {
+  draw();
+  if (document.fonts && document.fonts.addEventListener) {
+    document.fonts.addEventListener('loadingdone', () => draw());
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initQuizSystem();
   initConcept1Canvas();
@@ -267,7 +280,7 @@ function initConcept1Canvas() {
   }
 
   slider.addEventListener('input', updateVisuals);
-  updateVisuals(); // Initial Draw
+  drawWithFonts(updateVisuals); // Initial Draw
 }
 
 /* ==========================================================================
@@ -500,7 +513,7 @@ function initConcept2Canvas() {
   canvas.addEventListener('touchmove', handleMove);
   window.addEventListener('touchend', handleEnd);
 
-  drawNumberLine();
+  drawWithFonts(drawNumberLine);
   updateTexts();
 }
 
@@ -691,7 +704,7 @@ function initConcept3Canvas() {
   canvas.addEventListener('touchmove', handleMove);
   window.addEventListener('touchend', handleEnd);
 
-  drawCompareLine();
+  drawWithFonts(drawCompareLine);
   updateTexts();
 }
 
@@ -868,7 +881,7 @@ function initConcept4Canvas() {
   canvas.addEventListener('touchmove', handleMove);
   window.addEventListener('touchend', handleEnd);
 
-  drawOpposites();
+  drawWithFonts(drawOpposites);
   updateTexts();
 }
 
@@ -1049,6 +1062,6 @@ function initConcept5Canvas() {
   canvas.addEventListener('touchmove', handleMove);
   window.addEventListener('touchend', handleEnd);
 
-  drawAbsoluteValue();
+  drawWithFonts(drawAbsoluteValue);
   updateTexts();
 }

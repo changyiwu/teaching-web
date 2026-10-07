@@ -332,7 +332,7 @@ function initCommonCanvas() {
 
   sliderA.addEventListener('input', draw);
   sliderB.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -490,7 +490,7 @@ function initGcdLadderCanvas() {
 
   sliderA.addEventListener('input', draw);
   sliderB.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -634,7 +634,7 @@ function initMultipleCanvas() {
 
   sliderA.addEventListener('input', draw);
   sliderB.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -732,7 +732,7 @@ function initLcmLadderCanvas() {
   }
 
   sliders.forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -899,7 +899,7 @@ function initTowerCanvas() {
 
   sliderA.addEventListener('input', draw);
   sliderB.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1259,5 +1259,5 @@ function initApplyCanvas(opts) {
   sliderA.addEventListener('input', draw);
   sliderB.addEventListener('input', draw);
   applyRange();
-  draw();
+  drawWithFonts(draw);
 }

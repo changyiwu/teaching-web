@@ -12,7 +12,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initQuizSystem();
-  hbDrawWithFonts(initQuizFigs);
+  drawWithFonts(initQuizFigs);
 
   initAngleCanvas();
   initVertCanvas();
@@ -43,17 +43,6 @@ const HB_JADE = '#6ee7b7';
 // 每個重點的主題色，與 style.css 的 #conceptN strong 對應
 const HB_TONE = ['#fcd34d', '#5eead4', '#7dd3fc', '#fda4af', '#6ee7b7', '#d8b4fe',
                  '#fdba74', '#f9a8d4', '#a5b4fc', '#bef264', '#67e8f9'];
-
-// 先畫一次，之後每當有網頁字型下載完成就重畫。canvas 用到的字重（fi(800, 18)
-// 這類）與 Noto Sans TC 的中文字段，要等第一次被畫到才開始下載，
-// document.fonts.ready 不會等它們；只靠 ready，初次畫面會停在替代字型，
-// 直到使用者動了控制項才換過來。draw 只依目前狀態重畫，多畫幾次結果相同。
-function hbDrawWithFonts(draw) {
-  draw();
-  if (document.fonts && document.fonts.addEventListener) {
-    document.fonts.addEventListener('loadingdone', () => draw());
-  }
-}
 
 /* ==========================================================================
    隨堂評量
@@ -424,7 +413,7 @@ function initAngleCanvas() {
 
   sa.addEventListener('input', draw);
   bindPickGroup(g, 'data-an-mode', v => { mode = v; draw(); });
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -488,7 +477,7 @@ function initVertCanvas() {
 
   [sa, sb].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-vt-mode', v => { mode = v; draw(); });
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -543,7 +532,7 @@ function initTriSumCanvas() {
   }
 
   [sa, sb].forEach(s => s.addEventListener('input', draw));
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -625,7 +614,7 @@ function initTurnCanvas() {
 
   sa.addEventListener('input', draw);
   bindPickGroup(g, 'data-tn-mode', v => { mode = v; draw(); });
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -691,7 +680,7 @@ function initExtSumCanvas() {
   }
 
   [sa, sb, ss].forEach(x => x.addEventListener('input', draw));
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -753,7 +742,7 @@ function initExtThmCanvas() {
 
   [sa, sb].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-xt-mode', v => { mode = v; draw(); });
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -799,7 +788,7 @@ function initEightCanvas() {
   }
 
   [sa, sb, sc].forEach(s => s.addEventListener('input', draw));
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -863,7 +852,7 @@ function initDartCanvas() {
 
   [sa, sb, sd].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-dt-mode', v => { mode = v; draw(); });
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -953,7 +942,7 @@ function initNgonCanvas() {
 
   sn.addEventListener('input', draw);
   bindPickGroup(g, 'data-ng-mode', v => { mode = v; draw(); });
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1041,7 +1030,7 @@ function initRegCanvas() {
 
   sn.addEventListener('input', draw);
   bindPickGroup(g, 'data-rg-mode', v => { mode = v; draw(); });
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1125,5 +1114,5 @@ function initFindNCanvas() {
   sa.addEventListener('input', draw);
   bindPickGroup(g, 'data-fn-mode', v => { mode = v; draw(); });
   bindPickGroup(gk, 'data-fn-k', v => { const s = v.split('/'); k = [parseInt(s[0], 10), parseInt(s[1] || '1', 10)]; draw(); });
-  hbDrawWithFonts(draw);
+  drawWithFonts(draw);
 }

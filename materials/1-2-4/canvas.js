@@ -208,7 +208,7 @@ function initPowerCanvas() {
   }
 
   [bS, aS, nS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);
   }
@@ -353,7 +353,7 @@ function initTrendCanvas() {
   }
 
   [aS, nS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);
   }
@@ -545,7 +545,7 @@ function initOrderCanvas() {
   nextBtn.addEventListener('click', () => { step += 1; draw(); });
   resetBtn.addEventListener('click', () => { step = 1; draw(); });
 
-  draw();
+  drawWithFonts(draw);
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);
   }
@@ -768,7 +768,7 @@ function initExpandCanvas() {
     draw();
   });
   [aS, mS, nS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);
   }
@@ -983,7 +983,7 @@ function initDeriveCanvas(opts) {
     });
   }
   [mS, nS].filter(Boolean).forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);
   }
@@ -1144,7 +1144,7 @@ function initZeroCanvas() {
   }
 
   [aS, stepS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);
   }

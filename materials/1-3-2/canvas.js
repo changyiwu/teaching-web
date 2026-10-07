@@ -419,7 +419,7 @@ function initIdentityCanvas() {
   }
 
   bindPickGroup(group, 'data-eq', v => { idx = parseInt(v, 10); draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -547,7 +547,7 @@ function initTranslateCanvas() {
   bindPickGroup(group, 'data-item', v => { idx = parseInt(v, 10); step = 0; draw(); });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (step > 0) { step--; draw(); } });
   if (btnNext) btnNext.addEventListener('click', () => { if (step < 3) { step++; draw(); } });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -638,7 +638,7 @@ function initSubstituteCanvas() {
     xv = parseInt(slider.value, 10);
     if (valOut) valOut.textContent = xv;
   }
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -756,7 +756,7 @@ function initAxiomCanvas() {
   if (btnReset) btnReset.addEventListener('click', () => { reset(); draw(); });
 
   reset();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* 逐行推導的堆疊排版
@@ -906,7 +906,7 @@ function initMoveCanvas() {
   if (btnNext) btnNext.addEventListener('click', () => {
     if (step < CASES[idx].lines.length - 1) { step++; draw(); }
   });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1083,5 +1083,5 @@ function initExpandCanvas() {
   if (btnNext) btnNext.addEventListener('click', () => {
     if (step < CASES[idx].lines.length - 1) { step++; draw(); }
   });
-  draw();
+  drawWithFonts(draw);
 }

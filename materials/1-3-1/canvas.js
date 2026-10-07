@@ -241,7 +241,7 @@ function initBoardCanvas() {
     price = parseInt(v, 10);
     update();
   });
-  update();
+  drawWithFonts(update);
 }
 
 /* ==========================================================================
@@ -369,7 +369,7 @@ function initShorthandCanvas() {
     si = 0;
     update();
   });
-  update();
+  drawWithFonts(update);
 }
 
 /* ==========================================================================
@@ -552,7 +552,7 @@ function initOrderCanvas() {
     cup = parseInt(v, 10);
     update();
   });
-  update();
+  drawWithFonts(update);
 }
 
 /* ==========================================================================
@@ -692,7 +692,7 @@ function initSubCanvas() {
     ci = parseInt(v, 10);
     update();
   });
-  update();
+  drawWithFonts(update);
 }
 
 /* ==========================================================================
@@ -991,7 +991,7 @@ function initSortCanvas() {
   });
 
   reset();
-  update();
+  drawWithFonts(update);
 }
 
 /* ==========================================================================
@@ -1116,5 +1116,5 @@ function initSimplifyCanvas(opts) {
     si = 0;
     update();
   });
-  update();
+  drawWithFonts(update);
 }

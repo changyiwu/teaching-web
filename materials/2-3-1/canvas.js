@@ -406,7 +406,7 @@ function initMixCanvas() {
 
   aS.addEventListener('input', draw);
   bS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -523,7 +523,7 @@ function initValCanvas() {
   bindPickGroup(modeGroup, 'data-vl-mode', v => { mode = v; draw(); });
   aS.addEventListener('input', draw);
   bS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -631,7 +631,7 @@ function initEqCanvas() {
 
   bindPickGroup(baseGroup, 'data-eq-base', v => { bi = parseInt(v, 10); draw(); });
   mS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -758,7 +758,7 @@ function initSimpCanvas() {
   bindPickGroup(modeGroup, 'data-sp-mode', v => { mode = v; draw(); });
   aS.addEventListener('input', draw);
   bS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -940,7 +940,7 @@ function initCrossCanvas() {
   bS.addEventListener('input', draw);
   cS.addEventListener('input', draw);
   applyMode();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1041,7 +1041,7 @@ function initShareCanvas() {
   bindPickGroup(ratioGroup, 'data-sh-ratio', v => { ri = parseInt(v, 10); draw(); });
   bindPickGroup(condGroup, 'data-sh-cond', v => { cond = v; draw(); });
   sS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1195,7 +1195,7 @@ function initSwapCanvas() {
   bindPickGroup(targetGroup, 'data-sw-target', v => { ti = parseInt(v, 10); draw(); });
   pS.addEventListener('input', draw);
   qS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1290,7 +1290,7 @@ function initFixCanvas() {
   }
 
   rS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1400,7 +1400,7 @@ function initTimesCanvas() {
   mS.addEventListener('input', draw);
   nS.addEventListener('input', draw);
   sS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1515,7 +1515,7 @@ function initChgCanvas() {
 
   bindPickGroup(caseGroup, 'data-cg-case', v => { ci = parseInt(v, 10); draw(); });
   rS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1672,5 +1672,5 @@ function initScaleCanvas() {
 
   bindPickGroup(kGroup, 'data-sc-k', v => { ki = parseInt(v, 10); draw(); });
   lS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }

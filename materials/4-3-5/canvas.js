@@ -19,7 +19,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initQuizSystem();
-  initQuizFigs();
+  drawWithFonts(initQuizFigs);
 
   initPathCanvas();
   initMakeCanvas();
@@ -509,7 +509,7 @@ function initPathCanvas() {
 
   [sx, sh].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-pa-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -605,7 +605,7 @@ function initMakeCanvas() {
   }
 
   sl.forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -690,7 +690,7 @@ function initIsoCanvas() {
 
   [sp, sq].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-is-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -766,7 +766,7 @@ function initRangeCanvas() {
   }
 
   [sa, sb, st].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -886,7 +886,7 @@ function initShareCanvas() {
   }
 
   sl.forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -964,7 +964,7 @@ function initBigCanvas() {
   }
 
   [sx, sy, sc].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1073,7 +1073,7 @@ function initWhyCanvas() {
 
   [sx, sy, se].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-wy-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1127,7 +1127,7 @@ function initAngCanvas() {
   }
 
   [sa, sb].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1185,7 +1185,7 @@ function initChainCanvas() {
   }
 
   sl.forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1247,7 +1247,7 @@ function initTwoCanvas() {
   }
 
   sl.forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1357,7 +1357,7 @@ function initRngCanvas() {
     else { sg.min = 5; sg.max = 55; sg.value = 30; stt.min = 65; stt.max = 175; stt.value = 100; }
     draw();
   });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1430,5 +1430,5 @@ function initRightCanvas() {
   }
 
   sl.forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }

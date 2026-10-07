@@ -440,7 +440,7 @@ function initCheckCanvas() {
   }
 
   bindPickGroup(group, 'data-pc', v => { key = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -516,7 +516,7 @@ function initCoefCanvas() {
   }
 
   S.forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -604,7 +604,7 @@ function initDegreeCanvas() {
   }
 
   S.forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -710,7 +710,7 @@ function initParamCanvas() {
   bindPickGroup(tplG, 'data-pa-tpl', v => { tpl = v; draw(); });
   bindPickGroup(goalG, 'data-pa-goal', v => { goal = parseInt(v, 10); draw(); });
   [aS, bS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -809,7 +809,7 @@ function initOrderCanvas() {
 
   bindPickGroup(pG, 'data-od-p', v => { set = v; draw(); });
   bindPickGroup(mG, 'data-od-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -900,7 +900,7 @@ function initTileCanvas() {
   }
 
   ids.forEach(k => S[k].addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1034,7 +1034,7 @@ function initColCanvas() {
 
   bindPickGroup(pG, 'data-co-p', v => { set = v; draw(); });
   bindPickGroup(mG, 'data-co-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1162,7 +1162,7 @@ function initSubCanvas() {
 
   bindPickGroup(pG, 'data-sb-p', v => { set = v; draw(); });
   bindPickGroup(mG, 'data-sb-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1262,7 +1262,7 @@ function initMixCanvas() {
   prev.addEventListener('click', () => { step -= 1; draw(); });
   next.addEventListener('click', () => { step += 1; draw(); });
   all.addEventListener('click', () => { step = MX_SETS[set].length; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1351,5 +1351,5 @@ function initFindCanvas() {
 
   bindPickGroup(mG, 'data-fd-mode', v => { mode = v; draw(); });
   S.forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }

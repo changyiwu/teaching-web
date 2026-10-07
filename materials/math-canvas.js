@@ -13,7 +13,7 @@
      - 有理數：qOf／qAdd／qSub／qMul／qDiv／qPow、qTex／qTexP／qTexM、qIt／qOpIt／qPowIt
      - 基本繪圖：roundRect／drawPanel／drawChip／drawTitle／drawNote／drawArrow
      - 數值與字串：gcd／clamp／reduce／texFrac／numStr／coefTex／signed
-     - 互動與版面：canvasPos／bindPickGroup／wrapText／wrapFeedback／typeset
+     - 互動與版面：canvasPos／bindPickGroup／wrapText／wrapFeedback／typeset／drawWithFonts
      - 平面幾何與尺規作圖：hb*（數學方向角）、cg*（canvas 座標、圓規直尺播放引擎）
 
    各節的**主題配色**（C_BRASS、C_TEAL 之類）與主題繪圖（軟木板、天平…）
@@ -47,6 +47,18 @@ function wrapFeedback(html) {
 function typeset(nodes) {
   if (window.MathJax && MathJax.typesetPromise) {
     MathJax.typesetPromise(nodes).catch(err => console.log(err));
+  }
+}
+
+// 先畫一次，之後每當有網頁字型下載完成就重畫。canvas 用到的字重（fi(800, 18)
+// 這類）與 Noto Sans TC 的中文字段，要等第一次被畫到才開始下載，
+// document.fonts.ready 不會等它們；只畫一次的話，字型晚到時初次畫面會停在
+// 替代字型，直到使用者動了控制項才換過來。draw 必須只依目前狀態重畫
+// （多畫幾次結果相同）——各頁的 draw 本來就會在每次操作時被重複呼叫。
+function drawWithFonts(draw) {
+  draw();
+  if (document.fonts && document.fonts.addEventListener) {
+    document.fonts.addEventListener('loadingdone', () => draw());
   }
 }
 

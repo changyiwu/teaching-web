@@ -19,7 +19,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initQuizSystem();
-  initQuizFigs();
+  drawWithFonts(initQuizFigs);
 
   initOvCanvas();
   initCrCanvas();
@@ -541,7 +541,7 @@ function initOvCanvas() {
 
   bindPickGroup(g, 'data-ov-mode', v => { mode = v; draw(); });
   sl.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -620,7 +620,7 @@ function initCrCanvas() {
 
   bindPickGroup(g, 'data-cr-map', v => { map = v; draw(); });
   [sA, sF].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -729,7 +729,7 @@ function initSssCanvas() {
   bindPickGroup(g, 'data-sss-side', v => { side = v; draw(); });
   cgSteps('sss', st, draw);
   [sa, sb, sc].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -811,7 +811,7 @@ function initSasCanvas() {
 
   cgSteps('sas', st, draw);
   [sa, sc, sAng].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -907,7 +907,7 @@ function initSsaCanvas() {
 
   cgSteps('ssa', st, draw);
   [sAng, sa].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -994,7 +994,7 @@ function initRhsCanvas() {
 
   cgSteps('rhs', st, draw);
   [sH, sS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1081,7 +1081,7 @@ function initAsaCanvas() {
 
   cgSteps('asa', st, draw);
   [sa, s1, s2].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1173,7 +1173,7 @@ function initAasCanvas() {
 
   bindPickGroup(g, 'data-aas-side', v => { side = v; draw(); });
   [sB, sC, sS].forEach(x => x.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1249,7 +1249,7 @@ function initAaaCanvas() {
   }
 
   [sA, sB, sK].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1355,7 +1355,7 @@ function initJdCanvas() {
     clearJudge();
     draw();
   });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1470,7 +1470,7 @@ function initHdCanvas() {
   bindPickGroup(g, 'data-hd-mode', v => { mode = v; st.k = 1; draw(); });
   cgSteps('hd', st, draw);
   sp.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1575,5 +1575,5 @@ function initApCanvas() {
 
   bindPickGroup(g, 'data-ap-mode', v => { mode = v; draw(); });
   [sT, sO, sM, sN].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }

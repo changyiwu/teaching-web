@@ -329,7 +329,7 @@ function initPowerCanvas() {
 
   sliderA.addEventListener('input', draw);
   sliderN.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -474,7 +474,7 @@ function initBracketCanvas() {
 
   sliderA.addEventListener('input', draw);
   sliderN.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -722,7 +722,7 @@ function initTenCanvas() {
   }
 
   slider.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -933,7 +933,7 @@ function initSciCanvas() {
 
   slider.addEventListener('input', draw);
   syncSlider();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1106,5 +1106,5 @@ function initCompareCanvas() {
   }
 
   [sA, sM, sB, sN].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }

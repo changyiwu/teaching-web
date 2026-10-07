@@ -369,7 +369,7 @@ function initStepsCanvas() {
   if (btnNext) btnNext.addEventListener('click', () => { if (step < 3) { step++; draw(); } });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (step > 0) { step--; draw(); } });
   if (btnReset) btnReset.addEventListener('click', () => { step = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -482,7 +482,7 @@ function initTranslateCanvas() {
     if (shown < SENTS[idx].segs.length) { shown++; draw(); }
   });
   if (btnReset) btnReset.addEventListener('click', () => { shown = 1; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -606,7 +606,7 @@ function initAllocCanvas() {
     draw();
   });
   syncSlider();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -695,7 +695,7 @@ function initDiscountCanvas() {
     if (valOut) valOut.textContent = xv;
     draw();
   });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -870,7 +870,7 @@ function initFigureCanvas() {
     if (valOut) valOut.textContent = numStr(xv);
     draw();
   });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -992,7 +992,7 @@ function initAgeCanvas() {
     draw();
   });
   syncSlider();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1193,7 +1193,7 @@ function initVerdictCanvas() {
   if (btnOk) btnOk.addEventListener('click', () => { verdict = 'ok'; draw(); });
   if (btnNo) btnNo.addEventListener('click', () => { verdict = 'no'; draw(); });
   if (btnReset) btnReset.addEventListener('click', () => { verdict = null; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1451,7 +1451,7 @@ function initRateCanvas() {
 
   [sA, sB, sC].forEach(s => s.addEventListener('input', draw));
   applyMode();
-  draw();
+  drawWithFonts(draw);
   if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
     MathJax.startup.promise.then(draw);
   }

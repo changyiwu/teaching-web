@@ -344,7 +344,7 @@ function initStepsCanvas() {
 
   bindPickGroup(caseGroup, 'data-case', v => { idx = parseInt(v, 10); draw(); });
   if (sS) sS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -522,7 +522,7 @@ function initCountCanvas() {
   bindPickGroup(pickGroup, 'data-pick', v => { pick = parseInt(v, 10); draw(); });
   if (aS) aS.addEventListener('input', draw);
   if (bS) bS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -684,7 +684,7 @@ function initSwapCanvas() {
   bindPickGroup(caseGroup, 'data-case', v => { idx = parseInt(v, 10); applyConf(); draw(); });
   if (dS) dS.addEventListener('input', () => { dVal[idx] = parseInt(dS.value, 10); draw(); });
   applyConf();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -885,7 +885,7 @@ function initPackCanvas() {
 
   bindPickGroup(modeGroup, 'data-mode', v => { mode = parseInt(v, 10); draw(); });
   [kS, rS, sS].forEach(el => { if (el) el.addEventListener('input', draw); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1048,7 +1048,7 @@ function initAskCanvas() {
   bindPickGroup(qGroup, 'data-q', v => { qi = parseInt(v, 10); draw(); });
   if (xS) xS.addEventListener('input', draw);
   if (yS) yS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1259,5 +1259,5 @@ function initCheckCanvas() {
   if (pS) pS.addEventListener('input', () => { pVal[idx] = parseInt(pS.value, 10); draw(); });
   if (qS) qS.addEventListener('input', () => { qVal[idx] = parseInt(qS.value, 10); draw(); });
   applyConf();
-  draw();
+  drawWithFonts(draw);
 }

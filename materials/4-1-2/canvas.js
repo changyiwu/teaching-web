@@ -420,7 +420,7 @@ function initKindCanvas() {
 
   [sa, sd, sn].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-kd-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -517,7 +517,7 @@ function initFlipCanvas() {
 
   [sa, sd, sn].forEach(s => s.addEventListener('input', draw));
   bindSteps('fl', () => N_STEP, state, draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -598,7 +598,7 @@ function initPairCanvas() {
   }
 
   [sa, sd, sn].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -684,7 +684,7 @@ function initLastCanvas() {
 
   [sa, sd, sn, sm, sN].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-ls-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -763,7 +763,7 @@ function initFormula2Canvas() {
 
   [sa, sd, sn].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-f2-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -846,7 +846,7 @@ function initSolveCanvas() {
 
   [sa, sn, sk, sa2, sb2, sm2].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-sv-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -915,7 +915,7 @@ function initStackCanvas() {
 
   [st, sd, sn].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-sk-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -994,7 +994,7 @@ function initSeatCanvas() {
   [sn, sd, sa].forEach(s => s.addEventListener('input', draw));
   bindSteps('se', () => nRows, state, draw);
   bindPickGroup(g, 'data-se-ask', v => { ask = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1137,7 +1137,7 @@ function initDaysCanvas() {
   [sa, sd, sn].forEach(s => s.addEventListener('input', draw));
   bindSteps('dy', () => nRows, state, draw);
   bindPickGroup(g, 'data-dy-mode', v => setMode(v));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1218,5 +1218,5 @@ function initSignCanvas() {
   }
 
   [sa, sd, sn].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }

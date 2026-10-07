@@ -363,7 +363,7 @@ function initMeanCanvas() {
   }
 
   [kS, aS, bS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -517,7 +517,7 @@ function initCheckCanvas(opts) {
 
   bindPickGroup(group, `data-${P}-case`, v => { ci = parseInt(v, 10); draw(); });
   nS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 // canvas 文字用的分數（斜線寫法只出現在判定句裡）
@@ -645,7 +645,7 @@ function initSolveCanvas(opts) {
 
   bindPickGroup(askGroup, `data-${P}-ask`, v => { ask = v; draw(); });
   [x1S, y1S, tS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -847,7 +847,7 @@ function initApplyCanvas(opts) {
   bindPickGroup(askGroup, `data-${P}-ask`, v => { ask = v; resetSlider(); draw(); });
   qS.addEventListener('input', draw);
   resetSlider();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -952,7 +952,7 @@ function initTileCanvas() {
   aS.addEventListener('input', draw);
   bS.addEventListener('input', draw);
   resetSliders(0, 3);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1075,7 +1075,7 @@ function initTrendCanvas() {
 
   bindPickGroup(group, 'data-tr-cand', v => { ci = parseInt(v, 10); draw(); });
   sS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1243,5 +1243,5 @@ function initFixCanvas() {
   bindPickGroup(lockGroup, 'data-fx-lock', v => { li = parseInt(v, 10); draw(); });
   nS.addEventListener('input', draw);
   relabel();
-  draw();
+  drawWithFonts(draw);
 }

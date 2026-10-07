@@ -357,7 +357,7 @@ function initSolCanvas() {
 
   bindPickGroup(caseGroup, 'data-case', v => { idx = parseInt(v, 10); draw(); });
   xS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -434,7 +434,7 @@ function initTraceCanvas() {
 
   bindPickGroup(caseGroup, 'data-case', v => { idx = parseInt(v, 10); nS.value = '3'; draw(); });
   nS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -520,7 +520,7 @@ function initTwoCanvas() {
 
   aS.addEventListener('input', draw);
   bS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -639,7 +639,7 @@ function initCeptCanvas() {
   }
 
   [aS, bS, cS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -722,7 +722,7 @@ function initGridCanvas() {
 
   bindPickGroup(modeGroup, 'data-mode', v => { mode = v; draw(); });
   kS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -838,7 +838,7 @@ function initChkCanvas() {
   bindPickGroup(modeGroup, 'data-mode', v => { mode = v; draw(); });
   pS.addEventListener('input', draw);
   qS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -912,7 +912,7 @@ function initOrgCanvas() {
 
   bindPickGroup(caseGroup, 'data-case', v => { idx = parseInt(v, 10); draw(); });
   cS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1030,7 +1030,7 @@ function initRecCanvas() {
   }
 
   [axS, ayS, bxS, byS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1096,7 +1096,7 @@ function initCrossCanvas() {
 
   pS.addEventListener('input', draw);
   qS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1205,5 +1205,5 @@ function initAreaCanvas() {
 
   aS.addEventListener('input', draw);
   bS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }

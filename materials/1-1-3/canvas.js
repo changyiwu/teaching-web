@@ -266,7 +266,7 @@ function initMultiplyCanvas() {
 
   sliderA.addEventListener('input', draw);
   sliderB.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -442,7 +442,7 @@ function initSignsCanvas() {
   });
 
   syncButtons();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -598,7 +598,7 @@ function initDivideCanvas() {
 
   sliderQ.addEventListener('input', draw);
   sliderD.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -872,7 +872,7 @@ function initDistributeCanvas() {
   sliderA.addEventListener('input', draw);
   sliderB.addEventListener('input', draw);
   sliderC.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1034,5 +1034,5 @@ function initDiceCanvas() {
   }
 
   sliderK.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }

@@ -407,7 +407,7 @@ function initShiftCanvas() {
   bindPickGroup(signG, 'data-sh-sign', v => { key = v; draw(); });
   [aS, bS, cS].forEach(s => s.addEventListener('input', draw));
   loadMode();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -520,7 +520,7 @@ function initScaleCanvas(o) {
 
   bindPickGroup(group, `data-${pre}-k`, v => { kk = v; draw(); });
   [aS, bS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* --------------------------------------------------------------------------
@@ -634,7 +634,7 @@ function initMoveCanvas() {
 
   bindPickGroup(signG, 'data-mv-sign', v => { key = v; draw(); });
   [aS, bS, cS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -727,7 +727,7 @@ function initBothCanvas() {
   bindPickGroup(sideG, 'data-bo-side', v => { side = v; draw(); });
   bindPickGroup(signG, 'data-bo-sign', v => { key = v; draw(); });
   ['p', 'q', 'r', 't'].forEach(n => S_[n].s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -862,7 +862,7 @@ function initParenCanvas() {
   bindPickGroup(methodG, 'data-pa-method', v => { method = v; draw(); });
   bindPickGroup(signG, 'data-pa-sign', v => { key = v; draw(); });
   ['m', 'n', 'p', 'q'].forEach(n => S_[n].s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* --------------------------------------------------------------------------
@@ -1019,7 +1019,7 @@ function initFracCanvas() {
   bindPickGroup(methodG, 'data-fr-method', v => { method = v; draw(); });
   bindPickGroup(styleG, 'data-fr-style', v => { style = v; draw(); });
   [aS, bS, cS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1121,7 +1121,7 @@ function initIntCanvas() {
 
   bindPickGroup(signG, 'data-it-sign', v => { key = v; draw(); });
   kS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1228,7 +1228,7 @@ function initMenuCanvas() {
   bindPickGroup(discG, 'data-mn-disc', v => { disc = parseInt(v, 10); draw(); });
   bindPickGroup(ruleG, 'data-mn-rule', v => { rule = v; draw(); });
   bS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1344,7 +1344,7 @@ function initTierCanvas() {
     draw();
   });
   [pS, xS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1471,5 +1471,5 @@ function initCupCanvas() {
   bindPickGroup(n1G, 'data-cp-n1', v => { n1 = parseInt(v, 10); draw(); });
   bindPickGroup(addG, 'data-cp-add', v => { add = parseInt(v, 10); draw(); });
   [sS, xS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }

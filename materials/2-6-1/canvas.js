@@ -487,7 +487,7 @@ function initLineCanvas() {
     }
   });
   typeGs.forEach((g, k) => bindPickGroup(g, 'data-ln-type', v => { figs[k].type = v; draw(); }));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -594,7 +594,7 @@ function initAngleCanvas() {
 
   sliders.forEach(s => s.addEventListener('input', draw));
   bindPickGroup(pickG, 'data-ag-pick', v => { pick = v.split(',').map(Number); draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -753,7 +753,7 @@ function initPolyCanvas() {
 
   bindPickGroup(nG, 'data-pg-n', v => { n = parseInt(v, 10); draw(); });
   bindPickGroup(kindG, 'data-pg-kind', v => { kind = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -912,7 +912,7 @@ function initDiagCanvas() {
   bindPickGroup(nG, 'data-dg-n', v => { n = parseInt(v, 10); seq = []; from = 0; draw(); });
   bindPickGroup(modeG, 'data-dg-mode', v => { mode = v; draw(); });
   resetBtn.addEventListener('click', () => { seq = []; from = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1044,7 +1044,7 @@ function initPerpCanvas() {
   hS.addEventListener('input', draw);
   xS.addEventListener('input', draw);
   bindPickGroup(tiltG, 'data-pp-tilt', v => { tilt = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1178,7 +1178,7 @@ function initMidCanvas() {
   }
 
   [lenS, cS, foldS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1330,7 +1330,7 @@ function initSymCanvas() {
   bindPickGroup(shapeG, 'data-sy-shape', v => { shape = v; draw(); });
   bindPickGroup(kindG, 'data-sy-kind', v => { kind = v; draw(); });
   foldS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1466,7 +1466,7 @@ function initCheckCanvas() {
     draw();
   });
   bindPickGroup(axisG, 'data-ck-axis', v => { rot = v === 'tilt' ? -Math.PI / 4 : 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1597,7 +1597,7 @@ function initAxisCanvas() {
     visited = new Set();
     draw();
   });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1769,7 +1769,7 @@ function initGridCanvas() {
   nextB.addEventListener('click', () => { step++; probe = null; draw(); });
   bindPickGroup(axisG, 'data-gr-axis', v => { axis = v; step = 0; probe = null; draw(); });
   bindPickGroup(figG, 'data-gr-fig', v => { fig = parseInt(v, 10); step = 0; probe = null; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -2034,7 +2034,7 @@ function initCutCanvas() {
   function syncStep() {
     stepG.querySelectorAll('.pick-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-ct-step') === String(step)));
   }
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -2223,7 +2223,7 @@ function initViewCanvas() {
   });
   bindPickGroup(showG, 'data-vw-show', v => { show = v; draw(); });
   bindPickGroup(presetG, 'data-vw-preset', v => { H = PRESETS[v].map(r => r.slice()); draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -2320,5 +2320,5 @@ function initWhoCanvas() {
   bindPickGroup(ansG, 'data-wh-ans', v => { answer = v; draw(); });
   bindPickGroup(shapeG, 'data-wh-shape', v => { shape = v; qi = 0; answer = null; clearAns(); draw(); });
   nextB.addEventListener('click', () => { qi = (qi + 1) % ORDER.length; answer = null; clearAns(); draw(); });
-  draw();
+  drawWithFonts(draw);
 }

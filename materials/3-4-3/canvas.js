@@ -516,7 +516,7 @@ function initStepsCanvas() {
 
   [sn, sd].forEach(s => s.addEventListener('input', draw));
   bindSteps('st', () => nRows, state, draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -599,7 +599,7 @@ function initSumCanvas() {
 
   [sb, ss].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-su-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -683,7 +683,7 @@ function initEggCanvas() {
 
   [sn, sk].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-eg-ask', v => { ask = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -754,7 +754,7 @@ function initPriceCanvas() {
 
   [sp, sm, sk].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-pr-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -820,7 +820,7 @@ function initBorderCanvas() {
 
   [sL, sW, sw].forEach(s => s.addEventListener('input', draw));
   fix();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -888,7 +888,7 @@ function initCrossCanvas() {
 
   [sL, sW, sw].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(g, 'data-cr-view', v => { view = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -979,7 +979,7 @@ function initPythCanvas() {
   }
 
   [sp, sq, sr].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 // 有理數的近似：整數印整數，否則印到小數第 2 位
@@ -1080,7 +1080,7 @@ function initGroupCanvas() {
   }
 
   [sN, sP, sD, sX, sC].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1151,7 +1151,7 @@ function initNosolCanvas() {
   }
 
   [sa, sk, sr].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1220,5 +1220,5 @@ function initDiscCanvas() {
   }
 
   [sp, sn, st].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }

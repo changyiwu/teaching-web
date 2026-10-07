@@ -243,7 +243,7 @@ function initCmpCanvas() {
 
   cgSteps('cmp', st, draw);
   sl.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -303,7 +303,7 @@ function initCpyCanvas() {
 
   cgSteps('cpy', st, draw);
   [sLen, sTilt].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -390,7 +390,7 @@ function initSumCanvas() {
   bindPickGroup(g, 'data-sum-mode', v => { mode = v; draw(); });
   cgSteps('sum', st, draw);
   [sa, sb].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -489,7 +489,7 @@ function initTriCanvas() {
   bindPickGroup(g, 'data-tri-mode', v => { mode = v; draw(); });
   cgSteps('tri', st, draw);
   [sa, sb, sc].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -570,7 +570,7 @@ function initAngCanvas() {
 
   cgSteps('ang', st, draw);
   [sT, sR].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -686,7 +686,7 @@ function initAsumCanvas() {
   bindPickGroup(g, 'data-asum-mode', v => { mode = v; draw(); });
   cgSteps('asum', st, draw);
   [s1, s2].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -775,7 +775,7 @@ function initPbCanvas() {
   bindPickGroup(g, 'data-pb-mode', v => { mode = v; draw(); });
   cgSteps('pb', st, draw);
   [sL, sR].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -854,7 +854,7 @@ function initHalfCanvas() {
 
   cgSteps('half', st, draw);
   sk.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -939,7 +939,7 @@ function initBisCanvas() {
 
   cgSteps('bis', st, draw);
   [sT, s1, s2].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1024,7 +1024,7 @@ function initQbCanvas() {
   bindPickGroup(g, 'data-qb-t', v => { th = parseInt(v, 10); draw(); });
   cgSteps('qb', st, draw);
   sk.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1105,7 +1105,7 @@ function initPonCanvas() {
 
   cgSteps('pon', st, draw);
   [sx, s1, s2].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1202,7 +1202,7 @@ function initPoffCanvas() {
 
   cgSteps('poff', st, draw);
   [sd, s1, s2].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1337,5 +1337,5 @@ function initAltCanvas() {
   bindPickGroup(g, 'data-alt-mode', v => { mode = v; st.k = 1; draw(); });
   cgSteps('alt', st, draw);
   sx.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }

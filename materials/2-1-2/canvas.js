@@ -227,7 +227,7 @@ function initPairCanvas() {
   bindPickGroup(caseGroup, 'data-case', v => { idx = parseInt(v, 10); draw(); });
   bindPickGroup(roleGroup, 'data-role', v => { role = parseInt(v, 10); draw(); });
   if (nS) nS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -332,7 +332,7 @@ function initCommonCanvas() {
   bindPickGroup(group, 'data-eq', v => { idx = parseInt(v, 10); draw(); });
   if (xS) xS.addEventListener('input', draw);
   if (yS) yS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -426,7 +426,7 @@ function initSubstCanvas() {
   if (btnNext) btnNext.addEventListener('click', () => { if (step < CASES[idx].rows.length) { step++; draw(); } });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (step > 0) { step--; draw(); } });
   if (btnReset) btnReset.addEventListener('click', () => { step = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -613,7 +613,7 @@ function initRearrCanvas() {
   if (btnNext) btnNext.addEventListener('click', () => { if (step < plan().rows.length) { step++; draw(); } });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (step > 0) { step--; draw(); } });
   if (btnReset) btnReset.addEventListener('click', () => { step = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -723,7 +723,7 @@ function initAddSubCanvas() {
   bindPickGroup(opGroup, 'data-op', v => { op = v; draw(); });
   if (c1S) c1S.addEventListener('input', draw);
   if (c2S) c2S.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -841,7 +841,7 @@ function initAlignCanvas() {
 
   if (a1S) a1S.addEventListener('input', draw);
   if (a2S) a2S.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -931,7 +931,7 @@ function initStandardCanvas() {
   if (btnNext) btnNext.addEventListener('click', () => { if (step < CASES[idx].rows.length) { step++; draw(); } });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (step > 0) { step--; draw(); } });
   if (btnReset) btnReset.addEventListener('click', () => { step = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1032,5 +1032,5 @@ function initDenomCanvas() {
   bindPickGroup(group, 'data-mode', v => { mode = parseInt(v, 10); draw(); });
   if (d1S) d1S.addEventListener('input', draw);
   if (d2S) d2S.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }

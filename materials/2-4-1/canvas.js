@@ -316,7 +316,7 @@ function initGateCanvas() {
 
   bindPickGroup(group, 'data-hg-sign', v => { key = v; draw(); });
   [aS, hS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -398,7 +398,7 @@ function initDefCanvas() {
   }
 
   bindPickGroup(group, 'data-df-card', v => { ci = parseInt(v, 10); draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 // 算式卡片上的字色（淺奶油色，在深色底板上最清楚）
@@ -492,7 +492,7 @@ function initWordCanvas() {
 
   bindPickGroup(group, 'data-wd-word', v => { wi = parseInt(v, 10); draw(); });
   aS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -653,7 +653,7 @@ function initBudgetCanvas() {
   bindPickGroup(group, 'data-bg-case', v => { ci = parseInt(v, 10); loadCase(); draw(); });
   ['p', 'q', 'x'].forEach(k => S_[k].s.addEventListener('input', draw));
   loadCase();
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -761,7 +761,7 @@ function initRangeCanvas() {
   bindPickGroup(loG, 'data-rg-lo', v => { lo = parseInt(v, 10); draw(); });
   bindPickGroup(hiG, 'data-rg-hi', v => { hi = parseInt(v, 10); draw(); });
   [aS, bS, xS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -856,7 +856,7 @@ function initSubCanvas() {
   bindPickGroup(group, 'data-sb-case', v => { ci = parseInt(v, 10); draw(); });
   xS.addEventListener('input', draw);
   clearBtn.addEventListener('click', () => { history[ci].clear(); draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -926,7 +926,7 @@ function initRayCanvas() {
   bindPickGroup(signG, 'data-ry-sign', v => { key = v; draw(); });
   bindPickGroup(styleG, 'data-ry-style', v => { style = v; draw(); });
   [aS, tS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1033,5 +1033,5 @@ function initSegCanvas() {
   bindPickGroup(styleG, 'data-sm-style', v => { style = v; draw(); });
   bindPickGroup(filterG, 'data-sm-filter', v => { filter = v; draw(); });
   [aS, bS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }

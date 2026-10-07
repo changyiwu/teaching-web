@@ -276,7 +276,7 @@ function initFactorCanvas() {
   }
 
   slider.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -384,7 +384,7 @@ function initTailCanvas() {
 
   frontSlider.addEventListener('input', draw);
   lastSlider.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -508,7 +508,7 @@ function initDigitSumCanvas() {
   }
 
   [hSlider, tSlider, uSlider].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -623,7 +623,7 @@ function initElevenCanvas() {
 
   frontSlider.addEventListener('input', draw);
   backSlider.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -766,7 +766,7 @@ function initSieveCanvas() {
     draw();
   });
 
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -951,5 +951,5 @@ function initFactorizeCanvas() {
   }
 
   slider.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }

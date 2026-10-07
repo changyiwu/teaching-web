@@ -210,7 +210,7 @@ function initFrameCanvas() {
 
   mS.addEventListener('input', draw);
   nS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -307,7 +307,7 @@ function initWalkCanvas() {
   bindPickGroup(document.getElementById('wk-mode-group'), 'data-wkmode', v => { mode = v; draw(); });
   xS.addEventListener('input', draw);
   yS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -387,7 +387,7 @@ function initAxisCanvas() {
 
   xS.addEventListener('input', draw);
   yS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -490,7 +490,7 @@ function initDistCanvas() {
   bindPickGroup(document.getElementById('di-mode-group'), 'data-dimode', v => { mode = v; draw(); });
   xS.addEventListener('input', draw);
   yS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -567,7 +567,7 @@ function initMoveCanvas() {
   }
 
   [aS, bS, hS, vS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -677,7 +677,7 @@ function initBackCanvas() {
   }
 
   [pS, qS, hS, vS, stS].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -864,7 +864,7 @@ function initOriginCanvas() {
 
   bindPickGroup(document.getElementById('og-origin-group'), 'data-ogorigin', v => { originIdx = parseInt(v, 10); draw(); });
   pkS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -961,7 +961,7 @@ function initQuadCanvas() {
 
   xS.addEventListener('input', draw);
   yS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1173,5 +1173,5 @@ function initSignCanvas() {
   bindPickGroup(document.getElementById('sg-quad-group'), 'data-sgquad', v => { quad = parseInt(v, 10); draw(); });
   eS.addEventListener('input', draw);
   stS.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }

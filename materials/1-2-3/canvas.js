@@ -360,7 +360,7 @@ function initEquivCanvas() {
   sliderA.addEventListener('input', draw);
   sliderB.addEventListener('input', draw);
   sliderK.addEventListener('input', draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -549,7 +549,7 @@ function initCompareCanvas() {
   }
 
   [sA1, sB1, sA2, sB2].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -736,7 +736,7 @@ function initAddSubCanvas() {
     });
   });
   [sA1, sB1, sA2, sB2].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -887,7 +887,7 @@ function initMulCanvas() {
   }
 
   [sA1, sB1, sA2, sB2].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1041,7 +1041,7 @@ function initRecipCanvas() {
   }
 
   [sP, sQ, sA, sB].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1435,5 +1435,5 @@ function initApplyCanvas() {
   [sA, sB, sC].forEach(s => s.addEventListener('input', draw));
 
   applyMode('dist');
-  draw();
+  drawWithFonts(draw);
 }

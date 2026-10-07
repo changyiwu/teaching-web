@@ -510,7 +510,7 @@ function initExpandCanvas() {
   }
 
   [sa, sb].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -586,7 +586,7 @@ function initSameCanvas() {
   bindPickGroup(kG, 'data-ss-prob', v => { key = v; st.step = 1; draw(); });
   bindPickGroup(mG, 'data-ss-mode', v => { mode = v; st.step = 1; draw(); });
   bindSteps('ss', () => list.length, st, draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -677,7 +677,7 @@ function initMixedCanvas() {
   sk.addEventListener('input', draw);
   bindPickGroup(kG, 'data-sm-prob', v => { key = v; sk.value = 0; draw(); });
   bindPickGroup(gG, 'data-sm-sign', v => { sign = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -749,7 +749,7 @@ function initCannotCanvas() {
   }
 
   [sp, sq].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -824,7 +824,7 @@ function initLeadCanvas() {
   [sa, sc].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(kG, 'data-ld-prob', v => { key = v; sa.value = 0; sc.value = 0; draw(); });
   bindPickGroup(gG, 'data-ld-sign', v => { sign = parseInt(v, 10); draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -911,7 +911,7 @@ function initSwapCanvas() {
     draw();
   });
   bindPickGroup(kG, 'data-sw-prob', v => { key = v; sa.value = 0; sc.value = 0; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -989,7 +989,7 @@ function initNegCanvas() {
   bindPickGroup(kG, 'data-ng-prob', v => { key = v; st.step = 1; draw(); });
   bindPickGroup(pG, 'data-ng-put', v => { put = v; draw(); });
   bindSteps('ng', () => 4, st, draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1069,7 +1069,7 @@ function initPullCanvas() {
   sk.addEventListener('input', draw);
   bindPickGroup(iG, 'data-pf-in', v => { key = v; draw(); });
   bindPickGroup(mG, 'data-pf-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1175,7 +1175,7 @@ function initSharedCanvas() {
 
   bindPickGroup(kG, 'data-sh-prob', v => { key = v; st.step = 1; draw(); });
   bindSteps('sh', () => 3, st, draw);
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1265,7 +1265,7 @@ function initReverseCanvas() {
 
   sm.addEventListener('input', draw);
   bindPickGroup(kG, 'data-rv-prob', v => { key = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1354,5 +1354,5 @@ function initTilesCanvas() {
   }
 
   [sa, sb, sc].forEach(s => s.addEventListener('input', draw));
-  draw();
+  drawWithFonts(draw);
 }

@@ -487,8 +487,7 @@ function initQuizCharts() {
       if (cv) drawQuizChart(cv, QUIZ_CHARTS[id]);
     });
   };
-  draw();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -615,7 +614,7 @@ function initCumTableCanvas() {
   [sk, sb].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(elById('cf-ds-group'), 'data-cf-ds', v => { ds = parseInt(v, 10); draw(); });
   bindPickGroup(elById('cf-mode-group'), 'data-cf-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -727,7 +726,7 @@ function initCumLineCanvas() {
   sk.addEventListener('input', draw);
   bindPickGroup(elById('cl-ds-group'), 'data-cl-ds', v => { ds = parseInt(v, 10); draw(); });
   bindPickGroup(elById('cl-mode-group'), 'data-cl-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -836,7 +835,7 @@ function initCumReadCanvas() {
 
   [sa, sb, sn].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(elById('cr-mode-group'), 'data-cr-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -920,7 +919,7 @@ function initFairCanvas() {
 
   [sat, sap, sbt, sbp].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(elById('fa-mode-group'), 'data-fa-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1020,7 +1019,7 @@ function initRelTableCanvas() {
   sk.addEventListener('input', draw);
   bindPickGroup(elById('rt-ds-group'), 'data-rt-ds', v => { ds = parseInt(v, 10); draw(); });
   bindPickGroup(elById('rt-mode-group'), 'data-rt-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1102,7 +1101,7 @@ function initConvertCanvas() {
 
   [sN, sp].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(elById('cv-mode-group'), 'data-cv-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1204,7 +1203,7 @@ function initTwoWaysCanvas() {
   sk.addEventListener('input', draw);
   bindPickGroup(elById('tw-ds-group'), 'data-tw-ds', v => { ds = parseInt(v, 10); draw(); });
   bindPickGroup(elById('tw-mode-group'), 'data-tw-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1285,7 +1284,7 @@ function initPositionCanvas() {
 
   [sa, sN].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(elById('ps-mode-group'), 'data-ps-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }
 
 /* ==========================================================================
@@ -1413,5 +1412,5 @@ function initCompareCanvas() {
   [sk, sa].forEach(s => s.addEventListener('input', draw));
   bindPickGroup(elById('cp-pair-group'), 'data-cp-pair', v => { pair = parseInt(v, 10); draw(); });
   bindPickGroup(elById('cp-mode-group'), 'data-cp-mode', v => { mode = v; draw(); });
-  draw();
+  drawWithFonts(draw);
 }

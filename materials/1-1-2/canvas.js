@@ -337,7 +337,7 @@ function initAdditionCanvas() {
   sliderB.addEventListener('input', drawAdditionLine);
   
   // Initial draw
-  drawAdditionLine();
+  drawWithFonts(drawAdditionLine);
 }
 
 /* ==========================================================================
@@ -519,7 +519,7 @@ function initThermometerCanvas() {
   sliderStart.addEventListener('input', drawThermometer);
   sliderEnd.addEventListener('input', drawThermometer);
 
-  drawThermometer();
+  drawWithFonts(drawThermometer);
 }
 
 /* ==========================================================================
@@ -857,7 +857,7 @@ function initDistanceCanvas() {
   canvas.addEventListener('touchmove', handleMove, { passive: false });
   canvas.addEventListener('touchend', handleUp);
 
-  drawDistanceLine();
+  drawWithFonts(drawDistanceLine);
 }
 /* ==========================================================================
    2b. Regrouping Explorer (重點 2：加法運算規律)
@@ -1120,10 +1120,7 @@ function initRegroupCanvas() {
 
   [sliderA, sliderB, sliderC].forEach((s) => s.addEventListener('input', draw));
 
-  draw();
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(draw);
-  }
+  drawWithFonts(draw);
 }
 /* ==========================================================================
    5b. Absolute Value Explorer (重點 5：含絕對值的算式運算)
@@ -1367,8 +1364,5 @@ function initAbsCanvas() {
 
   [sliderA, sliderB].forEach((s) => s.addEventListener('input', draw));
 
-  draw();
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(draw);
-  }
+  drawWithFonts(draw);
 }
