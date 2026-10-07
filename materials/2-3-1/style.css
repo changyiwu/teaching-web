@@ -473,7 +473,8 @@ canvas {
      scrollWidth 12），被算進 scrollWidth 就冒出一條捲不出東西的假捲軸。
      補一點左右 padding 讓它有地方放；真的放不下的算式則照常換行。 */
   padding-block: 2px;
-  padding-inline: 2px;
+  /* 2px 不夠：比例尺換算台的「x = 1200」剛好排到行尾時，行框比內容區多 0.4px，撐出 0.67px 的捲軸 */
+  padding-inline: 3px;
 }
 
 .slider-wrapper {

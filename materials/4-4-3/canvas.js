@@ -848,7 +848,8 @@ function initFamilyCanvas() {
 
   function draw() {
     const W = cv.width, H = cv.height;
-    const s1 = hbClampSlider(sl[0], 2, 8), s2 = hbClampSlider(sl[1], 2, 8);
+    const s1 = mode === 'para' ? hbClampSlider(sl[0], 2, 8) : hbClampSlider(sl[0], 2, 5);
+    const s2 = mode === 'para' ? hbClampSlider(sl[1], 2, 8) : hbClampSlider(sl[1], 5, 8);
     const s3 = mode === 'para' ? hbClampSlider(sl[2], 45, 90) : hbClampSlider(sl[2], 50, 130);
     hbEl('fm-l1').textContent = mode === 'para' ? 'AB' : 'AB = AD';
     hbEl('fm-l2').textContent = mode === 'para' ? 'BC' : 'CB = CD';
@@ -923,8 +924,12 @@ function initFamilyCanvas() {
   sl.forEach(s => s.addEventListener('input', draw));
   bindPickGroup(hbEl('fm-mode-group'), 'data-fm-mode', v => {
     mode = v;
-    if (mode === 'para') { sl[2].min = 45; sl[2].max = 90; sl[2].step = 5; sl[2].value = 70; }
-    else { sl[2].min = 50; sl[2].max = 130; sl[2].step = 5; sl[2].value = 80; }
+    // 箏形模式讓 CB 一定不短於 AB（AB = AD：2～5，CB = CD：5～8），下半邊才一定接得起來；
+    // 兩邊都調到 5 時四邊相等，就是菱形
+    const R = mode === 'para'
+      ? [[2, 8, 6], [2, 8, 4], [45, 90, 70]]
+      : [[2, 5, 3], [5, 8, 6], [50, 130, 80]];
+    R.forEach((r, i) => { sl[i].min = r[0]; sl[i].max = r[1]; sl[i].value = r[2]; });
     draw();
   });
   drawWithFonts(draw);

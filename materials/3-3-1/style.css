@@ -704,6 +704,15 @@ input[type="range"]::-webkit-slider-thumb:hover {
   font-size: 0.95rem;
 }
 
+/* 手機寬度（414px）下，選項裡的聯立方程式／整條等式比選項框寬幾 px，整張題卡會冒出橫向捲軸；
+   窄螢幕收一點左右內距與間距（約省 17px），選項本身維持一行。 */
+@media (max-width: 480px) {
+  .option-label {
+    gap: 8px;
+    padding-inline: 0.8rem;
+  }
+}
+
 .option-label input[type="radio"] {
   accent-color: var(--primary);
   width: 18px;
