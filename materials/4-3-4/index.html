@@ -4,39 +4,1387 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-4 中垂線與角平分線的性質 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-4 中垂線與角平分線的性質 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第3章 三角形的基本性質</div>
-    <h1>3-4 中垂線與角平分線的性質</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第三章</span>
+        <h1>3-4 中垂線與角平分線的性質</h1>
+        <p>3-2 節小蜜和阿蜂用尺規作出了中垂線與角平分線；這一節回到養蜂花園，用 3-3 節的<strong>全等性質</strong>說明它們為什麼好用：<strong>中垂線</strong>上的點到線段兩端一樣遠、<strong>角平分線</strong>上的點到角的兩邊一樣遠，反過來也對。接著把這些「等長」搬來搬去解題，最後回到<strong>等腰三角形</strong>：兩底角相等、三線合一，以及「兩角相等就是等腰」。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-arrows-left-right-to-line"></i> 中垂線性質</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-circle-dot"></i> 中垂線判別</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-code-fork"></i> 角平分線性質</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-crosshairs"></i> 角平分線判別</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-square-root-variable"></i> 等長＋畢氏</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-location-dot"></i> 兩個條件找點</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-play"></i> 三線合一</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-angles-right"></i> 底角推角度</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-link"></i> 中垂線生等腰</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 等腰判別</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-arrow-right-arrow-left"></i> 判別的應用</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（銅版畫博物圖鑑・養蜂花園）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(252, 211, 77, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);"></i> 課前暖身漫畫：水盆放哪裡才公平？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            花園裡有兩個蜂箱，阿蜂想放一個水盆，讓兩箱的蜜蜂飛過去一樣遠。小蜜拿兩條一樣長的麻繩，從兩個蜂箱各拉一條，兩條繩子碰頭的地方就是一個好位置——換一個長度再拉一次，又找到一個。<strong style="color:#fcd34d">這些「一樣遠」的點，竟然全部排在同一條直線上！</strong>
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="19 世紀手工上色銅版畫博物圖鑑風四格漫畫。阿蜂指著花園裡相隔一段距離的兩個木框蜂箱，問水盆放哪裡才公平；小蜜拿出兩條一樣長的麻繩；阿蜂發現一樣遠的位置不只一個；最後小蜜站在一排三支小旗旁，小旗排成一直線、位在兩個蜂箱正中間，旁白說明這些點都在兩箱連線的中垂線上。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 中垂線性質
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right-to-line" aria-hidden="true"></i> <span>重點 1：中垂線性質——中垂線上任一點到兩端點等距</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>中垂線</strong>：通過線段的中點、並且與線段垂直的直線。</li>
+              <li>直線 \(L\) 是 \(\overline{AB}\) 的中垂線，交 \(\overline{AB}\) 於 \(D\)；\(C\) 是 \(L\) 上任一點。在 \(\triangle CAD\) 與 \(\triangle CBD\) 中：
+                <ul class="bullet-list">
+                  <li>\(\overline{AD} = \overline{BD}\)（\(D\) 是中點）</li>
+                  <li>\(\angle CDA = \angle CDB = 90^\circ\)（垂直）</li>
+                  <li>\(\overline{CD} = \overline{CD}\)（共用邊）</li>
+                </ul>
+                所以 \(\triangle CAD \cong \triangle CBD\)（<strong>SAS</strong>），得 \(\overline{CA} = \overline{CB}\)（對應邊相等）。</li>
+              <li>解題時的用法：看到中垂線，就可以把 \(\overline{CB}\) 換成 \(\overline{CA}\)——<strong>等長搬家</strong>。</li>
+              <li>例：直線 \(L\) 為 \(\overline{BC}\) 的中垂線，交 \(\overline{AB}\) 於 \(E\)。若 \(\triangle AEC\) 的周長為 \(26\)、\(\overline{AC} = 8\)，因為 \(\overline{CE} = \overline{BE}\)，
+                \[\begin{aligned} & \overline{AB} = \overline{AE} + \overline{BE} \\ &= \overline{AE} + \overline{CE} \\ &= 26 - 8 = 18 \end{aligned}\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・中垂線性質</span>
+              一線段的<strong>中垂線上任一點</strong>，到此線段兩端點的距離相等。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_pbprop.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。養蜂花園的石板小徑兩側各有一個木框蜂箱，小徑正中間放著一個陶製水盆；阿蜂蹲在水盆旁，用水壺往盆裡倒水，幾隻小蜜蜂在盆邊停著喝水。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：C 點在中垂線上嗎？</h3>
+            <p class="interactive-instruction">直線 \(L\) 是 \(\overline{AB}\) 的中垂線（\(\overline{AB} = 8\)）。拉動「高度」讓 \(C\) 沿著 \(L\) 上下移動，看 \(\overline{CA}\) 與 \(\overline{CB}\) 是不是一直相等；再拉「偏離 \(L\)」讓 \(C\) 離開中垂線，比比看兩段長度。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pb" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pb-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pb-h">\(C\) 的高度：<span id="pb-vh" class="val-num">3</span></label>
+                    <input type="range" id="pb-h" min="-5" max="5" value="3" step="0.5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pb-d">\(C\) 偏離 \(L\)：<span id="pb-vd" class="val-num">0</span></label>
+                    <input type="range" id="pb-d" min="-3" max="3" value="0" step="0.5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pb-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (中垂線性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 如圖，直線 \(L\) 為 \(\overline{BC}\) 的中垂線，交 \(\overline{BC}\) 於 \(D\)、交 \(\overline{AB}\) 於 \(E\)。若 \(\triangle AEC\) 的周長為 \(31\)，\(\overline{AC} = 11\)，則 \(\overline{AB}\) 的長為多少？</p>
+            <canvas class="quiz-fig" data-fig="q1" width="320" height="220" role="img" aria-label="三角形 ABC，直線 L 垂直平分 BC 於 D，並交 AB 於 E，連接 EC"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-1" value="A"><span class="option-text">A. \(42\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-1" value="B"><span class="option-text">B. \(31\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-1" value="C"><span class="option-text">C. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-1" value="D"><span class="option-text">D. \(10\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(E\) 在 \(\overline{BC}\) 的中垂線上，所以 \(\overline{EC} = \overline{EB}\)：
+              \[\begin{aligned} & \overline{AE} + \overline{EC} + \overline{AC} = 31 \\ & \overline{AE} + \overline{EB} = 31 - 11 \\ & \overline{AB} = 20 \end{aligned}\]
+              A 錯：\(42 = 31 + 11\)，周長要減掉 \(\overline{AC}\) 才對。<br>
+              B 錯：\(31\) 是 \(\triangle AEC\) 的周長，它比 \(\overline{AB}\) 多了一段 \(\overline{AC}\)。<br>
+              D 錯：\(10\) 是 \(20\) 的一半；\(E\) 不一定是 \(\overline{AB}\) 的中點。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 直線 \(L\) 為 \(\overline{AB}\) 的中垂線，\(C\) 點在 \(L\) 上。若 \(\overline{CA} = 2x + 3\)、\(\overline{CB} = 5x - 9\)，則 \(\overline{CA}\) 的長為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-2" value="A"><span class="option-text">A. \(11\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-2" value="B"><span class="option-text">B. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-2" value="C"><span class="option-text">C. \(22\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-2" value="D"><span class="option-text">D. \(8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(C\) 在 \(\overline{AB}\) 的中垂線上，\(\overline{CA} = \overline{CB}\)：
+              \[\begin{aligned} & 2x + 3 = 5x - 9 \\ & x = 4 \end{aligned}\]
+              \(\overline{CA} = 2 \times 4 + 3 = 11\)（驗算：\(\overline{CB} = 5 \times 4 - 9 = 11\)）。<br>
+              B 錯：\(4\) 是 \(x\)，題目問的是 \(\overline{CA}\)。<br>
+              C 錯：\(22\) 是 \(\overline{CA} + \overline{CB}\)。<br>
+              D 錯：\(8 = 2 \times 4\)，少加了 \(3\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 中垂線的判別性質
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-circle-dot" aria-hidden="true"></i> <span>重點 2：中垂線的判別性質——到兩端點等距，就在中垂線上</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>反過來問：\(P\) 是 \(\overline{AB}\) 外一點，且 \(\overline{PA} = \overline{PB}\)，\(P\) 在 \(\overline{AB}\) 的中垂線上嗎？</li>
+              <li>過 \(P\) 作 \(\overline{PM} \perp \overline{AB}\) 於 \(M\)。在 \(\triangle APM\) 與 \(\triangle BPM\) 中：
+                <ul class="bullet-list">
+                  <li>\(\overline{PA} = \overline{PB}\)（已知，是兩個直角三角形的斜邊）</li>
+                  <li>\(\overline{PM} = \overline{PM}\)（共用的股）</li>
+                  <li>\(\angle AMP = \angle BMP = 90^\circ\)</li>
+                </ul>
+                所以 \(\triangle APM \cong \triangle BPM\)（<strong>RHS</strong>），得 \(\overline{AM} = \overline{BM}\)：\(\overline{PM}\) 垂直又平分 \(\overline{AB}\)，就是中垂線。</li>
+              <li>合起來：<strong>到 \(A\)、\(B\) 兩點等距的點，全部都在 \(\overline{AB}\) 的中垂線上</strong>；中垂線上的點也全部到 \(A\)、\(B\) 等距。</li>
+              <li>例：\(\triangle ABC\) 中，\(\angle A = 90^\circ\)，\(D\) 在 \(\overline{BC}\) 上、\(E\) 在 \(\overline{AC}\) 上，\(\overline{DE} \perp \overline{BC}\) 且 \(\overline{BE} = \overline{CE}\)。\(E\) 到 \(B\)、\(C\) 等距，\(\overline{DE}\) 又垂直 \(\overline{BC}\)，所以 \(\overline{DE}\) 就是 \(\overline{BC}\) 的中垂線，\(D\) 是 \(\overline{BC}\) 的中點。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead>
+                  <tr><th>名稱</th><th>已知</th><th>得到</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>性質</td><td>\(C\) 在中垂線上</td><td>\(\overline{CA} = \overline{CB}\)</td></tr>
+                  <tr><td>判別性質</td><td>\(\overline{CA} = \overline{CB}\)</td><td>\(C\) 在中垂線上</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・中垂線的判別性質</span>
+              若一點到某線段兩端點的距離相等，則此點在該線段的<strong>中垂線</strong>上。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_pbconv.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。花園草地上平放著兩條一樣長的麻繩，左右兩端都對齊；小蜜蹲在一旁，正把一支小紅旗插進草地，阿蜂站在後面低頭看著兩條麻繩。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一樣遠的點排成一條線</h3>
+            <p class="interactive-instruction">以 \(A\)、\(B\) 為圓心、同樣的半徑 \(r\) 畫圓，兩圓交於 \(P\)、\(Q\)：它們都到 \(A\)、\(B\) 等距。按「留下所有交點」後拉動半徑，看這些點會排在哪裡。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pc" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">顯示</span>
+                    <div class="btn-group" id="pc-mode-group">
+                      <button class="pick-btn active" data-pc-mode="one">只看這一組</button>
+                      <button class="pick-btn" data-pc-mode="all">留下所有交點</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pc-ab">\(\overline{AB}\) 的長：<span id="pc-vab" class="val-num">6</span></label>
+                    <input type="range" id="pc-ab" min="4" max="8" value="6" step="2">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pc-r">半徑 \(r\)：<span id="pc-vr" class="val-num">5</span></label>
+                    <input type="range" id="pc-r" min="3.5" max="7" value="5" step="0.5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (中垂線的判別性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-3">
+            <p class="quiz-question"><strong>Q3.</strong> 如圖，\(\triangle ABC\) 中，\(\angle A = 90^\circ\)，\(D\) 在 \(\overline{BC}\) 上、\(E\) 在 \(\overline{AC}\) 上，\(\overline{DE} \perp \overline{BC}\) 且 \(\overline{BE} = \overline{CE}\)。若 \(\overline{AB} = 9\)、\(\overline{BD} = \frac{15}{2}\)，則 \(\triangle ABE\) 的周長為多少？</p>
+            <canvas class="quiz-fig" data-fig="q3" width="320" height="220" role="img" aria-label="直角三角形 ABC，角 A 為直角；D 在 BC 上、E 在 AC 上，DE 垂直 BC，連接 BE"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-3" value="A"><span class="option-text">A. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-3" value="B"><span class="option-text">B. \(36\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-3" value="C"><span class="option-text">C. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-3" value="D"><span class="option-text">D. \(21\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{BE} = \overline{CE}\)，由判別性質，\(E\) 在 \(\overline{BC}\) 的中垂線上；而 \(\overline{DE} \perp \overline{BC}\)，所以 \(\overline{DE}\) 就是中垂線，\(D\) 是中點，\(\overline{BC} = 2 \times \frac{15}{2} = 15\)。
+              \[\begin{aligned} & \overline{AC} = \sqrt{15^2 - 9^2} = 12 \\ & \overline{AB} + \overline{AE} + \overline{BE} \\ &= \overline{AB} + \overline{AE} + \overline{EC} \\ &= 9 + 12 = 21 \end{aligned}\]
+              A 錯：\(24 = 9 + 15\)，用的是 \(\overline{BC}\) 不是 \(\overline{AC}\)。<br>
+              B 錯：\(36\) 是 \(\triangle ABC\) 的周長。<br>
+              C 錯：\(12\) 只是 \(\overline{AC}\)，還要加上 \(\overline{AB}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-4">
+            <p class="quiz-question"><strong>Q4.</strong> 平面上有 \(A\)、\(B\) 兩點。小蜜找到 \(P\)、\(Q\)、\(R\) 三個不同的點，每一點到 \(A\)、\(B\) 的距離都相等。下列敘述何者<strong>一定</strong>正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-4" value="A"><span class="option-text">A. 三點中有一點是 \(\overline{AB}\) 的中點</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-4" value="B"><span class="option-text">B. 三點都在線段 \(\overline{AB}\) 上</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-4" value="C"><span class="option-text">C. \(P\)、\(Q\)、\(R\) 三點在同一條直線上</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-4" value="D"><span class="option-text">D. \(P\)、\(Q\)、\(R\) 三點可以連成一個三角形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。由中垂線的判別性質，到 \(A\)、\(B\) 等距的點都在 \(\overline{AB}\) 的中垂線上，所以 \(P\)、\(Q\)、\(R\) 都在這一條直線上。<br>
+              A 錯：中點只是中垂線上的其中一點，三點可以都不是它。<br>
+              B 錯：線段 \(\overline{AB}\) 上只有中點到兩端等距，三個不同的點不可能都在上面。<br>
+              D 錯：三點在同一直線上，連不成三角形。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 角平分線性質
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-fork" aria-hidden="true"></i> <span>重點 3：角平分線性質——角平分線上任一點到兩邊等距</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>點到直線的距離</strong>：從點往直線畫的<strong>垂線段</strong>長。斜著畫的線段都比它長，不算距離。</li>
+              <li>\(\overrightarrow{AP}\) 為 \(\angle EAF\) 的角平分線，\(D\) 是 \(\overrightarrow{AP}\) 上任一點，\(\overline{DC} \perp \overline{AE}\)、\(\overline{DB} \perp \overline{AF}\)。在 \(\triangle ACD\) 與 \(\triangle ABD\) 中：
+                <ul class="bullet-list">
+                  <li>\(\angle 1 = \angle 2\)（角平分線）</li>
+                  <li>\(\angle ACD = \angle ABD = 90^\circ\)</li>
+                  <li>\(\overline{AD} = \overline{AD}\)（共用邊）</li>
+                </ul>
+                所以 \(\triangle ACD \cong \triangle ABD\)（<strong>AAS</strong>），得 \(\overline{DC} = \overline{DB}\)。</li>
+              <li>例：\(\triangle ABC\) 中，\(\angle ACB = 90^\circ\)，\(\overline{BD}\) 平分 \(\angle ABC\) 交 \(\overline{AC}\) 於 \(D\)，\(\overline{DE} \perp \overline{AB}\)。若 \(\overline{AB} = 16\)、\(\overline{CD} = 3\)：\(\overline{DC}\) 與 \(\overline{DE}\) 都是 \(D\) 到 \(\angle ABC\) 兩邊的距離，所以 \(\overline{DE} = 3\)，
+                \[\triangle ABD = \frac{1}{2} \times 16 \times 3 = 24\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・角平分線性質</span>
+              一角的<strong>角平分線上任一點</strong>，到此角兩邊的距離相等。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_abprop.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。花園一角，兩道矮木籬笆斜斜地交會成一個尖角，一條碎石小徑從尖角往外延伸、走在兩道籬笆正中間；阿蜂沿著小徑往前走，小蜜站在籬笆外看著他。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：D 到兩邊一樣遠嗎？</h3>
+            <p class="interactive-instruction">金色虛線 \(\overrightarrow{AP}\) 平分 \(\angle EAF\)。改變角度與 \(\overline{AD}\) 的長，看 \(D\) 到兩邊的垂線段 \(\overline{DC}\)、\(\overline{DB}\)；拉「偏離角平分線」讓 \(D\) 離開 \(\overrightarrow{AP}\)；切到「斜線段」看看為什麼距離只能用垂線段量。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ab" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ab-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">量法</span>
+                    <div class="btn-group" id="ab-mode-group">
+                      <button class="pick-btn active" data-ab-mode="perp">垂線段（距離）</button>
+                      <button class="pick-btn" data-ab-mode="slant">斜線段（不是距離）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ab-ang">\(\angle EAF\)：<span id="ab-vang" class="val-num">80</span>°</label>
+                    <input type="range" id="ab-ang" min="40" max="140" value="80" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ab-d">\(\overline{AD}\) 的長：<span id="ab-vd" class="val-num">6</span></label>
+                    <input type="range" id="ab-d" min="3" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ab-off">偏離角平分線：<span id="ab-voff" class="val-num">0</span>°</label>
+                    <input type="range" id="ab-off" min="-15" max="15" value="0" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ab-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (角平分線性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-5">
+            <p class="quiz-question"><strong>Q5.</strong> 如圖，\(\triangle ABC\) 中，\(\angle ACB = 90^\circ\)，\(\overline{BD}\) 平分 \(\angle ABC\) 交 \(\overline{AC}\) 於 \(D\)，\(\overline{DE} \perp \overline{AB}\) 於 \(E\)。若 \(\overline{AB} = 20\)、\(\overline{CD} = 5\)，則 \(\triangle ABD\) 的面積為多少？</p>
+            <canvas class="quiz-fig" data-fig="q5" width="320" height="220" role="img" aria-label="直角三角形 ABC，角 C 為直角；BD 平分角 ABC 交 AC 於 D，DE 垂直 AB 於 E"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-5" value="A"><span class="option-text">A. \(100\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-5" value="B"><span class="option-text">B. \(50\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-5" value="C"><span class="option-text">C. \(25\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-5" value="D"><span class="option-text">D. 無法求出，因為不知道 \(\overline{DE}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(D\) 在 \(\angle ABC\) 的角平分線上，\(\overline{DC} \perp \overline{BC}\)、\(\overline{DE} \perp \overline{AB}\)，兩者都是 \(D\) 到 \(\angle ABC\) 兩邊的距離，所以 \(\overline{DE} = \overline{DC} = 5\)。以 \(\overline{AB}\) 為底、\(\overline{DE}\) 為高：
+              \[\triangle ABD = \frac{1}{2} \times 20 \times 5 = 50\]
+              A 錯：\(100 = 20 \times 5\)，忘了乘 \(\frac{1}{2}\)。<br>
+              C 錯：\(25 = \frac{1}{2} \times 10 \times 5\)，把底 \(\overline{AB}\) 也除以 \(2\) 了。<br>
+              D 錯：\(\overline{DE}\) 雖然沒直接給，但角平分線性質告訴我們它等於 \(\overline{CD}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-6">
+            <p class="quiz-question"><strong>Q6.</strong> 如圖，\(\overline{AD}\) 為 \(\angle BAC\) 的角平分線，交 \(\overline{BC}\) 於 \(D\)，\(\overline{DE} \perp \overline{AB}\)、\(\overline{DF} \perp \overline{AC}\)。若 \(\overline{AB} = 10\)、\(\overline{AC} = 8\)，\(\triangle ABC\) 的面積為 \(27\)，則 \(\overline{DE}\) 的長為多少？</p>
+            <canvas class="quiz-fig" data-fig="q6" width="320" height="220" role="img" aria-label="三角形 ABC，AD 平分角 BAC 交 BC 於 D，DE 垂直 AB 於 E，DF 垂直 AC 於 F"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-6" value="A"><span class="option-text">A. \(3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-6" value="B"><span class="option-text">B. \(\frac{27}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-6" value="C"><span class="option-text">C. \(\frac{27}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-6" value="D"><span class="option-text">D. \(\frac{3}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(D\) 在 \(\angle BAC\) 的角平分線上，\(\overline{DE} = \overline{DF}\)，設為 \(x\)。\(\triangle ABC\) 被 \(\overline{AD}\) 切成兩塊：
+              \[\begin{aligned} & \frac{1}{2} \times 10x + \frac{1}{2} \times 8x = 27 \\ & 9x = 27 \\ & x = 3 \end{aligned}\]
+              B 錯：只算了 \(\triangle ABD\)：\(\frac{1}{2} \times 10x = 27\)，漏掉 \(\triangle ACD\)。<br>
+              C 錯：只算了 \(\triangle ACD\)：\(\frac{1}{2} \times 8x = 27\)。<br>
+              D 錯：忘了乘 \(\frac{1}{2}\)，寫成 \(10x + 8x = 27\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 角平分線的判別性質
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-crosshairs" aria-hidden="true"></i> <span>重點 4：角平分線的判別性質——到兩邊等距，就在角平分線上</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>反過來問：\(P\) 是 \(\angle EAF\) 內的一點，\(\overline{PB} \perp \overline{AE}\) 於 \(B\)、\(\overline{PC} \perp \overline{AF}\) 於 \(C\)，且 \(\overline{PB} = \overline{PC}\)，\(P\) 在角平分線上嗎？</li>
+              <li>連接 \(\overline{AP}\)。在 \(\triangle APB\) 與 \(\triangle APC\) 中，\(\overline{PA}\) 是兩個直角三角形共用的斜邊、\(\overline{PB} = \overline{PC}\) 是一組股，所以 \(\triangle APB \cong \triangle APC\)（<strong>RHS</strong>），得 \(\angle BAP = \angle CAP\)：\(\overrightarrow{AP}\) 平分 \(\angle EAF\)。</li>
+              <li>合起來：在角的內部，<strong>到角兩邊等距的點，恰好就是角平分線上的點</strong>。</li>
+              <li>例：\(\triangle ABC\) 中，\(D\) 在 \(\overline{BC}\) 上，\(\overline{DE} \perp \overline{AB}\)、\(\overline{DF} \perp \overline{AC}\) 且 \(\overline{DE} = \overline{DF}\)。若 \(\angle BAD = 42^\circ\)、\(\angle C = 60^\circ\)：\(\overline{AD}\) 平分 \(\angle BAC\)，
+                \[\begin{aligned} & \angle BAC = 42^\circ \times 2 = 84^\circ \\ & \angle B = 180^\circ - 60^\circ - 84^\circ = 36^\circ \end{aligned}\]</li>
+              <li>小心別說錯：「到角兩邊等距 \(\Rightarrow\) 在角的<strong>中垂線</strong>上」是錯的——角沒有中垂線，線段才有。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・角平分線的判別性質</span>
+              若一點到某角兩邊的距離相等，則此點在該角的<strong>角平分線</strong>上。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_abconv.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。兩道矮木籬笆交會成一個角，角落裡開著一叢玫瑰紅的花；小蜜蹲在花叢前，伸出手指讓一隻普通的小蜜蜂停在指尖上。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩個距離一樣，P 就落在點線上</h3>
+            <p class="interactive-instruction">用兩個滑桿分別設定 \(P\) 到 \(\overline{AE}\) 的距離 \(\overline{PB}\)、到 \(\overline{AF}\) 的距離 \(\overline{PC}\)，畫面依這兩個距離找出 \(P\)。調成一樣長，看紫色的 \(\overrightarrow{AP}\) 是不是剛好疊在角平分線（點線）上。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ac" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ac-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ac-ang">\(\angle EAF\)：<span id="ac-vang" class="val-num">70</span>°</label>
+                    <input type="range" id="ac-ang" min="50" max="120" value="70" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ac-p">\(\overline{PB}\)（到 \(\overline{AE}\)）：<span id="ac-vp" class="val-num">3</span></label>
+                    <input type="range" id="ac-p" min="1" max="6" value="3" step="0.5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ac-q">\(\overline{PC}\)（到 \(\overline{AF}\)）：<span id="ac-vq" class="val-num">4.5</span></label>
+                    <input type="range" id="ac-q" min="1" max="6" value="4.5" step="0.5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ac-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (角平分線的判別性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-7">
+            <p class="quiz-question"><strong>Q7.</strong> 如圖，\(\triangle ABC\) 中，\(D\) 在 \(\overline{BC}\) 上，\(\overline{DE} \perp \overline{AB}\)、\(\overline{DF} \perp \overline{AC}\)，且 \(\overline{DE} = \overline{DF}\)。若 \(\angle BAD = 37^\circ\)、\(\angle C = 58^\circ\)，則 \(\angle B\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q7" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 BC 上，DE 垂直 AB、DF 垂直 AC 且 DE 等於 DF，標示角 BAD 37 度、角 C 58 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-7" value="A"><span class="option-text">A. \(85^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-7" value="B"><span class="option-text">B. \(37^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-7" value="C"><span class="option-text">C. \(58^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-7" value="D"><span class="option-text">D. \(48^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(D\) 到 \(\angle BAC\) 兩邊的距離 \(\overline{DE} = \overline{DF}\)，由判別性質，\(\overline{AD}\) 平分 \(\angle BAC\)：
+              \[\begin{aligned} & \angle BAC = 37^\circ \times 2 = 74^\circ \\ & \angle B = 180^\circ - 74^\circ - 58^\circ = 48^\circ \end{aligned}\]
+              A 錯：\(85^\circ = 180^\circ - 37^\circ - 58^\circ\)，只用了半個 \(\angle BAC\)。<br>
+              B 錯：\(37^\circ\) 是 \(\angle BAD\)。<br>
+              C 錯：\(58^\circ\) 是 \(\angle C\)；題目沒有說 \(\triangle ABC\) 是等腰。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-8">
+            <p class="quiz-question"><strong>Q8.</strong> 下列哪一個點<strong>一定</strong>在 \(\angle EAF\) 的角平分線上？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-8" value="A"><span class="option-text">A. \(\angle EAF\) 內的點 \(P\)，到 \(\overline{AE}\)、\(\overline{AF}\) 的距離分別是 \(7\)、\(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-8" value="B"><span class="option-text">B. \(\angle EAF\) 內的點 \(Q\)，到 \(\overline{AE}\)、\(\overline{AF}\) 的距離都是 \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-8" value="C"><span class="option-text">C. \(\angle EAF\) 內的點 \(R\)，從 \(R\) 往 \(\overline{AE}\)、\(\overline{AF}\) 各畫一條不一定垂直的線段，兩段一樣長</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-8" value="D"><span class="option-text">D. \(\angle EAF\) 外的點 \(S\)，到直線 \(AE\)、\(AF\) 的距離都是 \(7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(Q\) 在角的內部，到兩邊的距離相等，由角平分線的判別性質，\(Q\) 在 \(\angle EAF\) 的角平分線上。<br>
+              A 錯：兩個距離不相等，\(P\) 偏向離它比較近的 \(\overline{AE}\) 那一側。<br>
+              C 錯：距離要量<strong>垂線段</strong>；斜著畫的線段想畫多長都可以，一樣長不代表距離相等。<br>
+              D 錯：判別性質說的是角<strong>內</strong>的點；角外到兩直線等距的點，可能落在別的直線上，不在 \(\angle EAF\) 的角平分線上。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 綜合應用——等長＋畢氏定理
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-root-variable" aria-hidden="true"></i> <span>重點 5：綜合應用——把等長搬進直角三角形，用畢氏定理列方程式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>解題三步：
+                <ul class="bullet-list">
+                  <li>① 用中垂線或角平分線性質，找出<strong>相等的兩段</strong>，設同一個 \(x\)。</li>
+                  <li>② 把其他邊也用 \(x\) 表示，湊出一個<strong>直角三角形</strong>。</li>
+                  <li>③ 用畢氏定理列方程式，解出 \(x\)。</li>
+                </ul>
+              </li>
+              <li>例（中垂線）：\(\triangle ABC\) 中，\(\angle C = 90^\circ\)，\(\overline{AC} = 6\)、\(\overline{BC} = 8\)，直線 \(L\) 為 \(\overline{AB}\) 的中垂線，交 \(\overline{BC}\) 於 \(E\)。設 \(\overline{CE} = x\)，則 \(\overline{AE} = \overline{BE} = 8 - x\)。在 \(\triangle AEC\) 中：
+                \[\begin{aligned} & x^2 + 6^2 = (8 - x)^2 \\ & 16x = 28 \\ & x = \frac{7}{4} \end{aligned}\]</li>
+              <li>例（角平分線）：梯形 \(ABCD\) 中，\(\overline{AD} \parallel \overline{BC}\)，\(\angle A = \angle B = 90^\circ\)，\(\overline{AB} = 18\)、\(\overline{AD} = 6\)，\(\overline{CE}\) 平分 \(\angle BCD\) 交 \(\overline{AB}\) 於 \(E\)，且 \(\angle CDE = 90^\circ\)。\(E\) 到 \(\angle BCD\) 兩邊的距離是 \(\overline{EB}\)、\(\overline{ED}\)，所以設 \(\overline{BE} = \overline{DE} = x\)，\(\overline{AE} = 18 - x\)。在 \(\triangle ADE\) 中：
+                \[\begin{aligned} & x^2 = (18 - x)^2 + 6^2 \\ & 36x = 360 \\ & x = 10 \end{aligned}\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・解題策略</span>
+              看到中垂線或角平分線，先問：<strong>哪兩段一樣長？</strong>設成同一個 \(x\)，再找直角三角形。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_apply.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。標本工作室的木桌上立著一個直角三角形的木框，阿蜂一手扶著木框，另一手托著下巴思考；小蜜坐在桌子另一側，低頭在羊皮紙上寫字（紙上看不出任何文字）。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：設 x、搬等長、列畢氏</h3>
+            <p class="interactive-instruction">兩種題型各看一次：「中垂線型」固定 \(\overline{BC} = 8\)，拉動 \(\overline{AC}\)；「角平分線型」切換不同的直角三角形。畫布逐行寫出設法、方程式與答案，最後一行是直接從圖上量出來的長度，用來驗算。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ap" width="540" height="560"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ap-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題型</span>
+                    <div class="btn-group" id="ap-mode-group">
+                      <button class="pick-btn active" data-ap-mode="pb">中垂線型</button>
+                      <button class="pick-btn" data-ap-mode="ab">角平分線型</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="ap-row-a">
+                    <label for="ap-a">\(\overline{AC}\) 的長：<span id="ap-va" class="val-num">4</span></label>
+                    <input type="range" id="ap-a" min="1" max="7" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="ap-row-k">
+                    <label for="ap-k">直角三角形：<span id="ap-vk" class="val-num">AC = 3、BC = 4、AB = 5</span></label>
+                    <input type="range" id="ap-k" min="1" max="6" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ap-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (綜合應用)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-9">
+            <p class="quiz-question"><strong>Q9.</strong> 如圖，梯形 \(ABCD\) 中，\(\overline{AD} \parallel \overline{BC}\)，\(\angle A = \angle B = 90^\circ\)，\(\overline{AB} = 24\)、\(\overline{AD} = 12\)。\(\overline{CE}\) 平分 \(\angle BCD\) 交 \(\overline{AB}\) 於 \(E\)，且 \(\angle CDE = 90^\circ\)，則 \(\overline{BE}\) 的長為多少？</p>
+            <canvas class="quiz-fig" data-fig="q9" width="320" height="220" role="img" aria-label="直角梯形 ABCD，角 A 與角 B 為直角，CE 平分角 BCD 交 AB 於 E，角 CDE 為直角"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-9" value="A"><span class="option-text">A. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-9" value="B"><span class="option-text">B. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-9" value="C"><span class="option-text">C. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-9" value="D"><span class="option-text">D. \(18\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(E\) 在 \(\angle BCD\) 的角平分線上，\(\overline{EB} \perp \overline{BC}\)、\(\overline{ED} \perp \overline{CD}\)，所以 \(\overline{BE} = \overline{DE}\)。設為 \(x\)，\(\overline{AE} = 24 - x\)，在 \(\triangle ADE\) 中：
+              \[\begin{aligned} & x^2 = (24 - x)^2 + 12^2 \\ & 48x = 720 \\ & x = 15 \end{aligned}\]
+              其他三個選項代回去都不合：<br>
+              A 錯：\(x = 9\) 時 \(\overline{AE} = 15\)，斜邊 \(\overline{DE} = 9\) 反而比股短，\(9^2 \ne 15^2 + 12^2\)。（\(9\) 其實是 \(\overline{AE}\)。）<br>
+              B 錯：\(x = 12\) 時 \(\overline{AE} = 12\)，\(12^2 \ne 12^2 + 12^2\)。<br>
+              D 錯：\(x = 18\) 時 \(\overline{AE} = 6\)，\(18^2 = 324\)，而 \(6^2 + 12^2 = 180\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-10">
+            <p class="quiz-question"><strong>Q10.</strong> 如圖，\(\triangle ABC\) 中，\(\angle C = 90^\circ\)，\(\overline{AC} = 12\)、\(\overline{BC} = 18\)。直線 \(L\) 為 \(\overline{AB}\) 的中垂線，交 \(\overline{AB}\) 於 \(D\)、交 \(\overline{BC}\) 於 \(E\)，則 \(\overline{CE}\) 的長為多少？</p>
+            <canvas class="quiz-fig" data-fig="q10" width="320" height="220" role="img" aria-label="直角三角形 ABC，角 C 為直角；直線 L 垂直平分 AB 於 D，交 BC 於 E"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-10" value="A"><span class="option-text">A. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-10" value="B"><span class="option-text">B. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-10" value="C"><span class="option-text">C. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-10" value="D"><span class="option-text">D. \(6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。連接 \(\overline{AE}\)。\(E\) 在 \(\overline{AB}\) 的中垂線上，\(\overline{AE} = \overline{BE}\)。設 \(\overline{CE} = x\)，則 \(\overline{AE} = \overline{BE} = 18 - x\)，在 \(\triangle AEC\) 中：
+              \[\begin{aligned} & x^2 + 12^2 = (18 - x)^2 \\ & 36x = 180 \\ & x = 5 \end{aligned}\]
+              B 錯：\(13 = 18 - 5\) 是 \(\overline{AE}\) 與 \(\overline{BE}\) 的長。<br>
+              C 錯：\(9\) 是 \(\overline{BC}\) 的一半；中垂線平分的是 \(\overline{AB}\)，不是 \(\overline{BC}\)。<br>
+              D 錯：\(6\) 是 \(\overline{AC}\) 的一半，和 \(\overline{CE}\) 沒有關係。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 兩個條件找點
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>重點 6：同時滿足兩個條件——找兩條線的交點</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>每一個「等距」條件，都對應<strong>一條線</strong>：
+                <ul class="bullet-list">
+                  <li>到兩個<strong>點</strong>等距 \(\Rightarrow\) 在這兩點連線段的<strong>中垂線</strong>上</li>
+                  <li>到一個角的兩<strong>邊</strong>等距 \(\Rightarrow\) 在這個角的<strong>角平分線</strong>上</li>
+                </ul>
+              </li>
+              <li>要<strong>同時</strong>滿足兩個條件，就分別作出兩條線，取它們的<strong>交點</strong>。</li>
+              <li>先分清楚題目說的是「點」還是「邊」：「到 \(C\)、\(E\) 兩處等距」是兩個點，要用 \(\overline{CE}\) 的<strong>中垂線</strong>；只取「角平分線和線段 \(\overline{CE}\) 的交點」，那個點不一定是 \(\overline{CE}\) 的中點，到 \(C\)、\(E\) 的距離就不一定相等。</li>
+              <li>交點可能落在圖形外面，也可能因為兩線平行而不存在；作圖後要回頭檢查。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead>
+                  <tr><th>條件</th><th>作哪一條線</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>到 \(X\)、\(Y\) 兩點等距</td><td>\(\overline{XY}\) 的中垂線</td></tr>
+                  <tr><td>到 \(\angle V\) 的兩邊等距</td><td>\(\angle V\) 的角平分線</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・找點</span>
+              一個條件一條線，兩個條件取<strong>交點</strong>。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_find.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。標本工作室的牆上掛著一張手繪的花園平面圖（只有花壇與步道的形狀，沒有任何文字），小蜜雙手捧著一個小小的木製蜂箱模型，站在圖前抬頭端詳要放在哪裡。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一個條件一條線</h3>
+            <p class="interactive-instruction">選「到哪兩點等距」與「到哪個角的兩邊等距」，畫面作出對應的中垂線（實線）與角平分線（虛線），交點 \(P\) 同時滿足兩個條件；下方量出 \(P\) 到兩點、到兩邊的距離。拉動 \(C\) 點改變三角形，看交點會不會跑到三角形外面。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fd" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">到兩點等距</span>
+                    <div class="btn-group" id="fd-pb-group">
+                      <button class="pick-btn active" data-fd-pb="AB">\(A\)、\(B\)</button>
+                      <button class="pick-btn" data-fd-pb="BC">\(B\)、\(C\)</button>
+                      <button class="pick-btn" data-fd-pb="CA">\(C\)、\(A\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">到兩邊等距</span>
+                    <div class="btn-group" id="fd-ab-group">
+                      <button class="pick-btn" data-fd-ab="A">\(\angle A\)</button>
+                      <button class="pick-btn active" data-fd-ab="B">\(\angle B\)</button>
+                      <button class="pick-btn" data-fd-ab="C">\(\angle C\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fd-cx">\(\overline{BC}\) 的長：<span id="fd-vcx" class="val-num">9</span></label>
+                    <input type="range" id="fd-cx" min="7" max="10" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩個條件找點)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-11">
+            <p class="quiz-question"><strong>Q11.</strong> 五邊形花園 \(PQRST\) 裡要放一個蜂箱，規定：蜂箱到兩條步道 \(\overline{PQ}\)、\(\overline{QR}\) 的距離相等，而且到兩個水龍頭 \(S\)、\(T\) 的距離也相等。蜂箱應該放在哪裡？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-11" value="A"><span class="option-text">A. \(\overline{PQ}\) 與 \(\overline{QR}\) 兩條中垂線的交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-11" value="B"><span class="option-text">B. \(\angle PQR\) 的角平分線與線段 \(\overline{ST}\) 的交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-11" value="C"><span class="option-text">C. \(\angle S\) 與 \(\angle T\) 兩條角平分線的交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-11" value="D"><span class="option-text">D. \(\angle PQR\) 的角平分線與 \(\overline{ST}\) 的中垂線的交點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。步道 \(\overline{PQ}\)、\(\overline{QR}\) 是 \(\angle PQR\) 的兩邊，到兩邊等距 \(\Rightarrow\) 在 \(\angle PQR\) 的角平分線上；水龍頭 \(S\)、\(T\) 是兩個點，到兩點等距 \(\Rightarrow\) 在 \(\overline{ST}\) 的中垂線上。兩個條件取交點。<br>
+              A 錯：中垂線管的是「到兩個點」等距，步道是邊，不是點。<br>
+              B 錯：角平分線與線段 \(\overline{ST}\) 的交點不一定是 \(\overline{ST}\) 的中點，到 \(S\)、\(T\) 不一定等距。<br>
+              C 錯：題目沒有提到 \(\angle S\)、\(\angle T\) 的兩邊。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-12">
+            <p class="quiz-question"><strong>Q12.</strong> 要在 \(\triangle ABC\) 內找一點，使它到三角形<strong>三個邊</strong>的距離都相等。下列哪一種作法一定找得到？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-12" value="A"><span class="option-text">A. 作兩個邊的中垂線，取交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-12" value="B"><span class="option-text">B. 作兩個內角的角平分線，取交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-12" value="C"><span class="option-text">C. 作一個邊的中垂線與一個內角的角平分線，取交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-12" value="D"><span class="option-text">D. 作三個邊上的高，取交點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。點在 \(\angle A\) 的角平分線上 \(\Rightarrow\) 到 \(\overline{AB}\)、\(\overline{AC}\) 等距；又在 \(\angle B\) 的角平分線上 \(\Rightarrow\) 到 \(\overline{BA}\)、\(\overline{BC}\) 等距。兩串等式接起來，到三邊的距離都相等。<br>
+              A 錯：中垂線的交點到三個<strong>頂點</strong>等距，不是到三個邊。<br>
+              C 錯：只保證到兩個點等距、到一個角的兩邊等距，第三個邊管不到。<br>
+              D 錯：高只保證垂直，和距離相等沒有關係。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 等腰三角形——三線合一
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-play" aria-hidden="true"></i> <span>重點 7：等腰三角形——頂角平分線就是底邊的中垂線</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\triangle ABC\) 中 \(\overline{AB} = \overline{AC}\)，作頂角 \(\angle A\) 的角平分線交 \(\overline{BC}\) 於 \(D\)。在 \(\triangle ABD\) 與 \(\triangle ACD\) 中：\(\overline{AB} = \overline{AC}\)、\(\angle BAD = \angle CAD\)、\(\overline{AD}\) 共用，所以 \(\triangle ABD \cong \triangle ACD\)（<strong>SAS</strong>），得到：
+                <ul class="bullet-list">
+                  <li>\(\angle B = \angle C\)：<strong>兩底角相等</strong></li>
+                  <li>\(\overline{BD} = \overline{CD}\)，且 \(\angle ADB = \angle ADC = 90^\circ\)：\(\overline{AD}\) 是底邊的<strong>中垂線</strong></li>
+                </ul>
+              </li>
+              <li>所以等腰三角形的<strong>頂角平分線、底邊的中垂線、底邊上的高、底邊上的中線</strong>是同一條線——它就是等腰三角形的對稱軸。</li>
+              <li>例：\(\overline{AB} = \overline{AC}\)、\(\angle A = 40^\circ\)，則
+                \[\begin{aligned} & \angle B = \angle C \\ &= (180^\circ - 40^\circ) \div 2 \\ &= 70^\circ \end{aligned}\]</li>
+              <li>小心：「\(\overline{AD}\) 平分 \(\angle BAC\)，所以 \(\overline{BD} = \overline{CD}\)」只有在 \(\overline{AB} = \overline{AC}\) 時才成立；一般三角形的角平分線不會平分對邊。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等腰三角形的性質</span>
+              ① 兩底角相等　② 頂角平分線就是底邊的中垂線
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_iso.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。工作室牆上的一根釘子掛著一個兩條斜邊一樣長的三角形木框，頂角朝上；一條綁著小黃銅錘的細繩從頂角垂直往下垂，經過底邊的正中間；阿蜂站在一旁仰頭看著細繩。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：三條線什麼時候合一？</h3>
+            <p class="interactive-instruction">畫面同時畫出 \(\angle A\) 的平分線（金）、\(\overline{BC}\) 的中垂線（綠虛線）與 \(\overline{BC}\) 上的高（藍點線）。改變 \(\overline{AB}\)、\(\overline{AC}\) 與 \(\angle A\)，看三條線什麼時候疊成同一條。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-iso" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="iso-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="iso-ab">\(\overline{AB}\) 的長：<span id="iso-vab" class="val-num">7</span></label>
+                    <input type="range" id="iso-ab" min="4" max="9" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="iso-ac">\(\overline{AC}\) 的長：<span id="iso-vac" class="val-num">5</span></label>
+                    <input type="range" id="iso-ac" min="4" max="9" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="iso-ang">\(\angle A\)：<span id="iso-vang" class="val-num">60</span>°</label>
+                    <input type="range" id="iso-ang" min="30" max="120" value="60" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="iso-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等腰三角形的性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-13">
+            <p class="quiz-question"><strong>Q13.</strong> \(\triangle ABC\) 中，\(\overline{AB} = \overline{AC}\)，\(D\) 是 \(\overline{BC}\) 的中點，連接 \(\overline{AD}\)。下列哪一個結論<strong>不一定</strong>成立？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-13" value="A"><span class="option-text">A. \(\overline{AD} = \overline{BD}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-13" value="B"><span class="option-text">B. \(\overline{AD} \perp \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-13" value="C"><span class="option-text">C. \(\overline{AD}\) 平分 \(\angle BAC\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-13" value="D"><span class="option-text">D. \(\angle B = \angle C\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{AB} = \overline{AC}\)、\(\overline{BD} = \overline{CD}\)、\(\overline{AD}\) 共用，\(\triangle ABD \cong \triangle ACD\)（SSS），所以 B、C、D 都成立。\(\overline{AD} = \overline{BD}\) 則要看形狀：例如 \(\angle BAC = 40^\circ\) 時，\(\overline{AD}\) 比 \(\overline{BD}\) 長得多。<br>
+              B、C 錯（它們一定成立）：全等得 \(\angle ADB = \angle ADC\)，兩者合成平角，各是 \(90^\circ\)；也得 \(\angle BAD = \angle CAD\)。<br>
+              D 錯（它一定成立）：等腰三角形的兩底角相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-14">
+            <p class="quiz-question"><strong>Q14.</strong> \(\triangle ABC\) 中，\(\overline{AB} = \overline{AC}\)，\(\overline{AD} \perp \overline{BC}\) 於 \(D\)。若 \(\overline{BC} = 18\)、\(\angle B = 52^\circ\)，則 \(\overline{BD}\) 與 \(\angle BAD\) 分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-14" value="A"><span class="option-text">A. \(\overline{BD} = 18\)，\(\angle BAD = 38^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-14" value="B"><span class="option-text">B. \(\overline{BD} = 9\)，\(\angle BAD = 52^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-14" value="C"><span class="option-text">C. \(\overline{BD} = 9\)，\(\angle BAD = 38^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-14" value="D"><span class="option-text">D. \(\overline{BD} = 9\)，\(\angle BAD = 76^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。等腰三角形底邊上的高，也是底邊的中垂線與頂角平分線，所以 \(\overline{BD} = 18 \div 2 = 9\)。在直角 \(\triangle ABD\) 中：
+              \[\begin{aligned} & \angle BAD \\ &= 180^\circ - 90^\circ - 52^\circ \\ &= 38^\circ \end{aligned}\]
+              A 錯：\(D\) 是 \(\overline{BC}\) 的中點，\(\overline{BD}\) 只有一半。<br>
+              B 錯：\(52^\circ\) 是 \(\angle B\)。<br>
+              D 錯：\(76^\circ\) 是整個頂角 \(\angle BAC\)，\(\angle BAD\) 只有一半。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 等腰三角形的底角——角度推理
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-angles-right" aria-hidden="true"></i> <span>重點 8：用「兩底角相等」一路推角度</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>先在圖上找出<strong>等長的兩邊</strong>（題目給的、或標了記號的），它們所對的兩個角就相等。</li>
+              <li>等腰三角形的頂角為 \(x^\circ\)，每個底角就是 \((180 - x)^\circ\) 的一半；底角為 \(y^\circ\)，頂角就是 \((180 - 2y)^\circ\)。</li>
+              <li>例：\(\triangle ABC\) 中，\(D\)、\(E\)、\(F\) 分別在 \(\overline{BC}\)、\(\overline{AB}\)、\(\overline{AC}\) 上，\(\overline{BD} = \overline{BE}\)、\(\overline{CD} = \overline{CF}\)，\(\angle B = 70^\circ\)、\(\angle C = 40^\circ\)：
+                \[\begin{aligned} & \angle BDE = 110^\circ \div 2 = 55^\circ \\ & \angle CDF = 140^\circ \div 2 = 70^\circ \\ & \angle EDF \\ &= 180^\circ - 55^\circ - 70^\circ \\ &= 55^\circ \end{aligned}\]
+                （\(110^\circ = 180^\circ - 70^\circ\)、\(140^\circ = 180^\circ - 40^\circ\)，底角是「\(180^\circ\) 減頂角」的一半。）</li>
+              <li>好幾個等腰三角形接在一起時，用<strong>外角定理</strong>把角接下去。例：\(D\) 在 \(\overline{BC}\) 上，\(\overline{AB} = \overline{AD} = \overline{CD}\)、\(\angle C = 32^\circ\)：
+                \[\begin{aligned} & \angle DAC = \angle C = 32^\circ \\ & \angle ADB = 32^\circ + 32^\circ = 64^\circ \\ & \angle B = \angle ADB = 64^\circ \end{aligned}\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等邊對等角</span>
+              同一個三角形裡，<strong>相等的邊所對的角相等</strong>；找到一組等長，就多一組等角。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_isoang.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。小蜜坐在工作室木桌前，雙手捧著一片兩邊一樣長的三角形蜂蠟片，舉到窗邊的光線下端詳；桌上放著一把小刮刀和一盒蜂蠟碎片。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：等長一組，等角一組</h3>
+            <p class="interactive-instruction">「兩個等腰並排」：改變 \(\angle B\)、\(\angle C\)，看 \(\angle 1\)、\(\angle 2\) 與 \(\angle EDF\) 怎麼跟著變。「等腰接等腰」：\(\overline{AB} = \overline{AD} = \overline{DC}\)，改變 \(\angle C\)，看等角怎麼一路傳到 \(\angle B\)。畫面上的度數都是從圖形量出來的。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ia" width="540" height="510"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ia-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="ia-mode-group">
+                      <button class="pick-btn active" data-ia-mode="two">兩個等腰並排</button>
+                      <button class="pick-btn" data-ia-mode="chain">等腰接等腰</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="ia-row-b">
+                    <label for="ia-b">\(\angle B\)：<span id="ia-vb" class="val-num">64</span>°</label>
+                    <input type="range" id="ia-b" min="30" max="100" value="64" step="2">
+                  </div>
+                  <div class="slider-row" id="ia-row-c">
+                    <label for="ia-c">\(\angle C\)：<span id="ia-vc" class="val-num">46</span>°</label>
+                    <input type="range" id="ia-c" min="30" max="86" value="46" step="2">
+                  </div>
+                  <div class="slider-row" id="ia-row-k">
+                    <label for="ia-k">\(\angle C\)：<span id="ia-vk" class="val-num">30</span>°</label>
+                    <input type="range" id="ia-k" min="20" max="40" value="30" step="2">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ia-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (底角推角度)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-15">
+            <p class="quiz-question"><strong>Q15.</strong> 如圖，\(B\)、\(C\)、\(D\) 三點在同一直線上，\(\overline{AB} = \overline{AC}\)、\(\overline{EC} = \overline{ED}\)。若 \(\angle A + \angle E = 150^\circ\)，則 \(\angle ACE\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q15" width="320" height="220" role="img" aria-label="B、C、D 三點共線；三角形 ABC 中 AB 等於 AC，三角形 ECD 中 EC 等於 ED，標示角 ACE"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-15" value="A"><span class="option-text">A. \(30^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-15" value="B"><span class="option-text">B. \(75^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-15" value="C"><span class="option-text">C. \(105^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-15" value="D"><span class="option-text">D. \(150^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設 \(\angle ACB = \angle 1\)、\(\angle ECD = \angle 2\)。\(\overline{AB} = \overline{AC}\) 得 \(\angle B = \angle 1\)；\(\overline{EC} = \overline{ED}\) 得 \(\angle D = \angle 2\)：
+              \[\begin{aligned} & \angle A = 180^\circ - 2\angle 1 \\ & \angle E = 180^\circ - 2\angle 2 \\ & 360^\circ - 2(\angle 1 + \angle 2) = 150^\circ \\ & \angle 1 + \angle 2 = 105^\circ \end{aligned}\]
+              \(B\)、\(C\)、\(D\) 共線，\(\angle ACE = 180^\circ - 105^\circ = 75^\circ\)。<br>
+              A 錯：\(30^\circ = 180^\circ - 150^\circ\)，\(\angle A + \angle E\) 並不是 \(\angle ACE\) 的補角。<br>
+              C 錯：\(105^\circ\) 是 \(\angle 1 + \angle 2\)，還要用平角扣掉。<br>
+              D 錯：\(150^\circ\) 是題目給的 \(\angle A + \angle E\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-16">
+            <p class="quiz-question"><strong>Q16.</strong> \(\triangle ABC\) 中，\(D\) 在 \(\overline{BC}\) 上，且 \(\overline{AB} = \overline{AD} = \overline{DC}\)。若 \(\angle BAC = 105^\circ\)，則 \(\angle C\) 是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-16" value="A"><span class="option-text">A. \(35^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-16" value="B"><span class="option-text">B. \(50^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-16" value="C"><span class="option-text">C. \(37.5^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-16" value="D"><span class="option-text">D. \(25^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。設 \(\angle C = x^\circ\)。\(\overline{AD} = \overline{DC}\) 得 \(\angle DAC = x^\circ\)；\(\angle ADB\) 是 \(\triangle ADC\) 的外角，等於 \(2x^\circ\)；\(\overline{AB} = \overline{AD}\) 得 \(\angle B = 2x^\circ\)。在 \(\triangle ABC\) 中：
+              \[\begin{aligned} & 105 + 2x + x = 180 \\ & x = 25 \end{aligned}\]
+              A 錯：\(35^\circ = 105^\circ \div 3\)，把頂角平均分了。<br>
+              B 錯：\(50^\circ\) 是 \(\angle B\)。<br>
+              C 錯：\(37.5^\circ = (180^\circ - 105^\circ) \div 2\)，誤以為 \(\angle B = \angle C\)；但 \(\overline{AB} = \overline{AC}\) 並沒有成立。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 中垂線造出等腰
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> <span>重點 9：中垂線造出等腰三角形——由等長得等角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(P\) 在 \(\overline{BC}\) 的中垂線上 \(\Rightarrow\) \(\overline{PB} = \overline{PC}\) \(\Rightarrow\) \(\triangle PBC\) 是等腰三角形 \(\Rightarrow\) \(\angle PBC = \angle PCB\)。</li>
+              <li>看到中垂線，先把這條「等長 \(\Rightarrow\) 等角」寫下來，再配合內角和、外角定理。</li>
+              <li>例：\(\triangle ABC\) 中，\(\overline{BC}\) 的中垂線交 \(\overline{AB}\) 於 \(P\)，\(\angle B = 35^\circ\)、\(\angle ACB = 80^\circ\)：
+                \[\begin{aligned} & \angle PCB = \angle B = 35^\circ \\ & \angle ACP = 80^\circ - 35^\circ = 45^\circ \\ & \angle APC = 35^\circ + 35^\circ = 70^\circ \end{aligned}\]
+                最後一步是外角定理：\(\angle APC\) 是 \(\triangle PBC\) 的外角。</li>
+              <li>中垂線和角平分線同時出現時，常把好幾個角都設成同一個 \(x\)，再用內角和列方程式。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・中垂線 → 等腰</span>
+              中垂線上的點連到線段兩端，得到等腰三角形，<strong>兩個底角相等</strong>。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_pbiso.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。花園裡立著一個人字形木架：兩根一樣長的木條頂端用一顆黃銅鉚釘固定，下端張開站在草地上，架上掛著一串風乾的薰衣草；阿蜂一手扶著木架，小蜜在旁邊遞上另一串花。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：中垂線上的 P 帶來兩個相等的角</h3>
+            <p class="interactive-instruction">\(\overline{BC}\) 的中垂線 \(L\) 交 \(\overline{AB}\) 於 \(P\)，連接 \(\overline{PC}\)。改變 \(\angle B\)、\(\angle C\)，看 \(\angle PCB\) 是不是一直等於 \(\angle B\)，再看 \(\angle ACP\) 與 \(\angle APC\) 怎麼算出來。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pi" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pi-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pi-b">\(\angle B\)：<span id="pi-vb" class="val-num">35</span>°</label>
+                    <input type="range" id="pi-b" min="20" max="60" value="35" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pi-c">\(\angle ACB\)：<span id="pi-vc" class="val-num">80</span>°</label>
+                    <input type="range" id="pi-c" min="25" max="150" value="80" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pi-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (中垂線造出等腰)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-17">
+            <p class="quiz-question"><strong>Q17.</strong> 如圖，\(\triangle ABC\) 中，\(D\) 在 \(\overline{BC}\) 上。\(\overline{BD}\) 的中垂線交 \(\overline{AB}\) 於 \(E\)，\(\overline{CD}\) 的中垂線交 \(\overline{AC}\) 於 \(F\)，連接 \(\overline{DE}\)、\(\overline{DF}\)。若 \(\angle A = 68^\circ\)，則 \(\angle EDF\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q17" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 BC 上；BD 的中垂線交 AB 於 E，CD 的中垂線交 AC 於 F，連接 DE 與 DF，標示角 A 68 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-17" value="A"><span class="option-text">A. \(68^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-17" value="B"><span class="option-text">B. \(112^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-17" value="C"><span class="option-text">C. \(56^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-17" value="D"><span class="option-text">D. \(34^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(E\) 在 \(\overline{BD}\) 的中垂線上，\(\overline{EB} = \overline{ED}\)，所以 \(\angle EDB = \angle B\)；同理 \(\overline{FC} = \overline{FD}\)，\(\angle FDC = \angle C\)。\(\angle BDC\) 是平角：
+              \[\begin{aligned} & \angle EDF = 180^\circ - \angle B - \angle C \\ &= \angle A = 68^\circ \end{aligned}\]
+              B 錯：\(112^\circ = 180^\circ - 68^\circ\) 是 \(\angle B + \angle C\)。<br>
+              C 錯：\(56^\circ = (180^\circ - 68^\circ) \div 2\)，題目沒有說 \(\angle B = \angle C\)。<br>
+              D 錯：\(34^\circ\) 是 \(\angle A\) 的一半。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-18">
+            <p class="quiz-question"><strong>Q18.</strong> 如圖，直角 \(\triangle ABC\) 中，\(\angle A = 90^\circ\)。直線 \(L\) 為 \(\overline{BC}\) 的中垂線，\(\overline{BD}\) 平分 \(\angle ABC\) 交 \(\overline{AC}\) 於 \(D\)，\(L\) 與 \(\overline{BD}\) 交於 \(O\)。若 \(\angle DCO = 24^\circ\)，則 \(\angle COD\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q18" width="320" height="220" role="img" aria-label="直角三角形 ABC，角 A 為直角；L 為 BC 的中垂線，BD 平分角 ABC 交 AC 於 D，L 與 BD 交於 O，連接 OC，標示角 DCO 24 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-18" value="A"><span class="option-text">A. \(22^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-18" value="B"><span class="option-text">B. \(66^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-18" value="C"><span class="option-text">C. \(44^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-18" value="D"><span class="option-text">D. \(46^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{BD}\) 平分 \(\angle ABC\)，\(\angle ABO = \angle CBO\)；\(O\) 在 \(\overline{BC}\) 的中垂線上，\(\overline{OB} = \overline{OC}\)，\(\angle BCO = \angle CBO\)。三個角都設為 \(x^\circ\)，在 \(\triangle ABC\) 中：
+              \[\begin{aligned} & 90 + 2x + (x + 24) = 180 \\ & 3x = 66 \\ & x = 22 \end{aligned}\]
+              \(\angle COD\) 是 \(\triangle OBC\) 的外角：\(\angle COD = 22^\circ + 22^\circ = 44^\circ\)。<br>
+              A 錯：\(22^\circ\) 是 \(x\)，也就是 \(\angle CBO\)。<br>
+              B 錯：\(66^\circ\) 是 \(3x\)。<br>
+              D 錯：\(46^\circ = 22^\circ + 24^\circ\) 是 \(\angle ACB\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 等腰三角形的判別性質
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>重點 10：等腰三角形的判別性質——兩角相等，對邊就相等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>反過來問：\(\triangle ABC\) 中 \(\angle B = \angle C\)，它是等腰三角形嗎？</li>
+              <li>作 \(\angle A\) 的角平分線交 \(\overline{BC}\) 於 \(E\)。在 \(\triangle ABE\) 與 \(\triangle ACE\) 中：\(\angle B = \angle C\)、\(\angle BAE = \angle CAE\)、\(\overline{AE}\) 共用，所以 \(\triangle ABE \cong \triangle ACE\)（<strong>AAS</strong>），得 \(\overline{AB} = \overline{AC}\)。</li>
+              <li>相等的兩邊是相等兩角的<strong>對邊</strong>：\(\angle B\) 對 \(\overline{AC}\)、\(\angle C\) 對 \(\overline{AB}\)。不要找成夾著它們的 \(\overline{BC}\)。</li>
+              <li>例：\(\triangle ABC\) 中 \(\angle A = 58^\circ\)、\(\angle B = 64^\circ\)，則
+                \[\begin{aligned} & \angle C \\ &= 180^\circ - 58^\circ - 64^\circ \\ &= 58^\circ = \angle A \end{aligned}\]
+                所以 \(\angle A\) 的對邊 \(\overline{BC}\) 等於 \(\angle C\) 的對邊 \(\overline{AB}\)。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead>
+                  <tr><th>名稱</th><th>已知</th><th>得到</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>性質</td><td>兩邊相等</td><td>對角相等</td></tr>
+                  <tr><td>判別性質</td><td>兩角相等</td><td>對邊相等</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等腰三角形的判別性質</span>
+              若三角形有兩個內角相等，則此三角形必為等腰三角形（等角對等邊）。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_isojudge.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。小蜜站在工作室窗前，雙手拿著一個三角形木框舉到眼前，歪著頭比較木框的兩個角；阿蜂在她身後的工作台上整理一排玻璃標本罐。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：看角找邊</h3>
+            <p class="interactive-instruction">拉動 \(\angle A\)、\(\angle B\)（\(\angle C\) 由內角和算出），三角形照實際的角度畫出來。當兩個角相等時，它們和它們的<strong>對邊</strong>會一起亮成金色；下方的邊長是從圖上量出來的。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ij" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ij-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ij-a">\(\angle A\)：<span id="ij-va" class="val-num">70</span>°</label>
+                    <input type="range" id="ij-a" min="20" max="140" value="70" step="2">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ij-b">\(\angle B\)：<span id="ij-vb" class="val-num">40</span>°</label>
+                    <input type="range" id="ij-b" min="20" max="140" value="40" step="2">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ij-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等腰三角形的判別性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-19">
+            <p class="quiz-question"><strong>Q19.</strong> \(\triangle ABC\) 中，\(\angle A = 47^\circ\)、\(\angle C = 86^\circ\)。這個三角形的哪兩邊相等？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-19" value="A"><span class="option-text">A. \(\overline{AB} = \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-19" value="B"><span class="option-text">B. \(\overline{AB} = \overline{AC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-19" value="C"><span class="option-text">C. \(\overline{BC} = \overline{AC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-19" value="D"><span class="option-text">D. 三邊都相等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & \angle B \\ &= 180^\circ - 47^\circ - 86^\circ \\ &= 47^\circ = \angle A \end{aligned}\]
+              相等的兩邊是這兩個角的對邊：\(\angle A\) 對 \(\overline{BC}\)、\(\angle B\) 對 \(\overline{AC}\)，所以 \(\overline{BC} = \overline{AC}\)。<br>
+              A 錯：\(\overline{AB} = \overline{BC}\) 要 \(\angle C = \angle A\)。<br>
+              B 錯：\(\overline{AB} = \overline{AC}\) 要 \(\angle C = \angle B\)。<br>
+              D 錯：三邊相等要三個角都是 \(60^\circ\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-20">
+            <p class="quiz-question"><strong>Q20.</strong> \(\triangle ABC\) 中，延長 \(\overline{CB}\) 到 \(D\)，得到 \(\angle B\) 的外角 \(\angle ABD\)。若 \(\angle ABD = 2\angle C\)，則下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-20" value="A"><span class="option-text">A. \(\overline{AB} = \overline{AC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-20" value="B"><span class="option-text">B. \(\overline{AB} = \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-20" value="C"><span class="option-text">C. \(\overline{AC} = \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-20" value="D"><span class="option-text">D. 無法判斷哪兩邊相等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。由外角定理，\(\angle ABD = \angle A + \angle C\)。又 \(\angle ABD = 2\angle C\)，所以 \(\angle A = \angle C\)，對邊相等：\(\angle A\) 對 \(\overline{BC}\)、\(\angle C\) 對 \(\overline{AB}\)，得 \(\overline{AB} = \overline{BC}\)。<br>
+              A 錯：\(\overline{AB} = \overline{AC}\) 要 \(\angle B = \angle C\)。<br>
+              C 錯：\(\overline{AC} = \overline{BC}\) 要 \(\angle A = \angle B\)。<br>
+              D 錯：外角定理已經推出 \(\angle A = \angle C\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 判別性質的應用
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> <span>重點 11：判別性質的應用——由等角推出等腰，再把等長搬過去</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>題目只給角的關係、卻問邊長時，找<strong>兩角相等的三角形</strong>，用判別性質把角換成邊。</li>
+              <li>例：\(\triangle ABC\) 中，\(D\) 在 \(\overline{AB}\) 上，\(\overline{AB} = 7\)、\(\overline{BC} = 3\)，\(\angle A = \angle ACD\)、\(\angle B = \angle BDC\)：
+                <ul class="bullet-list">
+                  <li>\(\triangle BCD\) 中 \(\angle B = \angle BDC\) \(\Rightarrow\) \(\overline{CD} = \overline{CB} = 3\)</li>
+                  <li>\(\triangle ACD\) 中 \(\angle A = \angle ACD\) \(\Rightarrow\) \(\overline{AD} = \overline{CD} = 3\)</li>
+                  <li>\(\overline{BD} = 7 - 3 = 4\)</li>
+                </ul>
+              </li>
+              <li>例：\(\triangle BCD\) 中，\(A\) 在 \(\overline{CD}\) 上，\(\overline{AC} = \overline{BC}\)，\(\angle ABD = \frac{1}{2}\angle ABC\)。\(\overline{AC} = \overline{BC}\) 得 \(\angle CAB = \angle ABC\)；\(\angle CAB\) 是 \(\triangle ABD\) 的外角，
+                \[\begin{aligned} & \angle D = \angle CAB - \angle ABD \\ &= \angle ABC - \frac{1}{2}\angle ABC \\ &= \frac{1}{2}\angle ABC = \angle ABD \end{aligned}\]
+                所以 \(\triangle ABD\) 是等腰三角形。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・角換邊</span>
+              一個三角形裡出現兩個相等的角，就有兩條相等的<strong>對邊</strong>；一連串的等腰三角形能把一段長度一路搬過去。
+            </div>
+
+            <div class="illustration-container">
+              <img src="pv_isouse.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。傍晚的標本工作室，小蜜把一支黃銅圓規收進木盒，阿蜂把一把沒有刻度的木直尺放回牆上的掛架；桌上攤著畫滿三角形草圖的羊皮紙（紙上沒有任何文字）。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩次判別，把 BC 搬到 AD</h3>
+            <p class="interactive-instruction">已知 \(\angle A = \angle ACD\)（記號 1）、\(\angle B = \angle BDC\)（記號 2）。按「下一步」一步步推出等長；拉動 \(\angle A\) 與 \(\overline{BC}\) 改變三角形，最下面一行是直接從圖上量出的長度與角度。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-iu" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="iu-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="iu-prev">上一步</button>
+                      <span class="step-counter" id="iu-step">1 / 4</span>
+                      <button class="pick-btn" id="iu-next">下一步</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="iu-a">\(\angle A\)：<span id="iu-va" class="val-num">23</span>°</label>
+                    <input type="range" id="iu-a" min="15" max="41" value="23" step="2">
+                  </div>
+                  <div class="slider-row">
+                    <label for="iu-bc">\(\overline{BC}\) 的長：<span id="iu-vbc" class="val-num">4</span></label>
+                    <input type="range" id="iu-bc" min="2" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="iu-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (判別性質的應用)</h3>
+
+          <div class="quiz-card" data-quiz="3-4-21">
+            <p class="quiz-question"><strong>Q21.</strong> 如圖，\(\triangle ABC\) 中，\(D\) 在 \(\overline{AC}\) 上，\(\angle ABD = \angle A\)、\(\angle BDC = \angle C\)。若 \(\overline{AC} = 15\)、\(\overline{BC} = 7\)，則 \(\overline{DC}\) 的長為多少？</p>
+            <canvas class="quiz-fig" data-fig="q21" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 AC 上，連接 BD；角 A 與角 ABD 標示相同記號，角 BDC 與角 C 標示相同記號"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-21" value="A"><span class="option-text">A. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-21" value="B"><span class="option-text">B. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-21" value="C"><span class="option-text">C. \(\frac{15}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-21" value="D"><span class="option-text">D. \(14\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\triangle BDC\) 中 \(\angle BDC = \angle C\)，對邊 \(\overline{BC} = \overline{BD} = 7\)；\(\triangle ABD\) 中 \(\angle ABD = \angle A\)，對邊 \(\overline{AD} = \overline{BD} = 7\)。所以 \(\overline{DC} = 15 - 7 = 8\)。<br>
+              B 錯：\(7\) 是 \(\overline{AD}\)（也等於 \(\overline{BD}\)、\(\overline{BC}\)）。<br>
+              C 錯：\(\frac{15}{2}\) 是 \(\overline{AC}\) 的一半，但 \(D\) 不是 \(\overline{AC}\) 的中點。<br>
+              D 錯：\(14 = 7 + 7\)，以為 \(\overline{DC} = \overline{BD} + \overline{BC}\)；但三角形兩邊和大於第三邊，\(\overline{DC}\) 一定比 \(14\) 短。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-4-22">
+            <p class="quiz-question"><strong>Q22.</strong> \(\triangle ABC\) 中，\(\overline{AB} = \overline{AC}\)、\(\angle A = 36^\circ\)，\(\overline{BD}\) 平分 \(\angle ABC\) 交 \(\overline{AC}\) 於 \(D\)。若 \(\overline{BC} = 5\)，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-4-22" value="A"><span class="option-text">A. \(\overline{AD} = 5\)、\(\overline{DC} = 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-22" value="B"><span class="option-text">B. \(\overline{BD} = 5\)，但 \(\overline{AD}\) 的長無法確定</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-22" value="C"><span class="option-text">C. \(\overline{AD} = \overline{DC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-4-22" value="D"><span class="option-text">D. \(\overline{AD} = \overline{BD} = 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & \angle ABC = \angle C \\ &= (180^\circ - 36^\circ) \div 2 \\ &= 72^\circ \end{aligned}\]
+              \(\angle ABD = \angle DBC = 36^\circ\)，
+              \[\begin{aligned} & \angle BDC \\ &= 180^\circ - 36^\circ - 72^\circ \\ &= 72^\circ \end{aligned}\]
+              \(\triangle BCD\) 中 \(\angle BDC = \angle C\)，對邊 \(\overline{BC} = \overline{BD} = 5\)；\(\triangle ABD\) 中 \(\angle A = \angle ABD = 36^\circ\)，對邊 \(\overline{BD} = \overline{AD} = 5\)。<br>
+              A 錯：\(\triangle BCD\) 中 \(\angle DBC = 36^\circ \ne \angle BDC\)，所以 \(\overline{DC} \ne \overline{BC}\)。<br>
+              B 錯：\(\triangle ABD\) 也有兩角相等，\(\overline{AD}\) 可以確定。<br>
+              C 錯：\(\overline{BD}\) 是 \(\angle B\) 的平分線，\(\overline{BA} \ne \overline{BC}\)，不會平分對邊 \(\overline{AC}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 性質與判別性質速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>中垂線性質</strong>：中垂線上的點到線段兩端等距（SAS）。</li>
+              <li><strong>中垂線判別</strong>：到兩端等距的點在中垂線上（RHS）。</li>
+              <li><strong>角平分線性質</strong>：角平分線上的點到角兩邊等距（AAS）；距離一律量垂線段。</li>
+              <li><strong>角平分線判別</strong>：到角兩邊等距的點在角平分線上（RHS）。</li>
+              <li><strong>解題</strong>：等長設同一個 \(x\)，搬進直角三角形用畢氏定理。</li>
+              <li><strong>找點</strong>：到兩點等距作中垂線、到兩邊等距作角平分線，同時滿足取交點。</li>
+              <li><strong>等腰性質</strong>：兩底角相等；頂角平分線就是底邊的中垂線（也是高與中線）。</li>
+              <li><strong>等腰判別</strong>：兩角相等的三角形是等腰三角形，相等的是它們的對邊。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-seedling"></i> 回到養蜂花園：水盆與蜂箱</h4>
+              <h5><i class="fa-solid fa-droplet"></i> 公平的水盆</h5>
+              <p>兩個蜂箱要共用一個水盆，水盆放在兩箱連線的中垂線上，兩邊的蜜蜂就飛一樣遠。沿著那條線移動水盆，公平依然成立——中垂線上每一點都行。</p>
+              <h5><i class="fa-solid fa-route"></i> 兩道籬笆的角落</h5>
+              <p>花園角落的兩道籬笆夾出一個角，沿著角平分線走，到兩道籬笆永遠一樣遠；如果某一點到兩道籬笆一樣遠，它也一定在這條小徑上。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節</h5>
+              <p>等腰三角形告訴我們「等邊對等角」。3-5 節會問：邊不相等時，角會怎樣？——大邊對大角，以及三角形兩邊之和為什麼一定大於第三邊。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

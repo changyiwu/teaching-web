@@ -4,39 +4,1554 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-3 三角形的全等性質 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-3 三角形的全等性質 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第3章 三角形的基本性質</div>
-    <h1>3-3 三角形的全等性質</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第三章</span>
+        <h1>3-3 三角形的全等性質</h1>
+        <p>養蜂花園的蜂箱要配兩片一模一樣的三角形山牆板，小蜜和阿蜂想知道：要比對幾個條件，才能確定兩個三角形<strong>完全疊合</strong>？這一節先認識<strong>全等</strong>的意義與記號，再用尺規作圖找出五種只要三個條件就夠的<strong>全等性質</strong>——SSS、SAS、RHS、ASA、AAS，也看看為什麼 SSA 和 AAA 不行，最後學會在圖形裡找出藏起來的條件、用全等算出邊長、角度與面積。</p>
+      </div>
+      <!-- Progress navigation (12 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-clone"></i> 全等的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-right-left"></i> 對應邊角</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-draw-polygon"></i> SSS</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-angle-left"></i> SAS</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-code-branch"></i> SSA 不行</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-square-full"></i> RHS</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-ruler-horizontal"></i> ASA</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-shuffle"></i> AAS</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> AAA 不行</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 判別性質</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 隱藏條件</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-calculator"></i> 全等的應用</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（銅版畫博物圖鑑風）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(212, 160, 23, 0.3);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(212, 160, 23, 0.25);">
+          <i class="fa-solid fa-clone" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(212, 160, 23, 0.45);"></i> 課前暖身漫畫：六個條件都要量嗎？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            阿蜂要再做一片和舊的一模一樣的三角形山牆板，正煩惱三個邊、三個角是不是都得量。小蜜拿來三根木條：只要三根的長度照抄，釘起來的三角形就怎麼推也推不變形——<strong style="color:#fcd34d">三邊一確定，三角形就確定了。</strong>
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="19 世紀手工上色銅版畫博物圖鑑風四格漫畫。第一格阿蜂雙手舉著一片三角形木板，說蜂箱屋頂要兩片一模一樣的三角形木板；第二格阿蜂皺眉思考三個邊、三個角是不是都要量；第三格小蜜手握三根長短不同的木條；第四格小蜜舉起三根木條釘成的三角形框，旁白說三邊一樣長，兩個三角形就全等。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 全等的意義與記法
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-clone" aria-hidden="true"></i> <span>重點 1：全等的意義——搬過去能完全疊合</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>全等</strong>：兩個圖形經過<strong>平移</strong>、<strong>旋轉</strong>或<strong>翻轉</strong>後可以完全疊合，就稱這兩個圖形全等。全等的圖形形狀一樣、大小也相等。</li>
+              <li><strong>記號</strong>：\(\triangle ABC\) 與 \(\triangle DEF\) 全等，記作 \(\triangle ABC \cong \triangle DEF\)，讀作「\(\triangle ABC\) 全等於 \(\triangle DEF\)」。</li>
+              <li>疊合在一起的頂點叫<strong>對應點</strong>，疊合在一起的邊叫<strong>對應邊</strong>，疊合在一起的角叫<strong>對應角</strong>。</li>
+              <li>若 \(\triangle ABC \cong \triangle DEF\)（\(A\)、\(B\)、\(C\) 依序對應 \(D\)、\(E\)、\(F\)），則
+                <ul class="bullet-list">
+                  <li>對應邊相等：\(\overline{AB} = \overline{DE}\)、\(\overline{BC} = \overline{EF}\)、\(\overline{AC} = \overline{DF}\)</li>
+                  <li>對應角相等：\(\angle A = \angle D\)、\(\angle B = \angle E\)、\(\angle C = \angle F\)</li>
+                </ul>
+              </li>
+              <li><strong>本書的寫法依對應的順序</strong>：記號裡第 1 個字母對第 1 個字母、第 2 個對第 2 個、第 3 個對第 3 個。</li>
+              <li><strong>面積相等不一定全等</strong>：底 \(6\)、高 \(2\) 的三角形和底 \(3\)、高 \(4\) 的三角形面積都是 \(6\)，形狀卻不一樣。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・全等</span>
+              全等 \(\Leftrightarrow\) 能完全疊合 \(\Rightarrow\) 三組對應邊、三組對應角全部相等。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_overlay.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。小蜜站在標本工作室的木桌前，雙手捧著一片三角形的蜂巢格木框，低頭看著桌上另一片同樣大小的三角形木框；桌上有玻璃標本罐與攤開的羊皮紙。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：疊合實驗台</h3>
+            <p class="interactive-instruction">選一種搬法（平移、旋轉、翻轉），再拉動「疊合進度」，把 \(\triangle DEF\) 搬到 \(\triangle ABC\) 上。刻痕條數相同的邊、弧條數相同的角，最後會不會疊在一起？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ov" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ov-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">搬法</span>
+                    <div class="btn-group" id="ov-mode-group">
+                      <button class="pick-btn active" data-ov-mode="slide">平移</button>
+                      <button class="pick-btn" data-ov-mode="turn">旋轉</button>
+                      <button class="pick-btn" data-ov-mode="flip">翻轉</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ov-t">疊合進度：<span id="ov-vt" class="val-num">0%</span></label>
+                    <input type="range" id="ov-t" min="0" max="10" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ov-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (全等的意義)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 已知 \(\triangle PQR \cong \triangle XYZ\)（依對應順序寫）。下列哪一個敘述<strong>錯誤</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-1" value="A"><span class="option-text">A. \(\overline{QR} = \overline{YZ}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-1" value="B"><span class="option-text">B. \(\angle R = \angle Z\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-1" value="C"><span class="option-text">C. \(\overline{PR} = \overline{XZ}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-1" value="D"><span class="option-text">D. \(\angle Q = \angle Z\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。依記號的順序，\(P\) 對應 \(X\)、\(Q\) 對應 \(Y\)、\(R\) 對應 \(Z\)，所以 \(\angle Q\) 的對應角是 \(\angle Y\)，不是 \(\angle Z\)。<br>
+              A、C 對：\(\overline{QR}\) 的兩端對應 \(Y\)、\(Z\)；\(\overline{PR}\) 的兩端對應 \(X\)、\(Z\)。<br>
+              B 對：\(R\) 和 \(Z\) 都排在第 3 個。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列哪一組的兩個三角形<strong>一定</strong>全等？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-2" value="A"><span class="option-text">A. 面積都是 \(12\) 平方公分的兩個三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-2" value="B"><span class="option-text">B. 周長都是 \(18\) 公分的兩個三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-2" value="C"><span class="option-text">C. 邊長都是 \(7\) 公分的兩個正三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-2" value="D"><span class="option-text">D. 三個角都是 \(60^\circ\) 的兩個三角形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。邊長都是 \(7\) 公分的正三角形，三個邊、三個角都一樣，搬過去可以完全疊合。<br>
+              A 錯：底 \(6\)、高 \(4\) 和底 \(8\)、高 \(3\) 面積都是 \(12\)，形狀卻不同。<br>
+              B 錯：三邊 \(6\)、\(6\)、\(6\) 和 \(5\)、\(6\)、\(7\) 周長都是 \(18\)，卻不能疊合。<br>
+              D 錯：三個角都是 \(60^\circ\) 的是正三角形，但邊長可以是 \(2\)，也可以是 \(9\)，大小不一定相同。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 依對應順序求邊與角
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> <span>重點 2：依記號的順序找對應，求出邊與角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>先配對，再寫等式</strong>：把記號兩邊的字母<strong>依位置</strong>一個一個配對，不要看圖上的位置猜。例如 \(\triangle ABC \cong \triangle FDE\) 時，\(A \leftrightarrow F\)、\(B \leftrightarrow D\)、\(C \leftrightarrow E\)。</li>
+              <li><strong>對應邊</strong>由兩個頂點一起配對：\(\overline{BC}\) 的兩端 \(B\)、\(C\) 對應 \(D\)、\(E\)，所以 \(\overline{BC} = \overline{DE}\)。</li>
+              <li><strong>求角</strong>：先把題目給的角搬到同一個三角形裡（對應角相等），再用內角和 \(180^\circ\) 求第三個角，最後搬回另一個三角形。</li>
+              <li><strong>求未知數</strong>：邊或角寫成含 \(x\) 的式子時，讓<strong>對應</strong>的兩個量相等，列方程式解出 \(x\)，再代回去求其他量。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>\(\triangle ABC \cong \triangle FDE\)</th><th>對應角</th><th>對應邊</th></tr></thead>
+                <tbody>
+                  <tr><td>第 1 個字母</td><td>\(\angle A = \angle F\)</td><td>\(\overline{AB} = \overline{FD}\)</td></tr>
+                  <tr><td>第 2 個字母</td><td>\(\angle B = \angle D\)</td><td>\(\overline{BC} = \overline{DE}\)</td></tr>
+                  <tr><td>第 3 個字母</td><td>\(\angle C = \angle E\)</td><td>\(\overline{CA} = \overline{EF}\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・對應</span>
+              記號裡排在同一個位置的字母就是對應點；對應邊、對應角都由對應點決定。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_match.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。阿蜂坐在養蜂花園的木凳上，把兩片同樣大小的三角形木牌並排放在膝上的木盤裡，一片轉了方向；他低頭比對兩片木牌，身旁是木框蜂箱與幾隻小蜜蜂。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：∠F 到底對應誰？</h3>
+            <p class="interactive-instruction">左邊 \(\triangle ABC\) 給了 \(\angle A\)，右邊的三角形給了 \(\angle F\)。換一種記號寫法，看 \(\angle F\) 改成對應 \(\triangle ABC\) 的哪一個角，再拉動兩支滑桿，看三個角怎麼一步一步求出來。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cr" width="540" height="420"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">記號</span>
+                    <div class="btn-group" id="cr-map-group">
+                      <button class="pick-btn active" data-cr-map="def">\(\triangle ABC \cong \triangle DEF\)</button>
+                      <button class="pick-btn" data-cr-map="efd">\(\triangle ABC \cong \triangle EFD\)</button>
+                      <button class="pick-btn" data-cr-map="dfe">\(\triangle ABC \cong \triangle DFE\)</button>
+                      <button class="pick-btn" data-cr-map="edf">\(\triangle ABC \cong \triangle EDF\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cr-a">\(\angle A\)（度）：<span id="cr-va" class="val-num">50</span></label>
+                    <input type="range" id="cr-a" min="35" max="85" value="50" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cr-f">\(\angle F\)（度）：<span id="cr-vf" class="val-num">75</span></label>
+                    <input type="range" id="cr-f" min="35" max="85" value="75" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (依對應求邊與角)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-3">
+            <p class="quiz-question"><strong>Q3.</strong> 已知 \(\triangle KLM \cong \triangle RST\)，其中 \(K\)、\(L\)、\(M\) 的對應點依序是 \(R\)、\(S\)、\(T\)。若 \(\angle K = 47^\circ\)、\(\angle T = 68^\circ\)，則 \(\angle L\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-3" value="A"><span class="option-text">A. \(47^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-3" value="B"><span class="option-text">B. \(65^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-3" value="C"><span class="option-text">C. \(68^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-3" value="D"><span class="option-text">D. \(133^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(M\) 對應 \(T\)，所以 \(\angle M = \angle T = 68^\circ\)。在 \(\triangle KLM\) 中，
+              \[ \angle L = 180^\circ - 47^\circ - 68^\circ = 65^\circ \]
+              A 錯：\(47^\circ\) 是 \(\angle K\)。<br>
+              C 錯：\(68^\circ\) 是 \(\angle M\)。<br>
+              D 錯：\(133^\circ\) 只扣掉了 \(\angle K\)，忘了扣 \(\angle M\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-4">
+            <p class="quiz-question"><strong>Q4.</strong> 已知 \(\triangle ABC \cong \triangle DEF\)，\(A\)、\(B\)、\(C\) 依序對應 \(D\)、\(E\)、\(F\)。若 \(\overline{AB} = 9\)、\(\overline{BC} = 3x - 2\)、\(\overline{AC} = 2x + 1\)、\(\overline{EF} = x + 8\)，則 \(\triangle DEF\) 的周長是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-4" value="A"><span class="option-text">A. \(33\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-4" value="B"><span class="option-text">B. \(43\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-4" value="C"><span class="option-text">C. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-4" value="D"><span class="option-text">D. \(5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{BC}\) 的對應邊是 \(\overline{EF}\)：
+              \[ \begin{aligned} & 3x - 2 = x + 8 \\ &\Rightarrow x = 5 \end{aligned} \]
+              所以 \(\overline{EF} = \overline{BC} = 13\)、\(\overline{DF} = \overline{AC} = 11\)、\(\overline{DE} = \overline{AB} = 9\)，周長 \(9 + 13 + 11 = 33\)。<br>
+              B 錯：把 \(\overline{AC}\) 當成 \(\overline{EF}\) 的對應邊，會解出 \(x = 7\)，周長算成 \(9 + 19 + 15 = 43\)。<br>
+              C 錯：\(13\) 只是 \(\overline{EF}\) 的長。<br>
+              D 錯：\(5\) 只是 \(x\) 的值。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: SSS
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-draw-polygon" aria-hidden="true"></i> <span>重點 3：SSS——三組邊對應相等就全等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>六個條件不必全比</strong>：全等時三組邊、三組角都相等；反過來，只要挑其中<strong>三個適當的條件</strong>就能確定全等。</li>
+              <li><strong>兩組邊不夠</strong>：固定一邊，另一邊繞著共同的頂點轉，第三邊就跟著變，三角形不只一種。</li>
+              <li><strong>SSS 作圖</strong>（已知三邊 \(a\)、\(b\)、\(c\)）：
+                <ol>
+                  <li>作一直線 \(L\)，在 \(L\) 上作 \(\overline{BC} = a\)。</li>
+                  <li>分別以 \(B\)、\(C\) 為圓心，\(c\)、\(b\) 為半徑，在 \(L\) 的同側各畫一弧，兩弧交於 \(A\)。</li>
+                  <li>連接 \(\overline{AB}\)、\(\overline{AC}\)，\(\triangle ABC\) 即為所求。</li>
+                </ol>
+              </li>
+              <li>作出來的三角形和原來的三角形完全疊合，所以三邊一確定，三角形就只有一種。</li>
+              <li><strong>有未知數時</strong>：先用題目給的那一組相等列式求出 \(x\)，再把每一邊算出來，<strong>三組都比對過</strong>才能下結論。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・SSS 全等性質</span>
+              兩個三角形的三組邊對應相等時，這兩個三角形全等。<br>
+              寫法：\(\because\) 三組邊對應相等，\(\therefore\) 根據 SSS 全等性質，兩三角形全等。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_sss.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。小蜜在標本工作室的木桌上，把三根長短不同的細木條排在羊皮紙上，準備釘成三角形；阿蜂在一旁扶著木條的一端，桌角放著一小盒黃銅圖釘。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：SSS 作圖</h3>
+            <p class="interactive-instruction">拉動滑桿設定三邊 \(a\)、\(b\)、\(c\)，按「下一步」一步一步作出 \(\triangle ABC\)。最後換到「交點取下方」再作一次：兩個三角形翻過來能不能疊合？也試試看哪些三個長度根本作不出三角形。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sss" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sss-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">交點</span>
+                    <div class="btn-group" id="sss-side-group">
+                      <button class="pick-btn active" data-sss-side="up">取上方</button>
+                      <button class="pick-btn" data-sss-side="down">取下方</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="sss-prev">上一步</button>
+                      <span class="step-counter" id="sss-step">1 / 5</span>
+                      <button class="pick-btn" id="sss-next">下一步</button>
+                      <button class="pick-btn" id="sss-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sss-a">\(a = \overline{BC}\)（公分）：<span id="sss-va" class="val-num">5.0</span></label>
+                    <input type="range" id="sss-a" min="4" max="12" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sss-b">\(b = \overline{CA}\)（公分）：<span id="sss-vb" class="val-num">4.0</span></label>
+                    <input type="range" id="sss-b" min="4" max="12" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sss-c">\(c = \overline{AB}\)（公分）：<span id="sss-vc" class="val-num">3.5</span></label>
+                    <input type="range" id="sss-c" min="4" max="12" value="7" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sss-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (SSS 全等性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-5">
+            <p class="quiz-question"><strong>Q5.</strong> \(\triangle ABC\) 中，\(\overline{AB} = 3x - 4\)、\(\overline{BC} = 15\)、\(\overline{AC} = 2x + 3\)；\(\triangle DEF\) 中，\(\overline{DE} = 11\)、\(\overline{EF} = 15\)、\(\overline{DF} = 13\)。若 \(\overline{AB} = \overline{DE}\)，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-5" value="A"><span class="option-text">A. \(x = 4\)，兩三角形根據 SSS 全等</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-5" value="B"><span class="option-text">B. \(x = 5\)，兩三角形根據 SSS 全等</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-5" value="C"><span class="option-text">C. \(x = 5\)，只知兩組邊相等，不一定全等</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-5" value="D"><span class="option-text">D. \(x = 4\)，兩三角形不全等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。由 \(\overline{AB} = \overline{DE}\)：
+              \[ \begin{aligned} & 3x - 4 = 11 \\ &\Rightarrow x = 5 \end{aligned} \]
+              於是 \(\overline{AC} = 2 \times 5 + 3 = 13\)。三組邊 \(\overline{AB} = \overline{DE} = 11\)、\(\overline{BC} = \overline{EF} = 15\)、\(\overline{AC} = \overline{DF} = 13\) 全部相等，根據 SSS 全等。<br>
+              A、D 錯：\(x = 4\) 是把 \(\overline{AC}\) 和 \(\overline{DE}\) 配在一起（\(2x + 3 = 11\)）算出來的，但題目說的是 \(\overline{AB} = \overline{DE}\)。<br>
+              C 錯：求出 \(x\) 之後第三組邊 \(\overline{AC} = \overline{DF}\) 也相等，三組都相等了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-6">
+            <p class="quiz-question"><strong>Q6.</strong> 阿蜂要作三邊長為 \(a\)、\(b\)、\(c\) 的 \(\triangle ABC\)，第一步已經作出 \(\overline{BC} = a\)。為了讓 \(\overline{AB} = c\)，下一步應該怎麼畫弧？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-6" value="A"><span class="option-text">A. 以 \(B\) 為圓心、\(b\) 為半徑</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-6" value="B"><span class="option-text">B. 以 \(C\) 為圓心、\(c\) 為半徑</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-6" value="C"><span class="option-text">C. 以 \(B\) 為圓心、\(c\) 為半徑</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-6" value="D"><span class="option-text">D. 以 \(C\) 為圓心、\(a\) 為半徑</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{AB}\) 的一端是 \(B\)，要讓 \(A\) 到 \(B\) 的距離是 \(c\)，就以 \(B\) 為圓心、\(c\) 為半徑畫弧，\(A\) 一定落在這個弧上。<br>
+              A 錯：這樣得到的是 \(\overline{AB} = b\)。<br>
+              B 錯：這樣得到的是 \(\overline{AC} = c\)。<br>
+              D 錯：半徑 \(a\) 是 \(\overline{BC}\) 的長，和 \(\overline{AB}\) 無關。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: SAS
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-angle-left" aria-hidden="true"></i> <span>重點 4：SAS——兩邊和它們的夾角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>已知兩組邊對應相等，再加<strong>一組角</strong>時要分兩種情況：這個角是兩邊的<strong>夾角</strong>（重點 4），或是其中一邊的<strong>對角</strong>（重點 5）。</li>
+              <li><strong>夾角</strong>：夾在兩個已知邊中間的角。\(\angle B\) 是 \(\overline{BA}\) 和 \(\overline{BC}\) 的夾角。</li>
+              <li><strong>SAS 作圖</strong>（已知兩邊 \(a\)、\(c\) 及夾角 \(\angle 1\)）：
+                <ol>
+                  <li>作 \(\angle B = \angle 1\)。</li>
+                  <li>在 \(\angle B\) 的一邊上取 \(A\)，使 \(\overline{AB} = c\)。</li>
+                  <li>在另一邊上取 \(C\)，使 \(\overline{BC} = a\)。</li>
+                  <li>連接 \(\overline{AC}\)，\(\triangle ABC\) 即為所求。</li>
+                </ol>
+              </li>
+              <li>記號把 A 寫在兩個 S 中間，就是在提醒：這個角<strong>夾在</strong>兩邊之間。</li>
+              <li><strong>共用邊</strong>：兩個三角形共用的那一邊，在兩個三角形裡長度當然相同，可以寫成「\(\overline{AD} = \overline{AD}\)（共用邊）」，也可以寫「公用邊」。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・SAS 全等性質</span>
+              兩個三角形的兩組邊及其夾角分別對應相等時，這兩個三角形全等。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_sas.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。阿蜂在花園的木桌上，把兩根木條的一端用一顆黃銅鉚釘固定在一起、張開成一個角，另一隻手按住其中一根木條；小蜜在對面拿著一捲麻繩，準備量兩根木條末端之間的距離。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：SAS 作圖</h3>
+            <p class="interactive-instruction">拉動滑桿設定兩邊 \(a\)、\(c\) 與夾角 \(\angle 1\)，按「下一步」作出 \(\triangle ABC\)。第三邊 \(\overline{AC}\) 是自己「長」出來的：有沒有可能作出兩種不同的 \(\overline{AC}\)？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sas" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sas-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="sas-prev">上一步</button>
+                      <span class="step-counter" id="sas-step">1 / 5</span>
+                      <button class="pick-btn" id="sas-next">下一步</button>
+                      <button class="pick-btn" id="sas-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sas-a">\(a = \overline{BC}\)（公分）：<span id="sas-va" class="val-num">5.0</span></label>
+                    <input type="range" id="sas-a" min="4" max="12" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sas-c">\(c = \overline{BA}\)（公分）：<span id="sas-vc" class="val-num">4.0</span></label>
+                    <input type="range" id="sas-c" min="4" max="12" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sas-ang">夾角 \(\angle 1\)（度）：<span id="sas-vang" class="val-num">55</span></label>
+                    <input type="range" id="sas-ang" min="30" max="140" value="55" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sas-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (SAS 全等性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-7">
+            <p class="quiz-question"><strong>Q7.</strong> \(\triangle ABC\) 中，\(\overline{AB} = 9\)、\(\overline{BC} = 14\)、\(\angle B = 38^\circ\)。下列哪一個三角形<strong>一定</strong>與 \(\triangle ABC\) 全等？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-7" value="A"><span class="option-text">A. 兩邊長 \(9\)、\(14\)，這兩邊的夾角是 \(38^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7" value="B"><span class="option-text">B. 兩邊長 \(9\)、\(14\)，長 \(14\) 的邊所對的角是 \(38^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7" value="C"><span class="option-text">C. 兩邊長 \(9\)、\(14\)，長 \(9\) 的邊所對的角是 \(38^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-7" value="D"><span class="option-text">D. 三個角與 \(\triangle ABC\) 的三個角分別相等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\triangle ABC\) 的 \(\angle B\) 夾在 \(\overline{AB} = 9\) 和 \(\overline{BC} = 14\) 中間，所以是「兩邊及夾角」，選項 A 的條件完全一樣，根據 SAS 全等。<br>
+              B、C 錯：\(38^\circ\) 是其中一邊的<strong>對角</strong>，不是夾角，和 \(\triangle ABC\) 的條件不一樣，不能保證全等。<br>
+              D 錯：三個角相等只確定形狀，大小可以不同。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-8">
+            <p class="quiz-question"><strong>Q8.</strong> 如圖，四邊形 \(ABCD\) 中連接對角線 \(\overline{BD}\)，\(\overline{AB} = \overline{CD} = 10\)，\(\angle ABD = \angle CDB = 34^\circ\)。若四邊形 \(ABCD\) 的周長是 \(46\)，則 \(\overline{AD}\) 是多少？</p>
+            <canvas class="quiz-fig" data-fig="q8" width="320" height="220" role="img" aria-label="四邊形 ABCD 與對角線 BD，AB 與 CD 各畫一條刻痕並標示 10，角 ABD 與角 CDB 各畫一條弧並標示 34 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-8" value="A"><span class="option-text">A. \(26\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8" value="B"><span class="option-text">B. \(23\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8" value="C"><span class="option-text">C. \(36\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-8" value="D"><span class="option-text">D. \(13\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。在 \(\triangle ABD\) 和 \(\triangle CDB\) 中，\(\overline{AB} = \overline{CD}\)、\(\angle ABD = \angle CDB\)、\(\overline{BD} = \overline{DB}\)（共用邊），根據 SAS 全等，所以 \(\overline{AD} = \overline{CB}\)。
+              \[ \begin{aligned} & 10 + 10 + 2\overline{AD} = 46 \\ &\Rightarrow \overline{AD} = 13 \end{aligned} \]
+              A 錯：\(26\) 是 \(\overline{AD} + \overline{CB}\)，忘了除以 \(2\)。<br>
+              B 錯：\(23\) 是周長的一半，沒有先扣掉兩個 \(10\)。<br>
+              C 錯：\(36\) 只扣掉一個 \(10\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: SSA 不一定全等
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-branch" aria-hidden="true"></i> <span>重點 5：SSA 不能當全等性質——弧可能交出兩個點</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>SSA</strong>：兩組邊對應相等，再加上<strong>其中一邊的對角</strong>對應相等（角不夾在兩邊中間）。</li>
+              <li><strong>作作看</strong>：作 \(\angle A = \angle 1\)，在一邊上取 \(C\) 使 \(\overline{AC} = b\)，再以 \(C\) 為圓心、\(a\) 為半徑畫弧，看弧和另一邊交在哪裡：
+                <ul class="bullet-list">
+                  <li>\(a\) 比 \(C\) 到另一邊的距離還短：碰不到，作不出三角形。</li>
+                  <li>\(a\) 剛好等於這個距離：只碰到一點，那一點的角是直角。</li>
+                  <li>\(a\) 比距離長、但比 \(b\) 短：交出 \(B\)、\(B'\) <strong>兩個點</strong>，得到 \(\triangle ABC\)、\(\triangle AB'C\) 兩個不同的三角形。</li>
+                </ul>
+              </li>
+              <li>兩個三角形都符合同樣的 SSA 條件卻不全等，所以 <strong>SSA 不能作為全等性質</strong>。</li>
+              <li><strong>「不一定全等」不是「一定不全等」</strong>：只知道 SSA 時，兩個三角形可能全等、也可能不全等，所以不能拿來判定。</li>
+              <li><strong>例外</strong>：如果那個對角是直角（或鈍角），弧只會在另一邊上交出一點，三角形就只有一種——直角的情形就是下一個重點的 RHS。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・SSA</span>
+              兩邊及其中一邊的對角對應相等，兩個三角形<strong>不一定</strong>全等。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_ssa.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。花園的石板小徑上，阿蜂蹲著看一條拉直的麻繩，小蜜站在旁邊，手裡拿著一根短木棒，正在比較木棒該靠在麻繩的近處還是遠處；背景是花壇與木框蜂箱。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：SSA 作得出幾個三角形？</h3>
+            <p class="interactive-instruction">\(\overline{AC}\) 固定 \(5\) 公分。拉動 \(\angle 1\) 和 \(a\)，按「下一步」看以 \(C\) 為圓心的弧和水平那一邊交出幾個點。找一組會交出兩個點的數字，再找一組只交出一個點的。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ssa" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ssa-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="ssa-prev">上一步</button>
+                      <span class="step-counter" id="ssa-step">1 / 4</span>
+                      <button class="pick-btn" id="ssa-next">下一步</button>
+                      <button class="pick-btn" id="ssa-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ssa-ang">\(\angle 1\)（度）：<span id="ssa-vang" class="val-num">40</span></label>
+                    <input type="range" id="ssa-ang" min="20" max="150" value="40" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ssa-a">\(a = \overline{CB}\)（公分）：<span id="ssa-va" class="val-num">4.0</span></label>
+                    <input type="range" id="ssa-a" min="3" max="14" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ssa-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (SSA 不一定全等)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-9">
+            <p class="quiz-question"><strong>Q9.</strong> 小蜜依 SSA 的條件作圖：以 \(C\) 為圓心畫弧，交 \(\angle A\) 的一邊於 \(B\)、\(B'\) 兩點（\(B'\) 比較靠近 \(A\)），得到 \(\triangle ABC\) 與 \(\triangle AB'C\)。若 \(\angle AB'C = 117^\circ\)，則 \(\angle ABC\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-9" value="A"><span class="option-text">A. \(117^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-9" value="B"><span class="option-text">B. \(54^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-9" value="C"><span class="option-text">C. \(63^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-9" value="D"><span class="option-text">D. \(27^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(B\)、\(B'\) 都在同一個弧上，所以 \(\overline{CB} = \overline{CB'}\)，\(\triangle CBB'\) 是等腰三角形，兩底角 \(\angle CBB' = \angle CB'B\)。\(A\)、\(B'\)、\(B\) 在同一直線上，
+              \[ \begin{aligned} \angle CB'B &= 180^\circ - 117^\circ \\ &= 63^\circ \end{aligned} \]
+              所以 \(\angle ABC = \angle CBB' = 63^\circ\)。兩個三角形 SSA 條件相同，一個角是 \(63^\circ\)、對應的角卻是 \(117^\circ\)，正好說明它們不全等。<br>
+              A 錯：以為兩個三角形全等、對應角相等。<br>
+              B 錯：\(54^\circ\) 是 \(180^\circ - 2 \times 63^\circ\)，是 \(\angle BCB'\)。<br>
+              D 錯：\(27^\circ\) 和題目的角沒有關係。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-10">
+            <p class="quiz-question"><strong>Q10.</strong> \(\angle A\) 是銳角，\(C\) 在 \(\angle A\) 的一邊上，\(\overline{AC} = 13\)，\(C\) 到 \(\angle A\) 另一邊的距離是 \(6\)。要在另一邊上找一點 \(B\)，使 \(\overline{CB} = 9\)，可以作出幾個不同的 \(\triangle ABC\)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-10" value="A"><span class="option-text">A. \(0\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-10" value="B"><span class="option-text">B. \(1\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-10" value="C"><span class="option-text">C. 無限多個</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-10" value="D"><span class="option-text">D. \(2\) 個</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。以 \(C\) 為圓心、\(9\) 為半徑畫弧：<br>
+              半徑 \(9\) 比 \(C\) 到另一邊的距離 \(6\) 長，所以弧會和那條直線交於兩點；<br>
+              半徑 \(9\) 又比 \(\overline{AC} = 13\) 短，所以 \(A\) 在弧的外面，兩個交點都落在 \(A\) 的同一側、都在 \(\angle A\) 的邊上。<br>
+              於是作得出 \(2\) 個不同的三角形，這正是 SSA 不能判定全等的原因。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: RHS
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-full" aria-hidden="true"></i> <span>重點 6：RHS——直角三角形的斜邊與一股</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>為什麼成立</strong>：兩個直角三角形的斜邊相等、一股也相等，由畢氏定理
+                \[ (\text{另一股})^2 = (\text{斜邊})^2 - (\text{一股})^2 \]
+                另一股也相等，三組邊都相等，就回到 SSS。</li>
+              <li><strong>R、H、S</strong>：R 代表直角（Right angle），H 代表斜邊（Hypotenuse），S 代表一邊（Side，這裡是一股）。</li>
+              <li><strong>三個條件缺一不可</strong>：一定要是<strong>直角三角形</strong>，相等的邊裡一定要有<strong>斜邊</strong>（直角的對邊）。</li>
+              <li><strong>作圖</strong>：作 \(L \perp M\) 於 \(P\)；以 \(P\) 為圓心、股長為半徑交 \(M\) 於 \(R\)；以 \(R\) 為圓心、斜邊長為半徑交 \(L\) 於 \(Q\)；連 \(\overline{QR}\)。</li>
+              <li>斜邊一定比兩股都長；股不比斜邊短時，弧碰不到 \(L\)，作不出來。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・RHS 全等性質</span>
+              兩個直角三角形的斜邊及一股分別對應相等時，這兩個直角三角形全等。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_rhs.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。阿蜂把一根長木條斜靠在直立的木框蜂箱側面，木條下端抵在石板地上；小蜜蹲在蜂箱旁，抬頭看著木條靠在蜂箱上的那一點。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：已知斜邊與一股</h3>
+            <p class="interactive-instruction">拉動斜邊 \(H\) 與一股 \(S\)（單位長），按「下一步」用尺規作出直角三角形 \(PQR\)。第三邊 \(\overline{PQ}\) 一定等於多少？股和斜邊一樣長、或股比較長時又會怎樣？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-rhs" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rhs-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="rhs-prev">上一步</button>
+                      <span class="step-counter" id="rhs-step">1 / 5</span>
+                      <button class="pick-btn" id="rhs-next">下一步</button>
+                      <button class="pick-btn" id="rhs-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rhs-h">斜邊 \(H\)：<span id="rhs-vh" class="val-num">7</span></label>
+                    <input type="range" id="rhs-h" min="3" max="10" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rhs-s">一股 \(S\)：<span id="rhs-vs" class="val-num">4</span></label>
+                    <input type="range" id="rhs-s" min="1" max="9" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rhs-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (RHS 全等性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-11">
+            <p class="quiz-question"><strong>Q11.</strong> \(\triangle ABC\) 與 \(\triangle DEF\) 中，\(\angle B = \angle E = 90^\circ\)，\(\overline{AC} = \overline{DF} = 26\)，\(\overline{AB} = \overline{DE} = 24\)。兩個三角形根據哪一個性質全等？\(\triangle DEF\) 的面積是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-11" value="A"><span class="option-text">A. RHS；\(120\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-11" value="B"><span class="option-text">B. SAS；\(120\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-11" value="C"><span class="option-text">C. RHS；\(240\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-11" value="D"><span class="option-text">D. 條件不足，不能判定</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩個都是直角三角形，\(\overline{AC}\)、\(\overline{DF}\) 是直角的對邊（斜邊），再加一股相等，根據 RHS 全等。另一股
+              \[ \begin{aligned} \overline{BC} &= \sqrt{26^2 - 24^2} \\ &= \sqrt{100} = 10 \end{aligned} \]
+              面積 \(= \frac{1}{2} \times 24 \times 10 = 120\)，全等的 \(\triangle DEF\) 面積也是 \(120\)。<br>
+              B 錯：相等的兩邊是斜邊和一股，直角並不夾在它們中間，不是 SAS。<br>
+              C 錯：\(240\) 忘了乘 \(\frac{1}{2}\)。<br>
+              D 錯：直角、斜邊、一股三個條件都有。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-12">
+            <p class="quiz-question"><strong>Q12.</strong> \(\triangle ABC\) 與 \(\triangle DEF\) 中，\(\angle C = \angle F = 90^\circ\)，\(\overline{AB} = \overline{DE} = 17\)，\(\overline{AC} = \overline{DF} = 8\)。\(\overline{EF}\) 的長是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-12" value="A"><span class="option-text">A. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-12" value="B"><span class="option-text">B. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-12" value="C"><span class="option-text">C. \(25\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-12" value="D"><span class="option-text">D. \(17\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\angle C\)、\(\angle F\) 是直角，\(\overline{AB}\)、\(\overline{DE}\) 是斜邊，\(\overline{AC}\)、\(\overline{DF}\) 是一股，根據 RHS，\(\triangle ABC \cong \triangle DEF\)，所以 \(\overline{EF} = \overline{BC}\)：
+              \[ \begin{aligned} \overline{BC} &= \sqrt{17^2 - 8^2} \\ &= \sqrt{225} = 15 \end{aligned} \]
+              A 錯：\(17 - 8 = 9\)，把畢氏定理的平方漏掉了。<br>
+              C 錯：\(17 + 8 = 25\)。<br>
+              D 錯：\(17\) 是斜邊，\(\overline{EF}\) 是一股，一定比斜邊短。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: ASA
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-horizontal" aria-hidden="true"></i> <span>重點 7：ASA——兩角和它們的夾邊</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>兩組角不夠</strong>：只知道兩組角對應相等，三角形可以放大縮小，不一定全等。</li>
+              <li>再加<strong>一組邊</strong>時也分兩種：這條邊是兩角的<strong>夾邊</strong>（重點 7），或是其中一角的<strong>對邊</strong>（重點 8）。</li>
+              <li><strong>ASA 作圖</strong>（已知兩角 \(\angle 1\)、\(\angle 2\) 及夾邊 \(a\)）：
+                <ol>
+                  <li>作 \(\overline{BC} = a\)。</li>
+                  <li>以 \(B\) 為頂點、\(\overline{BC}\) 為一邊，作 \(\angle B = \angle 1\)。</li>
+                  <li>以 \(C\) 為頂點、\(\overline{BC}\) 為一邊，在<strong>同側</strong>作 \(\angle C = \angle 2\)。</li>
+                  <li>兩角的另一邊交於 \(A\)，\(\triangle ABC\) 即為所求。</li>
+                </ol>
+              </li>
+              <li>記號把 S 寫在兩個 A 中間：這條邊<strong>夾在</strong>兩個角之間。</li>
+              <li><strong>作得出來的條件</strong>：兩個角的和一定要小於 \(180^\circ\)，兩條邊才會相交。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・ASA 全等性質</span>
+              兩個三角形的兩組角及其夾邊分別對應相等時，這兩個三角形全等。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_asa.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。小蜜站在花壇邊，雙手各握一根細木桿，從一段平放在草地上的木板兩端斜斜往上舉，兩根木桿的頂端在空中碰在一起；阿蜂在一旁抬頭看兩根木桿相碰的位置。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：ASA 作圖</h3>
+            <p class="interactive-instruction">拉動夾邊 \(a\) 與兩個角 \(\angle 1\)、\(\angle 2\)，按「下一步」作出 \(\triangle ABC\)。兩條射線只會交在一個點嗎？把兩個角調大，加起來超過 \(180^\circ\) 時會發生什麼事？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-asa" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="asa-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="asa-prev">上一步</button>
+                      <span class="step-counter" id="asa-step">1 / 4</span>
+                      <button class="pick-btn" id="asa-next">下一步</button>
+                      <button class="pick-btn" id="asa-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="asa-a">夾邊 \(a = \overline{BC}\)（公分）：<span id="asa-va" class="val-num">5.0</span></label>
+                    <input type="range" id="asa-a" min="5" max="12" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="asa-b">\(\angle 1\)（度）：<span id="asa-vb" class="val-num">50</span></label>
+                    <input type="range" id="asa-b" min="20" max="140" value="50" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="asa-c">\(\angle 2\)（度）：<span id="asa-vc" class="val-num">70</span></label>
+                    <input type="range" id="asa-c" min="20" max="140" value="70" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="asa-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (ASA 全等性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-13">
+            <p class="quiz-question"><strong>Q13.</strong> 如圖，正方形 \(ABCD\) 中，\(E\)、\(F\) 分別在 \(\overline{AB}\)、\(\overline{AD}\) 上，\(\angle 1 = \angle BCE\)、\(\angle 2 = \angle DCF\)，且 \(\angle 1 = \angle 2 = 17^\circ\)。\(\angle CEF\) 是幾度？</p>
+            <canvas class="quiz-fig" data-fig="q13" width="320" height="220" role="img" aria-label="正方形 ABCD，E 在 AB 上、F 在 AD 上，連接 CE、CF、EF，角 BCE 與角 DCF 各畫一條弧，標示角 1 等於角 2 等於 17 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-13" value="A"><span class="option-text">A. \(56^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-13" value="B"><span class="option-text">B. \(73^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-13" value="C"><span class="option-text">C. \(34^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-13" value="D"><span class="option-text">D. \(62^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。在 \(\triangle CBE\) 和 \(\triangle CDF\) 中，\(\angle 1 = \angle 2\)、\(\overline{CB} = \overline{CD}\)、\(\angle B = \angle D = 90^\circ\)（正方形），\(\overline{CB}\)、\(\overline{CD}\) 夾在兩角中間，根據 ASA 全等，所以 \(\overline{CE} = \overline{CF}\)，\(\triangle CEF\) 是等腰三角形。
+              \[ \begin{aligned} \angle ECF &= 90^\circ - 17^\circ - 17^\circ \\ &= 56^\circ \\ \angle CEF &= (180^\circ - 56^\circ) \div 2 \\ &= 62^\circ \end{aligned} \]
+              A 錯：\(56^\circ\) 是頂角 \(\angle ECF\)。<br>
+              B 錯：\(73^\circ\) 是 \(\angle BEC\)（\(90^\circ - 17^\circ\)）。<br>
+              C 錯：\(34^\circ\) 是 \(\angle 1 + \angle 2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-14">
+            <p class="quiz-question"><strong>Q14.</strong> 阿蜂想用 ASA 作圖：夾邊 \(5\) 公分，兩端的角分別是 \(96^\circ\) 和 \(87^\circ\)。結果會如何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-14" value="A"><span class="option-text">A. 作不出三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-14" value="B"><span class="option-text">B. 剛好作出一個三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-14" value="C"><span class="option-text">C. 作出兩個不全等的三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-14" value="D"><span class="option-text">D. 作出無限多個三角形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(96^\circ + 87^\circ = 183^\circ\)，已經超過三角形的內角和 \(180^\circ\)。從夾邊兩端作出的兩條射線往外張開，永遠不會相交，作不出三角形。<br>
+              B 錯：兩角和小於 \(180^\circ\) 時才會剛好作出一個。<br>
+              C 錯：ASA 的兩條射線最多只交一點，不會有兩個。<br>
+              D 錯：條件確定後沒有任何可以變動的地方。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: AAS
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shuffle" aria-hidden="true"></i> <span>重點 8：AAS——兩角和其中一角的對邊</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>AAS</strong>：兩組角對應相等，再加上其中一個角的<strong>對邊</strong>對應相等（邊不夾在兩角中間）。</li>
+              <li><strong>為什麼成立</strong>：兩組角相等，由內角和 \(180^\circ\)，第三組角也相等。這時已知的那條邊就夾在另外兩個角中間，變成 ASA。</li>
+              <li><strong>對應要對好</strong>：相等的邊必須對著<strong>對應</strong>的角。例如 \(\angle B = \angle E\)、\(\angle C = \angle F\) 時，要 \(\overline{AC} = \overline{DF}\)（都是 \(\angle B\)、\(\angle E\) 的對邊）才行；若一個三角形給的是 \(\angle B\) 的對邊、另一個給的是 \(\angle F\) 的對邊，就不能判定。</li>
+              <li><strong>判定之後</strong>：對應邊、對應角都相等，可以拿來求長度、列方程式。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・AAS 全等性質</span>
+              兩個三角形的兩組角及其中一組角的對邊分別對應相等時，這兩個三角形全等。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_aas.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。小蜜和阿蜂在標本工作室裡，各自拿著一片三角形的蜂巢格木片，舉到窗前對著光比較；窗外是開滿玫瑰紅花朵的花壇。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：把 AAS 變成 ASA</h3>
+            <p class="interactive-instruction">已知 \(\angle B\)、\(\angle C\) 和一條邊。選這條邊是誰：它是 \(\angle B\) 的對邊、\(\angle C\) 的對邊，還是夾邊？拉動滑桿，看內角和怎麼補出第三個角，讓已知的邊變成夾邊。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-aas" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="aas-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知的邊</span>
+                    <div class="btn-group" id="aas-side-group">
+                      <button class="pick-btn active" data-aas-side="ac">\(\overline{AC}\)（\(\angle B\) 的對邊）</button>
+                      <button class="pick-btn" data-aas-side="ab">\(\overline{AB}\)（\(\angle C\) 的對邊）</button>
+                      <button class="pick-btn" data-aas-side="bc">\(\overline{BC}\)（夾邊）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="aas-b">\(\angle B\)（度）：<span id="aas-vb" class="val-num">50</span></label>
+                    <input type="range" id="aas-b" min="25" max="110" value="50" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="aas-c">\(\angle C\)（度）：<span id="aas-vc" class="val-num">60</span></label>
+                    <input type="range" id="aas-c" min="25" max="110" value="60" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="aas-s">已知邊的長（公分）：<span id="aas-vs" class="val-num">4.5</span></label>
+                    <input type="range" id="aas-s" min="6" max="12" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="aas-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (AAS 全等性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-15">
+            <p class="quiz-question"><strong>Q15.</strong> \(\triangle ABC\) 與 \(\triangle DEF\) 中，\(\angle B = \angle E\)、\(\angle C = \angle F\)，\(\overline{AB} = \overline{DE} = 14\)，\(\overline{AC} = 11\)，\(\overline{EF} = 16\)。\(\triangle DEF\) 的周長是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-15" value="A"><span class="option-text">A. \(44\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-15" value="B"><span class="option-text">B. \(46\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-15" value="C"><span class="option-text">C. \(41\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-15" value="D"><span class="option-text">D. 條件不足，無法求出</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{AB}\) 是 \(\angle C\) 的對邊、\(\overline{DE}\) 是 \(\angle F\) 的對邊，而 \(\angle C = \angle F\)，對應正確。由 \(\angle B = \angle E\)、\(\angle C = \angle F\)、\(\overline{AB} = \overline{DE}\)，根據 AAS 全等，所以 \(\overline{DF} = \overline{AC} = 11\)，周長 \(14 + 16 + 11 = 41\)。<br>
+              A 錯：把 \(\overline{DF}\) 當成 \(14\)。<br>
+              B 錯：把 \(\overline{DF}\) 當成 \(16\)。<br>
+              D 錯：兩角及一組對應的對邊已經足夠判定全等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-16">
+            <p class="quiz-question"><strong>Q16.</strong> \(\triangle ABC\) 與 \(\triangle DEF\) 中，\(\angle A = \angle D = 52^\circ\)、\(\angle B = \angle E\)、\(\overline{BC} = \overline{EF}\)；\(\overline{AB} = 9\)、\(\overline{AC} = 19\)、\(\overline{DF} = 4x - 5\)。\(x\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-16" value="A"><span class="option-text">A. \(3.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-16" value="B"><span class="option-text">B. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-16" value="C"><span class="option-text">C. \(19\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-16" value="D"><span class="option-text">D. 不能判定全等，無法求出</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{BC}\) 是 \(\angle A\) 的對邊、\(\overline{EF}\) 是 \(\angle D\) 的對邊，由 \(\angle A = \angle D\)、\(\angle B = \angle E\)、\(\overline{BC} = \overline{EF}\)，根據 AAS 全等，所以 \(\overline{DF} = \overline{AC}\)：
+              \[ \begin{aligned} & 4x - 5 = 19 \\ &\Rightarrow x = 6 \end{aligned} \]
+              A 錯：\(\overline{DF}\) 的對應邊是 \(\overline{AC}\)，不是 \(\overline{AB}\)；\(4x - 5 = 9\) 配錯了。<br>
+              C 錯：\(19\) 是 \(\overline{DF}\) 的長，不是 \(x\)。<br>
+              D 錯：兩角及其中一角的對邊對應相等，AAS 成立。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: AAA 不能當全等性質
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> <span>重點 9：AAA 不能當全等性質——形狀一樣，大小可以不同</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩個三角形的<strong>兩組角</strong>對應相等時，由內角和 \(180^\circ\)，<strong>第三組角也一定相等</strong>。</li>
+              <li>所以「三組角相等」其實只比「兩組角相等」多了一句廢話，仍然沒有說到任何一條邊。</li>
+              <li><strong>反例</strong>：邊長 \(2\) 和邊長 \(4\) 的兩個正三角形，三個角都是 \(60^\circ\)，卻明顯不能疊合。</li>
+              <li>三個角只決定三角形的<strong>形狀</strong>，不決定<strong>大小</strong>：同一個形狀可以等比例放大、縮小。</li>
+              <li>到目前為止，能判定全等的只有 <strong>SSS、SAS、RHS、ASA、AAS</strong> 五種；<strong>SSA、AAA</strong> 都不能。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・AAA</span>
+              三組角對應相等，兩個三角形<strong>不一定</strong>全等——判定全等至少要有一組邊。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_aaa.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。工作室的木架上並排立著一大一小兩個三角形的蜂巢格木框，小蜜站在木架前，一手指著大的那一個、一手指著小的那一個，轉頭看向阿蜂。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：放大縮小機</h3>
+            <p class="interactive-instruction">拉動 \(\angle A\)、\(\angle B\) 決定形狀，再拉動「倍數」把 \(\triangle DEF\) 放大或縮小。三個角一直都對應相等，兩個三角形什麼時候才會全等？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-aaa" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="aaa-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="aaa-a">\(\angle A = \angle D\)（度）：<span id="aaa-va" class="val-num">60</span></label>
+                    <input type="range" id="aaa-a" min="30" max="100" value="60" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="aaa-b">\(\angle B = \angle E\)（度）：<span id="aaa-vb" class="val-num">45</span></label>
+                    <input type="range" id="aaa-b" min="30" max="100" value="45" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="aaa-k">倍數（\(\overline{EF}\) 是 \(\overline{BC}\) 的幾倍）：<span id="aaa-vk" class="val-num">1.5</span></label>
+                    <input type="range" id="aaa-k" min="2" max="8" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="aaa-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (AAA 不一定全等)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-17">
+            <p class="quiz-question"><strong>Q17.</strong> \(\triangle ABC\) 與 \(\triangle DEF\) 中，\(\angle A = \angle D = 58^\circ\)，\(\angle B = \angle E = 71^\circ\)。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-17" value="A"><span class="option-text">A. 兩個三角形一定全等</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-17" value="B"><span class="option-text">B. \(\angle C = \angle F\)，但兩個三角形不一定全等</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-17" value="C"><span class="option-text">C. \(\angle C\) 與 \(\angle F\) 不一定相等</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-17" value="D"><span class="option-text">D. 兩個三角形的面積一定相等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。由內角和，\[ \begin{aligned} \angle C = \angle F &= 180^\circ - 58^\circ - 71^\circ \\ &= 51^\circ \end{aligned} \]三組角都相等；但沒有任何一組邊相等，三角形可以一大一小，不一定全等。<br>
+              A 錯：AAA 不能判定全等。<br>
+              C 錯：兩組角相等，第三組角一定相等。<br>
+              D 錯：一大一小時面積不同。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-18">
+            <p class="quiz-question"><strong>Q18.</strong> 兩個三角形的三個角都是 \(41^\circ\)、\(76^\circ\)、\(63^\circ\)。其中一個的最短邊是 \(5\) 公分，另一個的最短邊是 \(8\) 公分。這兩個三角形的關係是？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-18" value="A"><span class="option-text">A. 根據 AAA，兩個三角形全等</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-18" value="B"><span class="option-text">B. 要看擺放的位置才能決定</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-18" value="C"><span class="option-text">C. 根據 ASA，兩個三角形全等</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-18" value="D"><span class="option-text">D. 不全等：形狀相同，但對應邊不相等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。最短邊都是 \(41^\circ\) 角的對邊，是一組對應邊，一個 \(5\) 公分、一個 \(8\) 公分，不相等，所以不可能疊合。三個角相等只說明形狀相同。<br>
+              A 錯：AAA 不是全等性質。<br>
+              B 錯：全等與擺放位置無關，只看能不能經過平移、旋轉、翻轉疊合。<br>
+              C 錯：ASA 需要一組<strong>相等</strong>的夾邊，這裡的邊都不相等。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 判別用哪一個全等性質
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>重點 10：判別該用哪一個全等性質</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>第一步：數一數</strong>。相等的邊有幾組（S）、相等的角有幾組（A）。</li>
+              <li><strong>三組邊</strong>：SSS。</li>
+              <li><strong>兩邊一角</strong>：角夾在兩邊中間 → SAS；是直角三角形而且相等的邊有斜邊 → RHS；其他 → SSA，不一定全等。</li>
+              <li><strong>一邊兩角</strong>：邊夾在兩角中間 → ASA；邊是其中一角的對邊 → AAS（要對好對應）。</li>
+              <li><strong>三組角</strong>：AAA，不一定全等。</li>
+              <li>圖上的記號：刻痕條數相同的邊相等、弧條數相同的角相等、小方塊代表直角。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>全等性質</th><th>全等條件</th></tr></thead>
+                <tbody>
+                  <tr><td>SSS</td><td>三組邊分別對應相等</td></tr>
+                  <tr><td>SAS</td><td>兩組邊及其夾角分別對應相等</td></tr>
+                  <tr><td>RHS</td><td>直角三角形的斜邊及一股分別對應相等</td></tr>
+                  <tr><td>ASA</td><td>兩組角及其夾邊分別對應相等</td></tr>
+                  <tr><td>AAS</td><td>兩組角及其中一組角的對邊分別對應相等</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・判別</span>
+              先數組數，再看「夾」的位置：角夾在兩邊中間是 SAS，邊夾在兩角中間是 ASA。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_judge.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。阿蜂坐在標本工作室的木桌前，桌上攤著一排卡片，每張卡片上畫著兩個小三角形的圖樣（沒有文字）；他一手拿起一張卡片端詳，小蜜站在他身後探頭看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：全等判別卡</h3>
+            <p class="interactive-instruction">選一張卡片，看兩個三角形上的記號：哪些邊、哪些角對應相等？在下方選出它屬於哪一個全等性質（或「不一定全等」）。答完按「下一張」。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-jd" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="jd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">卡片</span>
+                    <div class="btn-group" id="jd-card-group">
+                      <button class="pick-btn active" data-jd-card="0">1</button>
+                      <button class="pick-btn" data-jd-card="1">2</button>
+                      <button class="pick-btn" data-jd-card="2">3</button>
+                      <button class="pick-btn" data-jd-card="3">4</button>
+                      <button class="pick-btn" data-jd-card="4">5</button>
+                      <button class="pick-btn" data-jd-card="5">6</button>
+                      <button class="pick-btn" data-jd-card="6">7</button>
+                      <button class="pick-btn" data-jd-card="7">8</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">我的判斷</span>
+                    <div class="btn-group" id="jd-judge-group">
+                      <button class="pick-btn" data-jd-judge="SSS">SSS</button>
+                      <button class="pick-btn" data-jd-judge="SAS">SAS</button>
+                      <button class="pick-btn" data-jd-judge="RHS">RHS</button>
+                      <button class="pick-btn" data-jd-judge="ASA">ASA</button>
+                      <button class="pick-btn" data-jd-judge="AAS">AAS</button>
+                      <button class="pick-btn" data-jd-judge="NO">不一定全等</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">換卡</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="jd-next">下一張</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="jd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (判別全等性質)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-19">
+            <p class="quiz-question"><strong>Q19.</strong> 如圖，\(\triangle ABC\) 中，\(\overline{AB} = 8\)、\(\angle B = 47^\circ\)、\(\angle C = 61^\circ\)。下列哪一個三角形一定與 \(\triangle ABC\) 全等？</p>
+            <canvas class="quiz-fig" data-fig="q19" width="320" height="220" role="img" aria-label="三角形 ABC，邊 AB 標示 8，角 B 標示 47 度，角 C 標示 61 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-19" value="A"><span class="option-text">A. 兩個角是 \(47^\circ\)、\(61^\circ\)，長 \(8\) 的邊夾在這兩個角中間</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-19" value="B"><span class="option-text">B. 兩個角是 \(47^\circ\)、\(61^\circ\)，長 \(8\) 的邊是 \(47^\circ\) 角的對邊</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-19" value="C"><span class="option-text">C. 兩個角是 \(47^\circ\)、\(61^\circ\)，長 \(8\) 的邊是 \(61^\circ\) 角的對邊</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-19" value="D"><span class="option-text">D. 三個角是 \(47^\circ\)、\(61^\circ\)、\(72^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。在 \(\triangle ABC\) 中，\(\overline{AB}\) 的兩端是 \(A\)、\(B\)，它不在 \(\angle C\) 的兩邊上，是 \(\angle C = 61^\circ\) 的對邊。選項 C 的兩角與那條邊的位置完全對應，根據 AAS 全等。<br>
+              A 錯：\(\triangle ABC\) 中夾在 \(47^\circ\)、\(61^\circ\) 中間的是 \(\overline{BC}\)，不是 \(\overline{AB}\)。<br>
+              B 錯：\(47^\circ\) 角（\(\angle B\)）的對邊是 \(\overline{AC}\)，不是長 \(8\) 的 \(\overline{AB}\)。<br>
+              D 錯：只有三個角，AAA 不能判定全等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-20">
+            <p class="quiz-question"><strong>Q20.</strong> \(\triangle ABC\) 中，\(\angle A = 64^\circ\)、\(\angle B = 53^\circ\)。小蜜與阿蜂想在 \(\overline{BC}\) 的另一側找一點 \(D\)，使 \(\triangle ABC\) 與 \(\triangle DBC\) 全等。<br>
+            小蜜：分別以 \(B\)、\(C\) 為圓心、\(\overline{BC}\) 為半徑畫弧，兩弧交於 \(D\)。<br>
+            阿蜂：分別以 \(B\)、\(C\) 為頂點、\(\overline{BC}\) 為一邊，在另一側作 \(\angle DBC = \angle ABC\)、\(\angle DCB = \angle ACB\)，兩角的另一邊交於 \(D\)。<br>
+            誰的作法正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-20" value="A"><span class="option-text">A. 兩人都正確</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-20" value="B"><span class="option-text">B. 只有小蜜正確</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-20" value="C"><span class="option-text">C. 只有阿蜂正確</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-20" value="D"><span class="option-text">D. 兩人都不正確</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。阿蜂的作法讓 \(\angle DBC = \angle ABC\)、\(\overline{BC} = \overline{BC}\)（共用邊）、\(\angle DCB = \angle ACB\)，根據 ASA，\(\triangle DBC \cong \triangle ABC\)。<br>
+              小蜜的作法讓 \(\overline{DB} = \overline{DC} = \overline{BC}\)，作出的 \(\triangle DBC\) 是正三角形，三個角都是 \(60^\circ\)；但 \(\triangle ABC\) 的角是 \(64^\circ\)、\(53^\circ\)、\(63^\circ\)，兩者不全等。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 圖形裡藏起來的條件
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span>重點 11：找出圖裡藏起來的條件</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>很多題目只寫兩個條件，第三個條件<strong>藏在圖裡</strong>，要自己找出來：
+                <ul class="bullet-list">
+                  <li><strong>共用邊</strong>：兩個三角形共用一條邊，寫成 \(\overline{AD} = \overline{AD}\)（共用邊）。</li>
+                  <li><strong>共用角</strong>：兩個三角形用到同一個頂點的同一個角，寫成 \(\angle C = \angle C\)（共用角）。</li>
+                  <li><strong>對頂角</strong>：兩條直線相交，對頂角相等。</li>
+                  <li><strong>垂直</strong>給直角；<strong>中點</strong>給兩段等長；<strong>正方形</strong>給四邊相等、四個直角。</li>
+                </ul>
+              </li>
+              <li><strong>說明的格式</strong>：列出三個條件，每一個後面用括號寫理由，最後寫「根據某某全等性質」：
+                \[ \begin{aligned} &\because \overline{AB} = \overline{AC}\ (\text{已知}) \\ &\phantom{\because}\ \overline{BD} = \overline{CD}\ (\text{已知}) \\ &\phantom{\because}\ \overline{AD} = \overline{AD}\ (\text{共用邊}) \end{aligned} \]
+                \(\therefore\) 根據 SSS 全等性質，\(\triangle ABD \cong \triangle ACD\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・找條件</span>
+              題目只給兩個條件時，先找共用邊、共用角、對頂角。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_hidden.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。小蜜蹲在花園的石板地上，拿著一支放大鏡仔細看地上用粉筆畫的線條；阿蜂站在她身旁，腰間掛著養蜂人網帽，彎腰一起看。地上的線條只是幾條交叉的直線，沒有任何文字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：藏起來的第三個條件</h3>
+            <p class="interactive-instruction">選一種圖形，按「下一步」：先看題目給的兩個條件，再找出圖裡藏著的第三個，最後判定是哪一個全等性質。拉動「形狀」滑桿，換個樣子再找一次。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-hd" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="hd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="hd-mode-group">
+                      <button class="pick-btn active" data-hd-mode="side">共用邊</button>
+                      <button class="pick-btn" data-hd-mode="angle">共用角</button>
+                      <button class="pick-btn" data-hd-mode="vert">對頂角</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="hd-prev">上一步</button>
+                      <span class="step-counter" id="hd-step">1 / 3</span>
+                      <button class="pick-btn" id="hd-next">下一步</button>
+                      <button class="pick-btn" id="hd-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="hd-p">形狀：<span id="hd-vp" class="val-num">3</span></label>
+                    <input type="range" id="hd-p" min="0" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="hd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (找出藏起來的條件)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-21">
+            <p class="quiz-question"><strong>Q21.</strong> \(\triangle ABC\) 中，\(D\) 在 \(\overline{AB}\) 上、\(E\) 在 \(\overline{AC}\) 上，\(\overline{AD} = \overline{AE}\)、\(\overline{AB} = \overline{AC}\)，連接 \(\overline{BE}\)、\(\overline{CD}\)。要說明 \(\triangle ABE \cong \triangle ACD\)，還需要哪一個條件、根據哪一個性質？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-21" value="A"><span class="option-text">A. \(\angle A = \angle A\)（共用角），SAS</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-21" value="B"><span class="option-text">B. \(\overline{BE} = \overline{CD}\)，SSS</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-21" value="C"><span class="option-text">C. \(\angle A = \angle A\)（共用角），ASA</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-21" value="D"><span class="option-text">D. \(\overline{BC} = \overline{BC}\)（共用邊），SSS</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\triangle ABE\) 的兩邊是 \(\overline{AB}\)、\(\overline{AE}\)，\(\triangle ACD\) 的兩邊是 \(\overline{AC}\)、\(\overline{AD}\)，兩組都相等；它們的夾角都是頂點 \(A\) 的那個角，\(\angle A = \angle A\)（共用角），根據 SAS 全等。<br>
+              B 錯：\(\overline{BE} = \overline{CD}\) 是全等之後才知道的，不能拿來證明全等。<br>
+              C 錯：只有一組角，不是 ASA。<br>
+              D 錯：\(\overline{BC}\) 不是這兩個三角形的邊。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-22">
+            <p class="quiz-question"><strong>Q22.</strong> 如圖，\(\overline{AB}\) 與 \(\overline{CD}\) 交於 \(E\)，\(\angle A = \angle B\)，\(\overline{AE} = \overline{BE}\)。若 \(\overline{CE} = 2x + 5\)、\(\overline{DE} = 3x - 4\)，則 \(\overline{CD}\) 的長是多少？</p>
+            <canvas class="quiz-fig" data-fig="q22" width="320" height="220" role="img" aria-label="線段 AB 與 CD 交於 E，連接 AC 與 BD；AE 與 BE 各畫一條刻痕，角 A 與角 B 各畫一條弧，CE 標示 2x 加 5，DE 標示 3x 減 4"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-22" value="A"><span class="option-text">A. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-22" value="B"><span class="option-text">B. \(23\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-22" value="C"><span class="option-text">C. \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-22" value="D"><span class="option-text">D. \(46\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。在 \(\triangle AEC\) 與 \(\triangle BED\) 中，\(\angle A = \angle B\)、\(\overline{AE} = \overline{BE}\)、\(\angle AEC = \angle BED\)（對頂角），\(\overline{AE}\)、\(\overline{BE}\) 夾在兩角中間，根據 ASA 全等，所以 \(\overline{CE} = \overline{DE}\)：
+              \[ \begin{aligned} & 2x + 5 = 3x - 4 \\ &\Rightarrow x = 9 \end{aligned} \]
+              \(\overline{CE} = \overline{DE} = 23\)，\(\overline{CD} = 23 + 23 = 46\)。<br>
+              A 錯：\(9\) 是 \(x\)。B 錯：\(23\) 只是 \(\overline{CE}\)。C 錯：\(18\) 是 \(2x\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 全等的應用
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> <span>重點 12：全等的應用——先證全等，再求邊、角、面積</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>兩段式</strong>：⑴ 找三個條件，說明兩個三角形全等；⑵ 用「對應邊相等」「對應角相等」求出題目要的量。</li>
+              <li><strong>求角</strong>：全等給的是<strong>整個角</strong>相等。兩個相等的角若有重疊的部分，各自扣掉重疊的那一塊，剩下的也相等。</li>
+              <li><strong>求面積</strong>：全等的兩個三角形面積相等，可以「一塊換一塊」：
+                <ul class="bullet-list">
+                  <li>四邊形被對角線分成兩個全等三角形：面積是其中一個的 \(2\) 倍。</li>
+                  <li>切掉一塊、在別處補上一塊全等的，總面積不變。</li>
+                </ul>
+              </li>
+              <li><strong>等腰三角形</strong>：證出兩條邊相等後，底角相等，就能接著求角。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・應用</span>
+              全等是工具：證完全等，才能放心地說「這兩條邊一樣長」「這兩個角一樣大」。
+            </div>
+
+            <div class="illustration-container">
+              <img src="cc_apply.webp" alt="19 世紀手工上色銅版畫博物圖鑑風純情境插圖。阿蜂與小蜜在養蜂花園裡，一起把兩片同樣大小的三角形木板拼成蜂箱斜屋頂，阿蜂扶著屋頂、小蜜用小木槌輕敲；周圍有花壇和幾隻小蜜蜂。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：證完全等，接著算</h3>
+            <p class="interactive-instruction">「旋轉重疊」：兩個全等三角形共用頂點 \(B\)，拉動 \(\angle DBC\) 與重疊的 \(\angle 1\)，看 \(\angle ABD\) 怎麼求。「箏形面積」：拉動 \(\overline{AB}\)、\(\overline{CD}\)，看全等怎麼幫我們求面積。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ap" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ap-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題型</span>
+                    <div class="btn-group" id="ap-mode-group">
+                      <button class="pick-btn active" data-ap-mode="turn">旋轉重疊（求角）</button>
+                      <button class="pick-btn" data-ap-mode="kite">箏形面積</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="ap-row-t">
+                    <label for="ap-t">\(\angle DBC\)（度）：<span id="ap-vt" class="val-num">140</span></label>
+                    <input type="range" id="ap-t" min="100" max="170" value="140" step="10">
+                  </div>
+                  <div class="slider-row" id="ap-row-o">
+                    <label for="ap-o">\(\angle 1 = \angle ABE\)（度）：<span id="ap-vo" class="val-num">40</span></label>
+                    <input type="range" id="ap-o" min="20" max="80" value="40" step="10">
+                  </div>
+                  <div class="slider-row" id="ap-row-m">
+                    <label for="ap-m">\(\overline{AB}\)：<span id="ap-vm" class="val-num">6</span></label>
+                    <input type="range" id="ap-m" min="3" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="ap-row-n">
+                    <label for="ap-n">\(\overline{CD}\)：<span id="ap-vn" class="val-num">4</span></label>
+                    <input type="range" id="ap-n" min="2" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ap-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (全等的應用)</h3>
+
+          <div class="quiz-card" data-quiz="3-3-23">
+            <p class="quiz-question"><strong>Q23.</strong> 如圖，\(\triangle ABC\) 與 \(\triangle DBE\) 中，\(\overline{AB} = \overline{DB}\)、\(\overline{BC} = \overline{BE}\)、\(\overline{AC} = \overline{DE}\)。已知 \(\angle ABE = 38^\circ\)、\(\angle DBC = 132^\circ\)，則 \(\angle ABD\) 是幾度？</p>
+            <canvas class="quiz-fig" data-fig="q23" width="320" height="220" role="img" aria-label="兩個三角形 ABC 與 DBE 共用頂點 B，射線依序為 BD、BA、BE、BC；標示角 ABE 等於 38 度、角 DBC 等於 132 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-23" value="A"><span class="option-text">A. \(94^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-23" value="B"><span class="option-text">B. \(47^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-23" value="C"><span class="option-text">C. \(85^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-23" value="D"><span class="option-text">D. \(38^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。三組邊對應相等，根據 SSS，\(\triangle ABC \cong \triangle DBE\)，所以 \(\angle ABC = \angle DBE\)。兩個角都包含 \(\angle ABE\)，各自扣掉後 \(\angle EBC = \angle ABD\)。
+              \[ \begin{aligned} \angle ABD &= (132^\circ - 38^\circ) \div 2 \\ &= 47^\circ \end{aligned} \]
+              A 錯：\(94^\circ\) 是 \(\angle ABD + \angle EBC\)，忘了除以 \(2\)。<br>
+              C 錯：\(85^\circ\) 是 \(\angle ABC\)（\(47^\circ + 38^\circ\)）。<br>
+              D 錯：\(38^\circ\) 是重疊的 \(\angle ABE\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-3-24">
+            <p class="quiz-question"><strong>Q24.</strong> 如圖，正方形 \(ABCD\) 的邊長是 \(16\)，\(P\)、\(Q\) 分別是 \(\overline{AB}\)、\(\overline{BC}\) 的中點，延長 \(\overline{PQ}\) 交直線 \(DC\) 於 \(R\)。四邊形 \(APRD\) 的面積是多少？</p>
+            <canvas class="quiz-fig" data-fig="q24" width="320" height="220" role="img" aria-label="正方形 ABCD，A 在左上、B 在左下、C 在右下、D 在右上，P 是 AB 中點、Q 是 BC 中點，PQ 延長交 DC 的延長線於 R，正方形邊長標示 16"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-3-24" value="A"><span class="option-text">A. \(256\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-24" value="B"><span class="option-text">B. \(224\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-24" value="C"><span class="option-text">C. \(288\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-3-24" value="D"><span class="option-text">D. \(192\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。在 \(\triangle BPQ\) 與 \(\triangle CRQ\) 中，\(\angle B = \angle QCR = 90^\circ\)、\(\overline{BQ} = \overline{CQ}\)（\(Q\) 是中點）、\(\angle BQP = \angle CQR\)（對頂角），根據 ASA 全等，兩塊面積相等。四邊形 \(APRD\) 等於正方形切掉 \(\triangle BPQ\)、再補上 \(\triangle CRQ\)，面積不變：
+              \[ 16 \times 16 = 256 \]
+              B 錯：\(224\) 只切掉 \(\triangle BPQ\)（面積 \(32\)），忘了補上 \(\triangle CRQ\)。<br>
+              C 錯：\(288\) 多加了一塊 \(32\)。<br>
+              D 錯：\(192\) 扣掉了兩塊 \(32\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 全等性質速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>全等</strong>：平移、旋轉、翻轉後完全疊合；\(\triangle ABC \cong \triangle DEF\) 依對應順序寫。</li>
+              <li><strong>對應</strong>：記號裡同一個位置的字母是對應點；全等 \(\Rightarrow\) 對應邊、對應角都相等。</li>
+              <li><strong>SSS</strong>：三組邊。</li>
+              <li><strong>SAS</strong>：兩邊及其<strong>夾角</strong>。</li>
+              <li><strong>RHS</strong>：直角三角形的斜邊及一股。</li>
+              <li><strong>ASA</strong>：兩角及其<strong>夾邊</strong>（兩角和小於 \(180^\circ\)）。</li>
+              <li><strong>AAS</strong>：兩角及其中一角的<strong>對邊</strong>（內角和補出第三角，變成 ASA）。</li>
+              <li><strong>不能用</strong>：SSA（可能作出兩個三角形）、AAA（可以放大縮小）。</li>
+              <li><strong>找條件</strong>：共用邊、共用角、對頂角、垂直、中點。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-seedling"></i> 回到養蜂花園：一模一樣的山牆板</h4>
+              <h5><i class="fa-solid fa-ruler-combined"></i> 三根木條就夠</h5>
+              <p>阿蜂後來明白，要做一片和舊板一模一樣的三角形山牆板，不必把三個邊、三個角全量一遍：照舊板量出三根木條的長度，釘起來就是同一個三角形（SSS）。三根木條釘死的三角形推不變形，這也是蜂箱屋架、橋樑都用三角形的原因。</p>
+              <h5><i class="fa-solid fa-triangle-exclamation"></i> 兩根木條加一個角，要看角在哪</h5>
+              <p>如果只有兩根木條和一個角度，角要夾在兩根木條中間（SAS）才保證一樣；角若在其中一根的另一端（SSA），可能釘出兩種不同的板子。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節</h5>
+              <p>3-4 節要用這些全等性質，證明中垂線與角平分線上的點有什麼特別的性質，並說明為什麼等腰三角形的兩個底角相等。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

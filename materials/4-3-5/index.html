@@ -4,39 +4,1424 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-5 三角形的邊角關係 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-5 三角形的邊角關係 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第3章 三角形的基本性質</div>
-    <h1>3-5 三角形的邊角關係</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第三章</span>
+        <h1>3-5 三角形的邊角關係</h1>
+        <p>養蜂花園裡，小蜜和阿蜂要從蜂箱走到花壇：直直走過去，還是繞到水井再過去？這一節先從「兩點之間直線最短」得到<strong>三角形任意兩邊的和大於第三邊、兩邊的差小於第三邊</strong>，用它判斷三條線段能不能圍成三角形、求第三邊的範圍；再看同一個三角形裡邊和角的關係——<strong>大邊對大角、大角對大邊</strong>，以及<strong>三邊滿足畢氏定理的三角形一定是直角三角形</strong>。</p>
+      </div>
+      <!-- Progress navigation (12 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-route"></i> 兩邊和與差</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-ruler-combined"></i> 構成條件</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-house-chimney"></i> 等腰兩種情形</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-arrows-left-right"></i> 第三邊範圍</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-object-group"></i> 共用邊</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> 大邊對大角</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 先找大邊</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-compass-drafting"></i> 大角對大邊</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-link"></i> 串接比較</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-ban"></i> 同一個三角形</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-sliders"></i> 角的範圍</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-square-check"></i> 直角的判別</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（銅版畫博物圖鑑・養蜂花園）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(252, 211, 77, 0.25);">
+        <h2 class="section-title" style="color: #fcd34d; border-bottom-color: rgba(252, 211, 77, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #fcd34d; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);"></i> 課前暖身漫畫：繞路比較近？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            阿蜂想先繞到水井、再去蜂箱，說這樣「順路」；小蜜直接沿著小徑走過去，早就在蜂箱旁等他了。<strong style="color:#fcd34d">繞路的兩段加起來，一定比直走的那一段長</strong>——把出發點、水井、蜂箱連起來，就是這一節的第一個性質：三角形任意兩邊的和大於第三邊。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="19 世紀手工上色銅版畫風四格漫畫：阿蜂站在橡樹下指著水井，想先繞過去；小蜜指著直通蜂箱的小徑；阿蜂在水井邊彎腰喘氣；最後小蜜早已坐在蜂箱旁等他，旁白說明繞路的兩段加起來比直走的一段長。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 兩邊的和大於第三邊、兩邊的差小於第三邊
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-route" aria-hidden="true"></i> <span>重點 1：兩邊的和大於第三邊，兩邊的差小於第三邊</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>若 \(a\)、\(b\)、\(c\) 是 △\(ABC\) 的三邊長，則
+                \[\begin{aligned} & a + b \gt c \\ & a + c \gt b \\ & b + c \gt a \end{aligned}\]
+                也就是<strong>任意兩邊的和大於第三邊</strong>。</li>
+              <li>理由是<strong>兩點之間以直線最短</strong>：從 \(A\) 直接走到 \(C\)，一定比先繞到 \(B\) 再到 \(C\) 近。</li>
+              <li>把 \(a + b \gt c\) 兩邊同減 \(b\)，得到 \(a \gt c - b\)。同樣的作法可以得到：<strong>任意兩邊的差小於第三邊</strong>（用大的減小的）。</li>
+              <li>三點在同一直線上時，會有一組變成「\(=\)」，三角形被壓扁成一條線，<strong>不算三角形</strong>。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・三邊長的關係</span>
+              兩邊之差 \(\lt\) 第三邊 \(\lt\) 兩邊之和
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_path.webp" alt="手工上色銅版畫風插圖：養蜂花園裡，小蜜沿著石板小徑直直走向木框蜂箱，阿蜂則繞了一大圈經過水井才走過來。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：把 A 點拉到任何地方</h3>
+            <p class="interactive-instruction">\(B\)、\(C\) 固定，拉動滑桿把 \(A\) 移到格點上的任何位置，看三組「兩邊的和」是不是都大於第三邊；切到「兩邊的差」再看一次。把 \(A\) 的高度調成 \(0\)，看看三點共線時發生什麼事。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-path" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pa-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">比較</span>
+                    <div class="btn-group" id="pa-mode-group">
+                      <button class="pick-btn active" data-pa-mode="sum">兩邊的和</button>
+                      <button class="pick-btn" data-pa-mode="diff">兩邊的差</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pa-x">\(A\) 的左右位置：<span id="pa-vx" class="val-num">2</span></label>
+                    <input type="range" id="pa-x" min="-2" max="10" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pa-h">\(A\) 的高度：<span id="pa-vh" class="val-num">4</span></label>
+                    <input type="range" id="pa-h" min="0" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pa-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩邊的和與差)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-1">
+            <p class="quiz-question"><strong>Q1.</strong> 在 △\(ABC\) 中，下列哪一個式子<strong>不可能</strong>成立？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-1" value="A"><span class="option-text">A. \(\overline{AB} + \overline{BC} \gt \overline{AC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-1" value="B"><span class="option-text">B. \(\overline{AC} - \overline{AB} \lt \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-1" value="C"><span class="option-text">C. \(\overline{AB} - \overline{BC} \gt \overline{AC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-1" value="D"><span class="option-text">D. \(\overline{BC} + \overline{AC} \gt \overline{AB}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。把 C 的式子兩邊同加 \(\overline{BC}\)，得到
+              \[\overline{AB} \gt \overline{AC} + \overline{BC}\]
+              這跟「任意兩邊的和大於第三邊」矛盾，所以不可能成立。<br>
+              A、D 錯：都是「兩邊的和大於第三邊」，一定成立。<br>
+              B 錯：這是「兩邊的差小於第三邊」，一定成立（\(\overline{AC}\) 比 \(\overline{AB}\) 短時，左邊是負數，更小於 \(\overline{BC}\)）。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-2">
+            <p class="quiz-question"><strong>Q2.</strong> 平面上有 \(A\)、\(B\)、\(C\) 三點，量得 \(\overline{AB} = 9\)、\(\overline{BC} = 14\)、\(\overline{AC} = 23\)，則下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-2" value="A"><span class="option-text">A. \(B\) 點在 \(\overline{AC}\) 上，三點共線</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-2" value="B"><span class="option-text">B. \(A\)、\(B\)、\(C\) 可以圍成一個三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-2" value="C"><span class="option-text">C. \(A\) 點在 \(\overline{BC}\) 上，三點共線</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-2" value="D"><span class="option-text">D. \(C\) 點在 \(\overline{AB}\) 上，三點共線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\overline{AB} + \overline{BC} = 9 + 14 = 23 = \overline{AC}\]
+              從 \(A\) 經過 \(B\) 到 \(C\) 的路程，剛好等於直接從 \(A\) 到 \(C\)，所以 \(B\) 就在線段 \(\overline{AC}\) 上。<br>
+              B 錯：要「大於」才圍得成三角形，「等於」是三點共線。<br>
+              C 錯：\(A\) 若在 \(\overline{BC}\) 上，應該 \(\overline{BA} + \overline{AC} = \overline{BC}\)，但 \(9 + 23 \ne 14\)。<br>
+              D 錯：\(C\) 若在 \(\overline{AB}\) 上，應該 \(\overline{AC} + \overline{CB} = \overline{AB}\)，但 \(23 + 14 \ne 9\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 三線段構成三角形的條件
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> <span>重點 2：三條線段能不能圍成三角形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>三線段長 \(a\)、\(b\)、\(c\)，其中 \(c\) 最長。以 \(c\) 的兩端為圓心、\(a\)、\(b\) 為半徑畫弧：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>條件</th><th>兩弧</th><th>三角形</th></tr></thead>
+                <tbody>
+                  <tr><td>\(a + b \lt c\)</td><td>碰不到</td><td>不能</td></tr>
+                  <tr><td>\(a + b = c\)</td><td>碰在 \(c\) 上</td><td>不能</td></tr>
+                  <tr><td>\(a + b \gt c\)</td><td>交於一點</td><td>能</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list">
+              <li><strong>只要檢查最長的那一條</strong>：另外兩個不等式的左邊都有最長邊，一定成立，不必再算。</li>
+              <li>例：\(6\)、\(9\)、\(14\) ⇒ \(6 + 9 = 15 \gt 14\)，可以構成三角形；\(4\)、\(7\)、\(11\) ⇒ \(4 + 7 = 11\)，不可以。</li>
+              <li>常見錯誤：拿「最長邊 \(+\) 某一邊」去跟短的比——那一定大於，什麼也證明不了。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・構成三角形的條件</span>
+              最長的線段 \(\lt\) 另外兩線段的和
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_sticks.webp" alt="手工上色銅版畫風插圖：小蜜坐在標本工作室的木桌前，手裡拿著一根細木條比劃，桌上散著幾根長短不一的木條。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：圓規畫弧圍三角形</h3>
+            <p class="interactive-instruction">調整三條線段的長度。畫布會把<strong>最長</strong>的那一條當底，另外兩條當半徑從兩端畫弧：兩弧交在上方才圍得成三角形。看看下方三個不等式裡，哪一個才是真正會失敗的。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-make" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mk-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mk-a">\(a\)：<span id="mk-va" class="val-num">5</span></label>
+                    <input type="range" id="mk-a" min="1" max="12" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mk-b">\(b\)：<span id="mk-vb" class="val-num">7</span></label>
+                    <input type="range" id="mk-b" min="1" max="12" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mk-c">\(c\)：<span id="mk-vc" class="val-num">10</span></label>
+                    <input type="range" id="mk-c" min="1" max="12" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mk-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (構成三角形的條件)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-3">
+            <p class="quiz-question"><strong>Q3.</strong> 下列各組的 3 個數分別代表三線段的長度，哪一組可以構成三角形？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-3" value="A"><span class="option-text">A. \(7\)、\(15\)、\(22\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-3" value="B"><span class="option-text">B. \(8\)、\(9\)、\(22\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-3" value="C"><span class="option-text">C. \(5\)、\(17\)、\(23\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-3" value="D"><span class="option-text">D. \(11\)、\(13\)、\(21\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。只要看「另外兩條的和」是不是大於最長的那一條：
+              \[\begin{aligned} & \text{A：} 7 + 15 = 22 \\ & \text{B：} 8 + 9 = 17 \lt 22 \\ & \text{C：} 5 + 17 = 22 \lt 23 \\ & \text{D：} 11 + 13 = 24 \gt 21 \end{aligned}\]
+              A 錯：和剛好等於最長邊，三點共線，不是三角形。<br>
+              B、C 錯：兩條短的接起來還不夠長，圍不起來。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-4">
+            <p class="quiz-question"><strong>Q4.</strong> 阿蜂判斷長 \(7\)、\(22\)、\(9\) 的三線段時寫：「因為 \(7 + 22 \gt 9\)，所以可以構成三角形。」他的判斷如何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-4" value="A"><span class="option-text">A. 正確，兩邊的和大於第三邊</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-4" value="B"><span class="option-text">B. 錯誤，要看最長邊：\(7 + 9 \lt 22\)，不能構成</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-4" value="C"><span class="option-text">C. 錯誤，要看 \(22 + 9 \gt 7\)，所以可以構成</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-4" value="D"><span class="option-text">D. 正確，因為 \(22 - 9 \lt 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。最長的是 \(22\)，另外兩條的和
+              \[7 + 9 = 16 \lt 22\]
+              兩條短的接起來不夠長，不能構成三角形。<br>
+              A 錯：\(7 + 22 \gt 9\) 的左邊含有最長邊，本來就一定成立，證明不了什麼。<br>
+              C 錯：同 A，這個不等式也含有最長邊。<br>
+              D 錯：\(22 - 9 = 13\)，並不小於 \(7\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 等腰三角形的兩種情形
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-house-chimney" aria-hidden="true"></i> <span>重點 3：等腰三角形——兩種長度，哪一種當腰？</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>等腰三角形只給兩種邊長 \(p\)、\(q\) 時，有<strong>兩種可能</strong>：腰 \(p\)、底 \(q\)，或腰 \(q\)、底 \(p\)。</li>
+              <li>每一種都要用「<strong>兩腰的和大於底</strong>」檢查，不合的要捨去。</li>
+              <li>例：兩邊長 \(4\)、\(10\)。腰 \(4\)：\(4 + 4 = 8 \lt 10\)，不合；腰 \(10\)：\(10 + 10 \gt 4\)，三邊 \(10\)、\(10\)、\(4\)，周長 \(24\)。</li>
+              <li>兩種都合的時候，答案就有兩個，例如 \(3\)、\(5\)：三邊可以是 \(3\)、\(3\)、\(5\)，也可以是 \(5\)、\(5\)、\(3\)。</li>
+              <li>兩腰相等，所以兩底角也相等：<strong>等邊對等角</strong>（3-4 學過）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等腰三角形</span>
+              腰 \(+\) 腰 \(\gt\) 底，兩種當腰的方法都要檢查
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_roof.webp" alt="手工上色銅版畫風插圖：阿蜂雙手扶著一座木框蜂箱的三角形屋頂，屋頂的兩片斜板一樣長。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩種屋頂，搭得起來嗎？</h3>
+            <p class="interactive-instruction">兩種長度 \(p\)、\(q\) 由滑桿決定。按「\(p\) 當腰」或「\(q\) 當腰」，看兩條腰能不能在上方碰在一起；畫布下方同時列出兩種情形的檢查。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-iso" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="is-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">當腰</span>
+                    <div class="btn-group" id="is-mode-group">
+                      <button class="pick-btn active" data-is-mode="p">\(p\) 當腰</button>
+                      <button class="pick-btn" data-is-mode="q">\(q\) 當腰</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="is-p">\(p\)：<span id="is-vp" class="val-num">3</span></label>
+                    <input type="range" id="is-p" min="1" max="12" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="is-q">\(q\)：<span id="is-vq" class="val-num">8</span></label>
+                    <input type="range" id="is-q" min="1" max="12" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="is-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等腰三角形)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-5">
+            <p class="quiz-question"><strong>Q5.</strong> 某等腰三角形有兩邊長分別是 \(7\) 和 \(23\)，它的周長是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-5" value="A"><span class="option-text">A. \(37\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-5" value="B"><span class="option-text">B. \(53\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-5" value="C"><span class="option-text">C. \(37\) 或 \(53\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-5" value="D"><span class="option-text">D. \(30\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。兩種情形都要檢查：
+              \[\begin{aligned} & \text{腰 } 7\text{：} 7 + 7 = 14 \lt 23 \\ & \text{腰 } 23\text{：} 23 + 23 \gt 7 \end{aligned}\]
+              只有三邊 \(23\)、\(23\)、\(7\) 圍得起來，周長 \(23 + 23 + 7 = 53\)。<br>
+              A 錯：\(7 + 7 + 23 = 37\) 是不合的那一種。<br>
+              C 錯：沒有用「兩腰的和大於底」檢查。<br>
+              D 錯：\(7 + 23 = 30\) 只加了兩條邊。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-6">
+            <p class="quiz-question"><strong>Q6.</strong> 某等腰三角形有兩邊長分別是 \(11\) 和 \(21\)，它的周長可能是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-6" value="A"><span class="option-text">A. 只有 \(43\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-6" value="B"><span class="option-text">B. 只有 \(53\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-6" value="C"><span class="option-text">C. \(32\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-6" value="D"><span class="option-text">D. \(43\) 或 \(53\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & \text{腰 } 11\text{：} 11 + 11 = 22 \gt 21 \\ & \text{腰 } 21\text{：} 21 + 21 \gt 11 \end{aligned}\]
+              兩種都圍得起來：\(11 + 11 + 21 = 43\)，\(21 + 21 + 11 = 53\)。<br>
+              A、B 錯：只考慮了一種當腰的方法。<br>
+              C 錯：\(11 + 21 = 32\) 只加了兩條邊。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 已知兩邊，第三邊的範圍
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> <span>重點 4：已知兩邊，求第三邊的範圍</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>三角形的兩邊長 \(a\)、\(b\)（\(a \ge b\)），第三邊長 \(x\) 一定滿足
+                \[a - b \lt x \lt a + b\]</li>
+              <li>兩個端點都<strong>取不到</strong>：取到就是三點共線。</li>
+              <li>例：兩邊長 \(3\)、\(10\) ⇒ \(7 \lt x \lt 13\)；若 \(x\) 是整數，\(x\) 可以是 \(8\)、\(9\)、\(10\)、\(11\)、\(12\)，共 \(5\) 個。</li>
+              <li>小數也一樣：兩邊長 \(2.4\)、\(6.5\) ⇒ \(4.1 \lt x \lt 8.9\)，整數 \(x\) 是 \(5\)、\(6\)、\(7\)、\(8\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・第三邊的範圍</span>
+              \(a - b \lt x \lt a + b\)（端點取不到）
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_hinge.webp" alt="手工上色銅版畫風插圖：阿蜂雙手各握一根細木條，兩根木條的一端用一顆黃銅鉚釘接在一起，張開成一個角。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：鉚釘接起來的兩根木條</h3>
+            <p class="interactive-instruction">兩根木條的長度 \(a\)、\(b\) 不變，把張開的角度從 \(0^\circ\) 拉到 \(180^\circ\)，看虛線（第三邊 \(x\)）怎麼變：它在數線上永遠落在兩個空心圈之間。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-range" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rg-a">\(a\)：<span id="rg-va" class="val-num">6</span></label>
+                    <input type="range" id="rg-a" min="2" max="24" value="12" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rg-b">\(b\)：<span id="rg-vb" class="val-num">9.5</span></label>
+                    <input type="range" id="rg-b" min="2" max="24" value="19" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rg-t">張開的角度：<span id="rg-vt" class="val-num">70</span>°</label>
+                    <input type="range" id="rg-t" min="0" max="180" value="70" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (第三邊的範圍)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-7">
+            <p class="quiz-question"><strong>Q7.</strong> 一個三角形有兩邊長是 \(3.5\) 和 \(13\)，若第三邊長 \(x\) 是整數，\(x\) 有幾種可能？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-7" value="A"><span class="option-text">A. \(7\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-7" value="B"><span class="option-text">B. \(16\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-7" value="C"><span class="option-text">C. \(8\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-7" value="D"><span class="option-text">D. \(6\) 種</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\begin{aligned} & 13 - 3.5 \lt x \lt 13 + 3.5 \\ & 9.5 \lt x \lt 16.5 \end{aligned}\]
+              整數 \(x\) 是 \(10\)、\(11\)、…、\(16\)，共 \(7\) 個。<br>
+              B 錯：只用了 \(x \lt 16.5\)，把 \(1\) 到 \(16\) 全算進去，漏了「大於兩邊的差」。<br>
+              C 錯：把 \(9.5\)、\(16.5\) 四捨五入成 \(10\)、\(17\) 再數 \(10\) 到 \(17\)；但 \(17 \gt 16.5\)。<br>
+              D 錯：以為大於 \(9.5\) 要從 \(11\) 開始，漏掉了 \(10\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-8">
+            <p class="quiz-question"><strong>Q8.</strong> 花園裡的甲、乙、丙三個蜂箱不在同一直線上，甲到乙 \(25\) 公尺、乙到丙 \(9\) 公尺。若丙到甲的距離是整數公尺，則它可能是下列哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-8" value="A"><span class="option-text">A. \(16\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-8" value="B"><span class="option-text">B. \(34\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-8" value="C"><span class="option-text">C. \(22\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-8" value="D"><span class="option-text">D. \(36\) 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。三點不共線，圍成三角形：
+              \[\begin{aligned} & 25 - 9 \lt x \lt 25 + 9 \\ & 16 \lt x \lt 34 \end{aligned}\]
+              只有 \(22\) 在範圍內。<br>
+              A、B 錯：剛好是端點，三點會共線，但題目說不共線。<br>
+              D 錯：比兩邊的和還長。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 共用邊取交集
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-object-group" aria-hidden="true"></i> <span>重點 5：共用的邊——兩個範圍取交集</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>四邊形 \(ABCD\) 的對角線 \(\overline{AC}\) 同時是 △\(ABC\) 和 △\(ACD\) 的邊，所以兩個三角形的條件<strong>都要滿足</strong>。</li>
+              <li>作法：兩個三角形各求一段範圍，再取<strong>兩段重疊的部分</strong>（交集）。</li>
+              <li>例：\(\overline{AB} = 10\)、\(\overline{BC} = 3\)、\(\overline{CD} = 8\)、\(\overline{DA} = 6\)。
+                \[\begin{aligned} & \text{△}ABC\text{：} 7 \lt \overline{AC} \lt 13 \\ & \text{△}ACD\text{：} 2 \lt \overline{AC} \lt 14 \end{aligned}\]
+                重疊的部分是 \(7 \lt \overline{AC} \lt 13\)；\(\overline{AC}\) 是整數時，最小 \(8\)、最大 \(12\)。</li>
+              <li>在數線上把兩段畫出來，最容易看出重疊的地方。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・共用邊</span>
+              共用的邊要同時滿足兩個三角形的範圍
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_brace.webp" alt="手工上色銅版畫風插圖：小蜜和阿蜂在花園裡組裝一個四邊形木框，一根斜撐木條從一個角斜斜接到對面的角。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一根斜撐、兩個三角形</h3>
+            <p class="interactive-instruction">調整四邊形的四條邊，數線上會出現兩段範圍（紅：△\(ABC\)，藍：△\(ACD\)），金色是重疊的部分。再拉動 \(\overline{AC}\)，看它在哪裡時上下兩個三角形才都圍得起來。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-share" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sh-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sh-ab">\(\overline{AB}\)：<span id="sh-vab" class="val-num">9</span></label>
+                    <input type="range" id="sh-ab" min="2" max="12" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-bc">\(\overline{BC}\)：<span id="sh-vbc" class="val-num">5</span></label>
+                    <input type="range" id="sh-bc" min="2" max="12" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-cd">\(\overline{CD}\)：<span id="sh-vcd" class="val-num">8</span></label>
+                    <input type="range" id="sh-cd" min="2" max="12" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-da">\(\overline{DA}\)：<span id="sh-vda" class="val-num">6</span></label>
+                    <input type="range" id="sh-da" min="2" max="12" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-ac">\(\overline{AC}\)：<span id="sh-vac" class="val-num">10</span></label>
+                    <input type="range" id="sh-ac" min="1" max="24" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sh-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (共用邊)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-9">
+            <p class="quiz-question"><strong>Q9.</strong> 如圖，四邊形 \(ABCD\) 中，\(\overline{AB} = 13\)、\(\overline{BC} = 6\)、\(\overline{CD} = 11\)、\(\overline{DA} = 5\)。若對角線 \(\overline{AC}\) 的長是整數，則 \(\overline{AC}\) 的最小值與最大值分別是多少？</p>
+            <canvas class="quiz-fig" data-fig="q9" width="320" height="220" role="img" aria-label="四邊形 ABCD 與虛線對角線 AC，標示 AB 13、BC 6、CD 11、DA 5"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-9" value="A"><span class="option-text">A. 最小 \(7\)、最大 \(19\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-9" value="B"><span class="option-text">B. 最小 \(6\)、最大 \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-9" value="C"><span class="option-text">C. 最小 \(8\)、最大 \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-9" value="D"><span class="option-text">D. 最小 \(8\)、最大 \(15\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & \text{△}ABC\text{：} 7 \lt \overline{AC} \lt 19 \\ & \text{△}ACD\text{：} 6 \lt \overline{AC} \lt 16 \end{aligned}\]
+              重疊的部分是 \(7 \lt \overline{AC} \lt 16\)，整數最小 \(8\)、最大 \(15\)。<br>
+              A 錯：這是 △\(ABC\) 範圍的兩個端點，而且端點取不到。<br>
+              B 錯：這是 △\(ACD\) 範圍的兩個端點。<br>
+              C 錯：只看了 △\(ABC\)；\(\overline{AC} = 18\) 時 △\(ACD\) 圍不起來（\(11 + 5 = 16 \lt 18\)）。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-10">
+            <p class="quiz-question"><strong>Q10.</strong> 四邊形 \(ABCD\) 中，\(\overline{AB} = 4\)、\(\overline{BC} = 15\)、\(\overline{CD} = 9\)、\(\overline{DA} = 8\)。若對角線 \(\overline{AC}\) 的長是整數，\(\overline{AC}\) 有幾種可能？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-10" value="A"><span class="option-text">A. \(7\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-10" value="B"><span class="option-text">B. \(5\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-10" value="C"><span class="option-text">C. \(15\) 種</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-10" value="D"><span class="option-text">D. \(6\) 種</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & \text{△}ABC\text{：} 11 \lt \overline{AC} \lt 19 \\ & \text{△}ACD\text{：} 1 \lt \overline{AC} \lt 17 \end{aligned}\]
+              重疊的部分是 \(11 \lt \overline{AC} \lt 17\)，整數有 \(12\)、\(13\)、\(14\)、\(15\)、\(16\)，共 \(5\) 種。<br>
+              A 錯：只看了 △\(ABC\)（\(12\) 到 \(18\)）。<br>
+              C 錯：只看了 △\(ACD\)（\(2\) 到 \(16\)）。<br>
+              D 錯：把端點 \(11\) 也算進去了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 大邊對大角（等邊對等角）
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> <span>重點 6：大邊對大角，等邊對等角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>對邊與對角</strong>：一條邊的對角，是「不在這條邊上的那個頂點」的角。\(\overline{BC}\) 對 \(\angle A\)、\(\overline{CA}\) 對 \(\angle B\)、\(\overline{AB}\) 對 \(\angle C\)。</li>
+              <li><strong>等邊對等角，等角對等邊</strong>（3-4 學過）：兩邊相等，它們的對角也相等；反過來也對。</li>
+              <li><strong>大邊對大角</strong>：在一個三角形中，若兩邊不相等，較大的邊所對的角比較大。</li>
+              <li>摺紙說明：△\(ABC\) 中 \(\overline{AB} \gt \overline{AC}\)，把 \(\overline{AC}\) 摺到 \(\overline{AB}\) 上，\(C\) 落在 \(E\)，摺痕交 \(\overline{BC}\) 於 \(D\)。\(\angle AED = \angle C\)，而 \(\angle AED\) 是 △\(BED\) 的外角，大於 \(\angle B\)，所以 \(\angle C \gt \angle B\)。</li>
+              <li>例：△\(ABC\) 中 \(\overline{AB} = 6\)、\(\overline{BC} = 7\)、\(\overline{CA} = 9\)。最長的 \(\overline{CA}\) 對 \(\angle B\)，最短的 \(\overline{AB}\) 對 \(\angle C\)，所以 \(\angle B \gt \angle A \gt \angle C\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・大邊對大角</span>
+              同一個三角形中：\(\overline{AB} \gt \overline{AC}\) ⇒ \(\angle C \gt \angle B\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_bed.webp" alt="手工上色銅版畫風插圖：小蜜蹲在一塊三角形花壇的一角，花壇裡開著玫瑰紅的花，她抬頭看著花壇對面的阿蜂。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：格點上的三角形</h3>
+            <p class="interactive-instruction">移動 \(A\) 與 \(C\)，三角形的邊長由格點算出、角度由座標量出。同一個顏色是一條邊和它對面的角：紅色最大、藍色最小。試著做出兩邊一樣長的三角形，看等長記號和等角記號同時出現。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-big" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bg-ax">\(A\) 的左右位置：<span id="bg-vax" class="val-num">2</span></label>
+                    <input type="range" id="bg-ax" min="-2" max="10" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bg-ay">\(A\) 的高度：<span id="bg-vay" class="val-num">5</span></label>
+                    <input type="range" id="bg-ay" min="1" max="7" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bg-cx">\(C\) 的位置（\(\overline{BC}\) 的長）：<span id="bg-vcx" class="val-num">9</span></label>
+                    <input type="range" id="bg-cx" min="3" max="10" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (大邊對大角)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-11">
+            <p class="quiz-question"><strong>Q11.</strong> △\(ABC\) 中，\(\overline{AB} = 16\)、\(\overline{BC} = 25\)、\(\overline{CA} = 21\)，則三個內角的大小關係為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-11" value="A"><span class="option-text">A. \(\angle A \gt \angle B \gt \angle C\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-11" value="B"><span class="option-text">B. \(\angle B \gt \angle C \gt \angle A\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-11" value="C"><span class="option-text">C. \(\angle C \gt \angle B \gt \angle A\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-11" value="D"><span class="option-text">D. \(\angle C \gt \angle A \gt \angle B\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\overline{BC} \gt \overline{CA} \gt \overline{AB}\]
+              \(\overline{BC}\) 對 \(\angle A\)、\(\overline{CA}\) 對 \(\angle B\)、\(\overline{AB}\) 對 \(\angle C\)，大邊對大角，所以 \(\angle A \gt \angle B \gt \angle C\)。<br>
+              B 錯：把每條邊配給了它「起點」的那個角，而不是對角。<br>
+              C 錯：方向完全相反，變成大邊對小角。<br>
+              D 錯：\(\angle C\) 對的是最短的 \(\overline{AB}\)，應該最小。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-12">
+            <p class="quiz-question"><strong>Q12.</strong> △\(ABC\) 中，\(\overline{AB} = \overline{BC}\)，且 \(\overline{AC}\) 比 \(\overline{AB}\) 長，則下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-12" value="A"><span class="option-text">A. \(\angle A = \angle B\)，\(\angle C\) 最大</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-12" value="B"><span class="option-text">B. \(\angle A = \angle C\)，\(\angle B\) 最小</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-12" value="C"><span class="option-text">C. \(\angle A = \angle C\)，\(\angle B\) 最大</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-12" value="D"><span class="option-text">D. \(\angle B = \angle C\)，\(\angle A\) 最大</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{AB}\) 對 \(\angle C\)、\(\overline{BC}\) 對 \(\angle A\)，兩邊相等，所以 \(\angle A = \angle C\)（等邊對等角）。\(\overline{AC}\) 最長，它對的 \(\angle B\) 最大（大邊對大角）。<br>
+              A、D 錯：相等的兩個角配錯了，要找的是相等兩邊的<strong>對角</strong>。<br>
+              B 錯：\(\overline{AC}\) 是最長邊，它的對角應該最大。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 大邊對大角的推理：先找出大邊
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span>重點 7：先找出哪條邊比較大，再比角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>題目不一定直接告訴你哪條邊比較長，常要<strong>自己先推出來</strong>，再回到要比的那個三角形用大邊對大角。</li>
+              <li><strong>直角三角形的斜邊最長</strong>：斜邊的平方等於兩股的平方和，比任何一股的平方都大。</li>
+              <li>例（正方形）：正方形 \(ABCD\) 中，\(E\) 在 \(\overline{AD}\) 上。△\(CDE\) 中 \(\angle D = 90^\circ\)，所以 \(\overline{CE} \gt \overline{CD} = \overline{BC}\)；再到 △\(BCE\)：\(\overline{CE}\) 對 \(\angle CBE\)、\(\overline{BC}\) 對 \(\angle CEB\)，得 \(\angle CBE \gt \angle CEB\)。</li>
+              <li>例（高）：△\(ABC\) 中 \(\overline{AB} = 14\)、\(\overline{AC} = 19\)，\(\overline{AH} \perp \overline{BC}\)。
+                \[\begin{aligned} & \overline{AC} \gt \overline{AB} \Rightarrow \angle B \gt \angle C \\ & \angle BAH = 90^\circ - \angle B \\ & \angle CAH = 90^\circ - \angle C \end{aligned}\]
+                減掉比較大的角，剩下的比較小：\(\angle BAH \lt \angle CAH\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・推理的順序</span>
+              先找出邊的大小 ⇒ 在同一個三角形裡比角
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_square.webp" alt="手工上色銅版畫風插圖：阿蜂蹲在花園的正方形石板地磚旁，手指著石板的一個角，小蜜站在一旁看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩條推理鏈</h3>
+            <p class="interactive-instruction">「高把頂角切兩半」：移動 \(A\)，看 \(\overline{AB}\)、\(\overline{AC}\) 的大小怎麼一路決定 \(\angle BAH\)、\(\angle CAH\)。「正方形」：把 \(E\) 沿著 \(\overline{AD}\) 移動，看斜邊 \(\overline{CE}\) 為什麼總是比 \(\overline{BC}\) 長。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-why" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="wy-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="wy-mode-group">
+                      <button class="pick-btn active" data-wy-mode="alt">高把頂角切兩半</button>
+                      <button class="pick-btn" data-wy-mode="sq">正方形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="wy-row-ax">
+                    <label for="wy-ax">\(A\) 的左右位置：<span id="wy-vax" class="val-num">3</span></label>
+                    <input type="range" id="wy-ax" min="1" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="wy-row-ay">
+                    <label for="wy-ay">\(A\) 的高度：<span id="wy-vay" class="val-num">5</span></label>
+                    <input type="range" id="wy-ay" min="2" max="7" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="wy-row-e">
+                    <label for="wy-e">\(\overline{AE}\) 的長（正方形邊長 6）：<span id="wy-ve" class="val-num">2</span></label>
+                    <input type="range" id="wy-e" min="0" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="wy-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (先找出大邊)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-13">
+            <p class="quiz-question"><strong>Q13.</strong> △\(ABC\) 中，\(\overline{AB} = 11\)、\(\overline{AC} = 8\)，\(\overline{AH} \perp \overline{BC}\) 且 \(H\) 在 \(\overline{BC}\) 上，則 \(\angle BAH\) 與 \(\angle CAH\) 的大小關係為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-13" value="A"><span class="option-text">A. \(\angle BAH \lt \angle CAH\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-13" value="B"><span class="option-text">B. \(\angle BAH = \angle CAH\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-13" value="C"><span class="option-text">C. \(\angle BAH \gt \angle CAH\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-13" value="D"><span class="option-text">D. 條件不足，無法判斷</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} & \overline{AB} \gt \overline{AC} \Rightarrow \angle C \gt \angle B \\ & \angle BAH = 90^\circ - \angle B \\ & \angle CAH = 90^\circ - \angle C \end{aligned}\]
+              \(\angle B\) 比較小，\(90^\circ\) 減去它剩下的比較多，所以 \(\angle BAH \gt \angle CAH\)。<br>
+              A 錯：把 \(\angle B\)、\(\angle C\) 的大小方向弄反了。<br>
+              B 錯：只有 \(\overline{AB} = \overline{AC}\) 時，高才會把頂角平分。<br>
+              D 錯：用大邊對大角加上直角三角形兩銳角互餘，就判斷得出來。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-14">
+            <p class="quiz-question"><strong>Q14.</strong> 如圖，正方形 \(ABCD\) 中，\(E\) 點在 \(\overline{CD}\) 上（不與 \(C\)、\(D\) 重合），連接 \(\overline{AE}\)、\(\overline{BE}\)。\(\angle 1 = \angle ABE\)、\(\angle 2 = \angle AEB\)，則 \(\angle 1\) 與 \(\angle 2\) 的大小關係為何？</p>
+            <canvas class="quiz-fig" data-fig="q14" width="320" height="220" role="img" aria-label="正方形 ABCD，E 在 CD 上，連接 AE、BE，角 1 在 B、角 2 在 E"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-14" value="A"><span class="option-text">A. \(\angle 1 \gt \angle 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-14" value="B"><span class="option-text">B. \(\angle 1 \lt \angle 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-14" value="C"><span class="option-text">C. \(\angle 1 = \angle 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-14" value="D"><span class="option-text">D. 要看 \(E\) 的位置才知道</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。△\(ADE\) 中 \(\angle D = 90^\circ\)，斜邊 \(\overline{AE}\) 最長：
+              \[\overline{AE} \gt \overline{AD} = \overline{AB}\]
+              在 △\(ABE\) 中，\(\overline{AE}\) 對 \(\angle 1\)、\(\overline{AB}\) 對 \(\angle 2\)，大邊對大角，\(\angle 1 \gt \angle 2\)。<br>
+              B 錯：把對邊配錯了。<br>
+              C 錯：要 \(\overline{AE} = \overline{AB}\) 才會相等，但斜邊一定比股長。<br>
+              D 錯：\(E\) 在 \(\overline{CD}\) 上哪裡都一樣，\(\overline{AE}\) 永遠是 △\(ADE\) 的斜邊。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 大角對大邊
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i> <span>重點 8：大角對大邊——先把第三個角算出來</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>大角對大邊</strong>：在一個三角形中，若兩角不相等，較大的角所對的邊比較長。</li>
+              <li>摺紙說明：△\(ABC\) 中 \(\angle C \gt \angle B\)，把 \(B\) 摺到 \(C\) 上，摺痕交 \(\overline{AB}\) 於 \(D\)，則 \(\overline{DB} = \overline{DC}\)。在 △\(ACD\) 中 \(\overline{AD} + \overline{DC} \gt \overline{AC}\)，換掉 \(\overline{DC}\) 就是 \(\overline{AB} \gt \overline{AC}\)。</li>
+              <li>題目只給兩個角時，<strong>先用內角和 \(180^\circ\) 求出第三個角</strong>，再排大小。</li>
+              <li>例：\(\angle A = 75^\circ\)、\(\angle B = 40^\circ\)，則 \(\angle C = 65^\circ\)。
+                \[\begin{aligned} & \angle A \gt \angle C \gt \angle B \\ & \Rightarrow \overline{BC} \gt \overline{AB} \gt \overline{AC} \end{aligned}\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・大角對大邊</span>
+              同一個三角形中：\(\angle C \gt \angle B\) ⇒ \(\overline{AB} \gt \overline{AC}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_fold.webp" alt="手工上色銅版畫風插圖：小蜜在標本工作室的木桌上，把一張三角形羊皮紙的一角往另一角摺過去，阿蜂在旁邊探頭看摺痕。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：由兩個角作三角形</h3>
+            <p class="interactive-instruction">拉動 \(\angle A\)、\(\angle B\)，畫布先算出 \(\angle C\)，再按角的大小把三條邊排好；最下面一行是由座標量出的邊長，順序跟推出來的完全一樣。試著讓兩個角相等。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ang" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ag-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ag-a">\(\angle A\)：<span id="ag-va" class="val-num">55</span>°</label>
+                    <input type="range" id="ag-a" min="10" max="150" value="55" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ag-b">\(\angle B\)：<span id="ag-vb" class="val-num">80</span>°</label>
+                    <input type="range" id="ag-b" min="10" max="115" value="80" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ag-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (大角對大邊)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-15">
+            <p class="quiz-question"><strong>Q15.</strong> △\(ABC\) 中，\(\angle A = 47^\circ\)、\(\angle C = 68^\circ\)，則三邊的大小關係為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-15" value="A"><span class="option-text">A. \(\overline{BC} \gt \overline{AC} \gt \overline{AB}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-15" value="B"><span class="option-text">B. \(\overline{AB} \gt \overline{AC} \gt \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-15" value="C"><span class="option-text">C. \(\overline{AC} \gt \overline{AB} \gt \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-15" value="D"><span class="option-text">D. \(\overline{AB} \gt \overline{BC} \gt \overline{AC}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & \angle B = 180^\circ - 47^\circ - 68^\circ = 65^\circ \\ & \angle C \gt \angle B \gt \angle A \end{aligned}\]
+              \(\angle C\) 對 \(\overline{AB}\)、\(\angle B\) 對 \(\overline{AC}\)、\(\angle A\) 對 \(\overline{BC}\)，所以 \(\overline{AB} \gt \overline{AC} \gt \overline{BC}\)。<br>
+              A 錯：順序完全相反，變成大角對小邊。<br>
+              C 錯：沒算 \(\angle B\)，以為題目沒給的 \(\angle B\) 最大。<br>
+              D 錯：\(\overline{BC}\) 對的 \(\angle A\) 最小，\(\overline{BC}\) 應該最短。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-16">
+            <p class="quiz-question"><strong>Q16.</strong> 等腰三角形 \(ABC\) 中，\(\overline{AB} = \overline{AC}\)，\(\angle A = 76^\circ\)，則 \(\overline{AB}\) 與 \(\overline{BC}\) 的大小關係為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-16" value="A"><span class="option-text">A. \(\overline{AB} \gt \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-16" value="B"><span class="option-text">B. \(\overline{AB} = \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-16" value="C"><span class="option-text">C. 條件不足，無法判斷</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-16" value="D"><span class="option-text">D. \(\overline{AB} \lt \overline{BC}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。等邊對等角：
+              \[\angle B = \angle C = \frac{180^\circ - 76^\circ}{2} = 52^\circ\]
+              \(\angle A = 76^\circ \gt \angle C = 52^\circ\)，\(\angle A\) 對 \(\overline{BC}\)、\(\angle C\) 對 \(\overline{AB}\)，所以 \(\overline{BC} \gt \overline{AB}\)。<br>
+              A 錯：以為腰一定比底長；頂角大於 \(60^\circ\) 時，底反而最長。<br>
+              B 錯：要 \(\angle A = 60^\circ\)（正三角形）才會相等。<br>
+              C 錯：先求出底角就能比較。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 共用邊的串接比較
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> <span>重點 9：兩個三角形共用一邊——把比較串起來</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>四邊形 \(ABCD\) 被對角線 \(\overline{BD}\) 分成 △\(DAB\) 和 △\(DBC\)。每一次比較都只能在<strong>一個三角形裡</strong>做，再用共用的 \(\overline{DB}\) 把結果接起來。</li>
+              <li>例：\(\angle DAB = 80^\circ\)、\(\angle DBA = 55^\circ\)、\(\angle DBC = 70^\circ\)、\(\angle DCB = 50^\circ\)。
+                \[\begin{aligned} & \text{△}DAB\text{：} 80^\circ \gt 55^\circ \\ & \Rightarrow \overline{DB} \gt \overline{DA} \\ & \text{△}DBC\text{：} 70^\circ \gt 50^\circ \\ & \Rightarrow \overline{DC} \gt \overline{DB} \end{aligned}\]
+                串起來：\(\overline{DC} \gt \overline{DB} \gt \overline{DA}\)。</li>
+              <li>注意對邊：\(\angle DAB\) 的對邊是 \(\overline{DB}\)，\(\angle DBA\) 的對邊是 \(\overline{DA}\)。</li>
+              <li>若兩次比較都說 \(\overline{DB}\) 比較長（或都說比較短），\(\overline{DA}\) 與 \(\overline{DC}\) 就<strong>串不起來</strong>，只靠大角對大邊比不出誰長。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・串接</span>
+              各自在自己的三角形裡比，再經由共用邊接成一串
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_kite.webp" alt="手工上色銅版畫風插圖：小蜜和阿蜂在花園裡，一人拉著麻繩的一端，量兩塊相鄰的三角形花壇共用的那一條邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：四個角決定的四邊形</h3>
+            <p class="interactive-instruction">調整四個角，畫布依角度作出四邊形，並在 △\(DAB\)、△\(DBC\) 各比一次。看哪些情形串得起來、哪些情形 \(\overline{DA}\) 與 \(\overline{DC}\) 比不出來。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-chain" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ch-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ch-a">\(\angle DAB\)：<span id="ch-va" class="val-num">70</span>°</label>
+                    <input type="range" id="ch-a" min="20" max="120" value="70" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ch-b1">\(\angle DBA\)：<span id="ch-vb1" class="val-num">50</span>°</label>
+                    <input type="range" id="ch-b1" min="20" max="120" value="50" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ch-b2">\(\angle DBC\)：<span id="ch-vb2" class="val-num">65</span>°</label>
+                    <input type="range" id="ch-b2" min="20" max="120" value="65" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ch-c">\(\angle DCB\)：<span id="ch-vc" class="val-num">45</span>°</label>
+                    <input type="range" id="ch-c" min="20" max="120" value="45" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ch-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (串接比較)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-17">
+            <p class="quiz-question"><strong>Q17.</strong> 如圖，四邊形 \(ABCD\) 中，\(\angle DAB = 73^\circ\)、\(\angle DBA = 58^\circ\)、\(\angle DBC = 61^\circ\)、\(\angle DCB = 54^\circ\)，則 \(\overline{DA}\)、\(\overline{DB}\)、\(\overline{DC}\) 中哪一條最長？</p>
+            <canvas class="quiz-fig" data-fig="q17" width="320" height="220" role="img" aria-label="四邊形 ABCD 與對角線 BD，標示角 DAB 73 度、角 DBA 58 度、角 DBC 61 度、角 DCB 54 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-17" value="A"><span class="option-text">A. \(\overline{DA}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-17" value="B"><span class="option-text">B. \(\overline{DB}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-17" value="C"><span class="option-text">C. 無法判斷</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-17" value="D"><span class="option-text">D. \(\overline{DC}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\begin{aligned} & \text{△}DAB\text{：} \angle DAB \gt \angle DBA \\ & \Rightarrow \overline{DB} \gt \overline{DA} \\ & \text{△}DBC\text{：} \angle DBC \gt \angle DCB \\ & \Rightarrow \overline{DC} \gt \overline{DB} \end{aligned}\]
+              串起來 \(\overline{DC} \gt \overline{DB} \gt \overline{DA}\)，\(\overline{DC}\) 最長。<br>
+              A 錯：\(\angle DAB\) 的對邊是 \(\overline{DB}\)，不是 \(\overline{DA}\)。<br>
+              B 錯：只比了 △\(DAB\)，沒有比 △\(DBC\)。<br>
+              C 錯：兩次比較方向一致，接得起來。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-18">
+            <p class="quiz-question"><strong>Q18.</strong> 如圖，四邊形 \(ABCD\) 中，\(\angle DAB = 72^\circ\)、\(\angle DBA = 46^\circ\)、\(\angle DBC = 43^\circ\)、\(\angle DCB = 69^\circ\)。只用「大角對大邊」，可以得到下列哪一個結論？</p>
+            <canvas class="quiz-fig" data-fig="q18" width="320" height="220" role="img" aria-label="四邊形 ABCD 與對角線 BD，標示角 DAB 72 度、角 DBA 46 度、角 DBC 43 度、角 DCB 69 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-18" value="A"><span class="option-text">A. \(\overline{DA} \gt \overline{DB} \gt \overline{DC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-18" value="B"><span class="option-text">B. \(\overline{DB}\) 最長</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-18" value="C"><span class="option-text">C. \(\overline{DC} \gt \overline{DB} \gt \overline{DA}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-18" value="D"><span class="option-text">D. \(\overline{DA}\) 最短</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & \text{△}DAB\text{：} 72^\circ \gt 46^\circ \\ & \Rightarrow \overline{DB} \gt \overline{DA} \\ & \text{△}DBC\text{：} 43^\circ \lt 69^\circ \\ & \Rightarrow \overline{DC} \lt \overline{DB} \end{aligned}\]
+              兩次都說 \(\overline{DB}\) 比較長，所以 \(\overline{DB}\) 最長；但 \(\overline{DA}\) 與 \(\overline{DC}\) 不在同一個三角形裡，大角對大邊比不出誰長。<br>
+              A、C 錯：兩次比較串不成一列。<br>
+              D 錯：\(\overline{DA}\) 和 \(\overline{DC}\) 誰短，用大角對大邊判斷不出來。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 只在同一個三角形中成立
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ban" aria-hidden="true"></i> <span>重點 10：邊角關係只在同一個三角形裡成立</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>大邊對大角、大角對大邊、等邊對等角、等角對等邊，說的都是<strong>同一個三角形</strong>裡的邊和角。</li>
+              <li>兩個不同的三角形，一個大、一個小，邊和角之間沒有這種關係。例如一個很小的三角形，頂角可以很大，對邊卻比另一個大三角形的邊短。</li>
+              <li>同理，△\(ABC\) 與 △\(DEF\) 都有一個 \(50^\circ\) 的角，不能因此說它們的對邊一樣長。</li>
+              <li>遇到四邊形或兩個三角形的題目，先問自己：「我要比的邊和角，在<strong>同一個三角形</strong>裡嗎？」</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・使用前先檢查</span>
+              要比的邊與角必須在同一個三角形中
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_frames.webp" alt="手工上色銅版畫風插圖：工作室木桌上並排放著一大一小兩個三角形木框，阿蜂指著它們，小蜜在旁邊歪著頭想。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩個三角形能互相比嗎？</h3>
+            <p class="interactive-instruction">兩個等腰三角形各自有頂角與底邊。調整之後比較 \(\overline{AB}\) 與 \(\overline{PQ}\)、\(\angle C\) 與 \(\angle R\)：有時方向一樣，有時剛好相反——跨三角形比不出結論；但每個三角形「自己內部」的比較永遠成立。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-two" width="540" height="460"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tw-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tw-c">\(\angle C\)：<span id="tw-vc" class="val-num">50</span>°</label>
+                    <input type="range" id="tw-c" min="40" max="140" value="50" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tw-ab">\(\overline{AB}\)：<span id="tw-vab" class="val-num">7</span></label>
+                    <input type="range" id="tw-ab" min="3" max="9" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tw-r">\(\angle R\)：<span id="tw-vr" class="val-num">100</span>°</label>
+                    <input type="range" id="tw-r" min="40" max="140" value="100" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tw-pq">\(\overline{PQ}\)：<span id="tw-vpq" class="val-num">5</span></label>
+                    <input type="range" id="tw-pq" min="3" max="9" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tw-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (同一個三角形)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-19">
+            <p class="quiz-question"><strong>Q19.</strong> 下列敘述何者<strong>一定</strong>正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-19" value="A"><span class="option-text">A. △\(PQR\) 中，若 \(\overline{QR} \gt \overline{PQ}\)，則 \(\angle P \gt \angle R\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-19" value="B"><span class="option-text">B. △\(ABC\) 與 △\(PQR\) 中，若 \(\overline{AB} \gt \overline{PQ}\)，則 \(\angle C \gt \angle R\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-19" value="C"><span class="option-text">C. △\(ABC\) 與 △\(PQR\) 中，若 \(\angle A = \angle P\)，則 \(\overline{BC} = \overline{QR}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-19" value="D"><span class="option-text">D. △\(ABC\) 中，若 \(\overline{AB} \gt \overline{AC}\)，則 \(\angle B \gt \angle C\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。同一個三角形中，\(\overline{QR}\) 對 \(\angle P\)、\(\overline{PQ}\) 對 \(\angle R\)，大邊對大角，\(\angle P \gt \angle R\)。<br>
+              B、C 錯：兩個不同的三角形，邊和角沒有這種關係（大三角形的邊長，角卻可以比小三角形的小）。<br>
+              D 錯：方向反了，\(\angle B\) 對的是比較短的 \(\overline{AC}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-20">
+            <p class="quiz-question"><strong>Q20.</strong> 如圖，四邊形 \(ABCD\) 中，\(E\)、\(F\) 分別在 \(\overline{BC}\)、\(\overline{CD}\) 上，\(\overline{AE} \perp \overline{BC}\)、\(\overline{AF} \perp \overline{CD}\)，\(\overline{AE} = 7\)、\(\overline{AF} = 12\)。<br>
+            小蜜說：「因為 \(\overline{AF} \gt \overline{AE}\)，根據大邊對大角，\(\angle D \gt \angle B\)。」<br>
+            阿蜂說：「因為 \(\angle AEB = \angle AFD = 90^\circ\)，根據等角對等邊，\(\overline{AB} = \overline{AD}\)。」<br>
+            兩人的推論是否正確？</p>
+            <canvas class="quiz-fig" data-fig="q20" width="320" height="220" role="img" aria-label="四邊形 ABCD，A 到 BC 的垂足 E、到 CD 的垂足 F，標示 AE 7、AF 12"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-20" value="A"><span class="option-text">A. 只有小蜜的推論正確</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-20" value="B"><span class="option-text">B. 只有阿蜂的推論正確</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-20" value="C"><span class="option-text">C. 兩人的推論都不正確</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-20" value="D"><span class="option-text">D. 兩人的推論都正確</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。<br>
+              小蜜：\(\overline{AF}\) 在 △\(ADF\) 裡、\(\overline{AE}\) 在 △\(ABE\) 裡，不是同一個三角形，不能用大邊對大角。<br>
+              阿蜂：\(\angle AEB\) 與 \(\angle AFD\) 也分屬兩個三角形，不能用等角對等邊。<br>
+              A、B、D 錯：兩人都把只在同一個三角形裡成立的性質，用在兩個不同的三角形上。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 由邊的大小順序求角的範圍
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>重點 11：由邊的大小順序，夾出角的範圍</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>知道三邊的大小順序，就知道三個角的大小順序；再加上<strong>內角和 \(180^\circ\)</strong>，可以把某個角夾在一段範圍裡。</li>
+              <li>例：△\(ABC\) 中 \(\overline{AB} \gt \overline{BC} \gt \overline{AC}\)，所以 \(\angle C \gt \angle A \gt \angle B\)。若 \(\angle C = 80^\circ\)：
+                \[\begin{aligned} & \angle A + \angle B = 100^\circ \\ & \angle A \gt \angle B \Rightarrow \angle B \lt 50^\circ \\ & \angle C \gt \angle A = 100^\circ - \angle B \\ & \Rightarrow \angle B \gt 20^\circ \end{aligned}\]
+                所以 \(20^\circ \lt \angle B \lt 50^\circ\)。</li>
+              <li>兩個不等號各給一個邊界：一個來自「比較大的那一個」、一個來自「比較小的那一個」，<strong>兩個都要用到</strong>。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・角的範圍</span>
+              邊的順序 ⇒ 角的順序，再配合內角和 \(180^\circ\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_range.webp" alt="手工上色銅版畫風插圖：小蜜坐在標本工作室的窗邊，手裡拿著一個三角形的木框蜂巢片端詳，窗外是花壇與蜂箱。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：試一個角，看順序對不對</h3>
+            <p class="interactive-instruction">固定 \(\overline{AB} \gt \overline{BC} \gt \overline{AC}\)。先選已知的是最大角還是最小角，拉動已知的角看範圍怎麼變；再用第二支滑桿試一個值，看三個角的順序是否符合。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-rng" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rn-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知</span>
+                    <div class="btn-group" id="rn-mode-group">
+                      <button class="pick-btn active" data-rn-mode="max">最大角 \(\angle C\)</button>
+                      <button class="pick-btn" data-rn-mode="min">最小角 \(\angle B\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rn-g"><span id="rn-lg">∠C（最大角）</span>：<span id="rn-vg" class="val-num">100</span>°</label>
+                    <input type="range" id="rn-g" min="65" max="175" value="100" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rn-t"><span id="rn-lt">試試 ∠B</span>：<span id="rn-vt" class="val-num">30</span>°</label>
+                    <input type="range" id="rn-t" min="5" max="85" value="30" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rn-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (角的範圍)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-21">
+            <p class="quiz-question"><strong>Q21.</strong> △\(ABC\) 中，\(\overline{BC} \gt \overline{AC} \gt \overline{AB}\)，且 \(\angle A = 74^\circ\)，則 \(\angle B\) 的範圍為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-21" value="A"><span class="option-text">A. \(0^\circ \lt \angle B \lt 53^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-21" value="B"><span class="option-text">B. \(53^\circ \lt \angle B \lt 106^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-21" value="C"><span class="option-text">C. \(53^\circ \lt \angle B \lt 74^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-21" value="D"><span class="option-text">D. \(32^\circ \lt \angle B \lt 53^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{BC}\) 對 \(\angle A\)、\(\overline{AC}\) 對 \(\angle B\)、\(\overline{AB}\) 對 \(\angle C\)，所以 \(\angle A \gt \angle B \gt \angle C\)。
+              \[\begin{aligned} & \angle B + \angle C = 106^\circ \\ & \angle B \gt \angle C \Rightarrow \angle B \gt 53^\circ \\ & \angle B \lt \angle A = 74^\circ \end{aligned}\]
+              A 錯：這是最小角 \(\angle C\) 才有的上界，\(\angle B\) 是中間的角。<br>
+              B 錯：只用了 \(\angle B \gt \angle C\)，漏了 \(\angle B \lt \angle A\)。<br>
+              D 錯：\(180^\circ - 2 \times 74^\circ = 32^\circ\) 是最小角 \(\angle C\) 的下界，配到了 \(\angle B\) 身上。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-22">
+            <p class="quiz-question"><strong>Q22.</strong> △\(ABC\) 中，\(\overline{AC} \gt \overline{AB} \gt \overline{BC}\)，且 \(\angle A = 38^\circ\)，則 \(\angle B\) 的範圍為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-22" value="A"><span class="option-text">A. \(71^\circ \lt \angle B \lt 104^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-22" value="B"><span class="option-text">B. \(38^\circ \lt \angle B \lt 71^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-22" value="C"><span class="option-text">C. \(71^\circ \lt \angle B \lt 142^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-22" value="D"><span class="option-text">D. \(38^\circ \lt \angle B \lt 104^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{AC}\) 對 \(\angle B\)、\(\overline{AB}\) 對 \(\angle C\)、\(\overline{BC}\) 對 \(\angle A\)，所以 \(\angle B \gt \angle C \gt \angle A\)。
+              \[\begin{aligned} & \angle B + \angle C = 142^\circ \\ & \angle B \gt \angle C \Rightarrow \angle B \gt 71^\circ \\ & \angle C = 142^\circ - \angle B \gt 38^\circ \\ & \Rightarrow \angle B \lt 104^\circ \end{aligned}\]
+              B 錯：這是 \(\angle C\) 的範圍。<br>
+              C 錯：漏了 \(\angle C \gt \angle A\) 給的上界。<br>
+              D 錯：下界只用了 \(\angle B \gt \angle A\)，沒有用 \(\angle B \gt \angle C\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 直角三角形的判別
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-check" aria-hidden="true"></i> <span>重點 12：三邊滿足畢氏定理，就是直角三角形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>畢氏定理說：直角三角形兩股的平方和等於斜邊的平方。<strong>反過來也成立</strong>：若 △\(ABC\) 三邊滿足 \(a^2 + b^2 = c^2\)，則 △\(ABC\) 是直角三角形，<strong>\(\angle C = 90^\circ\)</strong>（最長邊 \(c\) 的對角）。</li>
+              <li>理由：作一個兩股是 \(a\)、\(b\) 的直角三角形，它的斜邊平方也是 \(a^2 + b^2 = c^2\)，三邊都相等，由 SSS 全等可知原三角形也有一個直角。</li>
+              <li>判別時只要看<strong>最長邊</strong>：另外兩邊的平方和是否等於最長邊的平方。</li>
+              <li>例：\(9\)、\(12\)、\(15\) ⇒ \(81 + 144 = 225 = 15^2\)，是直角三角形；\(6\)、\(8\)、\(11\) ⇒ \(36 + 64 = 100 \ne 121\)，不是。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・直角三角形的判別</span>
+              \(a^2 + b^2 = c^2\) ⇒ \(\angle C = 90^\circ\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="ek_corner.webp" alt="手工上色銅版畫風插圖：阿蜂把一把沒有刻度的木製直角尺靠在木框蜂箱的角上，檢查那個角是不是直角，小蜜在一旁扶著蜂箱。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：平方和對得上嗎？</h3>
+            <p class="interactive-instruction">調整三邊 \(a = \overline{BC}\)、\(b = \overline{CA}\)、\(c = \overline{AB}\)。畫布用三邊作出三角形，比較「另外兩邊的平方和」與「最長邊的平方」，並由座標量出最大角。找找看還有哪些三邊會剛好相等。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-right" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rt-a">\(a\)：<span id="rt-va" class="val-num">8</span></label>
+                    <input type="range" id="rt-a" min="1" max="20" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rt-b">\(b\)：<span id="rt-vb" class="val-num">15</span></label>
+                    <input type="range" id="rt-b" min="1" max="20" value="15" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rt-c">\(c\)：<span id="rt-vc" class="val-num">17</span></label>
+                    <input type="range" id="rt-c" min="1" max="20" value="17" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (直角三角形的判別)</h3>
+
+          <div class="quiz-card" data-quiz="3-5-23">
+            <p class="quiz-question"><strong>Q23.</strong> 下列各組數分別代表三角形的三邊長，哪一組是直角三角形？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-23" value="A"><span class="option-text">A. \(15\)、\(20\)、\(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-23" value="B"><span class="option-text">B. \(20\)、\(21\)、\(29\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-23" value="C"><span class="option-text">C. \(8\)、\(21\)、\(23\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-23" value="D"><span class="option-text">D. \(7\)、\(24\)、\(26\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。只看最長邊：
+              \[\begin{aligned} & \text{A：} 225 + 400 = 625 \ne 576 \\ & \text{B：} 400 + 441 = 841 = 29^2 \\ & \text{C：} 64 + 441 = 505 \ne 529 \\ & \text{D：} 49 + 576 = 625 \ne 676 \end{aligned}\]
+              A 錯：兩邊平方和 \(625 = 25^2\)，但最長邊是 \(24\)。<br>
+              C 錯：差了 \(24\)，不相等。<br>
+              D 錯：\(7^2 + 24^2 = 25^2\)，第三邊要是 \(25\) 才是直角三角形。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-5-24">
+            <p class="quiz-question"><strong>Q24.</strong> △\(ABC\) 中，\(\overline{AB} = 9\)、\(\overline{BC} = 41\)、\(\overline{CA} = 40\)，則下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-5-24" value="A"><span class="option-text">A. \(\angle B = 90^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-24" value="B"><span class="option-text">B. \(\angle C = 90^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-24" value="C"><span class="option-text">C. 不是直角三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-5-24" value="D"><span class="option-text">D. \(\angle A = 90^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。最長邊是 \(\overline{BC} = 41\)：
+              \[\begin{aligned} & 9^2 + 40^2 = 81 + 1600 \\ & = 1681 = 41^2 \end{aligned}\]
+              是直角三角形，直角是最長邊 \(\overline{BC}\) 的對角 \(\angle A\)。<br>
+              A 錯：\(\angle B\) 對的是 \(\overline{CA}\)，不是最長邊。<br>
+              B 錯：\(\angle C\) 對的是最短的 \(\overline{AB}\)；不能看到 \(c\) 就以為直角一定是 \(\angle C\)。<br>
+              C 錯：平方和剛好相等，是直角三角形。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 邊角關係速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>三邊關係</strong>：任意兩邊的和大於第三邊，任意兩邊的差小於第三邊。</li>
+              <li><strong>構成條件</strong>：最長的線段小於另外兩線段的和；等於或大於都不行。</li>
+              <li><strong>等腰</strong>：兩種當腰的方法都要檢查「腰 \(+\) 腰 \(\gt\) 底」。</li>
+              <li><strong>第三邊</strong>：兩邊之差 \(\lt x \lt\) 兩邊之和，端點取不到；共用邊取交集。</li>
+              <li><strong>邊角關係</strong>（同一個三角形）：等邊對等角、等角對等邊；大邊對大角、大角對大邊。</li>
+              <li>先推出邊或角的大小再比較；共用邊可以把兩次比較串起來；由順序與內角和可夾出角的範圍。</li>
+              <li><strong>直角的判別</strong>：最長邊的平方等於另兩邊的平方和 ⇒ 最長邊的對角是直角。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到養蜂花園：蜂巢小車</h4>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 時間換成距離</h5>
+              <p>小蜜設計了一臺沿著蜂巢路線走的小車，讓它以相同的速率沿著 △\(ABC\) 的三條邊各跑一次：從 \(A\) 到 \(B\) 比從 \(A\) 到 \(C\) 花的時間多，從 \(B\) 到 \(C\) 又比從 \(B\) 到 \(A\) 多。速率相同，時間越多，路越長，所以</p>
+              <p>\(\overline{BC} \gt \overline{AB}\)<wbr>\({} \gt \overline{AC}\)</p>
+              <h5><i class="fa-solid fa-scale-balanced"></i> 距離換成角度</h5>
+              <p>同一個三角形裡大邊對大角：\(\overline{BC}\) 對 \(\angle A\)、\(\overline{AB}\) 對 \(\angle C\)、\(\overline{AC}\) 對 \(\angle B\)，於是 \(\angle A \gt \angle C \gt \angle B\)。不用量角器，只用碼錶就排出了三個角的大小。</p>
+              <h5><i class="fa-solid fa-forward"></i> 第 3 章回顧</h5>
+              <p>從內角與外角、尺規作圖、全等性質、中垂線與角平分線，到這一節的邊角關係，第 3 章把三角形的「角」與「邊」一步步連了起來；下一章「平行與四邊形」會把這些工具用到四邊形上。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

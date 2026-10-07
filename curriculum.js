@@ -142,9 +142,9 @@
         "sections": [
           { "code": "3-1", "title": "三角形與多邊形的內角與外角", "status": "completed" },
           { "code": "3-2", "title": "尺規作圖", "status": "completed" },
-          { "code": "3-3", "title": "三角形的全等性質" },
-          { "code": "3-4", "title": "中垂線與角平分線的性質" },
-          { "code": "3-5", "title": "三角形的邊角關係" }
+          { "code": "3-3", "title": "三角形的全等性質", "status": "completed" },
+          { "code": "3-4", "title": "中垂線與角平分線的性質", "status": "completed" },
+          { "code": "3-5", "title": "三角形的邊角關係", "status": "completed" }
         ]
       },
       {
