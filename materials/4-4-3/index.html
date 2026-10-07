@@ -4,39 +4,1483 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>4-3 特殊四邊形的性質 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>4-3 特殊四邊形的性質 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第4章 平行與四邊形</div>
-    <h1>4-3 特殊四邊形的性質</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第四章</span>
+        <h1>4-3 特殊四邊形的性質</h1>
+        <p>道路標線工班今天要畫停車格、菱形預告標線，還要做梯形的分隔島。小線和阿平發現：只要量<strong>兩條對角線</strong>，就能知道畫出來的是不是長方形、菱形或箏形。這一節先看<strong>長方形、菱形、箏形、正方形</strong>的對角線性質、判別方法與面積算法，再看<strong>梯形兩腰中點的連線段</strong>與<strong>等腰梯形</strong>的性質。</p>
+      </div>
+      <!-- Progress navigation (12 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-car"></i> 長方形</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-diamond"></i> 菱形</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-layer-group"></i> 對角線求面積</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-wind"></i> 箏形</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-square"></i> 正方形</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 對角線判別</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-sitemap"></i> 包含關係</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-grip-lines"></i> 中點連線段</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-fill-drip"></i> 梯形面積</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-road"></i> 等腰梯形底角</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-ruler"></i> 等腰梯形對角線</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-check-double"></i> 等腰梯形判別</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（復古琺瑯道路標誌風・道路標線工班）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(244, 196, 48, 0.25);">
+        <h2 class="section-title" style="color: #f4c430; border-bottom-color: rgba(244, 196, 48, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #f4c430; text-shadow: 0 0 10px rgba(244, 196, 48, 0.4);"></i> 課前暖身漫畫：停車格是長方形嗎？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            停車格畫好了，可是工地沒有那麼大的直角尺。小線拿出捲尺量兩條對角線：<strong style="color:#f4c430">兩條一樣長，而且中點在同一個地方</strong>——這樣就能確定四個角都是直角。這一節要說明為什麼可以這樣檢查。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(15, 23, 42, 0.4);">
+            <img src="motivation_comic.webp" alt="復古琺瑯道路標誌風四格漫畫：阿平畫好停車格後擔心四個角不是直角；小線拿出捲尺說量兩條對角線就知道；阿平拉著捲尺量第二條對角線，發現和第一條一樣長；小線在完成的停車格旁，旁白說明兩條對角線等長且互相平分的四邊形是長方形。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 長方形的對角線
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-car" aria-hidden="true"></i> <span>重點 1：長方形的兩條對角線等長且互相平分</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>長方形（矩形）</strong>是四個內角都是直角的四邊形。它的兩雙對角分別相等，所以也是平行四邊形，平行四邊形的性質它全都有。</li>
+              <li><strong>對角線等長</strong>：在 △\(ABC\) 與 △\(DCB\) 中，\(\overline{AB} = \overline{DC}\)、\(\angle ABC = \angle DCB = 90^\circ\)、\(\overline{BC}\) 共用，由 SAS 全等得 \(\overline{AC} = \overline{DB}\)。也可以用畢氏定理：兩條對角線的平方都等於 \(\overline{AB}^2 + \overline{BC}^2\)。</li>
+              <li><strong>互相平分</strong>是平行四邊形本來就有的，所以交點 \(O\) 到四個頂點一樣遠：
+                \[\overline{OA} = \overline{OB} = \overline{OC} = \overline{OD}\]</li>
+              <li>兩條對角線把長方形切成四個小三角形，<strong>面積都是長方形的 \(\frac{1}{4}\)</strong>。</li>
+              <li>例：\(\overline{BC} = 24\)、\(\overline{CD} = 7\)，則
+                \[\begin{aligned} & \overline{BD} = \sqrt{24^2 + 7^2} \\ & = \sqrt{625} = 25 \end{aligned}\]
+                \(\overline{OC} = 25 \div 2 = 12.5\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・長方形的對角線</span>
+              兩對角線<strong>相等</strong>且<strong>互相平分</strong>
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_parking.webp" alt="復古琺瑯道路標誌風插圖：瀝青地上一個剛畫好白線的長方形停車格，小線和阿平各站在停車格對角的兩個角上，拉直一條捲尺，捲尺從一個角直直通到對面的角。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：拉長、壓扁長方形</h3>
+            <p class="interactive-instruction">調整長方形的長與寬，看兩條對角線的長度怎麼由畢氏定理算出來、交點 \(O\) 到四個頂點是不是一樣遠。切到「△\(BOC\)」看對角線切出來的小三角形。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-rect" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">觀察</span>
+                    <div class="btn-group" id="rc-mode-group">
+                      <button class="pick-btn active" data-rc-mode="diag">對角線</button>
+                      <button class="pick-btn" data-rc-mode="tri">△BOC</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rc-w">\(\overline{BC}\)（長）：<span id="rc-vw" class="val-num">12</span></label>
+                    <input type="range" id="rc-w" min="2" max="12" value="12" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rc-h">\(\overline{CD}\)（寬）：<span id="rc-vh" class="val-num">5</span></label>
+                    <input type="range" id="rc-h" min="2" max="9" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (長方形的對角線)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 長方形 \(ABCD\) 中，\(\overline{AB} = 20\)、\(\overline{BC} = 21\)，則兩條對角線長的和是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-1" value="A"><span class="option-text">A. \(29\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-1" value="B"><span class="option-text">B. \(58\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-1" value="C"><span class="option-text">C. \(41\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-1" value="D"><span class="option-text">D. \(82\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} & \overline{AC} = \sqrt{20^2 + 21^2} \\ & = \sqrt{841} = 29 \end{aligned}\]
+              長方形的兩條對角線等長，所以和是 \(29 + 29 = 58\)。<br>
+              A 錯：只算了一條對角線。<br>
+              C 錯：\(20 + 21\) 是兩邊的和，不是對角線。<br>
+              D 錯：\(2 \times (20 + 21) = 82\) 是長方形的周長。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 長方形 \(ABCD\) 的兩條對角線交於 \(O\) 點，\(\overline{OB} = 8.5\)、\(\overline{BC} = 15\)，則長方形 \(ABCD\) 的周長是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-2" value="A"><span class="option-text">A. \(30\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-2" value="B"><span class="option-text">B. \(64\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-2" value="C"><span class="option-text">C. \(120\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-2" value="D"><span class="option-text">D. \(46\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。長方形的對角線互相平分，\(\overline{BD} = 2 \times 8.5 = 17\)。在直角 △\(BCD\) 中
+              \[\begin{aligned} & \overline{CD}^2 = 17^2 - 15^2 \\ & = 289 - 225 = 64 \end{aligned}\]
+              得 \(\overline{CD} = 8\)，周長 \(= 2 \times (15 + 8) = 46\)。<br>
+              A 錯：\(30\) 是 △\(BOC\) 的面積（長方形面積的 \(\frac{1}{4}\)）。<br>
+              B 錯：把對角線 \(17\) 當成邊：\(2 \times (15 + 17) = 64\)。<br>
+              C 錯：\(15 \times 8 = 120\) 是長方形的面積。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 菱形的對角線
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-diamond" aria-hidden="true"></i> <span>重點 2：菱形的兩條對角線互相垂直平分</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>菱形</strong>是四個邊都相等的四邊形。它的兩雙對邊分別相等，所以也是平行四邊形。</li>
+              <li>菱形的兩條對角線都是對稱軸，所以兩條對角線<strong>互相垂直平分</strong>，而且<strong>平分四個內角</strong>。</li>
+              <li>對角線把菱形切成<strong>四個全等的直角三角形</strong>：兩股是兩條對角線的一半，斜邊是菱形的邊長。</li>
+              <li>例：\(\overline{AO} = 8\)、\(\overline{BO} = 15\)，則
+                \[\overline{AB} = \sqrt{8^2 + 15^2} = 17\]
+                周長是 \(68\)。</li>
+              <li>角度：相鄰兩角互補；\(\angle BAO = \frac{1}{2}\angle BAD\)，而 \(\angle ABO = 90^\circ - \angle BAO\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・菱形的對角線</span>
+              兩對角線<strong>互相垂直平分</strong>，並<strong>平分內角</strong>
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_diamond.webp" alt="復古琺瑯道路標誌風插圖：小線蹲在柏油路面上，用刷子替一個沿著車道方向拉長的白色菱形標線補漆，阿平推著畫線車停在後方。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：菱形的四個直角三角形</h3>
+            <p class="interactive-instruction">「長度」模式調整半條對角線 \(\overline{AO}\)、\(\overline{BO}\)，看邊長怎麼算；「角度」模式調整 \(\angle BAD\)，看對角線怎麼把內角分成兩半。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-rhomb" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rb-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="rb-mode-group">
+                      <button class="pick-btn active" data-rb-mode="len">長度</button>
+                      <button class="pick-btn" data-rb-mode="ang">角度</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="rb-row-p">
+                    <label for="rb-p">\(\overline{AO}\)：<span id="rb-vp" class="val-num">4</span></label>
+                    <input type="range" id="rb-p" min="1" max="9" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="rb-row-q">
+                    <label for="rb-q">\(\overline{BO}\)：<span id="rb-vq" class="val-num">3</span></label>
+                    <input type="range" id="rb-q" min="1" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="rb-row-a" style="display:none">
+                    <label for="rb-a">\(\angle BAD\)：<span id="rb-va" class="val-num">70</span>°</label>
+                    <input type="range" id="rb-a" min="20" max="160" value="70" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rb-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (菱形的對角線)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-3">
+            <p class="quiz-question"><strong>Q3.</strong> 菱形 \(ABCD\) 的兩條對角線交於 \(O\) 點，\(\overline{BC} = 29\)、\(\overline{AC} = 40\)，則 \(\overline{BD}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-3" value="A"><span class="option-text">A. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-3" value="B"><span class="option-text">B. \(58\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-3" value="C"><span class="option-text">C. \(42\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-3" value="D"><span class="option-text">D. \(84\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。菱形的對角線互相垂直平分，\(\overline{OC} = 40 \div 2 = 20\)。在直角 △\(OBC\) 中
+              \[\begin{aligned} & \overline{OB}^2 = 29^2 - 20^2 \\ & = 841 - 400 = 441 \end{aligned}\]
+              得 \(\overline{OB} = 21\)，\(\overline{BD} = 2 \times 21 = 42\)。<br>
+              A 錯：\(21\) 只是 \(\overline{OB}\)，忘了乘 \(2\)。<br>
+              B 錯：\(58\) 是兩倍的邊長。<br>
+              D 錯：乘了兩次 \(2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-4">
+            <p class="quiz-question"><strong>Q4.</strong> 菱形 \(ABCD\) 中，\(\angle ABC = 124^\circ\)，兩條對角線交於 \(O\) 點，則 \(\angle OAD\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-4" value="A"><span class="option-text">A. \(28^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-4" value="B"><span class="option-text">B. \(56^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-4" value="C"><span class="option-text">C. \(34^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-4" value="D"><span class="option-text">D. \(62^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。菱形相鄰兩角互補：
+              \[\angle BAD = 180^\circ - 124^\circ = 56^\circ\]
+              對角線 \(\overline{AC}\) 平分 \(\angle BAD\)，所以 \(\angle OAD = 56^\circ \div 2 = 28^\circ\)。<br>
+              B 錯：\(56^\circ\) 是整個 \(\angle BAD\)，還沒平分。<br>
+              C 錯：\(90^\circ - 56^\circ\) 把整個 \(\angle BAD\) 當成小直角三角形裡的銳角。<br>
+              D 錯：\(124^\circ \div 2 = 62^\circ\) 是 \(\angle ABO\)，在 \(B\) 那一端。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 對角線互相垂直的四邊形面積
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i> <span>重點 3：對角線互相垂直，面積是兩對角線乘積的一半</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>菱形 \(ABCD\) 被對角線 \(\overline{BD}\) 分成兩個三角形，底都是 \(\overline{BD}\)，高分別是 \(\overline{OA}\)、\(\overline{OC}\)：
+                \[\begin{aligned} & \frac{1}{2}\overline{BD} \times \overline{OA} + \frac{1}{2}\overline{BD} \times \overline{OC} \\ & = \frac{1}{2}\overline{BD} \times \overline{AC} \end{aligned}\]</li>
+              <li>推導只用到「兩條對角線<strong>互相垂直</strong>」，所以<strong>任何對角線互相垂直的四邊形</strong>都適用，箏形、正方形也一樣。</li>
+              <li>另一種看法：以兩條對角線為長、寬作外框長方形，四邊形剛好佔外框的一半。</li>
+              <li>例：兩條對角線長 \(14\) 與 \(9\)，面積是 \(\frac{1}{2} \times 14 \times 9 = 63\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・對角線互相垂直的四邊形</span>
+              面積 \(=\) 兩對角線長的乘積 \(\div 2\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_cutpaper.webp" alt="復古琺瑯道路標誌風插圖：工班的木製工作檯上平放一張黃色長方形反光貼紙，上面用鉛筆畫了一個菱形，菱形的四個尖端剛好碰到長方形四條邊的正中間；小線用手指著其中一個尖端。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：外框長方形的一半</h3>
+            <p class="interactive-instruction">調整兩條對角線的長，以及交點 \(O\) 落在哪裡（\(\overline{AO}\)、\(\overline{BO}\)）。每一小塊長方形都被四邊形的邊切成兩個全等三角形——不管交點在哪，面積都是外框的一半。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-area" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ar-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ar-d1">\(\overline{AC}\)：<span id="ar-vd1" class="val-num">9</span></label>
+                    <input type="range" id="ar-d1" min="2" max="12" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ar-d2">\(\overline{BD}\)：<span id="ar-vd2" class="val-num">6</span></label>
+                    <input type="range" id="ar-d2" min="2" max="10" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ar-o">\(\overline{AO}\)：<span id="ar-vo" class="val-num">3</span></label>
+                    <input type="range" id="ar-o" min="1" max="8" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ar-b">\(\overline{BO}\)：<span id="ar-vb" class="val-num">2</span></label>
+                    <input type="range" id="ar-b" min="1" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ar-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (由對角線求面積)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-5">
+            <p class="quiz-question"><strong>Q5.</strong> 一張長方形色紙 \(ABCD\)，\(\overline{AD} = 16\) 公分、\(\overline{AB} = 26\) 公分。把四邊的中點連起來、剪掉四個角，剩下一個菱形。這個菱形的面積是多少平方公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-5" value="A"><span class="option-text">A. \(416\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-5" value="B"><span class="option-text">B. \(104\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-5" value="C"><span class="option-text">C. \(84\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-5" value="D"><span class="option-text">D. \(208\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。菱形的兩條對角線分別和色紙的兩邊一樣長：\(16\) 與 \(26\)，所以面積是
+              \[\frac{1}{2} \times 16 \times 26 = 208\]
+              A 錯：\(16 \times 26 = 416\) 是整張色紙，忘了除以 \(2\)。<br>
+              B 錯：除以 \(4\) 了——剪掉的四個角合起來是色紙的一半，剩下的也是一半。<br>
+              C 錯：\(2 \times (16 + 26) = 84\) 是色紙的周長。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-6">
+            <p class="quiz-question"><strong>Q6.</strong> 四邊形 \(ABCD\) 的兩條對角線互相垂直，\(\overline{AC} = 15\)，面積是 \(60\)，則 \(\overline{BD}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-6" value="A"><span class="option-text">A. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-6" value="B"><span class="option-text">B. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-6" value="C"><span class="option-text">C. \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-6" value="D"><span class="option-text">D. \(45\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。對角線互相垂直，面積是乘積的一半：
+              \[\frac{1}{2} \times 15 \times \overline{BD} = 60\]
+              得 \(\overline{BD} = 8\)。<br>
+              A 錯：\(60 \div 15 = 4\) 漏掉了公式裡的 \(\frac{1}{2}\)。<br>
+              C 錯：\(8\) 已經是整條對角線，不必再乘 \(2\)。<br>
+              D 錯：\(60 - 15\)，面積和長度不能相減。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 箏形
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-wind" aria-hidden="true"></i> <span>重點 4：箏形的一條對角線垂直平分另一條</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>箏形</strong>是兩雙<strong>鄰邊</strong>分別等長的四邊形：\(\overline{AB} = \overline{AD}\)、\(\overline{CB} = \overline{CD}\)。</li>
+              <li>對角線 \(\overline{AC}\) 是對稱軸，所以 \(\overline{AC}\) <strong>垂直平分</strong> \(\overline{BD}\)，並平分 \(\angle BAD\) 與 \(\angle BCD\)；另外 \(\angle ABC = \angle ADC\)（△\(ABC\) \(\cong\) △\(ADC\)，SSS）。</li>
+              <li>反過來，\(\overline{BD}\) <strong>不一定</strong>平分 \(\overline{AC}\)：\(\overline{AO}\) 和 \(\overline{OC}\) 通常不相等。</li>
+              <li>箏形<strong>不一定是平行四邊形</strong>：相等的是鄰邊，不是對邊。</li>
+              <li>兩條對角線互相垂直，所以面積 \(= \frac{1}{2} \times \overline{AC} \times \overline{BD}\)。</li>
+              <li>例：\(\overline{AB} = 15\)、\(\overline{CB} = 41\)、\(\overline{BO} = 9\)，則 \(\overline{AO} = 12\)、\(\overline{OC} = 40\)，\(\overline{AC} = 52\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・箏形</span>
+              一條對角線<strong>垂直平分</strong>另一條，並平分兩個頂角
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_kite.webp" alt="復古琺瑯道路標誌風插圖：收工後的空地上，阿平雙手舉著一只紙風箏，風箏由兩根竹條撐開，橫的竹條較短、和直的竹條垂直，交叉點靠近上方，橫竹條兩邊一樣長；小線在旁邊抬頭看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：做一只風箏</h3>
+            <p class="interactive-instruction">\(\overline{AC}\) 是直的竹條、\(\overline{BD}\) 是橫的竹條。調整 \(\overline{AO}\)、\(\overline{OC}\)、\(\overline{BO}\)，看哪些邊相等、哪些角被平分；把 \(\overline{AO}\) 調成和 \(\overline{OC}\) 一樣長會發生什麼事？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-kite" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="kt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="kt-mode-group">
+                      <button class="pick-btn active" data-kt-mode="len">邊與面積</button>
+                      <button class="pick-btn" data-kt-mode="ang">角</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="kt-p">\(\overline{AO}\)：<span id="kt-vp" class="val-num">3</span></label>
+                    <input type="range" id="kt-p" min="1" max="8" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="kt-r">\(\overline{OC}\)：<span id="kt-vr" class="val-num">8</span></label>
+                    <input type="range" id="kt-r" min="1" max="10" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="kt-q">\(\overline{BO} = \overline{OD}\)：<span id="kt-vq" class="val-num">4</span></label>
+                    <input type="range" id="kt-q" min="1" max="7" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="kt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (箏形)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-7">
+            <p class="quiz-question"><strong>Q7.</strong> 如圖，箏形 \(ABCD\) 中，\(\overline{AB} = \overline{AD} = 13\)、\(\overline{CB} = \overline{CD} = 20\)，對角線交於 \(O\) 點，\(\overline{BO} = 12\)，則 \(\overline{AC}\) 是多少？</p>
+            <canvas class="quiz-fig" data-fig="q7" width="320" height="220" role="img" aria-label="箏形 ABCD，A 在上、C 在下，AB 與 AD 標 13，CB 與 CD 標 20，對角線交於 O，BO 標 12"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-7" value="A"><span class="option-text">A. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-7" value="B"><span class="option-text">B. \(11\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-7" value="C"><span class="option-text">C. \(33\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-7" value="D"><span class="option-text">D. \(24\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。箏形的 \(\overline{AC}\) 垂直平分 \(\overline{BD}\)，△\(ABO\) 與 △\(CBO\) 都是直角三角形：
+              \[\begin{aligned} & \overline{AO} = \sqrt{13^2 - 12^2} = 5 \\ & \overline{OC} = \sqrt{20^2 - 12^2} = 16 \end{aligned}\]
+              \(\overline{AC} = 5 + 16 = 21\)。<br>
+              B 錯：\(16 - 5 = 11\)；\(O\) 在 \(A\)、\(C\) 之間，要相加。<br>
+              C 錯：\(13 + 20 = 33\) 是兩邊的和。<br>
+              D 錯：\(24\) 是 \(\overline{BD}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-8">
+            <p class="quiz-question"><strong>Q8.</strong> 箏形 \(ABCD\) 中，\(\overline{AB} = \overline{AD}\)、\(\overline{CB} = \overline{CD}\)，\(\angle BAD = 64^\circ\)、\(\angle BCD = 40^\circ\)，則 \(\angle ABC\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-8" value="A"><span class="option-text">A. \(52^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-8" value="B"><span class="option-text">B. \(116^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-8" value="C"><span class="option-text">C. \(128^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-8" value="D"><span class="option-text">D. \(104^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。箏形的 \(\angle ABC = \angle ADC\)，四個角的和是 \(360^\circ\)：
+              \[\begin{aligned} & 2\angle ABC = 360^\circ - 64^\circ - 40^\circ \\ & = 256^\circ \end{aligned}\]
+              得 \(\angle ABC = 128^\circ\)。<br>
+              A 錯：\((64^\circ + 40^\circ) \div 2\)，不是四邊形內角和的算法。<br>
+              B 錯：\(180^\circ - 64^\circ\)——箏形不是平行四邊形，相鄰兩角不一定互補。<br>
+              D 錯：\(64^\circ + 40^\circ\) 是兩個頂角的和。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 正方形
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square" aria-hidden="true"></i> <span>重點 5：正方形的對角線等長且互相垂直平分</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>正方形</strong>是四個角都是直角、四個邊都相等的四邊形。</li>
+              <li>它是長方形，所以對角線<strong>等長且互相平分</strong>；它也是菱形，所以對角線<strong>互相垂直平分</strong>。合起來：
+                \[\overline{OA} = \overline{OB} = \overline{OC} = \overline{OD}\]
+                而且兩條對角線互相垂直。</li>
+              <li>由對角線求邊長：△\(AOB\) 是等腰直角三角形，\(\overline{AB}^2 = \overline{OA}^2 + \overline{OB}^2\)。</li>
+              <li>例：\(\overline{AC} = 12\)，則 \(\overline{OA} = \overline{OB} = 6\)，\(\overline{AB} = 6\sqrt{2}\)，周長 \(24\sqrt{2}\)，面積 \(\frac{1}{2} \times 12 \times 12 = 72\)。</li>
+              <li>坐標：已知 \(A\)、\(C\)，先找中點 \(O\)；\(\overline{AC}\) 水平時，\(B\)、\(D\) 就在 \(O\) 的正上方與正下方，距離等於 \(\overline{OA}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・正方形的對角線</span>
+              <strong>等長</strong>且<strong>互相垂直平分</strong>
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_tile.webp" alt="復古琺瑯道路標誌風插圖：人行道上有一塊正方形的鑄鐵孔蓋，小線蹲在旁邊，把一把 L 形的金屬直角尺貼在孔蓋的一個角上檢查；阿平站在後面捧著捲尺盒。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：由 A、C 找出 B、D</h3>
+            <p class="interactive-instruction">對角線的中點 \(O\) 固定在 \((6, 5)\)。調整 \(A\) 相對於 \(O\) 的位置（往右幾格、往上幾格），\(C\) 會在對面。把黃色的「斜率三角形」轉 \(90^\circ\)，就得到藍色的 \(O \to B\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-square" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sp-u">\(A\) 在 \(O\) 右邊幾格：<span id="sp-vu" class="val-num">3</span></label>
+                    <input type="range" id="sp-u" min="-4" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sp-v">\(A\) 在 \(O\) 上方幾格：<span id="sp-vv" class="val-num">1</span></label>
+                    <input type="range" id="sp-v" min="-4" max="4" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (正方形)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-9">
+            <p class="quiz-question"><strong>Q9.</strong> 正方形 \(ABCD\) 的兩條對角線交於 \(O\) 點，\(\overline{BD} = 14\)，則正方形的周長與面積分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-9" value="A"><span class="option-text">A. 周長 \(56\)、面積 \(196\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-9" value="B"><span class="option-text">B. 周長 \(28\sqrt{2}\)、面積 \(98\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-9" value="C"><span class="option-text">C. 周長 \(28\sqrt{2}\)、面積 \(196\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-9" value="D"><span class="option-text">D. 周長 \(28\)、面積 \(49\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。正方形的對角線等長且互相垂直平分，\(\overline{OA} = \overline{OB} = 7\)：
+              \[\overline{AB} = \sqrt{7^2 + 7^2} = 7\sqrt{2}\]
+              周長 \(= 4 \times 7\sqrt{2} = 28\sqrt{2}\)，面積 \(= \frac{1}{2} \times 14 \times 14 = 98\)。<br>
+              A 錯：把對角線 \(14\) 當成邊長。<br>
+              C 錯：面積用了 \(14 \times 14\)，忘了除以 \(2\)。<br>
+              D 錯：把 \(\overline{OA} = 7\) 當成邊長。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-10">
+            <p class="quiz-question"><strong>Q10.</strong> 坐標平面上，正方形 \(ABCD\) 的頂點 \(A(-4, 1)\)、\(C(6, 1)\)，則 \(B\)、\(D\) 兩點的坐標是哪一組？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-10" value="A"><span class="option-text">A. \((1, 11)\)、\((1, -9)\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-10" value="B"><span class="option-text">B. \((-4, 6)\)、\((6, -4)\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-10" value="C"><span class="option-text">C. \((1, 5)\)、\((1, -5)\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-10" value="D"><span class="option-text">D. \((1, 6)\)、\((1, -4)\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。對角線的中點 \(O(1, 1)\)，\(\overline{AC} = 6 - (-4) = 10\)，所以 \(\overline{OB} = \overline{OD} = 5\)。\(\overline{AC}\) 是水平的，\(\overline{BD}\) 就是鉛垂的：\(B\)、\(D\) 是 \((1, 1 + 5)\)、\((1, 1 - 5)\)。<br>
+              A 錯：用了整條對角線 \(10\)，忘了取一半。<br>
+              B 錯：以為 \(B\) 在 \(A\) 的正上方、\(D\) 在 \(C\) 的正下方，那樣圍出來的不是正方形。<br>
+              C 錯：忘了 \(O\) 的 \(y\) 坐標是 \(1\)，從 \(y = 0\) 往上下走。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 由對角線判別
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>重點 6：只看對角線，判別長方形、菱形、箏形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>前面的性質<strong>反過來也成立</strong>，可以用來判別：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>兩條對角線</th><th>四邊形</th></tr></thead>
+                <tbody>
+                  <tr><td>互相平分</td><td>平行四邊形</td></tr>
+                  <tr><td>等長且互相平分</td><td>長方形</td></tr>
+                  <tr><td>互相垂直平分</td><td>菱形</td></tr>
+                  <tr><td>等長且互相垂直平分</td><td>正方形</td></tr>
+                  <tr><td>一條垂直平分另一條</td><td>箏形</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list">
+              <li><strong>長方形</strong>：\(\overline{OA} = \overline{OB} = \overline{OC} = \overline{OD}\)，△\(AOB\)、△\(AOD\) 都是等腰三角形；△\(ABD\) 的內角和讓 \(\angle DAB\) 恰好是 \(90^\circ\)，四個角同理。</li>
+              <li><strong>菱形</strong>：\(\overline{AC}\) 垂直 \(\overline{BD}\) 又通過它的中點，是 \(\overline{BD}\) 的中垂線，所以 \(\overline{AB} = \overline{AD}\)；同理 \(\overline{BA} = \overline{BC}\)，四邊相等。</li>
+              <li><strong>箏形</strong>：只要 \(\overline{BD}\) 垂直平分 \(\overline{AC}\)，就有 \(\overline{DA} = \overline{DC}\)、\(\overline{BA} = \overline{BC}\)。</li>
+              <li>⚠️ 只有「等長」不一定是長方形，只有「垂直」不一定是菱形——<strong>少了互相平分</strong>，交點可以偏到一邊去。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・對角線判別</span>
+              先看<strong>互相平分</strong>，再看<strong>等長</strong>、<strong>垂直</strong>
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_tapecheck.webp" alt="復古琺瑯道路標誌風插圖：瀝青地上一個白線畫的長方形框，兩條捲尺分別沿兩條對角線拉直，在框的正中間交叉；小線蹲在交叉點旁邊看，阿平握著其中一條捲尺的一端。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：對角線判別器</h3>
+            <p class="interactive-instruction">分別調整交點 \(O\) 到四個頂點的距離與兩條對角線的夾角。畫布會檢查三個條件，判斷這是哪一種四邊形，並量出四個內角驗證。試著做出「等長但不是長方形」「垂直但不是菱形」的例子。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-judge" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="jd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="jd-a">\(\overline{OA}\)：<span id="jd-va" class="val-num">4</span></label>
+                    <input type="range" id="jd-a" min="1" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="jd-c">\(\overline{OC}\)：<span id="jd-vc" class="val-num">4</span></label>
+                    <input type="range" id="jd-c" min="1" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="jd-b">\(\overline{OB}\)：<span id="jd-vb" class="val-num">3</span></label>
+                    <input type="range" id="jd-b" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="jd-d">\(\overline{OD}\)：<span id="jd-vd" class="val-num">3</span></label>
+                    <input type="range" id="jd-d" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="jd-t">兩對角線的夾角：<span id="jd-vt" class="val-num">60</span>°</label>
+                    <input type="range" id="jd-t" min="30" max="90" value="60" step="15">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="jd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (由對角線判別)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-11">
+            <p class="quiz-question"><strong>Q11.</strong> 四邊形 \(ABCD\) 的兩條對角線<strong>等長</strong>而且<strong>互相垂直</strong>，則下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-11" value="A"><span class="option-text">A. 一定是正方形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-11" value="B"><span class="option-text">B. 一定是長方形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-11" value="C"><span class="option-text">C. 一定是菱形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-11" value="D"><span class="option-text">D. 以上都不一定</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。題目沒有說對角線<strong>互相平分</strong>。例如兩條對角線都長 \(6\)、互相垂直，但 \(\overline{OA} = 1\)、\(\overline{OC} = 5\)、\(\overline{OB} = \overline{OD} = 3\)：這是箏形，連平行四邊形都不是。<br>
+              A 錯：正方形要「等長且互相垂直<strong>平分</strong>」。<br>
+              B 錯：長方形要「等長且互相<strong>平分</strong>」。<br>
+              C 錯：菱形要「互相垂直<strong>平分</strong>」。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-12">
+            <p class="quiz-question"><strong>Q12.</strong> 直線 \(L_1\) 與 \(L_2\) 互相垂直，交於 \(P\) 點。以 \(P\) 為圓心畫兩個<strong>半徑不同</strong>的圓：小圓交 \(L_1\) 於 \(A\)、\(C\) 兩點，大圓交 \(L_2\) 於 \(B\)、\(D\) 兩點。四邊形 \(ABCD\) 是什麼形狀？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-12" value="A"><span class="option-text">A. 菱形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-12" value="B"><span class="option-text">B. 長方形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-12" value="C"><span class="option-text">C. 正方形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-12" value="D"><span class="option-text">D. 一般的平行四邊形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{PA} = \overline{PC}\)（小圓半徑）、\(\overline{PB} = \overline{PD}\)（大圓半徑），所以兩條對角線互相平分；又 \(L_1 \perp L_2\)，兩條對角線互相<strong>垂直平分</strong>，是菱形。<br>
+              B 錯：長方形要兩條對角線等長，但 \(\overline{AC}\) 是小圓直徑、\(\overline{BD}\) 是大圓直徑，不一樣長。<br>
+              C 錯：同樣因為對角線不等長，不是正方形。<br>
+              D 錯：它是平行四邊形沒錯，但對角線還互相垂直，可以確定是菱形。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 包含關係
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-sitemap" aria-hidden="true"></i> <span>重點 7：特殊四邊形的包含關係</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>長方形</strong>、<strong>菱形</strong>都是平行四邊形；<strong>正方形</strong>既是長方形（四個直角），也是菱形（四邊相等）。</li>
+              <li>菱形的兩雙鄰邊也分別等長，所以<strong>菱形（包括正方形）也是箏形</strong>。</li>
+              <li><strong>梯形</strong>只有一雙對邊平行；平行四邊形有兩雙，所以平行四邊形<strong>不是</strong>梯形。等腰梯形是梯形的一種。</li>
+              <li>下面是各種四邊形的對角線性質（✓ 表示一定成立）：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>四邊形</th><th>互相平分</th><th>互相垂直</th><th>等長</th></tr></thead>
+                <tbody>
+                  <tr><td>平行四邊形</td><td>✓</td><td></td><td></td></tr>
+                  <tr><td>長方形</td><td>✓</td><td></td><td>✓</td></tr>
+                  <tr><td>菱形</td><td>✓</td><td>✓</td><td></td></tr>
+                  <tr><td>正方形</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                  <tr><td>箏形</td><td></td><td>✓</td><td></td></tr>
+                  <tr><td>等腰梯形</td><td></td><td></td><td>✓</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・包含關係</span>
+              越特殊的圖形，擁有上面每一個家族的<strong>全部性質</strong>
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_signboard.webp" alt="復古琺瑯道路標誌風插圖：工班倉庫的牆上掛著一排沒有文字的空白琺瑯標誌牌，形狀有正方形、菱形、長方形；小線踮腳把一塊菱形牌掛上去，阿平抱著一疊牌子在旁邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：它屬於哪幾個家族？</h3>
+            <p class="interactive-instruction">從一般的平行四邊形（或箏形）開始調整。下方的家族圖會亮起它所屬的每一個家族——箭頭往下讀作「是一種」。試著讓「正方形」亮起來，看看它同時屬於幾個家族。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-family" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fm-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">起點</span>
+                    <div class="btn-group" id="fm-mode-group">
+                      <button class="pick-btn active" data-fm-mode="para">平行四邊形</button>
+                      <button class="pick-btn" data-fm-mode="kite">箏形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fm-1"><span id="fm-l1">AB</span>：<span id="fm-v1" class="val-num">6</span></label>
+                    <input type="range" id="fm-1" min="2" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fm-2"><span id="fm-l2">BC</span>：<span id="fm-v2" class="val-num">4</span></label>
+                    <input type="range" id="fm-2" min="2" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fm-3"><span id="fm-l3">∠B</span>：<span id="fm-v3" class="val-num">70°</span></label>
+                    <input type="range" id="fm-3" min="45" max="90" value="70" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fm-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (包含關係)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-13">
+            <p class="quiz-question"><strong>Q13.</strong> 下列敘述何者<strong>錯誤</strong>？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-13" value="A"><span class="option-text">A. 正方形是長方形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-13" value="B"><span class="option-text">B. 菱形是平行四邊形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-13" value="C"><span class="option-text">C. 四個邊都相等的四邊形一定是正方形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-13" value="D"><span class="option-text">D. 正方形也是箏形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。四個邊都相等只能確定是菱形；還要四個角都是直角，才是正方形。<br>
+              A 對：正方形四個角都是直角，符合長方形的定義。<br>
+              B 對：菱形兩雙對邊分別相等，是平行四邊形。<br>
+              D 對：正方形四邊相等，兩雙鄰邊當然分別等長。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-14">
+            <p class="quiz-question"><strong>Q14.</strong> 下列哪一種四邊形，<strong>一定</strong>同時是平行四邊形，也是箏形？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-14" value="A"><span class="option-text">A. 長方形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-14" value="B"><span class="option-text">B. 菱形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-14" value="C"><span class="option-text">C. 等腰梯形</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-14" value="D"><span class="option-text">D. 一般的平行四邊形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。菱形四邊相等：兩雙對邊相等，是平行四邊形；兩雙鄰邊也分別等長，是箏形。<br>
+              A 錯：長方形的鄰邊不一定相等（相等時是正方形），所以不一定是箏形。<br>
+              C 錯：等腰梯形只有一雙對邊平行，不是平行四邊形。<br>
+              D 錯：一般的平行四邊形鄰邊不相等，不是箏形。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 梯形兩腰中點連線段
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-grip-lines" aria-hidden="true"></i> <span>重點 8：梯形兩腰中點的連線段</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>梯形 \(ABCD\) 中 \(\overline{AD} \parallel \overline{BC}\)：平行的兩邊是<strong>上底</strong>、<strong>下底</strong>，不平行的兩邊是<strong>腰</strong>，腰與下底的夾角是<strong>底角</strong>。</li>
+              <li>\(E\)、\(F\) 分別是兩腰 \(\overline{AB}\)、\(\overline{DC}\) 的中點，\(\overline{EF}\) 叫做<strong>兩腰中點的連線段</strong>。</li>
+              <li>性質：\(\overline{EF} \parallel \overline{AD} \parallel \overline{BC}\)，而且
+                \[\overline{EF} = \frac{1}{2}(\overline{AD} + \overline{BC})\]</li>
+              <li>理由：把一個一樣的梯形倒過來接在旁邊，拼成平行四邊形，它的底是 \(\overline{AD} + \overline{BC}\)；\(\overline{EF}\) 剛好是對應那條線段的一半。</li>
+              <li>例：\(\overline{AD} = 8\)、\(\overline{BC} = 20\)，則 \(\overline{EF} = 14\)。常見錯誤是寫成兩底<strong>差</strong>的一半。</li>
+              <li>兩腰各分成四等分時，先算正中間那一條，上半、下半再各用一次這個性質。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・兩腰中點的連線段</span>
+              平行兩底，長度 \(= \dfrac{\text{上底} + \text{下底}}{2}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_midline.webp" alt="復古琺瑯道路標誌風插圖：柏油路面上一塊用白線圍出的梯形區域，上邊短、下邊長；阿平推著畫線車，正在畫一條黃線，黃線從左邊斜邊的正中間通到右邊斜邊的正中間，和上下兩條邊平行。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩個梯形拼成平行四邊形</h3>
+            <p class="interactive-instruction">調整上底、下底與梯形的歪斜程度。「中點連線段」模式把梯形繞 \(F\) 轉半圈拼成平行四邊形；「四等分」模式把兩腰各分成四等分，看三條線段怎麼一條一條算出來。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mid" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="md-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="md-mode-group">
+                      <button class="pick-btn active" data-md-mode="mid">中點連線段</button>
+                      <button class="pick-btn" data-md-mode="quarter">四等分</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="md-a">上底 \(\overline{AD}\)：<span id="md-va" class="val-num">4</span></label>
+                    <input type="range" id="md-a" min="2" max="10" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-b">下底 \(\overline{BC}\)：<span id="md-vb" class="val-num">12</span></label>
+                    <input type="range" id="md-b" min="3" max="16" value="12" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-s">\(A\) 往右偏：<span id="md-vs" class="val-num">2</span></label>
+                    <input type="range" id="md-s" min="0" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="md-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩腰中點的連線段)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-15">
+            <p class="quiz-question"><strong>Q15.</strong> 梯形 \(ABCD\) 中，\(\overline{AD} \parallel \overline{BC}\)，\(E\)、\(F\) 分別是 \(\overline{AB}\)、\(\overline{DC}\) 的中點。若 \(\overline{AD} = 9\)、\(\overline{BC} = 23\)，則 \(\overline{EF}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-15" value="A"><span class="option-text">A. \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-15" value="B"><span class="option-text">B. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-15" value="C"><span class="option-text">C. \(32\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-15" value="D"><span class="option-text">D. \(7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。
+              \[\overline{EF} = \frac{1}{2}(9 + 23) = 16\]
+              B 錯：\(23 - 9 = 14\) 是兩底的差。<br>
+              C 錯：\(9 + 23 = 32\) 是兩底的和，還沒除以 \(2\)。<br>
+              D 錯：\((23 - 9) \div 2 = 7\) 是兩底差的一半。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-16">
+            <p class="quiz-question"><strong>Q16.</strong> 如圖，梯形 \(ABCD\) 中 \(\overline{AD} \parallel \overline{BC}\)，\(\overline{AD} = 6\)、\(\overline{BC} = 34\)。\(E\)、\(F\)、\(G\) 由上往下把 \(\overline{AB}\) 四等分，\(H\)、\(I\)、\(J\) 由上往下把 \(\overline{DC}\) 四等分，且 \(\overline{EH}\)、\(\overline{FI}\)、\(\overline{GJ}\) 都平行底邊。\(\overline{GJ}\) 是多少？</p>
+            <canvas class="quiz-fig" data-fig="q16" width="320" height="200" role="img" aria-label="梯形 ABCD，上底 AD 標 6、下底 BC 標 34，兩腰各四等分，三條虛線 EH、FI、GJ 由上往下"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-16" value="A"><span class="option-text">A. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-16" value="B"><span class="option-text">B. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-16" value="C"><span class="option-text">C. \(27\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-16" value="D"><span class="option-text">D. \(41\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{FI}\) 是梯形 \(ABCD\) 兩腰中點的連線段，\(\overline{GJ}\) 是梯形 \(FBCI\) 兩腰中點的連線段：
+              \[\begin{aligned} & \overline{FI} = \frac{1}{2}(6 + 34) = 20 \\ & \overline{GJ} = \frac{1}{2}(20 + 34) = 27 \end{aligned}\]
+              A 錯：\(20\) 是 \(\overline{FI}\)。<br>
+              B 錯：\(13 = \frac{1}{2}(6 + 20)\) 是 \(\overline{EH}\)。<br>
+              D 錯：\(34 + 7 = 41\)，往下應該越來越接近 \(34\)，不會超過下底。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 梯形面積
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-fill-drip" aria-hidden="true"></i> <span>重點 9：梯形面積 = 兩腰中點的連線段 × 高</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>梯形面積 \(= \dfrac{\text{上底} + \text{下底}}{2} \times \text{高}\)，而 \(\dfrac{\text{上底} + \text{下底}}{2}\) 正是兩腰中點的連線段長，所以
+                \[\text{梯形面積} = \overline{EF} \times \text{高}\]</li>
+              <li>反過來求底：\(\overline{BC} = 2\overline{EF} - \overline{AD}\)。</li>
+              <li>例：\(\overline{EF} = 9\)、高 \(6\)，面積 \(= 54\)；若 \(\overline{AD} = 4\)，則 \(\overline{BC} = 2 \times 9 - 4 = 14\)。</li>
+              <li>\(\overline{EF}\) 把高分成兩半，但上下兩塊<strong>面積不相等</strong>：上面那塊的兩底都比較短。</li>
+              <li>要把梯形分成面積相等的兩塊，可以連接<strong>上底中點與下底中點</strong>：兩塊的高相同，上下底的和也相同。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・梯形面積</span>
+              面積 \(=\) 兩腰中點的連線段長 \(\times\) 高
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_paint.webp" alt="復古琺瑯道路標誌風插圖：柏油路面上用白線圍出一塊梯形，小線把黃色油漆倒進滾筒用的漆盤，阿平拿著長柄滾筒站在梯形旁邊準備塗。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：剪角補角</h3>
+            <p class="interactive-instruction">「面積」模式：過 \(E\)、\(F\) 作鉛垂線，左右各剪下一個三角形、轉半圈補到上面，梯形就變成長方形。「平分面積」模式：比較「連接兩底中點的 \(\overline{PQ}\)」與「下底 \(\overline{BC}\) 的中垂線」，哪一條真的把面積分成兩半。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tarea" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ta-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="ta-mode-group">
+                      <button class="pick-btn active" data-ta-mode="area">面積</button>
+                      <button class="pick-btn" data-ta-mode="half">平分面積</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ta-a">上底 \(\overline{AD}\)：<span id="ta-va" class="val-num">4</span></label>
+                    <input type="range" id="ta-a" min="1" max="10" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ta-b">下底 \(\overline{BC}\)：<span id="ta-vb" class="val-num">10</span></label>
+                    <input type="range" id="ta-b" min="2" max="16" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ta-h">高：<span id="ta-vh" class="val-num">4</span></label>
+                    <input type="range" id="ta-h" min="2" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ta-s">\(A\) 往右偏：<span id="ta-vs" class="val-num">1</span></label>
+                    <input type="range" id="ta-s" min="0" max="6" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ta-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (梯形面積)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-17">
+            <p class="quiz-question"><strong>Q17.</strong> 一個梯形兩腰中點的連線段長和它的高一樣長，梯形面積是 \(121\)，則這個梯形上底與下底的和是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-17" value="A"><span class="option-text">A. \(11\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-17" value="B"><span class="option-text">B. \(22\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-17" value="C"><span class="option-text">C. \(60.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-17" value="D"><span class="option-text">D. \(44\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設中點連線段長 \(=\) 高 \(= x\)，面積 \(= x \times x = 121\)，\(x = 11\)（負不合）。兩底的和是中點連線段的 \(2\) 倍：\(2 \times 11 = 22\)。<br>
+              A 錯：\(11\) 是中點連線段，不是兩底的和。<br>
+              C 錯：\(121 \div 2\)，把面積公式用錯了。<br>
+              D 錯：\(4 \times 11 = 44\)，多乘了一次 \(2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-18">
+            <p class="quiz-question"><strong>Q18.</strong> 如圖，梯形 \(ABCD\) 中 \(\overline{AD} \parallel \overline{BC}\)，\(\overline{AD} = 5\)、\(\overline{BC} = 17\)，高是 \(8\)，\(\overline{EF}\) 是兩腰中點的連線段。梯形 \(AEFD\) 的面積是多少？</p>
+            <canvas class="quiz-fig" data-fig="q18" width="320" height="200" role="img" aria-label="梯形 ABCD，上底 AD 標 5、下底 BC 標 17，高標 8，E、F 是兩腰中點，EF 連線"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-18" value="A"><span class="option-text">A. \(44\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-18" value="B"><span class="option-text">B. \(56\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-18" value="C"><span class="option-text">C. \(88\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-18" value="D"><span class="option-text">D. \(32\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{EF} = \frac{1}{2}(5 + 17) = 11\)，\(\overline{EF}\) 把高分成兩半，梯形 \(AEFD\) 的高是 \(4\)：
+              \[\frac{(5 + 11) \times 4}{2} = 32\]
+              A 錯：\(88 \div 2 = 44\)，以為 \(\overline{EF}\) 把梯形分成面積相等的兩塊。<br>
+              B 錯：\(56\) 是下面那塊梯形 \(EBCF\) 的面積。<br>
+              C 錯：\(88\) 是整個梯形的面積。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 等腰梯形的底角
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-road" aria-hidden="true"></i> <span>重點 10：等腰梯形的兩底角相等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩腰相等的梯形叫做<strong>等腰梯形</strong>。它是<strong>線對稱圖形</strong>，對稱軸同時是上底、下底的中垂線。</li>
+              <li><strong>兩底角相等</strong>：從 \(A\)、\(D\) 作高 \(\overline{AE}\)、\(\overline{DF}\)。平行線間的距離處處相等，\(\overline{AE} = \overline{DF}\)；又 \(\overline{AB} = \overline{DC}\)，由 RHS 全等得 △\(ABE\) \(\cong\) △\(DCF\)，所以 \(\angle B = \angle C\)。</li>
+              <li>同一次全等還得到 \(\overline{BE} = \overline{CF} = \frac{1}{2}(\overline{BC} - \overline{AD})\)，解題時很常用。</li>
+              <li>\(\overline{AD} \parallel \overline{BC}\)，所以 \(\angle A + \angle B = 180^\circ\)；上底的兩個角也相等：\(\angle A = \angle D\)。</li>
+              <li>例：\(\angle B = 70^\circ\)，則 \(\angle C = 70^\circ\)、\(\angle A = \angle D = 110^\circ\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等腰梯形</span>
+              兩底角相等；是線對稱圖形
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_iso.webp" alt="復古琺瑯道路標誌風插圖：小線和阿平一左一右抬起一座木製施工拒馬，側面看過去，拒馬的兩支斜腿一樣長、左右對稱地向外張開，頂端由一根橫木相連。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：調整底角</h3>
+            <p class="interactive-instruction">調整底角 \(\angle B\) 與上底、下底的長度，看四個角怎麼互相決定。切到「對稱軸與高」，看作高之後切出的兩個全等直角三角形。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-iso" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="is-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">觀察</span>
+                    <div class="btn-group" id="is-mode-group">
+                      <button class="pick-btn active" data-is-mode="ang">四個角</button>
+                      <button class="pick-btn" data-is-mode="axis">對稱軸與高</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="is-x">\(\angle B\)：<span id="is-vx" class="val-num">65</span>°</label>
+                    <input type="range" id="is-x" min="30" max="85" value="65" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="is-a">上底 \(\overline{AD}\)：<span id="is-va" class="val-num">4</span></label>
+                    <input type="range" id="is-a" min="2" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="is-c">下底 \(\overline{BC}\)：<span id="is-vc" class="val-num">10</span></label>
+                    <input type="range" id="is-c" min="3" max="14" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="is-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等腰梯形的底角)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-19">
+            <p class="quiz-question"><strong>Q19.</strong> 等腰梯形 \(ABCD\) 中 \(\overline{AD} \parallel \overline{BC}\)，\(\angle A + \angle D = 248^\circ\)，則 \(\angle B\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-19" value="A"><span class="option-text">A. \(56^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-19" value="B"><span class="option-text">B. \(124^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-19" value="C"><span class="option-text">C. \(62^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-19" value="D"><span class="option-text">D. \(112^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。等腰梯形兩底角相等，\(\angle B = \angle C\)：
+              \[\begin{aligned} & 2\angle B = 360^\circ - 248^\circ = 112^\circ \\ & \angle B = 56^\circ \end{aligned}\]
+              B 錯：\(124^\circ\) 是 \(\angle A\)（\(248^\circ \div 2\)）。<br>
+              C 錯：把 \(\angle A\) 再除以 \(2\)。<br>
+              D 錯：\(112^\circ\) 是 \(\angle B + \angle C\)，還沒除以 \(2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-20">
+            <p class="quiz-question"><strong>Q20.</strong> 等腰梯形 \(ABCD\) 中 \(\overline{AD} \parallel \overline{BC}\)，\(\angle A = (2x + 8)^\circ\)、\(\angle C = (x + 16)^\circ\)，則 \(\angle D\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-20" value="A"><span class="option-text">A. \(68^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-20" value="B"><span class="option-text">B. \(52^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-20" value="C"><span class="option-text">C. \(112^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-20" value="D"><span class="option-text">D. \(24^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\angle B = \angle C = (x + 16)^\circ\)，而 \(\angle A + \angle B = 180^\circ\)：
+              \[\begin{aligned} & (2x + 8) + (x + 16) = 180 \\ & 3x = 156 \\ & x = 52 \end{aligned}\]
+              \(\angle A = 2 \times 52 + 8 = 112^\circ\)，\(\angle D = \angle A = 112^\circ\)。<br>
+              A 錯：\(68^\circ\) 是 \(\angle C\)。<br>
+              B 錯：\(52\) 是 \(x\)，不是角度。<br>
+              D 錯：把 \(\angle A\) 與 \(\angle C\) 當成相等，\(2x + 8 = x + 16\) 得 \(x = 8\)；但等腰梯形相等的是兩底角，\(\angle A\) 與 \(\angle C\) 是互補。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 等腰梯形的對角線
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler" aria-hidden="true"></i> <span>重點 11：等腰梯形的兩條對角線等長</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>△\(ABC\) 與 △\(DCB\) 中，\(\overline{AB} = \overline{DC}\)、\(\angle ABC = \angle DCB\)、\(\overline{BC}\) 共用，由 SAS 全等得 \(\overline{AC} = \overline{DB}\)：<strong>等腰梯形的兩條對角線等長</strong>。</li>
+              <li>但兩條對角線<strong>不互相平分</strong>（它不是平行四邊形）。</li>
+              <li>求對角線長：從 \(D\) 作高 \(\overline{DQ}\)，
+                \[\overline{BQ} = \overline{BP} + \overline{PQ} = \frac{\overline{AD} + \overline{BC}}{2}\]
+                再用畢氏定理：\(\overline{BD}^2 = \overline{DQ}^2 + \overline{BQ}^2\)。</li>
+              <li>例：\(\overline{AD} = 4\)、\(\overline{BC} = 14\)、高 \(12\)，\(\overline{BQ} = 9\)，\(\overline{BD} = \sqrt{12^2 + 9^2} = 15\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等腰梯形的對角線</span>
+              兩對角線<strong>等長</strong>（但不互相平分）
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_ladder.webp" alt="復古琺瑯道路標誌風插圖：工作台上平放一個上邊短、下邊長、左右兩邊一樣長的木框，阿平拉著捲尺從木框的左下角斜拉到右上角，小線用手按住木框。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：作高求對角線</h3>
+            <p class="interactive-instruction">調整上底、下底和高。「求對角線」模式畫出兩條高與直角三角形 \(BQD\)；「全等說明」模式看 △\(ABC\) 與 △\(DCB\) 怎麼由 SAS 疊在一起。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-isod" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="id-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="id-mode-group">
+                      <button class="pick-btn active" data-id-mode="len">求對角線</button>
+                      <button class="pick-btn" data-id-mode="cong">全等說明</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="id-a">上底 \(\overline{AD}\)：<span id="id-va" class="val-num">4</span></label>
+                    <input type="range" id="id-a" min="2" max="10" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="id-b">下底 \(\overline{BC}\)：<span id="id-vb" class="val-num">10</span></label>
+                    <input type="range" id="id-b" min="3" max="16" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="id-h">高：<span id="id-vh" class="val-num">4</span></label>
+                    <input type="range" id="id-h" min="2" max="8" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="id-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等腰梯形的對角線)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-21">
+            <p class="quiz-question"><strong>Q21.</strong> 如圖，等腰梯形 \(ABCD\) 中 \(\overline{AD} \parallel \overline{BC}\)，\(\overline{AD} = 7\)、\(\overline{BC} = 17\)。過 \(A\)、\(D\) 作 \(\overline{BC}\) 的垂直線段，垂足為 \(P\)、\(Q\)，\(\overline{AP} = \overline{DQ} = 12\)，則對角線 \(\overline{AC}\) 是多少？</p>
+            <canvas class="quiz-fig" data-fig="q21" width="320" height="200" role="img" aria-label="等腰梯形 ABCD，上底 AD 標 7、下底 BC 標 17，A、D 往下作垂線到 P、Q，高標 12"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-21" value="A"><span class="option-text">A. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-21" value="B"><span class="option-text">B. \(12\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-21" value="C"><span class="option-text">C. \(2\sqrt{61}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-21" value="D"><span class="option-text">D. \(17\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{BP} = (17 - 7) \div 2 = 5\)，\(\overline{PC} = 17 - 5 = 12\)：
+              \[\overline{AC} = \sqrt{12^2 + 12^2} = 12\sqrt{2}\]
+              A 錯：\(\sqrt{12^2 + 5^2} = 13\) 是腰 \(\overline{AB}\) 的長。<br>
+              C 錯：把兩底的差 \(10\) 當成水平距離：\(\sqrt{12^2 + 10^2}\)。<br>
+              D 錯：\(17\) 是下底 \(\overline{BC}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-22">
+            <p class="quiz-question"><strong>Q22.</strong> 等腰梯形 \(ABCD\) 中 \(\overline{AD} \parallel \overline{BC}\)，\(\overline{AD} = 11\)、\(\overline{BC} = 19\)，對角線 \(\overline{AC} = 17\)，則梯形 \(ABCD\) 的面積是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-22" value="A"><span class="option-text">A. \(120\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-22" value="B"><span class="option-text">B. \(60\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-22" value="C"><span class="option-text">C. \(136\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-22" value="D"><span class="option-text">D. \(255\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。作 \(\overline{AE} \perp \overline{BC}\)：\(\overline{BE} = (19 - 11) \div 2 = 4\)，\(\overline{CE} = 19 - 4 = 15\)。
+              \[\overline{AE} = \sqrt{17^2 - 15^2} = 8\]
+              面積 \(= \frac{11 + 19}{2} \times 8 = 15 \times 8 = 120\)。（\(\overline{CE}\) 剛好等於兩腰中點的連線段長。）<br>
+              B 錯：\(15 \times 8\) 又除以了 \(2\)。<br>
+              C 錯：\(17 \times 8\)，用對角線當底。<br>
+              D 錯：\(15 \times 17\)，把對角線當成高。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 等腰梯形的判別
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-check-double" aria-hidden="true"></i> <span>重點 12：兩底角相等的梯形是等腰梯形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>梯形 \(ABCD\) 中 \(\overline{AD} \parallel \overline{BC}\)，若 \(\angle ABC = \angle DCB\)，則它是<strong>等腰梯形</strong>。</li>
+              <li>理由：過 \(D\) 作 \(\overline{DE} \parallel \overline{AB}\) 交 \(\overline{BC}\) 於 \(E\)。\(ABED\) 是平行四邊形，\(\overline{DE} = \overline{AB}\)、\(\angle DEC = \angle B\)（同位角）。又 \(\angle B = \angle C\)，△\(DEC\) 是等腰三角形，\(\overline{DE} = \overline{DC}\)，所以 \(\overline{AB} = \overline{DC}\)。</li>
+              <li>上底兩角相等、或兩條對角線等長的梯形，也都是等腰梯形。</li>
+              <li>⚠️ 先確認它<strong>是梯形</strong>：若 \(\angle B + \angle C = 180^\circ\)，兩腰也平行，那是平行四邊形。</li>
+              <li>由四個內角判斷（依 \(\angle A\)、\(\angle B\)、\(\angle C\)、\(\angle D\) 的順序）：先看 \(\angle A + \angle B = 180^\circ\) 確定 \(\overline{AD} \parallel \overline{BC}\)，再看 \(\angle B = \angle C\)。例：\(115^\circ\)、\(65^\circ\)、\(65^\circ\)、\(115^\circ\) 是等腰梯形。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・等腰梯形的判別</span>
+              <strong>兩底角相等</strong>的梯形是等腰梯形
+            </div>
+
+            <div class="illustration-container">
+              <img src="sq_angles.webp" alt="復古琺瑯道路標誌風插圖：小線蹲在柏油路面上一塊白線梯形的左下角，把一個大型透明量角器貼著角落；阿平蹲在右下角，手上也拿著一個一模一樣的量角器。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：底角相等，兩腰就相等</h3>
+            <p class="interactive-instruction">下底 \(\overline{BC}\) 與高固定，分別調整兩個底角 \(\angle B\)、\(\angle C\)。畫布作出 \(\overline{DE} \parallel \overline{AB}\)，看 △\(DEC\) 什麼時候是等腰三角形，並比較兩腰與兩條對角線。也試試看 \(\angle B + \angle C = 180^\circ\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-isoj" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ij-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ij-b">\(\angle B\)：<span id="ij-vb" class="val-num">60</span>°</label>
+                    <input type="range" id="ij-b" min="40" max="140" value="60" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ij-c">\(\angle C\)：<span id="ij-vc" class="val-num">75</span>°</label>
+                    <input type="range" id="ij-c" min="40" max="140" value="75" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ij-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等腰梯形的判別)</h3>
+
+          <div class="quiz-card" data-quiz="4-3-23">
+            <p class="quiz-question"><strong>Q23.</strong> 四個四邊形 \(ABCD\) 的內角依 \(\angle A\)、\(\angle B\)、\(\angle C\)、\(\angle D\) 的順序寫在下面，哪一個是等腰梯形？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-23" value="A"><span class="option-text">A. \(72^\circ\)、\(108^\circ\)、\(72^\circ\)、\(108^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-23" value="B"><span class="option-text">B. \(102^\circ\)、\(78^\circ\)、\(68^\circ\)、\(112^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-23" value="C"><span class="option-text">C. \(58^\circ\)、\(122^\circ\)、\(122^\circ\)、\(58^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-23" value="D"><span class="option-text">D. \(64^\circ\)、\(116^\circ\)、\(124^\circ\)、\(56^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\angle A + \angle B = 180^\circ\)，所以 \(\overline{AD} \parallel \overline{BC}\)；\(\angle B + \angle C = 244^\circ\)，兩腰不平行，是梯形；兩底角 \(\angle B = \angle C = 122^\circ\)，是等腰梯形。<br>
+              A 錯：\(\angle B + \angle C = 180^\circ\)，兩雙對邊都平行，是平行四邊形。<br>
+              B 錯：是 \(\overline{AD} \parallel \overline{BC}\) 的梯形，但 \(\angle B = 78^\circ \ne \angle C = 68^\circ\)。<br>
+              D 錯：同樣是梯形，但 \(\angle B = 116^\circ \ne \angle C = 124^\circ\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-3-24">
+            <p class="quiz-question"><strong>Q24.</strong> 梯形 \(ABCD\) 中 \(\overline{AD} \parallel \overline{BC}\)，兩條對角線交於 \(P\) 點。再加上哪一個條件後，\(ABCD\) <strong>不一定</strong>是等腰梯形？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-3-24" value="A"><span class="option-text">A. \(\overline{AC} = \overline{BD}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-24" value="B"><span class="option-text">B. \(\angle ABC = \angle DCB\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-24" value="C"><span class="option-text">C. \(\angle BAD = \angle CDA\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-3-24" value="D"><span class="option-text">D. \(\overline{AC} \perp \overline{BD}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。對角線互相垂直只限制了夾角，交點 \(P\) 兩側的長度可以不對稱，畫得出兩腰不相等的梯形。<br>
+              A 對：對角線等長的梯形是等腰梯形。<br>
+              B 對：兩底角相等的梯形是等腰梯形。<br>
+              C 對：同樣得到兩底角相等：
+              \[\begin{aligned} & \angle B = 180^\circ - \angle A \\ & = 180^\circ - \angle D = \angle C \end{aligned}\]</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 特殊四邊形速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>長方形</strong>：對角線等長且互相平分；反過來也能判別。</li>
+              <li><strong>菱形</strong>：對角線互相垂直平分、平分內角；反過來也能判別。</li>
+              <li><strong>箏形</strong>：一條對角線垂直平分另一條；不一定是平行四邊形。</li>
+              <li><strong>正方形</strong>：對角線等長且互相垂直平分；它是長方形、菱形，也是箏形。</li>
+              <li><strong>面積</strong>：對角線互相垂直的四邊形 \(=\) 兩對角線乘積 \(\div 2\)；梯形 \(=\) 兩腰中點的連線段 \(\times\) 高。</li>
+              <li><strong>兩腰中點的連線段</strong>：平行兩底，長度是兩底和的一半。</li>
+              <li><strong>等腰梯形</strong>：兩底角相等、對角線等長、線對稱；兩底角相等的梯形是等腰梯形。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到道路工班：收工前的驗收</h4>
+              <h5><i class="fa-solid fa-car"></i> 停車格</h5>
+              <p>小線量停車格的兩條對角線：一樣長，而且交點剛好是兩條的中點，四個角就一定是直角——不必扛大直角尺。</p>
+              <h5><i class="fa-solid fa-diamond"></i> 菱形標線</h5>
+              <p>阿平要算菱形標線用多少漆：量兩條對角線，乘起來再除以 \(2\) 就是面積，不必先求邊長。</p>
+              <h5><i class="fa-solid fa-road"></i> 梯形分隔島</h5>
+              <p>分隔島是上窄下寬的等腰梯形。兩條斜邊的中點拉一條線，量出來剛好是上下兩邊的平均；再乘上分隔島的寬度，就是要鋪的面積。下一冊會把這些四邊形的性質用到更多證明裡。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

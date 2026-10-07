@@ -4,39 +4,1381 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>4-1 平行 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>4-1 平行 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第四冊 (2下) • 第4章 平行與四邊形</div>
-    <h1>4-1 平行</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第四冊 • 第四章</span>
+        <h1>4-1 平行</h1>
+        <p>道路標線工班的小線和阿平，要在新鋪好的柏油路上畫車道線、停車格和斑馬線——每一組標線都得<strong>互相平行</strong>。這一節先說清楚什麼叫平行（<strong>有一條共同的垂直線</strong>）與兩平行線的距離；再看一條直線截過兩條直線時的八個角：<strong>同位角、內錯角、同側內角</strong>，兩線平行時它們有什麼性質、反過來怎麼用角度判斷平行；最後用三角板與尺規，過線外一點畫出平行線。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-grip-lines"></i> 平行的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-link"></i> 垂直與遞移</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-ruler-vertical"></i> 距離處處相等</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-tags"></i> 截角的名稱</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-equals"></i> 截角性質</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-square-root-variable"></i> 列方程式</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-table-cells"></i> 多條截線</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-route"></i> 拐角</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 平行的判別</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-code-branch"></i> 角平分線</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-compass-drafting"></i> 作平行線</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（復古琺瑯道路標誌・道路標線工班）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(244, 196, 48, 0.3);">
+        <h2 class="section-title" style="color: #f4c430; border-bottom-color: rgba(244, 196, 48, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #f4c430; text-shadow: 0 0 10px rgba(244, 196, 48, 0.4);"></i> 課前暖身漫畫：目測畫出來的車道線
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            阿平推著畫線車，照著第一條車道線「目測」畫出第二條；畫完回頭一看，兩條線在遠處越靠越近。小線拉開捲尺在前後兩個地方各量一次，寬度竟然不一樣。<strong style="color:#f4c430">兩條平行線之間的距離處處相等</strong>——畫之前先量兩個地方，才知道有沒有畫歪。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(20, 22, 27, 0.5);">
+            <img src="motivation_comic.webp" alt="復古琺瑯道路標誌風四格漫畫：阿平推著畫線車沿第一條白色車道線目測畫第二條；畫完後兩條線在遠處明顯靠近；小線拉著捲尺在近處與遠處各量一次寬度，數字不同；旁白說平行線的距離處處相等，畫之前先量兩個地方。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 平行的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-grip-lines" aria-hidden="true"></i> <span>重點 1：平行的意義——有一條共同的垂直線</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>在<strong>同一平面</strong>上，兩條相異直線如果<strong>可以找到一條共同的垂直線</strong>，就稱這兩直線互相平行。</li>
+              <li>\(L_1\) 與 \(L_2\) 同時垂直於直線 \(L\)，記作 \(L_1 /\!/ L_2\)，讀作「\(L_1\) 平行於 \(L_2\)」。</li>
+              <li>生活中的窗框、柵欄、梯子的橫桿、斑馬線：每一組平行線都<strong>同時垂直於某一條直線</strong>。</li>
+              <li>不能只憑「畫出來的兩段沒有碰到」判斷：紙上畫的只是一小段，延長之後可能相交。要找的是共同垂線。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・平行的定義</span>
+              \(L_1 \perp L\)、\(L_2 \perp L\) \(\Rightarrow\) \(L_1 /\!/ L_2\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="pl_ladder.webp" alt="復古琺瑯道路標誌風插圖：阿平扶著一座直立的鋁梯，梯子的橫桿一根根互相平行，都和兩側的直立側桿垂直；小線站在旁邊指著橫桿。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：找共同垂線</h3>
+            <p class="interactive-instruction">黃色虛線 \(M\) 永遠垂直 \(L_1\)。調整 \(L_2\) 的傾斜，左右移動 \(M\)，看 \(M\) 和 \(L_2\) 夾幾度：只有夾 \(90^\circ\) 時，\(M\) 才是兩條線的共同垂線。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-def" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="def-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="def-a">\(L_1\) 的方向：<span id="def-va" class="val-num">10°</span></label>
+                    <input type="range" id="def-a" min="-30" max="30" value="10" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="def-t">\(L_2\) 相對 \(L_1\) 的傾斜：<span id="def-vt" class="val-num">6°</span></label>
+                    <input type="range" id="def-t" min="-12" max="12" value="6" step="2">
+                  </div>
+                  <div class="slider-row">
+                    <label for="def-m">\(M\) 的位置：<span id="def-vm" class="val-num">0</span></label>
+                    <input type="range" id="def-m" min="-3" max="3" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="def-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平行的意義)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 平面上有相異的四條直線 \(a\)、\(b\)、\(c\)、\(d\)，已知 \(a \perp c\)、\(b \perp c\)、\(b \perp d\)。下列哪一個敘述正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-1" value="A"><span class="option-text">A. 只有 \(a /\!/ b\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-1" value="B"><span class="option-text">B. \(a /\!/ b\)，而且 \(c /\!/ d\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-1" value="C"><span class="option-text">C. 只有 \(c /\!/ d\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-1" value="D"><span class="option-text">D. \(a /\!/ d\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(c\) 同時垂直 \(a\)、\(b\)，是 \(a\)、\(b\) 的共同垂線，所以 \(a /\!/ b\)；\(b\) 同時垂直 \(c\)、\(d\)，是 \(c\)、\(d\) 的共同垂線，所以 \(c /\!/ d\)。<br>
+              A、C 錯：各漏了另一組。<br>
+              D 錯：\(a /\!/ b\) 而 \(b \perp d\)，所以 \(d\) 也垂直 \(a\)，\(a\) 與 \(d\) 互相垂直，不是平行。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 長方形 \(ABCD\) 的四個內角都是 \(90^\circ\)。小線說「\(\overline{AB} /\!/ \overline{CD}\)」，下列哪一個理由最恰當？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-2" value="A"><span class="option-text">A. \(\overline{AB}\) 與 \(\overline{CD}\) 一樣長</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-2" value="B"><span class="option-text">B. 四邊形的對邊一定互相平行</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-2" value="C"><span class="option-text">C. \(\overline{AB} \perp \overline{BC}\)、\(\overline{BC} \perp \overline{CD}\)，所以 \(\overline{AB} \perp \overline{CD}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-2" value="D"><span class="option-text">D. \(\overline{AB}\)、\(\overline{CD}\) 都垂直於 \(\overline{BC}\)，有共同的垂直線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\angle B = \angle C = 90^\circ\)，所以 \(\overline{AB}\)、\(\overline{CD}\) 都垂直於 \(\overline{BC}\)，\(\overline{BC}\) 是它們的共同垂線，依定義互相平行。<br>
+              A 錯：一樣長不代表平行，例如等腰三角形的兩腰一樣長，卻交在頂點。<br>
+              B 錯：梯形只有一組對邊平行，一般四邊形的對邊不一定平行。<br>
+              C 錯：兩條線都垂直於同一條線，得到的是平行，不是垂直。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 平行線的性質（垂直傳遞、遞移性）
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> <span>重點 2：垂直一條就垂直另一條，平行可以遞移</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>已知 \(L_1 /\!/ L_2\)，若直線 \(M \perp L_1\)，則 \(M \perp L_2\)：<strong>垂直其中一條，就垂直另一條</strong>。</li>
+              <li>理由：依定義 \(L_1\)、\(L_2\) 有共同垂線 \(L\)。\(L\)、\(M\)、\(L_1\)、\(L_2\) 圍出的四邊形已經有三個直角，第四個角也是 \(360^\circ - 270^\circ = 90^\circ\)。</li>
+              <li><strong>平行的遞移性</strong>：\(L_1 /\!/ L_2\)、\(L_2 /\!/ L_3\) \(\Rightarrow\) \(L_1 /\!/ L_3\)，可以寫成 \(L_1 /\!/ L_2 /\!/ L_3\)。（作 \(M \perp L_1\)，一路垂直到 \(L_3\)，\(M\) 就是 \(L_1\)、\(L_3\) 的共同垂線。）</li>
+              <li>小心：兩條線<strong>都垂直於同一條線</strong>，它們互相平行；「垂直的垂直」不是垂直。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・平行線的性質</span>
+              \(L_1 /\!/ L_2\)，\(M \perp L_1\) \(\Rightarrow\) \(M \perp L_2\)<br>
+              \(L_1 /\!/ L_2\)，\(L_2 /\!/ L_3\) \(\Rightarrow\) \(L_1 /\!/ L_3\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="pl_crosswalk.webp" alt="復古琺瑯道路標誌風插圖：路口的柏油路上有一排等寬、等距的白色斑馬線條紋，每一條都和人行道邊緣垂直；小線跪著推滾輪畫線車畫最後一條，阿平站在人行道上看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一步一步推出來</h3>
+            <p class="interactive-instruction">選一個性質，按「下一步」看推理怎麼一步步走；拉動滑桿把整組圖形轉一個角度，結論不會改變。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-prop" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="prop-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">性質</span>
+                    <div class="btn-group" id="prop-mode-group">
+                      <button class="pick-btn active" data-prop-mode="perp">垂直傳過去</button>
+                      <button class="pick-btn" data-prop-mode="trans">平行的遞移</button>
+                      <button class="pick-btn" data-prop-mode="two">都垂直同一條線</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="prop-prev">上一步</button>
+                      <span class="step-counter" id="prop-step">1 / 3</span>
+                      <button class="pick-btn" id="prop-next">下一步</button>
+                      <button class="pick-btn" id="prop-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="prop-r">整組圖形轉動：<span id="prop-vr" class="val-num">0°</span></label>
+                    <input type="range" id="prop-r" min="-30" max="30" value="0" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="prop-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平行線的性質)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 平面上有相異直線 \(L_1\)、\(L_2\)、\(M\)、\(N\)，已知 \(L_1 /\!/ L_2\)、\(M \perp L_1\)、\(N \perp L_2\)，則 \(M\) 與 \(N\) 的關係為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-3" value="A"><span class="option-text">A. \(M /\!/ N\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-3" value="B"><span class="option-text">B. \(M \perp N\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-3" value="C"><span class="option-text">C. 相交，但不垂直</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-3" value="D"><span class="option-text">D. 條件不夠，無法判斷</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(L_1 /\!/ L_2\) 且 \(M \perp L_1\)，所以 \(M \perp L_2\)。現在 \(M\)、\(N\) 都垂直於 \(L_2\)，\(L_2\) 是它們的共同垂線，所以 \(M /\!/ N\)。<br>
+              B 錯：兩條都垂直於同一條線，是平行而不是垂直。<br>
+              C、D 錯：條件足夠推出平行，平行線不會相交。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 平面上有相異直線 \(a\)、\(b\)、\(c\)、\(d\)，已知 \(a \perp b\)、\(b \perp c\)、\(c \perp d\)，則 \(a\) 與 \(d\) 的關係為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-4" value="A"><span class="option-text">A. \(a /\!/ d\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-4" value="B"><span class="option-text">B. 條件不夠，無法判斷</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-4" value="C"><span class="option-text">C. \(a \perp d\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-4" value="D"><span class="option-text">D. 相交，但不垂直</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(a \perp b\)、\(b \perp c\)，\(b\) 是 \(a\)、\(c\) 的共同垂線，所以 \(a /\!/ c\)。又 \(d \perp c\)，垂直平行線中的一條就垂直另一條，所以 \(d \perp a\)。<br>
+              A 錯：把三次垂直都想成「垂直的垂直是平行」，只對了前兩次。<br>
+              B 錯：一步一步推，條件剛好足夠。<br>
+              D 錯：推得出是垂直。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 兩平行線的距離
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-vertical" aria-hidden="true"></i> <span>重點 3：兩平行線的距離處處相等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩平行線之間的<strong>垂直線段都等長</strong>（它們是長方形的對邊）。這個長度叫做<strong>兩平行線的距離</strong>。</li>
+              <li>兩平行線的距離<strong>處處相等</strong>，所以兩平行線永不相交。</li>
+              <li>應用：一個三角形的底在一條線上、頂點在另一條平行線上，不管頂點在哪裡，<strong>高都等於兩平行線的距離</strong>。所以<strong>同底</strong>的這些三角形面積都相等。</li>
+              <li>例：\(L /\!/ M\)，\(D\)、\(E\) 在 \(M\) 上，\(\overline{DE} = 6\)，兩線的距離是 \(5\)。\(A\)、\(B\) 在 \(L\) 上，則
+                \[\begin{aligned} & \triangle ADE = \triangle BDE \\ &= \frac{1}{2} \times 6 \times 5 = 15 \end{aligned}\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・兩平行線的距離</span>
+              兩平行線之間的垂直線段長處處相等
+            </div>
+
+            <div class="illustration-container">
+              <img src="pl_parking.webp" alt="復古琺瑯道路標誌風插圖：兩條平行的白色停車格邊線，小線在近處、阿平在遠處，各用一條黃色捲尺橫跨兩條邊線量寬度，捲尺都和邊線垂直。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：滑動頂點</h3>
+            <p class="interactive-instruction">\(L /\!/ M\)，底 \(\overline{DE}\) 在 \(M\) 上。拉動滑桿讓頂點 \(A\) 在 \(L\) 上滑動，看 \(\triangle ADE\) 的高與面積有沒有改變；再改變兩線的距離與底的長度。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-dist" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="dist-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="dist-x">頂點 \(A\) 的位置：<span id="dist-vx" class="val-num">5</span></label>
+                    <input type="range" id="dist-x" min="0" max="13" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dist-h">兩線的距離：<span id="dist-vh" class="val-num">4</span></label>
+                    <input type="range" id="dist-h" min="2" max="5" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="dist-b">底 \(\overline{DE}\) 的長：<span id="dist-vb" class="val-num">6</span></label>
+                    <input type="range" id="dist-b" min="3" max="8" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="dist-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩平行線的距離)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 如圖，\(\overline{AE} /\!/ \overline{BD}\)，\(C\) 在 \(\overline{BD}\) 上。若 \(\overline{AE} = 8\)、\(\overline{BD} = 10\)，\(\triangle ABD\) 的面積是 \(35\)，則 \(\triangle ACE\) 的面積是多少？</p>
+            <canvas class="quiz-fig" data-fig="q5" width="320" height="220" role="img" aria-label="AE 平行 BD，C 在 BD 上，連出三角形 ABD 與三角形 ACE"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-5" value="A"><span class="option-text">A. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-5" value="B"><span class="option-text">B. \(35\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-5" value="C"><span class="option-text">C. \(28\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-5" value="D"><span class="option-text">D. \(40\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設兩平行線的距離為 \(h\)，由 \(\triangle ABD\)：
+              \[\begin{aligned} & \frac{1}{2} \times 10 \times h = 35 \\ & h = 7 \end{aligned}\]
+              兩平行線的距離處處相等，\(\triangle ACE\) 以 \(\overline{AE}\) 為底，高也是 \(7\)：
+              \[\frac{1}{2} \times 8 \times 7 = 28\]
+              A 錯：求高時忘了乘 \(2\)，得到 \(h = 3.5\)，算出 \(14\)。<br>
+              B 錯：兩個三角形的高相同，但底不同，面積不相等。<br>
+              D 錯：\(8 \times 10 \div 2 = 40\)，把兩條底相乘了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 在同一平面上，與直線 \(L\) 的距離是 \(4\) 的直線有幾條？它們和 \(L\) 是什麼關係？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-6" value="A"><span class="option-text">A. \(2\) 條，分別在 \(L\) 的兩側，都與 \(L\) 平行</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-6" value="B"><span class="option-text">B. \(1\) 條，與 \(L\) 平行</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-6" value="C"><span class="option-text">C. \(4\) 條，都與 \(L\) 平行</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-6" value="D"><span class="option-text">D. 無限多條，都與 \(L\) 相交</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。「距離」是兩平行線之間垂直線段的長，只有跟 \(L\) 平行的直線才有固定的距離。\(L\) 的上方、下方各有一條離它 \(4\) 的平行線。<br>
+              B 錯：漏了另一側。<br>
+              C 錯：距離是 \(4\) 不代表有 \(4\) 條。<br>
+              D 錯：跟 \(L\) 相交的直線，離 \(L\) 越來越近，沒有固定的距離。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 截線與截角
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-tags" aria-hidden="true"></i> <span>重點 4：截線與截角——同位角、內錯角、同側內角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>直線 \(L\) 與 \(L_1\)、\(L_2\) 交於不同的兩點，\(L\) 叫做 \(L_1\)、\(L_2\) 的<strong>截線</strong>，形成的八個夾角都叫做<strong>截角</strong>。</li>
+              <li>課本的編號：截線與 \(L_1\) 的交點是 \(\angle 1\) 左上、\(\angle 2\) 右上、\(\angle 3\) 左下、\(\angle 4\) 右下；與 \(L_2\) 的交點依序是 \(\angle 5\)～\(\angle 8\)。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>名稱</th><th>位置</th><th>例</th></tr></thead>
+                <tbody>
+                  <tr><td>同位角</td><td>位置對應相同</td><td>\(\angle 1\)、\(\angle 5\)</td></tr>
+                  <tr><td>內錯角</td><td>兩線之間，在截線兩側</td><td>\(\angle 3\)、\(\angle 6\)</td></tr>
+                  <tr><td>同側內角</td><td>兩線之間，在截線同側</td><td>\(\angle 3\)、\(\angle 5\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list">
+              <li>名稱是<strong>依位置</strong>取的：\(L_1\)、\(L_2\) 不平行，照樣有同位角、內錯角、同側內角。</li>
+              <li>\(\angle 1\)、\(\angle 2\)、\(\angle 7\)、\(\angle 8\) 在兩線的外側，只有同位角，沒有內錯角與同側內角。</li>
+              <li>圖的編號方式不一定跟課本一樣，判斷時看<strong>位置</strong>，不要背號碼。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pl_junction.webp" alt="復古琺瑯道路標誌風插圖：俯瞰的路口，一條斜向的白色標線穿過兩條平行的黃色車道線，兩個交叉點各形成四個角；小線站在路邊舉著一面圓形的琺瑯藍號誌牌。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：點一個角，找它的夥伴</h3>
+            <p class="interactive-instruction">選一個角和一種關係，畫布會把它的夥伴標成藍色。把 \(L_2\) 轉斜，兩線不平行時名稱還在不在？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-name" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="name-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">選角</span>
+                    <div class="btn-group" id="name-k-group">
+                      <button class="pick-btn" data-name-k="1">\(\angle 1\)</button>
+                      <button class="pick-btn" data-name-k="2">\(\angle 2\)</button>
+                      <button class="pick-btn active" data-name-k="3">\(\angle 3\)</button>
+                      <button class="pick-btn" data-name-k="4">\(\angle 4\)</button>
+                      <button class="pick-btn" data-name-k="5">\(\angle 5\)</button>
+                      <button class="pick-btn" data-name-k="6">\(\angle 6\)</button>
+                      <button class="pick-btn" data-name-k="7">\(\angle 7\)</button>
+                      <button class="pick-btn" data-name-k="8">\(\angle 8\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">關係</span>
+                    <div class="btn-group" id="name-rel-group">
+                      <button class="pick-btn" data-name-rel="cor">同位角</button>
+                      <button class="pick-btn active" data-name-rel="alt">內錯角</button>
+                      <button class="pick-btn" data-name-rel="co">同側內角</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="name-t">截線的方向：<span id="name-vt" class="val-num">70°</span></label>
+                    <input type="range" id="name-t" min="55" max="125" value="70" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="name-b">\(L_2\) 的傾斜：<span id="name-vb" class="val-num">6°</span></label>
+                    <input type="range" id="name-b" min="-12" max="12" value="6" step="3">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="name-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (截角的名稱)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 如圖，直線 \(L\) 截 \(L_1\)、\(L_2\)（注意：這張圖的編號跟課本不同）。\(\angle 2\) 的同位角是哪一個？</p>
+            <canvas class="quiz-fig" data-fig="q7" width="320" height="220" role="img" aria-label="直線 L 截不平行的 L1、L2；每個交點由右上起逆時針編號：L1 上右上 1、左上 2、左下 3、右下 4，L2 上右上 5、左上 6、左下 7、右下 8"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-7" value="A"><span class="option-text">A. \(\angle 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-7" value="B"><span class="option-text">B. \(\angle 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-7" value="C"><span class="option-text">C. \(\angle 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-7" value="D"><span class="option-text">D. \(\angle 6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。這張圖每個交點都從右上開始、逆時針編號。\(\angle 2\) 在 \(L_1\) 的上方、截線的左側；\(L_2\) 上同樣在上方、左側的是 \(\angle 6\)。兩線不平行也照樣是同位角。<br>
+              A 錯：\(\angle 5\) 在 \(L_2\) 的上方、右側。<br>
+              B 錯：\(\angle 7\) 在下方、左側。<br>
+              C 錯：\(\angle 8\) 在下方、右側。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 承 Q7 的圖，下列哪一組是內錯角？</p>
+            <canvas class="quiz-fig" data-fig="q8" width="320" height="220" role="img" aria-label="同 Q7 的圖：直線 L 截不平行的 L1、L2，每個交點由右上起逆時針編號"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-8" value="A"><span class="option-text">A. \(\angle 4\) 與 \(\angle 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-8" value="B"><span class="option-text">B. \(\angle 3\) 與 \(\angle 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-8" value="C"><span class="option-text">C. \(\angle 4\) 與 \(\angle 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-8" value="D"><span class="option-text">D. \(\angle 1\) 與 \(\angle 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle 4\) 在 \(L_1\) 下方、截線右側，\(\angle 6\) 在 \(L_2\) 上方、截線左側：兩個都夾在兩線之間（內），又分在截線兩側（錯）。<br>
+              B 錯：\(\angle 3\)、\(\angle 6\) 都在截線左側，是同側內角。<br>
+              C 錯：\(\angle 4\)、\(\angle 8\) 位置對應相同，是同位角。<br>
+              D 錯：\(\angle 1\)、\(\angle 7\) 在兩線的外側，不是內錯角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 平行線的截角性質
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> <span>重點 5：平行線的截角性質——同位角、內錯角相等，同側內角互補</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩<strong>平行線</strong>被另一直線所截：<strong>同位角相等、內錯角相等、同側內角互補</strong>。</li>
+              <li>截線垂直兩平行線時，八個角都是 \(90^\circ\)。</li>
+              <li>不垂直時，八個角<strong>只有兩種大小</strong>，一大一小、互為補角。</li>
+              <li>例：\(L_1 /\!/ L_2\)，\(\angle 2 = 70^\circ\)。對頂角 \(\angle 3 = 70^\circ\)；補角 \(\angle 1 = \angle 4 = 110^\circ\)；同位角 \(\angle 5 = 110^\circ\)、\(\angle 6 = \angle 7 = 70^\circ\)、\(\angle 8 = 110^\circ\)。</li>
+              <li>前提是<strong>兩線平行</strong>：不平行時同位角照樣有名稱，但不一定相等。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・平行線的截角性質</span>
+              兩線平行 \(\Rightarrow\) 同位角相等、內錯角相等、同側內角互補
+            </div>
+
+            <div class="illustration-container">
+              <img src="pl_stripes.webp" alt="復古琺瑯道路標誌風插圖：一條斜向的白色導流線斜穿過兩條平行的黃色車道線，阿平蹲在交叉處，把一片黃色角度紙板貼在其中一個角上比對。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：知道一個角，八個全知道</h3>
+            <p class="interactive-instruction">\(L_1 /\!/ L_2\)。選一個「已知角」，再選一種關係，看它的夥伴是相等還是互補；拉動滑桿轉動截線，黃色的角永遠一樣大，藍色的永遠一樣大。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cut" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cut-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知角</span>
+                    <div class="btn-group" id="cut-k-group">
+                      <button class="pick-btn" data-cut-k="1">\(\angle 1\)</button>
+                      <button class="pick-btn active" data-cut-k="2">\(\angle 2\)</button>
+                      <button class="pick-btn" data-cut-k="3">\(\angle 3\)</button>
+                      <button class="pick-btn" data-cut-k="4">\(\angle 4\)</button>
+                      <button class="pick-btn" data-cut-k="5">\(\angle 5\)</button>
+                      <button class="pick-btn" data-cut-k="6">\(\angle 6\)</button>
+                      <button class="pick-btn" data-cut-k="7">\(\angle 7\)</button>
+                      <button class="pick-btn" data-cut-k="8">\(\angle 8\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">關係</span>
+                    <div class="btn-group" id="cut-rel-group">
+                      <button class="pick-btn active" data-cut-rel="cor">同位角</button>
+                      <button class="pick-btn" data-cut-rel="alt">內錯角</button>
+                      <button class="pick-btn" data-cut-rel="co">同側內角</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cut-t">截線的方向：<span id="cut-vt" class="val-num">65°</span></label>
+                    <input type="range" id="cut-t" min="30" max="150" value="65" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cut-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (截角性質)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 如圖，\(L_1 /\!/ L_2\)，直線 \(L\) 是截線。若 \(\angle 6 = 58^\circ\)，則 \(\angle 1\) 是幾度？</p>
+            <canvas class="quiz-fig" data-fig="q9" width="320" height="220" role="img" aria-label="L1 平行 L2，截線 L；八個角依課本編號：L1 上左上 1、右上 2、左下 3、右下 4，L2 上左上 5、右上 6、左下 7、右下 8"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-9" value="A"><span class="option-text">A. \(58^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-9" value="B"><span class="option-text">B. \(122^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-9" value="C"><span class="option-text">C. \(32^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-9" value="D"><span class="option-text">D. \(148^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\angle 6\) 與 \(\angle 2\) 是同位角，\(L_1 /\!/ L_2\)，所以 \(\angle 2 = 58^\circ\)；\(\angle 1\)、\(\angle 2\) 合成一個平角：
+              \[\angle 1 = 180^\circ - 58^\circ = 122^\circ\]
+              A 錯：\(\angle 1\) 的同位角是 \(\angle 5\)，不是 \(\angle 6\)。<br>
+              C 錯：\(90^\circ - 58^\circ\)，把互補當成互餘。<br>
+              D 錯：\(90^\circ + 58^\circ\)，沒有根據。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 如圖，\(L_1 /\!/ L_2\)，截線 \(L\) 與 \(L_1\) <strong>不垂直</strong>。下列哪一個關係是<strong>錯誤</strong>的？</p>
+            <canvas class="quiz-fig" data-fig="q10" width="320" height="220" role="img" aria-label="L1 平行 L2，截線 L 斜向；八個角依課本編號"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-10" value="A"><span class="option-text">A. \(\angle 2 = \angle 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-10" value="B"><span class="option-text">B. \(\angle 3 = \angle 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-10" value="C"><span class="option-text">C. \(\angle 4 + \angle 6 = 180^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-10" value="D"><span class="option-text">D. \(\angle 1 = \angle 6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。八個角只有兩種大小：\(\angle 1 = \angle 4 = \angle 5 = \angle 8\) 是一種，\(\angle 2 = \angle 3 = \angle 6 = \angle 7\) 是另一種，兩種互補。\(\angle 1\) 與 \(\angle 6\) 分屬兩種，只有截線垂直時才會相等。<br>
+              A 對：\(\angle 2 = \angle 6\)（同位角），\(\angle 6 = \angle 7\)（對頂角）。<br>
+              B 對：內錯角相等。<br>
+              C 對：同側內角互補。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 截角性質列方程式
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square-root-variable" aria-hidden="true"></i> <span>重點 6：截角用 \(x\) 表示——先判斷關係，再列方程式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩平行線的截角用含 \(x\) 的式子表示時，<strong>先判斷兩個角的關係</strong>：同位角、內錯角 \(\Rightarrow\) 列「相等」；同側內角 \(\Rightarrow\) 列「和是 \(180^\circ\)」。</li>
+              <li>例：\(L /\!/ M\)，一組同位角是 \((3x - 25)^\circ\) 與 \((x + 35)^\circ\)：
+                \[\begin{aligned} & 3x - 25 = x + 35 \\ & 2x = 60 \\ & x = 30 \end{aligned}\]
+                每個角都是 \(65^\circ\)。</li>
+              <li>例：一組同側內角，較大角是較小角的 \(4\) 倍。設較小角 \(x^\circ\)：\(x + 4x = 180\)，\(x = 36\)，兩角是 \(36^\circ\) 與 \(144^\circ\)。</li>
+              <li>解出 \(x\) 後要<strong>代回去</strong>：題目常問的是角度，而且每個角都要在 \(0^\circ\) 到 \(180^\circ\) 之間。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・列式的依據</span>
+              同位角、內錯角：相等；同側內角：和為 \(180^\circ\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="pl_signpost.webp" alt="復古琺瑯道路標誌風插圖：小線坐在工程車後斗，在膝上的工作板寫算式，旁邊立著一面琺瑯藍的道路指示牌；阿平拿著捲尺在一旁等。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：列式解角度</h3>
+            <p class="interactive-instruction">選兩個角的關係，調整兩個式子的係數與常數。畫布會列式、解出 \(x\)、代回去，並依解出的角度畫出截線；調到不合理的組合時，看看哪一步出問題。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-eq" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="eq-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">關係</span>
+                    <div class="btn-group" id="eq-mode-group">
+                      <button class="pick-btn" data-eq-mode="cor">同位角</button>
+                      <button class="pick-btn" data-eq-mode="alt">內錯角</button>
+                      <button class="pick-btn active" data-eq-mode="co">同側內角</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="eq-a">藍色角的 \(x\) 係數：<span id="eq-va" class="val-num">2</span></label>
+                    <input type="range" id="eq-a" min="1" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eq-b">藍色角的常數：<span id="eq-vb" class="val-num">20</span></label>
+                    <input type="range" id="eq-b" min="-20" max="40" value="20" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eq-c">紅色角的 \(x\) 係數：<span id="eq-vc" class="val-num">3</span></label>
+                    <input type="range" id="eq-c" min="1" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="eq-d">紅色角的常數：<span id="eq-vd" class="val-num">10</span></label>
+                    <input type="range" id="eq-d" min="-20" max="40" value="10" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="eq-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (列方程式)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 如圖，\(L /\!/ M\)，\(\angle 1 = (3x + 16)^\circ\)、\(\angle 2 = (5x - 4)^\circ\)，則 \(x\) 是多少？</p>
+            <canvas class="quiz-fig" data-fig="q11" width="320" height="220" role="img" aria-label="L 平行 M，截線 N；角 1 在 N 與 L 交點的右下，角 2 在 N 與 M 交點的右上"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-11" value="A"><span class="option-text">A. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-11" value="B"><span class="option-text">B. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-11" value="C"><span class="option-text">C. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-11" value="D"><span class="option-text">D. \(100\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\angle 1\)、\(\angle 2\) 都夾在 \(L\)、\(M\) 之間、在截線的同一側，是同側內角，互補：
+              \[\begin{aligned} & (3x + 16) + (5x - 4) = 180 \\ & 8x + 12 = 180 \\ & 8x = 168 \\ & x = 21 \end{aligned}\]
+              代回去 \(\angle 1 = 79^\circ\)、\(\angle 2 = 101^\circ\)。<br>
+              A 錯：誤以為兩角相等，\(3x + 16 = 5x - 4\) 得 \(x = 10\)。<br>
+              C 錯：移項沒有變號，\(8x = 180 + 12\) 得 \(x = 24\)。<br>
+              D 錯：把兩角相減當成 \(180\)，\(2x - 20 = 180\) 得 \(x = 100\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 如圖，\(L /\!/ M\)，\(\angle 1 = (4x - 18)^\circ\)、\(\angle 2 = (2x + 30)^\circ\)，則 \(\angle 1\) 是幾度？</p>
+            <canvas class="quiz-fig" data-fig="q12" width="320" height="220" role="img" aria-label="L 平行 M，截線 N；角 1 在 N 與 L 交點的右下，角 2 在 N 與 M 交點的左上"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-12" value="A"><span class="option-text">A. \(24^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-12" value="B"><span class="option-text">B. \(102^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-12" value="C"><span class="option-text">C. \(78^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-12" value="D"><span class="option-text">D. \(94^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\angle 1\)、\(\angle 2\) 夾在兩線之間、分在截線兩側，是內錯角，相等：
+              \[\begin{aligned} & 4x - 18 = 2x + 30 \\ & 2x = 48 \\ & x = 24 \end{aligned}\]
+              所以 \(\angle 1 = 4 \times 24 - 18 = 78^\circ\)。<br>
+              A 錯：\(24\) 是 \(x\)，題目問的是 \(\angle 1\)。<br>
+              B 錯：\(180^\circ - 78^\circ\)，算成了補角。<br>
+              D 錯：誤以為互補，\(6x + 12 = 180\) 得 \(x = 28\)，\(\angle 1 = 94^\circ\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 多條截線、兩組平行線
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells" aria-hidden="true"></i> <span>重點 7：好幾條截線、兩組平行線——一步只用一組</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>圖上有好幾條截線，或有兩組平行線時，<strong>每一步只看一條截線、一組平行線</strong>。</li>
+              <li>每一步都寫出理由：用了哪一組平行線、哪一種角的關係（同位角、內錯角、同側內角），再加上對頂角、平角這些老工具。</li>
+              <li>例：\(L_1 /\!/ L_2\)，\(M_1 /\!/ M_2\)，\(M_1\) 與 \(L_1\) 的夾角是 \(65^\circ\)。
+                <ul>
+                  <li>\(L_1\) 截 \(M_1 /\!/ M_2\)：同位角 \(\angle 1 = 65^\circ\)；</li>
+                  <li>\(M_2\) 截 \(L_1 /\!/ L_2\)：同位角 \(\angle 3 = \angle 1 = 65^\circ\)；</li>
+                  <li>\(\angle 2\) 與 \(\angle 3\) 合成平角，\(\angle 2 = 115^\circ\)。</li>
+                </ul>
+              </li>
+              <li>兩條<strong>不平行</strong>的截線之間，位置像同位角的兩個角不一定相等——那組線沒有平行。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pl_grid.webp" alt="復古琺瑯道路標誌風插圖：俯瞰的停車場，兩組白色標線交錯成一整排斜向停車格；小線站在停車格旁對照手上的施工圖。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：角度一站一站傳</h3>
+            <p class="interactive-instruction">黃色、藍色是已知角，綠色、紅色是要求的角。切換「兩條截線」與「兩組平行線」，拉動滑桿改變截線的方向，看每一步用的是哪一組平行線。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-multi" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="multi-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="multi-mode-group">
+                      <button class="pick-btn active" data-multi-mode="two">兩條截線</button>
+                      <button class="pick-btn" data-multi-mode="para">兩組平行線</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="multi-a">\(M\) 的方向：<span id="multi-va" class="val-num">65°</span></label>
+                    <input type="range" id="multi-a" min="50" max="130" value="65" step="5">
+                  </div>
+                  <div class="slider-row" id="multi-b-row">
+                    <label for="multi-b">\(N\) 的方向：<span id="multi-vb" class="val-num">110°</span></label>
+                    <input type="range" id="multi-b" min="50" max="130" value="110" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="multi-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多條截線)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 如圖，\(L_1 /\!/ L_2\)，直線 \(M\)、\(N\) 都是截線。根據圖中標示的角度，\(x + y\) 是多少？</p>
+            <canvas class="quiz-fig" data-fig="q13" width="320" height="220" role="img" aria-label="L1 平行 L2，截線 M 與 N。M 與 L1 交點右下標 63 度，M 與 L2 交點左上標 x；N 與 L2 交點右上標 74 度，N 與 L1 交點右下標 y"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-13" value="A"><span class="option-text">A. \(169\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-13" value="B"><span class="option-text">B. \(137\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-13" value="C"><span class="option-text">C. \(223\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-13" value="D"><span class="option-text">D. \(191\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。看 \(M\)：\(x\) 與 \(63^\circ\) 夾在兩線之間、分在 \(M\) 的兩側，是內錯角，\(x = 63\)。看 \(N\)：\(y\) 與 \(74^\circ\) 都在 \(N\) 的右側、夾在兩線之間，是同側內角，\(y = 180 - 74 = 106\)。
+              \[x + y = 63 + 106 = 169\]
+              B 錯：把 \(y\) 當成跟 \(74^\circ\) 相等，\(63 + 74 = 137\)。<br>
+              C 錯：把 \(x\) 當成 \(63^\circ\) 的補角，\(117 + 106 = 223\)。<br>
+              D 錯：兩個關係都弄反，\(117 + 74 = 191\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 如圖，\(L_1 /\!/ L_2\)，\(M_1 /\!/ M_2\)，\(M_1\) 與 \(L_1\) 夾 \(71^\circ\)，則 \(\angle 2\) 是幾度？</p>
+            <canvas class="quiz-fig" data-fig="q14" width="320" height="220" role="img" aria-label="L1 平行 L2，M1 平行 M2；M1 與 L1 交點右上標 71 度，角 2 在 M2 與 L2 交點的左上"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-14" value="A"><span class="option-text">A. \(71^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-14" value="B"><span class="option-text">B. \(19^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-14" value="C"><span class="option-text">C. \(109^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-14" value="D"><span class="option-text">D. \(142^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(L_1\) 截 \(M_1 /\!/ M_2\)：\(M_2\) 與 \(L_1\) 的右上角也是 \(71^\circ\)（同位角）。\(M_2\) 截 \(L_1 /\!/ L_2\)：\(M_2\) 與 \(L_2\) 的右上角也是 \(71^\circ\)（同位角）。\(\angle 2\) 與它合成平角：
+              \[\angle 2 = 180^\circ - 71^\circ = 109^\circ\]
+              A 錯：\(\angle 2\) 在左上，不是 \(71^\circ\) 的同位角。<br>
+              B 錯：\(90^\circ - 71^\circ\)，把互補當成互餘。<br>
+              D 錯：\(2 \times 71^\circ\)，沒有根據。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 拐角問題
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-route" aria-hidden="true"></i> <span>重點 8：兩平行線之間的拐角——作一條平行線</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(L_1 /\!/ L_2\)，折線 \(A \to B \to C\) 在兩線之間拐一個彎，\(\angle 1\)、\(\angle 2\) 分別是 \(\overline{AB}\)、\(\overline{CB}\) 與兩線朝拐點那一側的夾角，則
+                \[\angle ABC = \angle 1 + \angle 2\]</li>
+              <li><strong>作法一</strong>：過拐點 \(B\) 作 \(L_3 /\!/ L_1\)（也就平行 \(L_2\)），\(\angle ABC\) 被切成兩塊，各是一組內錯角。</li>
+              <li><strong>作法二</strong>：延長 \(\overline{CB}\) 交 \(L_1\) 於 \(D\)，內錯角把 \(\angle 2\) 搬到 \(D\)；\(\angle ABC\) 是 \(\triangle ABD\) 的外角，等於兩個內對角的和。</li>
+              <li>已知角若標在<strong>另一側</strong>（鈍角那一邊），要先取補角再相加。</li>
+              <li>例：\(\angle 1 = 40^\circ\)、\(\angle 2 = 35^\circ\)，則 \(\angle ABC = 75^\circ\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・拐角</span>
+              過拐點作平行線，拐角 \(=\) 兩邊的內錯角相加
+            </div>
+
+            <div class="illustration-container">
+              <img src="pl_turn.webp" alt="復古琺瑯道路標誌風插圖：兩條平行的白色路邊線之間，有一條拐一個彎的黃色導引線，拐點上放著一個三角錐；阿平推著滾輪畫線車沿著導引線畫。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩種輔助線</h3>
+            <p class="interactive-instruction">拉動滑桿改變兩邊的角。切換輔助線的畫法，看 \(\angle ABC\) 怎麼被拆成兩塊；把已知角改成「標在另一側」，記得先取補角。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-bend" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bend-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">輔助線</span>
+                    <div class="btn-group" id="bend-way-group">
+                      <button class="pick-btn active" data-bend-way="par">過 \(B\) 作平行線</button>
+                      <button class="pick-btn" data-bend-way="ext">延長 \(\overline{CB}\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">\(A\) 的已知角</span>
+                    <div class="btn-group" id="bend-pos-group">
+                      <button class="pick-btn active" data-bend-pos="in">標在拐點這側</button>
+                      <button class="pick-btn" data-bend-pos="out">標在另一側</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bend-1">\(\angle 1\)：<span id="bend-v1" class="val-num">40°</span></label>
+                    <input type="range" id="bend-1" min="25" max="70" value="40" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bend-2">\(\angle 2\)：<span id="bend-v2" class="val-num">35°</span></label>
+                    <input type="range" id="bend-2" min="25" max="70" value="35" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bend-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (拐角)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 如圖，\(L_1 /\!/ L_2\)，根據圖中標示的角度，\(\angle ABC\) 是幾度？</p>
+            <canvas class="quiz-fig" data-fig="q15" width="320" height="220" role="img" aria-label="L1 平行 L2，折線 A B C 在兩線之間；A 處 AB 與 L1 夾 37 度，C 處 CB 與 L2 夾 46 度，B 處的角是問號"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-15" value="A"><span class="option-text">A. \(97^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-15" value="B"><span class="option-text">B. \(83^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-15" value="C"><span class="option-text">C. \(9^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-15" value="D"><span class="option-text">D. \(277^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。過 \(B\) 作 \(L_3 /\!/ L_1\)，則 \(L_3 /\!/ L_2\)。\(\angle ABC\) 被切成兩塊，分別與 \(37^\circ\)、\(46^\circ\) 是內錯角：
+              \[\angle ABC = 37^\circ + 46^\circ = 83^\circ\]
+              A 錯：\(180^\circ - 83^\circ\)，多取了一次補角。<br>
+              C 錯：\(46^\circ - 37^\circ\)，兩塊應該相加。<br>
+              D 錯：\(360^\circ - 83^\circ\) 是 \(B\) 外側的角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 如圖，\(L_1 /\!/ L_2\)，\(A\) 處標示的 \(142^\circ\) 是 \(\overline{AB}\) 與 \(L_1\) 在<strong>另一側</strong>的夾角，\(C\) 處標示 \(49^\circ\)。\(\angle ABC\) 是幾度？</p>
+            <canvas class="quiz-fig" data-fig="q16" width="320" height="220" role="img" aria-label="L1 平行 L2，折線 A B C 在兩線之間；A 處標 142 度量在 AB 與 L1 往左的那一側，C 處 CB 與 L2 夾 49 度，B 處的角是問號"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-16" value="A"><span class="option-text">A. \(93^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-16" value="B"><span class="option-text">B. \(191^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-16" value="C"><span class="option-text">C. \(131^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-16" value="D"><span class="option-text">D. \(87^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(A\) 處朝拐點那一側的角是 \(180^\circ - 142^\circ = 38^\circ\)。過 \(B\) 作平行線，兩塊內錯角相加：
+              \[\angle ABC = 38^\circ + 49^\circ = 87^\circ\]
+              A 錯：\(180^\circ - 87^\circ\)，多取了一次補角。<br>
+              B 錯：\(142^\circ + 49^\circ\)，沒有先把 \(142^\circ\) 換成拐點這一側的角。<br>
+              C 錯：\(180^\circ - 49^\circ\)，取補角取錯了角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 平行線的判別
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span>重點 9：平行線的判別——由角度推出平行</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩直線被另一直線所截，若符合下列<strong>任一</strong>條件，這兩直線互相平行：<strong>同位角相等</strong>、<strong>內錯角相等</strong>、<strong>同側內角互補</strong>。</li>
+              <li>一組成立就夠了，其他組會跟著成立。</li>
+              <li>差 \(1^\circ\) 也不平行：眼睛看起來平行不算數，要用角度判斷。</li>
+              <li>例：\(\angle 4 = 128^\circ\)、\(\angle 6 = 52^\circ\) 是同側內角，\(128^\circ + 52^\circ = 180^\circ\)，所以兩線平行。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>截角性質</th><th>判別性質</th></tr></thead>
+                <tbody>
+                  <tr><td>已知兩線平行 \(\Rightarrow\) 推出角的關係</td><td>已知角的關係 \(\Rightarrow\) 推出兩線平行</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・平行線的判別性質</span>
+              同位角相等、內錯角相等、同側內角互補，任一成立 \(\Rightarrow\) 兩直線平行
+            </div>
+
+            <div class="illustration-container">
+              <img src="pl_check.webp" alt="復古琺瑯道路標誌風插圖：一條斜線穿過兩條白色車道線，小線蹲在兩個交叉點之間，雙手各拿一片一模一樣的黃色三角形紙板，貼在兩個交叉點的同一個位置比對；阿平在後方豎起大拇指。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：角度決定平不平行</h3>
+            <p class="interactive-instruction">截線 \(M\) 固定，兩條直線跟著兩個角的度數轉動。選一種關係，調到「相等」或「和是 \(180^\circ\)」時，兩條線才會平行；差一點點，看看它們在哪裡相交。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-judge" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="judge-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">關係</span>
+                    <div class="btn-group" id="judge-mode-group">
+                      <button class="pick-btn active" data-judge-mode="cor">同位角</button>
+                      <button class="pick-btn" data-judge-mode="alt">內錯角</button>
+                      <button class="pick-btn" data-judge-mode="co">同側內角</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="judge-a"><span id="judge-la">∠2</span>（在 \(L_1\)）：<span id="judge-va" class="val-num">70°</span></label>
+                    <input type="range" id="judge-a" min="40" max="140" value="70" step="2">
+                  </div>
+                  <div class="slider-row">
+                    <label for="judge-b"><span id="judge-lb">∠6</span>（在 \(L_2\)）：<span id="judge-vb" class="val-num">76°</span></label>
+                    <input type="range" id="judge-b" min="40" max="140" value="76" step="2">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="judge-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平行線的判別)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 如圖，直線 \(M\) 截 \(L_1\)、\(L_2\) 出八個角（課本的編號）。下列哪一個條件可以判斷 \(L_1 /\!/ L_2\)？</p>
+            <canvas class="quiz-fig" data-fig="q17" width="320" height="220" role="img" aria-label="直線 M 截 L1、L2；八個角依課本編號：L1 上左上 1、右上 2、左下 3、右下 4，L2 上左上 5、右上 6、左下 7、右下 8"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-17" value="A"><span class="option-text">A. \(\angle 3 = 87^\circ\)，\(\angle 5 = 87^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-17" value="B"><span class="option-text">B. \(\angle 1 = 103^\circ\)，\(\angle 8 = 103^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-17" value="C"><span class="option-text">C. \(\angle 4 = 97^\circ\)，\(\angle 6 = 97^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-17" value="D"><span class="option-text">D. \(\angle 2 = 69^\circ\)，\(\angle 5 = 69^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\angle 1 = 103^\circ\)，與它合成平角的 \(\angle 2 = 77^\circ\)；\(\angle 8 = 103^\circ\)，與它合成平角的 \(\angle 6 = 77^\circ\)。\(\angle 2 = \angle 6\) 是同位角相等，所以 \(L_1 /\!/ L_2\)。<br>
+              A 錯：\(\angle 3\)、\(\angle 5\) 是同側內角，\(87^\circ + 87^\circ = 174^\circ \ne 180^\circ\)。<br>
+              C 錯：\(\angle 4\)、\(\angle 6\) 是同側內角，\(97^\circ + 97^\circ = 194^\circ \ne 180^\circ\)。<br>
+              D 錯：\(\angle 3 = \angle 2 = 69^\circ\)（對頂角），與同側內角 \(\angle 5\) 的和是 \(138^\circ \ne 180^\circ\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 如圖，直線 \(a\)、\(b\)、\(c\)、\(d\) 相交，\(\angle 1 = 123^\circ\)、\(\angle 2 = 58^\circ\)、\(\angle 3 = 57^\circ\)。下列敘述何者正確？</p>
+            <canvas class="quiz-fig" data-fig="q18" width="320" height="220" role="img" aria-label="示意圖：直線 a、b 大致水平，直線 c、d 斜向。角 1 在 c 與 a 交點的右下，角 3 在 c 與 b 交點的右上，角 2 在 d 與 a 交點的左下"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-18" value="A"><span class="option-text">A. \(a /\!/ b\)，\(c /\!/ d\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-18" value="B"><span class="option-text">B. \(a\) 與 \(b\) 不平行，\(c /\!/ d\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-18" value="C"><span class="option-text">C. \(a /\!/ b\)，\(c\) 與 \(d\) 不平行</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-18" value="D"><span class="option-text">D. \(a\) 與 \(b\) 不平行，\(c\) 與 \(d\) 也不平行</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。看 \(c\) 截 \(a\)、\(b\)：\(\angle 1\)、\(\angle 3\) 是同側內角，\(123^\circ + 57^\circ = 180^\circ\)，所以 \(a /\!/ b\)。看 \(a\) 截 \(c\)、\(d\)：\(\angle 1\)、\(\angle 2\) 是同側內角，\(123^\circ + 58^\circ = 181^\circ \ne 180^\circ\)，所以 \(c\) 與 \(d\) 不平行。<br>
+              A 錯：\(c\)、\(d\) 看起來差不多平行，但差 \(1^\circ\) 就不平行。<br>
+              B、D 錯：\(a\)、\(b\) 有一組同側內角互補，是平行的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 角平分線與平行
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-branch" aria-hidden="true"></i> <span>重點 10：平分兩個截角——平分線平不平行？</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\overline{AB} /\!/ \overline{CD}\)，直線 \(EG\) 截兩線。\(\overline{EF}\) 平分 \(\angle AEG\)、\(\overline{GH}\) 平分 \(\angle EGD\)（一組內錯角）：
+                <ul>
+                  <li>\(\angle AEG = \angle EGD\)（內錯角相等）；</li>
+                  <li>各取一半：\(\angle 1 = \angle 2\)；</li>
+                  <li>\(\angle 1\)、\(\angle 2\) 是 \(\overline{EF}\)、\(\overline{GH}\) 被 \(EG\) 所截的內錯角 \(\Rightarrow\) \(\overline{EF} /\!/ \overline{GH}\)。</li>
+                </ul>
+              </li>
+              <li>平分一組<strong>同位角</strong>，平分線也平行（相等的角，一半也相等）。</li>
+              <li>平分一組<strong>同側內角</strong>：兩半加起來是 \(90^\circ\)，兩條平分線<strong>互相垂直</strong>，不是平行。</li>
+              <li>先用截角性質（平行 \(\Rightarrow\) 角），再用判別性質（角 \(\Rightarrow\) 平行），兩個方向都用上了。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pl_fold.webp" alt="復古琺瑯道路標誌風插圖：小線把一張黃色的角度紙板沿對角對摺，摺痕把角分成相等的兩半；阿平在旁邊的柏油路面上用粉筆照著摺痕描線。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：三種截角的平分線</h3>
+            <p class="interactive-instruction">選要平分哪一組截角，拉動滑桿轉動截線 \(EG\)。內錯角、同位角的平分線一直平行；同側內角的平分線一直交成 \(90^\circ\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-bis" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bis-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">平分</span>
+                    <div class="btn-group" id="bis-mode-group">
+                      <button class="pick-btn active" data-bis-mode="alt">內錯角</button>
+                      <button class="pick-btn" data-bis-mode="cor">同位角</button>
+                      <button class="pick-btn" data-bis-mode="co">同側內角</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bis-t">截線 \(EG\) 的方向：<span id="bis-vt" class="val-num">60°</span></label>
+                    <input type="range" id="bis-t" min="40" max="140" value="60" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bis-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (角平分線與平行)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 如圖，\(\overline{AB} /\!/ \overline{CD}\)，直線 \(EG\) 與兩線交於 \(E\)、\(G\)。\(\overline{EF}\) 平分 \(\angle BEG\)，\(\overline{GH}\) 平分 \(\angle CGE\)，則 \(\overline{EF}\) 與 \(\overline{GH}\) 的關係為何？</p>
+            <canvas class="quiz-fig" data-fig="q19" width="320" height="220" role="img" aria-label="AB 平行 CD，截線 EG；EF 從 E 往右下平分角 BEG，GH 從 G 往左上平分角 CGE"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-19" value="A"><span class="option-text">A. 互相平行</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-19" value="B"><span class="option-text">B. 互相垂直</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-19" value="C"><span class="option-text">C. 相交，夾角等於 \(\angle BEG\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-19" value="D"><span class="option-text">D. 條件不夠，無法判斷</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle BEG\) 在 \(E\) 的右下、\(\angle CGE\) 在 \(G\) 的左上，夾在兩線之間、分在截線兩側，是一組內錯角。\(\overline{AB} /\!/ \overline{CD}\)，所以兩角相等；各取一半，\(\angle FEG = \angle EGH\)，它們又是 \(\overline{EF}\)、\(\overline{GH}\) 被 \(EG\) 所截的內錯角，所以 \(\overline{EF} /\!/ \overline{GH}\)。<br>
+              B 錯：平分一組<strong>同側內角</strong>時，平分線才互相垂直。<br>
+              C、D 錯：條件足夠推出平行。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 如圖，\(\overline{AB} /\!/ \overline{CD}\)，同側內角 \(\angle BGH\) 與 \(\angle DHG\) 的角平分線交於 \(I\)。若 \(\angle BGH = 64^\circ\)，則 \(\angle GHI\) 是幾度？</p>
+            <canvas class="quiz-fig" data-fig="q20" width="320" height="220" role="img" aria-label="AB 平行 CD，截線 GH，G 在上、H 在下；角 BGH 標 64 度，兩條同側內角的平分線交於右側的 I"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-20" value="A"><span class="option-text">A. \(32^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-20" value="B"><span class="option-text">B. \(64^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-20" value="C"><span class="option-text">C. \(90^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-20" value="D"><span class="option-text">D. \(58^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。同側內角互補：
+              \[\angle DHG = 180^\circ - 64^\circ = 116^\circ\]
+              \(\overline{HI}\) 平分 \(\angle DHG\)，所以 \(\angle GHI = 116^\circ \div 2 = 58^\circ\)。<br>
+              A 錯：\(32^\circ\) 是 \(\angle BGH\) 的一半，那是 \(\angle IGH\)。<br>
+              B 錯：同側內角互補，不是相等。<br>
+              C 錯：\(90^\circ\) 是 \(\angle GIH\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 過線外一點作平行線
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i> <span>重點 11：過線外一點作平行線</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>方法一：直尺與三角板</strong>
+                <ul>
+                  <li>三角板直角的一邊貼齊 \(L\)，直尺貼齊直角的另一邊；</li>
+                  <li>直尺壓住不動，三角板沿直尺滑到 \(P\)，沿三角板的邊畫出 \(M\)。</li>
+                  <li>理由：\(M\)、\(L\) 都垂直於直尺，有共同垂線。</li>
+                </ul>
+              </li>
+              <li><strong>方法二：尺規等角作圖</strong>
+                <ul>
+                  <li>過 \(P\) 任意畫一直線 \(K\) 交 \(L\) 於 \(A\)，\(\angle 1\) 是 \(K\) 與 \(L\) 的夾角；</li>
+                  <li>以 \(P\) 為頂點、\(K\) 為一邊，在 \(\angle 1\) 的<strong>同位角</strong>位置作 \(\angle 2 = \angle 1\)（第 3 章的等角作圖），延長另一邊就是 \(M\)。</li>
+                  <li>理由：同位角相等，兩直線平行。畫在<strong>內錯角</strong>的位置也可以。</li>
+                </ul>
+              </li>
+              <li>方法一的直尺一旦滑動就前功盡棄；方法二的等角要畫對位置。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="pl_build.webp" alt="復古琺瑯道路標誌風插圖：阿平跪在柏油路上，一手壓住長直尺不動，另一手把大三角板沿著直尺往前推；小線拿著粉筆等在三角板邊緣。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一步一步畫平行線</h3>
+            <p class="interactive-instruction">選一種方法，按「下一步」看工具怎麼動；拉動滑桿移動 \(P\) 點再畫一次。尺規作圖的最後一步會量出 \(\angle 1\) 與 \(\angle 2\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-build" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="build-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方法</span>
+                    <div class="btn-group" id="build-mode-group">
+                      <button class="pick-btn" data-build-mode="tri">三角板＋直尺</button>
+                      <button class="pick-btn active" data-build-mode="cor">尺規：同位角</button>
+                      <button class="pick-btn" data-build-mode="alt">尺規：內錯角</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="build-prev">上一步</button>
+                      <span class="step-counter" id="build-step">1 / 5</span>
+                      <button class="pick-btn" id="build-next">下一步</button>
+                      <button class="pick-btn" id="build-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="build-p">\(P\) 點的位置：<span id="build-vp" class="val-num">3</span></label>
+                    <input type="range" id="build-p" min="1" max="5" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="build-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (作平行線)</h3>
+
+          <div class="quiz-card" data-quiz="4-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 阿平要過 \(P\) 作直線 \(L\) 的平行線。他在 \(A\) 量到 \(\angle 1 = 68^\circ\)，卻把等角 \(\angle 2 = 68^\circ\) 畫在 \(\angle 1\) 的<strong>同側內角</strong>位置，畫出直線 \(M\)。\(M\) 與 \(L\) 的關係為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-21" value="A"><span class="option-text">A. 不平行：同側內角要互補才平行，\(68^\circ + 68^\circ \ne 180^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-21" value="B"><span class="option-text">B. 平行：\(\angle 2 = \angle 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-21" value="C"><span class="option-text">C. 互相垂直</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-21" value="D"><span class="option-text">D. 只有 \(\angle 1 = 90^\circ\) 時才不平行</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。「相等」是同位角、內錯角的判別條件；同側內角要「和是 \(180^\circ\)」才平行。\(68^\circ + 68^\circ = 136^\circ\)，\(M\) 與 \(L\) 會和截線圍出一個三角形，交成 \(180^\circ - 136^\circ = 44^\circ\) 的角。<br>
+              B 錯：把同側內角的條件記成了相等。<br>
+              C 錯：兩線交成 \(44^\circ\)，不是 \(90^\circ\)。<br>
+              D 錯：剛好相反，\(\angle 1 = 90^\circ\) 時兩角相等又互補，反而平行。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="4-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 四邊形 \(ABCD\) 的四個內角都不相等。小線把它<strong>沿著直線 \(AB\) 平移</strong>，得到四邊形 \(A'B'C'D'\)；阿平<strong>以直線 \(AB\) 為軸把它翻到另一側</strong>，得到四邊形 \(ABC'D'\)。誰一定能得到一組平行線？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q4-1-22" value="A"><span class="option-text">A. 兩人都能：\(\overline{AD} /\!/ \overline{A'D'}\)，\(\overline{AD} /\!/ \overline{BC'}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-22" value="B"><span class="option-text">B. 只有阿平：\(\overline{AD} /\!/ \overline{BC'}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-22" value="C"><span class="option-text">C. 只有小線：\(\overline{AD} /\!/ \overline{A'D'}\)</span></label>
+              <label class="option-label"><input type="radio" name="q4-1-22" value="D"><span class="option-text">D. 兩人都不能</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。平移時 \(\angle DAB\) 原封不動搬到 \(\angle D'A'B'\)，兩角是 \(\overline{AD}\)、\(\overline{A'D'}\) 被直線 \(AB\) 所截的同位角，相等，所以 \(\overline{AD} /\!/ \overline{A'D'}\)。<br>
+              翻到另一側後，\(\overline{AD}\) 與 \(\overline{BC'}\) 分在直線 \(AB\) 的兩側，要平行必須內錯角 \(\angle DAB = \angle ABC' = \angle ABC\)；但四個內角都不相等，所以不平行。A、B、D 都錯。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 平行速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>定義</strong>：同一平面上兩相異直線有一條共同的垂直線 \(\Rightarrow\) 互相平行。</li>
+              <li><strong>性質</strong>：垂直平行線中的一條就垂直另一條；平行可以遞移；兩平行線的距離處處相等。</li>
+              <li><strong>截角名稱</strong>：同位角、內錯角、同側內角，只看位置。</li>
+              <li><strong>截角性質</strong>（平行 \(\Rightarrow\) 角）：同位角相等、內錯角相等、同側內角互補。</li>
+              <li><strong>判別性質</strong>（角 \(\Rightarrow\) 平行）：三個條件任一成立，兩直線平行。</li>
+              <li>多條線時一步只用一組平行線；拐角過拐點作平行線。</li>
+              <li><strong>作圖</strong>：三角板沿固定的直尺滑動，或在同位角（內錯角）的位置作等角。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到工班：畫一整排斜向停車格</h4>
+              <h5><i class="fa-solid fa-ruler-combined"></i> 先畫一條，再搬角度</h5>
+              <p>停車場要畫一排斜向停車格。小線先沿著路邊拉一條基準線，再畫第一條斜線，量出它和基準線的夾角。接下來每一條斜線，都在<strong>同位角</strong>的位置畫出一樣大的角——同位角相等，所以每一條斜線都互相平行。</p>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 收工前的檢查</h5>
+              <p>阿平不用眼睛看，而是在每兩條斜線之間各量一次垂直距離：距離處處相等，才是真的平行。量到不一樣的那一格，就是畫歪的那一條。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節</h5>
+              <p>兩組平行線交出來的四邊形叫做<strong>平行四邊形</strong>。下一節會用這一節的截角性質，推出它的對邊、對角與對角線有什麼性質。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

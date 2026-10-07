@@ -150,9 +150,9 @@
       {
         "chapter": "第4章 平行與四邊形",
         "sections": [
-          { "code": "4-1", "title": "平行" },
-          { "code": "4-2", "title": "平行四邊形" },
-          { "code": "4-3", "title": "特殊四邊形的性質" }
+          { "code": "4-1", "title": "平行", "status": "completed" },
+          { "code": "4-2", "title": "平行四邊形", "status": "completed" },
+          { "code": "4-3", "title": "特殊四邊形的性質", "status": "completed" }
         ]
       }
     ],
