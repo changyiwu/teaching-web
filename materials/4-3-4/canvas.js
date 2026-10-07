@@ -4,11 +4,9 @@
    配色：蜂蜜金 HB_GOLD、苔綠 HB_MOSS、玫瑰 HB_ROSE、天藍 HB_SKY、象牙 HB_IVORY。
 
    共用工具在 ../math-canvas.js（T／IT／FR／drawExpr／drawTitle／wbrEq／
-   textCenter／textLeft／bindPickGroup／typeset／wrapFeedback／reduce…）。
-
-   本檔另有兩組「從同章別節複製來」的幾何工具，日後要統一抽進共用檔：
-     - hb 前綴：由 4-3-1/canvas.js 逐字複製（角記號、頂點外推、三角形擺位）
-     - cg 前綴：由 4-3-2/canvas.js 逐字複製（兩圓／直線交點、直角記號）
+   textCenter／textLeft／bindPickGroup／typeset／wrapFeedback／reduce…），
+   同章共用的 hb*（角記號、頂點外推、三角形擺位）與 cg*（兩圓／直線交點、
+   直角記號）幾何工具也在那裡。
    本節自己的工具用 pv 前綴（property），互動共 11 個。
 
    長度與角度一律由座標實算：垂線段用真正的垂足、交點用真正的直線求交，
@@ -33,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   0. 調色盤與 hb 工具（由 4-3-1/canvas.js 逐字複製）
+   0. 調色盤（與 4-3-1 相同）
    ========================================================================== */
 
 const HB_GOLD = '#fcd34d';
@@ -49,311 +47,8 @@ const HB_JADE = '#6ee7b7';
 const HB_TONE = ['#fcd34d', '#5eead4', '#7dd3fc', '#fda4af', '#6ee7b7', '#d8b4fe',
                  '#fdba74', '#f9a8d4', '#a5b4fc', '#bef264', '#67e8f9'];
 
-const HB_RAD = Math.PI / 180;
-
-function hbEl(id) {
-  return document.getElementById(id);
-}
-
-function hbIv(el) {
-  return parseInt(el.value, 10);
-}
-
-function hbV(x, y) {
-  return { x, y };
-}
-
-// 數學方向角（度；逆時針為正、y 軸朝上）走 len 的點
-function hbAt(P, deg, len) {
-  return hbV(P.x + Math.cos(deg * HB_RAD) * len, P.y - Math.sin(deg * HB_RAD) * len);
-}
-
-// 由 V 看 P 的數學方向角（0～360）
-function hbHead(V, P) {
-  let a = Math.atan2(-(P.y - V.y), P.x - V.x) / HB_RAD;
-  if (a < 0) a += 360;
-  return a;
-}
-
-function hbDist(P, Q) {
-  return Math.hypot(P.x - Q.x, P.y - Q.y);
-}
-
-// 從 P 往 Q 的方向，延長到 Q 之外 len
-function hbBeyond(P, Q, len) {
-  const d = hbDist(P, Q) || 1;
-  return hbV(Q.x + (Q.x - P.x) / d * len, Q.y + (Q.y - P.y) / d * len);
-}
-
-function hbCentroid(pts) {
-  const s = pts.reduce((a, p) => hbV(a.x + p.x, a.y + p.y), hbV(0, 0));
-  return hbV(s.x / pts.length, s.y / pts.length);
-}
-
-function hbSeg(ctx, P, Q, color, width, dash) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width || 2.4;
-  ctx.lineCap = 'round';
-  if (dash) ctx.setLineDash(dash);
-  ctx.beginPath();
-  ctx.moveTo(P.x, P.y);
-  ctx.lineTo(Q.x, Q.y);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function hbPoly(ctx, pts, color, alpha, width) {
-  ctx.save();
-  ctx.beginPath();
-  pts.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)));
-  ctx.closePath();
-  if (alpha) {
-    ctx.globalAlpha = alpha;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  }
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width || 2.6;
-  ctx.lineJoin = 'round';
-  ctx.stroke();
-  ctx.restore();
-}
-
-function hbDot(ctx, P, color, r) {
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.arc(P.x, P.y, r || 4, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-}
-
-// 扇形角記號：從數學角 a0 起、逆時針掃 sweep 度（sweep 可到 360）
-//   o.alpha 填色透明度、o.label 標籤（畫在角平分線上 o.lr 處）、o.right 直角記號
-function hbSector(ctx, V, a0, sweep, r, color, o) {
-  const opt = o || {};
-  ctx.save();
-  if (opt.right && Math.abs(sweep - 90) < 1e-9) {
-    const s = Math.min(r * 0.55, 16);
-    const P1 = hbAt(V, a0, s), P3 = hbAt(V, a0 + 90, s), P2 = hbAt(P1, a0 + 90, s);
-    ctx.beginPath();
-    ctx.moveTo(V.x, V.y); ctx.lineTo(P1.x, P1.y); ctx.lineTo(P2.x, P2.y); ctx.lineTo(P3.x, P3.y); ctx.closePath();
-    ctx.globalAlpha = opt.alpha == null ? 0.28 : opt.alpha;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  } else {
-    const s = -a0 * HB_RAD, e = -(a0 + sweep) * HB_RAD;
-    ctx.beginPath();
-    ctx.moveTo(V.x, V.y);
-    ctx.arc(V.x, V.y, r, s, e, sweep > 0);
-    ctx.closePath();
-    ctx.globalAlpha = opt.alpha == null ? 0.28 : opt.alpha;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.beginPath();
-    ctx.arc(V.x, V.y, r, s, e, sweep > 0);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = opt.lw || 2.2;
-    if (opt.dash) ctx.setLineDash(opt.dash);
-    ctx.stroke();
-  }
-  ctx.restore();
-  if (opt.label) {
-    const P = hbAt(V, a0 + sweep / 2, opt.lr || r + 17);
-    textCenter(ctx, opt.label, P.x, P.y, opt.lc || color, opt.font || f(800, 15));
-  }
-}
-
-// ∠PVQ（取小於 180° 的那一側）
-function hbAngle(ctx, V, P, Q, r, color, o) {
-  const a = hbHead(V, P), b = hbHead(V, Q);
-  const d = ((b - a) % 360 + 360) % 360;
-  if (d > 180) hbSector(ctx, V, b, 360 - d, r, color, o);
-  else hbSector(ctx, V, a, d, r, color, o);
-}
-
-// ∠PVQ 的度數（數值，驗收用）
-function hbAngleDeg(V, P, Q) {
-  const d = ((hbHead(V, Q) - hbHead(V, P)) % 360 + 360) % 360;
-  return d > 180 ? 360 - d : d;
-}
-
-// 頂點字母畫在圖形外側（開發約束 18）：由 ref（通常是重心）往 V 的方向推出去
-function hbVLabel(ctx, V, ref, text, color, dist) {
-  const d = hbDist(V, ref) || 1;
-  const k = dist || 18;
-  const P = hbV(V.x + (V.x - ref.x) / d * k, V.y + (V.y - ref.y) / d * k);
-  textCenter(ctx, text, P.x, P.y, color || HB_IVORY, fi(800, 18));
-}
-
-// 把一組點等比例縮放、置中到 box 裡（保持形狀）
-function hbFit(pts, box) {
-  const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
-  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
-  const k = Math.min(box.w / Math.max(x1 - x0, 1e-6), box.h / Math.max(y1 - y0, 1e-6));
-  const ox = box.x + (box.w - (x1 - x0) * k) / 2, oy = box.y + (box.h - (y1 - y0) * k) / 2;
-  return pts.map(p => hbV(ox + (p.x - x0) * k, oy + (p.y - y0) * k));
-}
-
-// 由兩個內角作三角形：BC 水平，B 在左、C 在右、A 在上
-function hbTriangle(A, B, box) {
-  const C = 180 - A - B;
-  const Bp = hbV(0, 0), Cp = hbV(1, 0);
-  const ab = Math.sin(C * HB_RAD) / Math.sin(A * HB_RAD);
-  const Ap = hbAt(Bp, B, ab);
-  const fit = hbFit([Ap, Bp, Cp], box);
-  return { A: fit[0], B: fit[1], C: fit[2] };
-}
-
-// 兩條直線 P + t·u、Q + s·v 的交點
-function hbCross(P, u, Q, v) {
-  const det = u.x * (-v.y) - u.y * (-v.x);
-  const t = ((Q.x - P.x) * (-v.y) - (Q.y - P.y) * (-v.x)) / det;
-  return hbV(P.x + u.x * t, P.y + u.y * t);
-}
-
-function hbUnit(deg) {
-  return hbV(Math.cos(deg * HB_RAD), -Math.sin(deg * HB_RAD));
-}
-
-// 沿線段畫一個行進方向的箭頭（實心三角形，投影下才看得見）
-function hbArrowHead(ctx, P, Q, color) {
-  const ang = Math.atan2(Q.y - P.y, Q.x - P.x);
-  const M = hbV((P.x + Q.x) / 2, (P.y + Q.y) / 2);
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.moveTo(M.x + Math.cos(ang) * 9, M.y + Math.sin(ang) * 9);
-  ctx.lineTo(M.x - Math.cos(ang) * 6 - Math.sin(ang) * 7, M.y - Math.sin(ang) * 6 + Math.cos(ang) * 7);
-  ctx.lineTo(M.x - Math.cos(ang) * 6 + Math.sin(ang) * 7, M.y - Math.sin(ang) * 6 - Math.cos(ang) * 7);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-}
-
-// 度數的 LaTeX
-function hbDg(v) {
-  return `${v}^\\circ`;
-}
-
-// 依數值把滑桿夾回範圍，回傳夾過的值
-function hbClampSlider(s, lo, hi) {
-  s.min = lo;
-  s.max = hi;
-  let v = hbIv(s);
-  if (v > hi) v = hi;
-  if (v < lo) v = lo;
-  s.value = v;
-  return v;
-}
-
-// 有理數的 canvas 元件後面接度數：900/7 → 分數 + °
-function hbDegItem(n, d, color) {
-  const r = reduce(n, d);
-  if (r[1] === 1) return T(`${r[0]}°`, color);
-  return SEQ([FR(String(r[0]), String(r[1]), color), T('°', color)], color, 2);
-}
-
-function hbDegTex(n, d) {
-  const r = reduce(n, d);
-  if (r[1] === 1) return hbDg(r[0]);
-  return `\\frac{${r[0]}}{${r[1]}}^\\circ`;
-}
-
 /* ==========================================================================
-   cg 工具（由 4-3-2/canvas.js 逐字複製）
-   ========================================================================== */
-
-function cgP(x, y) { return { x, y }; }
-function cgDist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
-function cgAng(c, p) { return Math.atan2(p.y - c.y, p.x - c.x); }
-function cgPolar(c, r, ang) { return cgP(c.x + r * Math.cos(ang), c.y + r * Math.sin(ang)); }
-function cgMid(a, b) { return cgP((a.x + b.x) / 2, (a.y + b.y) / 2); }
-function cgRad(deg) { return deg * Math.PI / 180; }
-
-// 兩圓交點：0、1（相切）或 2 個
-function cgCC(c1, r1, c2, r2) {
-  const d = cgDist(c1, c2);
-  const eps = 1e-6;
-  if (d < eps) return [];
-  if (d > r1 + r2 + eps || d < Math.abs(r1 - r2) - eps) return [];
-  const a = (d * d + r1 * r1 - r2 * r2) / (2 * d);
-  const h2 = r1 * r1 - a * a;
-  const ux = (c2.x - c1.x) / d, uy = (c2.y - c1.y) / d;
-  const mx = c1.x + a * ux, my = c1.y + a * uy;
-  if (h2 <= eps * Math.max(1, r1 * r1) || Math.abs(d - r1 - r2) < eps || Math.abs(d - Math.abs(r1 - r2)) < eps) {
-    return [cgP(mx, my)];
-  }
-  const h = Math.sqrt(h2);
-  return [cgP(mx - h * uy, my + h * ux), cgP(mx + h * uy, my - h * ux)];
-}
-
-// 直線 ab 與圓的交點（依沿 a→b 的方向排序）
-function cgLC(a, b, c, r) {
-  const d = cgDist(a, b);
-  const ux = (b.x - a.x) / d, uy = (b.y - a.y) / d;
-  const fx = a.x - c.x, fy = a.y - c.y;
-  const B = fx * ux + fy * uy;
-  const C = fx * fx + fy * fy - r * r;
-  const disc = B * B - C;
-  if (disc < -1e-6) return [];
-  if (Math.abs(disc) <= 1e-6) return [cgP(a.x - B * ux, a.y - B * uy)];
-  const s = Math.sqrt(disc);
-  return [-B - s, -B + s].map(t => cgP(a.x + t * ux, a.y + t * uy));
-}
-
-// 兩直線 ab、cd 的交點
-function cgLL(a, b, c, d) {
-  const x1 = b.x - a.x, y1 = b.y - a.y, x2 = d.x - c.x, y2 = d.y - c.y;
-  const den = x1 * y2 - y1 * x2;
-  if (Math.abs(den) < 1e-9) return null;
-  const t = ((c.x - a.x) * y2 - (c.y - a.y) * x2) / den;
-  return cgP(a.x + t * x1, a.y + t * y1);
-}
-
-// 以 v 為頂點、兩邊通過 p、q 的角（度）
-function cgAngDeg(v, p, q) {
-  const ax = p.x - v.x, ay = p.y - v.y, bx = q.x - v.x, by = q.y - v.y;
-  const c = (ax * bx + ay * by) / (Math.hypot(ax, ay) * Math.hypot(bx, by));
-  return Math.acos(clamp(c, -1, 1)) * 180 / Math.PI;
-}
-
-// 點 p 在直線 ab 的哪一側（正負號）
-function cgSide(a, b, p) {
-  return Math.sign((b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x));
-}
-
-function cgUpper(pts) { return pts.slice().sort((u, v) => u.y - v.y)[0]; }
-function cgLower(pts) { return pts.slice().sort((u, v) => v.y - u.y)[0]; }
-
-// 直角記號：u、w 是兩條線的單位方向
-function cgRight(ctx, v, u, w, s, color) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 1.8;
-  ctx.beginPath();
-  ctx.moveTo(v.x + u.x * s, v.y + u.y * s);
-  ctx.lineTo(v.x + u.x * s + w.x * s, v.y + u.y * s + w.y * s);
-  ctx.lineTo(v.x + w.x * s, v.y + w.y * s);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function cgUnit(a, b) {
-  const d = cgDist(a, b);
-  return cgP((b.x - a.x) / d, (b.y - a.y) / d);
-}
-
-
-/* ==========================================================================
-   本節自己的小工具（pv = property；共用檔與 4-3-1／4-3-2 都沒有這個前綴）
+   本節自己的小工具（pv = property；共用檔沒有這個前綴）
    ========================================================================== */
 
 // 線段中點上的等長記號（n 條短橫線，垂直於線段）
@@ -482,9 +177,9 @@ function pvClip(ctx, y0, y1) {
 function pvTriLabels(ctx, A, B, C, names) {
   const G = hbCentroid([A, B, C]);
   const nm = names || ['A', 'B', 'C'];
-  hbVLabel(ctx, A, G, nm[0]);
-  hbVLabel(ctx, B, G, nm[1]);
-  hbVLabel(ctx, C, G, nm[2]);
+  hbVLabel(ctx, A, G, nm[0], HB_IVORY);
+  hbVLabel(ctx, B, G, nm[1], HB_IVORY);
+  hbVLabel(ctx, C, G, nm[2], HB_IVORY);
 }
 
 /* ==========================================================================

@@ -4,12 +4,11 @@
 
    共用工具在 ../math-canvas.js（f／fi／drawTitle／textCenter／textLeft／
    numLine／numLineEnd／numLineSeg／wrapFeedback／wbrEq／typeset／
-   bindPickGroup／clamp…）。
+   bindPickGroup／clamp…），同章共用的 hb*（角記號、頂點外推）與 cg*（兩圓
+   交點、弧、描邊標籤）幾何工具也在那裡。
 
    本檔分三層：
-     0. 由 4-3-1 複製的 hb* 幾何小工具（角記號、頂點外推）與 HB_ 色票，
-        由 4-3-2 複製的 cg* 求交工具（兩圓交點、弧、描邊標籤）——
-        兩組都逐字照抄，日後再統一抽進共用檔；
+     0. 同章的色票（HB_ 與 4-3-1 相同、CG_HONEY 與 4-3-2 相同）；
      1. 本節自己的工具（EK_ = Edge／Kaku 邊角；ek 前綴）；
      2. 12 個互動與評量附圖。
 
@@ -37,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   0a. 由 4-3-1 複製：色票與 hb* 幾何小工具（逐字相同）
+   0. 同章色票
    ========================================================================== */
 
 const HB_GOLD = '#fcd34d';
@@ -48,248 +47,7 @@ const HB_IVORY = '#fef3c7';
 const HB_VIOLET = '#c4b5fd';
 const HB_RED = '#fb7185';
 const HB_JADE = '#6ee7b7';
-
-const HB_RAD = Math.PI / 180;
-
-function hbEl(id) {
-  return document.getElementById(id);
-}
-
-function hbIv(el) {
-  return parseInt(el.value, 10);
-}
-
-function hbV(x, y) {
-  return { x, y };
-}
-
-// 數學方向角（度；逆時針為正、y 軸朝上）走 len 的點
-function hbAt(P, deg, len) {
-  return hbV(P.x + Math.cos(deg * HB_RAD) * len, P.y - Math.sin(deg * HB_RAD) * len);
-}
-
-// 由 V 看 P 的數學方向角（0～360）
-function hbHead(V, P) {
-  let a = Math.atan2(-(P.y - V.y), P.x - V.x) / HB_RAD;
-  if (a < 0) a += 360;
-  return a;
-}
-
-function hbDist(P, Q) {
-  return Math.hypot(P.x - Q.x, P.y - Q.y);
-}
-
-function hbCentroid(pts) {
-  const s = pts.reduce((a, p) => hbV(a.x + p.x, a.y + p.y), hbV(0, 0));
-  return hbV(s.x / pts.length, s.y / pts.length);
-}
-
-function hbSeg(ctx, P, Q, color, width, dash) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width || 2.4;
-  ctx.lineCap = 'round';
-  if (dash) ctx.setLineDash(dash);
-  ctx.beginPath();
-  ctx.moveTo(P.x, P.y);
-  ctx.lineTo(Q.x, Q.y);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function hbPoly(ctx, pts, color, alpha, width) {
-  ctx.save();
-  ctx.beginPath();
-  pts.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)));
-  ctx.closePath();
-  if (alpha) {
-    ctx.globalAlpha = alpha;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  }
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width || 2.6;
-  ctx.lineJoin = 'round';
-  ctx.stroke();
-  ctx.restore();
-}
-
-function hbDot(ctx, P, color, r) {
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.arc(P.x, P.y, r || 4, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-}
-
-// 扇形角記號：從數學角 a0 起、逆時針掃 sweep 度（sweep 可到 360）
-//   o.alpha 填色透明度、o.label 標籤（畫在角平分線上 o.lr 處）、o.right 直角記號
-function hbSector(ctx, V, a0, sweep, r, color, o) {
-  const opt = o || {};
-  ctx.save();
-  if (opt.right && Math.abs(sweep - 90) < 1e-9) {
-    const s = Math.min(r * 0.55, 16);
-    const P1 = hbAt(V, a0, s), P3 = hbAt(V, a0 + 90, s), P2 = hbAt(P1, a0 + 90, s);
-    ctx.beginPath();
-    ctx.moveTo(V.x, V.y); ctx.lineTo(P1.x, P1.y); ctx.lineTo(P2.x, P2.y); ctx.lineTo(P3.x, P3.y); ctx.closePath();
-    ctx.globalAlpha = opt.alpha == null ? 0.28 : opt.alpha;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  } else {
-    const s = -a0 * HB_RAD, e = -(a0 + sweep) * HB_RAD;
-    ctx.beginPath();
-    ctx.moveTo(V.x, V.y);
-    ctx.arc(V.x, V.y, r, s, e, sweep > 0);
-    ctx.closePath();
-    ctx.globalAlpha = opt.alpha == null ? 0.28 : opt.alpha;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.beginPath();
-    ctx.arc(V.x, V.y, r, s, e, sweep > 0);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = opt.lw || 2.2;
-    if (opt.dash) ctx.setLineDash(opt.dash);
-    ctx.stroke();
-  }
-  ctx.restore();
-  if (opt.label) {
-    const P = hbAt(V, a0 + sweep / 2, opt.lr || r + 17);
-    textCenter(ctx, opt.label, P.x, P.y, opt.lc || color, opt.font || f(800, 15));
-  }
-}
-
-// ∠PVQ（取小於 180° 的那一側）
-function hbAngle(ctx, V, P, Q, r, color, o) {
-  const a = hbHead(V, P), b = hbHead(V, Q);
-  const d = ((b - a) % 360 + 360) % 360;
-  if (d > 180) hbSector(ctx, V, b, 360 - d, r, color, o);
-  else hbSector(ctx, V, a, d, r, color, o);
-}
-
-// ∠PVQ 的度數（數值，驗收用）
-function hbAngleDeg(V, P, Q) {
-  const d = ((hbHead(V, Q) - hbHead(V, P)) % 360 + 360) % 360;
-  return d > 180 ? 360 - d : d;
-}
-
-// 頂點字母畫在圖形外側（開發約束 18）：由 ref（通常是重心）往 V 的方向推出去
-function hbVLabel(ctx, V, ref, text, color, dist) {
-  const d = hbDist(V, ref) || 1;
-  const k = dist || 18;
-  const P = hbV(V.x + (V.x - ref.x) / d * k, V.y + (V.y - ref.y) / d * k);
-  textCenter(ctx, text, P.x, P.y, color || HB_IVORY, fi(800, 18));
-}
-
-// 把一組點等比例縮放、置中到 box 裡（保持形狀）
-function hbFit(pts, box) {
-  const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
-  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
-  const k = Math.min(box.w / Math.max(x1 - x0, 1e-6), box.h / Math.max(y1 - y0, 1e-6));
-  const ox = box.x + (box.w - (x1 - x0) * k) / 2, oy = box.y + (box.h - (y1 - y0) * k) / 2;
-  return pts.map(p => hbV(ox + (p.x - x0) * k, oy + (p.y - y0) * k));
-}
-
-// 由兩個內角作三角形：BC 水平，B 在左、C 在右、A 在上
-function hbTriangle(A, B, box) {
-  const C = 180 - A - B;
-  const Bp = hbV(0, 0), Cp = hbV(1, 0);
-  const ab = Math.sin(C * HB_RAD) / Math.sin(A * HB_RAD);
-  const Ap = hbAt(Bp, B, ab);
-  const fit = hbFit([Ap, Bp, Cp], box);
-  return { A: fit[0], B: fit[1], C: fit[2] };
-}
-
-// 度數的 LaTeX
-function hbDg(v) {
-  return `${v}^\\circ`;
-}
-
-// 依數值把滑桿夾回範圍，回傳夾過的值
-function hbClampSlider(s, lo, hi) {
-  s.min = lo;
-  s.max = hi;
-  let v = hbIv(s);
-  if (v > hi) v = hi;
-  if (v < lo) v = lo;
-  s.value = v;
-  return v;
-}
-
-/* ==========================================================================
-   0b. 由 4-3-2 複製：cg* 求交與描邊標籤（逐字相同）
-   ========================================================================== */
-
 const CG_HONEY = '#fbbf24';
-
-function cgP(x, y) { return { x, y }; }
-function cgDist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
-function cgAng(c, p) { return Math.atan2(p.y - c.y, p.x - c.x); }
-
-// 兩圓交點：0、1（相切）或 2 個
-function cgCC(c1, r1, c2, r2) {
-  const d = cgDist(c1, c2);
-  const eps = 1e-6;
-  if (d < eps) return [];
-  if (d > r1 + r2 + eps || d < Math.abs(r1 - r2) - eps) return [];
-  const a = (d * d + r1 * r1 - r2 * r2) / (2 * d);
-  const h2 = r1 * r1 - a * a;
-  const ux = (c2.x - c1.x) / d, uy = (c2.y - c1.y) / d;
-  const mx = c1.x + a * ux, my = c1.y + a * uy;
-  if (h2 <= eps * Math.max(1, r1 * r1) || Math.abs(d - r1 - r2) < eps || Math.abs(d - Math.abs(r1 - r2)) < eps) {
-    return [cgP(mx, my)];
-  }
-  const h = Math.sqrt(h2);
-  return [cgP(mx - h * uy, my + h * ux), cgP(mx + h * uy, my - h * ux)];
-}
-
-function cgUpper(pts) { return pts.slice().sort((u, v) => u.y - v.y)[0]; }
-function cgLower(pts) { return pts.slice().sort((u, v) => v.y - u.y)[0]; }
-
-function cgArc(ctx, c, r, a0, a1, color, w) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = w || 2.2;
-  ctx.beginPath();
-  ctx.arc(c.x, c.y, r, a0, a1, false);
-  ctx.stroke();
-  ctx.restore();
-}
-
-// 圓心 c、半徑 r 的弧，涵蓋通往 pts 各點的方向，兩端再多 spread 弧度
-function cgArcAt(ctx, c, r, pts, spread, color, w) {
-  const base = cgAng(c, pts[0]);
-  let lo = 0, hi = 0;
-  pts.forEach(p => {
-    let d = cgAng(c, p) - base;
-    while (d > Math.PI) d -= 2 * Math.PI;
-    while (d < -Math.PI) d += 2 * Math.PI;
-    lo = Math.min(lo, d);
-    hi = Math.max(hi, d);
-  });
-  cgArc(ctx, c, r, base + lo - spread, base + hi + spread, color, w);
-}
-
-// 點名或邊長標籤：深色描邊讓它壓在線上也讀得到
-function cgLabel(ctx, p, text, color, dx, dy, font) {
-  ctx.save();
-  ctx.font = font || fi(700, 18);
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.lineJoin = 'round';
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = 'rgba(15, 23, 42, 0.92)';
-  ctx.strokeText(text, p.x + dx, p.y + dy);
-  ctx.fillStyle = color;
-  ctx.fillText(text, p.x + dx, p.y + dy);
-  ctx.restore();
-}
 
 /* ==========================================================================
    1. 本節工具（EK_ 色票、ek 前綴；共用檔沒有這兩個前綴）

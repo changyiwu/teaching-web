@@ -5,8 +5,9 @@
    角的固定配色（全頁一致）：∠A 玫瑰、∠B 天藍、∠C 苔綠、外角／轉彎角 蜂蜜金。
 
    共用工具在 ../math-canvas.js（T／IT／SEQ／FR／drawExpr／drawTitle／
-   drawStepRows／wbrEq／textCenter／textLeft／bindPickGroup／qIt…），本檔只放
-   本節的色票（HB_ 前綴）、幾何小工具（hb 前綴）與 11 個互動。
+   drawStepRows／wbrEq／textCenter／textLeft／bindPickGroup／qIt…），hb* 幾何
+   工具（角記號、頂點外推、由角度作三角形）也在那裡。本檔只放本節的色票
+   （HB_ 前綴）、本節才用的 hb* 擺位工具與 11 個互動。
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   0. 本節調色盤與小工具（HB_ = Honey Bee）
+   0. 本節調色盤（HB_ = Honey Bee）
    ========================================================================== */
 
 const HB_GOLD = '#fcd34d';
@@ -42,224 +43,6 @@ const HB_JADE = '#6ee7b7';
 // 每個重點的主題色，與 style.css 的 #conceptN strong 對應
 const HB_TONE = ['#fcd34d', '#5eead4', '#7dd3fc', '#fda4af', '#6ee7b7', '#d8b4fe',
                  '#fdba74', '#f9a8d4', '#a5b4fc', '#bef264', '#67e8f9'];
-
-const HB_RAD = Math.PI / 180;
-
-function hbEl(id) {
-  return document.getElementById(id);
-}
-
-function hbIv(el) {
-  return parseInt(el.value, 10);
-}
-
-function hbV(x, y) {
-  return { x, y };
-}
-
-// 數學方向角（度；逆時針為正、y 軸朝上）走 len 的點
-function hbAt(P, deg, len) {
-  return hbV(P.x + Math.cos(deg * HB_RAD) * len, P.y - Math.sin(deg * HB_RAD) * len);
-}
-
-// 由 V 看 P 的數學方向角（0～360）
-function hbHead(V, P) {
-  let a = Math.atan2(-(P.y - V.y), P.x - V.x) / HB_RAD;
-  if (a < 0) a += 360;
-  return a;
-}
-
-function hbDist(P, Q) {
-  return Math.hypot(P.x - Q.x, P.y - Q.y);
-}
-
-// 從 P 往 Q 的方向，延長到 Q 之外 len
-function hbBeyond(P, Q, len) {
-  const d = hbDist(P, Q) || 1;
-  return hbV(Q.x + (Q.x - P.x) / d * len, Q.y + (Q.y - P.y) / d * len);
-}
-
-function hbCentroid(pts) {
-  const s = pts.reduce((a, p) => hbV(a.x + p.x, a.y + p.y), hbV(0, 0));
-  return hbV(s.x / pts.length, s.y / pts.length);
-}
-
-function hbSeg(ctx, P, Q, color, width, dash) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width || 2.4;
-  ctx.lineCap = 'round';
-  if (dash) ctx.setLineDash(dash);
-  ctx.beginPath();
-  ctx.moveTo(P.x, P.y);
-  ctx.lineTo(Q.x, Q.y);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function hbPoly(ctx, pts, color, alpha, width) {
-  ctx.save();
-  ctx.beginPath();
-  pts.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)));
-  ctx.closePath();
-  if (alpha) {
-    ctx.globalAlpha = alpha;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  }
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width || 2.6;
-  ctx.lineJoin = 'round';
-  ctx.stroke();
-  ctx.restore();
-}
-
-function hbDot(ctx, P, color, r) {
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.arc(P.x, P.y, r || 4, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-}
-
-// 扇形角記號：從數學角 a0 起、逆時針掃 sweep 度（sweep 可到 360）
-//   o.alpha 填色透明度、o.label 標籤（畫在角平分線上 o.lr 處）、o.right 直角記號
-function hbSector(ctx, V, a0, sweep, r, color, o) {
-  const opt = o || {};
-  ctx.save();
-  if (opt.right && Math.abs(sweep - 90) < 1e-9) {
-    const s = Math.min(r * 0.55, 16);
-    const P1 = hbAt(V, a0, s), P3 = hbAt(V, a0 + 90, s), P2 = hbAt(P1, a0 + 90, s);
-    ctx.beginPath();
-    ctx.moveTo(V.x, V.y); ctx.lineTo(P1.x, P1.y); ctx.lineTo(P2.x, P2.y); ctx.lineTo(P3.x, P3.y); ctx.closePath();
-    ctx.globalAlpha = opt.alpha == null ? 0.28 : opt.alpha;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  } else {
-    const s = -a0 * HB_RAD, e = -(a0 + sweep) * HB_RAD;
-    ctx.beginPath();
-    ctx.moveTo(V.x, V.y);
-    ctx.arc(V.x, V.y, r, s, e, sweep > 0);
-    ctx.closePath();
-    ctx.globalAlpha = opt.alpha == null ? 0.28 : opt.alpha;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.beginPath();
-    ctx.arc(V.x, V.y, r, s, e, sweep > 0);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = opt.lw || 2.2;
-    if (opt.dash) ctx.setLineDash(opt.dash);
-    ctx.stroke();
-  }
-  ctx.restore();
-  if (opt.label) {
-    const P = hbAt(V, a0 + sweep / 2, opt.lr || r + 17);
-    textCenter(ctx, opt.label, P.x, P.y, opt.lc || color, opt.font || f(800, 15));
-  }
-}
-
-// ∠PVQ（取小於 180° 的那一側）
-function hbAngle(ctx, V, P, Q, r, color, o) {
-  const a = hbHead(V, P), b = hbHead(V, Q);
-  const d = ((b - a) % 360 + 360) % 360;
-  if (d > 180) hbSector(ctx, V, b, 360 - d, r, color, o);
-  else hbSector(ctx, V, a, d, r, color, o);
-}
-
-// ∠PVQ 的度數（數值，驗收用）
-function hbAngleDeg(V, P, Q) {
-  const d = ((hbHead(V, Q) - hbHead(V, P)) % 360 + 360) % 360;
-  return d > 180 ? 360 - d : d;
-}
-
-// 頂點字母畫在圖形外側（開發約束 18）：由 ref（通常是重心）往 V 的方向推出去
-function hbVLabel(ctx, V, ref, text, color, dist) {
-  const d = hbDist(V, ref) || 1;
-  const k = dist || 18;
-  const P = hbV(V.x + (V.x - ref.x) / d * k, V.y + (V.y - ref.y) / d * k);
-  textCenter(ctx, text, P.x, P.y, color || HB_IVORY, fi(800, 18));
-}
-
-// 把一組點等比例縮放、置中到 box 裡（保持形狀）
-function hbFit(pts, box) {
-  const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
-  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
-  const k = Math.min(box.w / Math.max(x1 - x0, 1e-6), box.h / Math.max(y1 - y0, 1e-6));
-  const ox = box.x + (box.w - (x1 - x0) * k) / 2, oy = box.y + (box.h - (y1 - y0) * k) / 2;
-  return pts.map(p => hbV(ox + (p.x - x0) * k, oy + (p.y - y0) * k));
-}
-
-// 由兩個內角作三角形：BC 水平，B 在左、C 在右、A 在上
-function hbTriangle(A, B, box) {
-  const C = 180 - A - B;
-  const Bp = hbV(0, 0), Cp = hbV(1, 0);
-  const ab = Math.sin(C * HB_RAD) / Math.sin(A * HB_RAD);
-  const Ap = hbAt(Bp, B, ab);
-  const fit = hbFit([Ap, Bp, Cp], box);
-  return { A: fit[0], B: fit[1], C: fit[2] };
-}
-
-// 兩條直線 P + t·u、Q + s·v 的交點
-function hbCross(P, u, Q, v) {
-  const det = u.x * (-v.y) - u.y * (-v.x);
-  const t = ((Q.x - P.x) * (-v.y) - (Q.y - P.y) * (-v.x)) / det;
-  return hbV(P.x + u.x * t, P.y + u.y * t);
-}
-
-function hbUnit(deg) {
-  return hbV(Math.cos(deg * HB_RAD), -Math.sin(deg * HB_RAD));
-}
-
-// 沿線段畫一個行進方向的箭頭（實心三角形，投影下才看得見）
-function hbArrowHead(ctx, P, Q, color) {
-  const ang = Math.atan2(Q.y - P.y, Q.x - P.x);
-  const M = hbV((P.x + Q.x) / 2, (P.y + Q.y) / 2);
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.moveTo(M.x + Math.cos(ang) * 9, M.y + Math.sin(ang) * 9);
-  ctx.lineTo(M.x - Math.cos(ang) * 6 - Math.sin(ang) * 7, M.y - Math.sin(ang) * 6 + Math.cos(ang) * 7);
-  ctx.lineTo(M.x - Math.cos(ang) * 6 + Math.sin(ang) * 7, M.y - Math.sin(ang) * 6 - Math.cos(ang) * 7);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-}
-
-// 度數的 LaTeX
-function hbDg(v) {
-  return `${v}^\\circ`;
-}
-
-// 依數值把滑桿夾回範圍，回傳夾過的值
-function hbClampSlider(s, lo, hi) {
-  s.min = lo;
-  s.max = hi;
-  let v = hbIv(s);
-  if (v > hi) v = hi;
-  if (v < lo) v = lo;
-  s.value = v;
-  return v;
-}
-
-// 有理數的 canvas 元件後面接度數：900/7 → 分數 + °
-function hbDegItem(n, d, color) {
-  const r = reduce(n, d);
-  if (r[1] === 1) return T(`${r[0]}°`, color);
-  return SEQ([FR(String(r[0]), String(r[1]), color), T('°', color)], color, 2);
-}
-
-function hbDegTex(n, d) {
-  const r = reduce(n, d);
-  if (r[1] === 1) return hbDg(r[0]);
-  return `\\frac{${r[0]}}{${r[1]}}^\\circ`;
-}
 
 /* ==========================================================================
    隨堂評量
@@ -404,9 +187,9 @@ const HB_QUIZ_FIGS = {
     hbAngle(ctx, t.A, t.B, Dp, 30, HB_ROSE, { label: '29°', lr: 48, font: f(800, 13) });
     hbAngle(ctx, t.A, Dp, t.C, 22, HB_GOLD, { label: '38°', lr: 40, font: f(800, 13) });
     const G = hbCentroid([t.A, t.B, t.C]);
-    hbVLabel(ctx, t.A, G, 'A');
-    hbVLabel(ctx, t.B, G, 'B');
-    hbVLabel(ctx, t.C, G, 'C');
+    hbVLabel(ctx, t.A, G, 'A', HB_IVORY);
+    hbVLabel(ctx, t.B, G, 'B', HB_IVORY);
+    hbVLabel(ctx, t.C, G, 'C', HB_IVORY);
     textCenter(ctx, 'D', Dp.x, Dp.y + 16, HB_IVORY, fi(800, 17));
   },
   // 8 字形：以 x = 41 照實際角度作圖（∠A 41°、∠B 58°、∠C 56°、∠D 43°），只標題目的式子
@@ -488,9 +271,9 @@ function hbDartFig(ctx, W, H, A, B, D, labs) {
   hbAngle(ctx, q.D, q.A, q.C, 24, HB_MOSS, { label: labs[2], lr: 42, font: f(800, 13) });
   hbAngle(ctx, q.C, q.B, q.D, 18, HB_GOLD, { label: labs[3], lr: 34, font: f(800, 13) });
   const G = hbCentroid([q.A, q.B, q.D]);
-  hbVLabel(ctx, q.A, G, 'A');
-  hbVLabel(ctx, q.B, G, 'B');
-  hbVLabel(ctx, q.D, G, 'D');
+  hbVLabel(ctx, q.A, G, 'A', HB_IVORY);
+  hbVLabel(ctx, q.B, G, 'B', HB_IVORY);
+  hbVLabel(ctx, q.D, G, 'D', HB_IVORY);
   textCenter(ctx, 'C', q.C.x, q.C.y - 15, HB_IVORY, fi(800, 17));
 }
 
@@ -724,9 +507,9 @@ function initTriSumCanvas() {
     hbAngle(ctx, t.B, t.A, t.C, r, HB_SKY, { label: `${B}°`, lr: r + 17, font: f(800, 14) });
     hbAngle(ctx, t.C, t.A, t.B, r, HB_MOSS, { label: `${Cc}°`, lr: r + 17, font: f(800, 14) });
     const G = hbCentroid([t.A, t.B, t.C]);
-    hbVLabel(ctx, t.A, G, 'A');
-    hbVLabel(ctx, t.B, G, 'B');
-    hbVLabel(ctx, t.C, G, 'C');
+    hbVLabel(ctx, t.A, G, 'A', HB_IVORY);
+    hbVLabel(ctx, t.B, G, 'B', HB_IVORY);
+    hbVLabel(ctx, t.C, G, 'C', HB_IVORY);
 
     // 撕下三個角，頂點對在一起
     textLeft(ctx, '把三個角撕下來、頂點對在一起：', 36, 282, MUTED, f(700, 13.5));
@@ -807,8 +590,8 @@ function initTurnCanvas() {
     hbAngle(ctx, A, E2, B, 30, HB_GOLD, { alpha: 0.22, label: '∠2', lr: 48, font: f(800, 15) });
     hbPoly(ctx, [A, B, Cp], INK, 0.04, 2.6);
     const G = hbCentroid([A, B, Cp]);
-    hbVLabel(ctx, B, G, 'B');
-    hbVLabel(ctx, Cp, G, 'C');
+    hbVLabel(ctx, B, G, 'B', HB_IVORY);
+    hbVLabel(ctx, Cp, G, 'C', HB_IVORY);
     // 頂點字母畫在三角形外（開發約束 18）：A 的外側是兩條延長線夾出的灰色角
     const AL = hbAt(A, 90, 40);
     textCenter(ctx, 'A', AL.x, AL.y, HB_IVORY, fi(800, 17));
@@ -941,8 +724,8 @@ function initExtThmCanvas() {
     }
     hbPoly(ctx, [t.A, t.B, t.C], INK, 0.05, 2.6);
     const G = hbCentroid([t.A, t.B, t.C]);
-    hbVLabel(ctx, t.A, G, 'A');
-    hbVLabel(ctx, t.B, G, 'B');
+    hbVLabel(ctx, t.A, G, 'A', HB_IVORY);
+    hbVLabel(ctx, t.B, G, 'B', HB_IVORY);
     textCenter(ctx, 'C', t.C.x, t.C.y + 20, HB_IVORY, fi(800, 18));
     textCenter(ctx, 'D', D.x + 14, D.y, HB_IVORY, fi(800, 18));
 
@@ -1048,9 +831,9 @@ function initDartCanvas() {
       hbAngle(ctx, p.C, E, p.D, 26, HB_MOSS, { alpha: 0.3, label: '∠2', lr: 44, font: f(800, 13.5) });
     }
     const G = hbCentroid([p.A, p.B, p.D]);
-    hbVLabel(ctx, p.A, G, 'A');
-    hbVLabel(ctx, p.B, G, 'B');
-    hbVLabel(ctx, p.D, G, 'D');
+    hbVLabel(ctx, p.A, G, 'A', HB_IVORY);
+    hbVLabel(ctx, p.B, G, 'B', HB_IVORY);
+    hbVLabel(ctx, p.D, G, 'D', HB_IVORY);
     textCenter(ctx, 'C', p.C.x + 16, p.C.y - 12, HB_IVORY, fi(800, 18));
 
     if (mode === 'plain') {

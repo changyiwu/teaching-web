@@ -14,6 +14,7 @@
      - 基本繪圖：roundRect／drawPanel／drawChip／drawTitle／drawNote／drawArrow
      - 數值與字串：gcd／clamp／reduce／texFrac／numStr／coefTex／signed
      - 互動與版面：canvasPos／bindPickGroup／wrapText／wrapFeedback／typeset
+     - 平面幾何與尺規作圖：hb*（數學方向角）、cg*（canvas 座標、圓規直尺播放引擎）
 
    各節的**主題配色**（C_BRASS、C_TEAL 之類）與主題繪圖（軟木板、天平…）
    留在該節自己的 canvas.js，不要放進本檔。
@@ -1261,4 +1262,620 @@ function subLabel(ctx, base, idx, cx, cy, color, size) {
   const w = measure(ctx, it, s).w;
   drawIt(ctx, it, cx - w / 2, cy, s, color);
   ctx.restore();
+}
+
+/* ==========================================================================
+   由 4-3-1～4-3-5 五頁抽出的共用工具：平面幾何與尺規作圖
+
+   hb* 用數學方向角（度、逆時針為正、y 軸朝上）：角記號、頂點外推、由角度作
+   三角形、度數的 LaTeX；原本 4-3-1、4-3-4、4-3-5 各有一份逐字相同的複本。
+   cg* 用 canvas 座標（弧度、y 向下）：圓與圓／直線與圓／直線與直線求交、
+   弧、角記號、直角記號，以及圓規、無刻度直尺與逐步播放引擎；原本 4-3-2～
+   4-3-5 各有一份逐字相同的複本。兩組座標慣例不同，所以兩套都留著。
+
+   ⚠️ 顏色一律由呼叫端傳入（各節的調色盤不進共用檔）；播放引擎的配色見
+   cgUsePalette()。
+   ========================================================================== */
+
+const HB_RAD = Math.PI / 180;
+
+function hbEl(id) {
+  return document.getElementById(id);
+}
+
+function hbIv(el) {
+  return parseInt(el.value, 10);
+}
+
+function hbV(x, y) {
+  return { x, y };
+}
+
+// 數學方向角（度；逆時針為正、y 軸朝上）走 len 的點
+function hbAt(P, deg, len) {
+  return hbV(P.x + Math.cos(deg * HB_RAD) * len, P.y - Math.sin(deg * HB_RAD) * len);
+}
+
+// 由 V 看 P 的數學方向角（0～360）
+function hbHead(V, P) {
+  let a = Math.atan2(-(P.y - V.y), P.x - V.x) / HB_RAD;
+  if (a < 0) a += 360;
+  return a;
+}
+
+function hbDist(P, Q) {
+  return Math.hypot(P.x - Q.x, P.y - Q.y);
+}
+
+// 從 P 往 Q 的方向，延長到 Q 之外 len
+function hbBeyond(P, Q, len) {
+  const d = hbDist(P, Q) || 1;
+  return hbV(Q.x + (Q.x - P.x) / d * len, Q.y + (Q.y - P.y) / d * len);
+}
+
+function hbCentroid(pts) {
+  const s = pts.reduce((a, p) => hbV(a.x + p.x, a.y + p.y), hbV(0, 0));
+  return hbV(s.x / pts.length, s.y / pts.length);
+}
+
+function hbSeg(ctx, P, Q, color, width, dash) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width || 2.4;
+  ctx.lineCap = 'round';
+  if (dash) ctx.setLineDash(dash);
+  ctx.beginPath();
+  ctx.moveTo(P.x, P.y);
+  ctx.lineTo(Q.x, Q.y);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function hbPoly(ctx, pts, color, alpha, width) {
+  ctx.save();
+  ctx.beginPath();
+  pts.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)));
+  ctx.closePath();
+  if (alpha) {
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width || 2.6;
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+  ctx.restore();
+}
+
+function hbDot(ctx, P, color, r) {
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.arc(P.x, P.y, r || 4, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+// 扇形角記號：從數學角 a0 起、逆時針掃 sweep 度（sweep 可到 360）
+//   o.alpha 填色透明度、o.label 標籤（畫在角平分線上 o.lr 處）、o.right 直角記號
+function hbSector(ctx, V, a0, sweep, r, color, o) {
+  const opt = o || {};
+  ctx.save();
+  if (opt.right && Math.abs(sweep - 90) < 1e-9) {
+    const s = Math.min(r * 0.55, 16);
+    const P1 = hbAt(V, a0, s), P3 = hbAt(V, a0 + 90, s), P2 = hbAt(P1, a0 + 90, s);
+    ctx.beginPath();
+    ctx.moveTo(V.x, V.y); ctx.lineTo(P1.x, P1.y); ctx.lineTo(P2.x, P2.y); ctx.lineTo(P3.x, P3.y); ctx.closePath();
+    ctx.globalAlpha = opt.alpha == null ? 0.28 : opt.alpha;
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  } else {
+    const s = -a0 * HB_RAD, e = -(a0 + sweep) * HB_RAD;
+    ctx.beginPath();
+    ctx.moveTo(V.x, V.y);
+    ctx.arc(V.x, V.y, r, s, e, sweep > 0);
+    ctx.closePath();
+    ctx.globalAlpha = opt.alpha == null ? 0.28 : opt.alpha;
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.beginPath();
+    ctx.arc(V.x, V.y, r, s, e, sweep > 0);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = opt.lw || 2.2;
+    if (opt.dash) ctx.setLineDash(opt.dash);
+    ctx.stroke();
+  }
+  ctx.restore();
+  if (opt.label) {
+    const P = hbAt(V, a0 + sweep / 2, opt.lr || r + 17);
+    textCenter(ctx, opt.label, P.x, P.y, opt.lc || color, opt.font || f(800, 15));
+  }
+}
+
+// ∠PVQ（取小於 180° 的那一側）
+function hbAngle(ctx, V, P, Q, r, color, o) {
+  const a = hbHead(V, P), b = hbHead(V, Q);
+  const d = ((b - a) % 360 + 360) % 360;
+  if (d > 180) hbSector(ctx, V, b, 360 - d, r, color, o);
+  else hbSector(ctx, V, a, d, r, color, o);
+}
+
+// ∠PVQ 的度數（數值，驗收用）
+function hbAngleDeg(V, P, Q) {
+  const d = ((hbHead(V, Q) - hbHead(V, P)) % 360 + 360) % 360;
+  return d > 180 ? 360 - d : d;
+}
+
+// 頂點字母畫在圖形外側（開發約束 18）：由 ref（通常是重心）往 V 的方向推出去
+//   color 必填（各節的調色盤不進共用檔）
+function hbVLabel(ctx, V, ref, text, color, dist) {
+  const d = hbDist(V, ref) || 1;
+  const k = dist || 18;
+  const P = hbV(V.x + (V.x - ref.x) / d * k, V.y + (V.y - ref.y) / d * k);
+  textCenter(ctx, text, P.x, P.y, color, fi(800, 18));
+}
+
+// 把一組點等比例縮放、置中到 box 裡（保持形狀）
+function hbFit(pts, box) {
+  const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const k = Math.min(box.w / Math.max(x1 - x0, 1e-6), box.h / Math.max(y1 - y0, 1e-6));
+  const ox = box.x + (box.w - (x1 - x0) * k) / 2, oy = box.y + (box.h - (y1 - y0) * k) / 2;
+  return pts.map(p => hbV(ox + (p.x - x0) * k, oy + (p.y - y0) * k));
+}
+
+// 由兩個內角作三角形：BC 水平，B 在左、C 在右、A 在上
+function hbTriangle(A, B, box) {
+  const C = 180 - A - B;
+  const Bp = hbV(0, 0), Cp = hbV(1, 0);
+  const ab = Math.sin(C * HB_RAD) / Math.sin(A * HB_RAD);
+  const Ap = hbAt(Bp, B, ab);
+  const fit = hbFit([Ap, Bp, Cp], box);
+  return { A: fit[0], B: fit[1], C: fit[2] };
+}
+
+// 兩條直線 P + t·u、Q + s·v 的交點
+function hbCross(P, u, Q, v) {
+  const det = u.x * (-v.y) - u.y * (-v.x);
+  const t = ((Q.x - P.x) * (-v.y) - (Q.y - P.y) * (-v.x)) / det;
+  return hbV(P.x + u.x * t, P.y + u.y * t);
+}
+
+function hbUnit(deg) {
+  return hbV(Math.cos(deg * HB_RAD), -Math.sin(deg * HB_RAD));
+}
+
+// 沿線段畫一個行進方向的箭頭（實心三角形，投影下才看得見）
+function hbArrowHead(ctx, P, Q, color) {
+  const ang = Math.atan2(Q.y - P.y, Q.x - P.x);
+  const M = hbV((P.x + Q.x) / 2, (P.y + Q.y) / 2);
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(M.x + Math.cos(ang) * 9, M.y + Math.sin(ang) * 9);
+  ctx.lineTo(M.x - Math.cos(ang) * 6 - Math.sin(ang) * 7, M.y - Math.sin(ang) * 6 + Math.cos(ang) * 7);
+  ctx.lineTo(M.x - Math.cos(ang) * 6 + Math.sin(ang) * 7, M.y - Math.sin(ang) * 6 - Math.cos(ang) * 7);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+// 度數的 LaTeX
+function hbDg(v) {
+  return `${v}^\\circ`;
+}
+
+// 依數值把滑桿夾回範圍，回傳夾過的值
+function hbClampSlider(s, lo, hi) {
+  s.min = lo;
+  s.max = hi;
+  let v = hbIv(s);
+  if (v > hi) v = hi;
+  if (v < lo) v = lo;
+  s.value = v;
+  return v;
+}
+
+// 有理數的 canvas 元件後面接度數：900/7 → 分數 + °
+function hbDegItem(n, d, color) {
+  const r = reduce(n, d);
+  if (r[1] === 1) return T(`${r[0]}°`, color);
+  return SEQ([FR(String(r[0]), String(r[1]), color), T('°', color)], color, 2);
+}
+
+function hbDegTex(n, d) {
+  const r = reduce(n, d);
+  if (r[1] === 1) return hbDg(r[0]);
+  return `\\frac{${r[0]}}{${r[1]}}^\\circ`;
+}
+
+// 尺規播放引擎（cgCompass／cgBand／cgRender）的配色：由頁面在 canvas.js 開頭
+// 呼叫一次 cgUsePalette() 登記，共用檔不放主題色。欄位：
+//   ink（點與點名的預設色）、honey（圓規的半徑虛線與標籤）、brass／brassDk（圓規本體）、
+//   tools：{ compass, ruler, look, warn }（步驟列各工具的顏色）
+let CG_PAL = null;
+
+function cgUsePalette(p) {
+  CG_PAL = p;
+}
+
+// 角度：四捨五入到 0.01 度（33.75° 這種再平分的角要看得到兩位），尾巴的 0 不留
+function cgDeg(v) {
+  const r = Math.round(v * 100) / 100;
+  return String(r);
+}
+
+function cgP(x, y) { return { x, y }; }
+
+function cgDist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
+
+function cgAng(c, p) { return Math.atan2(p.y - c.y, p.x - c.x); }
+
+function cgPolar(c, r, ang) { return cgP(c.x + r * Math.cos(ang), c.y + r * Math.sin(ang)); }
+
+function cgMid(a, b) { return cgP((a.x + b.x) / 2, (a.y + b.y) / 2); }
+
+function cgRad(deg) { return deg * Math.PI / 180; }
+
+// 兩圓交點：0、1（相切）或 2 個
+function cgCC(c1, r1, c2, r2) {
+  const d = cgDist(c1, c2);
+  const eps = 1e-6;
+  if (d < eps) return [];
+  if (d > r1 + r2 + eps || d < Math.abs(r1 - r2) - eps) return [];
+  const a = (d * d + r1 * r1 - r2 * r2) / (2 * d);
+  const h2 = r1 * r1 - a * a;
+  const ux = (c2.x - c1.x) / d, uy = (c2.y - c1.y) / d;
+  const mx = c1.x + a * ux, my = c1.y + a * uy;
+  if (h2 <= eps * Math.max(1, r1 * r1) || Math.abs(d - r1 - r2) < eps || Math.abs(d - Math.abs(r1 - r2)) < eps) {
+    return [cgP(mx, my)];
+  }
+  const h = Math.sqrt(h2);
+  return [cgP(mx - h * uy, my + h * ux), cgP(mx + h * uy, my - h * ux)];
+}
+
+// 直線 ab 與圓的交點（依沿 a→b 的方向排序）
+function cgLC(a, b, c, r) {
+  const d = cgDist(a, b);
+  const ux = (b.x - a.x) / d, uy = (b.y - a.y) / d;
+  const fx = a.x - c.x, fy = a.y - c.y;
+  const B = fx * ux + fy * uy;
+  const C = fx * fx + fy * fy - r * r;
+  const disc = B * B - C;
+  if (disc < -1e-6) return [];
+  if (Math.abs(disc) <= 1e-6) return [cgP(a.x - B * ux, a.y - B * uy)];
+  const s = Math.sqrt(disc);
+  return [-B - s, -B + s].map(t => cgP(a.x + t * ux, a.y + t * uy));
+}
+
+// 兩直線 ab、cd 的交點
+function cgLL(a, b, c, d) {
+  const x1 = b.x - a.x, y1 = b.y - a.y, x2 = d.x - c.x, y2 = d.y - c.y;
+  const den = x1 * y2 - y1 * x2;
+  if (Math.abs(den) < 1e-9) return null;
+  const t = ((c.x - a.x) * y2 - (c.y - a.y) * x2) / den;
+  return cgP(a.x + t * x1, a.y + t * y1);
+}
+
+// 以 v 為頂點、兩邊通過 p、q 的角（度）
+function cgAngDeg(v, p, q) {
+  const ax = p.x - v.x, ay = p.y - v.y, bx = q.x - v.x, by = q.y - v.y;
+  const c = (ax * bx + ay * by) / (Math.hypot(ax, ay) * Math.hypot(bx, by));
+  return Math.acos(clamp(c, -1, 1)) * 180 / Math.PI;
+}
+
+// 點 p 在直線 ab 的哪一側（正負號）
+function cgSide(a, b, p) {
+  return Math.sign((b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x));
+}
+
+function cgUpper(pts) { return pts.slice().sort((u, v) => u.y - v.y)[0]; }
+
+function cgLower(pts) { return pts.slice().sort((u, v) => v.y - u.y)[0]; }
+
+function cgSeg(ctx, a, b, color, w, dash) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = w || 2.4;
+  ctx.lineCap = 'round';
+  if (dash) ctx.setLineDash(dash);
+  ctx.beginPath();
+  ctx.moveTo(a.x, a.y);
+  ctx.lineTo(b.x, b.y);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function cgArc(ctx, c, r, a0, a1, color, w) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = w || 2.2;
+  ctx.beginPath();
+  ctx.arc(c.x, c.y, r, a0, a1, false);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 圓心 c、半徑 r 的弧，涵蓋通往 pts 各點的方向，兩端再多 spread 弧度
+function cgArcAt(ctx, c, r, pts, spread, color, w) {
+  const base = cgAng(c, pts[0]);
+  let lo = 0, hi = 0;
+  pts.forEach(p => {
+    let d = cgAng(c, p) - base;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    lo = Math.min(lo, d);
+    hi = Math.max(hi, d);
+  });
+  cgArc(ctx, c, r, base + lo - spread, base + hi + spread, color, w);
+}
+
+// 圍繞某個方向的弧
+function cgArcDir(ctx, c, r, ang, spread, color, w) {
+  cgArc(ctx, c, r, ang - spread, ang + spread, color, w);
+}
+
+function cgDot(ctx, p, color) {
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.strokeStyle = 'rgba(15, 23, 42, 0.9)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, 4.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 點名或邊長標籤：深色描邊讓它壓在線上也讀得到
+function cgLabel(ctx, p, text, color, dx, dy, font) {
+  ctx.save();
+  ctx.font = font || fi(700, 18);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = 'rgba(15, 23, 42, 0.92)';
+  ctx.strokeText(text, p.x + dx, p.y + dy);
+  ctx.fillStyle = color;
+  ctx.fillText(text, p.x + dx, p.y + dy);
+  ctx.restore();
+}
+
+// 角的記號：從方向 a0 轉到 a1（走較短的那一邊）
+function cgAngMark(ctx, v, a0, a1, r, color, w) {
+  let d = a1 - a0;
+  while (d > Math.PI) d -= 2 * Math.PI;
+  while (d < -Math.PI) d += 2 * Math.PI;
+  // 平角：一律畫在上方（canvas 的負角度）
+  if (Math.abs(Math.abs(d) - Math.PI) < 1e-6) d = -Math.PI;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = w || 2;
+  ctx.beginPath();
+  ctx.arc(v.x, v.y, r, a0, a0 + d, d < 0);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 直角記號：u、w 是兩條線的單位方向
+function cgRight(ctx, v, u, w, s, color) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.8;
+  ctx.beginPath();
+  ctx.moveTo(v.x + u.x * s, v.y + u.y * s);
+  ctx.lineTo(v.x + u.x * s + w.x * s, v.y + u.y * s + w.y * s);
+  ctx.lineTo(v.x + w.x * s, v.y + w.y * s);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function cgUnit(a, b) {
+  const d = cgDist(a, b);
+  return cgP((b.x - a.x) / d, (b.y - a.y) / d);
+}
+
+/* --------------------------------------------------------------------------
+   圓規：針腳在圓心 c，筆尖在 c 往 ang 方向 r 的位置。
+   兩腳一樣長、在鉸鏈處相接，張開的大小（針腳到筆尖）就是半徑——
+   畫面上的圓規真的畫得出那段弧（開發約束 28）。
+   -------------------------------------------------------------------------- */
+function cgCompass(ctx, c, r, ang, label) {
+  const t = cgPolar(c, r, ang);
+  const m = cgMid(c, t);
+  let nx = -(t.y - c.y) / r, ny = (t.x - c.x) / r;
+  if (ny > 0 || (Math.abs(ny) < 1e-6 && nx < 0)) { nx = -nx; ny = -ny; }
+  const L = Math.max(96, r / 2 + 36);
+  const h = Math.sqrt(L * L - r * r / 4);
+  const hinge = cgP(m.x + nx * h, m.y + ny * h);
+
+  ctx.save();
+  // 半徑（針腳到筆尖的距離）
+  ctx.setLineDash([5, 4]);
+  ctx.strokeStyle = CG_PAL.honey;
+  ctx.globalAlpha = 0.9;
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(c.x, c.y);
+  ctx.lineTo(t.x, t.y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.globalAlpha = 1;
+  ctx.lineCap = 'round';
+
+  [[c, 'needle'], [t, 'pencil']].forEach(([tip, kind]) => {
+    const dd = cgDist(hinge, tip);
+    const ux = (tip.x - hinge.x) / dd, uy = (tip.y - hinge.y) / dd;
+    const end = cgP(tip.x - ux * 13, tip.y - uy * 13);
+    ctx.strokeStyle = CG_PAL.brassDk;
+    ctx.lineWidth = 7.5;
+    ctx.beginPath(); ctx.moveTo(hinge.x, hinge.y); ctx.lineTo(end.x, end.y); ctx.stroke();
+    ctx.strokeStyle = CG_PAL.brass;
+    ctx.lineWidth = 4.5;
+    ctx.beginPath(); ctx.moveTo(hinge.x, hinge.y); ctx.lineTo(end.x, end.y); ctx.stroke();
+    if (kind === 'needle') {
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(end.x, end.y); ctx.lineTo(tip.x, tip.y); ctx.stroke();
+    } else {
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 4.5;
+      ctx.beginPath(); ctx.moveTo(end.x, end.y); ctx.lineTo(tip.x - ux * 4, tip.y - uy * 4); ctx.stroke();
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(tip.x - ux * 4, tip.y - uy * 4); ctx.lineTo(tip.x, tip.y); ctx.stroke();
+    }
+  });
+
+  // 握柄與鉸鏈
+  ctx.strokeStyle = '#b45309';
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(hinge.x, hinge.y);
+  ctx.lineTo(hinge.x + nx * 18, hinge.y + ny * 18);
+  ctx.stroke();
+  ctx.fillStyle = CG_PAL.brass;
+  ctx.strokeStyle = CG_PAL.brassDk;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(hinge.x, hinge.y, 7, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  if (label) cgLabel(ctx, m, label, CG_PAL.honey, -nx * 15, -ny * 15, f(700, 13));
+}
+
+/* --------------------------------------------------------------------------
+   直尺：沒有刻度的木條，一邊貼著要畫的那條線
+   -------------------------------------------------------------------------- */
+function cgRuler(ctx, a, b) {
+  const u = cgUnit(a, b);
+  let nx = -u.y, ny = u.x;
+  if (ny < 0 || (Math.abs(ny) < 1e-6 && nx < 0)) { nx = -nx; ny = -ny; }
+  const ext = 26, wd = 18, off = 5;
+  const p0 = cgP(a.x - u.x * ext + nx * off, a.y - u.y * ext + ny * off);
+  const p1 = cgP(b.x + u.x * ext + nx * off, b.y + u.y * ext + ny * off);
+  ctx.save();
+  ctx.fillStyle = 'rgba(234, 205, 140, 0.10)';
+  ctx.strokeStyle = 'rgba(234, 205, 140, 0.6)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(p0.x, p0.y);
+  ctx.lineTo(p1.x, p1.y);
+  ctx.lineTo(p1.x + nx * wd, p1.y + ny * wd);
+  ctx.lineTo(p0.x + nx * wd, p0.y + ny * wd);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  let ang = Math.atan2(u.y, u.x);
+  if (ang > Math.PI / 2) ang -= Math.PI;
+  if (ang < -Math.PI / 2) ang += Math.PI;
+  const cx = (p0.x + p1.x) / 2 + nx * wd / 2, cy = (p0.y + p1.y) / 2 + ny * wd / 2;
+  ctx.translate(cx, cy);
+  ctx.rotate(ang);
+  ctx.fillStyle = 'rgba(254, 243, 199, 0.6)';
+  ctx.font = f(600, 11);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('直尺（沒有刻度）', 0, 0);
+  ctx.restore();
+}
+
+const CG_TOOL_NAME = { compass: '圓規', ruler: '直尺', look: '觀察', warn: '注意' };
+
+function cgBand(ctx, k, n, tool, text) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  const y = H - 84, h = 76;
+  const name = CG_TOOL_NAME[tool], col = CG_PAL.tools[tool];
+  drawPanel(ctx, 12, y, W - 24, h, col, 0.1);
+  textCenter(ctx, `步驟 ${k}/${n}`, 62, y + 22, '#f8fafc', f(800, 14));
+  ctx.save();
+  ctx.globalAlpha = 0.22;
+  ctx.fillStyle = col;
+  roundRect(ctx, 30, y + 38, 64, 26, 8);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.strokeStyle = col;
+  ctx.lineWidth = 1.6;
+  roundRect(ctx, 30, y + 38, 64, 26, 8);
+  ctx.stroke();
+  ctx.restore();
+  textCenter(ctx, name, 62, y + 51, col, f(800, 14));
+  const lines = fitLines(ctx, text, W - 24 - 104 - 14, f(600, 15)).slice(0, 3);
+  const lh = 20;
+  const y0 = y + h / 2 - (lines.length - 1) * lh / 2;
+  lines.forEach((ln, i) => textLeft(ctx, ln, 116, y0 + i * lh, '#f1f5f9', f(600, 15)));
+}
+
+// 步驟列上方的一行量測結果
+function cgMeasure(ctx, text, color) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  textCenter(ctx, text, W / 2, H - 100, color, f(700, 15));
+}
+
+/* --------------------------------------------------------------------------
+   逐步播放引擎
+     o.steps: [{ tool, text, draw(ctx), compass: {c, r, ang, label}, ruler: [a, b] }]
+     o.pts:   [{ p, n（名字）, s（第幾步出現；0 是已知）, c（顏色）, dx, dy }]
+     o.k:     目前顯示到第幾步
+   畫到第 k 步：已知圖形 → 前 k 步的痕跡（舊的淡一點）→ 點與名字 →
+   這一步正在用的工具 → 量測結果 → 步驟列。
+   -------------------------------------------------------------------------- */
+function cgRender(ctx, o) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  drawTitle(ctx, o.title, o.color);
+  const k = o.k;
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, 40, W, H - 152);
+  ctx.clip();
+  if (o.given) o.given(ctx);
+  const cur = o.steps[k - 1];
+  // 直尺墊在痕跡底下：它只是表示「這一步用直尺」，不能蓋住畫出來的線
+  if (cur.ruler) cgRuler(ctx, cur.ruler[0], cur.ruler[1]);
+  for (let i = 0; i < k; i++) {
+    const s = o.steps[i];
+    if (!s.draw) continue;
+    ctx.save();
+    ctx.globalAlpha = (i === k - 1) ? 1 : 0.78;
+    s.draw(ctx);
+    ctx.restore();
+  }
+  const pts = (o.pts || []).filter(q => q && q.s <= k);
+  pts.forEach(q => cgDot(ctx, q.p, q.c || CG_PAL.ink));
+  pts.forEach(q => { if (q.n) cgLabel(ctx, q.p, q.n, q.c || CG_PAL.ink, q.dx || 0, q.dy == null ? -18 : q.dy); });
+  if (cur.compass) cgCompass(ctx, cur.compass.c, cur.compass.r, cur.compass.ang, cur.compass.label);
+  ctx.restore();
+  if (o.measure) cgMeasure(ctx, o.measure[0], o.measure[1]);
+  cgBand(ctx, k, o.steps.length, cur.tool, cur.text);
+}
+
+/* --------------------------------------------------------------------------
+   步驟按鈕：上一步／下一步／全部顯示
+   -------------------------------------------------------------------------- */
+function cgSteps(prefix, st, draw) {
+  const prev = hbEl(prefix + '-prev'), next = hbEl(prefix + '-next'), all = hbEl(prefix + '-all');
+  if (prev) prev.addEventListener('click', () => { st.k -= 1; draw(); });
+  if (next) next.addEventListener('click', () => { st.k += 1; draw(); });
+  if (all) all.addEventListener('click', () => { st.k = 99; draw(); });
+}
+
+function cgSync(prefix, st, n) {
+  st.k = clamp(st.k, 1, n);
+  const prev = hbEl(prefix + '-prev'), next = hbEl(prefix + '-next'), all = hbEl(prefix + '-all');
+  const counter = hbEl(prefix + '-step');
+  if (counter) counter.textContent = `${st.k} / ${n}`;
+  if (prev) prev.disabled = (st.k <= 1);
+  if (next) next.disabled = (st.k >= n);
+  if (all) all.disabled = (st.k >= n);
 }

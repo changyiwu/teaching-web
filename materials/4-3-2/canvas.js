@@ -6,9 +6,10 @@
    薰衣草 CG_LAV（菱形、箏形等輔助線）、玫瑰 CG_ROSE（作不出來、錯誤）。
 
    共用工具在 ../math-canvas.js（f／fi／drawTitle／drawPanel／fitLines／
-   textCenter／textLeft／bindPickGroup／typeset／wrapFeedback／clamp…），
-   本檔只放本節的色票、平面幾何小工具、尺規作圖的「逐步播放引擎」，
-   以及 13 個互動。
+   textCenter／textLeft／bindPickGroup／typeset／wrapFeedback／clamp…）；
+   cg* 平面幾何工具與尺規作圖的「逐步播放引擎」（cgRender／cgSteps／cgSync）
+   也在那裡，引擎的配色由本檔呼叫 cgUsePalette() 登記。
+   本檔只放本節的色票、cgLine／cgSpan，以及 13 個互動。
 
    作圖結果一律用真正的作圖動作算出來（圓與圓的交點、直線與圓的交點），
    不直接用答案公式擺位置——畫面上量到的角度與長度才是作圖的結果。
@@ -45,6 +46,12 @@ const CG_ROSE = '#fb7185';
 const CG_BRASS = '#d4a017';
 const CG_BRASS_DK = '#5b4208';
 
+// 尺規播放引擎的配色（共用檔的 cgUsePalette）
+cgUsePalette({
+  ink: CG_INK, honey: CG_HONEY, brass: CG_BRASS, brassDk: CG_BRASS_DK,
+  tools: { compass: CG_HONEY, ruler: CG_SKY, look: CG_MOSS, warn: CG_ROSE }
+});
+
 // 1 公分畫成 40px
 const CG_PX = 40;
 
@@ -52,107 +59,14 @@ const CG_PX = 40;
 const CG_TONE = ['#fcd34d', '#5eead4', '#7dd3fc', '#fda4af', '#6ee7b7', '#d8b4fe',
                  '#fdba74', '#f9a8d4', '#a5b4fc', '#bef264', '#67e8f9', '#fca5a5', '#f0abfc'];
 
-function elById(id) {
-  return document.getElementById(id);
-}
-
-function iv(el) {
-  return parseInt(el.value, 10);
-}
-
 // 公分（一位小數）
 function cgCm(px) {
   return (px / CG_PX).toFixed(1);
 }
 
-// 角度：四捨五入到 0.01 度（33.75° 這種再平分的角要看得到兩位），尾巴的 0 不留
-function cgDeg(v) {
-  const r = Math.round(v * 100) / 100;
-  return String(r);
-}
-
 /* ==========================================================================
-   1. 平面幾何（canvas 座標，y 向下）
+   1. 本節才用的繪圖元件（其餘 cg* 工具在 math-canvas.js）
    ========================================================================== */
-
-function cgP(x, y) { return { x, y }; }
-function cgDist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
-function cgAng(c, p) { return Math.atan2(p.y - c.y, p.x - c.x); }
-function cgPolar(c, r, ang) { return cgP(c.x + r * Math.cos(ang), c.y + r * Math.sin(ang)); }
-function cgMid(a, b) { return cgP((a.x + b.x) / 2, (a.y + b.y) / 2); }
-function cgRad(deg) { return deg * Math.PI / 180; }
-
-// 兩圓交點：0、1（相切）或 2 個
-function cgCC(c1, r1, c2, r2) {
-  const d = cgDist(c1, c2);
-  const eps = 1e-6;
-  if (d < eps) return [];
-  if (d > r1 + r2 + eps || d < Math.abs(r1 - r2) - eps) return [];
-  const a = (d * d + r1 * r1 - r2 * r2) / (2 * d);
-  const h2 = r1 * r1 - a * a;
-  const ux = (c2.x - c1.x) / d, uy = (c2.y - c1.y) / d;
-  const mx = c1.x + a * ux, my = c1.y + a * uy;
-  if (h2 <= eps * Math.max(1, r1 * r1) || Math.abs(d - r1 - r2) < eps || Math.abs(d - Math.abs(r1 - r2)) < eps) {
-    return [cgP(mx, my)];
-  }
-  const h = Math.sqrt(h2);
-  return [cgP(mx - h * uy, my + h * ux), cgP(mx + h * uy, my - h * ux)];
-}
-
-// 直線 ab 與圓的交點（依沿 a→b 的方向排序）
-function cgLC(a, b, c, r) {
-  const d = cgDist(a, b);
-  const ux = (b.x - a.x) / d, uy = (b.y - a.y) / d;
-  const fx = a.x - c.x, fy = a.y - c.y;
-  const B = fx * ux + fy * uy;
-  const C = fx * fx + fy * fy - r * r;
-  const disc = B * B - C;
-  if (disc < -1e-6) return [];
-  if (Math.abs(disc) <= 1e-6) return [cgP(a.x - B * ux, a.y - B * uy)];
-  const s = Math.sqrt(disc);
-  return [-B - s, -B + s].map(t => cgP(a.x + t * ux, a.y + t * uy));
-}
-
-// 兩直線 ab、cd 的交點
-function cgLL(a, b, c, d) {
-  const x1 = b.x - a.x, y1 = b.y - a.y, x2 = d.x - c.x, y2 = d.y - c.y;
-  const den = x1 * y2 - y1 * x2;
-  if (Math.abs(den) < 1e-9) return null;
-  const t = ((c.x - a.x) * y2 - (c.y - a.y) * x2) / den;
-  return cgP(a.x + t * x1, a.y + t * y1);
-}
-
-// 以 v 為頂點、兩邊通過 p、q 的角（度）
-function cgAngDeg(v, p, q) {
-  const ax = p.x - v.x, ay = p.y - v.y, bx = q.x - v.x, by = q.y - v.y;
-  const c = (ax * bx + ay * by) / (Math.hypot(ax, ay) * Math.hypot(bx, by));
-  return Math.acos(clamp(c, -1, 1)) * 180 / Math.PI;
-}
-
-// 點 p 在直線 ab 的哪一側（正負號）
-function cgSide(a, b, p) {
-  return Math.sign((b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x));
-}
-
-function cgUpper(pts) { return pts.slice().sort((u, v) => u.y - v.y)[0]; }
-function cgLower(pts) { return pts.slice().sort((u, v) => v.y - u.y)[0]; }
-
-/* ==========================================================================
-   2. 繪圖元件
-   ========================================================================== */
-
-function cgSeg(ctx, a, b, color, w, dash) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = w || 2.4;
-  ctx.lineCap = 'round';
-  if (dash) ctx.setLineDash(dash);
-  ctx.beginPath();
-  ctx.moveTo(a.x, a.y);
-  ctx.lineTo(b.x, b.y);
-  ctx.stroke();
-  ctx.restore();
-}
 
 // 通過 a、b 的直線，兩端各多畫 ext px
 function cgLine(ctx, a, b, color, ext, w, dash) {
@@ -160,96 +74,6 @@ function cgLine(ctx, a, b, color, ext, w, dash) {
   const ux = (b.x - a.x) / d, uy = (b.y - a.y) / d;
   const e = ext == null ? 40 : ext;
   cgSeg(ctx, cgP(a.x - ux * e, a.y - uy * e), cgP(b.x + ux * e, b.y + uy * e), color, w, dash);
-}
-
-function cgArc(ctx, c, r, a0, a1, color, w) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = w || 2.2;
-  ctx.beginPath();
-  ctx.arc(c.x, c.y, r, a0, a1, false);
-  ctx.stroke();
-  ctx.restore();
-}
-
-// 圓心 c、半徑 r 的弧，涵蓋通往 pts 各點的方向，兩端再多 spread 弧度
-function cgArcAt(ctx, c, r, pts, spread, color, w) {
-  const base = cgAng(c, pts[0]);
-  let lo = 0, hi = 0;
-  pts.forEach(p => {
-    let d = cgAng(c, p) - base;
-    while (d > Math.PI) d -= 2 * Math.PI;
-    while (d < -Math.PI) d += 2 * Math.PI;
-    lo = Math.min(lo, d);
-    hi = Math.max(hi, d);
-  });
-  cgArc(ctx, c, r, base + lo - spread, base + hi + spread, color, w);
-}
-
-// 圍繞某個方向的弧
-function cgArcDir(ctx, c, r, ang, spread, color, w) {
-  cgArc(ctx, c, r, ang - spread, ang + spread, color, w);
-}
-
-function cgDot(ctx, p, color) {
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.strokeStyle = 'rgba(15, 23, 42, 0.9)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.arc(p.x, p.y, 4.5, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
-}
-
-// 點名或邊長標籤：深色描邊讓它壓在線上也讀得到
-function cgLabel(ctx, p, text, color, dx, dy, font) {
-  ctx.save();
-  ctx.font = font || fi(700, 18);
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.lineJoin = 'round';
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = 'rgba(15, 23, 42, 0.92)';
-  ctx.strokeText(text, p.x + dx, p.y + dy);
-  ctx.fillStyle = color;
-  ctx.fillText(text, p.x + dx, p.y + dy);
-  ctx.restore();
-}
-
-// 角的記號：從方向 a0 轉到 a1（走較短的那一邊）
-function cgAngMark(ctx, v, a0, a1, r, color, w) {
-  let d = a1 - a0;
-  while (d > Math.PI) d -= 2 * Math.PI;
-  while (d < -Math.PI) d += 2 * Math.PI;
-  // 平角：一律畫在上方（canvas 的負角度）
-  if (Math.abs(Math.abs(d) - Math.PI) < 1e-6) d = -Math.PI;
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = w || 2;
-  ctx.beginPath();
-  ctx.arc(v.x, v.y, r, a0, a0 + d, d < 0);
-  ctx.stroke();
-  ctx.restore();
-}
-
-// 直角記號：u、w 是兩條線的單位方向
-function cgRight(ctx, v, u, w, s, color) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 1.8;
-  ctx.beginPath();
-  ctx.moveTo(v.x + u.x * s, v.y + u.y * s);
-  ctx.lineTo(v.x + u.x * s + w.x * s, v.y + u.y * s + w.y * s);
-  ctx.lineTo(v.x + w.x * s, v.y + w.y * s);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function cgUnit(a, b) {
-  const d = cgDist(a, b);
-  return cgP((b.x - a.x) / d, (b.y - a.y) / d);
 }
 
 // 一段長度的小括線（畫在線段旁邊 off px，標上名字）
@@ -270,211 +94,6 @@ function cgSpan(ctx, a, b, off, color, text) {
   const m = cgMid(p, q);
   const sg = off < 0 ? -1 : 1;
   cgLabel(ctx, m, text, color, n.x * 12 * sg, n.y * 12 * sg, fi(700, 16));
-}
-
-/* --------------------------------------------------------------------------
-   圓規：針腳在圓心 c，筆尖在 c 往 ang 方向 r 的位置。
-   兩腳一樣長、在鉸鏈處相接，張開的大小（針腳到筆尖）就是半徑——
-   畫面上的圓規真的畫得出那段弧（開發約束 28）。
-   -------------------------------------------------------------------------- */
-function cgCompass(ctx, c, r, ang, label) {
-  const t = cgPolar(c, r, ang);
-  const m = cgMid(c, t);
-  let nx = -(t.y - c.y) / r, ny = (t.x - c.x) / r;
-  if (ny > 0 || (Math.abs(ny) < 1e-6 && nx < 0)) { nx = -nx; ny = -ny; }
-  const L = Math.max(96, r / 2 + 36);
-  const h = Math.sqrt(L * L - r * r / 4);
-  const hinge = cgP(m.x + nx * h, m.y + ny * h);
-
-  ctx.save();
-  // 半徑（針腳到筆尖的距離）
-  ctx.setLineDash([5, 4]);
-  ctx.strokeStyle = CG_HONEY;
-  ctx.globalAlpha = 0.9;
-  ctx.lineWidth = 1.4;
-  ctx.beginPath();
-  ctx.moveTo(c.x, c.y);
-  ctx.lineTo(t.x, t.y);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.globalAlpha = 1;
-  ctx.lineCap = 'round';
-
-  [[c, 'needle'], [t, 'pencil']].forEach(([tip, kind]) => {
-    const dd = cgDist(hinge, tip);
-    const ux = (tip.x - hinge.x) / dd, uy = (tip.y - hinge.y) / dd;
-    const end = cgP(tip.x - ux * 13, tip.y - uy * 13);
-    ctx.strokeStyle = CG_BRASS_DK;
-    ctx.lineWidth = 7.5;
-    ctx.beginPath(); ctx.moveTo(hinge.x, hinge.y); ctx.lineTo(end.x, end.y); ctx.stroke();
-    ctx.strokeStyle = CG_BRASS;
-    ctx.lineWidth = 4.5;
-    ctx.beginPath(); ctx.moveTo(hinge.x, hinge.y); ctx.lineTo(end.x, end.y); ctx.stroke();
-    if (kind === 'needle') {
-      ctx.strokeStyle = '#e2e8f0';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(end.x, end.y); ctx.lineTo(tip.x, tip.y); ctx.stroke();
-    } else {
-      ctx.strokeStyle = '#475569';
-      ctx.lineWidth = 4.5;
-      ctx.beginPath(); ctx.moveTo(end.x, end.y); ctx.lineTo(tip.x - ux * 4, tip.y - uy * 4); ctx.stroke();
-      ctx.strokeStyle = '#0f172a';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(tip.x - ux * 4, tip.y - uy * 4); ctx.lineTo(tip.x, tip.y); ctx.stroke();
-    }
-  });
-
-  // 握柄與鉸鏈
-  ctx.strokeStyle = '#b45309';
-  ctx.lineWidth = 5;
-  ctx.beginPath();
-  ctx.moveTo(hinge.x, hinge.y);
-  ctx.lineTo(hinge.x + nx * 18, hinge.y + ny * 18);
-  ctx.stroke();
-  ctx.fillStyle = CG_BRASS;
-  ctx.strokeStyle = CG_BRASS_DK;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.arc(hinge.x, hinge.y, 7, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
-
-  if (label) cgLabel(ctx, m, label, CG_HONEY, -nx * 15, -ny * 15, f(700, 13));
-}
-
-/* --------------------------------------------------------------------------
-   直尺：沒有刻度的木條，一邊貼著要畫的那條線
-   -------------------------------------------------------------------------- */
-function cgRuler(ctx, a, b) {
-  const u = cgUnit(a, b);
-  let nx = -u.y, ny = u.x;
-  if (ny < 0 || (Math.abs(ny) < 1e-6 && nx < 0)) { nx = -nx; ny = -ny; }
-  const ext = 26, wd = 18, off = 5;
-  const p0 = cgP(a.x - u.x * ext + nx * off, a.y - u.y * ext + ny * off);
-  const p1 = cgP(b.x + u.x * ext + nx * off, b.y + u.y * ext + ny * off);
-  ctx.save();
-  ctx.fillStyle = 'rgba(234, 205, 140, 0.10)';
-  ctx.strokeStyle = 'rgba(234, 205, 140, 0.6)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(p0.x, p0.y);
-  ctx.lineTo(p1.x, p1.y);
-  ctx.lineTo(p1.x + nx * wd, p1.y + ny * wd);
-  ctx.lineTo(p0.x + nx * wd, p0.y + ny * wd);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-  let ang = Math.atan2(u.y, u.x);
-  if (ang > Math.PI / 2) ang -= Math.PI;
-  if (ang < -Math.PI / 2) ang += Math.PI;
-  const cx = (p0.x + p1.x) / 2 + nx * wd / 2, cy = (p0.y + p1.y) / 2 + ny * wd / 2;
-  ctx.translate(cx, cy);
-  ctx.rotate(ang);
-  ctx.fillStyle = 'rgba(254, 243, 199, 0.6)';
-  ctx.font = f(600, 11);
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('直尺（沒有刻度）', 0, 0);
-  ctx.restore();
-}
-
-/* --------------------------------------------------------------------------
-   畫布下方的步驟列：第幾步、用什麼工具、這一步在做什麼
-   -------------------------------------------------------------------------- */
-const CG_TOOL = {
-  compass: ['圓規', CG_HONEY],
-  ruler: ['直尺', CG_SKY],
-  look: ['觀察', CG_MOSS],
-  warn: ['注意', CG_ROSE]
-};
-
-function cgBand(ctx, k, n, tool, text) {
-  const W = ctx.canvas.width, H = ctx.canvas.height;
-  const y = H - 84, h = 76;
-  const [name, col] = CG_TOOL[tool];
-  drawPanel(ctx, 12, y, W - 24, h, col, 0.1);
-  textCenter(ctx, `步驟 ${k}/${n}`, 62, y + 22, '#f8fafc', f(800, 14));
-  ctx.save();
-  ctx.globalAlpha = 0.22;
-  ctx.fillStyle = col;
-  roundRect(ctx, 30, y + 38, 64, 26, 8);
-  ctx.fill();
-  ctx.globalAlpha = 1;
-  ctx.strokeStyle = col;
-  ctx.lineWidth = 1.6;
-  roundRect(ctx, 30, y + 38, 64, 26, 8);
-  ctx.stroke();
-  ctx.restore();
-  textCenter(ctx, name, 62, y + 51, col, f(800, 14));
-  const lines = fitLines(ctx, text, W - 24 - 104 - 14, f(600, 15)).slice(0, 3);
-  const lh = 20;
-  const y0 = y + h / 2 - (lines.length - 1) * lh / 2;
-  lines.forEach((ln, i) => textLeft(ctx, ln, 116, y0 + i * lh, '#f1f5f9', f(600, 15)));
-}
-
-// 步驟列上方的一行量測結果
-function cgMeasure(ctx, text, color) {
-  const W = ctx.canvas.width, H = ctx.canvas.height;
-  textCenter(ctx, text, W / 2, H - 100, color, f(700, 15));
-}
-
-/* --------------------------------------------------------------------------
-   逐步播放引擎
-     o.steps: [{ tool, text, draw(ctx), compass: {c, r, ang, label}, ruler: [a, b] }]
-     o.pts:   [{ p, n（名字）, s（第幾步出現；0 是已知）, c（顏色）, dx, dy }]
-     o.k:     目前顯示到第幾步
-   畫到第 k 步：已知圖形 → 前 k 步的痕跡（舊的淡一點）→ 點與名字 →
-   這一步正在用的工具 → 量測結果 → 步驟列。
-   -------------------------------------------------------------------------- */
-function cgRender(ctx, o) {
-  const W = ctx.canvas.width, H = ctx.canvas.height;
-  ctx.clearRect(0, 0, W, H);
-  drawTitle(ctx, o.title, o.color);
-  const k = o.k;
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(0, 40, W, H - 152);
-  ctx.clip();
-  if (o.given) o.given(ctx);
-  const cur = o.steps[k - 1];
-  // 直尺墊在痕跡底下：它只是表示「這一步用直尺」，不能蓋住畫出來的線
-  if (cur.ruler) cgRuler(ctx, cur.ruler[0], cur.ruler[1]);
-  for (let i = 0; i < k; i++) {
-    const s = o.steps[i];
-    if (!s.draw) continue;
-    ctx.save();
-    ctx.globalAlpha = (i === k - 1) ? 1 : 0.78;
-    s.draw(ctx);
-    ctx.restore();
-  }
-  const pts = (o.pts || []).filter(q => q && q.s <= k);
-  pts.forEach(q => cgDot(ctx, q.p, q.c || CG_INK));
-  pts.forEach(q => { if (q.n) cgLabel(ctx, q.p, q.n, q.c || CG_INK, q.dx || 0, q.dy == null ? -18 : q.dy); });
-  if (cur.compass) cgCompass(ctx, cur.compass.c, cur.compass.r, cur.compass.ang, cur.compass.label);
-  ctx.restore();
-  if (o.measure) cgMeasure(ctx, o.measure[0], o.measure[1]);
-  cgBand(ctx, k, o.steps.length, cur.tool, cur.text);
-}
-
-/* --------------------------------------------------------------------------
-   步驟按鈕：上一步／下一步／全部顯示
-   -------------------------------------------------------------------------- */
-function cgSteps(prefix, st, draw) {
-  const prev = elById(prefix + '-prev'), next = elById(prefix + '-next'), all = elById(prefix + '-all');
-  if (prev) prev.addEventListener('click', () => { st.k -= 1; draw(); });
-  if (next) next.addEventListener('click', () => { st.k += 1; draw(); });
-  if (all) all.addEventListener('click', () => { st.k = 99; draw(); });
-}
-
-function cgSync(prefix, st, n) {
-  st.k = clamp(st.k, 1, n);
-  const prev = elById(prefix + '-prev'), next = elById(prefix + '-next'), all = elById(prefix + '-all');
-  const counter = elById(prefix + '-step');
-  if (counter) counter.textContent = `${st.k} / ${n}`;
-  if (prev) prev.disabled = (st.k <= 1);
-  if (next) next.disabled = (st.k >= n);
-  if (all) all.disabled = (st.k >= n);
 }
 
 /* ==========================================================================
@@ -568,16 +187,16 @@ function initQuizSystem() {
    重點 1：圓規比長短——以 C 為圓心、AB 長為半徑畫弧，看弧落在哪裡
    ========================================================================== */
 function initCmpCanvas() {
-  const cv = elById('canvas-cmp');
+  const cv = hbEl('canvas-cmp');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sl = elById('cmp-cd'), vl = elById('cmp-vcd');
-  const out = elById('cmp-formula'), fb = elById('cmp-feedback');
+  const sl = hbEl('cmp-cd'), vl = hbEl('cmp-vcd');
+  const out = hbEl('cmp-formula'), fb = hbEl('cmp-feedback');
   const st = { k: 1 };
   const AB = 4.5 * CG_PX;
 
   function draw() {
-    const cd = iv(sl) / 2;
+    const cd = hbIv(sl) / 2;
     vl.textContent = cd.toFixed(1);
     const L = cd * CG_PX;
     const A = cgP(80, 150), B = cgP(80 + AB, 150);
@@ -631,16 +250,16 @@ function initCmpCanvas() {
    重點 2：等線段作圖
    ========================================================================== */
 function initCpyCanvas() {
-  const cv = elById('canvas-cpy');
+  const cv = hbEl('canvas-cpy');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sLen = elById('cpy-len'), sTilt = elById('cpy-tilt');
-  const vLen = elById('cpy-vlen'), vTilt = elById('cpy-vtilt');
-  const out = elById('cpy-formula'), fb = elById('cpy-feedback');
+  const sLen = hbEl('cpy-len'), sTilt = hbEl('cpy-tilt');
+  const vLen = hbEl('cpy-vlen'), vTilt = hbEl('cpy-vtilt');
+  const out = hbEl('cpy-formula'), fb = hbEl('cpy-feedback');
   const st = { k: 1 };
 
   function draw() {
-    const len = iv(sLen) / 2, tilt = iv(sTilt) * 10;
+    const len = hbIv(sLen) / 2, tilt = hbIv(sTilt) * 10;
     vLen.textContent = len.toFixed(1);
     vTilt.textContent = tilt;
     const r = len * CG_PX;
@@ -691,18 +310,18 @@ function initCpyCanvas() {
    重點 3：線段的和與差
    ========================================================================== */
 function initSumCanvas() {
-  const cv = elById('canvas-sum');
+  const cv = hbEl('canvas-sum');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sa = elById('sum-a'), sb = elById('sum-b');
-  const va = elById('sum-va'), vb = elById('sum-vb');
-  const g = elById('sum-mode-group');
-  const out = elById('sum-formula'), fb = elById('sum-feedback');
+  const sa = hbEl('sum-a'), sb = hbEl('sum-b');
+  const va = hbEl('sum-va'), vb = hbEl('sum-vb');
+  const g = hbEl('sum-mode-group');
+  const out = hbEl('sum-formula'), fb = hbEl('sum-feedback');
   const st = { k: 1 };
   let mode = 'add';
 
   function draw() {
-    const a = iv(sa) / 2, b = iv(sb) / 2;
+    const a = hbIv(sa) / 2, b = hbIv(sb) / 2;
     va.textContent = a.toFixed(1);
     vb.textContent = b.toFixed(1);
     const ra = a * CG_PX, rb = b * CG_PX;
@@ -778,14 +397,14 @@ function initSumCanvas() {
    重點 4：兩弧的交點——已知三邊作三角形
    ========================================================================== */
 function initTriCanvas() {
-  const cv = elById('canvas-tri');
+  const cv = hbEl('canvas-tri');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sa = elById('tri-a'), sb = elById('tri-b'), sc = elById('tri-c');
-  const va = elById('tri-va'), vb = elById('tri-vb'), vc = elById('tri-vc');
-  const rowB = elById('tri-row-b'), rowC = elById('tri-row-c');
-  const g = elById('tri-mode-group');
-  const out = elById('tri-formula'), fb = elById('tri-feedback');
+  const sa = hbEl('tri-a'), sb = hbEl('tri-b'), sc = hbEl('tri-c');
+  const va = hbEl('tri-va'), vb = hbEl('tri-vb'), vc = hbEl('tri-vc');
+  const rowB = hbEl('tri-row-b'), rowC = hbEl('tri-row-c');
+  const g = hbEl('tri-mode-group');
+  const out = hbEl('tri-formula'), fb = hbEl('tri-feedback');
   const st = { k: 1 };
   let mode = 'sss';
 
@@ -793,11 +412,11 @@ function initTriCanvas() {
     const equi = (mode === 'equi');
     rowB.style.display = equi ? 'none' : '';
     rowC.style.display = equi ? 'none' : '';
-    const a = iv(sa) / 2;
-    const b = equi ? a : iv(sb) / 2, c = equi ? a : iv(sc) / 2;
+    const a = hbIv(sa) / 2;
+    const b = equi ? a : hbIv(sb) / 2, c = equi ? a : hbIv(sc) / 2;
     va.textContent = a.toFixed(1);
-    vb.textContent = (iv(sb) / 2).toFixed(1);
-    vc.textContent = (iv(sc) / 2).toFixed(1);
+    vb.textContent = (hbIv(sb) / 2).toFixed(1);
+    vc.textContent = (hbIv(sc) / 2).toFixed(1);
     const ra = a * CG_PX, rb = b * CG_PX, rc = c * CG_PX;
     const Y = 330;
     const B = cgP(270 - ra / 2, Y);
@@ -877,16 +496,16 @@ function initTriCanvas() {
    重點 5：等角作圖
    ========================================================================== */
 function initAngCanvas() {
-  const cv = elById('canvas-ang');
+  const cv = hbEl('canvas-ang');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sT = elById('ang-t'), sR = elById('ang-r');
-  const vT = elById('ang-vt'), vR = elById('ang-vr');
-  const out = elById('ang-formula'), fb = elById('ang-feedback');
+  const sT = hbEl('ang-t'), sR = hbEl('ang-r');
+  const vT = hbEl('ang-vt'), vR = hbEl('ang-vr');
+  const out = hbEl('ang-formula'), fb = hbEl('ang-feedback');
   const st = { k: 1 };
 
   function draw() {
-    const th = iv(sT) * 5, rr = iv(sR) / 2;
+    const th = hbIv(sT) * 5, rr = hbIv(sR) / 2;
     vT.textContent = th;
     vR.textContent = rr.toFixed(1);
     const r = rr * CG_PX;
@@ -958,18 +577,18 @@ function initAngCanvas() {
    重點 6：角的和與差——兩次等角作圖
    ========================================================================== */
 function initAsumCanvas() {
-  const cv = elById('canvas-asum');
+  const cv = hbEl('canvas-asum');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const s1 = elById('asum-1'), s2 = elById('asum-2');
-  const v1 = elById('asum-v1'), v2 = elById('asum-v2');
-  const g = elById('asum-mode-group');
-  const out = elById('asum-formula'), fb = elById('asum-feedback');
+  const s1 = hbEl('asum-1'), s2 = hbEl('asum-2');
+  const v1 = hbEl('asum-v1'), v2 = hbEl('asum-v2');
+  const g = hbEl('asum-mode-group');
+  const out = hbEl('asum-formula'), fb = hbEl('asum-feedback');
   const st = { k: 1 };
   let mode = 'add';
 
   function draw() {
-    const t1 = iv(s1) * 5, t2 = iv(s2) * 5;
+    const t1 = hbIv(s1) * 5, t2 = hbIv(s2) * 5;
     v1.textContent = t1;
     v2.textContent = t2;
     const add = (mode === 'add');
@@ -1074,18 +693,18 @@ function initAsumCanvas() {
    重點 7：中垂線作圖（含「兩端半徑不同」的錯誤示範）
    ========================================================================== */
 function initPbCanvas() {
-  const cv = elById('canvas-pb');
+  const cv = hbEl('canvas-pb');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sL = elById('pb-len'), sR = elById('pb-r');
-  const vL = elById('pb-vlen'), vR = elById('pb-vr');
-  const g = elById('pb-mode-group');
-  const out = elById('pb-formula'), fb = elById('pb-feedback');
+  const sL = hbEl('pb-len'), sR = hbEl('pb-r');
+  const vL = hbEl('pb-vlen'), vR = hbEl('pb-vr');
+  const g = hbEl('pb-mode-group');
+  const out = hbEl('pb-formula'), fb = hbEl('pb-feedback');
   const st = { k: 1 };
   let mode = 'same';
 
   function draw() {
-    const len = iv(sL) / 2, kr = iv(sR) * 0.05;
+    const len = hbIv(sL) / 2, kr = hbIv(sR) * 0.05;
     vL.textContent = len.toFixed(1);
     vR.textContent = kr.toFixed(2);
     const same = (mode === 'same');
@@ -1163,16 +782,16 @@ function initPbCanvas() {
    重點 8：用中垂線找八等分點——對半、再對半
    ========================================================================== */
 function initHalfCanvas() {
-  const cv = elById('canvas-half');
+  const cv = hbEl('canvas-half');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sk = elById('half-k'), vk = elById('half-vk');
-  const out = elById('half-formula'), fb = elById('half-feedback');
+  const sk = hbEl('half-k'), vk = hbEl('half-vk');
+  const out = hbEl('half-formula'), fb = hbEl('half-feedback');
   const st = { k: 1 };
   const NAMES = ['C', 'D', 'E'];
 
   function draw() {
-    const k = iv(sk);
+    const k = hbIv(sk);
     vk.textContent = k;
     const A = cgP(60, 220), B = cgP(480, 220);
     const at = i => cgP(A.x + (B.x - A.x) * i / 8, A.y);
@@ -1242,16 +861,16 @@ function initHalfCanvas() {
    重點 9：角平分線作圖
    ========================================================================== */
 function initBisCanvas() {
-  const cv = elById('canvas-bis');
+  const cv = hbEl('canvas-bis');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sT = elById('bis-t'), s1 = elById('bis-r1'), s2 = elById('bis-r2');
-  const vT = elById('bis-vt'), v1 = elById('bis-vr1'), v2 = elById('bis-vr2');
-  const out = elById('bis-formula'), fb = elById('bis-feedback');
+  const sT = hbEl('bis-t'), s1 = hbEl('bis-r1'), s2 = hbEl('bis-r2');
+  const vT = hbEl('bis-vt'), v1 = hbEl('bis-vr1'), v2 = hbEl('bis-vr2');
+  const out = hbEl('bis-formula'), fb = hbEl('bis-feedback');
   const st = { k: 1 };
 
   function draw() {
-    const th = iv(sT) * 10, r1 = iv(s1) / 2, fct = iv(s2) / 10;
+    const th = hbIv(sT) * 10, r1 = hbIv(s1) / 2, fct = hbIv(s2) / 10;
     vT.textContent = th;
     v1.textContent = r1.toFixed(1);
     v2.textContent = fct.toFixed(1);
@@ -1327,18 +946,18 @@ function initBisCanvas() {
    重點 10：角平分線的再平分——作出 k/8 個角
    ========================================================================== */
 function initQbCanvas() {
-  const cv = elById('canvas-qb');
+  const cv = hbEl('canvas-qb');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sk = elById('qb-k'), vk = elById('qb-vk');
-  const g = elById('qb-t-group');
-  const out = elById('qb-formula'), fb = elById('qb-feedback');
+  const sk = hbEl('qb-k'), vk = hbEl('qb-vk');
+  const g = hbEl('qb-t-group');
+  const out = hbEl('qb-formula'), fb = hbEl('qb-feedback');
   const st = { k: 1 };
   const NAMES = ['C', 'D', 'E'];
   let th = 90;
 
   function draw() {
-    const k = iv(sk);
+    const k = hbIv(sk);
     vk.textContent = k;
     const O = cgP(270, 355);
     const LEN = 215, RR = 80;
@@ -1412,16 +1031,16 @@ function initQbCanvas() {
    重點 11：過線上一點作垂線
    ========================================================================== */
 function initPonCanvas() {
-  const cv = elById('canvas-pon');
+  const cv = hbEl('canvas-pon');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sx = elById('pon-x'), s1 = elById('pon-r1'), s2 = elById('pon-r2');
-  const vx = elById('pon-vx'), v1 = elById('pon-vr1'), v2 = elById('pon-vr2');
-  const out = elById('pon-formula'), fb = elById('pon-feedback');
+  const sx = hbEl('pon-x'), s1 = hbEl('pon-r1'), s2 = hbEl('pon-r2');
+  const vx = hbEl('pon-vx'), v1 = hbEl('pon-vr1'), v2 = hbEl('pon-vr2');
+  const out = hbEl('pon-formula'), fb = hbEl('pon-feedback');
   const st = { k: 1 };
 
   function draw() {
-    const px = iv(sx) * 20, r1 = iv(s1) / 2, fct = iv(s2) / 10;
+    const px = hbIv(sx) * 20, r1 = hbIv(s1) / 2, fct = hbIv(s2) / 10;
     vx.textContent = ((px - 20) / CG_PX).toFixed(1);
     v1.textContent = r1.toFixed(1);
     v2.textContent = fct.toFixed(1);
@@ -1493,16 +1112,16 @@ function initPonCanvas() {
    重點 12：過線外一點作垂線
    ========================================================================== */
 function initPoffCanvas() {
-  const cv = elById('canvas-poff');
+  const cv = hbEl('canvas-poff');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sd = elById('poff-d'), s1 = elById('poff-r1'), s2 = elById('poff-r2');
-  const vd = elById('poff-vd'), v1 = elById('poff-vr1'), v2 = elById('poff-vr2');
-  const out = elById('poff-formula'), fb = elById('poff-feedback');
+  const sd = hbEl('poff-d'), s1 = hbEl('poff-r1'), s2 = hbEl('poff-r2');
+  const vd = hbEl('poff-vd'), v1 = hbEl('poff-vr1'), v2 = hbEl('poff-vr2');
+  const out = hbEl('poff-formula'), fb = hbEl('poff-feedback');
   const st = { k: 1 };
 
   function draw() {
-    const d = iv(sd) / 2, r1 = iv(s1) / 2, fct = iv(s2) / 10;
+    const d = hbIv(sd) / 2, r1 = hbIv(s1) / 2, fct = hbIv(s2) / 10;
     vd.textContent = d.toFixed(1);
     v1.textContent = r1.toFixed(1);
     v2.textContent = fct.toFixed(1);
@@ -1590,17 +1209,17 @@ function initPoffCanvas() {
    重點 13：三角形裡的四條線——高、中垂線、中線、角平分線
    ========================================================================== */
 function initAltCanvas() {
-  const cv = elById('canvas-alt');
+  const cv = hbEl('canvas-alt');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  const sx = elById('alt-ax'), vx = elById('alt-vax');
-  const g = elById('alt-mode-group');
-  const out = elById('alt-formula'), fb = elById('alt-feedback');
+  const sx = hbEl('alt-ax'), vx = hbEl('alt-vax');
+  const g = hbEl('alt-mode-group');
+  const out = hbEl('alt-formula'), fb = hbEl('alt-feedback');
   const st = { k: 1 };
   let mode = 'height';
 
   function draw() {
-    const ax = iv(sx) * 10;
+    const ax = hbIv(sx) * 10;
     const dx = (ax - 200) / CG_PX;
     vx.textContent = (dx > 0 ? '+' : '') + dx.toFixed(2);
     const Y = 280;
