@@ -4,39 +4,1357 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-3 縮放與相似 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-3 縮放與相似 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第五冊 (3上) • 第1章 相似形</div>
-    <h1>1-3 縮放與相似</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第五冊 • 第一章</span>
+        <h1>1-3 縮放與相似</h1>
+        <p>老照相館的小影和見習生阿光，每天都在暗房裡用放大機把底片放大成相片——放大機的燈泡就是<strong>縮放中心</strong>，放大的倍數就是<strong>縮放倍率</strong>。這一節先看線段、角與多邊形縮放之後變了什麼、沒變什麼；再定義<strong>相似多邊形</strong>（對應邊成比例、對應角相等），用它求邊長與角度；最後學三角形的三個判別方法：<strong>AA、SAS、SSS 相似性質</strong>。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-lightbulb"></i> 線段的縮放</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-compass-drafting"></i> 角的縮放</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-vector-square"></i> 多邊形的縮放</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-shapes"></i> 正 n 邊形</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-arrows-left-right"></i> 相似與對應</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> 缺一不可</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-calculator"></i> 求邊與角</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-equals"></i> AA 相似</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-scissors"></i> SAS 相似</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-ruler"></i> SSS 相似</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 判別性質</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（昭和復古照相館・暗房）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(217, 179, 140, 0.3);">
+        <h2 class="section-title" style="color: #d9b38c; border-bottom-color: rgba(217, 179, 140, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #d9b38c; text-shadow: 0 0 10px rgba(217, 179, 140, 0.4);"></i> 課前暖身漫畫：被拉胖的全家福
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            客人要把一張全家福放大。阿光只把相片的<strong style="color:#d9b38c">寬</strong>拉成 2 倍、高沒動，印出來每個人都胖了一圈。小影把放大機的燈頭往上拉：燈光從同一個點照下來，長和寬一起變成 2 倍，相片變大了、人的樣子卻沒變。<strong style="color:#d9b38c">長和寬乘上同一個倍率，形狀才不會變</strong>——這就是這一節的「縮放」。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(28, 22, 17, 0.5);">
+            <img src="motivation_comic.webp" alt="昭和復古照相館風四格漫畫：阿光把全家福的寬拉成兩倍、高不變，相片裡的人變胖；小影指出要長寬一起放大，拉高放大機的燈頭重新放大，相片變大而人物比例不變，最後說長和寬乘上同一個倍率形狀才不會變。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 縮放的意義與線段的縮放
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-lightbulb" aria-hidden="true"></i> <span>重點 1：縮放中心、縮放倍率與線段的縮放</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>影印機的放大縮小、手電筒照出來的影子：大小可能改變，<strong>形狀不變</strong>，這叫做<strong>縮放</strong>。光源、圖形上的點、影子上的對應點，三點在同一條直線上。</li>
+              <li>平面上固定一點 \(O\)，在射線 \(OA\) 上取一點 \(A'\)，使 \(\overline{OA'} = r\,\overline{OA}\)：\(A'\) 是以 \(O\) 為<strong>中心</strong>、把 \(A\) 縮放 \(r\) 倍的<strong>對應點</strong>，\(r\) 叫做<strong>縮放倍率</strong>。</li>
+              <li>\(r \gt 1\) 是放大，\(0 \lt r \lt 1\) 是縮小。對應點一定在<strong>射線 \(OA\)</strong> 上，不會跑到 \(O\) 的另一側。</li>
+              <li>畫線段 \(\overline{AB}\) 的縮放圖形：把兩個端點各自縮放，再把兩個對應點連起來。中心在線段上時畫法也一樣。</li>
+              <li>射線縮放後仍是射線、直線縮放後仍是直線，而且都跟原來的平行（或重合）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・線段的縮放</span>
+              縮放後仍是線段；\(\overline{A'B'} /\!/ \overline{AB}\)（或在同一直線上）；\(\overline{A'B'} = r\,\overline{AB}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="sim_flashlight.webp" alt="昭和復古照相館風插圖：暗房裡小影捏著一張剪成三角形的相紙，阿光用手電筒照它，牆上映出同樣形狀、每邊兩倍長的三角形影子，光線從手電筒的一點經過三角形頂點落到影子上。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：從燈泡拉出來的線段</h3>
+            <p class="interactive-instruction">\(O\) 是放大機的燈泡。選中心的位置，拉動倍率，看 \(A'\)、\(B'\) 怎麼沿著光線移動：\(\overline{A'B'}\) 的長度變成幾倍？方向有沒有改變？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-seg" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="seg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">中心</span>
+                    <div class="btn-group" id="seg-mode-group">
+                      <button class="pick-btn active" data-seg-mode="out">在線段外</button>
+                      <button class="pick-btn" data-seg-mode="on">在線段上</button>
+                      <button class="pick-btn" data-seg-mode="end">在端點 \(A\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="seg-r">縮放倍率 \(r\)：<span id="seg-vr" class="val-num">2 倍</span></label>
+                    <input type="range" id="seg-r" min="0" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="seg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (線段的縮放)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-1">
+            <p class="quiz-question"><strong>Q1.</strong> 點 \(O\) 不在直線 \(AB\) 上。以 \(O\) 為中心，將 \(\overline{AB}\) 縮放 4 倍得到 \(\overline{A'B'}\)。若 \(\overline{OA} = 5\)、\(\overline{AB} = 7\)，下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-1" value="A"><span class="option-text">A. \(\overline{OA'} = 20\)、\(\overline{A'B'} = 28\)，且 \(\overline{A'B'} /\!/ \overline{AB}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-1" value="B"><span class="option-text">B. \(\overline{OA'} = 9\)、\(\overline{A'B'} = 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-1" value="C"><span class="option-text">C. \(\overline{OA'} = 20\)、\(\overline{A'B'} = 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-1" value="D"><span class="option-text">D. \(\overline{AA'} = 20\)、\(\overline{A'B'} = 28\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{OA'} = 4 \times 5 = 20\)；線段縮放 4 倍，長度也變 4 倍：\(\overline{A'B'} = 4 \times 7 = 28\)，而且 \(O\) 不在直線 \(AB\) 上，所以 \(\overline{A'B'} /\!/ \overline{AB}\)。<br>
+              B 錯：縮放是「乘」倍率，不是「加」。<br>
+              C 錯：縮放後不變的是角度，長度會變 4 倍。<br>
+              D 錯：\(A'\) 在射線 \(OA\) 上，\(\overline{AA'} = \overline{OA'} - \overline{OA} = 15\)，不是 20。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-2">
+            <p class="quiz-question"><strong>Q2.</strong> 點 \(O\) 在 \(\overline{CD}\) 上，\(\overline{OC} = 6\)、\(\overline{OD} = 9\)。以 \(O\) 為中心，將 \(\overline{CD}\) 縮放 \(\frac{1}{4}\) 倍得到 \(\overline{C'D'}\)。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-2" value="A"><span class="option-text">A. \(\overline{C'D'} = \frac{15}{4}\)，與 \(\overline{CD}\) 平行但不在同一直線上</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-2" value="B"><span class="option-text">B. \(\overline{C'D'} = \frac{15}{4}\)，與 \(\overline{CD}\) 在同一直線上，\(C'\)、\(D'\) 分在 \(O\) 的兩側</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-2" value="C"><span class="option-text">C. \(\overline{C'D'} = 60\)，與 \(\overline{CD}\) 在同一直線上</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-2" value="D"><span class="option-text">D. \(\overline{C'D'} = \frac{15}{4}\)，\(C'\)、\(D'\) 在 \(O\) 的同一側</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(C'\) 在射線 \(OC\) 上、\(\overline{OC'} = \frac{6}{4} = \frac{3}{2}\)；\(D'\) 在射線 \(OD\) 上、\(\overline{OD'} = \frac{9}{4}\)。兩條射線方向相反，所以 \(C'\)、\(D'\) 分在 \(O\) 的兩側，都在直線 \(CD\) 上：
+              \[\overline{C'D'} = \frac{3}{2} + \frac{9}{4} = \frac{15}{4}\]
+              剛好是 \(\overline{CD} = 15\) 的 \(\frac{1}{4}\)。<br>
+              A 錯：中心在線段上時，縮放後與原線段在同一直線上。<br>
+              C 錯：縮放 \(\frac{1}{4}\) 倍是縮小，不是乘 4。<br>
+              D 錯：每個對應點都留在自己那條射線上，不會換邊。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 角的縮放
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i> <span>重點 2：角經過縮放，度數不變</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>角的兩邊是兩條射線。以 \(O\) 為中心，把 \(A\)、\(B\)、\(C\) 都縮放 \(r\) 倍得到 \(A'\)、\(B'\)、\(C'\)，連出 \(\angle A'C'B'\)。</li>
+              <li>射線縮放後互相平行：\(CA /\!/ C'A'\)、\(CB /\!/ C'B'\)。</li>
+              <li>直線 \(OC\) 同時截這兩組平行線，<strong>同位角相等</strong>：\(\angle 1 = \angle 3\)、\(\angle 2 = \angle 4\)，所以
+              \[\begin{aligned} & \angle A'C'B' = \angle 3 + \angle 4 \\ &= \angle 1 + \angle 2 = \angle ACB \end{aligned}\]</li>
+              <li>會變成 \(r\) 倍的是<strong>長度</strong>，不是角度。「一個角縮放 2 倍，度數也變 2 倍」是常見的錯誤。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・角的縮放</span>
+              一個角經過縮放後，<strong>角的度數不變</strong>
+            </div>
+
+            <div class="illustration-container">
+              <img src="sim_angle.webp" alt="昭和復古照相館風插圖：小影把一張小相片和放大後的大相片並排放在工作檯上，兩張相片上的屋頂斜線張開的角度一樣；阿光拿著量角器比對。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：角放大了幾倍？</h3>
+            <p class="interactive-instruction">調整 \(\angle ACB\) 的大小與縮放倍率，看 \(\angle A'C'B'\) 的兩邊與原來的兩邊是否平行，以及角的度數有沒有跟著變。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ang" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ang-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">中心</span>
+                    <div class="btn-group" id="ang-mode-group">
+                      <button class="pick-btn active" data-ang-mode="in">在角的內部</button>
+                      <button class="pick-btn" data-ang-mode="out">在角的外部</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ang-t">\(\angle ACB\)：<span id="ang-vt" class="val-num">70°</span></label>
+                    <input type="range" id="ang-t" min="30" max="150" value="70" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ang-r">縮放倍率 \(r\)：<span id="ang-vr" class="val-num">2 倍</span></label>
+                    <input type="range" id="ang-r" min="0" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ang-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (角的縮放)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-3">
+            <p class="quiz-question"><strong>Q3.</strong> \(\angle PQR = 38^\circ\)。以 \(O\) 為中心，將 \(\angle PQR\) 縮放 3 倍得到 \(\angle P'Q'R'\)，則 \(\angle P'Q'R'\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-3" value="A"><span class="option-text">A. \(114^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-3" value="B"><span class="option-text">B. \(\frac{38}{3}^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-3" value="C"><span class="option-text">C. \(38^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-3" value="D"><span class="option-text">D. \(142^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。縮放後角的兩邊分別與原來的兩邊平行，同位角相等，所以度數不變，仍是 \(38^\circ\)。<br>
+              A 錯：把角度也乘了 3，會變 3 倍的只有長度。<br>
+              B 錯：縮放 3 倍是放大，而且角度根本不變。<br>
+              D 錯：\(142^\circ\) 是 \(38^\circ\) 的補角，與縮放無關。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-4">
+            <p class="quiz-question"><strong>Q4.</strong> 阿光把一個三角形以 \(O\) 為中心縮放 \(\frac{1}{2}\) 倍。他說：「新三角形的三個內角，也都變成原來的一半。」下列哪一個理由最能說明他錯了？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-4" value="A"><span class="option-text">A. 縮小的時候，角度會變大</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-4" value="B"><span class="option-text">B. 三角形縮小後，邊長不變，只有角度變小</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-4" value="C"><span class="option-text">C. 只有縮放倍率大於 1 時，角度才會改變</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-4" value="D"><span class="option-text">D. 若三個內角都變一半，內角和只剩 \(90^\circ\)，圍不成三角形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。任何三角形的內角和都是 \(180^\circ\)；三個角都減半，和就只剩 \(90^\circ\)，不可能是三角形。事實上縮放後每一組對應邊都平行，同位角相等，三個內角都不變。<br>
+              A、C 錯：不論放大或縮小，角度都不變。<br>
+              B 錯：剛好相反，縮放 \(\frac{1}{2}\) 倍時邊長變一半、角度不變。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 多邊形的縮放
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-vector-square" aria-hidden="true"></i> <span>重點 3：多邊形的縮放——中心在哪裡都一樣</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>把圖形上<strong>每一個點</strong>與中心的距離都乘上同一個倍率，得到的圖形叫做原圖形的<strong>縮放圖形</strong>。</li>
+              <li>畫多邊形的縮放圖形：先把各頂點縮放，再把對應點依序用線段連起來。</li>
+              <li>縮放 \(r\) 倍後：每一邊都變 \(r\) 倍（<strong>對應邊成比例</strong>）、每一個角都不變（<strong>對應角相等</strong>），所以周長也變成 \(r\) 倍。</li>
+              <li>中心在圖形的外部、內部、頂點或邊上都可以。只要倍率相同，得到的縮放圖形<strong>全等</strong>，只是位置不同；所以沒有必要時，不必特別說中心在哪裡。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・縮放圖形</span>
+              \(n\) 邊形縮放後仍是 \(n\) 邊形，與原圖形<strong>對應邊成比例、對應角相等</strong>
+            </div>
+
+            <div class="illustration-container">
+              <img src="sim_enlarger.webp" alt="昭和復古照相館風插圖：紅色安全燈下的暗房，阿光扶著放大機的燈頭，燈光從上方一點往下照，把底片上的四邊形圖案投成工作檯上一個大很多、形狀一樣的四邊形；小影在旁邊壓著相紙。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：換一個中心再縮放</h3>
+            <p class="interactive-instruction">選縮放中心的位置與倍率，看四邊形 \(A'B'C'D'\) 的邊長與角度；再切到「四種中心疊在一起」，比較四個縮放圖形的形狀與大小。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-poly" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="poly-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">中心</span>
+                    <div class="btn-group" id="poly-center-group">
+                      <button class="pick-btn active" data-poly-center="out">外部</button>
+                      <button class="pick-btn" data-poly-center="in">內部</button>
+                      <button class="pick-btn" data-poly-center="vtx">頂點 \(D\)</button>
+                      <button class="pick-btn" data-poly-center="edge">\(\overline{AB}\) 上</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">畫面</span>
+                    <div class="btn-group" id="poly-view-group">
+                      <button class="pick-btn active" data-poly-view="one">只看這一個</button>
+                      <button class="pick-btn" data-poly-view="all">四種中心疊在一起</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="poly-r">縮放倍率 \(r\)：<span id="poly-vr" class="val-num">2 倍</span></label>
+                    <input type="range" id="poly-r" min="0" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="poly-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (多邊形的縮放)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-5">
+            <p class="quiz-question"><strong>Q5.</strong> 小影以同一個四邊形 \(ABCD\) 為原圖，分別以四邊形外部一點、內部一點、頂點 \(B\)、\(\overline{CD}\) 上一點為中心，各縮放 3 倍，得到四個四邊形。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-5" value="A"><span class="option-text">A. 四個四邊形的位置不同，但彼此全等</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-5" value="B"><span class="option-text">B. 以內部一點為中心的那一個面積最大</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-5" value="C"><span class="option-text">C. 以 \(B\) 為中心時 \(B\) 不動，所以有兩邊只放大 2 倍</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-5" value="D"><span class="option-text">D. 只有以外部一點為中心時，對應角才相等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。不管中心在哪裡，縮放 3 倍後每一邊都是原來的 3 倍、每一個角都不變，四個四邊形的邊與角完全一樣，所以全等，只是擺的位置不同。<br>
+              B 錯：四個全等，面積一樣大。<br>
+              C 錯：\(B\) 不動，但 \(\overline{BA'} = 3\overline{BA}\)，每一邊仍是 3 倍。<br>
+              D 錯：角的縮放與中心位置無關，對應角一定相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-6">
+            <p class="quiz-question"><strong>Q6.</strong> 一個五邊形的周長是 18 公分。以任一點為中心將它縮放 \(\frac{2}{3}\) 倍，縮放圖形的周長是多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-6" value="A"><span class="option-text">A. 27</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-6" value="B"><span class="option-text">B. 8</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-6" value="C"><span class="option-text">C. 12</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-6" value="D"><span class="option-text">D. 18</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。五條邊都變成原來的 \(\frac{2}{3}\) 倍，加起來的周長也是 \(\frac{2}{3}\) 倍：\(18 \times \frac{2}{3} = 12\) 公分。<br>
+              A 錯：\(18 \div \frac{2}{3} = 27\)，把縮小算成放大。<br>
+              B 錯：\(18 \times \frac{2}{3} \times \frac{2}{3} = 8\)，周長只乘一次倍率。<br>
+              D 錯：周長會跟著邊長變，不會不變。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 正 n 邊形的縮放與相似
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shapes" aria-hidden="true"></i> <span>重點 4：正 \(n\) 邊形縮放後仍是正 \(n\) 邊形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>正 \(n\) 邊形縮放 \(r\) 倍：每一邊都變 \(r\) 倍（邊長仍全部相等），每一個內角都不變，所以<strong>仍是正 \(n\) 邊形</strong>。</li>
+              <li>正 \(n\) 邊形的一個內角：
+              \[\frac{180^\circ \times (n - 2)}{n}\]
+              只跟邊數 \(n\) 有關，跟邊長無關。</li>
+              <li>兩個<strong>邊數相同</strong>的正多邊形：每一組對應邊的比都一樣（對應邊成比例），內角都相等（對應角相等），所以<strong>任意兩個正 \(n\) 邊形都相似</strong>。</li>
+              <li>「邊數相同」不能省：正三角形與正方形連邊數都不同，不會相似。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="sim_hexframe.webp" alt="昭和復古照相館風插圖：照相館櫥窗裡掛著一大一小兩個正六邊形木相框，形狀一樣、大小不同；阿光踮腳把小相框掛到大相框旁邊，小影在下面看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：正多邊形相框</h3>
+            <p class="interactive-instruction">調整邊數、原來的邊長與縮放倍率，比較兩個正多邊形的邊長與內角。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-reg" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="reg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="reg-n">邊數 \(n\)：<span id="reg-vn" class="val-num">6</span></label>
+                    <input type="range" id="reg-n" min="3" max="12" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="reg-s">原來的邊長：<span id="reg-vs" class="val-num">2</span></label>
+                    <input type="range" id="reg-s" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="reg-r">縮放倍率 \(r\)：<span id="reg-vr" class="val-num">3/2 倍</span></label>
+                    <input type="range" id="reg-r" min="0" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="reg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (正 n 邊形)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-7">
+            <p class="quiz-question"><strong>Q7.</strong> 邊長 2 公分的正十五邊形，以某一點為中心縮放 4 倍。縮放圖形的邊長與一個內角分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-7" value="A"><span class="option-text">A. 6 公分、\(156^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-7" value="B"><span class="option-text">B. 8 公分、\(624^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-7" value="C"><span class="option-text">C. 8 公分、\(144^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-7" value="D"><span class="option-text">D. 8 公分、\(156^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。邊長變 4 倍：\(2 \times 4 = 8\) 公分；內角不變，仍是正十五邊形的內角：
+              \[\frac{180^\circ \times (15 - 2)}{15} = 156^\circ\]
+              A 錯：邊長是乘 4，不是加 4。<br>
+              B 錯：把內角也乘了 4。<br>
+              C 錯：\(144^\circ\) 是正十邊形的內角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-8">
+            <p class="quiz-question"><strong>Q8.</strong> 下列哪一組中的兩個圖形一定相似？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-8" value="A"><span class="option-text">A. 兩個等腰三角形</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-8" value="B"><span class="option-text">B. 兩個菱形</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-8" value="C"><span class="option-text">C. 一個正二十邊形，與另一個邊長不同的正二十邊形</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-8" value="D"><span class="option-text">D. 兩個五個內角都是 \(108^\circ\) 的五邊形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩個正二十邊形，邊長的比處處相同、內角都相等，一定相似。<br>
+              A 錯：頂角 \(30^\circ\) 與頂角 \(100^\circ\) 的等腰三角形，角都不一樣。<br>
+              B 錯：菱形的邊都成比例，但內角可以不同。<br>
+              D 錯：只知道角都相等，五條邊不一定一樣長，邊不一定成比例。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 相似多邊形的意義與對應順序
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> <span>重點 5：相似多邊形——寫的順序就是對應關係</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩個<strong>邊數相同</strong>的多邊形，若<strong>對應邊成比例</strong>且<strong>對應角相等</strong>，就稱這兩個多邊形<strong>相似</strong>。</li>
+              <li>記作「四邊形 \(ABCD \sim\) 四邊形 \(EFGH\)」，讀作「四邊形 \(ABCD\) 相似於四邊形 \(EFGH\)」。</li>
+              <li>課本一律<strong>照對應的順序</strong>寫：第 1 個字母對第 1 個、第 2 個對第 2 個……讀相似式就能直接列出
+              \[\frac{\overline{AB}}{\overline{EF}} = \frac{\overline{BC}}{\overline{FG}} = \frac{\overline{CD}}{\overline{GH}} = \frac{\overline{DA}}{\overline{HE}}\]</li>
+              <li>反過來，兩個相似的多邊形，對應邊一定成比例、對應角一定相等。縮放圖形與原圖形一定相似。</li>
+              <li>找對應頂點看的是<strong>角的大小與邊的長短</strong>，不是圖擺放的位置：圖轉了一個角度，對應關係不變。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・相似多邊形</span>
+              相似 \(\Leftrightarrow\) 對應邊成比例 <strong>且</strong> 對應角相等
+            </div>
+
+            <div class="illustration-container">
+              <img src="sim_negatives.webp" alt="昭和復古照相館風插圖：小影把一條小小的底片舉到燈箱前，旁邊工作檯上放著同一個畫面放大後的相片，相片被轉了一個方向擺放；阿光歪著頭對照兩者。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：誰對應誰？</h3>
+            <p class="interactive-instruction">右邊的四邊形 \(EFGH\) 是左邊 \(ABCD\) 放大後轉了一個角度。選「\(A\) 對應到哪一點」，其餘頂點照順序跟著對應，看邊的比與角是否都對得上。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-corr" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="corr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">\(A\) 對應</span>
+                    <div class="btn-group" id="corr-map-group">
+                      <button class="pick-btn active" data-corr-map="0">\(E\)</button>
+                      <button class="pick-btn" data-corr-map="1">\(F\)</button>
+                      <button class="pick-btn" data-corr-map="2">\(G\)</button>
+                      <button class="pick-btn" data-corr-map="3">\(H\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="corr-rot">右邊圖形轉動：<span id="corr-vrot" class="val-num">120°</span></label>
+                    <input type="range" id="corr-rot" min="0" max="330" value="120" step="30">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="corr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (相似多邊形)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-9">
+            <p class="quiz-question"><strong>Q9.</strong> 已知四邊形 \(ABCD \sim\) 四邊形 \(PQRS\)，且頂點依序對應。下列何者一定正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-9" value="A"><span class="option-text">A. \(\overline{AB} : \overline{QR} = \overline{BC} : \overline{RS}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-9" value="B"><span class="option-text">B. \(\angle B = \angle R\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-9" value="C"><span class="option-text">C. \(\overline{AD} : \overline{PS} = \overline{CD} : \overline{RS}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-9" value="D"><span class="option-text">D. \(\angle A + \angle P = 180^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。依序對應：\(A \leftrightarrow P\)、\(B \leftrightarrow Q\)、\(C \leftrightarrow R\)、\(D \leftrightarrow S\)。\(\overline{AD}\) 對 \(\overline{PS}\)、\(\overline{CD}\) 對 \(\overline{RS}\)，對應邊成比例。<br>
+              A 錯：\(\overline{AB}\) 的對應邊是 \(\overline{PQ}\)，不是 \(\overline{QR}\)。<br>
+              B 錯：\(\angle B\) 的對應角是 \(\angle Q\)。<br>
+              D 錯：對應角是相等，不是互補。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-10">
+            <p class="quiz-question"><strong>Q10.</strong> 四邊形 \(KLMN\) 與四邊形 \(WXYZ\) 相似，且 \(K\)、\(L\)、\(M\)、\(N\) 的對應點依序是 \(Y\)、\(Z\)、\(W\)、\(X\)。下列哪一種寫法同時寫出了正確的對應關係？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-10" value="A"><span class="option-text">A. 四邊形 \(KLMN \sim\) 四邊形 \(WXYZ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-10" value="B"><span class="option-text">B. 四邊形 \(KLMN \sim\) 四邊形 \(YZWX\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-10" value="C"><span class="option-text">C. 四邊形 \(KLMN \sim\) 四邊形 \(XWZY\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-10" value="D"><span class="option-text">D. 四邊形 \(KLMN \sim\) 四邊形 \(ZYXW\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。照對應的順序寫：\(K\) 對 \(Y\)、\(L\) 對 \(Z\)、\(M\) 對 \(W\)、\(N\) 對 \(X\)，右邊依序寫成 \(YZWX\)。<br>
+              A 錯：照字母順序寫，對應關係就變成 \(K \leftrightarrow W\)。<br>
+              C、D 錯：順序對不上，例如 C 寫成 \(K \leftrightarrow X\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 只有一個條件不一定相似
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> <span>重點 6：只有邊成比例、或只有角相等，不一定相似</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>判斷兩個多邊形是否相似，<strong>兩個條件都要檢查</strong>：對應邊成比例、對應角相等。</li>
+              <li><strong>只有角相等</strong>：長方形和正方形的四個角都是 \(90^\circ\)，但長、寬不相等的長方形，怎麼縮放都不會變成正方形，所以不一定相似。</li>
+              <li><strong>只有邊成比例</strong>：菱形和正方形的四組邊都成比例，但內角不是直角的菱形，縮放後仍不是直角，所以不一定相似。</li>
+              <li>長方形對摺成小長方形時，長邊、短邊可能互換角色：<strong>兩種對應方式都要試</strong>，都不成比例才能說不相似。</li>
+              <li>這條提醒是對<strong>四邊形以上</strong>說的；三角形另有比較簡單的判別方法（重點 8～10）。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="sim_frames.webp" alt="昭和復古照相館風插圖：工作檯上並排放著一個正方形木相框和一個細長的長方形木相框，四個角都是直角；阿光想把正方形的相片塞進長方形相框，小影搖頭。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：缺一個條件會怎樣？</h3>
+            <p class="interactive-instruction">左邊是邊長 4 的正方形。選一種圖形，調整它的邊長或角度，看兩個條件各自有沒有成立，以及什麼時候才相似。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-only" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="only-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">比較</span>
+                    <div class="btn-group" id="only-mode-group">
+                      <button class="pick-btn active" data-only-mode="rect">長方形（角都相等）</button>
+                      <button class="pick-btn" data-only-mode="rho">菱形（邊都成比例）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="only-row-l">
+                    <label for="only-l">長方形的長：<span id="only-vl" class="val-num">7</span></label>
+                    <input type="range" id="only-l" min="2" max="10" value="7" step="1">
+                  </div>
+                  <div class="slider-row" id="only-row-w">
+                    <label for="only-w">長方形的寬：<span id="only-vw" class="val-num">4</span></label>
+                    <input type="range" id="only-w" min="2" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="only-row-a" style="display:none">
+                    <label for="only-a">菱形的邊長：<span id="only-va" class="val-num">6</span></label>
+                    <input type="range" id="only-a" min="2" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="only-row-t" style="display:none">
+                    <label for="only-t">菱形的一個內角：<span id="only-vt" class="val-num">60°</span></label>
+                    <input type="range" id="only-t" min="40" max="140" value="60" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="only-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (缺一不可)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-11">
+            <p class="quiz-question"><strong>Q11.</strong> 長方形 \(ABCD\) 中，\(\overline{AB} = 8\)、\(\overline{AD} = 12\)，\(E\)、\(F\) 分別是 \(\overline{AD}\)、\(\overline{BC}\) 的中點。長方形 \(ABFE\) 與長方形 \(ABCD\) 是否相似？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-11" value="A"><span class="option-text">A. 相似：四個角都是直角</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-11" value="B"><span class="option-text">B. 不相似：兩種對應方式，邊的比都不相等</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-11" value="C"><span class="option-text">C. 相似：\(ABFE\) 的面積剛好是一半</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-11" value="D"><span class="option-text">D. 相似：\(\overline{AE}\) 剛好是 \(\overline{AD}\) 的一半</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。長方形 \(ABFE\) 的兩邊是 \(\overline{AB} = 8\)、\(\overline{AE} = 6\)。<br>
+              ① \(\overline{AB}\) 對 \(\overline{AB}\)、\(\overline{AE}\) 對 \(\overline{AD}\)：\(\frac{8}{8} = 1\)，\(\frac{6}{12} = \frac{1}{2}\)，不相等。<br>
+              ② 短邊對短邊、長邊對長邊：\(\frac{6}{8} = \frac{3}{4}\)，\(\frac{8}{12} = \frac{2}{3}\)，也不相等。<br>
+              兩種對應方式都不成比例，所以不相似。A 錯：只有角相等不夠。C、D 錯：面積、單一邊長的關係都不是相似的條件。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-12">
+            <p class="quiz-question"><strong>Q12.</strong> 小影說：「兩個四邊形的四組對應邊比都是 \(1 : 2\)，所以它們一定相似。」下列哪一組圖形可以說明她說錯了？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-12" value="A"><span class="option-text">A. 邊長 3 的正方形，與邊長 6、一個內角 \(72^\circ\) 的菱形</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-12" value="B"><span class="option-text">B. 邊長 3 的正方形，與邊長 6 的正方形</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-12" value="C"><span class="option-text">C. \(3 \times 5\) 的長方形，與 \(6 \times 10\) 的長方形</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-12" value="D"><span class="option-text">D. \(3 \times 5\) 的長方形，與 \(6 \times 9\) 的長方形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。正方形與菱形的四組邊比都是 \(3 : 6 = 1 : 2\)，但正方形的角都是 \(90^\circ\)、菱形有 \(72^\circ\) 的角，對應角不相等，所以不相似——邊都成比例，卻不相似，這就說明她錯了。<br>
+              B、C 錯：這兩組邊成比例、角也都是直角，確實相似，不能當反例。<br>
+              D 錯：\(3 : 6 \ne 5 : 9\)，連「四組邊比都是 \(1 : 2\)」都不符合，不能拿來說明。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 利用相似求邊長與角度
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> <span>重點 7：已知相似，求邊長與角度</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>知道兩個圖形相似、也知道對應順序，就能用<strong>對應角相等</strong>求角度、用<strong>對應邊成比例</strong>求邊長。</li>
+              <li><strong>求角</strong>：先從相似式找出對應角，直接相等；剩下的角用內角和（四邊形 \(360^\circ\)）算。</li>
+              <li><strong>求邊</strong>：列比例式，再用「內項乘積等於外項乘積」：
+              \[\begin{aligned} & \overline{AB} : \overline{EF} = \overline{BC} : \overline{FG} \\ \Rightarrow \ & \overline{AB} \times \overline{FG} = \overline{EF} \times \overline{BC} \end{aligned}\]</li>
+              <li>比例式兩邊要<strong>同一個方向</strong>：左邊是「原圖 : 新圖」，右邊也要「原圖 : 新圖」，寫反就會算錯。</li>
+              <li>「多幾公分」這類問題：先求出邊長本身，再相減，不能把差直接照比例搬過去。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="sim_print.webp" alt="昭和復古照相館風插圖：工作檯上並排放著同一張風景照的小張和大張，小影用捲尺量大張相片的寬，阿光在小筆記本上寫比例式。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：相似四邊形計算台</h3>
+            <p class="interactive-instruction">四邊形 \(ABCD \sim\) 四邊形 \(EFGH\)（依序對應）。「求角」調整 \(ABCD\) 的三個角，看 \(EFGH\) 的角；「求邊」調整三個已知長度，看怎麼列式求 \(\overline{FG}\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-calc" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="calc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求</span>
+                    <div class="btn-group" id="calc-mode-group">
+                      <button class="pick-btn active" data-calc-mode="ang">求角</button>
+                      <button class="pick-btn" data-calc-mode="side">求邊</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="calc-row-A">
+                    <label for="calc-A">\(\angle A\)：<span id="calc-vA" class="val-num">95°</span></label>
+                    <input type="range" id="calc-A" min="65" max="105" value="95" step="5">
+                  </div>
+                  <div class="slider-row" id="calc-row-B">
+                    <label for="calc-B">\(\angle B\)：<span id="calc-vB" class="val-num">70°</span></label>
+                    <input type="range" id="calc-B" min="65" max="105" value="70" step="5">
+                  </div>
+                  <div class="slider-row" id="calc-row-C">
+                    <label for="calc-C">\(\angle C\)：<span id="calc-vC" class="val-num">100°</span></label>
+                    <input type="range" id="calc-C" min="65" max="105" value="100" step="5">
+                  </div>
+                  <div class="slider-row" id="calc-row-ab" style="display:none">
+                    <label for="calc-ab">\(\overline{AB}\)：<span id="calc-vab" class="val-num">6</span></label>
+                    <input type="range" id="calc-ab" min="4" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="calc-row-bc" style="display:none">
+                    <label for="calc-bc">\(\overline{BC}\)：<span id="calc-vbc" class="val-num">5</span></label>
+                    <input type="range" id="calc-bc" min="2" max="7" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="calc-row-ef" style="display:none">
+                    <label for="calc-ef">\(\overline{EF}\)：<span id="calc-vef" class="val-num">9</span></label>
+                    <input type="range" id="calc-ef" min="2" max="12" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="calc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求邊與角)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-13">
+            <p class="quiz-question"><strong>Q13.</strong> 四邊形 \(ABCD \sim\) 四邊形 \(EFGH\)，且頂點依序對應。若 \(\angle A = 84^\circ\)、\(\angle F = 77^\circ\)、\(\angle C = 108^\circ\)，則 \(\angle H\) 是幾度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-13" value="A"><span class="option-text">A. \(77^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-13" value="B"><span class="option-text">B. \(84^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-13" value="C"><span class="option-text">C. \(108^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-13" value="D"><span class="option-text">D. \(91^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。對應角相等：\(\angle B = \angle F = 77^\circ\)。\(\angle H\) 的對應角是 \(\angle D\)：
+              \[\begin{aligned} & \angle H = \angle D \\ &= 360^\circ - 84^\circ - 77^\circ - 108^\circ \\ &= 91^\circ \end{aligned}\]
+              A 錯：\(77^\circ\) 是 \(\angle B\)。B 錯：\(84^\circ\) 是 \(\angle E\)。C 錯：\(108^\circ\) 是 \(\angle G\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-14">
+            <p class="quiz-question"><strong>Q14.</strong> 長方形 \(ABCD \sim\) 長方形 \(EFGH\)，且頂點依序對應，\(\overline{EF} = 4\) 公分、\(\overline{EH} = 10\) 公分。若 \(\overline{AD}\) 比 \(\overline{EH}\) 多 5 公分，則 \(\overline{AB}\) 比 \(\overline{EF}\) 多幾公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-14" value="A"><span class="option-text">A. 2</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-14" value="B"><span class="option-text">B. 5</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-14" value="C"><span class="option-text">C. 6</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-14" value="D"><span class="option-text">D. \(\frac{4}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{AD} = 10 + 5 = 15\)。對應邊成比例：
+              \[\begin{aligned} & \overline{AD} : \overline{EH} = \overline{AB} : \overline{EF} \\ & 15 : 10 = \overline{AB} : 4 \\ & 10\,\overline{AB} = 60,\ \overline{AB} = 6 \end{aligned}\]
+              所以 \(\overline{AB}\) 比 \(\overline{EF}\) 多 \(6 - 4 = 2\) 公分。<br>
+              B 錯：把「多 5 公分」直接搬過去，相似是成比例，不是差相同。<br>
+              C 錯：6 是 \(\overline{AB}\) 本身，還要減掉 \(\overline{EF}\)。<br>
+              D 錯：比例式寫反（\(15 : 10 = 4 : \overline{AB}\)）會得 \(\overline{AB} = \frac{8}{3}\)，再算 \(4 - \frac{8}{3}\) 就是這個數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: AAA（AA）相似性質
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> <span>重點 8：AAA（AA）相似性質</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>三角形不必把邊和角全部檢查完。若 \(\angle A = \angle P\)、\(\angle B = \angle Q\)、\(\angle C = \angle R\)：把 \(\angle A\) 疊到 \(\angle P\) 上，\(\angle B = \angle Q\) 是同位角相等，所以 \(\overline{BC} /\!/ \overline{QR}\)，再由平行線截比例線段，三邊成比例 \(\Rightarrow\) 相似。</li>
+              <li>已知<strong>兩組</strong>對應角相等，第三組也一定相等（內角和 \(180^\circ\)），所以兩組角就夠了。</li>
+              <li><strong>A 字型</strong>：\(\overline{DE} /\!/ \overline{BC}\) \(\Rightarrow\) \(\angle ADE = \angle B\)、\(\angle AED = \angle C\)（同位角）\(\Rightarrow\) \(\triangle ADE \sim \triangle ABC\)。列式時用<strong>整條 \(\overline{AC}\)</strong>，不是 \(\overline{EC}\)。</li>
+              <li><strong>反向等角</strong>：\(\angle AED = \angle B\) 加上共用的 \(\angle A\) \(\Rightarrow\) \(\triangle AED \sim \triangle ABC\)，這時 \(E\) 對應 \(B\)、\(D\) 對應 \(C\)，比例式要照這個順序列。</li>
+              <li>只有<strong>一組</strong>角相等不夠：一個正三角形和一個也有 \(60^\circ\) 角的直角三角形並不相似。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・AAA（AA）相似性質</span>
+              兩個三角形有三組（或兩組）對應角相等 \(\Rightarrow\) 兩個三角形相似
+            </div>
+
+            <div class="illustration-container">
+              <img src="sim_tripod.webp" alt="昭和復古照相館風插圖：照相館門口立著一座木頭三腳架，阿光在三腳架兩支腳之間綁上一根和地面平行的橫木，小影蹲在地上看橫木和地面圍出的兩個三角形。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩組角就夠了</h3>
+            <p class="interactive-instruction">選一種圖形，調整三個已知長度，看怎麼由兩組等角判斷相似，再用對應邊成比例求出未知的長度。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-aa" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="aa-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="aa-mode-group">
+                      <button class="pick-btn active" data-aa-mode="par">A 字型（\(\overline{DE} /\!/ \overline{BC}\)）</button>
+                      <button class="pick-btn" data-aa-mode="rev">反向等角（\(\angle AED = \angle B\)）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="aa-row-a">
+                    <label for="aa-a">\(\overline{AE}\)：<span id="aa-va" class="val-num">4</span></label>
+                    <input type="range" id="aa-a" min="2" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="aa-row-c">
+                    <label for="aa-c">\(\overline{EC}\)：<span id="aa-vc" class="val-num">2</span></label>
+                    <input type="range" id="aa-c" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="aa-row-d">
+                    <label for="aa-d">\(\overline{DE}\)：<span id="aa-vd" class="val-num">6</span></label>
+                    <input type="range" id="aa-d" min="2" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="aa-row-ad" style="display:none">
+                    <label for="aa-ad">\(\overline{AD}\)：<span id="aa-vad" class="val-num">3</span></label>
+                    <input type="range" id="aa-ad" min="2" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="aa-row-ae" style="display:none">
+                    <label for="aa-ae">\(\overline{AE}\)：<span id="aa-vae" class="val-num">4</span></label>
+                    <input type="range" id="aa-ae" min="2" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="aa-row-ec" style="display:none">
+                    <label for="aa-ec">\(\overline{EC}\)：<span id="aa-vec" class="val-num">2</span></label>
+                    <input type="range" id="aa-ec" min="1" max="6" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="aa-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (AA 相似性質)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-15">
+            <p class="quiz-question"><strong>Q15.</strong> 如圖，\(\triangle ABC\) 中，\(D\)、\(E\) 分別在 \(\overline{AB}\)、\(\overline{AC}\) 上，且 \(\overline{DE} /\!/ \overline{BC}\)。若 \(\overline{AE} = 10\)、\(\overline{EC} = 5\)、\(\overline{DE} = 9\)，則 \(\overline{BC} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q15" width="320" height="220" role="img" aria-label="三角形 ABC，A 在上；D 在 AB 上、E 在 AC 上，DE 與 BC 平行；AE 標 10、EC 標 5、DE 標 9"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-15" value="A"><span class="option-text">A. \(\frac{9}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-15" value="B"><span class="option-text">B. 14</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-15" value="C"><span class="option-text">C. \(\frac{27}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-15" value="D"><span class="option-text">D. 18</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{DE} /\!/ \overline{BC}\)，同位角相等，\(\triangle ADE \sim \triangle ABC\)（AA）。\(\overline{AC} = 10 + 5 = 15\)：
+              \[\begin{aligned} & \overline{DE} : \overline{BC} = \overline{AE} : \overline{AC} \\ & 9 : \overline{BC} = 10 : 15 \\ & 10\,\overline{BC} = 135,\ \overline{BC} = \frac{27}{2} \end{aligned}\]
+              A 錯：拿 \(\overline{EC}\) 當對應邊（\(9 : \overline{BC} = 10 : 5\)）。<br>
+              B 錯：\(9 + 5\) 把長度直接相加。<br>
+              D 錯：\(\overline{AC}\) 是 \(\overline{AE}\) 的 \(\frac{3}{2}\) 倍，不是 2 倍。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-16">
+            <p class="quiz-question"><strong>Q16.</strong> 如圖，\(\triangle ABC\) 中，\(D\) 在 \(\overline{AB}\) 上、\(E\) 在 \(\overline{AC}\) 上，且 \(\angle ABC = \angle AED\)。若 \(\overline{AD} = 7\)、\(\overline{AE} = 8\)、\(\overline{EC} = 6\)，則 \(\overline{BD} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q16" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 AB 上、E 在 AC 上，角 ABC 與角 AED 標同樣的角記號；AD 標 7、AE 標 8、EC 標 6"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-16" value="A"><span class="option-text">A. 9</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-16" value="B"><span class="option-text">B. 16</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-16" value="C"><span class="option-text">C. \(\frac{21}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-16" value="D"><span class="option-text">D. \(\frac{49}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle AED = \angle ABC\)、\(\angle A\) 共用，所以 \(\triangle AED \sim \triangle ABC\)（AA），\(E\) 對應 \(B\)、\(D\) 對應 \(C\)。\(\overline{AC} = 8 + 6 = 14\)：
+              \[\begin{aligned} & \overline{AE} : \overline{AB} = \overline{AD} : \overline{AC} \\ & 8 : \overline{AB} = 7 : 14 \\ & 7\,\overline{AB} = 112,\ \overline{AB} = 16 \end{aligned}\]
+              \(\overline{BD} = 16 - 7 = 9\)。<br>
+              B 錯：16 是 \(\overline{AB}\)，還要減 \(\overline{AD}\)。<br>
+              C、D 錯：誤把 \(D\) 對 \(B\)、\(E\) 對 \(C\)（\(7 : \overline{AB} = 8 : 14\)），得 \(\overline{AB} = \frac{49}{4}\)，D 是它、C 是它再減 7。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: SAS 相似性質
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scissors" aria-hidden="true"></i> <span>重點 9：SAS 相似性質——角要夾在兩組邊中間</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩個三角形有一組對應角相等，而且<strong>夾這個角的兩組對應邊成比例</strong> \(\Rightarrow\) 相似。</li>
+              <li>理由：把 \(\angle A\) 疊到 \(\angle P\) 上，\(\overline{AB} : \overline{PQ} = \overline{AC} : \overline{PR}\)，所以 \(\overline{BC} /\!/ \overline{QR}\)，同位角相等，再用 AAA。</li>
+              <li>相似性質的 S 是「對應邊<strong>成比例</strong>」，全等性質的 S 是「對應邊<strong>相等</strong>」，意思不一樣。</li>
+              <li><strong>X 字型</strong>（剪刀）：兩條線段交於一點，<strong>對頂角</strong>就是那組夾角。夾邊可能「同一條線對同一條線」，也可能交叉對應，兩種都要試。</li>
+              <li>兩組邊成比例、但相等的角<strong>沒有夾在中間</strong>（SSA），不一定相似。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・SAS 相似性質</span>
+              一組對應角相等，且夾這個角的兩組對應邊成比例 \(\Rightarrow\) 相似
+            </div>
+
+            <div class="illustration-container">
+              <img src="sim_scissors.webp" alt="昭和復古照相館風插圖：小影在工作檯上張開一把裁相片的大剪刀，兩片刀刃交叉成 X 字形；阿光用手指著刀刃的交叉點。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：剪刀與 SSA 陷阱</h3>
+            <p class="interactive-instruction">「X 字型」調整交點 \(C\) 兩側的四段長度，看夾邊的比何時相等、是哪兩個三角形相似；「SSA 陷阱」固定一個角與兩邊，看會不會出現兩種形狀。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sas" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sas-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="sas-mode-group">
+                      <button class="pick-btn active" data-sas-mode="x">X 字型</button>
+                      <button class="pick-btn" data-sas-mode="ssa">SSA 陷阱</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="sas-row-a">
+                    <label for="sas-a">\(\overline{CA}\)：<span id="sas-va" class="val-num">3</span></label>
+                    <input type="range" id="sas-a" min="2" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="sas-row-b">
+                    <label for="sas-b">\(\overline{CB}\)：<span id="sas-vb" class="val-num">4</span></label>
+                    <input type="range" id="sas-b" min="2" max="9" value="4" step="1">
+                  </div>
+                  <div class="slider-row" id="sas-row-e">
+                    <label for="sas-e">\(\overline{CE}\)：<span id="sas-ve" class="val-num">6</span></label>
+                    <input type="range" id="sas-e" min="2" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="sas-row-d">
+                    <label for="sas-d">\(\overline{CD}\)：<span id="sas-vd" class="val-num">7</span></label>
+                    <input type="range" id="sas-d" min="2" max="9" value="7" step="1">
+                  </div>
+                  <div class="slider-row" id="sas-row-bc" style="display:none">
+                    <label for="sas-bc">\(\overline{BC}\)：<span id="sas-vbc" class="val-num">5</span></label>
+                    <input type="range" id="sas-bc" min="3" max="8" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sas-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (SAS 相似性質)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-17">
+            <p class="quiz-question"><strong>Q17.</strong> 如圖，\(\overline{AE}\) 與 \(\overline{BD}\) 交於 \(C\)。若 \(\overline{AC} = 4\)、\(\overline{CE} = 10\)、\(\overline{BC} = 6\)、\(\overline{CD} = 15\)、\(\overline{AB} = 5\)，則 \(\overline{DE} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q17" width="320" height="220" role="img" aria-label="線段 AE 與線段 BD 交於 C，A、B 在左，D、E 在右；AC 標 4、CE 標 10、BC 標 6、CD 標 15、AB 標 5"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-17" value="A"><span class="option-text">A. 2</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-17" value="B"><span class="option-text">B. \(\frac{25}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-17" value="C"><span class="option-text">C. 11</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-17" value="D"><span class="option-text">D. \(\frac{25}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{AC} : \overline{EC} = 4 : 10 = 2 : 5\)，\(\overline{BC} : \overline{DC} = 6 : 15 = 2 : 5\)，夾角 \(\angle ACB = \angle ECD\)（對頂角），所以 \(\triangle ACB \sim \triangle ECD\)（SAS），\(A\) 對 \(E\)、\(B\) 對 \(D\)：
+              \[\begin{aligned} & \overline{AB} : \overline{ED} = 2 : 5 \\ & 5 : \overline{DE} = 2 : 5,\ \overline{DE} = \frac{25}{2} \end{aligned}\]
+              A 錯：把比例反過來，算成縮小。<br>
+              B 錯：交叉對應（\(5 : \overline{DE} = 6 : 10\)），但 \(4 : 15 \ne 6 : 10\)，這樣對應不成比例。<br>
+              C 錯：\(5 + 6\) 把長度直接相加。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-18">
+            <p class="quiz-question"><strong>Q18.</strong> \(\triangle ABC\) 與 \(\triangle DEF\) 中，\(\angle A = \angle D\)，且 \(\overline{AB} : \overline{DE} = \overline{BC} : \overline{EF} = 2 : 3\)。下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-18" value="A"><span class="option-text">A. 一定相似，根據 SAS 相似性質</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-18" value="B"><span class="option-text">B. 不一定相似：相等的角沒有夾在這兩組邊之間</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-18" value="C"><span class="option-text">C. 一定相似，根據 SSS 相似性質</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-18" value="D"><span class="option-text">D. 一定不相似</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。夾 \(\angle A\) 的兩邊是 \(\overline{AB}\)、\(\overline{AC}\)，題目給的卻是 \(\overline{AB}\)、\(\overline{BC}\)：\(\angle A\) 不是這兩組邊的夾角（SSA），可能畫出兩種形狀，不一定相似。<br>
+              A 錯：SAS 的角必須夾在兩組成比例的邊中間。<br>
+              C 錯：SSS 要三組邊都成比例，這裡只有兩組。<br>
+              D 錯：也有可能剛好相似，只是不能確定。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: SSS 相似性質
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler" aria-hidden="true"></i> <span>重點 10：SSS 相似性質——短對短、長對長</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩個三角形的<strong>三組對應邊成比例</strong> \(\Rightarrow\) 相似。</li>
+              <li>理由：把 \(\triangle ABC\) 縮放 \(r\) 倍得到 \(\triangle A_1B_1C_1\)，它與 \(\triangle PQR\) 三邊相等（SSS 全等），角都相等；而縮放不改變角度，所以 \(\triangle ABC\) 與 \(\triangle PQR\) 的對應角相等。</li>
+              <li>做法：兩個三角形的邊各自<strong>由短排到長</strong>，最短對最短、中間對中間、最長對最長，三個比都相等才相似。</li>
+              <li>找對應頂點：<strong>對應邊所對的角</strong>是對應角。例如最短邊對面的角，對應另一個三角形最短邊對面的角。</li>
+              <li>只有兩組邊成比例不夠：一個正三角形和一個等腰直角三角形，可以有兩組邊成比例，卻不相似。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・SSS 相似性質</span>
+              兩個三角形有三組對應邊成比例 \(\Rightarrow\) 兩個三角形相似
+            </div>
+
+            <div class="illustration-container">
+              <img src="sim_sticks.webp" alt="昭和復古照相館風插圖：阿光在工作檯上用三根短木條釘成一個小三角形相框，小影手上拿著三根長木條，正把它們由短到長排在小三角形旁邊比對。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：三邊配對檢查</h3>
+            <p class="interactive-instruction">選 \(\triangle ABC\) 的三邊，再調整 \(\triangle DEF\) 的三邊。畫布會把兩組邊由短到長排好配對，算出三個比，判斷是否相似、哪個頂點對哪個頂點。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sss" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sss-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">\(\triangle ABC\)</span>
+                    <div class="btn-group" id="sss-base-group">
+                      <button class="pick-btn active" data-sss-base="0">\(\overline{AB} = 3\)、\(\overline{BC} = 4\)、\(\overline{CA} = 6\)</button>
+                      <button class="pick-btn" data-sss-base="1">\(\overline{AB} = 6\)、\(\overline{BC} = 8\)、\(\overline{CA} = 5\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sss-d">\(\overline{DE}\)：<span id="sss-vd" class="val-num">6</span></label>
+                    <input type="range" id="sss-d" min="2" max="18" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sss-e">\(\overline{EF}\)：<span id="sss-ve" class="val-num">9</span></label>
+                    <input type="range" id="sss-e" min="2" max="18" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sss-f">\(\overline{FD}\)：<span id="sss-vf" class="val-num">12</span></label>
+                    <input type="range" id="sss-f" min="2" max="18" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sss-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (SSS 相似性質)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-19">
+            <p class="quiz-question"><strong>Q19.</strong> \(\triangle ABC\) 的三邊長是 4、6、7。下列哪一組長度圍成的三角形，一定與 \(\triangle ABC\) 相似？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-19" value="A"><span class="option-text">A. 8、10、14</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-19" value="B"><span class="option-text">B. 12、18、21</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-19" value="C"><span class="option-text">C. 6、8、9</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-19" value="D"><span class="option-text">D. 7、8、12</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。由短到長配對：\(\frac{12}{4} = \frac{18}{6} = \frac{21}{7} = 3\)，三組對應邊成比例，根據 SSS 相似性質，兩個三角形相似。<br>
+              A 錯：\(\frac{8}{4} = \frac{14}{7} = 2\)，但 \(\frac{10}{6} \ne 2\)，只有兩組成比例。<br>
+              C 錯：三邊各加 2，比是 \(\frac{3}{2}\)、\(\frac{4}{3}\)、\(\frac{9}{7}\)，不相等。<br>
+              D 錯：由短到長是 \(\frac{7}{4}\)、\(\frac{8}{6}\)、\(\frac{12}{7}\)，不相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-20">
+            <p class="quiz-question"><strong>Q20.</strong> 四邊形 \(ABCD\) 中，\(\overline{AB} = 4\)、\(\overline{AD} = 7\)、\(\overline{BD} = 8\)、\(\overline{BC} = 16\)、\(\overline{CD} = 14\)。\(\angle A\) 與 \(\triangle BDC\) 的哪一個內角相等？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-20" value="A"><span class="option-text">A. \(\angle BDC\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-20" value="B"><span class="option-text">B. \(\angle DBC\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-20" value="C"><span class="option-text">C. \(\angle BCD\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-20" value="D"><span class="option-text">D. 三個都不相等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\triangle ABD\) 三邊由短到長是 4、7、8，\(\triangle DBC\) 是 8、14、16，比都是 \(\frac{1}{2}\)，所以 \(\triangle ABD \sim \triangle DBC\)（SSS）。<br>
+              \(\angle A\) 對著 \(\triangle ABD\) 的最長邊 \(\overline{BD} = 8\)；\(\triangle DBC\) 的最長邊是 \(\overline{BC} = 16\)，它對著的角是 \(\angle BDC\)，所以 \(\angle A = \angle BDC\)。<br>
+              B 錯：\(\angle DBC\) 對著 \(\overline{CD} = 14\)，對應的是 \(\angle ABD\)。<br>
+              C 錯：\(\angle BCD\) 對著 \(\overline{BD} = 8\)，對應的是 \(\angle ADB\)。<br>
+              D 錯：三組邊成比例，對應角一定相等。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 判別該用哪一個相似性質
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span>重點 11：判別相似，該用哪一個性質？</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>先整理已知：有幾組角相等？有幾組邊成比例？相等的角是不是<strong>夾在</strong>兩組邊中間？</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>已知條件</th><th>結論</th></tr></thead>
+                <tbody>
+                  <tr><td>兩組（或三組）角相等</td><td>AA 相似</td></tr>
+                  <tr><td>兩組邊成比例，夾角相等</td><td>SAS 相似</td></tr>
+                  <tr><td>三組邊成比例</td><td>SSS 相似</td></tr>
+                  <tr><td>只有一組角相等</td><td>不能判定</td></tr>
+                  <tr><td>兩組邊成比例，角沒有夾在中間</td><td>不能判定</td></tr>
+                  <tr><td>只有兩組邊成比例</td><td>不能判定</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list">
+              <li>隱藏的條件：<strong>共用角、對頂角</strong>、平行線的同位角與內錯角、用內角和推出的第三個角。</li>
+              <li>要「作」一個相似三角形時，<strong>角度照抄、邊長照比例</strong>。把角也縮成一半，畫出來的三角形就不相似了。</li>
+              <li>寫相似式時，頂點照對應的順序寫。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="sim_sorting.webp" alt="昭和復古照相館風插圖：照相館櫃檯上攤著一疊剛沖洗好的相片，小影和阿光一張一張拿起來對照，把相片分成幾堆。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：相似判別台</h3>
+            <p class="interactive-instruction">選一組案例，看兩個三角形標了哪些已知條件，再按下方的判斷按鈕：可以用哪一個相似性質？還是不能判定？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-judge" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="judge-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">案例</span>
+                    <div class="btn-group" id="judge-case-group">
+                      <button class="pick-btn active" data-judge-case="0">1</button>
+                      <button class="pick-btn" data-judge-case="1">2</button>
+                      <button class="pick-btn" data-judge-case="2">3</button>
+                      <button class="pick-btn" data-judge-case="3">4</button>
+                      <button class="pick-btn" data-judge-case="4">5</button>
+                      <button class="pick-btn" data-judge-case="5">6</button>
+                      <button class="pick-btn" data-judge-case="6">7</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">判斷</span>
+                    <div class="btn-group" id="judge-ans-group">
+                      <button class="pick-btn" data-judge-ans="AA">AA</button>
+                      <button class="pick-btn" data-judge-ans="SAS">SAS</button>
+                      <button class="pick-btn" data-judge-ans="SSS">SSS</button>
+                      <button class="pick-btn" data-judge-ans="NO">不能判定</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="judge-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (判別相似)</h3>
+
+          <div class="quiz-card" data-quiz="1-3-21">
+            <p class="quiz-question"><strong>Q21.</strong> 如圖，\(\triangle ABC\) 中，\(D\) 在 \(\overline{AB}\) 上、\(E\) 在 \(\overline{AC}\) 上，\(\overline{AD} = 3\)、\(\overline{DB} = 5\)、\(\overline{AE} = 4\)、\(\overline{EC} = 2\)。\(\triangle ABC \sim \triangle AED\) 的理由是下列哪一個性質？</p>
+            <canvas class="quiz-fig" data-fig="q21" width="320" height="220" role="img" aria-label="三角形 ABC，A 在上；D 在 AB 上、E 在 AC 上，連接 DE；AD 標 3、DB 標 5、AE 標 4、EC 標 2"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-21" value="A"><span class="option-text">A. AA 相似性質</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-21" value="B"><span class="option-text">B. SSS 相似性質</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-21" value="C"><span class="option-text">C. SAS 相似性質</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-21" value="D"><span class="option-text">D. 條件不夠，不能判定</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{AB} = 3 + 5 = 8\)、\(\overline{AC} = 4 + 2 = 6\)。依 \(\triangle ABC \sim \triangle AED\) 的順序，\(\overline{AB}\) 對 \(\overline{AE}\)、\(\overline{AC}\) 對 \(\overline{AD}\)：
+              \[\frac{\overline{AB}}{\overline{AE}} = \frac{8}{4} = 2,\quad \frac{\overline{AC}}{\overline{AD}} = \frac{6}{3} = 2\]
+              夾角都是共用的 \(\angle A\)，所以是 SAS 相似性質。<br>
+              A 錯：只知道共用的 \(\angle A\) 這一組角相等，一組角不夠用 AA。<br>
+              B 錯：\(\overline{BC}\)、\(\overline{DE}\) 的長度沒有給。<br>
+              D 錯：條件剛好夠用 SAS。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-3-22">
+            <p class="quiz-question"><strong>Q22.</strong> 已知 \(\triangle ABC\) 中，\(\overline{AC} = 12\)、\(\angle A = 70^\circ\)、\(\angle B = 50^\circ\)。小影作 \(\triangle DEF\)：\(\overline{DF} = 6\)、\(\angle D = 35^\circ\)、\(\angle E = 25^\circ\)；阿光作 \(\triangle DEF\)：\(\overline{DF} = 4\)、\(\angle D = 70^\circ\)、\(\angle F = 60^\circ\)。誰作出的三角形一定與 \(\triangle ABC\) 相似？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-3-22" value="A"><span class="option-text">A. 只有小影</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-22" value="B"><span class="option-text">B. 兩個人都是</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-22" value="C"><span class="option-text">C. 兩個人都不是</span></label>
+              <label class="option-label"><input type="radio" name="q1-3-22" value="D"><span class="option-text">D. 只有阿光</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\angle C = 180^\circ - 70^\circ - 50^\circ = 60^\circ\)。阿光的 \(\angle D = 70^\circ = \angle A\)、\(\angle F = 60^\circ = \angle C\)，兩組角相等，根據 AA 相似性質一定相似（邊長是多少都不影響）。<br>
+              小影把邊和角都減半，但相似圖形的對應角不會變：他的 \(\angle F = 120^\circ\)，與 \(\triangle ABC\) 的角都對不上，不相似。所以 A、B、C 都錯。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 縮放與相似速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>縮放</strong>：對應點在射線 \(OA\) 上，\(\overline{OA'} = r\,\overline{OA}\)；\(r \gt 1\) 放大、\(0 \lt r \lt 1\) 縮小。</li>
+              <li><strong>線段</strong>縮放後平行（或共線）、長度 \(r\) 倍；<strong>角</strong>縮放後度數不變。</li>
+              <li><strong>多邊形</strong>縮放後對應邊成比例、對應角相等；中心在哪裡結果都全等。</li>
+              <li><strong>相似多邊形</strong>：對應邊成比例且對應角相等，兩個都要；任意兩個正 \(n\) 邊形都相似。</li>
+              <li><strong>三角形相似</strong>：AA、SAS（角要夾在中間）、SSS（短對短、長對長）。</li>
+              <li>相似式照對應順序寫，求邊列比例式、求角找對應角。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到暗房：放大機為什麼不會把人拉胖</h4>
+              <h5><i class="fa-solid fa-lightbulb"></i> 燈泡就是縮放中心</h5>
+              <p>放大機的燈泡從一點往下照，底片上每一點的光都沿著直線落到相紙上。燈頭拉高一倍，每一點到燈泡的距離都變成原來的 2 倍——長和寬<strong>一起</strong>變 2 倍，角度一個也沒變，所以相片和底片<strong>相似</strong>。</p>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 阿光的錯在哪裡</h5>
+              <p>只把寬拉成 2 倍，長寬的比就變了，對應邊不成比例，相片和原圖不相似，人看起來當然變胖。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節</h5>
+              <p>相似三角形還能幫我們量「量不到」的東西：路燈的影子、遠方的塔、河的寬度。下一節會看相似三角形的高、面積與生活中的測量。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

@@ -4,39 +4,1348 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-2 比例線段 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-2 比例線段 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第五冊 (3上) • 第1章 相似形</div>
-    <h1>1-2 比例線段</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第五冊 • 第一章</span>
+        <h1>1-2 比例線段</h1>
+        <p>老照相館的暗房裡，小影和阿光要把相紙裁成等寬的試光條、把放大機的光框對準——處處都是<strong>平行線把線段切成比例</strong>。這一節先從「高相等的三角形，面積比 = 底邊比」出發，推出<strong>平行線截比例線段性質</strong>與它的判別，再看<strong>三角形兩邊中點連線段</strong>、三條平行線截兩條截線、梯形裡的平行線段，最後用尺規把一條線段<strong>按比例分割</strong>。</p>
+      </div>
+      <!-- Progress navigation (11 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-chart-area"></i> 面積與底邊</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-scissors"></i> 截比例①</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-ruler-horizontal"></i> 截比例②</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 判斷平行</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> 不能反推</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-circle-dot"></i> 中點連線</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-rotate-left"></i> 過中點的平行線</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-bars"></i> 三條平行線</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-shapes"></i> 梯形中的線段</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-right-left"></i> 先平移再比</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-compass-drafting"></i> 尺規作比例線段</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（昭和復古照相館・暗房）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(217, 179, 140, 0.3);">
+        <h2 class="section-title" style="color: #d9b38c; border-bottom-color: rgba(217, 179, 140, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #d9b38c; text-shadow: 0 0 10px rgba(217, 179, 140, 0.4);"></i> 課前暖身漫畫：把試光條切成五等分
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            阿光要把一條相紙切成五等分做曝光試光條，可是紙條的長度除以 5 量起來很麻煩。小影拿來一本橫線筆記本，把紙條<strong style="color:#d9b38c">斜放</strong>，讓兩端剛好壓在第 1 條和第 6 條橫線上——等距的平行橫線，把斜放的紙條也切成了一樣長的五段。這一節就要說清楚：<strong style="color:#d9b38c">平行線為什麼能把線段切成比例</strong>。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(27, 21, 17, 0.5);">
+            <img src="motivation_comic.webp" alt="昭和復古照相館風四格漫畫：阿光拿著一條相紙發愁，想切成五等分卻不好量；小影拿來橫線筆記本，把紙條斜放、兩端壓在第 1 條和第 6 條橫線上，橫線把紙條切成五段一樣長；最後小影說平行等距的橫線會把斜放的紙條也切成等長。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 三角形面積與底邊的關係
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-area" aria-hidden="true"></i> <span>重點 1：高相等的兩個三角形，面積比 = 底邊比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>三角形面積 \(= \frac{\text{底} \times \text{高}}{2}\)。兩個三角形的<strong>高相等</strong>時，面積只跟底有關：<strong>面積比 = 底邊比</strong>。</li>
+              <li>最常見的情形：兩個三角形<strong>共用一個頂點</strong>，底邊落在同一條直線上。例如 \(B\)、\(D\)、\(C\) 在同一直線上，\(\triangle ABD\) 與 \(\triangle ADC\) 的高都是 \(A\) 到 \(\overline{BC}\) 的距離。</li>
+              <li>另一種情形：底邊分別落在<strong>兩條平行線</strong>上、頂點在另一條線上。兩平行線的距離處處相等，所以高也相等。</li>
+              <li><strong>同底等高</strong>（底相等、高也相等）的兩個三角形面積相等——這一條是下一個重點的關鍵。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・三角形面積與底邊的關係</span>
+              兩個三角形的高相等 \(\Rightarrow\) 面積比 \(=\) 對應底邊的比
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_pennant.webp" alt="昭和復古照相館風插圖：照相館門口兩條上下平行的細繩之間，掛著兩面三角旗，旗尖都碰到下面那條繩，左邊的旗底比右邊寬一倍；小影仰頭看著。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：高不變，面積比跟著底走</h3>
+            <p class="interactive-instruction">調整兩段底的長度，再左右移動上面的頂點（或上面那條邊）。看「量一量」的面積比：只要高不變，它永遠等於底邊比。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-area" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ar-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情形</span>
+                    <div class="btn-group" id="ar-mode-group">
+                      <button class="pick-btn active" data-ar-mode="line">底在同一直線</button>
+                      <button class="pick-btn" data-ar-mode="par">底在兩平行線</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ar-p">第一段底（\(\overline{BD}\) 或 \(\overline{AD}\)）：<span id="ar-vp" class="val-num">2</span></label>
+                    <input type="range" id="ar-p" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ar-q">第二段底（\(\overline{DC}\) 或 \(\overline{BC}\)）：<span id="ar-vq" class="val-num">5</span></label>
+                    <input type="range" id="ar-q" min="1" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ar-s">上方的點左右移動：<span id="ar-vs" class="val-num">0</span></label>
+                    <input type="range" id="ar-s" min="-3" max="3" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ar-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (面積與底邊)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 如圖，\(\triangle ABC\) 中，\(D\) 在 \(\overline{BC}\) 上，\(\overline{BD} = 4\)、\(\overline{DC} = 7\)。\(\triangle ABD\) 面積 : \(\triangle ABC\) 面積 \(=\)？</p>
+            <canvas class="quiz-fig" data-fig="q1" width="320" height="200" role="img" aria-label="三角形 ABC，D 在底邊 BC 上，BD 標 4、DC 標 7，連 AD"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-1" value="A"><span class="option-text">A. \(4 : 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-1" value="B"><span class="option-text">B. \(4 : 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-1" value="C"><span class="option-text">C. \(7 : 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-1" value="D"><span class="option-text">D. \(16 : 121\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\triangle ABD\) 與 \(\triangle ABC\) 的高都是 \(A\) 到 \(\overline{BC}\) 的距離，面積比 \(=\) 底邊比 \( = \overline{BD} : \overline{BC} \)<wbr>\( {}= 4 : (4 + 7) \)<wbr>\( {}= 4 : 11 \)。<br>
+              A 錯：那是 \(\triangle ABD : \triangle ADC\)，題目問的是和整個 \(\triangle ABC\) 比。<br>
+              C 錯：那是 \(\triangle ADC : \triangle ABC\)。<br>
+              D 錯：高相等時面積比就是底邊比，不必平方。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 如圖，梯形 \(ABCD\) 中，\(\overline{AD} /\!/ \overline{BC}\)，\(\overline{AD} = 9\)、\(\overline{BC} = 16\)，\(M\) 是 \(\overline{BC}\) 的中點。\(\triangle ABM\) 面積 : \(\triangle AMD\) 面積 : \(\triangle DMC\) 面積 \(=\)？</p>
+            <canvas class="quiz-fig" data-fig="q2" width="320" height="200" role="img" aria-label="梯形 ABCD，上底 AD 標 9，下底 BC 長 16，M 是 BC 中點，連 AM、DM"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-2" value="A"><span class="option-text">A. \(8 : 9 : 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-2" value="B"><span class="option-text">B. \(1 : 1 : 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-2" value="C"><span class="option-text">C. \(9 : 8 : 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-2" value="D"><span class="option-text">D. \(8 : 16 : 8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{BM} = \overline{MC} = 8\)。三個三角形的底 \(\overline{BM}\)、\(\overline{AD}\)、\(\overline{MC}\) 分別落在兩條平行線上，高都是兩平行線的距離，所以面積比 \(= \overline{BM} : \overline{AD} : \overline{MC} = 8 : 9 : 8\)。<br>
+              B 錯：三個三角形的底不一樣長，面積不會相等。<br>
+              C 錯：把上底與下段的位置對調了。<br>
+              D 錯：\(\triangle AMD\) 的底是 \(\overline{AD} = 9\)，不是 \(\overline{BC}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 平行線截比例線段性質①
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scissors" aria-hidden="true"></i> <span>重點 2：平行線截比例線段性質①——兩邊截成相同的比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\triangle ABC\) 中，\(D\)、\(E\) 分別在 \(\overline{AB}\)、\(\overline{AC}\) 上，且 \(\overline{DE} /\!/ \overline{BC}\)，則兩邊被截成<strong>相同的比</strong>，稱為<strong>比例線段</strong>。</li>
+              <li>三個比例式都成立，挑題目給的那幾段來用：<strong>上段 : 下段</strong>、<strong>上段 : 全長</strong>、<strong>下段 : 全長</strong>。</li>
+              <li>理由（面積推理）：連 \(\overline{BE}\)、\(\overline{CD}\)。\(\triangle ADE : \triangle BDE = \overline{AD} : \overline{DB}\)、\(\triangle ADE : \triangle CDE = \overline{AE} : \overline{EC}\)；又 \(\overline{DE} /\!/ \overline{BC}\)，\(\triangle BDE\) 與 \(\triangle CDE\) <strong>同底等高</strong>、面積相等，兩個比就相等。</li>
+              <li>列式時<strong>同一邊的線段寫在同一側</strong>：\(\overline{AD} : \overline{DB} = \overline{AE} : \overline{EC}\)，左邊都是 \(\overline{AB}\) 上的、右邊都是 \(\overline{AC}\) 上的。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・平行線截比例線段性質①</span>
+              \(\overline{DE} /\!/ \overline{BC} \Rightarrow\)<br>
+              \(\overline{AD} : \overline{DB} = \overline{AE} : \overline{EC}\)<br>
+              \(\overline{AD} : \overline{AB} = \overline{AE} : \overline{AC}\)<br>
+              \(\overline{DB} : \overline{AB} = \overline{EC} : \overline{AC}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_enlarger.webp" alt="昭和復古照相館風插圖：暗房的紅色安全燈下，放大機的燈頭往下投出一束三角形的光，光束先穿過水平的底片架、再照到水平的相紙上；阿光彎腰看著相紙。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：三個比例式</h3>
+            <p class="interactive-instruction">調整 \(\overline{AD}\)、\(\overline{DB}\) 與 \(\overline{AC}\) 的長，\(\overline{DE}\) 一直和 \(\overline{BC}\) 平行。切換比例式，看 \(\overline{AC}\) 上的兩段怎麼跟著 \(\overline{AB}\) 上的比走；按「為什麼」看面積推理。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cut1" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c1-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">比例式</span>
+                    <div class="btn-group" id="c1-mode-group">
+                      <button class="pick-btn active" data-c1-mode="part">上段 : 下段</button>
+                      <button class="pick-btn" data-c1-mode="whole">上段 : 全長</button>
+                      <button class="pick-btn" data-c1-mode="low">下段 : 全長</button>
+                      <button class="pick-btn" data-c1-mode="why">為什麼</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c1-a">\(\overline{AD}\) 的長：<span id="c1-va" class="val-num">1</span></label>
+                    <input type="range" id="c1-a" min="1" max="6" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c1-b">\(\overline{DB}\) 的長：<span id="c1-vb" class="val-num">3</span></label>
+                    <input type="range" id="c1-b" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c1-c">\(\overline{AC}\) 的長：<span id="c1-vc" class="val-num">8</span></label>
+                    <input type="range" id="c1-c" min="3" max="12" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c1-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平行線截比例線段性質①)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 如圖，\(\triangle ABC\) 中，\(D\)、\(E\) 分別在 \(\overline{AB}\)、\(\overline{AC}\) 上，\(\overline{DE} /\!/ \overline{BC}\)。若 \(\overline{AD} = 7\)、\(\overline{DB} = 3\)、\(\overline{AE} = 14\)，則 \(\overline{EC} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q3" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 AB 上、E 在 AC 上，DE 平行 BC；AD 標 7、DB 標 3、AE 標 14"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-3" value="A"><span class="option-text">A. \(\frac{98}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-3" value="B"><span class="option-text">B. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-3" value="C"><span class="option-text">C. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-3" value="D"><span class="option-text">D. \(10\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{DE} /\!/ \overline{BC}\)，所以 \(\overline{AD} : \overline{DB} = \overline{AE} : \overline{EC}\)：
+              \[ \begin{aligned} & 7 : 3 = 14 : \overline{EC} \\ & 7\,\overline{EC} = 42 \\ & \overline{EC} = 6 \end{aligned} \]
+              A 錯：把比例式寫成 \(7 : 3 = \overline{EC} : 14\)，左右兩邊的上下段順序不一致。<br>
+              B 錯：寫成 \(7 : 10 = 14 : \overline{EC}\)，一邊用「上段 : 全長」、另一邊用「上段 : 下段」，配錯了。<br>
+              D 錯：以為兩邊的「差」一樣（\(7 - 3 = 14 - 10\)），比例線段比的是比，不是差。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 如圖，\(\triangle ABC\) 中，\(\overline{DE} /\!/ \overline{BC}\)，\(\overline{AD} = 10\)、\(\overline{AB} = 24\)、\(\overline{AC} = 36\)。\(\overline{EC} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q4" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 AB 上、E 在 AC 上，DE 平行 BC；AD 標 10，EC 標問號"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-4" value="A"><span class="option-text">A. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-4" value="B"><span class="option-text">B. \(26\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-4" value="C"><span class="option-text">C. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-4" value="D"><span class="option-text">D. \(21\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。題目給的是全長，用「上段 : 全長」：
+              \[ \begin{aligned} & \overline{AD} : \overline{AB} = \overline{AE} : \overline{AC} \\ & 10 : 24 = \overline{AE} : 36 \\ & \overline{AE} = 15 \end{aligned} \]
+              所以 \(\overline{EC} = 36 - 15 = 21\)。<br>
+              A 錯：\(15\) 是 \(\overline{AE}\)，題目問的是 \(\overline{EC}\)。<br>
+              B 錯：\(36 - 10\) 把 \(\overline{AB}\) 上的線段拿去減 \(\overline{AC}\)，沒有用比例。<br>
+              C 錯：\(14\) 是 \(\overline{DB}\)，不是 \(\overline{EC}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 平行線截比例線段性質②
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-horizontal" aria-hidden="true"></i> <span>重點 3：平行線截比例線段性質②——DE : BC = AD : AB</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\overline{DE} /\!/ \overline{BC}\) 時，兩條平行邊的長也成比例：\( \overline{DE} : \overline{BC} \)<wbr>\( {}= \overline{AD} : \overline{AB} \)<wbr>\( {}= \overline{AE} : \overline{AC} \)。</li>
+              <li>理由：過 \(D\) 作 \(\overline{AC}\) 的平行線交 \(\overline{BC}\) 於 \(F\)，\(DFCE\) 是平行四邊形，\(\overline{DE} = \overline{FC}\)；在 \(\triangle BAC\) 中用性質①，\(\overline{FC} : \overline{BC} = \overline{AD} : \overline{AB}\)。</li>
+              <li>⚠️ <strong>一定要配「上段 : 全長」</strong>：\(\overline{DE}\) 是小三角形 \(ADE\) 的邊，\(\overline{BC}\) 是整個 \(\triangle ABC\) 的邊，所以配 \(\overline{AD} : \overline{AB}\)，<strong>不是</strong> \(\overline{AD} : \overline{DB}\)。</li>
+              <li>好幾條平行線時，每一條各配自己的「上段 : 全長」。例如 \(\overline{AB}\) 被分成三等分，兩條平行線分別是 \(\overline{BC}\) 的 \(\frac{1}{3}\) 與 \(\frac{2}{3}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・平行線截比例線段性質②</span>
+              \( \overline{DE} /\!/ \overline{BC} \)<wbr>\( {}\Rightarrow \overline{DE} : \overline{BC} \)<wbr>\( {}= \overline{AD} : \overline{AB} \)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_tripod.webp" alt="昭和復古照相館風插圖：木頭三腳架張開的兩支腳之間，有一根水平的木橫桿，橫桿比地面上兩腳之間的距離短；阿光蹲在三腳架旁扶著橫桿。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：平行邊配「上段 : 全長」</h3>
+            <p class="interactive-instruction">調整 \(\overline{AD}\)、\(\overline{DB}\) 與 \(\overline{BC}\)，看 \(\overline{DE}\) 怎麼算；紅色那一列是配錯的結果。切到「等分」模式，看好幾條平行線的長度怎麼排。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cut2" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c2-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="c2-mode-group">
+                      <button class="pick-btn active" data-c2-mode="one">一條平行線</button>
+                      <button class="pick-btn" data-c2-mode="multi">等分 AB</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c2-a"><span id="c2-la">\(\overline{AD}\) 的長</span>：<span id="c2-va" class="val-num">3</span></label>
+                    <input type="range" id="c2-a" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="c2-row-b">
+                    <label for="c2-b">\(\overline{DB}\) 的長：<span id="c2-vb" class="val-num">2</span></label>
+                    <input type="range" id="c2-b" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c2-c">\(\overline{BC}\) 的長：<span id="c2-vc" class="val-num">5</span></label>
+                    <input type="range" id="c2-c" min="2" max="12" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c2-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平行線截比例線段性質②)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 如圖，\(\triangle ABC\) 中，\(\overline{DE} /\!/ \overline{BC}\)，\(\overline{DE} = 4\)、\(\overline{DB} = 10\)、\(\overline{BC} = 9\)。\(\overline{AD} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q5" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 AB 上、E 在 AC 上，DE 平行 BC；DE 標 4、DB 標 10、BC 標 9"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-5" value="A"><span class="option-text">A. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-5" value="B"><span class="option-text">B. \(\frac{40}{9}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-5" value="C"><span class="option-text">C. \(18\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-5" value="D"><span class="option-text">D. \(\frac{45}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設 \(\overline{AD} = x\)，則 \(\overline{AB} = x + 10\)。\(\overline{DE} : \overline{BC} = \overline{AD} : \overline{AB}\)：
+              \[ \begin{aligned} & 4 : 9 = x : (x + 10) \\ & 9x = 4x + 40 \\ & x = 8 \end{aligned} \]
+              B 錯：寫成 \(4 : 9 = x : 10\)，把平行邊配到「上段 : 下段」。<br>
+              C 錯：\(18\) 是 \(\overline{AB}\) 的長，不是 \(\overline{AD}\)。<br>
+              D 錯：寫成 \(4 : 9 = 10 : x\)，比例的前後項放反了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 如圖，\(\triangle ABC\) 中，\(D\)、\(E\) 在 \(\overline{AB}\) 上，\(F\)、\(G\) 在 \(\overline{AC}\) 上，\(\overline{DF} /\!/ \overline{EG} /\!/ \overline{BC}\)，且 \(\overline{AD} : \overline{DE} : \overline{EB} = 1 : 2 : 4\)。若 \(\overline{BC} = 21\)，則 \(\overline{EG} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q6" width="320" height="220" role="img" aria-label="三角形 ABC，AB 上由上而下有 D、E，AC 上有 F、G，DF 與 EG 都平行 BC，BC 標 21"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-6" value="A"><span class="option-text">A. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-6" value="B"><span class="option-text">B. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-6" value="C"><span class="option-text">C. \(9\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-6" value="D"><span class="option-text">D. \(\frac{63}{4}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{EG}\) 的上段是 \(\overline{AE}\)，\( \overline{AE} : \overline{AB} \)<wbr>\( {}= (1 + 2) : (1 + 2 + 4) \)<wbr>\( {}= 3 : 7 \)，所以
+              \[ \overline{EG} = 21 \times \frac{3}{7} = 9 \]
+              A 錯：只用了 \(\overline{DE}\) 那一段（\(2 : 7\)），上段要從 \(A\) 量起。<br>
+              B 錯：用了 \(\overline{EB} : \overline{AB} = 4 : 7\)，那是下段。<br>
+              D 錯：用了 \(\overline{AE} : \overline{EB} = 3 : 4\)，平行邊要配全長。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 利用截比例線段判斷平行
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span>重點 4：兩邊截成相同的比 ⇒ 平行</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>反過來也成立：\(\triangle ABC\) 中，\(D\)、\(E\) 分別在 \(\overline{AB}\)、\(\overline{AC}\) 上，只要下列<strong>任一個</strong>比例式成立，就有 \(\overline{DE} /\!/ \overline{BC}\)。</li>
+              <li>理由：\(\overline{AD} : \overline{DB} = \overline{AE} : \overline{EC}\) 推出 \(\triangle BDE\) 與 \(\triangle CDE\) 面積相等；它們同底 \(\overline{DE}\)，所以 \(B\)、\(C\) 到 \(\overline{DE}\) 的距離相等，\(\overline{DE} /\!/ \overline{BC}\)。</li>
+              <li>判斷平行之後，就能用平行線的性質：\(\angle ADE = \angle B\)、\(\angle AED = \angle C\)（同位角相等）。</li>
+              <li>看的是<strong>比</strong>，不是長度差：兩邊各差一樣多，比卻可能不一樣。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・利用截比例線段判斷平行</span>
+              下列任一式成立 \(\Rightarrow \overline{DE} /\!/ \overline{BC}\)<br>
+              ① \(\overline{AD} : \overline{DB} = \overline{AE} : \overline{EC}\)<br>
+              ② \(\overline{AD} : \overline{AB} = \overline{AE} : \overline{AC}\)<br>
+              ③ \(\overline{DB} : \overline{AB} = \overline{EC} : \overline{AC}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_mat.webp" alt="昭和復古照相館風插圖：工作檯上一張三角形的厚紙板相框襯紙，小影一手壓著紙板、一手拿鉛筆，在紙板的兩條斜邊上各點了一個小記號，準備用直尺把兩個記號連起來。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：比一比再判斷</h3>
+            <p class="interactive-instruction">分別調整兩邊被截成的四段長。兩個比相等時 \(\overline{DE}\) 變綠、和 \(\overline{BC}\) 平行；看「量一量」的 \(\angle ADE\) 與 \(\angle B\) 是否相等。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-judge" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="jd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="jd-p">\(\overline{AD}\)：<span id="jd-vp" class="val-num">2</span></label>
+                    <input type="range" id="jd-p" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="jd-q">\(\overline{DB}\)：<span id="jd-vq" class="val-num">3</span></label>
+                    <input type="range" id="jd-q" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="jd-r">\(\overline{AE}\)：<span id="jd-vr" class="val-num">4</span></label>
+                    <input type="range" id="jd-r" min="1" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="jd-s">\(\overline{EC}\)：<span id="jd-vs" class="val-num">5</span></label>
+                    <input type="range" id="jd-s" min="1" max="6" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="jd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (判斷平行)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> \(\triangle ABC\) 中，\(D\)、\(E\) 分別在 \(\overline{AB}\)、\(\overline{AC}\) 上。下列哪一組數據可以確定 \(\overline{DE} /\!/ \overline{BC}\)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-7" value="A"><span class="option-text">A. \(\overline{AD} = 7\)、\(\overline{DB} = 4\)、\(\overline{AE} = 11\)、\(\overline{EC} = 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-7" value="B"><span class="option-text">B. \(\overline{AD} = 7\)、\(\overline{DB} = 4\)、\(\overline{AE} = 8\)、\(\overline{EC} = 14\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-7" value="C"><span class="option-text">C. \(\overline{AD} = 7\)、\(\overline{AB} = 11\)、\(\overline{AE} = 14\)、\(\overline{AC} = 18\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-7" value="D"><span class="option-text">D. \(\overline{AD} = 7\)、\(\overline{DB} = 4\)、\(\overline{AE} = 14\)、\(\overline{EC} = 8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{AD} : \overline{DB} = 7 : 4\)，\(\overline{AE} : \overline{EC} = 14 : 8 = 7 : 4\)，兩邊截成相同的比，所以 \(\overline{DE} /\!/ \overline{BC}\)。<br>
+              A 錯：兩邊的差都是 \(3\)，但 \(7 : 4 \ne 11 : 8\)，看的是比不是差。<br>
+              B 錯：\(\overline{AE} : \overline{EC} = 8 : 14 = 4 : 7\)，上下段順序反了。<br>
+              C 錯：\(\overline{AD} : \overline{AB} = 7 : 11\)，\(\overline{AE} : \overline{AC} = 14 : 18 = 7 : 9\)，不相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> 如圖，\(\triangle ABC\) 中，\(D\)、\(E\) 分別在 \(\overline{AB}\)、\(\overline{AC}\) 上，\(\overline{AD} = 10\)、\(\overline{DB} = 14\)、\(\overline{AE} = 15\)、\(\overline{EC} = 21\)，\(\angle B = 58^\circ\)。\(\angle ADE =\)？</p>
+            <canvas class="quiz-fig" data-fig="q8" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 AB 上、E 在 AC 上，連 DE；AD 標 10、DB 標 14、AE 標 15、EC 標 21，角 B 標 58 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-8" value="A"><span class="option-text">A. \(122^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-8" value="B"><span class="option-text">B. \(58^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-8" value="C"><span class="option-text">C. \(32^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-8" value="D"><span class="option-text">D. 條件不夠，無法判斷</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{AD} : \overline{DB} = 10 : 14 = 5 : 7\)，\(\overline{AE} : \overline{EC} = 15 : 21 = 5 : 7\)，比相等，所以 \(\overline{DE} /\!/ \overline{BC}\)，同位角 \(\angle ADE = \angle B = 58^\circ\)。<br>
+              A 錯：\(122^\circ\) 是 \(\angle BDE\)（同側內角），不是 \(\angle ADE\)。<br>
+              C 錯：\(32^\circ\) 是 \(90^\circ - 58^\circ\)，圖中沒有直角。<br>
+              D 錯：比例相等就能判斷平行，條件是夠的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: DE : BC = AD : AB 不能判斷平行
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> <span>重點 5：「平行邊的比」不能反過來判斷平行</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>性質②說：\( \overline{DE} /\!/ \overline{BC} \)<wbr>\( {}\Rightarrow \overline{DE} : \overline{BC} \)<wbr>\( {}= \overline{AD} : \overline{AB} \)。但<strong>反過來不一定成立</strong>。</li>
+              <li>反例：以 \(D\) 為圓心、\(\overline{DE}\) 為半徑畫弧，弧和 \(\overline{AC}\) 可能還交於另一點 \(E'\)。\(\overline{DE'} = \overline{DE}\)，所以 \(\overline{DE'} : \overline{BC}\) 也等於 \(\overline{AD} : \overline{AB}\)，可是 \(\overline{DE'}\) 和 \(\overline{BC}\) 不平行。</li>
+              <li>要判斷平行，只能用重點 4 的三個比例式——都是<strong>兩邊被截成的線段</strong>互相比，沒有 \(\overline{DE}\)、\(\overline{BC}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">注意・不能用來判斷平行</span>
+              \(\overline{DE} : \overline{BC} = \overline{AD} : \overline{AB}\)<br>\(\not\Rightarrow \overline{DE} /\!/ \overline{BC}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_compass.webp" alt="昭和復古照相館風插圖：暗房工作檯上，阿光一手按住紙、一手拿著圓規在紙上畫一段弧，小影在旁邊探頭看，背景是紅色安全燈和晾在繩上的相片。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：同樣長，卻不平行</h3>
+            <p class="interactive-instruction">\(\overline{DE}\) 和 \(\overline{BC}\) 平行；虛線弧以 \(D\) 為圓心，交 \(\overline{AC}\) 於 \(E\) 和 \(E'\)。調整 \(D\) 的位置和三角形的形狀，比較 \(\angle ADE'\) 與 \(\angle B\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-counter" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ct-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">看哪一條</span>
+                    <div class="btn-group" id="ct-mode-group">
+                      <button class="pick-btn" data-ct-mode="E">DE</button>
+                      <button class="pick-btn active" data-ct-mode="E2">DE'</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ct-k">\(\overline{AD} : \overline{AB}\)：<span id="ct-vk" class="val-num">4 : 6</span></label>
+                    <input type="range" id="ct-k" min="1" max="5" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ct-c">三角形的形狀（\(\overline{AC}\) 的長）：<span id="ct-vc" class="val-num">9</span></label>
+                    <input type="range" id="ct-c" min="7" max="11" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ct-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (不能反推)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> \(\triangle ABC\) 中，\(D\)、\(E\) 分別在 \(\overline{AB}\)、\(\overline{AC}\) 上，已知 \(\overline{DE} : \overline{BC} = \overline{AD} : \overline{AB}\)。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-9" value="A"><span class="option-text">A. \(\overline{DE} /\!/ \overline{BC}\) 一定成立</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-9" value="B"><span class="option-text">B. \(\overline{DE}\) 一定不平行 \(\overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-9" value="C"><span class="option-text">C. \(\overline{DE}\) 不一定平行 \(\overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-9" value="D"><span class="option-text">D. \(\overline{AE} : \overline{EC} = \overline{AD} : \overline{DB}\) 一定成立</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。以 \(D\) 為圓心、\(\overline{DE}\) 為半徑畫弧，可能交 \(\overline{AC}\) 於兩點，兩點連到 \(D\) 的線段一樣長、都滿足這個比例式，卻最多只有一條和 \(\overline{BC}\) 平行。<br>
+              A 錯：這個比例式不能用來判斷平行。<br>
+              B 錯：也有可能剛好平行，只是「不一定」。<br>
+              D 錯：\(\overline{DE}\) 不一定平行，兩邊也就不一定截成相同的比。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> \(\triangle ABC\) 中，\(D\) 在 \(\overline{AB}\) 上，\(\overline{AD} = 4\)、\(\overline{AB} = 10\)、\(\overline{BC} = 15\)；\(E\) 在 \(\overline{AC}\) 上，\(\overline{DE} = 6\)。小影說：「\(\overline{DE} : \overline{BC} = \overline{AD} : \overline{AB}\)，所以 \(\overline{DE} /\!/ \overline{BC}\)。」阿光以 \(D\) 為圓心、\(\overline{DE}\) 為半徑畫弧，發現弧和 \(\overline{AC}\) 還交於另一點 \(E'\)。下列何者正確？</p>
+            <canvas class="quiz-fig" data-fig="q10" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 AB 上；以 D 為圓心的虛線弧交 AC 於 E 與 E 撇兩點，連 DE 與 DE 撇"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-10" value="A"><span class="option-text">A. \(\overline{DE'}\) 也是 \(6\)，同樣滿足這個比例式，所以光憑它不能斷定 \(\overline{DE} /\!/ \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-10" value="B"><span class="option-text">B. \(\overline{DE'}\) 不是 \(6\)，所以小影的推論沒有問題</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-10" value="C"><span class="option-text">C. \(\overline{DE}\)、\(\overline{DE'}\) 都和 \(\overline{BC}\) 平行</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-10" value="D"><span class="option-text">D. \(\overline{DE}\) 一定不平行 \(\overline{BC}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(E\)、\(E'\) 在同一段弧上，\(\overline{DE'} = \overline{DE} = 6\)，\( \overline{DE'} : \overline{BC} \)<wbr>\( {}= 6 : 15 \)<wbr>\( {}= 2 : 5 \)<wbr>\( {}= \overline{AD} : \overline{AB} \)。兩條線段都滿足比例式，但過 \(D\) 只有一條直線和 \(\overline{BC}\) 平行，所以這個比例式不能判斷平行。<br>
+              B 錯：同一段弧上的點到圓心的距離都等於半徑。<br>
+              C 錯：過 \(D\) 和 \(\overline{BC}\) 平行的直線只有一條。<br>
+              D 錯：也可能剛好平行；要判斷，得量兩邊截成的比。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 三角形兩邊中點連線段性質
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-circle-dot" aria-hidden="true"></i> <span>重點 6：兩邊中點連線段——平行第三邊、長度是一半</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\triangle ABC\) 中，\(D\)、\(E\) 分別是 \(\overline{AB}\)、\(\overline{AC}\) 的<strong>中點</strong>，則 \(\overline{DE} /\!/ \overline{BC}\)，且 \(\overline{DE} = \frac{1}{2}\overline{BC}\)。</li>
+              <li>理由：\( \overline{AD} : \overline{DB} \)<wbr>\( {}= \overline{AE} : \overline{EC} \)<wbr>\( {}= 1 : 1 \)，由重點 4 得 \(\overline{DE} /\!/ \overline{BC}\)；再由重點 3，\( \overline{DE} : \overline{BC} \)<wbr>\( {}= \overline{AD} : \overline{AB} \)<wbr>\( {}= 1 : 2 \)。</li>
+              <li>它是平行線截比例線段性質的<strong>特例</strong>（比剛好是 \(1 : 1\)）。</li>
+              <li>\(\triangle ADE\) 的三邊都是 \(\triangle ABC\) 對應邊的一半，所以 \(\triangle ADE\) 的<strong>周長是 \(\triangle ABC\) 周長的一半</strong>。</li>
+              <li>一層一層取中點時，每一層<strong>再用一次</strong>這個性質，長度每次變成一半。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・三角形兩邊中點連線段性質</span>
+              \(D\)、\(E\) 為 \(\overline{AB}\)、\(\overline{AC}\) 中點 \(\Rightarrow \overline{DE} /\!/ \overline{BC}\)，\(\overline{DE} = \frac{1}{2}\overline{BC}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_aframe.webp" alt="昭和復古照相館風插圖：照相館門口一座 A 字形的木頭招牌立架，兩支斜腳的正中間用一根水平橫木連起來，橫木只有兩腳著地距離的一半長；小影拿著抹布擦招牌。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：中點連線段</h3>
+            <p class="interactive-instruction">用三條邊長決定三角形，看兩邊中點連線段的長度與 \(\triangle ADE\) 的周長；切到「一層一層」看連續取中點。三邊圍不成三角形時，畫面會告訴你為什麼。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mid" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="md-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="md-mode-group">
+                      <button class="pick-btn active" data-md-mode="one">一組中點</button>
+                      <button class="pick-btn" data-md-mode="nest">一層一層</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="md-ab">\(\overline{AB}\)：<span id="md-vab" class="val-num">9</span></label>
+                    <input type="range" id="md-ab" min="4" max="12" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-ac">\(\overline{AC}\)：<span id="md-vac" class="val-num">11</span></label>
+                    <input type="range" id="md-ac" min="4" max="12" value="11" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-bc">\(\overline{BC}\)：<span id="md-vbc" class="val-num">8</span></label>
+                    <input type="range" id="md-bc" min="4" max="12" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="md-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (中點連線段)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> \(\triangle ABC\) 中，\(\overline{AB} = 13\)、\(\overline{BC} = 10\)、\(\overline{AC} = 15\)，\(D\)、\(E\) 分別是 \(\overline{AB}\)、\(\overline{AC}\) 的中點。\(\triangle ADE\) 的周長為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-11" value="A"><span class="option-text">A. \(38\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-11" value="B"><span class="option-text">B. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-11" value="C"><span class="option-text">C. \(\frac{19}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-11" value="D"><span class="option-text">D. \(19\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{AD} = \frac{13}{2}\)、\(\overline{AE} = \frac{15}{2}\)、\(\overline{DE} = \frac{1}{2}\overline{BC} = 5\)，周長
+              \[ \frac{13}{2} + \frac{15}{2} + 5 = 19 \]
+              也就是 \(\triangle ABC\) 周長 \(38\) 的一半。<br>
+              A 錯：\(38\) 是 \(\triangle ABC\) 的周長。<br>
+              B 錯：\(\frac{13}{2} + \frac{15}{2} + 10\)，\(\overline{DE}\) 沒有取一半。<br>
+              C 錯：取了兩次一半。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 如圖，\(\triangle ABC\) 中，\(D\)、\(E\) 是 \(\overline{AB}\)、\(\overline{AC}\) 的中點，\(F\)、\(G\) 是 \(\overline{AD}\)、\(\overline{AE}\) 的中點，\(P\)、\(Q\) 是 \(\overline{AF}\)、\(\overline{AG}\) 的中點。若 \(\overline{PQ} = 3\)，則 \(\overline{FG} + \overline{DE} + \overline{BC} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q12" width="320" height="260" role="img" aria-label="三角形 ABC 內由上而下三條平行線段 PQ、FG、DE，PQ 標 3"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-12" value="A"><span class="option-text">A. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-12" value="B"><span class="option-text">B. \(27\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-12" value="C"><span class="option-text">C. \(42\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-12" value="D"><span class="option-text">D. \(45\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。每一層都是下一層的兩邊中點連線段：\(\overline{FG} = 2\overline{PQ} = 6\)、\(\overline{DE} = 2\overline{FG} = 12\)、\(\overline{BC} = 2\overline{DE} = 24\)，和為 \(6 + 12 + 24 = 42\)。<br>
+              A 錯：只算到一半。<br>
+              B 錯：以為每往下一層多 \(3\)（\(6 + 9 + 12\)），其實是每層加倍。<br>
+              D 錯：多加了 \(\overline{PQ}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 過一邊中點且平行另一邊的直線
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> <span>重點 7：過一邊中點、平行另一邊，會通過第三邊的中點</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\triangle ABC\) 中，\(D\) 是 \(\overline{AB}\) 的中點，過 \(D\) 作 \(\overline{BC}\) 的平行線交 \(\overline{AC}\) 於 \(E\)，則 <strong>\(E\) 是 \(\overline{AC}\) 的中點</strong>。</li>
+              <li>理由：\(\overline{DE} /\!/ \overline{BC}\)，\( \overline{AE} : \overline{EC} \)<wbr>\( {}= \overline{AD} : \overline{DB} \)<wbr>\( {}= 1 : 1 \)。</li>
+              <li>知道 \(E\) 是中點以後，\(\overline{DE}\) 就是兩邊中點連線段，<strong>\(\overline{DE} = \frac{1}{2}\overline{BC}\)</strong>、\(\overline{AE} = \frac{1}{2}\overline{AC}\) 都能直接算。</li>
+              <li>和重點 6 的差別：重點 6 已知兩個中點、推出平行；這裡已知<strong>一個中點和平行</strong>、推出另一個中點。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・兩邊中點連線段性質（逆敘述）</span>
+              \(D\) 為 \(\overline{AB}\) 中點，\(\overline{DE} /\!/ \overline{BC} \Rightarrow E\) 為 \(\overline{AC}\) 中點
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_gable.webp" alt="昭和復古照相館風插圖：老照相館的三角形屋頂山牆，左邊斜屋簷的正中間釘著一根水平木條，往右延伸到右邊斜屋簷；阿光站在梯子上量木條。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：只有平行那一條會過中點</h3>
+            <p class="interactive-instruction">過 \(\overline{AB}\) 的中點 \(D\) 畫一條直線，調整它的傾斜：只有傾斜 \(0^\circ\)（和 \(\overline{BC}\) 平行）時，\(E\) 才落在 \(\overline{AC}\) 的中點。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-conv" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cv-t">直線相對 \(\overline{BC}\) 的傾斜：<span id="cv-vt" class="val-num">6°</span></label>
+                    <input type="range" id="cv-t" min="-9" max="9" value="6" step="3">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cv-s">頂點 \(A\) 左右移動：<span id="cv-vs" class="val-num">0</span></label>
+                    <input type="range" id="cv-s" min="-3" max="3" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (過中點的平行線)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 如圖，\(\triangle ABC\) 中，\(D\)、\(E\) 分別在 \(\overline{AB}\)、\(\overline{AC}\) 上，\(\overline{DE} /\!/ \overline{BC}\)，\(\overline{AD} = \overline{DB} = 5\)，\(\overline{AC} = 13\)、\(\overline{BC} = 19\)。\(\overline{AE}\) 與 \(\overline{DE}\) 分別是多少？</p>
+            <canvas class="quiz-fig" data-fig="q13" width="320" height="220" role="img" aria-label="三角形 ABC，D 在 AB 上、E 在 AC 上，DE 平行 BC；AD、DB 都標 5，BC 標 19"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-13" value="A"><span class="option-text">A. \(\overline{AE} = 5\)、\(\overline{DE} = \frac{19}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-13" value="B"><span class="option-text">B. \(\overline{AE} = \frac{13}{2}\)、\(\overline{DE} = \frac{19}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-13" value="C"><span class="option-text">C. \(\overline{AE} = \frac{13}{2}\)、\(\overline{DE} = 19\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-13" value="D"><span class="option-text">D. \(\overline{AE} = 5\)、\(\overline{DE} = 5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{AD} = \overline{DB}\)，\(D\) 是 \(\overline{AB}\) 的中點，又 \(\overline{DE} /\!/ \overline{BC}\)，所以 \(E\) 是 \(\overline{AC}\) 的中點：\(\overline{AE} = \frac{1}{2} \times 13 = \frac{13}{2}\)，\(\overline{DE} = \frac{1}{2} \times 19 = \frac{19}{2}\)。<br>
+              A、D 錯：\(\overline{AE}\) 是 \(\overline{AC}\) 的一半，不是等於 \(\overline{AD}\)。<br>
+              C 錯：\(\overline{DE}\) 是兩邊中點連線段，只有 \(\overline{BC}\) 的一半。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 等腰 \(\triangle ABC\) 中，\(\overline{AB} = \overline{AC}\)，\(D\) 是 \(\overline{AB}\) 的中點，過 \(D\) 作 \(\overline{DE} /\!/ \overline{BC}\) 交 \(\overline{AC}\) 於 \(E\)。若 \(\overline{DE} = 7\)、\(\overline{DB} = 5\)，則 \(\triangle ABC\) 的周長為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-14" value="A"><span class="option-text">A. \(34\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-14" value="B"><span class="option-text">B. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-14" value="C"><span class="option-text">C. \(29\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-14" value="D"><span class="option-text">D. \(17\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(D\) 是中點，\(\overline{AB} = 2 \times 5 = 10\)，\(\overline{AC} = \overline{AB} = 10\)；\(E\) 也是中點，\(\overline{BC} = 2\overline{DE} = 14\)。周長 \(= 10 + 10 + 14 = 34\)。<br>
+              B 錯：\(10 + 7 + 7\)，把 \(\overline{BC}\) 當成和 \(\overline{DE}\) 一樣長再算兩次。<br>
+              C 錯：\(10 + 5 + 14\)，\(\overline{AC}\) 只算了一半。<br>
+              D 錯：那是 \(\triangle ADE\) 的周長。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 三條平行線截兩條截線
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i> <span>重點 8：三條平行線截兩條截線，截出的線段成比例</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(L_1 /\!/ L_2 /\!/ L_3\)，分別交截線 \(M_1\) 於 \(A\)、\(B\)、\(C\)，交截線 \(M_2\) 於 \(D\)、\(E\)、\(F\)，則 \(\overline{AB} : \overline{BC} = \overline{DE} : \overline{EF}\)。</li>
+              <li>理由：連 \(\overline{AF}\) 交 \(L_2\) 於 \(I\)。在 \(\triangle ACF\) 中 \(\overline{AB} : \overline{BC} = \overline{AI} : \overline{IF}\)；在 \(\triangle FDA\) 中 \(\overline{DE} : \overline{EF} = \overline{AI} : \overline{IF}\)。</li>
+              <li>兩條截線不必平行、也不必一樣斜，比都相同。平行線<strong>等距</strong>時，截出的線段也等長——這就是暖身漫畫裡用橫線紙等分紙條的道理。</li>
+              <li>比例式可以化成方程式：內項乘積 \(=\) 外項乘積。出現二次方程式時，記得<strong>長度要大於 \(0\)</strong>，不合的根要捨去。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・平行線截比例線段性質的應用</span>
+              \(L_1 /\!/ L_2 /\!/ L_3\)<br>\(\Rightarrow \overline{AB} : \overline{BC} = \overline{DE} : \overline{EF}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_lines.webp" alt="昭和復古照相館風插圖：暗房裡三條上下平行的晾片繩，左右各有一根斜靠在牆上的竹竿穿過三條繩子，繩上夾著幾張相片；小影踮腳夾相片。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：截線怎麼斜，比都不變</h3>
+            <p class="interactive-instruction">調整兩段平行線的間距，再把兩條截線轉來轉去。截出的長度會變，但 \(\overline{AB} : \overline{BC}\) 和 \(\overline{DE} : \overline{EF}\) 永遠相等；切到「為什麼」看證明。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-three" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="th-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="th-mode-group">
+                      <button class="pick-btn active" data-th-mode="show">量一量</button>
+                      <button class="pick-btn" data-th-mode="proof">為什麼</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="th-g1">\(L_1\)、\(L_2\) 的間距：<span id="th-vg1" class="val-num">2</span></label>
+                    <input type="range" id="th-g1" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="th-g2">\(L_2\)、\(L_3\) 的間距：<span id="th-vg2" class="val-num">3</span></label>
+                    <input type="range" id="th-g2" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="th-t1">\(M_1\) 的傾斜：<span id="th-vt1" class="val-num">-10°</span></label>
+                    <input type="range" id="th-t1" min="-30" max="30" value="-10" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="th-t2">\(M_2\) 的傾斜：<span id="th-vt2" class="val-num">20°</span></label>
+                    <input type="range" id="th-t2" min="-30" max="30" value="20" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="th-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (三條平行線)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> 如圖，\(L_1 /\!/ L_2 /\!/ L_3\)，\(\overline{AB} = x + 3\)、\(\overline{BC} = 2x + 4\)、\(\overline{DE} = 14\)、\(\overline{EF} = 24\)。\(x =\)？</p>
+            <canvas class="quiz-fig" data-fig="q15" width="320" height="220" role="img" aria-label="三條水平平行線 L1、L2、L3 被兩條截線所截，左截線上 AB 標 x 加 3、BC 標 2x 加 4，右截線上 DE 標 14、EF 標 24"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-15" value="A"><span class="option-text">A. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-15" value="B"><span class="option-text">B. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-15" value="C"><span class="option-text">C. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-15" value="D"><span class="option-text">D. \(4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{AB} : \overline{BC} = \overline{DE} : \overline{EF}\)：
+              \[ \begin{aligned} & (x + 3) : (2x + 4) = 14 : 24 \\ & 24(x + 3) = 14(2x + 4) \\ & 24x + 72 = 28x + 56 \\ & x = 4 \end{aligned} \]
+              驗算：\(\overline{AB} = 7\)、\(\overline{BC} = 12\)，\(7 : 12 = 14 : 24\)。<br>
+              A、B、C 錯：代回去 \(\overline{AB} : \overline{BC}\) 分別是 \(5 : 8\)、\(8 : 14\)、\(10 : 18\)，都不等於 \(7 : 12\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 如圖，\(L_1 /\!/ L_2 /\!/ L_3\)，\(\overline{AB} = 7\)、\(\overline{BC} = x + 1\)、\(\overline{DE} = x - 1\)、\(\overline{EF} = 9\)。\(x =\)？</p>
+            <canvas class="quiz-fig" data-fig="q16" width="320" height="220" role="img" aria-label="三條水平平行線 L1、L2、L3 被兩條截線所截，左截線上 AB 標 7、BC 標 x 加 1，右截線上 DE 標 x 減 1、EF 標 9"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-16" value="A"><span class="option-text">A. \(8\) 或 \(-8\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-16" value="B"><span class="option-text">B. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-16" value="C"><span class="option-text">C. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-16" value="D"><span class="option-text">D. \(9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{AB} : \overline{BC} = \overline{DE} : \overline{EF}\)：
+              \[ \begin{aligned} & 7 : (x + 1) = (x - 1) : 9 \\ & (x + 1)(x - 1) = 63 \\ & x^2 = 64 \end{aligned} \]
+              \(x = 8\) 或 \(x = -8\)。但 \(x = -8\) 時 \(\overline{DE} = -9\)，長度不能是負的，捨去，所以 \(x = 8\)。<br>
+              A 錯：沒有把負的長度捨去。<br>
+              B、D 錯：代回去比例式不成立。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 梯形中的平行線段
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shapes" aria-hidden="true"></i> <span>重點 9：梯形中平行兩底的線段</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>四邊形 \(ABCD\) 中 \(\overline{AD} /\!/ \overline{EF} /\!/ \overline{BC}\)，先由重點 8 得 \(\overline{AE} : \overline{EB} = \overline{DF} : \overline{FC}\)。</li>
+              <li><strong>方法一：連對角線</strong> \(\overline{AC}\) 交 \(\overline{EF}\) 於 \(G\)。\(\overline{EG}\) 在 \(\triangle ABC\) 裡配 \(\overline{BC}\)（用 \(\overline{AE} : \overline{AB}\)），\(\overline{GF}\) 在 \(\triangle CAD\) 裡配 \(\overline{AD}\)（用 \(\overline{CF} : \overline{CD}\)），再相加。</li>
+              <li><strong>方法二：作平行線</strong> \(\overline{DN} /\!/ \overline{AB}\)，把上底平移下來：\(\overline{EM} = \overline{AD}\)，剩下的 \(\overline{MF}\) 在 \(\triangle DNC\) 裡算。</li>
+              <li>⚠️ \(\overline{EF}\) <strong>不是</strong>兩底的平均——只有 \(E\)、\(F\) 是兩腰中點時才是（第四冊的梯形中線）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・梯形中的平行線段</span>
+              切成「三角形」或「平行四邊形 ＋ 三角形」，再各用一次平行線截比例線段性質
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_rack.webp" alt="昭和復古照相館風插圖：照相館櫥窗裡一座梯形的木頭相片展示架，上窄下寬，中間有一層水平的隔板，隔板比底部窄、比頂部寬，每一層都立著幾個相框；阿光正在擺相框。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩種切法算 EF</h3>
+            <p class="interactive-instruction">調整 \(\overline{AE} : \overline{EB}\) 與上下底的長，切換「連對角線」和「作平行線」兩種方法，看兩種切法算出的 \(\overline{EF}\) 是否一樣。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-trap" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方法</span>
+                    <div class="btn-group" id="tp-mode-group">
+                      <button class="pick-btn active" data-tp-mode="diag">連對角線</button>
+                      <button class="pick-btn" data-tp-mode="trans">作平行線</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tp-m">\(\overline{AE}\) 的份數：<span id="tp-vm" class="val-num">1</span></label>
+                    <input type="range" id="tp-m" min="1" max="4" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tp-n">\(\overline{EB}\) 的份數：<span id="tp-vn" class="val-num">3</span></label>
+                    <input type="range" id="tp-n" min="1" max="4" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tp-a">上底 \(\overline{AD}\)：<span id="tp-va" class="val-num">4</span></label>
+                    <input type="range" id="tp-a" min="2" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tp-b">下底 \(\overline{BC}\)：<span id="tp-vb" class="val-num">12</span></label>
+                    <input type="range" id="tp-b" min="6" max="14" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (梯形中的線段)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 如圖，四邊形 \(ABCD\) 中，\(\overline{AD} /\!/ \overline{EF} /\!/ \overline{BC}\)，\(\overline{AE} : \overline{EB} = 2 : 5\)，\(\overline{AD} = 6\)、\(\overline{BC} = 13\)。\(\overline{EF} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q17" width="320" height="200" role="img" aria-label="梯形 ABCD，上底 AD 標 6、下底 BC 標 13，E 在 AB 上、F 在 CD 上，EF 平行兩底"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-17" value="A"><span class="option-text">A. \(\frac{19}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-17" value="B"><span class="option-text">B. \(8\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-17" value="C"><span class="option-text">C. \(11\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-17" value="D"><span class="option-text">D. \(\frac{26}{7}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。連 \(\overline{AC}\) 交 \(\overline{EF}\) 於 \(G\)：
+              \[ \begin{aligned} & \overline{EG} = 13 \times \frac{2}{7} = \frac{26}{7} \\ & \overline{GF} = 6 \times \frac{5}{7} = \frac{30}{7} \\ & \overline{EF} = \frac{26}{7} + \frac{30}{7} = 8 \end{aligned} \]
+              （作 \(\overline{DN} /\!/ \overline{AB}\) 也可以：\(6 + (13 - 6) \times \frac{2}{7} = 8\)。）<br>
+              A 錯：\(\frac{6 + 13}{2}\) 是兩腰中點連線段的長，這裡 \(E\) 不是中點。<br>
+              C 錯：把 \(\frac{2}{7}\) 和 \(\frac{5}{7}\) 配反了。<br>
+              D 錯：只算了 \(\overline{EG}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 如圖，四邊形 \(ABCD\) 中，\(\overline{AD} /\!/ \overline{BC}\)，對角線 \(\overline{AC}\)、\(\overline{BD}\) 交於 \(G\)，過 \(G\) 作 \(\overline{EF} /\!/ \overline{BC}\)，交 \(\overline{AB}\) 於 \(E\)、\(\overline{CD}\) 於 \(F\)。若 \(\overline{AD} = 12\)、\(\overline{BC} = 20\)，則 \(\overline{EF} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q18" width="320" height="200" role="img" aria-label="梯形 ABCD，上底 AD 標 12、下底 BC 標 20，對角線 AC、BD 交於 G，過 G 的 EF 平行兩底"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-18" value="A"><span class="option-text">A. \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-18" value="B"><span class="option-text">B. \(\frac{15}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-18" value="C"><span class="option-text">C. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-18" value="D"><span class="option-text">D. \(15\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{EG}\) 同時在兩個三角形裡：在 \(\triangle ABC\) 中 \(\overline{EG} : \overline{BC} = \overline{AE} : \overline{AB}\)，在 \(\triangle BAD\) 中 \(\overline{EG} : \overline{AD} = \overline{BE} : \overline{AB}\)。所以
+              \[ 20 \times \overline{AE} = 12 \times \overline{BE} \]
+              \(\overline{AE} : \overline{EB} = 3 : 5\)，\(\overline{EG} = 20 \times \frac{3}{8} = \frac{15}{2}\)。同理 \(\overline{GF} = 20 \times \frac{3}{8} = \frac{15}{2}\)（\(\overline{DF} : \overline{DC} = \overline{AE} : \overline{AB}\)），\(\overline{EF} = 15\)。<br>
+              A 錯：\(16\) 是兩底的平均，\(G\) 不在兩腰中點的高度。<br>
+              B 錯：只算了 \(\overline{EG}\)。<br>
+              C 錯：\(\overline{EF}\) 比上底長，不會等於 \(\overline{AD}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 落在平行線上的線段，先平移再比
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> <span>重點 10：落在平行線上的線段，先平移再列比例</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(L_1 /\!/ L_2 /\!/ L_3\) 與截線 \(M_1\)、\(M_2\) 圍出 \(\overline{AD}\)、\(\overline{BE}\)、\(\overline{CF}\) 三條「橫的」線段。它們<strong>落在平行線上</strong>，不是被平行線截出來的，所以 \(\overline{AB} : \overline{AC} = \overline{BE} : \overline{CF}\) <strong>不成立</strong>。</li>
+              <li>正確做法：過 \(A\) 作 \(M_3 /\!/ M_2\)，交 \(L_2\)、\(L_3\) 於 \(G\)、\(H\)。\(AGED\)、\(GHFE\) 是平行四邊形，\(\overline{GE} = \overline{HF} = \overline{AD}\)。</li>
+              <li>扣掉 \(\overline{AD}\) 剩下的 \(\overline{BG}\)、\(\overline{CH}\) 在 \(\triangle ACH\) 裡，才能用 \(\overline{AB} : \overline{AC} = \overline{BG} : \overline{CH}\)，最後再加回 \(\overline{HF}\)。</li>
+              <li>同樣的道理：\(\overline{BG} : \overline{CH}\) 成立，不代表 \((\overline{BG} + a) : (\overline{CH} + a)\) 也成立。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・先平移、再列比例</span>
+              \(\overline{CF} = \overline{CH} + \overline{HF}\)，其中 \(\overline{AB} : \overline{AC} = \overline{BG} : \overline{CH}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_darkroom.webp" alt="昭和復古照相館風插圖：暗房裡紅色安全燈亮著，阿光站在顯影盤前用竹夾夾起一張剛顯影的相片，小影在旁邊拿著筆記本對照，兩人都專心看著相片。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：錯在哪、怎麼補</h3>
+            <p class="interactive-instruction">調整截線上的兩段和平行線上的 \(\overline{AD}\)、\(\overline{BE}\)。切到「錯誤做法」看直接配比例會算出多長；切到「正確做法」看平移後怎麼算出 \(\overline{CF}\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-shift" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sh-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">做法</span>
+                    <div class="btn-group" id="sh-mode-group">
+                      <button class="pick-btn" data-sh-mode="wrong">錯誤做法</button>
+                      <button class="pick-btn active" data-sh-mode="right">正確做法</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sh-u">\(\overline{AB}\)：<span id="sh-vu" class="val-num">2</span></label>
+                    <input type="range" id="sh-u" min="1" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-v">\(\overline{BC}\)：<span id="sh-vv" class="val-num">3</span></label>
+                    <input type="range" id="sh-v" min="1" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-d">\(\overline{AD}\)：<span id="sh-vd" class="val-num">2</span></label>
+                    <input type="range" id="sh-d" min="1" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sh-k">\(\overline{BE}\) 的長（比 \(\overline{AD}\) 長 1～5）：<span id="sh-vk" class="val-num">4</span></label>
+                    <input type="range" id="sh-k" min="1" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sh-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (先平移再比)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 如圖，\(L_1 /\!/ L_2 /\!/ L_3\)，截線 \(M_1\) 交三線於 \(A\)、\(B\)、\(C\)，截線 \(M_2\) 交三線於 \(D\)、\(E\)、\(F\)。若 \(\overline{AB} = 4\)、\(\overline{BC} = 6\)、\(\overline{AD} = 7\)、\(\overline{BE} = 9\)，則 \(\overline{CF} =\)？</p>
+            <canvas class="quiz-fig" data-fig="q19" width="320" height="220" role="img" aria-label="三條水平平行線被兩條截線所截，左截線上 AB 標 4、BC 標 6，平行線上的線段 AD 標 7、BE 標 9、CF 標問號"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-19" value="A"><span class="option-text">A. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-19" value="B"><span class="option-text">B. \(\frac{45}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-19" value="C"><span class="option-text">C. \(\frac{27}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-19" value="D"><span class="option-text">D. \(11\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。過 \(A\) 作 \(M_3 /\!/ M_2\)，交 \(L_2\)、\(L_3\) 於 \(G\)、\(H\)，\(\overline{GE} = \overline{HF} = 7\)：
+              \[ \begin{aligned} & \overline{BG} = 9 - 7 = 2 \\ & 4 : 10 = 2 : \overline{CH},\ \overline{CH} = 5 \\ & \overline{CF} = 5 + 7 = 12 \end{aligned} \]
+              B 錯：直接寫 \(\overline{AB} : \overline{AC} = \overline{BE} : \overline{CF}\)，得 \(9 \times \frac{10}{4}\)，\(\overline{BE}\)、\(\overline{CF}\) 不能這樣配。<br>
+              C 錯：寫成 \(\overline{AB} : \overline{BC} = \overline{BE} : \overline{CF}\)，同樣是把平行線上的線段拿來配比例。<br>
+              D 錯：以為每往下一條就多 \(2\)，忽略了 \(\overline{BC}\) 比 \(\overline{AB}\) 長。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> \(L_1 /\!/ L_2 /\!/ L_3\)，截線 \(M_1\) 上 \(\overline{AB} = 6\)、\(\overline{BC} = 3\)，平行線上 \(\overline{AD} = 2\)、\(\overline{BE} = 4\)。小影求 \(\overline{CF}\) 時寫「\(\overline{AB} : \overline{AC} = \overline{BE} : \overline{CF}\)」。她錯在哪裡？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-20" value="A"><span class="option-text">A. 應該寫成 \(\overline{AB} : \overline{BC} = \overline{BE} : \overline{CF}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-20" value="B"><span class="option-text">B. 應該寫成 \(\overline{AC} : \overline{AB} = \overline{BE} : \overline{CF}\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-20" value="C"><span class="option-text">C. \(\overline{BE}\)、\(\overline{CF}\) 落在平行線上，不是被平行線截出的線段，不能直接列比例</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-20" value="D"><span class="option-text">D. 沒有錯，\(\overline{CF} = 4 \times \frac{9}{6} = 6\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。平行線截比例線段性質講的是截線被截出的線段。正確做法是過 \(A\) 作 \(M_2\) 的平行線，先扣掉 \(\overline{AD}\)：\(\overline{BG} = 4 - 2 = 2\)，\(6 : 9 = 2 : \overline{CH}\)，\(\overline{CH} = 3\)，\(\overline{CF} = 3 + 2 = 5\)。<br>
+              A、B 錯：換個比例式，問題還是在 \(\overline{BE}\)、\(\overline{CF}\) 不能直接配。<br>
+              D 錯：照小影的式子得 \(6\)，和正確的 \(5\) 不同。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 利用尺規作圖作比例線段
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i> <span>重點 11：利用尺規作圖，把線段按比例分割</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>目標：在 \(\overline{AB}\) 上找一點 \(C\)，使 \(\overline{AC} : \overline{CB}\) 等於指定的比。直尺沒有刻度，不能量長度。</li>
+              <li>作法：① 過 \(A\) 另畫一條射線 \(L\)；② 用圓規在 \(L\) 上連續截取等長的線段，依指定的比取 \(D\)、\(E\)；③ 連 \(\overline{BE}\)；④ 過 \(D\) 作 \(\overline{BE}\) 的平行線（作同位角相等），交 \(\overline{AB}\) 於 \(C\)。</li>
+              <li>理由：\(\triangle ABE\) 中 \(\overline{CD} /\!/ \overline{BE}\)，由平行線截比例線段性質，\(\overline{AC} : \overline{CB} = \overline{AD} : \overline{DE}\)。</li>
+              <li>題目若要 \(\overline{AC} : \overline{AB}\) 等於某個比，就在 \(L\) 上取 \(\overline{AD} : \overline{AE}\) 等於那個比——<strong>看清楚是比「下段」還是比「全長」</strong>。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・尺規作比例線段</span>
+              \(\overline{CD} /\!/ \overline{BE}\)<br>\(\Rightarrow \overline{AC} : \overline{CB} = \overline{AD} : \overline{DE}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dr_divide.webp" alt="昭和復古照相館風插圖：照相館的木桌上鋪著一張白紙，小影一手扶著沒有刻度的木直尺、一手拿圓規，正在紙上的一條斜線上截出一段一段等長的小弧；阿光在對面看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一步一步作出 C</h3>
+            <p class="interactive-instruction">設定要的比 \(\overline{AC} : \overline{CB}\)，按「下一步」看圓規與直尺怎麼作；最後一步會量出 \(\overline{AC} \div \overline{CB}\) 驗證。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-build" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="bd-prev">上一步</button>
+                      <span class="step-counter" id="bd-step">1 / 7</span>
+                      <button class="pick-btn" id="bd-next">下一步</button>
+                      <button class="pick-btn" id="bd-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bd-m">\(\overline{AC}\) 的份數：<span id="bd-vm" class="val-num">1</span></label>
+                    <input type="range" id="bd-m" min="1" max="5" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="bd-n">\(\overline{CB}\) 的份數：<span id="bd-vn" class="val-num">2</span></label>
+                    <input type="range" id="bd-n" min="1" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (尺規作比例線段)</h3>
+
+          <div class="quiz-card" data-quiz="5-1-2-21">
+            <p class="quiz-question"><strong>Q21.</strong> 已知 \(\overline{AB}\)，依下列步驟作圖：過 \(A\) 另作一條射線 \(L\)；在 \(L\) 上依序取 \(D\)、\(E\) 兩點，使 \(\overline{AD} : \overline{AE} = 2 : 9\)；連接 \(\overline{BE}\)；過 \(D\) 作 \(\overline{BE}\) 的平行線交 \(\overline{AB}\) 於 \(C\)。則 \(\overline{AC} : \overline{CB} =\)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-21" value="A"><span class="option-text">A. \(2 : 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-21" value="B"><span class="option-text">B. \(2 : 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-21" value="C"><span class="option-text">C. \(7 : 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-21" value="D"><span class="option-text">D. \(2 : 11\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{AD} : \overline{AE} = 2 : 9\)，所以 \(\overline{AD} : \overline{DE} = 2 : (9 - 2) = 2 : 7\)。\(\triangle ABE\) 中 \(\overline{CD} /\!/ \overline{BE}\)，\(\overline{AC} : \overline{CB} = \overline{AD} : \overline{DE} = 2 : 7\)。<br>
+              A 錯：\(2 : 9\) 是 \(\overline{AC} : \overline{AB}\)，題目問的是 \(\overline{AC} : \overline{CB}\)。<br>
+              C 錯：前後項順序反了。<br>
+              D 錯：把 \(9\) 當成下段再加一次。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="5-1-2-22">
+            <p class="quiz-question"><strong>Q22.</strong> 阿光要在 \(\overline{AB}\) 上找 \(C\)，使 \(\overline{AC} : \overline{CB} = 6 : 5\)。他過 \(A\) 畫射線 \(L\)，用圓規在 \(L\) 上連續截取 \(11\) 段等長，依序得到 \(P_1, P_2, \ldots, P_{11}\)，再連接 \(\overline{BP_{11}}\)。下一步應該怎麼做？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q5-1-2-22" value="A"><span class="option-text">A. 過 \(P_6\) 作 \(\overline{BP_{11}}\) 的平行線，交 \(\overline{AB}\) 於 \(C\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-22" value="B"><span class="option-text">B. 連接 \(B\) 與 \(P_6\)，交點就是 \(C\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-22" value="C"><span class="option-text">C. 過 \(P_5\) 作 \(\overline{BP_{11}}\) 的平行線，交 \(\overline{AB}\) 於 \(C\)</span></label>
+              <label class="option-label"><input type="radio" name="q5-1-2-22" value="D"><span class="option-text">D. 過 \(P_6\) 作 \(\overline{AB}\) 的平行線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。過 \(P_6\) 作 \(\overline{BP_{11}}\) 的平行線交 \(\overline{AB}\) 於 \(C\)，由平行線截比例線段性質，\(\overline{AC} : \overline{CB} = \overline{AP_6} : \overline{P_6P_{11}} = 6 : 5\)。<br>
+              B 錯：\(\overline{BP_6}\) 和 \(\overline{AB}\) 只交在 \(B\)，找不到 \(C\)。<br>
+              C 錯：過 \(P_5\) 得到的是 \(5 : 6\)，前後顛倒。<br>
+              D 錯：和 \(\overline{AB}\) 平行的線永遠不會交 \(\overline{AB}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 比例線段速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>等高三角形</strong>：面積比 \(=\) 底邊比。</li>
+              <li><strong>截比例①</strong>：\(\overline{DE} /\!/ \overline{BC}\) \(\Rightarrow\) 兩邊截成相同的比（上段 : 下段、上段 : 全長、下段 : 全長）。</li>
+              <li><strong>截比例②</strong>：\(\overline{DE} : \overline{BC} = \overline{AD} : \overline{AB}\)，平行邊配全長。</li>
+              <li><strong>判斷平行</strong>：兩邊截成的比相等 \(\Rightarrow\) 平行；平行邊的比<strong>不能</strong>拿來判斷。</li>
+              <li><strong>中點連線段</strong>：平行第三邊、長度一半；過一邊中點的平行線也過另一邊中點。</li>
+              <li><strong>三條平行線</strong>截兩條截線，截出的線段成比例；落在平行線上的線段要先平移。</li>
+              <li><strong>尺規</strong>：在另一條射線上截等長，再作平行線，把比搬到 \(\overline{AB}\) 上。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到暗房：試光條與放大機</h4>
+              <h5><i class="fa-solid fa-ruler-combined"></i> 不用量，也能等分</h5>
+              <p>阿光的試光條最後是這樣切的：把紙條斜放在橫線紙上，兩端壓在相隔五格的兩條橫線上，在每條橫線經過的地方做記號。橫線等距又互相平行，所以紙條被截成的五段也一樣長——用的正是<strong>三條（或更多條）平行線截兩條截線</strong>的性質。</p>
+              <h5><i class="fa-solid fa-lightbulb"></i> 放大機的光框</h5>
+              <p>放大機的光從燈頭往下照，底片架和相紙都是水平的。光束的兩條邊被兩個水平面截出比例線段，畫面在相紙上就按同一個比放大。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節</h5>
+              <p>放大或縮小之後，圖形的角度不變、邊長成比例，這就是下一節的<strong>縮放與相似</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

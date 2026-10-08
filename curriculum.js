@@ -160,9 +160,9 @@
       {
         "chapter": "第1章 相似形",
         "sections": [
-          { "code": "1-1", "title": "連比例" },
-          { "code": "1-2", "title": "比例線段" },
-          { "code": "1-3", "title": "縮放與相似" },
+          { "code": "1-1", "title": "連比例", "status": "completed" },
+          { "code": "1-2", "title": "比例線段", "status": "completed" },
+          { "code": "1-3", "title": "縮放與相似", "status": "completed" },
           { "code": "1-4", "title": "相似三角形的應用" }
         ]
       },

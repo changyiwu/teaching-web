@@ -4,39 +4,1279 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-1 連比例 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-1 連比例 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第五冊 (3上) • 第1章 相似形</div>
-    <h1>1-1 連比例</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第五冊 • 第一章</span>
+        <h1>1-1 連比例</h1>
+        <p>老照相館的暗房裡，小影和阿光每天都要調顯影液：A 液、B 液、清水要照固定的比例倒。兩個量可以用「比」，<strong>三個以上的量</strong>一起比就叫做<strong>連比</strong>。這一節先學連比的寫法與化簡、怎麼把兩個比<strong>併成連比</strong>；再學連比例式 \(x : y : z = a : b : c\)，用「設 \(x = ar\)、\(y = br\)、\(z = cr\)」求未知數與新的連比；最後用連比解分配總量、兩根桿子重疊這類應用問題。</p>
+      </div>
+      <!-- Progress navigation (10 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-flask"></i> 連比的意義</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 化簡連比</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-table-columns"></i> 兩個比併連比</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-right-left"></i> 由 ax = by 求比</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-cubes"></i> 連比例式與設 r</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> 求未知項</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-equals"></i> 連等式與連比</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-arrows-rotate"></i> 代入求新連比</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-chart-pie"></i> 分配總量</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-ruler-combined"></i> 重疊與串接</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（昭和復古照相館・暗房）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(217, 179, 140, 0.3);">
+        <h2 class="section-title" style="color: #d9b38c; border-bottom-color: rgba(217, 179, 140, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #d9b38c; text-shadow: 0 0 10px rgba(217, 179, 140, 0.4);"></i> 課前暖身漫畫：顯影液要倒多少？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            顯影液的說明寫著「A 液、B 液、清水照 \(1 : 2 : 5\) 調配」，可是顯影盤要裝 \(2\) 公升，三種各要倒多少？小影把三個數加起來：一共 \(8\) 份，一份就是 \(250\) 毫升。<strong style="color:#d9b38c">三個以上的量一起比，就是連比</strong>——這一節就從這裡開始。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(28, 22, 18, 0.5);">
+            <img src="motivation_comic.webp" alt="昭和復古照相館風四格漫畫：小影在暗房紅色安全燈下讀顯影液的調配方法，A 液、B 液、清水照 1 比 2 比 5；阿光捧著顯影盤問要裝 2 公升各倒多少；小影算出一共 8 份、一份 250 毫升；旁白說三個以上的量一起比就是連比。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 連比的意義
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flask" aria-hidden="true"></i> <span>重點 1：連比的意義——三個量一起比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>三個（或三個以上）的數連續的比，叫做<strong>連比</strong>，記作 \(a : b : c\)。</li>
+              <li>顯影液用同一個量杯倒：A 液 \(3\) 杯、B 液 \(2\) 杯、清水 \(5\) 杯，A 液、B 液、清水杯數的連比就是 \(3 : 2 : 5\)。</li>
+              <li>一個連比同時包含<strong>三組比</strong>：A 液 : B 液 \(= 3 : 2\)、B 液 : 清水 \(= 2 : 5\)、A 液 : 清水 \(= 3 : 5\)。</li>
+              <li>連比要照<strong>題目說的順序</strong>寫，順序一換，連比就不同。</li>
+              <li>連比只說三個量的<strong>倍數關係</strong>，不是實際的量：\(x : y : z = 3 : 2 : 5\) 並不代表 \(x = 3\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・連比與它包含的三組比</span>
+              \(x : y : z = a : b : c\) \(\Rightarrow\) \(x : y = a : b\)、\(y : z = b : c\)、\(x : z = a : c\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dk_recipe.webp" alt="昭和復古照相館風插圖：暗房的紅色安全燈下，小影在工作台上排好三排同樣大小的玻璃量杯，琥珀色的 A 液 3 杯、淡藍色的 B 液 2 杯、透明的清水 4 杯；阿光拿著筆記本站在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：配方量杯台</h3>
+            <p class="interactive-instruction">用滑桿決定 A 液、B 液、清水各倒幾杯（同一個量杯），再選要比較哪兩樣：看連比裡的三組比是怎麼來的。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mean" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mean-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">比較</span>
+                    <div class="btn-group" id="mean-pair-group">
+                      <button class="pick-btn" data-mean-pair="ab">A 液 : B 液</button>
+                      <button class="pick-btn" data-mean-pair="bc">B 液 : 清水</button>
+                      <button class="pick-btn active" data-mean-pair="ac">A 液 : 清水</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mean-a">A 液：<span id="mean-va" class="val-num">3 杯</span></label>
+                    <input type="range" id="mean-a" min="1" max="8" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mean-b">B 液：<span id="mean-vb" class="val-num">2 杯</span></label>
+                    <input type="range" id="mean-b" min="1" max="8" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="mean-c">清水：<span id="mean-vc" class="val-num">4 杯</span></label>
+                    <input type="range" id="mean-c" min="1" max="8" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mean-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (連比的意義)</h3>
+
+          <div class="quiz-card" data-quiz="511-1">
+            <p class="quiz-question"><strong>Q1.</strong> 小影用同一支量匙調藥水：A 液 \(6\) 匙、B 液 \(4\) 匙、清水 \(9\) 匙。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-1" value="A"><span class="option-text">A. A 液與清水的比是 \(6 : 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-1" value="B"><span class="option-text">B. A 液與清水的比是 \(2 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-1" value="C"><span class="option-text">C. B 液與清水的比是 \(9 : 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-1" value="D"><span class="option-text">D. A 液、B 液、清水的連比是 \(6 : 9 : 4\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。A 液 : 清水 \(= 6 : 9\)，前後項同除以 \(3\)，得 \(2 : 3\)。<br>
+              A 錯：\(6 : 4\) 是 A 液 : B 液。<br>
+              C 錯：B 液 : 清水 \(= 4 : 9\)，前後項寫反了。<br>
+              D 錯：連比要照「A 液、B 液、清水」的順序寫，是 \(6 : 4 : 9\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-2">
+            <p class="quiz-question"><strong>Q2.</strong> 照相館裡木框、鐵框、紙框三種相框的個數連比為 \(14 : 21 : 35\)。阿光說：「所以木框一定有 \(14\) 個。」下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-2" value="A"><span class="option-text">A. 阿光對，連比的第一項就是木框的個數</span></label>
+              <label class="option-label"><input type="radio" name="q511-2" value="B"><span class="option-text">B. 阿光對，因為 \(14 : 21 : 35\) 已經是最簡整數比</span></label>
+              <label class="option-label"><input type="radio" name="q511-2" value="C"><span class="option-text">C. 阿光錯，木框一定是 \(2\) 個</span></label>
+              <label class="option-label"><input type="radio" name="q511-2" value="D"><span class="option-text">D. 阿光錯，木框 \(16\) 個、鐵框 \(24\) 個、紙框 \(40\) 個也符合這個連比</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。連比只說三個量的倍數關係。\(14 : 21 : 35\) 同除以 \(7\) 是 \(2 : 3 : 5\)，而 \(16 : 24 : 40\) 同除以 \(8\) 也是 \(2 : 3 : 5\)，所以兩者相等，木框可能是 \(16\) 個。<br>
+              A 錯：連比的項不是實際個數，木框可以是 \(2\)、\(4\)、\(6\)、\(8\)、… 個。<br>
+              B 錯：\(14\)、\(21\)、\(35\) 有公因數 \(7\)，不是最簡整數比；而且就算是最簡，也不代表實際個數。<br>
+              C 錯：\(2\) 個只是其中一種可能，不是「一定」。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 連比的運算性質與化簡
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>重點 2：同乘同除，連比不變——化成最簡整數比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>連比的各項<strong>同乘以</strong>或<strong>同除以</strong>同一個不為 \(0\) 的數，連比不變。</li>
+              <li>一份配方是 \(2 : 3 : 4\)，做 \(3\) 份是 \(6 : 9 : 12\)，做半份是 \(1 : 1.5 : 2\)，三個連比都相等。</li>
+              <li>化成<strong>最簡整數比</strong>（各項都是整數、沒有共同的因數）：
+                <ul>
+                  <li>整數：同除以三數的最大公因數。\(18 : 24 : 30 = 3 : 4 : 5\)（同除以 \(6\)）。</li>
+                  <li>小數：先同乘以 \(10\)（或 \(100\)）去掉小數點，再約。\(0.4 : 1 : 1.4\)<wbr>\({}= 4 : 10 : 14\)<wbr>\({}= 2 : 5 : 7\)。</li>
+                  <li>分數：先同乘以分母的最小公倍數。\(\frac{1}{2} : \frac{2}{3} : \frac{3}{4}\) 同乘以 \(12\)，得 \(6 : 8 : 9\)。</li>
+                </ul>
+              </li>
+              <li>每一項都要乘（或除），只處理其中幾項，比就變了。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・連比的運算性質（m ≠ 0）</span>
+              \(a : b : c\)<wbr>\({}= (a \times m) : (b \times m) : (c \times m)\)<br>
+              \(a : b : c\)<wbr>\({}= (a \div m) : (b \div m) : (c \div m)\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dk_batch.webp" alt="昭和復古照相館風插圖：工作台上左右兩組同樣大小的玻璃量杯。左組是 A 液 1 杯、B 液 2 杯、清水 3 杯；右組每一種都是左組的 2 倍：A 液 2 杯、B 液 4 杯、清水 6 杯。阿光伸手指著右組。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：連比化簡台</h3>
+            <p class="interactive-instruction">選整數、小數或分數的連比，調整三個數，看它一步一步化成最簡整數比。下方的三條長條按比例畫：化簡前後，三條的長短關係完全一樣。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-simp" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="simp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">連比</span>
+                    <div class="btn-group" id="simp-mode-group">
+                      <button class="pick-btn active" data-simp-mode="int">整數</button>
+                      <button class="pick-btn" data-simp-mode="dec">小數</button>
+                      <button class="pick-btn" data-simp-mode="frac">分數</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="simp-p"><span id="simp-lp">第一項的基本量</span>：<span id="simp-vp" class="val-num">3</span></label>
+                    <input type="range" id="simp-p" min="1" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="simp-q"><span id="simp-lq">第二項的基本量</span>：<span id="simp-vq" class="val-num">4</span></label>
+                    <input type="range" id="simp-q" min="1" max="9" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="simp-r"><span id="simp-lr">第三項的基本量</span>：<span id="simp-vr" class="val-num">6</span></label>
+                    <input type="range" id="simp-r" min="1" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="simp-g-row">
+                    <label for="simp-g">三項共同乘上的倍數：<span id="simp-vg" class="val-num">4</span></label>
+                    <input type="range" id="simp-g" min="2" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="simp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (化簡連比)</h3>
+
+          <div class="quiz-card" data-quiz="511-3">
+            <p class="quiz-question"><strong>Q3.</strong> 把 \(2.2 : 0.8 : 3\) 化成最簡整數比，結果是哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-3" value="A"><span class="option-text">A. \(11 : 4 : 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-3" value="B"><span class="option-text">B. \(22 : 8 : 30\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-3" value="C"><span class="option-text">C. \(22 : 8 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-3" value="D"><span class="option-text">D. \(11 : 4 : 1.5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。三項同乘以 \(10\)：\(2.2 : 0.8 : 3 = 22 : 8 : 30\)；三數的最大公因數是 \(2\)，同除以 \(2\) 得 \(11 : 4 : 15\)。<br>
+              B 錯：\(22\)、\(8\)、\(30\) 還有公因數 \(2\)，不是最簡。<br>
+              C 錯：\(3\) 也要乘以 \(10\) 變成 \(30\)；只乘有小數點的項，比就變了。<br>
+              D 錯：看成同除以 \(0.2\) 的話，\(3 \div 0.2 = 15\)，不是 \(1.5\)；而且最簡整數比的每一項都要是整數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-4">
+            <p class="quiz-question"><strong>Q4.</strong> 把 \(\frac{2}{3} : \frac{3}{4} : \frac{5}{6}\) 化成最簡整數比，結果是哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-4" value="A"><span class="option-text">A. \(2 : 3 : 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-4" value="B"><span class="option-text">B. \(3 : 4 : 6\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-4" value="C"><span class="option-text">C. \(8 : 9 : 10\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-4" value="D"><span class="option-text">D. \(10 : 9 : 8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。分母 \(3\)、\(4\)、\(6\) 的最小公倍數是 \(12\)，三項同乘以 \(12\)：</p>
+              \[\begin{aligned} & \frac{2}{3} \times 12 : \frac{3}{4} \times 12 : \frac{5}{6} \times 12 \\ &= 8 : 9 : 10 \end{aligned}\]
+              <p class="explanation-desc">A 錯：分母不同，不能只拿分子來比。<br>
+              B 錯：也不能只拿分母來比。<br>
+              D 錯：順序寫反了，第一項是 \(\frac{2}{3}\) 對應的 \(8\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 由兩個比求連比
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-columns" aria-hidden="true"></i> <span>重點 3：由兩個比求連比——把共同項對齊</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>已知 \(x : y\) 與 \(y : z\)，要併成 \(x : y : z\)，先找兩個比<strong>共同的那一項</strong>（這裡是 \(y\)）。</li>
+              <li>共同項對應的數<strong>相同</strong>：直接併。\(x : y = 5 : 4\)、\(y : z = 4 : 9\) \(\Rightarrow\) \(x : y : z = 5 : 4 : 9\)。</li>
+              <li>共同項對應的數<strong>不同</strong>：把它化成兩數的公倍數（通常取<strong>最小公倍數</strong>），兩個比各自同乘。
+                <ul>
+                  <li>\(x : y = 2 : 3\)、\(y : z = 4 : 5\)：\(y\) 的 \(3\) 與 \(4\) 化成 \(12\)，得 \(8 : 12\) 與 \(12 : 15\)，所以 \(x : y : z = 8 : 12 : 15\)。</li>
+                </ul>
+              </li>
+              <li>共同項不一定在中間：\(x : z\) 與 \(y : z\) 的共同項是 \(z\)，\(x : y\) 與 \(x : z\) 的共同項是 \(x\)。列直式時，每個數都要對齊到自己的那一欄。</li>
+              <li>常見錯誤：\(x : y = 2 : 3\)、\(y : z = 4 : 5\) 直接寫成 \(2 : 3 : 5\)——\(y\) 一下是 \(3\)、一下是 \(4\)，根本不是同一個標準。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="dk_merge.webp" alt="昭和復古照相館風插圖：照相館櫃台前，小影攤開一本筆記本，頁面上畫著三欄、四列的空白直式表格；阿光從她身後探頭看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：直式對齊台</h3>
+            <p class="interactive-instruction">先選兩個比的共同項是哪一個，再調四個數。框起來的那一欄就是共同項：看兩列各要乘幾倍才對得齊。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-align" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="align-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知</span>
+                    <div class="btn-group" id="align-mode-group">
+                      <button class="pick-btn active" data-align-mode="y">\(x : y\) 與 \(y : z\)</button>
+                      <button class="pick-btn" data-align-mode="z">\(x : z\) 與 \(y : z\)</button>
+                      <button class="pick-btn" data-align-mode="x">\(x : y\) 與 \(x : z\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="align-a">第一個比的前項：<span id="align-va" class="val-num">2</span></label>
+                    <input type="range" id="align-a" min="1" max="9" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="align-b">第一個比的後項：<span id="align-vb" class="val-num">3</span></label>
+                    <input type="range" id="align-b" min="1" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="align-c">第二個比的前項：<span id="align-vc" class="val-num">4</span></label>
+                    <input type="range" id="align-c" min="1" max="9" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="align-d">第二個比的後項：<span id="align-vd" class="val-num">5</span></label>
+                    <input type="range" id="align-d" min="1" max="9" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="align-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (由兩個比求連比)</h3>
+
+          <div class="quiz-card" data-quiz="511-5">
+            <p class="quiz-question"><strong>Q5.</strong> 已知 \(x : z = 11 : 4\)、\(y : z = 3 : 10\)，則 \(x : y : z\) 的最簡整數比為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-5" value="A"><span class="option-text">A. \(11 : 3 : 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-5" value="B"><span class="option-text">B. \(11 : 3 : 10\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-5" value="C"><span class="option-text">C. \(110 : 12 : 40\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-5" value="D"><span class="option-text">D. \(55 : 6 : 20\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。共同項是 \(z\)，對應的數是 \(4\) 與 \(10\)，最小公倍數 \(20\)：\(x : z = 55 : 20\)（同乘 \(5\)）、\(y : z = 6 : 20\)（同乘 \(2\)），所以 \(x : y : z = 55 : 6 : 20\)。<br>
+              A、B 錯：\(z\) 一下是 \(4\)、一下是 \(10\)，不能直接併。<br>
+              C 錯：\(110 : 12 : 40\) 是把 \(z\) 化成 \(40\) 的結果，和答案相等，但三數還有公因數 \(2\)，不是最簡整數比。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-6">
+            <p class="quiz-question"><strong>Q6.</strong> 暗房櫃子裡原有大、中、小三種相紙，張數比為 \(8 : 9 : 6\)。小影沖洗相片後（<strong>沒有用到小張相紙</strong>），三種相紙的張數比變成 \(3 : 4 : 3\)。關於用掉的相紙，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-6" value="A"><span class="option-text">A. 只用了大張相紙</span></label>
+              <label class="option-label"><input type="radio" name="q511-6" value="B"><span class="option-text">B. 只用了中張相紙</span></label>
+              <label class="option-label"><input type="radio" name="q511-6" value="C"><span class="option-text">C. 兩種都用了，用掉的大張比中張多</span></label>
+              <label class="option-label"><input type="radio" name="q511-6" value="D"><span class="option-text">D. 兩種都用了，用掉的中張比大張多</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。小張相紙沒用到，張數不變，它就是前後兩個連比的「共同項」。把後來的 \(3 : 4 : 3\) 同乘以 \(2\)，讓小張也是 \(6\)：</p>
+              \[\begin{aligned} & \text{原來 } 8 : 9 : 6 \\ & \text{後來 } 6 : 8 : 6 \end{aligned}\]
+              <p class="explanation-desc">大張少了 \(2\) 份、中張少了 \(1\) 份，兩種都用了，而且大張用得比較多。A、B、D 都不對。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 由兩數關係求連比
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i> <span>重點 4：由 \(ax = by\) 求比——係數交叉對調</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>若 \(ax = by\)（\(a\)、\(b\)、\(x\)、\(y\) 皆不為 \(0\)），則 \(x : y = b : a\)：係數要<strong>交叉對調</strong>。</li>
+              <li>理由：兩邊同除以 \(ab\)，得 \(\frac{x}{b} = \frac{y}{a}\)，也就是 \(x : b = y : a\)。</li>
+              <li>例：\(3x = 5y\) \(\Rightarrow\) \(x : y = 5 : 3\)，<strong>不是</strong> \(3 : 5\)。驗算：\(x = 5\)、\(y = 3\) 時 \(3 \times 5 = 5 \times 3\)。</li>
+              <li>兩條關係式各化成一個比，再照重點 3 對齊共同項：\(3x = 5y\)、\(2y = 7z\) \(\Rightarrow\) \(x : y = 5 : 3\)、\(y : z = 7 : 2\)，\(y\) 化成 \(21\)，得 \(x : y : z = 35 : 21 : 6\)。</li>
+              <li>題目若寫成 \(3x : 2y = 9 : 4\)，先用比例式「外項乘積＝內項乘積」化成 \(12x = 18y\)，再得 \(x : y = 18 : 12 = 3 : 2\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・係數交叉對調</span>
+              \(ax = by\) \(\Rightarrow\) \(x : y = b : a\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dk_scale.webp" alt="昭和復古照相館風插圖：晾相片的繩子上有上下兩排相片，上排是 2 張同樣大小的大相片緊貼並排，下排是 3 張同樣大小的小相片緊貼並排，兩排的左端與右端都對齊，合起來是一個完整的長方形；小影伸手夾上最後一張小相片。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：交叉對調機</h3>
+            <p class="interactive-instruction">調四個係數，看每一條關係式怎麼把係數交叉對調成一個比，再把兩個比對齊成連比；最下面一行把結果代回去驗算。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-rel" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rel-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知</span>
+                    <div class="btn-group" id="rel-mode-group">
+                      <button class="pick-btn active" data-rel-mode="yz">\(ax = by\)、\(cy = dz\)</button>
+                      <button class="pick-btn" data-rel-mode="zz">\(ax = bz\)、\(cy = dz\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rel-a">\(a\)：<span id="rel-va" class="val-num">3</span></label>
+                    <input type="range" id="rel-a" min="2" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rel-b">\(b\)：<span id="rel-vb" class="val-num">2</span></label>
+                    <input type="range" id="rel-b" min="2" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rel-c">\(c\)：<span id="rel-vc" class="val-num">5</span></label>
+                    <input type="range" id="rel-c" min="2" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rel-d">\(d\)：<span id="rel-vd" class="val-num">6</span></label>
+                    <input type="range" id="rel-d" min="2" max="6" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rel-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (由數量關係求連比)</h3>
+
+          <div class="quiz-card" data-quiz="511-7">
+            <p class="quiz-question"><strong>Q7.</strong> 設 \(x\)、\(y\)、\(z\) 皆不為 \(0\)，且 \(11x = 4y\)、\(3y = 8z\)，則 \(x : y : z\) 的最簡整數比為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-7" value="A"><span class="option-text">A. \(32 : 88 : 33\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-7" value="B"><span class="option-text">B. \(33 : 12 : 32\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-7" value="C"><span class="option-text">C. \(4 : 11 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-7" value="D"><span class="option-text">D. \(32 : 88 : 3\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(11x = 4y\) \(\Rightarrow\) \(x : y = 4 : 11\)；\(3y = 8z\) \(\Rightarrow\) \(y : z = 8 : 3\)。共同項 \(y\) 的 \(11\) 與 \(8\) 化成 \(88\)：\(x : y = 32 : 88\)、\(y : z = 88 : 33\)，所以 \(x : y : z = 32 : 88 : 33\)。<br>
+              B 錯：係數沒有交叉對調，寫成 \(x : y = 11 : 4\)、\(y : z = 3 : 8\)，併出來是 \(33 : 12 : 32\)。<br>
+              C 錯：\(y\) 一下是 \(11\)、一下是 \(8\)，不能直接併。<br>
+              D 錯：\(y : z = 8 : 3\) 同乘 \(11\) 時，後項 \(3\) 也要乘成 \(33\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-8">
+            <p class="quiz-question"><strong>Q8.</strong> \(\triangle ABC\) 中，\(\angle A = x^\circ\)、\(\angle B = y^\circ\)、\(\angle C = z^\circ\)。若 \(3x = 2y\)、\(10y = 3z\)，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-8" value="A"><span class="option-text">A. \(\angle A = 36^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-8" value="B"><span class="option-text">B. \(\triangle ABC\) 是鈍角三角形</span></label>
+              <label class="option-label"><input type="radio" name="q511-8" value="C"><span class="option-text">C. \(\angle B = 24^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-8" value="D"><span class="option-text">D. \(\angle C = 90^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(3x = 2y\) \(\Rightarrow\) \(x : y = 2 : 3\)；\(10y = 3z\) \(\Rightarrow\) \(y : z = 3 : 10\)。\(y\) 都是 \(3\)，直接併成 \(x : y : z = 2 : 3 : 10\)，共 \(15\) 份。三角形內角和 \(180^\circ\)，一份是 \(12^\circ\)：\(\angle A = 24^\circ\)、\(\angle B = 36^\circ\)、\(\angle C = 120^\circ\)，是鈍角三角形。<br>
+              A 錯：\(36^\circ\) 是 \(\angle B\)，\(\angle A = 24^\circ\)。<br>
+              C 錯：\(24^\circ\) 是 \(\angle A\)，\(\angle B = 36^\circ\)。<br>
+              D 錯：\(\angle C = 120^\circ\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 連比例式的意義與設 r
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-cubes" aria-hidden="true"></i> <span>重點 5：連比例式——設每一份是 \(r\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>像 \(x : y : z = 3 : 4 : 5\) 這樣的式子，叫做<strong>連比例式</strong>。</li>
+              <li>若 \(x : y : z = a : b : c\)（\(a\)、\(b\)、\(c\) 皆不為 \(0\)），則 \(\frac{x}{a} = \frac{y}{b} = \frac{z}{c}\)，也可以寫成 \(x : a = y : b = z : c\)。</li>
+              <li>這個共同的值就是「<strong>一份</strong>」，可設 \(x = ar\)、\(y = br\)、\(z = cr\)（\(r \ne 0\)）。</li>
+              <li>例：顯影液的 A 液 : B 液 : 清水 \(= 2 : 3 : 5\)，清水用了 \(400\) 毫升。設三者為 \(2r\)、\(3r\)、\(5r\)，由 \(5r = 400\) 得 \(r = 80\)，A 液 \(160\) 毫升、B 液 \(240\) 毫升。</li>
+              <li>連比的關係是「<strong>乘</strong>」不是「加」：\(x\) 由 \(2\) 變成 \(4\)（變 \(2\) 倍），\(y\) 也要由 \(3\) 變成 \(6\)，而不是 \(3 + 2 = 5\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・連比例式的運算性質</span>
+              \(x : y : z = a : b : c\) \(\Rightarrow\) \(\frac{x}{a} = \frac{y}{b} = \frac{z}{c}\)<br>
+              可設 \(x = ar\)、\(y = br\)、\(z = cr\)（\(r \ne 0\)）
+            </div>
+
+            <div class="illustration-container">
+              <img src="dk_portion.webp" alt="昭和復古照相館風插圖：工作台上排著許多大小完全相同、裝著一樣多藥水的小玻璃杯；小影把小杯裡的藥水分別倒進三個大燒杯，左邊的大燒杯旁有 2 個空的小杯、中間有 3 個、右邊有 5 個。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一份是多少</h3>
+            <p class="interactive-instruction">顯影液的 A 液 : B 液 : 清水 \(= a : b : c\)，每一小格都是一份 \(r\)。選哪一樣是已知的、它用了多少毫升，看一份 \(r\) 是多少、另外兩樣又是多少。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-setr" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="setr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知</span>
+                    <div class="btn-group" id="setr-known-group">
+                      <button class="pick-btn" data-setr-known="x">A 液 \(x\)</button>
+                      <button class="pick-btn" data-setr-known="y">B 液 \(y\)</button>
+                      <button class="pick-btn active" data-setr-known="z">清水 \(z\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="setr-a">\(a\)：<span id="setr-va" class="val-num">2</span></label>
+                    <input type="range" id="setr-a" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="setr-b">\(b\)：<span id="setr-vb" class="val-num">3</span></label>
+                    <input type="range" id="setr-b" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="setr-c">\(c\)：<span id="setr-vc" class="val-num">4</span></label>
+                    <input type="range" id="setr-c" min="1" max="6" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="setr-k">已知的那一樣用了：<span id="setr-vk" class="val-num">10 毫升</span></label>
+                    <input type="range" id="setr-k" min="1" max="30" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="setr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (連比例式與設 r)</h3>
+
+          <div class="quiz-card" data-quiz="511-9">
+            <p class="quiz-question"><strong>Q9.</strong> 設 \(x : y : z = 11 : 4 : 3\)，且 \(y = 8\)，則 \(x + z\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-9" value="A"><span class="option-text">A. \(22\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-9" value="B"><span class="option-text">B. \(112\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-9" value="C"><span class="option-text">C. \(28\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-9" value="D"><span class="option-text">D. \(14\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設 \(x = 11r\)、\(y = 4r\)、\(z = 3r\)。由 \(4r = 8\) 得 \(r = 2\)，所以 \(x = 22\)、\(z = 6\)，\(x + z = 28\)。<br>
+              A 錯：\(22\) 只是 \(x\)。<br>
+              B 錯：把 \(y = 8\) 當成一份 \(r\)，算成 \((11 + 3) \times 8\)。<br>
+              D 錯：\(14\) 是 \(x + z\) 的份數，還要乘以一份 \(r = 2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-10">
+            <p class="quiz-question"><strong>Q10.</strong> 若 \(x : y : z = 3 : 8 : 5\)，下列哪一個敘述正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-10" value="A"><span class="option-text">A. \(\frac{x}{3} = \frac{y}{8} = \frac{z}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-10" value="B"><span class="option-text">B. \(x : z = 5 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-10" value="C"><span class="option-text">C. 若 \(x = 6\)，則 \(y = 11\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-10" value="D"><span class="option-text">D. \(y - x\) 一定等於 \(5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。連比例式的性質：\(x : y : z = 3 : 8 : 5\) \(\Rightarrow\) \(\frac{x}{3} = \frac{y}{8} = \frac{z}{5}\)。<br>
+              B 錯：\(x : z = 3 : 5\)，前後項寫反了。<br>
+              C 錯：\(x\) 由 \(3\) 變 \(6\) 是變成 \(2\) 倍，\(y\) 也要變成 \(8 \times 2 = 16\)；\(8 + 3 = 11\) 是把「乘」當成「加」。<br>
+              D 錯：設 \(x = 3r\)、\(y = 8r\)，\(y - x = 5r\)，要看 \(r\) 是多少，不一定是 \(5\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 求連比例式的未知項
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span>重點 6：求連比例式的未知項——拆成兩個比例式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩個連比相等、其中一邊有未知數，例如 \(6 : x : y = 4 : 10 : 7\)。</li>
+              <li>做法：拿<strong>已知的那一項</strong>分別和每個未知項配成兩項的比例式，再用「<strong>外項乘積＝內項乘積</strong>」。
+                <ul>
+                  <li>\(6 : x = 4 : 10\) \(\Rightarrow\) \(4x = 60\)，\(x = 15\)。</li>
+                  <li>\(6 : y = 4 : 7\) \(\Rightarrow\) \(4y = 42\)，\(y = \frac{21}{2}\)。</li>
+                </ul>
+              </li>
+              <li>另一種寫法：\(6 : 4 = x : 10 = y : 7\)，也就是每一項和它對應的數比起來都一樣（重點 5 的 \(x : a = y : b = z : c\)）。</li>
+              <li>注意：「外項乘積＝內項乘積」只能用在<strong>兩項</strong>的比例式，三項的連比例式要先拆開（見重點 7）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・拆成比例式</span>
+              \(p : x : y = a : b : c\) \(\Rightarrow\) \(p : x = a : b\)，\(p : y = a : c\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dk_measure.webp" alt="昭和復古照相館風插圖：阿光站在暗房工作台前，彎腰平視一支細長的玻璃量筒，小心把棕色藥水從燒杯倒進量筒；量筒上只有刻度線，沒有數字。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：拆開來解</h3>
+            <p class="interactive-instruction">選已知數 \(p\) 放在第幾項、它是多少，再調右邊的連比 \(a : b : c\)。畫面把連比例式拆成兩個比例式，弧線標出外項與內項。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-solve" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="solve-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知在</span>
+                    <div class="btn-group" id="solve-pos-group">
+                      <button class="pick-btn active" data-solve-pos="0">第一項</button>
+                      <button class="pick-btn" data-solve-pos="1">第二項</button>
+                      <button class="pick-btn" data-solve-pos="2">第三項</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="solve-k">已知數 \(p\)：<span id="solve-vk" class="val-num">6</span></label>
+                    <input type="range" id="solve-k" min="1" max="12" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="solve-a">\(a\)：<span id="solve-va" class="val-num">4</span></label>
+                    <input type="range" id="solve-a" min="1" max="9" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="solve-b">\(b\)：<span id="solve-vb" class="val-num">6</span></label>
+                    <input type="range" id="solve-b" min="1" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="solve-c">\(c\)：<span id="solve-vc" class="val-num">9</span></label>
+                    <input type="range" id="solve-c" min="1" max="9" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="solve-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (求連比例式的未知項)</h3>
+
+          <div class="quiz-card" data-quiz="511-11">
+            <p class="quiz-question"><strong>Q11.</strong> 若 \(x : 21 : y = 4 : 3 : 11\)，則 \(x\)、\(y\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-11" value="A"><span class="option-text">A. \(x = 28\)，\(y = \frac{63}{11}\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-11" value="B"><span class="option-text">B. \(x = 28\)，\(y = 77\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-11" value="C"><span class="option-text">C. \(x = \frac{63}{4}\)，\(y = 77\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-11" value="D"><span class="option-text">D. \(x = 84\)，\(y = 231\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。拆成兩個比例式：\(x : 21 = 4 : 3\) \(\Rightarrow\) \(3x = 84\)，\(x = 28\)；\(21 : y = 3 : 11\) \(\Rightarrow\) \(3y = 231\)，\(y = 77\)。<br>
+              A 錯：\(21 : y = 3 : 11\) 的外項是 \(21\) 與 \(11\)、內項是 \(y\) 與 \(3\)，寫成 \(11y = 63\) 就配錯了。<br>
+              C 錯：\(x : 21 = 4 : 3\) 寫成 \(4x = 63\) 也是配錯。<br>
+              D 錯：把 \(21\) 當成一份 \(r\)；一份其實是 \(21 \div 3 = 7\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-12">
+            <p class="quiz-question"><strong>Q12.</strong> 若 \(\frac{1}{2} : \frac{1}{3} : \frac{1}{5} = x : 4 : y\)，則 \(x\)、\(y\) 的值為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-12" value="A"><span class="option-text">A. \(x = \frac{8}{3}\)，\(y = \frac{20}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-12" value="B"><span class="option-text">B. \(x = 6\)，\(y = \frac{20}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-12" value="C"><span class="option-text">C. \(x = \frac{8}{3}\)，\(y = \frac{12}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-12" value="D"><span class="option-text">D. \(x = 6\)，\(y = \frac{12}{5}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。先化簡左邊：同乘以 \(30\)，\(\frac{1}{2} : \frac{1}{3} : \frac{1}{5} = 15 : 10 : 6\)，所以 \(15 : 10 : 6 = x : 4 : y\)。</p>
+              \[\begin{aligned} & 15 : 10 = x : 4 \\ & \Rightarrow 10x = 60,\ x = 6 \\ & 10 : 6 = 4 : y \\ & \Rightarrow 10y = 24,\ y = \frac{12}{5} \end{aligned}\]
+              <p class="explanation-desc">A 錯：把「外項乘積＝內項乘積」做成「前項乘前項」：\(\frac{1}{2}x = \frac{1}{3} \times 4\) 得 \(\frac{8}{3}\)，\(\frac{1}{3} \times 4 = \frac{1}{5}y\) 得 \(\frac{20}{3}\)。<br>
+              B、C 錯：各有一個未知數配錯了項。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 連等式與連比
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> <span>重點 7：\(ax = by = cz\) 與連比不是同一回事</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>若 \(ax = by = cz\)（各數皆不為 \(0\)），設這個共同的值是 \(k\)，則 \(x = \frac{k}{a}\)、\(y = \frac{k}{b}\)、\(z = \frac{k}{c}\)，所以 \(x : y : z = \frac{1}{a} : \frac{1}{b} : \frac{1}{c}\)，再同乘以 \(a\)、\(b\)、\(c\) 的最小公倍數化成整數比。</li>
+              <li>例：\(3x = 4y = 6z\) \(\Rightarrow\) \(x : y : z = \frac{1}{3} : \frac{1}{4} : \frac{1}{6}\)，同乘以 \(12\) 得 \(4 : 3 : 2\)——<strong>不是</strong> \(3 : 4 : 6\)。係數越大，那個數反而越小。</li>
+              <li>反過來，\(x : y : z = 3 : 4 : 6\) <strong>推不出</strong> \(3x = 4y = 6z\)：設 \(x = 3r\)、\(y = 4r\)、\(z = 6r\)，得 \(9r\)、\(16r\)、\(36r\)，三者不相等。</li>
+              <li>正確的寫法是 \(\frac{x}{3} = \frac{y}{4} = \frac{z}{6}\)，同乘以 \(12\) 得 \(4x = 3y = 2z\)。</li>
+              <li>比例式的「外項乘積＝內項乘積」只能用在兩項的比例式，不能直接搬到三項的連比例式上。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・連等式化成連比</span>
+              \(ax = by = cz\) \(\Rightarrow\) \(x : y : z = \frac{1}{a} : \frac{1}{b} : \frac{1}{c}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dk_balance.webp" alt="昭和復古照相館風插圖：照相館的木櫃台上並排放著兩台檯面式上皿天平，兩台都保持水平平衡。左邊那台左盤放 2 個同樣的大黃銅砝碼、右盤放 3 個同樣的中黃銅砝碼；右邊那台左盤放 3 個中砝碼、右盤放 6 個同樣的小砝碼。小影蹲低平視天平。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：面積一樣的三張相紙</h3>
+            <p class="interactive-instruction">\(ax\) 就像一張寬 \(a\)、高 \(x\) 的長方形相紙的面積。選方向，調三個係數：「\(ax = by = cz\)」時三張面積相等，寬的那張就比較矮；「已知連比」時三張的面積就不一樣了。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-equal" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="equal-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方向</span>
+                    <div class="btn-group" id="equal-mode-group">
+                      <button class="pick-btn active" data-equal-mode="from">由 \(ax = by = cz\) 求連比</button>
+                      <button class="pick-btn" data-equal-mode="check">已知 \(x : y : z = a : b : c\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="equal-a">\(a\)：<span id="equal-va" class="val-num">2</span></label>
+                    <input type="range" id="equal-a" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="equal-b">\(b\)：<span id="equal-vb" class="val-num">5</span></label>
+                    <input type="range" id="equal-b" min="1" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="equal-c">\(c\)：<span id="equal-vc" class="val-num">4</span></label>
+                    <input type="range" id="equal-c" min="1" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="equal-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (連等式與連比)</h3>
+
+          <div class="quiz-card" data-quiz="511-13">
+            <p class="quiz-question"><strong>Q13.</strong> 設 \(x\)、\(y\)、\(z\) 皆不為 \(0\)，且 \(8x = 6y = 9z\)，則 \(x : y : z\) 的最簡整數比為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-13" value="A"><span class="option-text">A. \(8 : 6 : 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-13" value="B"><span class="option-text">B. \(12 : 9 : 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-13" value="C"><span class="option-text">C. \(9 : 12 : 8\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-13" value="D"><span class="option-text">D. \(9 : 6 : 8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(x : y : z = \frac{1}{8} : \frac{1}{6} : \frac{1}{9}\)，\(8\)、\(6\)、\(9\) 的最小公倍數是 \(72\)，同乘以 \(72\) 得 \(9 : 12 : 8\)。驗算：\(8 \times 9 = 6 \times 12 = 9 \times 8 = 72\)。<br>
+              A 錯：把係數直接當成連比；係數越大的那個數反而越小。<br>
+              B 錯：\(12\) 是 \(y\) 對應的數，順序放錯了。<br>
+              D 錯：\(8 \times 9 = 72\)、\(6 \times 6 = 36\)，兩者不相等。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-14">
+            <p class="quiz-question"><strong>Q14.</strong> 若 \(x : y : z = 2 : 7 : 8\)，下列哪一個等式一定成立？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-14" value="A"><span class="option-text">A. \(28x = 8y = 7z\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-14" value="B"><span class="option-text">B. \(2x = 7y = 8z\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-14" value="C"><span class="option-text">C. \(\frac{x}{8} = \frac{y}{7} = \frac{z}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-14" value="D"><span class="option-text">D. \(8x = 7y = 2z\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設 \(x = 2r\)、\(y = 7r\)、\(z = 8r\)，逐一代入：</p>
+              \[\begin{aligned} & \text{A：} 56r,\ 56r,\ 56r \\ & \text{B：} 4r,\ 49r,\ 64r \\ & \text{C：} \frac{1}{4}r,\ r,\ 4r \\ & \text{D：} 16r,\ 49r,\ 16r \end{aligned}\]
+              <p class="explanation-desc">只有 A 三者相等。A 其實就是 \(\frac{x}{2} = \frac{y}{7} = \frac{z}{8}\) 同乘以 \(56\)。B 把連比的數直接當係數，正是重點 7 提醒的錯誤。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 代入求新的連比
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> <span>重點 8：設 \(r\) 代入，求新的連比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>已知 \(x : y : z\)，要求 \(3x : 2y : z\) 或 \((x + y) : (y - z) : z\) 這類<strong>新的連比</strong>：設 \(x = ar\)、\(y = br\)、\(z = cr\) 代進去，整理後<strong>約掉 \(r\)</strong>。</li>
+              <li>例：\(x : y : z = 5 : 3 : 2\)，設 \(x = 5r\)、\(y = 3r\)、\(z = 2r\)：
+                <ul>
+                  <li>\(3x : 2y : z\)<wbr>\({}= 15r : 6r : 2r\)<wbr>\({}= 15 : 6 : 2\)。</li>
+                  <li>\((x - y) : (y - z) : (x + z)\)<wbr>\({}= 2r : r : 7r\)<wbr>\({}= 2 : 1 : 7\)。</li>
+                </ul>
+              </li>
+              <li>題目只給兩個比時，先照重點 3 併成連比，再設 \(r\)。</li>
+              <li>算出負數也照樣寫成連比，負數加括號，例如 \(3 : (-2) : (-1)\)。</li>
+              <li>不可以把 \(x\)、\(y\)、\(z\) 直接換成連比裡的數就當作答案的「實際值」；設 \(r\) 是為了最後能整個約掉。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="dk_tea.webp" alt="昭和復古照相館風插圖：照相館後間的下午茶時間，小影雙手端著木托盤，托盤上放著一壺紅茶、一小壺鮮奶和一個糖罐；阿光坐在小圓桌旁，手裡捧著茶杯。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：代入整理機</h3>
+            <p class="interactive-instruction">調 \(x : y : z = a : b : c\)，再選一個新的連比。畫面依序做「設 \(r\)」「代入」「整理」「約掉 \(r\)」，看新的連比怎麼算出來。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sub" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sub-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">新連比</span>
+                    <div class="btn-group" id="sub-expr-group">
+                      <button class="pick-btn" data-sub-expr="e1">\(x : 2y : 3z\)</button>
+                      <button class="pick-btn" data-sub-expr="e2">\(3x : 2y : z\)</button>
+                      <button class="pick-btn active" data-sub-expr="e3">\((x + y) : (y + z) : (z + x)\)</button>
+                      <button class="pick-btn" data-sub-expr="e4">\((x - y) : (y - z) : (z - x)\)</button>
+                      <button class="pick-btn" data-sub-expr="e5">\((x + y - z) : (2x - z)\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sub-a">\(a\)：<span id="sub-va" class="val-num">3</span></label>
+                    <input type="range" id="sub-a" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sub-b">\(b\)：<span id="sub-vb" class="val-num">2</span></label>
+                    <input type="range" id="sub-b" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sub-c">\(c\)：<span id="sub-vc" class="val-num">1</span></label>
+                    <input type="range" id="sub-c" min="1" max="6" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sub-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (代入求新的連比)</h3>
+
+          <div class="quiz-card" data-quiz="511-15">
+            <p class="quiz-question"><strong>Q15.</strong> 設 \(x : y : z = 2 : 7 : 4\)，則 \((3x - y + z) : (x + y - z)\) 的最簡整數比為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-15" value="A"><span class="option-text">A. \(5 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-15" value="B"><span class="option-text">B. \(3 : 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-15" value="C"><span class="option-text">C. \(3 : 13\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-15" value="D"><span class="option-text">D. \(17 : 13\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設 \(x = 2r\)、\(y = 7r\)、\(z = 4r\)：</p>
+              \[\begin{aligned} & (3x - y + z) : (x + y - z) \\ &= (6r - 7r + 4r) \\ & \quad : (2r + 7r - 4r) \\ &= 3r : 5r = 3 : 5 \end{aligned}\]
+              <p class="explanation-desc">A 錯：前後項寫反了。<br>
+              C 錯：後項把 \(-z\) 當成 \(+z\)，算成 \(2r + 7r + 4r = 13r\)。<br>
+              D 錯：把所有減號都當成加號，算成 \(17r : 13r\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-16">
+            <p class="quiz-question"><strong>Q16.</strong> 已知 \(x : y = 5 : 12\)、\(y : z = 4 : 3\)，則 \(2x : y : 3z\) 的最簡整數比為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-16" value="A"><span class="option-text">A. \(5 : 12 : 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-16" value="B"><span class="option-text">B. \(10 : 12 : 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-16" value="C"><span class="option-text">C. \(10 : 4 : 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q511-16" value="D"><span class="option-text">D. \(10 : 12 : 27\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。先併連比：\(y\) 的 \(12\) 與 \(4\) 化成 \(12\)，\(y : z = 12 : 9\)，所以 \(x : y : z = 5 : 12 : 9\)。設 \(x = 5r\)、\(y = 12r\)、\(z = 9r\)：\(2x : y : 3z\)<wbr>\({}= 10r : 12r : 27r\)<wbr>\({}= 10 : 12 : 27\)。<br>
+              A 錯：那只是 \(x : y : z\)，還沒乘上係數。<br>
+              B 錯：只把 \(x\) 乘了 \(2\)，\(3z\) 漏乘 \(3\)。<br>
+              C 錯：\(y\) 沒有對齊，直接拿 \(y : z = 4 : 3\) 的 \(4\) 與 \(3\) 來用。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 依連比分配總量
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-pie" aria-hidden="true"></i> <span>重點 9：應用（一）依連比分配總量</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>總量 \(T\) 依 \(a : b : c\) 分成三份，有兩種解法，挑自己熟的用：
+                <ul>
+                  <li><strong>解法一（設 \(r\)）</strong>：三份是 \(ar\)、\(br\)、\(cr\)，由 \(ar + br + cr = T\) 解出 \(r\)。</li>
+                  <li><strong>解法二（占總量的幾分之幾）</strong>：第一份占 \(\frac{a}{a + b + c}\)，是 \(T \times \frac{a}{a + b + c}\)。</li>
+                </ul>
+              </li>
+              <li>例：三人沖洗相片共付 \(840\) 元，金額比 \(2 : 5 : 7\)。共 \(14\) 份，一份 \(60\) 元，三人各付 \(120\)、\(300\)、\(420\) 元。</li>
+              <li>三角形三內角的比、三人的錢數比……只要知道「總和」，都是同一種題型。</li>
+              <li>如果總量不是三項直接相加（例如每一張大相片要用 \(3\) 個夾子），列式時要把每一項乘上各自的用量再相加。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・依連比分配</span>
+              \(ar + br + cr = T\) \(\Rightarrow\) \(r = \frac{T}{a + b + c}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="dk_share.webp" alt="昭和復古照相館風插圖：工作台上平放著一長條相紙，相紙被畫線等分成 10 個一樣大的方格，前 2 格塗成紅色、中間 3 格塗成藍色、最後 5 格塗成黃色；小影拿著剪刀準備沿著顏色交界剪開，阿光按住相紙的另一端。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：顯影液分裝台</h3>
+            <p class="interactive-instruction">暗房要調 \(T\) 毫升的顯影液，A 液 : B 液 : 清水 \(= a : b : c\)。調整連比與總量，切換兩種解法，看長條怎麼被切成 \(a + b + c\) 份。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-share" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="share-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">解法</span>
+                    <div class="btn-group" id="share-mode-group">
+                      <button class="pick-btn active" data-share-mode="r">設 \(r\)</button>
+                      <button class="pick-btn" data-share-mode="frac">占幾分之幾</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="share-a">\(a\)：<span id="share-va" class="val-num">2</span></label>
+                    <input type="range" id="share-a" min="1" max="9" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="share-b">\(b\)：<span id="share-vb" class="val-num">3</span></label>
+                    <input type="range" id="share-b" min="1" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="share-c">\(c\)：<span id="share-vc" class="val-num">5</span></label>
+                    <input type="range" id="share-c" min="1" max="9" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="share-t">總量 \(T\)：<span id="share-vt" class="val-num">600 毫升</span></label>
+                    <input type="range" id="share-t" min="50" max="1000" value="600" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="share-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (依連比分配總量)</h3>
+
+          <div class="quiz-card" data-quiz="511-17">
+            <p class="quiz-question"><strong>Q17.</strong> 照相館把大、中、小三種相片晾起來，張數比為 \(2 : 3 : 10\)。大張每張用 \(3\) 個夾子、中張每張用 \(2\) 個夾子，小張用磁鐵吸在板子上、不用夾子。若一共用了 \(96\) 個夾子，小張相片有幾張？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-17" value="A"><span class="option-text">A. \(16\) 張</span></label>
+              <label class="option-label"><input type="radio" name="q511-17" value="B"><span class="option-text">B. \(80\) 張</span></label>
+              <label class="option-label"><input type="radio" name="q511-17" value="C"><span class="option-text">C. \(64\) 張</span></label>
+              <label class="option-label"><input type="radio" name="q511-17" value="D"><span class="option-text">D. \(48\) 張</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。設大、中、小分別有 \(2r\)、\(3r\)、\(10r\) 張。夾子數是 \(3 \times 2r + 2 \times 3r = 12r = 96\)，\(r = 8\)，小張有 \(10r = 80\) 張。<br>
+              A 錯：\(16\) 是大張的張數。<br>
+              C 錯：把 \(96\) 個夾子直接照張數比分，\(96 \times \frac{10}{15} = 64\)；可是小張根本不用夾子。<br>
+              D 錯：\(48\) 是中張用掉的夾子數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-18">
+            <p class="quiz-question"><strong>Q18.</strong> 小影、阿光和老闆合買一批底片，共付 \(1260\) 元，三人所付金額的比為 \(3 : 4 : 11\)。老闆比小影多付多少元？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-18" value="A"><span class="option-text">A. \(560\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q511-18" value="B"><span class="option-text">B. \(770\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q511-18" value="C"><span class="option-text">C. \(490\) 元</span></label>
+              <label class="option-label"><input type="radio" name="q511-18" value="D"><span class="option-text">D. \(280\) 元</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。共 \(3 + 4 + 11 = 18\) 份，一份 \(1260 \div 18 = 70\) 元。小影付 \(210\) 元、老闆付 \(770\) 元，老闆多付 \((11 - 3) \times 70 = 560\) 元。<br>
+              B 錯：\(770\) 是老闆付的錢，題目問的是「多付多少」。<br>
+              C 錯：\(490\) 是老闆比阿光多付的錢。<br>
+              D 錯：\(280\) 是阿光付的錢。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 重疊與串接
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> <span>重點 10：應用（二）兩根桿子重疊——以重疊的那段為共同項</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩根桿子部分重疊接成一根：上面那根是 \(\overline{AC}\)、下面那根是 \(\overline{BD}\)，重疊的部分是 \(\overline{BC}\)。</li>
+              <li>已知 \(\overline{AB} : \overline{BC}\) 與 \(\overline{BC} : \overline{CD}\)：以 \(\overline{BC}\) 為<strong>共同項</strong>，照重點 3 併成 \(\overline{AB} : \overline{BC} : \overline{CD}\)，再照重點 9 依全長 \(\overline{AD}\) 分配。</li>
+              <li>上面那根 \(= \overline{AB} + \overline{BC}\)，下面那根 \(= \overline{BC} + \overline{CD}\)；\(\overline{BC}\) 兩根都有，但全長 \(\overline{AD}\) 裡只算一次。</li>
+              <li>例：\(\overline{AB} : \overline{BC} = 4 : 1\)、\(\overline{BC} : \overline{CD} = 2 : 3\)、全長 \(130\) 公分。\(\overline{BC}\) 化成 \(2\)，得 \(8 : 2 : 3\)，共 \(13\) 份，一份 \(10\) 公分：上面那根 \(100\) 公分、下面那根 \(50\) 公分。</li>
+              <li>伸縮的桿子（摺疊傘、三腳架）收到最短時，短的那一節整個縮進長的那一節，全長只剩<strong>比較長的那一節</strong>。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="dk_poles.webp" alt="昭和復古照相館風插圖：小影把一根深色木條與一根淺色木條部分重疊，用麻繩在重疊的那一段綁緊，接成一根長竿，舉高去取暗房天花板晾繩上的相片；阿光扶著梯子在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：三腳架的伸縮腳</h3>
+            <p class="interactive-instruction">三腳架的一隻腳分成上節 \(\overline{AC}\) 與下節 \(\overline{BD}\)，拉長時重疊 \(\overline{BC}\)。調兩個比與全長，看兩節各多長；切到「收到最短」，看短的那一節縮進去後還剩多長。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-chain" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="chain-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">問題</span>
+                    <div class="btn-group" id="chain-mode-group">
+                      <button class="pick-btn active" data-chain-mode="len">兩節各多長</button>
+                      <button class="pick-btn" data-chain-mode="short">收到最短</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="chain-p">\(\overline{AB} : \overline{BC}\) 的前項：<span id="chain-vp" class="val-num">3</span></label>
+                    <input type="range" id="chain-p" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="chain-q">\(\overline{AB} : \overline{BC}\) 的後項：<span id="chain-vq" class="val-num">2</span></label>
+                    <input type="range" id="chain-q" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="chain-s">\(\overline{BC} : \overline{CD}\) 的前項：<span id="chain-vs" class="val-num">1</span></label>
+                    <input type="range" id="chain-s" min="1" max="6" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="chain-t">\(\overline{BC} : \overline{CD}\) 的後項：<span id="chain-vt" class="val-num">2</span></label>
+                    <input type="range" id="chain-t" min="1" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="chain-L">全長 \(\overline{AD}\)：<span id="chain-vL" class="val-num">180 公分</span></label>
+                    <input type="range" id="chain-L" min="45" max="270" value="180" step="9">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="chain-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (重疊與串接)</h3>
+
+          <div class="quiz-card" data-quiz="511-19">
+            <p class="quiz-question"><strong>Q19.</strong> 小影把兩根木條部分重疊綁成一根長竿 \(\overline{AD}\)，長 \(190\) 公分。上面那根是 \(\overline{AC}\)，下面那根是 \(\overline{BD}\)，重疊的部分是 \(\overline{BC}\)。若 \(\overline{AB} : \overline{BC} = 11 : 2\)、\(\overline{BC} : \overline{CD} = 1 : 3\)，下面那根木條 \(\overline{BD}\) 長多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-19" value="A"><span class="option-text">A. \(110\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q511-19" value="B"><span class="option-text">B. \(130\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q511-19" value="C"><span class="option-text">C. \(60\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q511-19" value="D"><span class="option-text">D. \(80\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。共同項 \(\overline{BC}\) 的 \(2\) 與 \(1\) 化成 \(2\)：\(\overline{BC} : \overline{CD} = 2 : 6\)，所以 \(\overline{AB} : \overline{BC} : \overline{CD} = 11 : 2 : 6\)，共 \(19\) 份，一份 \(10\) 公分。\(\overline{BD} = (2 + 6) \times 10 = 80\) 公分。<br>
+              A 錯：\(110\) 公分是 \(\overline{AB}\)。<br>
+              B 錯：\(130\) 公分是上面那根 \(\overline{AC}\)。<br>
+              C 錯：\(60\) 公分是 \(\overline{CD}\)，漏了重疊的 \(\overline{BC}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="511-20">
+            <p class="quiz-question"><strong>Q20.</strong> 阿光的三腳架有一隻腳，拉到最長時 \(\overline{AD} = 105\) 公分，上節是 \(\overline{AC}\)、下節是 \(\overline{BD}\)，重疊的部分是 \(\overline{BC}\)，且 \(\overline{AB} : \overline{BC} = 7 : 2\)、\(\overline{BC} : \overline{CD} = 1 : 6\)。把下節往上推，直到 \(B\) 點碰到 \(A\) 點（收到最短），這隻腳變成多長？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q511-20" value="A"><span class="option-text">A. \(35\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q511-20" value="B"><span class="option-text">B. \(45\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q511-20" value="C"><span class="option-text">C. \(70\) 公分</span></label>
+              <label class="option-label"><input type="radio" name="q511-20" value="D"><span class="option-text">D. \(60\) 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{BC}\) 的 \(2\) 與 \(1\) 化成 \(2\)：\(\overline{AB} : \overline{BC} : \overline{CD} = 7 : 2 : 12\)，共 \(21\) 份，一份 \(5\) 公分：\(\overline{AB} = 35\)、\(\overline{BC} = 10\)、\(\overline{CD} = 60\)。上節 \(\overline{AC} = 45\) 公分，下節 \(\overline{BD} = 70\) 公分。\(B\) 推到 \(A\) 時，兩節的上端對齊，較短的上節整段和下節重疊，全長就是較長的下節 \(\overline{BD} = 70\) 公分。<br>
+              A 錯：\(35\) 公分是 \(\overline{AB}\)，也就是縮短的長度。<br>
+              B 錯：\(45\) 公分是上節，比下節短，縮進去後露在外面的是下節。<br>
+              D 錯：\(60\) 公分是 \(\overline{CD}\)，漏了 \(\overline{BC}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 連比例速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>連比</strong>：三個以上的數連續的比，只表示倍數關係；同乘、同除一個不為 \(0\) 的數，連比不變。</li>
+              <li><strong>化簡</strong>：小數先乘 \(10\)、分數先乘分母的最小公倍數，再同除以最大公因數。</li>
+              <li><strong>兩個比併連比</strong>：找共同項，化成最小公倍數後對齊。</li>
+              <li>\(ax = by\) \(\Rightarrow\) \(x : y = b : a\)（係數交叉對調）。</li>
+              <li><strong>連比例式</strong>：\(x : y : z = a : b : c\) \(\Rightarrow\) \(\frac{x}{a} = \frac{y}{b} = \frac{z}{c}\)，可設 \(x = ar\)、\(y = br\)、\(z = cr\)。</li>
+              <li>\(ax = by = cz\) \(\Rightarrow\) \(x : y : z = \frac{1}{a} : \frac{1}{b} : \frac{1}{c}\)；反過來不能直接把連比的數當係數。</li>
+              <li><strong>應用</strong>：設 \(r\) 列方程式，或用「占總量的幾分之幾」。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到暗房：調一整盤顯影液</h4>
+              <h5><i class="fa-solid fa-flask"></i> 先看清楚是哪一種比</h5>
+              <p>舊說明書寫「A 液 : B 液 \(= 1 : 2\)、B 液 : 清水 \(= 3 : 8\)」，兩個比的 B 液對不上。小影把 B 液都化成 \(6\)，得到 A 液 : B 液 : 清水 \(= 3 : 6 : 16\)，才敢開始倒。</p>
+              <h5><i class="fa-solid fa-calculator"></i> 一份是多少</h5>
+              <p>顯影盤要裝 \(1250\) 毫升：共 \(25\) 份，一份 \(50\) 毫升，A 液 \(150\)、B 液 \(300\)、清水 \(800\) 毫升。阿光倒完，三個量筒的液面高度剛好排成 \(3 : 6 : 16\)。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節</h5>
+              <p>相片放大時，每一段長度都照同一個比變大。下一節用「比」來看三角形裡被平行線截出的線段——<strong>比例線段</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>
