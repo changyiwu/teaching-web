@@ -160,6 +160,8 @@ teaching-web/
 - **`git status` 冒出一大批「變動」時，先跑 `git diff HEAD` 再動作**：本 repo 放在 Google 雲端硬碟裡，雲端硬碟會把舊版的 `.git/index` 同步回來，於是 `git status` 列出幾十筆變動、逐檔比對 HEAD 卻是 byte-identical。用 `git reset` 重建索引就好（內容零損失），**不要 checkout，那才會真的丟掉工作**。同理，判斷版本一律以 `git diff HEAD`／`git log` 為準，不要靠讀檔或看時間戳——雲端硬碟可能餵出過期內容。若 `git status` 是 `MM` 但 `git diff HEAD` 空的，多半只是 LF/CRLF 差異，`git add --renormalize .` 消掉即可
 - 所有回應與文件使用繁體中文；涉及檔案操作時回報完整產出位置
 - Windows 指令優先使用 PowerShell
+- `file-toolkit` 的 `ensure_env.ps1` 若回報 import 檢查失敗，先用它回傳的 Python 直譯器直接驗證所需模組；確認可用後再執行，不要僅憑檢查訊息重建環境或寫死跨電腦路徑。
+- sub-agent 遇到額度上限（429）時保留原任務與已完成產物；額度恢復後傳送接續訊息，從中斷處繼續，不要重開整批工作。
 - 收工前檢查程式碼是否含 API key、網址 Token、學生姓名等敏感資料
 - 只 stage 本次任務相關檔案，**不使用無差別的 `git add .`**；僅在使用者明確授權時 commit 與 push
 - 本機預覽窗格（Browser pane）會供快取的舊版 CSS/JS，改完在那裡看不到效果是正常的；**`navigate` 帶 `force` 與加 query 參數都擋不住**，驗收一律用 **`python tools/nostore.py`**（會送 `Cache-Control: no-store`），不要用 `python -m http.server` 的預設行為
