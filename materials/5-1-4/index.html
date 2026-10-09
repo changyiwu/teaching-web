@@ -4,39 +4,1595 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>1-4 相似三角形的應用 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>1-4 相似三角形的應用 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第五冊 (3上) • 第1章 相似形</div>
-    <h1>1-4 相似三角形的應用</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第五冊 • 第一章</span>
+        <h1>1-4 相似三角形的應用</h1>
+        <p>照相館的小影和見習生阿光這回走出暗房，要量一些「量不到」的東西：門口大樹的高度、河的寬度、遠方小山的高度。這一節先用<strong>影子</strong>與<strong>相似三角形</strong>做簡易測量；再看相似三角形的<strong>對應高</strong>、<strong>面積</strong>與<strong>中點連線</strong>；最後發現直角三角形只要角度固定，任兩邊的比就固定——那就是 <strong>sin、cos、tan</strong>，以及兩種特殊直角三角形的邊長比。</p>
+      </div>
+      <!-- Progress navigation (13 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-sun"></i> 影子測高</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-water"></i> 測河寬</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-map-location-dot"></i> 一段和</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-arrows-up-down"></i> 對應高</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-table-cells"></i> 面積比</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-arrows-left-right"></i> 找對應邊</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-play"></i> 中點連線</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-wheelchair"></i> 坡度與比值</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-ruler-combined"></i> sin cos tan</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-person-biking"></i> 三角比應用</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-shapes"></i> 特殊直角三角形</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-flag"></i> 生活問題</a>
+        <a href="#concept13" class="nav-item"><i class="fa-solid fa-mountain"></i> 兩次仰角</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（昭和復古照相館・暗房）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(217, 179, 140, 0.3);">
+        <h2 class="section-title" style="color: #d9b38c; border-bottom-color: rgba(217, 179, 140, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #d9b38c; text-shadow: 0 0 10px rgba(217, 179, 140, 0.4);"></i> 課前暖身漫畫：量不到的大樹
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            照相館門口的大樹要入鏡，客人想知道它有多高。阿光抱著捲尺仰頭看——爬不上去，量不到。小影指著地上的<strong style="color:#d9b38c">影子</strong>：同一時刻，人和樹的影子跟著陽光一起斜斜躺在地上。量自己的身高和影長，再量樹的影長，<strong style="color:#d9b38c">相似三角形</strong>就會告訴你樹有多高。兩千多年前，泰勒斯就是這樣量出金字塔的高度。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(28, 22, 17, 0.5);">
+            <img src="motivation_comic.webp" alt="昭和復古照相館風四格漫畫：阿光抱著捲尺仰望照相館門口的大樹，說樹太高量不到；小影指著地上的影子；小影直直站在樹旁，地上有她的影子和樹的影子；阿光恍然大悟，旁白說陽光平行，人和樹的影子三角形相似。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 影子測高
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-sun" aria-hidden="true"></i> <span>重點 1：利用影子測高（陽光與路燈）</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>太陽離地球非常遠，<strong>陽光可以看成平行光</strong>。同一時刻，直立的物體和它的影子圍成直角三角形，光線與地面的夾角都一樣，所以這些直角三角形<strong>相似（AA）</strong>。</li>
+              <li>於是 <strong>身高 : 物高 = 人影 : 物影</strong>。例如身高 160 公分的人影長 200 公分，同時樹影長 5 公尺：先統一單位 \(1.6 : x = 2 : 5\)，得樹高 \(x = 4\) 公尺。</li>
+              <li><strong>路燈</strong>是從一點射出的光，不是平行光：燈泡、頭頂、影子尖端三點在同一直線上。人和燈柱的兩個直角三角形共用影子尖端那個角（A 字型）。</li>
+              <li>路燈題對應的是「<strong>人到燈柱的距離 + 影長</strong>」那一整段，不是只有人到燈柱。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・影子測高</span>
+              陽光：身高 : 物高 = 人影 : 物影<br>路燈：身高 : 燈高 = 影長 : (人到燈柱 + 影長)
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_shadow.webp" alt="昭和復古照相館風插圖：午後陽光下，照相館門口的大樹與小影的影子平行地斜躺在石板地上；阿光蹲著用黃色捲尺量小影的影長。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：影長測高台</h3>
+            <p class="interactive-instruction">選光源是陽光還是路燈，調整身高與各段長度，看兩個直角三角形怎麼相似、比例式要怎麼列：求的是樹高（或燈高）\(x\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-shadow" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="shadow-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">光源</span>
+                    <div class="btn-group" id="shadow-mode-group">
+                      <button class="pick-btn active" data-shadow-mode="sun">陽光（平行光）</button>
+                      <button class="pick-btn" data-shadow-mode="lamp">路燈（一點射出）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="shadow-h">身高：<span id="shadow-vh" class="val-num">160 公分</span></label>
+                    <input type="range" id="shadow-h" min="150" max="180" value="160" step="5">
+                  </div>
+                  <div class="slider-row" id="shadow-row-s">
+                    <label for="shadow-s">人影：<span id="shadow-vs" class="val-num">240 公分</span></label>
+                    <input type="range" id="shadow-s" min="100" max="300" value="240" step="10">
+                  </div>
+                  <div class="slider-row" id="shadow-row-S">
+                    <label for="shadow-S">樹影：<span id="shadow-vS" class="val-num">6 公尺</span></label>
+                    <input type="range" id="shadow-S" min="2" max="12" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="shadow-row-d" style="display:none">
+                    <label for="shadow-d">人到燈柱：<span id="shadow-vd" class="val-num">3 公尺</span></label>
+                    <input type="range" id="shadow-d" min="2" max="16" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="shadow-row-l" style="display:none">
+                    <label for="shadow-l">影長：<span id="shadow-vl" class="val-num">2 公尺</span></label>
+                    <input type="range" id="shadow-l" min="5" max="20" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="shadow-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (影子測高)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-1">
+            <p class="quiz-question"><strong>Q1.</strong> 身高 144 公分的弟弟在陽光下的影長是 1.2 公尺，同一時刻，旁邊旗桿的影長是 7.5 公尺。旗桿高多少公尺？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-1" value="A"><span class="option-text">A. 6.25 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-1" value="B"><span class="option-text">B. 9 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-1" value="C"><span class="option-text">C. 900 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-1" value="D"><span class="option-text">D. 7.74 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。144 公分 = 1.44 公尺。陽光平行，兩個直角三角形相似，身高對旗桿高、人影對旗桿影：
+              \[\begin{aligned} & 1.44 : x = 1.2 : 7.5 \\ & 1.2x = 10.8,\ x = 9 \end{aligned}\]
+              A 錯：比例式前後對調了，\(1.2 : x = 1.44 : 7.5\) 算出 6.25。<br>
+              C 錯：把 144 公分直接當 144 代入，算出來的 900 其實是公分。<br>
+              D 錯：以為「差多少就加多少」：\(1.44 - 1.2 = 0.24\)、\(7.5 + 0.24 = 7.74\)。相似要用比例（乘倍數），不是加減。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-2">
+            <p class="quiz-question"><strong>Q2.</strong> 夜晚，身高 1.5 公尺的小影站在離路燈燈柱 4 公尺的地方，她的影子長 2.5 公尺（影子朝遠離燈柱的方向）。路燈的燈泡離地面多高？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-2" value="A"><span class="option-text">A. 2.4 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-2" value="B"><span class="option-text">B. 6.5 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-2" value="C"><span class="option-text">C. 4 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-2" value="D"><span class="option-text">D. 3.9 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。燈泡、頭頂、影子尖端在同一直線上，人和燈柱共用影子尖端的角。燈柱腳到影子尖端是 \(4 + 2.5 = 6.5\) 公尺：
+              \[\begin{aligned} & 1.5 : x = 2.5 : 6.5 \\ & 2.5x = 9.75,\ x = 3.9 \end{aligned}\]
+              A 錯：拿人到燈柱的 4 公尺去對應，\(1.5 : x = 2.5 : 4\) 得 2.4，少了影長那一段。<br>
+              B 錯：6.5 公尺是燈柱腳到影子尖端的距離，不是燈高。<br>
+              C 錯：\(1.5 + 2.5 = 4\) 只是把身高和影長相加，沒有用到相似。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 測河寬（X 字型）
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-water" aria-hidden="true"></i> <span>重點 2：在岸邊造一個小三角形，量出河寬</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>河寬過不去量，就在<strong>自己這一岸</strong>造一個與它相似的小三角形，用量得到的邊去推量不到的邊。</li>
+              <li>站在 \(A\) 正對著對岸的 \(B\)，沿著與 \(\overline{AB}\) 垂直的河岸走到 \(C\)，再繼續走到 \(D\)；從 \(D\) 朝離開河的方向直走到 \(E\)，使 \(B\)、\(C\)、\(E\) 在同一直線上。</li>
+              <li>\(\overline{AB} \perp \overline{AD}\)、\(\overline{DE} \perp \overline{AD}\)，所以 \(\overline{AB} /\!/ \overline{DE}\)，\(\angle B = \angle E\)（內錯角）；又 \(\angle A = \angle D = 90^\circ\)，得 \(\triangle ABC \sim \triangle DEC\)（AA 相似）。</li>
+              <li>課本的例子：走 20 步到 \(C\)、再 5 步到 \(D\)，量得 \(\overline{DE} = 2\) 公尺：\(\overline{AB} : 2 = 20 : 5\)，河寬 8 公尺。每一步一樣長，步數的比就是距離的比。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・X 字型測河寬</span>
+              \(\overline{AB} : \overline{DE} = \overline{CA} : \overline{CD}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_riverx.webp" alt="昭和復古照相館風插圖：河邊的草地上，阿光沿著河岸一步一步數著往前走，小影站在起點，伸手指著對岸的一棵樹。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：岸邊測距台</h3>
+            <p class="interactive-instruction">調整走到 \(C\)、再走到 \(D\) 的步數，以及 \(\overline{DE}\) 的長度，看兩個三角形為什麼相似、河寬 \(\overline{AB}\) 是多少公尺。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-riverx" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rx-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rx-a">\(A\) 走到 \(C\)：<span id="rx-va" class="val-num">24 步</span></label>
+                    <input type="range" id="rx-a" min="10" max="30" value="24" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rx-b">\(C\) 走到 \(D\)：<span id="rx-vb" class="val-num">6 步</span></label>
+                    <input type="range" id="rx-b" min="3" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rx-de">\(\overline{DE}\)：<span id="rx-vde" class="val-num">2.5 公尺</span></label>
+                    <input type="range" id="rx-de" min="2" max="8" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rx-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (測河寬)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-3">
+            <p class="quiz-question"><strong>Q3.</strong> 用重點 2 的方法測河寬：從 \(A\) 沿河岸走 45 步到 \(C\)，再走 6 步到 \(D\)，從 \(D\) 往離開河的方向走到 \(E\)，使 \(B\)、\(C\)、\(E\) 共線，量得 \(\overline{DE} = 1.6\) 公尺。每一步一樣長，河寬 \(\overline{AB}\) 是多少公尺？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-3" value="A"><span class="option-text">A. 12 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-3" value="B"><span class="option-text">B. 13.6 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-3" value="C"><span class="option-text">C. 9.6 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-3" value="D"><span class="option-text">D. 72 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\triangle ABC \sim \triangle DEC\)，\(\overline{AB}\) 對 \(\overline{DE}\)、\(\overline{CA}\) 對 \(\overline{CD}\)：
+              \[\begin{aligned} & \overline{AB} : 1.6 = 45 : 6 \\ & 6\,\overline{AB} = 72,\ \overline{AB} = 12 \end{aligned}\]
+              B 錯：用了整段 \(\overline{AD} = 51\) 步去對應，\(1.6 \times 51 \div 6 = 13.6\)；對應 \(\overline{CD}\) 的是 \(\overline{CA}\)。<br>
+              C 錯：\(1.6 \times 6 = 9.6\)，把比例的前後項放反了。<br>
+              D 錯：\(1.6 \times 45 = 72\)，交叉相乘之後忘了除以 6。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-4">
+            <p class="quiz-question"><strong>Q4.</strong> 河寬 \(\overline{AB}\) 已知是 9 公尺。小翊照重點 2 的方法，從 \(A\) 沿河岸走 30 步到 \(C\)，打算再走到 \(D\) 後轉身，走到 \(E\) 時讓 \(B\)、\(C\)、\(E\) 共線，而且 \(\overline{DE}\) 剛好是 1.2 公尺。\(\overline{CD}\) 應該走幾步？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-4" value="A"><span class="option-text">A. 225 步</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-4" value="B"><span class="option-text">B. 0.36 步</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-4" value="C"><span class="option-text">C. 4 步</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-4" value="D"><span class="option-text">D. 7.5 步</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。比例式一樣是 \(\overline{AB} : \overline{DE} = \overline{CA} : \overline{CD}\)，這次未知的是 \(\overline{CD}\)：
+              \[\begin{aligned} & 9 : 1.2 = 30 : \overline{CD} \\ & 9\,\overline{CD} = 36,\ \overline{CD} = 4 \end{aligned}\]
+              A 錯：\(30 \times 9 \div 1.2 = 225\)，把 \(\overline{CD}\) 當成和 \(\overline{AB}\) 對應。<br>
+              B 錯：\(9 \times 1.2 \div 30 = 0.36\)，比例式的項放錯位置。<br>
+              D 錯：\(9 \div 1.2 = 7.5\) 只是河寬是 \(\overline{DE}\) 的幾倍，還要用它去除 \(\overline{CA}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 未知數藏在一段和裡
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> <span>重點 3：未知數藏在「一段和」裡</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>有時要求的那一段，只是相似三角形某一邊的<strong>一部分</strong>。這時設它為 \(x\)，把整條邊寫成「已知 + \(x\)」或「總長 \(-\ x\)」，再列比例式。</li>
+              <li><strong>A 字型</strong>（共用一個角）：課本的湖邊測量，\(\angle B = \angle CDE = 90^\circ\)、\(\angle E\) 共用，\(\overline{AB} = 10\)、\(\overline{CD} = 4\)、\(\overline{BD} = 9\)。設河寬 \(\overline{DE} = x\)：
+              \[\begin{aligned} & 10 : 4 = (9 + x) : x \\ & 10x = 36 + 4x,\ x = 6 \end{aligned}\]</li>
+              <li><strong>X 字型</strong>（對頂角）：尋寶題 \(\overline{BD} = 21\) 是兩段的和。設 \(\overline{BC} = x\)，則 \(\overline{CD} = 21 - x\)，由 \(10 : 4 = x : (21 - x)\) 得 \(x = 15\)。</li>
+              <li>交叉相乘之後，要把 \(x\) 移到同一邊再解。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・整條邊對整條邊</span>
+              對應的是<strong>整條邊</strong>：（已知 \(+\ x\)）對 \(x\)，或 \(x\) 對（總長 \(-\ x\)）
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_treasure.webp" alt="昭和復古照相館風插圖：郊外草地上，小影雙手攤開一張手繪的尋寶地圖，阿光站在一根插在地上的木樁旁回頭看她。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一段和的比例式</h3>
+            <p class="interactive-instruction">選 A 字型或 X 字型，調整兩個直角邊與已知的那一段，看「整條邊」怎麼寫成含 \(x\) 的式子、方程式怎麼解。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-riversum" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rs-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="rs-mode-group">
+                      <button class="pick-btn active" data-rs-mode="a">A 字型（量河寬）</button>
+                      <button class="pick-btn" data-rs-mode="x">X 字型（兩段的和）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rs-p">\(\overline{AB}\)：<span id="rs-vp" class="val-num">9</span></label>
+                    <input type="range" id="rs-p" min="6" max="12" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rs-q">\(\overline{CD}\)（X 字型是 \(\overline{DE}\)）：<span id="rs-vq" class="val-num">3</span></label>
+                    <input type="range" id="rs-q" min="2" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="rs-row-n">
+                    <label for="rs-n">\(\overline{BD}\)：<span id="rs-vn" class="val-num">8</span></label>
+                    <input type="range" id="rs-n" min="3" max="12" value="8" step="1">
+                  </div>
+                  <div class="slider-row" id="rs-row-m" style="display:none">
+                    <label for="rs-m">\(\overline{BD}\)（兩段的和）：<span id="rs-vm" class="val-num">24</span></label>
+                    <input type="range" id="rs-m" min="10" max="30" value="24" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rs-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (一段和)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-5">
+            <p class="quiz-question"><strong>Q5.</strong> 如圖，\(\angle B = \angle CDE = 90^\circ\)，\(A\)、\(C\)、\(E\) 共線，\(B\)、\(D\)、\(E\) 共線。量得 \(\overline{AB} = 14\) 公尺、\(\overline{CD} = 12\) 公尺、\(\overline{BD} = 2\) 公尺，河寬 \(\overline{DE}\) 是多少公尺？</p>
+            <canvas class="quiz-fig" data-fig="q5" width="320" height="220" role="img" aria-label="B、D、E 在一條水平線上，A 在 B 的正上方、C 在 D 的正上方，A、C、E 共線；D 到 E 之間是河；AB 標 14、CD 標 12、BD 標 2"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-5" value="A"><span class="option-text">A. \(\frac{12}{7}\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-5" value="B"><span class="option-text">B. \(\frac{7}{3}\) 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-5" value="C"><span class="option-text">C. 12 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-5" value="D"><span class="option-text">D. 2 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\angle E\) 共用、\(\angle B = \angle CDE = 90^\circ\)，\(\triangle ABE \sim \triangle CDE\)。設 \(\overline{DE} = x\)，則 \(\overline{BE} = 2 + x\)：
+              \[\begin{aligned} & 14 : 12 = (2 + x) : x \\ & 14x = 24 + 12x,\ x = 12 \end{aligned}\]
+              A 錯：拿 \(\overline{BD} = 2\) 去對應，\(14 : 12 = 2 : x\) 得 \(\frac{12}{7}\)；\(\overline{BD}\) 不是三角形的一邊。<br>
+              B 錯：\(14 : 12 = x : 2\) 得 \(\frac{7}{3}\)，對應的邊放反了。<br>
+              D 錯：\(14 - 12 = 2\)，相似要用比例，不是相減。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-6">
+            <p class="quiz-question"><strong>Q6.</strong> 如圖，\(\angle B = \angle D = 90^\circ\)，\(B\)、\(C\)、\(D\) 共線，\(A\)、\(C\)、\(E\) 共線。已知 \(\overline{AB} = 15\)、\(\overline{DE} = 12\)、\(\overline{BD} = 27\)，\(\overline{BC}\) 是多少？</p>
+            <canvas class="quiz-fig" data-fig="q6" width="320" height="220" role="img" aria-label="B、C、D 在一條水平線上，A 在 B 的正上方，E 在 D 的正下方，A、C、E 共線；AB 標 15、DE 標 12、BD 標 27"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-6" value="A"><span class="option-text">A. 15</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-6" value="B"><span class="option-text">B. 12</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-6" value="C"><span class="option-text">C. 13.5</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-6" value="D"><span class="option-text">D. 33.75</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle ACB = \angle ECD\)（對頂角），又 \(\angle B = \angle D = 90^\circ\)，\(\triangle ABC \sim \triangle EDC\)。設 \(\overline{BC} = x\)，則 \(\overline{CD} = 27 - x\)：
+              \[\begin{aligned} & 15 : 12 = x : (27 - x) \\ & 12x = 405 - 15x \\ & 27x = 405,\ x = 15 \end{aligned}\]
+              B 錯：12 是 \(\overline{CD}\) 的長。<br>
+              C 錯：\(27 \div 2 = 13.5\)，以為 \(C\) 是中點。<br>
+              D 錯：\(15 : 12 = x : 27\)，把整段 \(\overline{BD}\) 當成 \(\overline{CD}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 對應高的比
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i> <span>重點 4：對應高的比 = 對應邊的比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\triangle ABC \sim \triangle DEF\)，\(\overline{AP}\)、\(\overline{DQ}\) 分別是 \(\overline{BC}\)、\(\overline{EF}\) 上的高。</li>
+              <li>因為 \(\angle B = \angle E\)，又 \(\angle APB = \angle DQE = 90^\circ\)，所以 \(\triangle ABP \sim \triangle DEQ\)（AA 相似），得 \(\overline{AP} : \overline{DQ} = \overline{AB} : \overline{DE}\)。</li>
+              <li>反過來，知道高的比也就知道邊的比。例如 \(\overline{CM}\)、\(\overline{FN}\) 是 \(\overline{AB}\)、\(\overline{DE}\) 上的高，\(\overline{CM} : \overline{FN} = 3 : 2\)、\(\overline{BC} = 12\)：\(12 : \overline{EF} = 3 : 2\)，\(\overline{EF} = 8\)。</li>
+              <li>同樣的道理，<strong>對應中線</strong>、<strong>對應角平分線</strong>的比，也都等於對應邊的比。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・相似三角形的對應高</span>
+              兩個相似三角形中，對應高的比 = 對應邊的比
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_height.webp" alt="昭和復古照相館風插圖：工作檯上並排兩張三角形相紙，一大一小、形狀一樣；小影拿鉛筆從大三角形的頂點往底邊畫一條垂直的高，阿光拿直尺量小三角形的高。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：對應線段量量看</h3>
+            <p class="interactive-instruction">選要比較的對應線段（高、中線或角平分線），調整兩個三角形的邊長比與形狀，量出來的比和邊的比一樣嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-height" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ht-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">線段</span>
+                    <div class="btn-group" id="ht-mode-group">
+                      <button class="pick-btn active" data-ht-mode="alt">高</button>
+                      <button class="pick-btn" data-ht-mode="med">中線</button>
+                      <button class="pick-btn" data-ht-mode="bis">角平分線</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ht-r">邊長比 \(\overline{BC} : \overline{EF}\)：<span id="ht-vr" class="val-num">4 : 3</span></label>
+                    <input type="range" id="ht-r" min="0" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ht-bc">\(\overline{BC}\)：<span id="ht-vbc" class="val-num">12</span></label>
+                    <input type="range" id="ht-bc" min="6" max="15" value="12" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ht-b">\(\angle B\)：<span id="ht-vb" class="val-num">60°</span></label>
+                    <input type="range" id="ht-b" min="40" max="75" value="60" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ht-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (對應高)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-7">
+            <p class="quiz-question"><strong>Q7.</strong> \(\triangle ABC \sim \triangle DEF\)，\(A\)、\(B\)、\(C\) 的對應點分別是 \(D\)、\(E\)、\(F\)。\(\overline{CM}\)、\(\overline{FN}\) 分別是 \(\overline{AB}\)、\(\overline{DE}\) 上的高，\(\overline{CM} : \overline{FN} = 7 : 4\)。若 \(\overline{AB} = 21\)，\(\overline{DE}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-7" value="A"><span class="option-text">A. \(\frac{147}{4}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-7" value="B"><span class="option-text">B. \(\frac{48}{7}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-7" value="C"><span class="option-text">C. 18</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-7" value="D"><span class="option-text">D. 12</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。對應高的比等於對應邊的比，\(\overline{AB} : \overline{DE} = \overline{CM} : \overline{FN} = 7 : 4\)：
+              \[\begin{aligned} & 21 : \overline{DE} = 7 : 4 \\ & 7\,\overline{DE} = 84,\ \overline{DE} = 12 \end{aligned}\]
+              A 錯：\(21 \times \frac{7}{4} = \frac{147}{4}\)，倍數乘反了；\(\triangle DEF\) 比較小。<br>
+              B 錯：\(21 \times \frac{16}{49} = \frac{48}{7}\)，把邊長比平方了；平方是面積比才要做的。<br>
+              C 錯：\(21 - (7 - 4) = 18\)，相似要用比例，不是相減。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-8">
+            <p class="quiz-question"><strong>Q8.</strong> \(\triangle ABC \sim \triangle DEF\)，\(A\)、\(B\)、\(C\) 的對應點分別是 \(D\)、\(E\)、\(F\)，\(\overline{AB} = 6\)、\(\overline{DE} = 9\)。\(\overline{AP}\) 是 \(\triangle ABC\) 的高、\(\overline{AP} = 4\)，那麼 \(\triangle DEF\) 的對應高 \(\overline{DQ}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-8" value="A"><span class="option-text">A. \(\frac{8}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-8" value="B"><span class="option-text">B. 6</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-8" value="C"><span class="option-text">C. 7</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-8" value="D"><span class="option-text">D. 9</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{AP} : \overline{DQ} = \overline{AB} : \overline{DE}\)：
+              \[\begin{aligned} & 4 : \overline{DQ} = 6 : 9 \\ & 6\,\overline{DQ} = 36,\ \overline{DQ} = 6 \end{aligned}\]
+              A 錯：\(4 \times \frac{6}{9} = \frac{8}{3}\)，倍數乘反了；\(\triangle DEF\) 比較大，高也比較長。<br>
+              C 錯：\(9 - 6 = 3\)，\(4 + 3 = 7\)，相似要用比例，不是加減。<br>
+              D 錯：高和邊是不同的線段，\(\overline{DQ}\) 不會等於 \(\overline{DE}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 面積比
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells" aria-hidden="true"></i> <span>重點 5：面積的比 = 對應邊長平方的比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\triangle ABC \sim \triangle DEF\)，對應邊的比是 \(a : b\)，對應高的比也是 \(a : b\)。面積是 \(\frac{1}{2} \times\) 底 \(\times\) 高，底和高<strong>都</strong>變，所以面積比是 \(a^2 : b^2\)。</li>
+              <li>例：\(\overline{AH} : \overline{DK} = 3 : 2\)（對應高），\(\triangle ABC\) 的面積是 18。設 \(\triangle DEF\) 的面積是 \(y\)：
+              \[\begin{aligned} & 18 : y = 3^2 : 2^2 \\ & 9y = 72,\ y = 8 \end{aligned}\]</li>
+              <li><strong>反過來</strong>，已知面積比求邊長比要<strong>開根號</strong>：面積比 \(9 : 25\) 的邊長比是 \(3 : 5\)；面積比 \(1 : 5\) 的邊長比是 \(1 : \sqrt{5}\)，不是 \(1 : 5\)。</li>
+              <li>袖珍博物館的娃娃屋照實物的 \(\frac{1}{12}\) 製作：長度是 \(\frac{1}{12}\)，地板面積只有實物的 \(\frac{1}{144}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・相似三角形的面積</span>
+              兩個相似三角形中，面積的比 = 對應邊長平方的比
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_dollhouse.webp" alt="昭和復古照相館風插圖：照相館櫥窗裡放著一棟小小的娃娃屋模型，旁邊擺著一張同一棟房子的大照片；小影彎腰看娃娃屋，阿光指著照片。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：數一數小三角形</h3>
+            <p class="interactive-instruction">「邊長比 → 面積比」：調整兩個三角形的邊長份數，數一數各被切成幾塊小三角形。「面積比 → 邊長比」：選一組面積比，看邊長比要怎麼求。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-area" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ar-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方向</span>
+                    <div class="btn-group" id="ar-mode-group">
+                      <button class="pick-btn active" data-ar-mode="fwd">邊長比 → 面積比</button>
+                      <button class="pick-btn" data-ar-mode="rev">面積比 → 邊長比</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="ar-row-pair" style="display:none">
+                    <span class="btn-group-label">面積比</span>
+                    <div class="btn-group" id="ar-pair-group">
+                      <button class="pick-btn active" data-ar-pair="0">4 : 9</button>
+                      <button class="pick-btn" data-ar-pair="1">25 : 16</button>
+                      <button class="pick-btn" data-ar-pair="2">1 : 3</button>
+                      <button class="pick-btn" data-ar-pair="3">2 : 9</button>
+                      <button class="pick-btn" data-ar-pair="4">4 : 5</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="ar-row-a">
+                    <label for="ar-a">\(\triangle ABC\) 的邊：<span id="ar-va" class="val-num">3</span> 份</label>
+                    <input type="range" id="ar-a" min="1" max="5" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="ar-row-b">
+                    <label for="ar-b">\(\triangle DEF\) 的邊：<span id="ar-vb" class="val-num">2</span> 份</label>
+                    <input type="range" id="ar-b" min="1" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="ar-row-s">
+                    <label for="ar-s">\(\triangle ABC\) 的面積：<span id="ar-vs" class="val-num">36</span></label>
+                    <input type="range" id="ar-s" min="9" max="90" value="36" step="9">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ar-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (面積比)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-9">
+            <p class="quiz-question"><strong>Q9.</strong> \(\triangle ABC \sim \triangle DEF\)，\(\overline{AH}\)、\(\overline{DK}\) 是對應高，\(\overline{AH} : \overline{DK} = 6 : 5\)。若 \(\triangle ABC\) 的面積是 72，\(\triangle DEF\) 的面積是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-9" value="A"><span class="option-text">A. 50</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-9" value="B"><span class="option-text">B. 60</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-9" value="C"><span class="option-text">C. 86.4</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-9" value="D"><span class="option-text">D. 103.68</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。對應高的比 = 對應邊的比 = \(6 : 5\)，面積比是 \(6^2 : 5^2 = 36 : 25\)：
+              \[\begin{aligned} & 72 : y = 36 : 25 \\ & 36y = 1800,\ y = 50 \end{aligned}\]
+              B 錯：\(72 \times \frac{5}{6} = 60\)，面積比忘了平方。<br>
+              C 錯：\(72 \times \frac{6}{5} = 86.4\)，沒有平方，倍數也乘反了。<br>
+              D 錯：\(72 \times \frac{36}{25} = 103.68\)，有平方但乘反了；\(\triangle DEF\) 比較小。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-10">
+            <p class="quiz-question"><strong>Q10.</strong> 如圖，三角形紙片 \(ABC\) 中，\(D\)、\(E\)、\(F\) 由 \(A\) 往 \(B\) 依序把 \(\overline{AB}\) 分成四等分。從 \(\overline{AB}\) 上的一點 \(P\)，沿著與 \(\overline{BC}\) 平行的方向剪開，剪下的小三角形面積剛好是 \(\triangle ABC\) 的 \(\frac{1}{2}\)。\(P\) 點在哪裡？</p>
+            <canvas class="quiz-fig" data-fig="q10" width="320" height="220" role="img" aria-label="三角形 ABC，A 在上；D、E、F 在 AB 上，把 AB 分成四等分，各段畫一條等長記號"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-10" value="A"><span class="option-text">A. 與 \(E\) 點重合</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-10" value="B"><span class="option-text">B. 在 \(\overline{DE}\) 上，不與 \(D\)、\(E\) 重合</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-10" value="C"><span class="option-text">C. 在 \(\overline{EF}\) 上，不與 \(E\)、\(F\) 重合</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-10" value="D"><span class="option-text">D. 與 \(F\) 點重合</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。剪下的小三角形與 \(\triangle ABC\) 相似（AA），面積比 \(1 : 2\)，邊長比就是 \(1 : \sqrt{2}\)：
+              \[\overline{AP} = \frac{1}{\sqrt{2}}\,\overline{AB} \fallingdotseq 0.71\,\overline{AB}\]
+              \(\overline{AE} = 0.5\,\overline{AB}\)、\(\overline{AF} = 0.75\,\overline{AB}\)，所以 \(P\) 在 \(E\)、\(F\) 之間。<br>
+              A 錯：以為邊長比也是 \(1 : 2\)；剪在 \(E\) 的面積只有 \(\left(\frac{1}{2}\right)^2 = \frac{1}{4}\)。<br>
+              B 錯：剪在 \(D\)、\(E\) 之間，面積還不到 \(\frac{1}{4}\)。<br>
+              D 錯：剪在 \(F\) 的面積是 \(\left(\frac{3}{4}\right)^2 = \frac{9}{16}\)，比一半多。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 找對應邊再算面積比
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> <span>重點 6：先找對應邊，再算面積比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>兩個相似三角形擺放的方向不同時，要<strong>照角找對應</strong>，不要照位置找：直角對直角、共用角對共用角，剩下的頂點自然配成一對。</li>
+              <li>例：\(\triangle ABC\) 中 \(\angle A = 90^\circ\)、\(\overline{AB} = 8\)、\(\overline{AC} = 6\)，\(D\) 是 \(\overline{AB}\) 的中點，\(\overline{DE} \perp \overline{BC}\) 於 \(E\)。\(\angle B\) 共用、\(\angle DEB = \angle A = 90^\circ\)，所以 \(\triangle EBD \sim \triangle ABC\)，\(E\) 對 \(A\)、\(D\) 對 \(C\)。</li>
+              <li>\(\overline{BD}\) 是小三角形的斜邊，要對大三角形的斜邊 \(\overline{BC} = 10\)：面積比 \(= 4^2 : 10^2 = 4 : 25\)。拿 \(\overline{BD} : \overline{AB} = 1 : 2\) 算出 \(1 : 4\) 是常見的錯。</li>
+              <li>平行四邊形裡也常藏著相似三角形：對邊平行，內錯角相等，再加上對頂角。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・對應邊要照角找</span>
+              面積比 = （<strong>對應</strong>邊的比）的平方
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_corner.webp" alt="昭和復古照相館風插圖：工作檯上一張直角三角形的大相紙，阿光把一張剪好的小直角三角形相紙轉了方向，貼在大相紙的一個角上比對；小影在旁邊用手指著兩個直角。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：誰對誰？</h3>
+            <p class="interactive-instruction">選一個直角三角形和 \(D\) 的位置，看 \(\triangle EBD\) 與 \(\triangle ABC\) 的對應頂點（同色）；切到「小妍的錯法」，比較兩種面積比哪裡不一樣。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-match" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">三邊</span>
+                    <div class="btn-group" id="mt-tri-group">
+                      <button class="pick-btn active" data-mt-tri="0">12、5、13</button>
+                      <button class="pick-btn" data-mt-tri="1">15、8、17</button>
+                      <button class="pick-btn" data-mt-tri="2">24、7、25</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">\(\overline{BD}\)</span>
+                    <div class="btn-group" id="mt-t-group">
+                      <button class="pick-btn" data-mt-t="1/3">\(\frac{1}{3}\overline{AB}\)</button>
+                      <button class="pick-btn active" data-mt-t="1/2">\(\frac{1}{2}\overline{AB}\)</button>
+                      <button class="pick-btn" data-mt-t="2/3">\(\frac{2}{3}\overline{AB}\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">看法</span>
+                    <div class="btn-group" id="mt-view-group">
+                      <button class="pick-btn active" data-mt-view="ok">照角對應</button>
+                      <button class="pick-btn" data-mt-view="bad">小妍的錯法</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (找對應邊)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-11">
+            <p class="quiz-question"><strong>Q11.</strong> 如圖，四邊形 \(ABCD\) 是平行四邊形，\(E\) 在 \(\overline{AD}\) 上，\(\overline{BE}\) 的延長線與 \(\overline{CD}\) 的延長線交於 \(F\)。若 \(\overline{BC} = 18\)、\(\overline{DE} = 12\)，\(\triangle ABE\) 面積 : \(\triangle DFE\) 面積 = ？</p>
+            <canvas class="quiz-fig" data-fig="q11" width="320" height="220" role="img" aria-label="平行四邊形 ABCD，A、D 在上、B、C 在下；E 在 AD 上，B、E、F 共線，F 在 CD 的延長線上；BC 標 18、DE 標 12"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-11" value="A"><span class="option-text">A. \(1 : 2\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-11" value="B"><span class="option-text">B. \(1 : 4\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-11" value="C"><span class="option-text">C. \(1 : 9\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-11" value="D"><span class="option-text">D. \(4 : 1\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{AB} /\!/ \overline{CF}\)，所以 \(\angle ABE = \angle DFE\)（內錯角）；又 \(\angle AEB = \angle DEF\)（對頂角），\(\triangle ABE \sim \triangle DFE\)，\(\overline{AE}\) 對 \(\overline{DE}\)。\(\overline{AD} = \overline{BC} = 18\)，\(\overline{AE} = 18 - 12 = 6\)：
+              \[\begin{aligned} & \triangle ABE : \triangle DFE \\ &= 6^2 : 12^2 = 1 : 4 \end{aligned}\]
+              A 錯：\(6 : 12 = 1 : 2\) 是邊長比，面積比要平方。<br>
+              C 錯：拿 \(\overline{AE} : \overline{AD} = 6 : 18\) 去平方；\(\overline{AD}\) 不是 \(\triangle DFE\) 的邊。<br>
+              D 錯：前後對調了，\(\triangle ABE\) 比較小。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-12">
+            <p class="quiz-question"><strong>Q12.</strong> 如圖，\(\triangle ABC\) 中 \(\angle A = 90^\circ\)、\(\overline{AB} = 16\)、\(\overline{AC} = 12\)，\(D\) 在 \(\overline{AB}\) 上且 \(\overline{BD} = 4\)，\(\overline{DE} \perp \overline{BC}\) 於 \(E\)。\(\triangle EBD\) 的面積是 \(\triangle ABC\) 面積的幾倍？</p>
+            <canvas class="quiz-fig" data-fig="q12" width="320" height="220" role="img" aria-label="直角三角形 ABC，直角在 A，A 在左下、B 在右下、C 在左上；D 在 AB 上，DE 垂直 BC 於 E；AC 標 12、AB 標 16、DB 標 4"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-12" value="A"><span class="option-text">A. \(\frac{1}{16}\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-12" value="B"><span class="option-text">B. \(\frac{1}{5}\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-12" value="C"><span class="option-text">C. \(\frac{1}{9}\) 倍</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-12" value="D"><span class="option-text">D. \(\frac{1}{25}\) 倍</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\angle B\) 共用、\(\angle DEB = \angle A = 90^\circ\)，\(\triangle EBD \sim \triangle ABC\)，\(D\) 對 \(C\)，所以 \(\overline{BD}\) 對 \(\overline{BC}\)。\(\overline{BC} = \sqrt{16^2 + 12^2} = 20\)：
+              \[\begin{aligned} & \triangle EBD : \triangle ABC \\ &= 4^2 : 20^2 = 1 : 25 \end{aligned}\]
+              A 錯：\(\overline{BD} : \overline{AB} = 4 : 16\)，照位置配對，\(\overline{BD}\) 對錯了邊。<br>
+              B 錯：\(4 : 20 = 1 : 5\) 是邊長比，面積比要平方。<br>
+              C 錯：\(\overline{BD} : \overline{AC} = 4 : 12\)，也是對錯了邊。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 中點連線
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-play" aria-hidden="true"></i> <span>重點 7：三角形各邊中點連線段</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\triangle ABC\) 中，\(D\)、\(E\)、\(F\) 分別是 \(\overline{BC}\)、\(\overline{AC}\)、\(\overline{AB}\) 的中點。由兩邊中點連線段性質，\(\overline{EF} = \frac{1}{2}\overline{BC}\)、\(\overline{DF} = \frac{1}{2}\overline{AC}\)、\(\overline{DE} = \frac{1}{2}\overline{AB}\)，所以 \(\triangle DEF \sim \triangle ABC\)（SSS 相似）。</li>
+              <li>邊長比 \(1 : 2\)，所以 \(\triangle DEF\) 的<strong>周長</strong>是 \(\triangle ABC\) 的 \(\frac{1}{2}\)，<strong>面積</strong>是 \(\left(\frac{1}{2}\right)^2 = \frac{1}{4}\)——三條中點連線把 \(\triangle ABC\) 切成 4 個全等的小三角形。</li>
+              <li>例：\(\overline{DE} = 3\)、\(\overline{DF} = 4\)、\(\angle FDE = 90^\circ\)，則 \(\overline{EF} = 5\)，\(\triangle DEF\) 周長 12、面積 6；\(\triangle ABC\) 周長 24、面積 24。</li>
+              <li>再連一次 \(\triangle DEF\) 的中點，周長再乘 \(\frac{1}{2}\)、面積再乘 \(\frac{1}{4}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・各邊中點連線段</span>
+              \(\triangle DEF \sim \triangle ABC\)，周長 \(\frac{1}{2}\)，面積 \(\frac{1}{4}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_midframe.webp" alt="昭和復古照相館風插圖：牆上掛著一個三角形木相框，裡面嵌著一個倒過來的小三角形木框，小框的三個角剛好頂在大框三邊的正中間；阿光扶著梯子，小影仰頭看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：一層一層往內連</h3>
+            <p class="interactive-instruction">設定 \(\triangle ABC\) 的周長與面積，選要往內連幾層中點，看每一層的周長、面積，和所有線段的總長。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mid" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="md-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="md-n">往內連：<span id="md-vn" class="val-num">1 層</span></label>
+                    <input type="range" id="md-n" min="1" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-p">\(\triangle ABC\) 的周長：<span id="md-vp" class="val-num">30</span></label>
+                    <input type="range" id="md-p" min="0" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-s">\(\triangle ABC\) 的面積：<span id="md-vs" class="val-num">48</span></label>
+                    <input type="range" id="md-s" min="0" max="3" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="md-b">形狀 \(\angle B\)：<span id="md-vb" class="val-num">60°</span></label>
+                    <input type="range" id="md-b" min="40" max="80" value="60" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="md-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (中點連線)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-13">
+            <p class="quiz-question"><strong>Q13.</strong> \(\triangle ABC\) 中，\(D\)、\(E\)、\(F\) 分別是 \(\overline{BC}\)、\(\overline{AC}\)、\(\overline{AB}\) 的中點。已知 \(\overline{DE} = 8\)、\(\overline{DF} = 15\)、\(\angle FDE = 90^\circ\)，\(\triangle ABC\) 的周長與面積分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-13" value="A"><span class="option-text">A. 周長 80、面積 240</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-13" value="B"><span class="option-text">B. 周長 80、面積 120</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-13" value="C"><span class="option-text">C. 周長 160、面積 240</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-13" value="D"><span class="option-text">D. 周長 40、面積 60</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{EF} = \sqrt{8^2 + 15^2} = 17\)，\(\triangle DEF\) 周長 \(8 + 15 + 17 = 40\)，面積 \(\frac{1}{2} \times 8 \times 15 = 60\)。\(\triangle ABC\) 的邊是 \(\triangle DEF\) 的 2 倍：
+              \[\begin{aligned} & \text{周長} = 2 \times 40 = 80 \\ & \text{面積} = 4 \times 60 = 240 \end{aligned}\]
+              B 錯：面積只乘 2；邊長 2 倍，面積要乘 \(2^2 = 4\)。<br>
+              C 錯：周長也乘了 4；周長只跟邊長一樣變 2 倍。<br>
+              D 錯：這是 \(\triangle DEF\) 自己的周長與面積。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-14">
+            <p class="quiz-question"><strong>Q14.</strong> \(\triangle ABC\) 是邊長 16 的正三角形，\(D\)、\(E\)、\(F\) 是三邊的中點，\(G\)、\(H\)、\(I\) 是 \(\triangle DEF\) 三邊的中點。把 \(\triangle ABC\)、\(\triangle DEF\)、\(\triangle GHI\) 的邊全部畫出來，圖中所有線段的長度和是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-14" value="A"><span class="option-text">A. 72</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-14" value="B"><span class="option-text">B. 63</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-14" value="C"><span class="option-text">C. 84</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-14" value="D"><span class="option-text">D. 96</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。每往內一層，周長乘 \(\frac{1}{2}\)：\(\triangle ABC\) 周長 \(3 \times 16 = 48\)、\(\triangle DEF\) 是 24、\(\triangle GHI\) 是 12，
+              \[48 + 24 + 12 = 84\]
+              A 錯：\(48 + 24 = 72\)，漏了最內層 \(\triangle GHI\)。<br>
+              B 錯：\(48 + 12 + 3 = 63\)，把周長也乘 \(\frac{1}{4}\)；乘 \(\frac{1}{4}\) 的是面積。<br>
+              D 錯：\(48 + 24 + 24 = 96\)，以為第三層的周長和第二層一樣。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 坡度與相似直角三角形
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-wheelchair" aria-hidden="true"></i> <span>重點 8：角度固定，任兩邊的比就固定</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>無障礙坡道規定：高度差超過 20 公分時，<strong>坡度 = \(\frac{\text{高度差}}{\text{水平長度}}\)</strong> 不可大於 \(\frac{1}{12}\)。坡度 \(\frac{1}{12}\) 時，高度差 20 公分要配水平長度 240 公分，高度差 30 公分要配 360 公分。</li>
+              <li>坡度固定，坡道與地面的夾角 \(\angle A\) 就固定。不同高度的坡道都是直角三角形、又有同一個 \(\angle A\)，所以<strong>全部相似</strong>（AA）。</li>
+              <li>由對應邊成比例，\(\frac{a}{a'} = \frac{b}{b'} = \frac{c}{c'}\) 可以改寫成 \(\frac{a}{c} = \frac{a'}{c'}\)、\(\frac{b}{c} = \frac{b'}{c'}\)、\(\frac{a}{b} = \frac{a'}{b'}\)。</li>
+              <li>結論：直角三角形只要一個銳角確定，<strong>不論大小</strong>，任兩邊的比值都確定；換一個角度，比值才會變。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・相似直角三角形</span>
+              銳角相同 \(\Rightarrow\) 相似 \(\Rightarrow\) \(\frac{a}{c}\)、\(\frac{b}{c}\)、\(\frac{a}{b}\) 都是固定值
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_ramp.webp" alt="昭和復古照相館風插圖：照相館門口新做的木頭無障礙坡道，小影蹲在坡道旁拉著捲尺量水平長度，阿光把一支水平尺放在坡道上。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：坡道放大鏡</h3>
+            <p class="interactive-instruction">選一種坡度，拉動高度差把坡道加高（綠色），和固定的小坡道（紅色）比一比：三個比值有沒有改變？換一種坡度呢？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-slope" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">坡度</span>
+                    <div class="btn-group" id="sl-k-group">
+                      <button class="pick-btn active" data-sl-k="0">\(\frac{1}{12}\)</button>
+                      <button class="pick-btn" data-sl-k="1">\(\frac{1}{8}\)</button>
+                      <button class="pick-btn" data-sl-k="2">\(\frac{1}{4}\)</button>
+                      <button class="pick-btn" data-sl-k="3">\(\frac{3}{4}\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sl-h">高度差 \(a\)：<span id="sl-vh" class="val-num">30 公分</span></label>
+                    <input type="range" id="sl-h" min="10" max="60" value="30" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (坡度與比值)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-15">
+            <p class="quiz-question"><strong>Q15.</strong> 公園步道的坡道設計成坡度 \(\frac{1}{15}\)。若坡道兩端的高度差是 36 公分，坡道的水平長度是多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-15" value="A"><span class="option-text">A. 2.4 公分</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-15" value="B"><span class="option-text">B. 540 公分</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-15" value="C"><span class="option-text">C. 51 公分</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-15" value="D"><span class="option-text">D. 432 公分</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。坡度 \(= \frac{\text{高度差}}{\text{水平長度}} = \frac{1}{15}\)，水平長度是高度差的 15 倍：
+              \[36 \times 15 = 540\]
+              A 錯：\(36 \div 15 = 2.4\)，把坡度的分子分母弄反了。<br>
+              C 錯：\(36 + 15 = 51\)，坡度是比值，不是加上去的長度。<br>
+              D 錯：\(36 \times 12 = 432\)，用了無障礙坡道法規的 \(\frac{1}{12}\)，不是題目給的 \(\frac{1}{15}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-16">
+            <p class="quiz-question"><strong>Q16.</strong> 直角 \(\triangle ABC\) 與直角 \(\triangle DEF\) 中，\(\angle C = \angle F = 90^\circ\)、\(\angle A = \angle D = 35^\circ\)。已知 \(\frac{\overline{BC}}{\overline{AB}} \fallingdotseq 0.57\)，若 \(\overline{DE} = 20\)，\(\overline{EF}\) 大約是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-16" value="A"><span class="option-text">A. 0.57</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-16" value="B"><span class="option-text">B. 35.09</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-16" value="C"><span class="option-text">C. 19.43</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-16" value="D"><span class="option-text">D. 11.4</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。兩個直角三角形有同一個 \(35^\circ\) 的銳角，所以相似，對應兩邊的比值一樣：\(\overline{EF}\) 對 \(\overline{BC}\)、\(\overline{DE}\) 對 \(\overline{AB}\)。
+              \[\frac{\overline{EF}}{20} \fallingdotseq 0.57,\quad \overline{EF} \fallingdotseq 11.4\]
+              A 錯：0.57 是比值，不是長度。<br>
+              B 錯：\(20 \div 0.57 \fallingdotseq 35.09\)，乘除弄反了；\(\overline{EF}\) 比斜邊 \(\overline{DE}\) 短。<br>
+              C 錯：\(20 - 0.57 = 19.43\)，比值要用乘的。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: sin、cos、tan
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> <span>重點 9：對邊、鄰邊、斜邊與 sin、cos、tan</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>直角 \(\triangle ABC\) 中 \(\angle C = 90^\circ\)：\(\overline{AB}\) 是<strong>斜邊</strong>（直角的對邊）；站在 \(\angle A\) 看，\(\overline{BC}\) 是 \(\angle A\) 的<strong>對邊</strong>、\(\overline{AC}\) 是 \(\angle A\) 的<strong>鄰邊</strong>。</li>
+              <li>三個比值有自己的名字（sine、cosine、tangent 的縮寫），習慣把 \(\sin\angle A\) 簡記為 \(\sin A\)。</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>名稱</th><th>比值</th><th>\(\angle C = 90^\circ\) 時</th></tr></thead>
+                <tbody>
+                  <tr><td>\(\sin A\)</td><td>對邊 ÷ 斜邊</td><td>\(\frac{a}{c}\)</td></tr>
+                  <tr><td>\(\cos A\)</td><td>鄰邊 ÷ 斜邊</td><td>\(\frac{b}{c}\)</td></tr>
+                  <tr><td>\(\tan A\)</td><td>對邊 ÷ 鄰邊</td><td>\(\frac{a}{b}\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list">
+              <li>例：\(\overline{AB} = 17\)、\(\overline{BC} = 8\)、\(\overline{AC} = 15\)，則 \(\sin A = \frac{8}{17}\)、\(\cos A = \frac{15}{17}\)、\(\tan A = \frac{8}{15}\)。</li>
+              <li>直角不在 \(C\) 時，先找出直角，它的對邊才是斜邊；換站到另一個銳角，對邊和鄰邊就互換。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・直角三角形的邊長比值</span>
+              \(\sin A = \frac{\text{對邊}}{\text{斜邊}}\)，\(\cos A = \frac{\text{鄰邊}}{\text{斜邊}}\)，\(\tan A = \frac{\text{對邊}}{\text{鄰邊}}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_setsquare.webp" alt="昭和復古照相館風插圖：工作檯上放著一塊木頭直角三角板，三條邊上各貼著紅、藍、黃三種顏色的紙膠帶；小影用手指著直角，阿光拿著其中一卷紙膠帶。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：站在哪個角看？</h3>
+            <p class="interactive-instruction">選三邊長、直角的位置與要看的角，對邊（紅）、鄰邊（藍）、斜邊（黃）會跟著換：寫出 \(\sin\)、\(\cos\)、\(\tan\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-trig" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">三邊</span>
+                    <div class="btn-group" id="tg-tri-group">
+                      <button class="pick-btn active" data-tg-tri="0">3、4、5</button>
+                      <button class="pick-btn" data-tg-tri="1">5、12、13</button>
+                      <button class="pick-btn" data-tg-tri="2">8、15、17</button>
+                      <button class="pick-btn" data-tg-tri="3">7、24、25</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">直角在</span>
+                    <div class="btn-group" id="tg-right-group">
+                      <button class="pick-btn active" data-tg-right="C">\(C\)</button>
+                      <button class="pick-btn" data-tg-right="B">\(B\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">看的角</span>
+                    <div class="btn-group" id="tg-ang-group">
+                      <button class="pick-btn active" data-tg-ang="A">\(\angle A\)</button>
+                      <button class="pick-btn" data-tg-ang="O">另一個銳角</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (sin、cos、tan)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-17">
+            <p class="quiz-question"><strong>Q17.</strong> 直角 \(\triangle ABC\) 中，\(\angle C = 90^\circ\)，\(\overline{AB} = 29\)、\(\overline{BC} = 20\)、\(\overline{AC} = 21\)。\(\sin B\) 等於多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-17" value="A"><span class="option-text">A. \(\frac{20}{29}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-17" value="B"><span class="option-text">B. \(\frac{21}{20}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-17" value="C"><span class="option-text">C. \(\frac{21}{29}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-17" value="D"><span class="option-text">D. \(\frac{20}{21}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。斜邊是直角 \(C\) 的對邊 \(\overline{AB} = 29\)。站在 \(\angle B\)：對邊是 \(\overline{AC} = 21\)、鄰邊是 \(\overline{BC} = 20\)。
+              \[\sin B = \frac{\text{對邊}}{\text{斜邊}} = \frac{21}{29}\]
+              A 錯：\(\frac{20}{29}\) 是鄰邊比斜邊，也就是 \(\cos B\)（或 \(\sin A\)）。<br>
+              B 錯：\(\frac{21}{20}\) 是對邊比鄰邊，也就是 \(\tan B\)。<br>
+              D 錯：\(\frac{20}{21}\) 是 \(\tan A\)，站錯了角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-18">
+            <p class="quiz-question"><strong>Q18.</strong> 直角 \(\triangle ABC\) 中，直角在 \(A\)（\(\angle A = 90^\circ\)）。下列何者等於 \(\tan B\)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-18" value="A"><span class="option-text">A. \(\frac{\overline{AC}}{\overline{AB}}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-18" value="B"><span class="option-text">B. \(\frac{\overline{AB}}{\overline{AC}}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-18" value="C"><span class="option-text">C. \(\frac{\overline{AC}}{\overline{BC}}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-18" value="D"><span class="option-text">D. \(\frac{\overline{AB}}{\overline{BC}}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。直角在 \(A\)，斜邊是 \(\overline{BC}\)。站在 \(\angle B\)：不碰到 \(B\) 的那一股 \(\overline{AC}\) 是對邊，夾著 \(\angle B\) 的那一股 \(\overline{AB}\) 是鄰邊。
+              \[\tan B = \frac{\text{對邊}}{\text{鄰邊}} = \frac{\overline{AC}}{\overline{AB}}\]
+              B 錯：這是 \(\tan C\)。<br>
+              C 錯：這是 \(\sin B\)（對邊比斜邊）。<br>
+              D 錯：這是 \(\cos B\)（鄰邊比斜邊）。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 三角比的生活應用
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-person-biking" aria-hidden="true"></i> <span>重點 10：用三角比的近似值解生活問題</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>角度固定，比值就固定，所以可以先用計算機（\(\sin\)、\(\cos\)、\(\tan\) 鍵）或查表得到這個比值的<strong>近似值</strong>，再乘上已知的邊。</li>
+              <li>先判斷已知邊、要求的邊對 \(\angle A\) 來說是對邊、鄰邊還是斜邊，再選用 \(\sin\)、\(\cos\) 或 \(\tan\)。</li>
+              <li>例：自行車道長 \(\overline{AC} = 1000\) 公尺，與水平面夾角 \(6^\circ\)，\(\sin 6^\circ \fallingdotseq 0.1045\)。垂直高度 \(\overline{BC}\) 是對邊、\(\overline{AC}\) 是斜邊：
+              \[\begin{aligned} & \overline{BC} \fallingdotseq 1000 \times 0.1045 \\ &= 104.5 \fallingdotseq 105 \end{aligned}\]</li>
+              <li>同一條車道的水平距離 \(\overline{AB}\) 是鄰邊，改用 \(\cos 6^\circ \fallingdotseq 0.9945\)，得約 995 公尺。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・三角比的應用</span>
+              對邊 = 斜邊 \(\times \sin A\)，鄰邊 = 斜邊 \(\times \cos A\)，對邊 = 鄰邊 \(\times \tan A\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_bikeway.webp" alt="昭和復古照相館風插圖：山坡上一條往上延伸的自行車道，阿光牽著腳踏車站在坡道起點，小影站在旁邊拿著小筆記本抬頭望向坡頂的涼亭。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：坡道計算機</h3>
+            <p class="interactive-instruction">選要求的是高度還是水平距離，調整角度與已知的長度：該用哪一個比值？乘出來四捨五入是多少？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-road" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="rd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知 → 求</span>
+                    <div class="btn-group" id="rd-mode-group">
+                      <button class="pick-btn active" data-rd-mode="sin">坡道長 → 高度</button>
+                      <button class="pick-btn" data-rd-mode="cos">坡道長 → 水平</button>
+                      <button class="pick-btn" data-rd-mode="tan">水平 → 高度</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="rd-ang">夾角 \(\angle A\)：<span id="rd-vang" class="val-num">8°</span></label>
+                    <input type="range" id="rd-ang" min="3" max="20" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="rd-len">已知的長度：<span id="rd-vlen" class="val-num">1200 公尺</span></label>
+                    <input type="range" id="rd-len" min="200" max="1500" value="1200" step="100">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="rd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (三角比應用)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-19">
+            <p class="quiz-question"><strong>Q19.</strong> 一條纜車路線 \(\overline{AC}\) 長 800 公尺，與水平面的夾角是 \(24^\circ\)。已知 \(\sin 24^\circ \fallingdotseq 0.4067\)、\(\cos 24^\circ \fallingdotseq 0.9135\)、\(\tan 24^\circ \fallingdotseq 0.4452\)，纜車上升的垂直高度約為多少公尺？（四捨五入到整數）</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-19" value="A"><span class="option-text">A. 731 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-19" value="B"><span class="option-text">B. 325 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-19" value="C"><span class="option-text">C. 356 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-19" value="D"><span class="option-text">D. 1967 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。垂直高度是 \(24^\circ\) 的對邊，路線長是斜邊，用 \(\sin\)：
+              \[800 \times 0.4067 = 325.36 \fallingdotseq 325\]
+              A 錯：\(800 \times 0.9135 \fallingdotseq 731\) 是水平距離（用了 \(\cos\)）。<br>
+              C 錯：\(800 \times 0.4452 \fallingdotseq 356\)，用了 \(\tan\)；\(\tan\) 是對邊比鄰邊，800 公尺不是鄰邊。<br>
+              D 錯：\(800 \div 0.4067 \fallingdotseq 1967\)，比斜邊還長，一定不對。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-20">
+            <p class="quiz-question"><strong>Q20.</strong> 阿光站在離鐘塔底部水平距離 30 公尺的地方，看塔頂的仰角是 \(52^\circ\)（不計眼睛的高度）。已知 \(\sin 52^\circ \fallingdotseq 0.7880\)、\(\cos 52^\circ \fallingdotseq 0.6157\)、\(\tan 52^\circ \fallingdotseq 1.2799\)，鐘塔約高多少公尺？（四捨五入到小數第 1 位）</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-20" value="A"><span class="option-text">A. 23.6 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-20" value="B"><span class="option-text">B. 18.5 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-20" value="C"><span class="option-text">C. 23.4 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-20" value="D"><span class="option-text">D. 38.4 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。塔高是 \(52^\circ\) 的對邊，30 公尺是鄰邊，用 \(\tan\)：
+              \[30 \times 1.2799 = 38.397 \fallingdotseq 38.4\]
+              A 錯：\(30 \times 0.7880 \fallingdotseq 23.6\)，用了 \(\sin\)；30 公尺不是斜邊。<br>
+              B 錯：\(30 \times 0.6157 \fallingdotseq 18.5\)，用了 \(\cos\)。<br>
+              C 錯：\(30 \div 1.2799 \fallingdotseq 23.4\)，乘除弄反了；仰角大於 \(45^\circ\)，塔高應該比 30 公尺還高。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 特殊直角三角形的邊長比
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shapes" aria-hidden="true"></i> <span>重點 11：特殊直角三角形的邊長比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>常見的兩塊三角板：<strong>45°、45°、90°</strong> 與 <strong>30°、60°、90°</strong>。不論大小，它們的三邊比都固定。</li>
+              <li>45°-45°-90°：兩股都是 \(a\)，由畢氏定理斜邊 \(= \sqrt{a^2 + a^2} = \sqrt{2}\,a\)，邊長比 \(1 : 1 : \sqrt{2}\)。</li>
+              <li>30°-60°-90°：兩塊拼成一個正三角形，30° 的對邊是斜邊的一半；長股 \(= \sqrt{b^2 - \left(\frac{b}{2}\right)^2} = \frac{\sqrt{3}}{2}b\)。邊長比是 <strong>30° 對 1、60° 對 \(\sqrt{3}\)、90° 對 2</strong>，不是 \(1 : 2 : \sqrt{3}\)。</li>
+              <li>例：\(\angle C = 90^\circ\)、\(\angle A = 45^\circ\)、\(\overline{AC} = 6\)，則 \(\overline{BC} = 6\)、\(\overline{AB} = 6\sqrt{2}\)。\(\angle A = 60^\circ\)、\(\overline{AC} = 10\) 時，\(\overline{AC}\) 對著 30°，\(\overline{BC} = 10\sqrt{3}\)、\(\overline{AB} = 20\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・特殊直角三角形</span>
+              45°-45°-90°：\(1 : 1 : \sqrt{2}\)<br>30°-60°-90°：\(1 : \sqrt{3} : 2\)（依序對 30°、60°、90°）
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_triangles.webp" alt="昭和復古照相館風插圖：工作檯上並排放著兩塊木頭三角板，一塊是等腰直角三角板，一塊是一邊細長的直角三角板；阿光拿起細長那塊比對，小影指著等腰那塊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：已知一邊，求另兩邊</h3>
+            <p class="interactive-instruction">選三角板的種類和已知的是哪一邊，拉動已知邊長：先找出它是比例裡的哪一份，算出「1 份」，再求其他兩邊。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-special" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">三角板</span>
+                    <div class="btn-group" id="sp-mode-group">
+                      <button class="pick-btn active" data-sp-mode="45">45°-45°-90°</button>
+                      <button class="pick-btn" data-sp-mode="30">30°-60°-90°</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="sp-row-k45">
+                    <span class="btn-group-label">已知</span>
+                    <div class="btn-group" id="sp-k45-group">
+                      <button class="pick-btn active" data-sp-k45="leg">股 \(\overline{BC}\)</button>
+                      <button class="pick-btn" data-sp-k45="hyp">斜邊 \(\overline{AB}\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="sp-row-k30" style="display:none">
+                    <span class="btn-group-label">已知</span>
+                    <div class="btn-group" id="sp-k30-group">
+                      <button class="pick-btn active" data-sp-k30="short">短股 \(\overline{BC}\)</button>
+                      <button class="pick-btn" data-sp-k30="long">長股 \(\overline{AC}\)</button>
+                      <button class="pick-btn" data-sp-k30="hyp">斜邊 \(\overline{AB}\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sp-v">已知邊長：<span id="sp-vv" class="val-num">6</span></label>
+                    <input type="range" id="sp-v" min="2" max="12" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (特殊直角三角形)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-21">
+            <p class="quiz-question"><strong>Q21.</strong> 直角 \(\triangle ABC\) 中，\(\angle C = 90^\circ\)、\(\angle A = 60^\circ\)、\(\overline{BC} = 21\)。\(\overline{AC}\)、\(\overline{AB}\) 分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-21" value="A"><span class="option-text">A. \(\overline{AC} = 7\sqrt{3}\)、\(\overline{AB} = 14\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-21" value="B"><span class="option-text">B. \(\overline{AC} = 21\sqrt{3}\)、\(\overline{AB} = 42\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-21" value="C"><span class="option-text">C. \(\overline{AC} = 10.5\)、\(\overline{AB} = \frac{21\sqrt{3}}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-21" value="D"><span class="option-text">D. \(\overline{AC} = 7\sqrt{3}\)、\(\overline{AB} = 42\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle B = 30^\circ\)。\(\overline{BC}\) 對著 \(60^\circ\)（\(\sqrt{3}\) 份），\(\overline{AC}\) 對著 \(30^\circ\)（1 份），\(\overline{AB}\) 是斜邊（2 份）：
+              \[\begin{aligned} & 1 \text{ 份} = \frac{21}{\sqrt{3}} = 7\sqrt{3} \\ & \overline{AC} = 7\sqrt{3},\ \overline{AB} = 14\sqrt{3} \end{aligned}\]
+              B 錯：把 \(\overline{BC}\) 當成 \(30^\circ\) 的對邊了；\(\overline{BC}\) 對的是 \(\angle A = 60^\circ\)。<br>
+              C 錯：用了錯的順序 \(1 : 2 : \sqrt{3}\)，以為 \(60^\circ\) 對 2。<br>
+              D 錯：\(\overline{AC}\) 對了，但斜邊是 \(\overline{AC}\) 的 2 倍，不是 \(\overline{BC}\) 的 2 倍。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-22">
+            <p class="quiz-question"><strong>Q22.</strong> 直角 \(\triangle ABC\) 中，\(\angle C = 90^\circ\)、\(\angle B = 45^\circ\)，斜邊 \(\overline{AB} = 18\)。\(\overline{AC}\) 是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-22" value="A"><span class="option-text">A. \(18\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-22" value="B"><span class="option-text">B. 9</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-22" value="C"><span class="option-text">C. \(9\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-22" value="D"><span class="option-text">D. 18</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。45°-45°-90° 的邊長比 \(1 : 1 : \sqrt{2}\)，斜邊是 \(\sqrt{2}\) 份：
+              \[\overline{AC} = \frac{18}{\sqrt{2}} = 9\sqrt{2}\]
+              A 錯：\(18 \times \sqrt{2}\)，乘除弄反了；股比斜邊短。<br>
+              B 錯：「斜邊的一半」是 30° 對邊的規則，不能用在 45° 的三角形。<br>
+              D 錯：等腰直角三角形只有兩股相等，斜邊比較長。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 特殊直角三角形的生活問題
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag" aria-hidden="true"></i> <span>重點 12：特殊直角三角形的生活問題</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>先在情境裡找出直角三角形和那個 45°、30° 或 60° 的角，標出<strong>已知邊</strong>與<strong>所求邊</strong>各是哪一份。</li>
+              <li>例：校舍高 \(\overline{BC} = 15\) 公尺，三角旗 \(\overline{AB}\) 與地面夾 45°：\(\overline{BC} : \overline{AB} = 1 : \sqrt{2}\)，\(\overline{AB} = 15\sqrt{2} \fallingdotseq 21.21\) 公尺。</li>
+              <li>例：電扶梯傾斜 30°，兩層樓高度差 3.6 公尺：高度差對著 30°，電扶梯長是它的 2 倍，\(2 \times 3.6 = 7.2\) 公尺。</li>
+              <li><strong>先寫出精確值</strong>（如 \(15\sqrt{2}\)），最後一步才用計算機取近似值，免得中間四捨五入累積誤差。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・特殊角的生活問題</span>
+              找角 → 對比例的份數 → 求精確值 → 最後才取近似值
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_pennant.webp" alt="昭和復古照相館風插圖：照相館二樓頂端斜斜拉下一串彩色三角旗到地面的木樁，阿光在地面上扶著木樁，小影在旁邊仰頭看著旗串。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：生活裡的三角板</h3>
+            <p class="interactive-instruction">選一個情境，拉動已知的長度：這是哪一種特殊直角三角形？已知邊與所求的 \(\overline{AB}\) 各是哪一份？精確值與近似值各是多少？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-life" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="lf-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="lf-case-group">
+                      <button class="pick-btn active" data-lf-case="flag">三角旗（45°）</button>
+                      <button class="pick-btn" data-lf-case="esc">電扶梯（30°）</button>
+                      <button class="pick-btn" data-lf-case="skate">滑板拋臺（30°）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="lf-v">已知的長度：<span id="lf-vv" class="val-num">12 公尺</span></label>
+                    <input type="range" id="lf-v" min="6" max="20" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="lf-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (生活問題)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-23">
+            <p class="quiz-question"><strong>Q23.</strong> 風箏線拉直時與地面的夾角是 \(60^\circ\)，風箏離地面 24 公尺（不計手的高度）。風箏線約長多少公尺？（四捨五入到小數第 2 位）</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-23" value="A"><span class="option-text">A. 48 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-23" value="B"><span class="option-text">B. 13.86 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-23" value="C"><span class="option-text">C. 41.57 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-23" value="D"><span class="option-text">D. 27.71 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。風箏的高度對著 \(60^\circ\)（\(\sqrt{3}\) 份），風箏線是斜邊（2 份）：
+              \[\begin{aligned} & \text{線長} = 24 \times \frac{2}{\sqrt{3}} \\ &= 16\sqrt{3} \fallingdotseq 27.71 \end{aligned}\]
+              A 錯：\(24 \times 2 = 48\)，把高度當成 \(30^\circ\) 的對邊了。<br>
+              B 錯：\(\frac{24}{\sqrt{3}} = 8\sqrt{3} \fallingdotseq 13.86\) 是「1 份」，也就是風箏到你腳下的水平距離，不是線長。<br>
+              C 錯：\(24\sqrt{3} \fallingdotseq 41.57\)，把高度當成 1 份。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-24">
+            <p class="quiz-question"><strong>Q24.</strong> 一座電扶梯傾斜 \(30^\circ\)，電扶梯本身長 13 公尺。它的兩端高度差是多少公尺？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-24" value="A"><span class="option-text">A. 26 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-24" value="B"><span class="option-text">B. 6.5 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-24" value="C"><span class="option-text">C. 11.26 公尺</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-24" value="D"><span class="option-text">D. 7.51 公尺</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。高度差對著 \(30^\circ\)（1 份），電扶梯是斜邊（2 份）：
+              \[13 \div 2 = 6.5\]
+              A 錯：\(13 \times 2 = 26\)，乘除弄反了；高度差比電扶梯短。<br>
+              C 錯：\(\frac{13\sqrt{3}}{2} \fallingdotseq 11.26\) 是水平距離（\(60^\circ\) 的對邊）。<br>
+              D 錯：\(\frac{13}{\sqrt{3}} \fallingdotseq 7.51\)，把電扶梯當成長股了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 13: 兩次仰角求山高
+           ========================================== -->
+      <section class="concept-section" id="concept13">
+        <h2 class="section-title">
+          <i class="fa-solid fa-mountain" aria-hidden="true"></i> <span>重點 13：在兩個地方測仰角，求山高</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>山腳下的 \(C\) 在山頂 \(D\) 的正下方，但走不到 \(C\)，所以 \(\overline{AC}\)、\(\overline{BC}\) 都量不到，只量得到 \(A\)、\(B\) 兩點的距離和兩個仰角。</li>
+              <li>設山高 \(\overline{CD} = x\)，用兩個特殊直角三角形把 \(\overline{AC}\)、\(\overline{BC}\) 都寫成 \(x\) 的式子：仰角 \(30^\circ\) 時 \(\overline{AC} = \sqrt{3}x\)、\(45^\circ\) 時 \(= x\)、\(60^\circ\) 時 \(= \frac{x}{\sqrt{3}}\)。</li>
+              <li>\(A\)、\(B\) 在山的<strong>同一側</strong>：\(\overline{AC} - \overline{BC} = \overline{AB}\)；在山的<strong>兩側</strong>：\(\overline{AC} + \overline{BC} = \overline{AB}\)。</li>
+              <li>例：同一側，仰角 \(30^\circ\)、\(60^\circ\)，\(\overline{AB} = 200\)：\(\sqrt{3}x - \frac{x}{\sqrt{3}} = 200\)，\(\frac{2}{\sqrt{3}}x = 200\)，\(x = 100\sqrt{3}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・兩次仰角</span>
+              設高為 \(x\) → 兩段都用 \(x\) 表示 → 同側相減、兩側相加 → 解方程式
+            </div>
+
+            <div class="illustration-container">
+              <img src="app_mountain.webp" alt="昭和復古照相館風插圖：河邊的平地上，遠方有一座小山；阿光把木頭三腳架架好、眼睛湊在一個簡單的量角板上望向山頂，小影拿著筆記本站在他身後。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> 視覺互動探索：兩次仰角測山高</h3>
+            <p class="interactive-instruction">選 \(A\)、\(B\) 在山的同一側還是兩側、兩個仰角，再拉動 \(\overline{AB}\) 的長度：山高 \(x\) 的方程式怎麼列？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-mount" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="mo-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">位置</span>
+                    <div class="btn-group" id="mo-side-group">
+                      <button class="pick-btn active" data-mo-side="same">同一側</button>
+                      <button class="pick-btn" data-mo-side="two">山的兩側</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">仰角</span>
+                    <div class="btn-group" id="mo-pair-group">
+                      <button class="pick-btn active" data-mo-pair="30-60">30° 與 60°</button>
+                      <button class="pick-btn" data-mo-pair="45-60">45° 與 60°</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="mo-d">\(\overline{AB}\)：<span id="mo-vd" class="val-num">300 公尺</span></label>
+                    <input type="range" id="mo-d" min="100" max="600" value="300" step="100">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="mo-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (兩次仰角)</h3>
+
+          <div class="quiz-card" data-quiz="1-4-25">
+            <p class="quiz-question"><strong>Q25.</strong> 如圖，小影在 \(A\) 測得山頂 \(D\) 的仰角是 \(30^\circ\)，朝山腳 \(C\) 的方向前進 400 公尺到 \(B\)，再測得仰角是 \(45^\circ\)。山高 \(\overline{CD}\) 是多少公尺？</p>
+            <canvas class="quiz-fig" data-fig="q25" width="320" height="220" role="img" aria-label="A、B、C 在一條水平線上，B 在 A 與 C 之間，D 在 C 的正上方；角 DAC 標 30 度、角 DBC 標 45 度，AB 標 400"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-25" value="A"><span class="option-text">A. \(200(\sqrt{3} + 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-25" value="B"><span class="option-text">B. \(200(\sqrt{3} - 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-25" value="C"><span class="option-text">C. \(400(\sqrt{3} + 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-25" value="D"><span class="option-text">D. \(\frac{400\sqrt{3}}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設 \(\overline{CD} = x\)。\(\triangle BCD\) 是 45°-45°-90°，\(\overline{BC} = x\)；\(\triangle ACD\) 是 30°-60°-90°，\(\overline{AC} = \sqrt{3}x\)。同一側要相減：
+              \[\begin{aligned} \sqrt{3}x - x &= 400 \\ x &= \frac{400}{\sqrt{3} - 1} \\ &= \frac{400(\sqrt{3} + 1)}{2} \\ &= 200(\sqrt{3} + 1) \end{aligned}\]
+              B 錯：這是把 \(\overline{AC}\)、\(\overline{BC}\) 相加的結果，\(A\)、\(B\) 在同一側要相減。<br>
+              C 錯：有理化時分母 \((\sqrt{3})^2 - 1^2 = 2\) 忘了除。<br>
+              D 錯：\(\frac{400}{\sqrt{3}} = \frac{400\sqrt{3}}{3}\)，把 400 當成整段 \(\overline{AC}\)，只用了 \(30^\circ\) 那個三角形。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="1-4-26">
+            <p class="quiz-question"><strong>Q26.</strong> 如圖，\(A\)、\(B\) 分別在山的兩側，\(A\)、\(C\)、\(B\) 在同一直線上。在 \(A\) 測得山頂 \(D\) 的仰角是 \(30^\circ\)，在 \(B\) 測得仰角是 \(45^\circ\)，\(\overline{AB} = 800\) 公尺。山高 \(\overline{CD}\) 是多少公尺？</p>
+            <canvas class="quiz-fig" data-fig="q26" width="320" height="220" role="img" aria-label="A、C、B 在一條水平線上，C 在 A 與 B 之間，D 在 C 的正上方；角 DAC 標 30 度、角 DBC 標 45 度，AB 標 800"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q1-4-26" value="A"><span class="option-text">A. \(400(\sqrt{3} + 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-26" value="B"><span class="option-text">B. \(800(\sqrt{3} - 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-26" value="C"><span class="option-text">C. \(400(\sqrt{3} - 1)\)</span></label>
+              <label class="option-label"><input type="radio" name="q1-4-26" value="D"><span class="option-text">D. 400</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設 \(\overline{CD} = x\)，\(\overline{AC} = \sqrt{3}x\)、\(\overline{BC} = x\)。兩側要相加：
+              \[\begin{aligned} \sqrt{3}x + x &= 800 \\ x &= \frac{800}{\sqrt{3} + 1} \\ &= \frac{800(\sqrt{3} - 1)}{2} \\ &= 400(\sqrt{3} - 1) \end{aligned}\]
+              A 錯：這是同一側（相減）的答案。<br>
+              B 錯：有理化時分母 \((\sqrt{3})^2 - 1^2 = 2\) 忘了除。<br>
+              D 錯：\(800 \div 2 = 400\)，以為 \(C\) 是 \(\overline{AB}\) 的中點；兩個仰角不同，\(C\) 不在正中間。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 相似三角形的應用速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>簡易測量</strong>：陽光是平行光，身高 : 物高 = 人影 : 物影；路燈要對「人到燈柱 + 影長」。河寬在岸邊造相似三角形。</li>
+              <li><strong>一段和</strong>：未知數只是一邊的一部分時，整條邊寫成「已知 + \(x\)」或「總長 \(-\ x\)」。</li>
+              <li><strong>對應高</strong>（中線、角平分線）的比 = 對應邊的比；<strong>面積比</strong> = 對應邊長平方的比，反推要開根號。</li>
+              <li>相似三角形照<strong>角</strong>找對應邊；中點連線三角形周長 \(\frac{1}{2}\)、面積 \(\frac{1}{4}\)。</li>
+              <li>直角三角形銳角固定，比值就固定：\(\sin A = \frac{\text{對邊}}{\text{斜邊}}\)、\(\cos A = \frac{\text{鄰邊}}{\text{斜邊}}\)、\(\tan A = \frac{\text{對邊}}{\text{鄰邊}}\)。</li>
+              <li>45°-45°-90°：\(1 : 1 : \sqrt{2}\)；30°-60°-90°：\(1 : \sqrt{3} : 2\)。先精確值，最後才取近似值。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到照相館門口：大樹到底多高</h4>
+              <h5><i class="fa-solid fa-sun"></i> 影子替我們量</h5>
+              <p>小影站直，阿光量她的影長；同一時刻再量大樹的影長。陽光平行，兩個影子三角形相似，身高對樹高、影長對影長，一條比例式就把爬不上去的高度算出來了——和兩千多年前泰勒斯量金字塔是同一個方法。</p>
+              <h5><i class="fa-solid fa-ruler-combined"></i> 比值有了名字</h5>
+              <p>同一個時刻，陽光與地面的夾角固定，所以「高 ÷ 影長」對每一棵樹、每一根竿子都一樣——這個固定的比值，就是太陽仰角的 \(\tan\)。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一章</h5>
+              <p>相似形告一段落。下一章要走進圓的世界：點、直線與圓之間的位置關係，以及圓心角、圓周角與弧。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

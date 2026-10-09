@@ -15,6 +15,7 @@
      - 數值與字串：gcd／clamp／reduce／texFrac／numStr／coefTex／signed
      - 互動與版面：canvasPos／bindPickGroup／wrapText／wrapFeedback／typeset／drawWithFonts
      - 平面幾何與尺規作圖：hb*（數學方向角）、cg*（canvas 座標、圓規直尺播放引擎）
+     - 相似形：dk*（數學座標 y 朝上的取景 dkView／dkView2、作三角形、dkRich 混排字與標籤）
 
    各節的**主題配色**（C_BRASS、C_TEAL 之類）與主題繪圖（軟木板、天平…）
    留在該節自己的 canvas.js，不要放進本檔。
@@ -1961,4 +1962,258 @@ function cgSync(prefix, st, n) {
   if (prev) prev.disabled = (st.k <= 1);
   if (next) next.disabled = (st.k >= n);
   if (all) all.disabled = (st.k >= n);
+}
+
+/* ==========================================================================
+   相似形工具（dk*）：5-1-3 寫的，5-1-4 也用，抽出來共用
+     幾何一律先在「數學座標」（單位長、y 朝上）算好，再由 dkView／dkView2
+     等比例放進畫布（y 翻成朝下）。dkTriSides／dkTriAngles 回傳數學座標。
+     dkRich：一行混排的字，[AB] 畫成上加橫線的線段名、{n/d} 畫成直式分數、
+     `…` 照原樣直立、英文字母自動斜體（AA、SAS、sin、cos、tan 等直立）。
+   配色：標籤底色與點的外圈由頁面在 canvas.js 開頭呼叫一次 dkUsePalette()
+   登記（共用檔不放主題色）；其餘顏色一律由呼叫端傳入。
+   ========================================================================== */
+let DKR_PAL = { tagBg: 'rgba(15, 23, 42, 0.88)', rim: 'rgba(15, 23, 42, 0.9)' };
+
+function dkUsePalette(p) {
+  DKR_PAL = Object.assign({}, DKR_PAL, p);
+}
+
+// 數學座標（y 朝上）的小工具
+function dkDir(deg) { return hbV(Math.cos(deg * HB_RAD), Math.sin(deg * HB_RAD)); }
+function dkAdd(P, v, s) { return hbV(P.x + v.x * s, P.y + v.y * s); }
+function dkScale(O, P, k) { return hbV(O.x + (P.x - O.x) * k, O.y + (P.y - O.y) * k); }
+function dkLen(P, Q) { return Math.hypot(P.x - Q.x, P.y - Q.y); }
+function dkRot(P, C, deg) {
+  const c = Math.cos(deg * HB_RAD), s = Math.sin(deg * HB_RAD);
+  const x = P.x - C.x, y = P.y - C.y;
+  return hbV(C.x + x * c - y * s, C.y + x * s + y * c);
+}
+
+// 把一組數學座標點等比例放進 box（y 翻成朝下），回傳 { k, P(p) }
+function dkView(pts, box) {
+  const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const k = Math.min(box.w / Math.max(x1 - x0, 1e-6), box.h / Math.max(y1 - y0, 1e-6));
+  const ox = box.x + (box.w - (x1 - x0) * k) / 2, oy = box.y + (box.h - (y1 - y0) * k) / 2;
+  return { k, P: p => hbV(ox + (p.x - x0) * k, oy + (y1 - p.y) * k) };
+}
+
+// 兩組點用同一個比例尺，各自置中在自己的 box 裡
+function dkView2(ptsL, boxL, ptsR, boxR) {
+  const ext = pts => {
+    const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
+    return { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) };
+  };
+  const a = ext(ptsL), b = ext(ptsR);
+  const k = Math.min(boxL.w / Math.max(a.x1 - a.x0, 1e-6), boxL.h / Math.max(a.y1 - a.y0, 1e-6),
+                     boxR.w / Math.max(b.x1 - b.x0, 1e-6), boxR.h / Math.max(b.y1 - b.y0, 1e-6));
+  const mk = (e, box) => {
+    const ox = box.x + (box.w - (e.x1 - e.x0) * k) / 2, oy = box.y + (box.h - (e.y1 - e.y0) * k) / 2;
+    return p => hbV(ox + (p.x - e.x0) * k, oy + (e.y1 - p.y) * k);
+  };
+  return { k, L: mk(a, boxL), R: mk(b, boxR) };
+}
+
+// 由三邊作三角形（數學座標）：BC = a、CA = b、AB = c；B 在原點、C 在右、A 在上
+function dkTriSides(a, b, c) {
+  const x = (c * c + a * a - b * b) / (2 * a);
+  const y = Math.sqrt(Math.max(c * c - x * x, 0));
+  return { A: hbV(x, y), B: hbV(0, 0), C: hbV(a, 0) };
+}
+
+// 由兩角作三角形：BC = a、∠B、∠C（度）
+function dkTriAngles(a, B, C) {
+  const A = 180 - B - C;
+  const c = a * Math.sin(C * HB_RAD) / Math.sin(A * HB_RAD);
+  return { A: dkAdd(hbV(0, 0), dkDir(B), c), B: hbV(0, 0), C: hbV(a, 0) };
+}
+
+/* --------------------------------------------------------------------------
+   dkRich：一行混排的字
+     [AB]     上面加一條橫線的線段名（斜體）
+     {n/d}    直式分數
+     `AA`     反引號裡照原樣、直立（性質名稱用）
+     英文字母 自動斜體（後面的 ' 一起算）
+   parts 是 [[字串, 顏色], …]；超過 maxW 會自動縮字。
+   -------------------------------------------------------------------------- */
+const DKR_UPRIGHT = ['AA', 'AAA', 'SAS', 'SSS', 'SSA', 'ASA', 'sin', 'cos', 'tan'];
+
+function dkTok(str, color) {
+  const out = [];
+  let buf = '';
+  const flush = () => { if (buf) { out.push({ k: 'up', s: buf, c: color }); buf = ''; } };
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i];
+    if (ch === '[') {
+      const j = str.indexOf(']', i);
+      flush(); out.push({ k: 'ov', s: str.slice(i + 1, j), c: color }); i = j; continue;
+    }
+    if (ch === '{') {
+      const j = str.indexOf('}', i);
+      const p = str.slice(i + 1, j).split('/');
+      flush(); out.push({ k: 'fr', n: p[0], d: p[1], c: color }); i = j; continue;
+    }
+    if (ch === '`') {
+      const j = str.indexOf('`', i + 1);
+      buf += str.slice(i + 1, j); i = j; continue;
+    }
+    if (/[A-Za-z]/.test(ch)) {
+      flush();
+      let s = ch;
+      while (i + 1 < str.length && /[A-Za-z']/.test(str[i + 1])) s += str[++i];
+      // 性質名稱（AA、SAS、SSS、SSA）照原樣直立，不是變數
+      if (DKR_UPRIGHT.indexOf(s) >= 0) { buf += s; continue; }
+      out.push({ k: 'it', s, c: color });
+      continue;
+    }
+    buf += ch;
+  }
+  flush();
+  return out;
+}
+
+function dkTokW(ctx, t, s) {
+  if (t.k === 'fr') {
+    ctx.font = f(700, s * 0.74);
+    return Math.max(ctx.measureText(t.n).width, ctx.measureText(t.d).width) + 6;
+  }
+  ctx.font = t.k === 'up' ? f(700, s) : fi(700, s);
+  return ctx.measureText(t.s).width + (t.k === 'up' ? 0 : 1.5);
+}
+
+function dkTokD(ctx, t, x, y, s) {
+  ctx.fillStyle = t.c;
+  ctx.textBaseline = 'middle';
+  if (t.k === 'fr') {
+    const w = dkTokW(ctx, t, s);
+    ctx.font = f(700, s * 0.74);
+    ctx.textAlign = 'center';
+    ctx.fillText(t.n, x + w / 2, y - s * 0.44);
+    ctx.fillText(t.d, x + w / 2, y + s * 0.5);
+    ctx.fillRect(x + 1.5, y - 0.9, w - 3, 1.8);
+    ctx.textAlign = 'left';
+    return w;
+  }
+  ctx.font = t.k === 'up' ? f(700, s) : fi(700, s);
+  ctx.textAlign = 'left';
+  ctx.fillText(t.s, x, y);
+  const w = ctx.measureText(t.s).width;
+  if (t.k === 'ov') ctx.fillRect(x + 1.5, y - s * 0.72, w - 0.5, 1.7);
+  return w + (t.k === 'up' ? 0 : 1.5);
+}
+
+function dkRich(ctx, parts, x, y, size, o) {
+  const opt = o || {};
+  const toks = [];
+  parts.forEach(p => dkTok(p[0], p[1]).forEach(t => toks.push(t)));
+  const maxW = opt.maxW || ctx.canvas.width - 28;
+  ctx.save();
+  let s = size;
+  const width = () => toks.reduce((a, t) => a + dkTokW(ctx, t, s), 0);
+  let w = width();
+  while (w > maxW && s > 10) { s -= 0.5; w = width(); }
+  let x0 = opt.align === 'left' ? x : x - w / 2;
+  if (opt.bg) {
+    ctx.fillStyle = DKR_PAL.tagBg;
+    roundRect(ctx, x0 - 5, y - s * 0.78, w + 10, s * 1.56, 6);
+    ctx.fill();
+  }
+  toks.forEach(t => { x0 += dkTokD(ctx, t, x0, y, s); });
+  ctx.restore();
+  return w;
+}
+
+// 置中的一行字（單色）
+function dkRow(ctx, str, y, color, size) {
+  return dkRich(ctx, [[str, color]], ctx.canvas.width / 2, y, size || 16);
+}
+
+// 圖上的小標籤：深色底、置中在 (x, y)
+function dkTag(ctx, str, x, y, color, size) {
+  return dkRich(ctx, [[str, color]], x, y, size || 14, { bg: true });
+}
+
+// 邊長標籤：放在 PQ 中點、往遠離 G 的那一側外推（開發約束 18）
+function dkSideTag(ctx, P, Q, G, str, color, off, size) {
+  const m = hbV((P.x + Q.x) / 2, (P.y + Q.y) / 2);
+  const d = hbDist(P, Q) || 1;
+  let nx = -(Q.y - P.y) / d, ny = (Q.x - P.x) / d;
+  if ((m.x - G.x) * nx + (m.y - G.y) * ny < 0) { nx = -nx; ny = -ny; }
+  const k = off || 18;
+  dkTag(ctx, str, m.x + nx * k, m.y + ny * k, color, size || 14);
+}
+
+// 點名（深色描邊）
+function dkName(ctx, P, text, color, dx, dy) {
+  cgLabel(ctx, P, text, color, dx, dy, fi(800, 17));
+}
+
+// 實心點加深色外圈
+function dkPt(ctx, P, color, r) {
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.strokeStyle = DKR_PAL.rim;
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.arc(P.x, P.y, r || 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 光源點（燈泡）：實心點加同色光暈。color 必填，給 '#rrggbb'
+function dkLamp(ctx, P, color) {
+  const rgb = [1, 3, 5].map(i => parseInt(color.slice(i, i + 2), 16)).join(', ');
+  ctx.save();
+  const g = ctx.createRadialGradient(P.x, P.y, 0, P.x, P.y, 22);
+  g.addColorStop(0, `rgba(${rgb}, 0.55)`);
+  g.addColorStop(1, `rgba(${rgb}, 0)`);
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(P.x, P.y, 22, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+  dkPt(ctx, P, color, 6);
+}
+
+// ∠PVQ（取小於 180° 的那一側），90° 時畫直角記號
+function dkAng(ctx, V, P, Q, r, color, o) {
+  const a = hbHead(V, P), b = hbHead(V, Q);
+  const d = ((b - a) % 360 + 360) % 360;
+  let s0 = a, sw = d;
+  if (d > 180) { s0 = b; sw = 360 - d; }
+  const right = Math.abs(sw - 90) < 0.01;
+  hbSector(ctx, V, s0, right ? 90 : sw, r, color, Object.assign({ right, alpha: 0.3 }, o || {}));
+}
+
+// 多邊形（畫布座標）
+function dkPoly(ctx, pts, color, alpha, width, dash) {
+  ctx.save();
+  ctx.beginPath();
+  pts.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)));
+  ctx.closePath();
+  if (alpha) {
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width || 2.8;
+  ctx.lineJoin = 'round';
+  if (dash) ctx.setLineDash(dash);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 頂點名一律推到圖形外側（由重心往外）
+function dkNames(ctx, pts, names, color, dist) {
+  const G = hbCentroid(pts);
+  pts.forEach((p, i) => hbVLabel(ctx, p, G, names[i], color, dist || 17));
+}
+
+// 互動卡的滑桿列：依模式顯示或隱藏
+function dkShow(ids, on) {
+  ids.forEach(id => { const el = hbEl(id); if (el) el.style.display = on ? '' : 'none'; });
 }

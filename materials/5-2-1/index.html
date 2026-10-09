@@ -4,39 +4,1553 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>2-1 點、直線與圓之間的位置關係 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-1 點、直線與圓之間的位置關係 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第五冊 (3上) • 第2章 圓</div>
-    <h1>2-1 點、直線與圓之間的位置關係</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第五冊 • 第二章</span>
+        <h1>2-1 點、直線與圓之間的位置關係</h1>
+        <p>街角的單車修理鋪裡，小輪和學徒阿軸每天都在跟車輪打交道——輪框是<strong>圓</strong>、輻條是<strong>半徑</strong>、車輪碰地的那一點連到輪軸，剛好跟地面<strong>垂直</strong>。這一節先認識圓的名詞、弧長與扇形面積；再用「距離和半徑比大小」判斷點、直線和圓的位置關係；接著學<strong>切線</strong>與<strong>切線段</strong>的性質；最後是<strong>弦</strong>與<strong>弦心距</strong>：從一段破輪框找回圓心、算出隧道與下水道的半徑。</p>
+      </div>
+      <!-- Progress navigation (13 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-circle-dot"></i> 圓的名詞</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-chart-pie"></i> 弧長與扇形</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-rotate-left"></i> 反求圓心角</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-moon"></i> 弓形</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-location-dot"></i> 點與圓</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-grip-lines"></i> 直線與圓</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-person-biking"></i> 切線性質</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-ruler"></i> 切線段長</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-angles-right"></i> 切線段性質</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-crosshairs"></i> 找圓心</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-calculator"></i> 弦心距</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 弦長比較</a>
+        <a href="#concept13" class="nav-item"><i class="fa-solid fa-archway"></i> 隧道與水管</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（油性粉蠟筆・單車修理鋪）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(242, 200, 121, 0.3);">
+        <h2 class="section-title" style="color: #f2c879; border-bottom-color: rgba(242, 200, 121, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #f2c879; text-shadow: 0 0 10px rgba(242, 200, 121, 0.4);"></i> 課前暖身漫畫：車輪只碰地一點
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            阿軸在修車時發現：輪子這麼大，碰到地面的卻只有一個點。小輪把車輪立在地上，指著從輪軸往下、正好連到碰地那一點的輻條——它和地面<strong style="color:#f2c879">垂直</strong>。<strong style="color:#f2c879">只碰到圓一點的直線叫做切線</strong>，這一節就從點、直線與圓的位置關係說起。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(18, 28, 30, 0.5);">
+            <img src="motivation_comic.webp" alt="油性粉蠟筆單車修理鋪風四格漫畫：阿軸把腳踏車倒放在工作檯上修輪子，問輪子這麼大為什麼只有一點碰到地；小輪把一個車輪立在地板上；小輪指著從輪軸往下連到碰地那一點的輻條，說它和地面垂直；旁白總結只碰到圓一點的直線叫做切線。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 圓的名詞
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-circle-dot" aria-hidden="true"></i> <span>重點 1：圓、弦、弧、弓形、圓心角與扇形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>圓</strong>：平面上與一個固定點距離相等的所有點。固定點叫<strong>圓心</strong>，圓心到圓上任一點的距離叫<strong>半徑</strong>。</li>
+              <li><strong>弦</strong>：連接圓上相異兩點的線段。通過圓心的弦叫<strong>直徑</strong>，直徑是圓中<strong>最長的弦</strong>。</li>
+              <li><strong>弧</strong>：一條弦把圓分成兩段弧。弦是直徑時兩弧一樣大，都叫<strong>半圓</strong>；否則較大的叫<strong>優弧</strong>、較小的叫<strong>劣弧</strong>。劣弧記作 \(\overset{\frown}{AB}\)，優弧要在弧上另取一點 \(C\)，記作 \(\overset{\frown}{ACB}\)。</li>
+              <li><strong>弓形</strong>：一條弦和一段弧圍成的圖形——邊上<strong>沒有半徑</strong>。</li>
+              <li><strong>圓心角</strong>：頂點在<strong>圓心</strong>、兩邊是半徑的角。</li>
+              <li><strong>扇形</strong>：兩條半徑和一段弧圍成的圖形。「扇形 \(AOB\)」通常指圓心角較小的那一個。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">分辨的訣竅</span>
+              邊上有兩條半徑 → 扇形；邊上是一條弦 → 弓形
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_wheelparts.webp" alt="油性粉蠟筆單車修理鋪風插圖：阿軸雙手把一個沒有輪胎的腳踏車輪框舉在胸前，小輪用手指著其中一根從輪軸連到輪框的輻條。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-circle-dot"></i> 視覺互動探索：車輪名詞指認台</h3>
+            <p class="interactive-instruction">選一個名詞，看它在車輪上是哪一部分；拉動 \(\angle AOB\)，看弦什麼時候變成直徑、優弧與劣弧什麼時候對調。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-name" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="name-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">名詞</span>
+                    <div class="btn-group" id="name-part-group">
+                      <button class="pick-btn active" data-name-part="chord">弦</button>
+                      <button class="pick-btn" data-name-part="minor">劣弧</button>
+                      <button class="pick-btn" data-name-part="major">優弧</button>
+                      <button class="pick-btn" data-name-part="seg">弓形</button>
+                      <button class="pick-btn" data-name-part="angle">圓心角</button>
+                      <button class="pick-btn" data-name-part="sector">扇形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="name-t">\(\angle AOB\)：<span id="name-vt" class="val-num">120°</span></label>
+                    <input type="range" id="name-t" min="20" max="340" value="120" step="10">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="name-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圓的名詞)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 下列關於圓的敘述，何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-1" value="A"><span class="option-text">A. 直徑是通過圓心的弦，也是圓中最長的弦</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1" value="B"><span class="option-text">B. 圓上任何一條弦，都會把圓分成一個優弧和一個劣弧</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1" value="C"><span class="option-text">C. 由一條弦和一段弧所圍成的圖形叫做扇形</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-1" value="D"><span class="option-text">D. 頂點在圓上、兩邊都是弦的角叫做圓心角</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。通過圓心的弦是直徑，它比其他弦都長。<br>
+              B 錯：弦是直徑時，兩個弧一樣大，都是半圓，沒有優弧、劣弧之分。<br>
+              C 錯：一條弦和一段弧圍成的是<strong>弓形</strong>；扇形的邊是兩條半徑。<br>
+              D 錯：圓心角的頂點在<strong>圓心</strong>，不在圓上。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 圓 \(O\) 中，\(\overline{OA}\)、\(\overline{OB}\) 是半徑，\(\angle AOB = 100^\circ\)，\(C\) 是優弧上的一點。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-2" value="A"><span class="option-text">A. 劣弧要記成 \(\overset{\frown}{ACB}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2" value="B"><span class="option-text">B. 半徑 \(\overline{OA}\)、\(\overline{OB}\) 把圓分成兩個弓形</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2" value="C"><span class="option-text">C. \(\overline{OA}\)、\(\overline{OB}\) 與劣弧圍成扇形，它的圓心角是 \(100^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-2" value="D"><span class="option-text">D. 弦 \(\overline{AB}\) 與優弧 \(\overset{\frown}{ACB}\) 圍成的圖形是扇形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩條半徑和一段弧圍成扇形；夾著劣弧的那一個，圓心角就是 \(\angle AOB = 100^\circ\)。<br>
+              A 錯：劣弧只用兩個端點記作 \(\overset{\frown}{AB}\)；中間多寫一點 \(C\) 的 \(\overset{\frown}{ACB}\) 是優弧。<br>
+              B 錯：兩條半徑分出來的是兩個<strong>扇形</strong>。<br>
+              D 錯：弦和弧圍成的是<strong>弓形</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 弧長與扇形面積
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-pie" aria-hidden="true"></i> <span>重點 2：弧長、扇形周長與扇形面積</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>圓周率是「圓周長與直徑的比值」，無法寫成有限小數或分數，記作 \(\pi\)。半徑 \(r\) 的圓：圓周長 \(= 2\pi r\)、圓面積 \(= \pi r^2\)。</li>
+              <li>圓心角 \(x^\circ\) 是周角 \(360^\circ\) 的 \(\frac{x}{360}\) 倍，所以它對的弧長、圍出的扇形面積，也都是整個圓的 \(\frac{x}{360}\) 倍。</li>
+              <li><strong>扇形周長</strong> \(=\) 弧長 \(+\) 兩條半徑，不是只有弧長。</li>
+              <li>例：半徑 \(6\)、圓心角 \(120^\circ\)（占周角的 \(\frac{1}{3}\)）：
+              \[\begin{aligned} &\text{弧長} = 2\pi \times 6 \times \frac{1}{3} = 4\pi \\ &\text{周長} = 4\pi + 12 \\ &\text{面積} = \pi \times 6^2 \times \frac{1}{3} = 12\pi \end{aligned}\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・弧長與扇形面積</span>
+              弧長 \(= 2\pi r \times \frac{x}{360}\)；扇形面積 \(= \pi r^2 \times \frac{x}{360}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_tape.webp" alt="油性粉蠟筆單車修理鋪風插圖：小輪在工作檯上，沿著平放車輪兩根輻條之間的那一段輪框貼上紅色膠帶，阿軸在旁邊扶著車輪。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> 視覺互動探索：輪框彩帶計算台</h3>
+            <p class="interactive-instruction">調整半徑和圓心角，看弧長、扇形周長、扇形面積怎麼跟著變。圓心角變成 2 倍時，弧長變幾倍？半徑變成 2 倍時，面積變幾倍？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-arc" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="arc-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="arc-r">半徑 \(r\)：<span id="arc-vr" class="val-num">6</span></label>
+                    <input type="range" id="arc-r" min="2" max="10" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="arc-x">圓心角：<span id="arc-vx" class="val-num">120°</span></label>
+                    <input type="range" id="arc-x" min="1" max="23" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="arc-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (弧長與扇形面積)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 一個扇形的半徑是 \(12\)、圓心角是 \(40^\circ\)。這個扇形的周長是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-3" value="A"><span class="option-text">A. \(\frac{8}{3}\pi + 12\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3" value="B"><span class="option-text">B. \(\frac{8}{3}\pi + 24\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3" value="C"><span class="option-text">C. \(16\pi + 24\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-3" value="D"><span class="option-text">D. \(\frac{16}{3}\pi + 24\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(40^\circ\) 是周角的 \(\frac{1}{9}\)：
+              \[\text{弧長} = 2\pi \times 12 \times \frac{1}{9} = \frac{8}{3}\pi\]
+              扇形周長還要加兩條半徑：\(\frac{8}{3}\pi + 24\)。<br>
+              A 錯：只加了一條半徑。<br>
+              C 錯：\(16\pi\) 是扇形面積 \(\pi \times 12^2 \times \frac{1}{9}\)，不是弧長。<br>
+              D 錯：把直徑 \(24\) 當成半徑，\(2\pi \times 24 \times \frac{1}{9} = \frac{16}{3}\pi\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 一個扇形的半徑是 \(9\)、圓心角是 \(160^\circ\)。它的面積與弧長分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-4" value="A"><span class="option-text">A. 面積 \(8\pi\)、弧長 \(36\pi\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4" value="B"><span class="option-text">B. 面積 \(36\pi\)、弧長 \(4\pi\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4" value="C"><span class="option-text">C. 面積 \(72\pi\)、弧長 \(8\pi\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-4" value="D"><span class="option-text">D. 面積 \(36\pi\)、弧長 \(8\pi\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(160^\circ\) 是周角的 \(\frac{4}{9}\)：
+              \[\begin{aligned} &\text{面積} = \pi \times 9^2 \times \frac{4}{9} = 36\pi \\ &\text{弧長} = 2\pi \times 9 \times \frac{4}{9} = 8\pi \end{aligned}\]
+              A 錯：面積和弧長對調了。<br>
+              B 錯：弧長漏乘 \(2\)：\(\pi \times 9 \times \frac{4}{9} = 4\pi\)。<br>
+              C 錯：面積多乘了 \(2\)：\(2 \times 36\pi = 72\pi\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 反求圓心角
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> <span>重點 3：由扇形面積或弧長反求圓心角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>已知扇形面積（或弧長）和半徑，要倒回去求圓心角。</li>
+              <li><strong>作法一：先算占幾分之幾</strong>。扇形面積占圓面積的幾分之幾，圓心角就占 \(360^\circ\) 的幾分之幾；弧長則和<strong>圓周長</strong>比。</li>
+              <li><strong>作法二：列方程式</strong>。設圓心角為 \(x^\circ\)，代進公式解 \(x\)。兩種作法答案相同。</li>
+              <li>例：半徑 \(10\)、扇形面積 \(25\pi\)。圓面積是 \(100\pi\)，扇形占 \(\frac{25\pi}{100\pi} = \frac{1}{4}\)，圓心角 \(= 360^\circ \times \frac{1}{4} = 90^\circ\)。</li>
+              <li>注意分母：面積要和 \(\pi r^2\) 比，弧長要和 \(2\pi r\) 比，不能拿錯。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・反求圓心角</span>
+              \[\begin{aligned} &\text{圓心角} \\ &= 360^\circ \times \frac{\text{扇形面積}}{\text{圓面積}} \\ &= 360^\circ \times \frac{\text{弧長}}{\text{圓周長}} \end{aligned}\]
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_measure.webp" alt="油性粉蠟筆單車修理鋪風純情境插圖：阿軸蹲在店裡，用一條沒有刻度數字的黃色布捲尺沿著立在地上的腳踏車輪胎外圈量長度，小輪在旁邊拿著筆記板看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-rotate-left"></i> 視覺互動探索：倒推圓心角</h3>
+            <p class="interactive-instruction">選「已知面積」或「已知弧長」，調整半徑和已知的量：畫面上的扇形是依照算出的圓心角畫的。同一個面積，半徑變大時圓心角變大還是變小？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-inv" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="inv-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知</span>
+                    <div class="btn-group" id="inv-mode-group">
+                      <button class="pick-btn active" data-inv-mode="area">扇形面積</button>
+                      <button class="pick-btn" data-inv-mode="arc">弧長</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="inv-r">半徑 \(r\)：<span id="inv-vr" class="val-num">6</span></label>
+                    <input type="range" id="inv-r" min="2" max="10" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="inv-n"><span id="inv-ln">已知扇形面積</span>：<span id="inv-vn" class="val-num">12π</span></label>
+                    <input type="range" id="inv-n" min="1" max="35" value="12" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="inv-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (反求圓心角)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 一個扇形的半徑是 \(15\)、面積是 \(40\pi\)。這個扇形的圓心角是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-5" value="A"><span class="option-text">A. \(32^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5" value="B"><span class="option-text">B. \(128^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5" value="C"><span class="option-text">C. \(64^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-5" value="D"><span class="option-text">D. \(96^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。圓面積 \(= \pi \times 15^2 = 225\pi\)，扇形占
+              \[\frac{40\pi}{225\pi} = \frac{8}{45}\]
+              圓心角 \(= 360^\circ \times \frac{8}{45} = 64^\circ\)。<br>
+              其他選項代回去都不是 \(40\pi\)：\(32^\circ\) 的面積是 \(20\pi\)、\(128^\circ\) 是 \(80\pi\)、\(96^\circ\) 是 \(60\pi\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 半徑 \(18\) 的圓中，有一段弧長是 \(7\pi\)。這段弧所對的圓心角是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-6" value="A"><span class="option-text">A. \(70^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6" value="B"><span class="option-text">B. \(35^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6" value="C"><span class="option-text">C. \(140^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-6" value="D"><span class="option-text">D. \(280^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。圓周長 \(= 2\pi \times 18 = 36\pi\)，弧長占
+              \[\frac{7\pi}{36\pi} = \frac{7}{36}\]
+              圓心角 \(= 360^\circ \times \frac{7}{36} = 70^\circ\)。<br>
+              其他選項代回去都不是 \(7\pi\)：\(35^\circ\) 的弧長是 \(\frac{7}{2}\pi\)、\(140^\circ\) 是 \(14\pi\)、\(280^\circ\) 是 \(28\pi\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 弓形
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-moon" aria-hidden="true"></i> <span>重點 4：弓形的面積與周長</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>弓形面積 \(=\) 扇形面積 \(-\) 三角形面積</strong>：扇形 \(AOB\) 扣掉 \(\triangle AOB\)，剩下的就是弦和劣弧圍成的弓形。</li>
+              <li><strong>弓形周長 \(=\) 弧長 \(+\) 弦長</strong>：弓形的邊沒有半徑。</li>
+              <li>三種常見的圓心角：
+                <ul class="bullet-list">
+                  <li>\(90^\circ\)：\(\triangle AOB\) 是等腰直角三角形，面積 \(\frac{1}{2}r^2\)、弦長 \(r\sqrt{2}\)。</li>
+                  <li>\(60^\circ\)：\(\triangle AOB\) 是正三角形，面積 \(\frac{\sqrt{3}}{4}r^2\)、弦長 \(r\)。</li>
+                  <li>\(120^\circ\)：從 \(O\) 作弦的垂線，切出兩個 \(30^\circ\)-\(60^\circ\)-\(90^\circ\) 三角形，弦長 \(r\sqrt{3}\)。</li>
+                </ul>
+              </li>
+              <li>例：半徑 \(6\)、圓心角 \(120^\circ\)：
+              \[\begin{aligned} &\text{面積} = 12\pi - 9\sqrt{3} \\ &\text{周長} = 4\pi + 6\sqrt{3} \end{aligned}\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・弓形</span>
+              面積 \(=\) 扇形 \(-\) 三角形；周長 \(=\) 弧 \(+\) 弦
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_bow.webp" alt="油性粉蠟筆單車修理鋪風插圖：小輪在工作檯上用一把長直尺壓住一片圓形的橡膠墊，沿著直尺用美工刀切下一小塊，切下的那一塊一邊是直的、一邊是圓弧；阿軸在對面按住橡膠墊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-moon"></i> 視覺互動探索：切下一塊弓形</h3>
+            <p class="interactive-instruction">選圓心角、調整半徑：紅色是弓形、藍色是被扣掉的 \(\triangle AOB\)。三種角度的三角形面積和弦長各是怎麼來的？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-bow" width="540" height="485"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="bow-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圓心角</span>
+                    <div class="btn-group" id="bow-ang-group">
+                      <button class="pick-btn" data-bow-ang="60">60°</button>
+                      <button class="pick-btn" data-bow-ang="90">90°</button>
+                      <button class="pick-btn active" data-bow-ang="120">120°</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="bow-r">半徑 \(r\)：<span id="bow-vr" class="val-num">6</span></label>
+                    <input type="range" id="bow-r" min="2" max="10" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="bow-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (弓形)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 圓 \(O\) 的半徑是 \(12\)，\(\angle AOB = 90^\circ\)。弦 \(\overline{AB}\) 與劣弧 \(\overset{\frown}{AB}\) 圍成的弓形面積是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-7" value="A"><span class="option-text">A. \(36\pi + 72\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7" value="B"><span class="option-text">B. \(36\pi - 72\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7" value="C"><span class="option-text">C. \(36\pi - 144\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-7" value="D"><span class="option-text">D. \(144\pi - 72\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \[\begin{aligned} &\text{扇形} = \pi \times 12^2 \times \frac{1}{4} = 36\pi \\ &\triangle AOB = \frac{1}{2} \times 12 \times 12 = 72 \end{aligned}\]
+              弓形 \(=\) 扇形 \(-\) 三角形 \(= 36\pi - 72\)。<br>
+              A 錯：三角形要扣掉，不是加上。<br>
+              C 錯：三角形面積忘了除以 \(2\)。<br>
+              D 錯：\(144\pi\) 是整個圓的面積，不是扇形。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 圓 \(O\) 的半徑是 \(15\)，\(\angle COD = 60^\circ\)。弦 \(\overline{CD}\) 與劣弧 \(\overset{\frown}{CD}\) 圍成的弓形，周長是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-8" value="A"><span class="option-text">A. \(5\pi + 30\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8" value="B"><span class="option-text">B. \(10\pi + 15\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8" value="C"><span class="option-text">C. \(5\pi + 15\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-8" value="D"><span class="option-text">D. \(5\pi + 15\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。弧長 \(= 2\pi \times 15 \times \frac{1}{6} = 5\pi\)；\(\overline{OC} = \overline{OD}\) 且夾 \(60^\circ\)，\(\triangle COD\) 是正三角形，弦 \(\overline{CD} = 15\)。弓形周長 \(= 5\pi + 15\)。<br>
+              A 錯：那是扇形的周長（弧加兩條半徑）。<br>
+              B 錯：弧長多乘了 \(2\)。<br>
+              C 錯：\(15\sqrt{2}\) 是圓心角 \(90^\circ\) 時的弦長。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 點與圓
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>重點 5：點與圓的位置關係</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>圓把平面分成三部分：<strong>圓的內部</strong>（包含圓心）、<strong>圓周</strong>、<strong>圓的外部</strong>。</li>
+              <li>點 \(P\) 和圓 \(O\)（半徑 \(r\)）的位置，只要比較 <strong>\(\overline{OP}\) 與 \(r\)</strong>：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>點與圓心的距離</th><th>位置</th></tr></thead>
+                <tbody>
+                  <tr><td>\(\overline{OP} \lt r\)</td><td>點在圓內</td></tr>
+                  <tr><td>\(\overline{OP} = r\)</td><td>點在圓上</td></tr>
+                  <tr><td>\(\overline{OP} \gt r\)</td><td>點在圓外</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list">
+              <li>反過來也成立：知道點在圓內，就知道 \(\overline{OP} \lt r\)。</li>
+              <li>距離是根號時，比<strong>平方</strong>最方便：\(\sqrt{20}\) 和 \(5\) 比，就是 \(20\) 和 \(25\) 比。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="bk_caps.webp" alt="油性粉蠟筆單車修理鋪風插圖：店門口的水泥地上用白色粉筆畫了一個大圓，小輪蹲在圓旁邊，地上有三個瓶蓋：一個在圓裡面、一個剛好壓在粉筆線上、一個在圓外面；阿軸站在一旁看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-location-dot"></i> 視覺互動探索：粉筆圓與瓶蓋</h3>
+            <p class="interactive-instruction">用滑桿（或直接點方格）移動 \(P\)，調整半徑：\(\overline{OP}\) 是用坐標算出來的。找一個不在格線交叉的「正上下左右」、卻剛好在圓上的點。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-pt" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="pt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="pt-x">\(P\) 的 \(x\) 坐標：<span id="pt-vx" class="val-num">3</span></label>
+                    <input type="range" id="pt-x" min="-6" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pt-y">\(P\) 的 \(y\) 坐標：<span id="pt-vy" class="val-num">2</span></label>
+                    <input type="range" id="pt-y" min="-6" max="6" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="pt-r">半徑 \(r\)：<span id="pt-vr" class="val-num">4</span></label>
+                    <input type="range" id="pt-r" min="1" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="pt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (點與圓)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 在坐標平面上，以原點 \(O\) 為圓心、\(13\) 為半徑畫圓。\(A(5, 12)\)、\(B(9, 9)\)、\(C(-9, 10)\) 三點與圓的位置，何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-9" value="A"><span class="option-text">A. \(A\) 在圓上、\(B\) 在圓內、\(C\) 在圓外</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-9" value="B"><span class="option-text">B. \(A\) 在圓上、\(B\)、\(C\) 都在圓外</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-9" value="C"><span class="option-text">C. \(A\) 在圓外、\(B\) 在圓內、\(C\) 在圓上</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-9" value="D"><span class="option-text">D. 三點都在圓上</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。比距離的平方與 \(13^2 = 169\)：
+              \[\begin{aligned} &\overline{OA}^2 = 25 + 144 = 169 \\ &\overline{OB}^2 = 81 + 81 = 162 \\ &\overline{OC}^2 = 81 + 100 = 181 \end{aligned}\]
+              \(169 = 169\)，\(A\) 在圓上；\(162 \lt 169\)，\(B\) 在圓內；\(181 \gt 169\)，\(C\) 在圓外。<br>
+              B 錯：\(\overline{OB}^2 = 162\) 比 \(169\) 小，\(B\) 在圓內。<br>
+              C、D 錯：只有 \(A\) 到 \(O\) 的距離剛好是 \(13\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> \(\triangle ABC\) 中，\(\angle B = 50^\circ\)、\(\angle C = 75^\circ\)。分別以 \(B\)、\(C\) 為圓心、\(\overline{BC}\) 為半徑畫圓 \(B\)、圓 \(C\)。關於 \(A\) 點的位置，何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-10" value="A"><span class="option-text">A. 在圓 \(B\) 內部、在圓 \(C\) 外部</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-10" value="B"><span class="option-text">B. 在圓 \(B\) 外部、在圓 \(C\) 外部</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-10" value="C"><span class="option-text">C. 在圓 \(B\) 外部、在圓 \(C\) 內部</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-10" value="D"><span class="option-text">D. 在圓 \(B\) 內部、在圓 \(C\) 內部</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\angle A = 180^\circ - 50^\circ - 75^\circ = 55^\circ\)。大角對大邊：<br>
+              \(\overline{AB}\) 對 \(75^\circ\)、\(\overline{BC}\) 對 \(55^\circ\)，所以 \(\overline{AB} \gt \overline{BC}\)，\(A\) 在圓 \(B\) <strong>外部</strong>。<br>
+              \(\overline{AC}\) 對 \(50^\circ\)，所以 \(\overline{AC} \lt \overline{BC}\)，\(A\) 在圓 \(C\) <strong>內部</strong>。<br>
+              A、B、D 都至少把一個圓的內外判反了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 直線與圓
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-grip-lines" aria-hidden="true"></i> <span>重點 6：直線與圓的位置關係</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>從圓心 \(O\) 作直線 \(L\) 的垂線，垂足 \(P\)：\(\overline{OP}\) 就是<strong>圓心到直線的距離 \(d\)</strong>。</li>
+              <li>比較 \(d\) 和半徑 \(r\)，就知道直線和圓有幾個交點：</li>
+            </ul>
+            <div class="table-scroll">
+              <table class="sign-table">
+                <thead><tr><th>距離</th><th>交點數</th><th>名稱</th></tr></thead>
+                <tbody>
+                  <tr><td>\(d \gt r\)</td><td>\(0\)</td><td>不相交</td></tr>
+                  <tr><td>\(d = r\)</td><td>\(1\)</td><td>切線（交點叫切點）</td></tr>
+                  <tr><td>\(d \lt r\)</td><td>\(2\)</td><td>割線</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="bullet-list">
+              <li>題目給的是<strong>直徑</strong>時，先除以 \(2\) 變成半徑再比——這是最常見的錯。</li>
+              <li>例：直徑 \(12\)，圓心到 \(L\) 的距離 \(6\)：半徑 \(6\)，\(d = r\)，\(L\) 是切線。</li>
+            </ul>
+
+            <div class="illustration-container">
+              <img src="bk_rack.webp" alt="油性粉蠟筆單車修理鋪風純情境插圖：店裡的牆上掛著幾個腳踏車輪，阿軸踩在一張木頭矮凳上，把一個車輪掛到牆上水平木頭橫桿的掛鉤上，小輪在下面扶著矮凳。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-grip-lines"></i> 視覺互動探索：把直線推向車輪</h3>
+            <p class="interactive-instruction">選題目給的是半徑還是直徑，再調整圓心到直線 \(L\) 的距離 \(d\)：交點從 2 個變成 1 個、再變成 0 個，分界在哪裡？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-line" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="line-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目給</span>
+                    <div class="btn-group" id="line-give-group">
+                      <button class="pick-btn active" data-line-give="r">半徑</button>
+                      <button class="pick-btn" data-line-give="d">直徑</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="line-g"><span id="line-lg">題目給的半徑</span>：<span id="line-vg" class="val-num">5</span></label>
+                    <input type="range" id="line-g" min="1" max="8" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="line-d">圓心到 \(L\) 的距離 \(d\)：<span id="line-vd" class="val-num">3</span></label>
+                    <input type="range" id="line-d" min="0" max="10" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="line-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (直線與圓)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 圓 \(O\) 的直徑是 \(26\) 公分，圓心到直線 \(L\)、\(M\)、\(N\)、\(H\) 的距離依序是 \(14\)、\(13\)、\(6.5\)、\(12\) 公分。四條直線與圓 \(O\) 的交點個數依序是？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-11" value="A"><span class="option-text">A. \(2\)、\(2\)、\(2\)、\(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-11" value="B"><span class="option-text">B. \(0\)、\(0\)、\(1\)、\(0\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-11" value="C"><span class="option-text">C. \(0\)、\(2\)、\(2\)、\(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-11" value="D"><span class="option-text">D. \(0\)、\(1\)、\(2\)、\(2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。半徑 \(= 26 \div 2 = 13\) 公分。\(14 \gt 13\)：不相交；\(13 = 13\)：切線，\(1\) 個；\(6.5 \lt 13\)、\(12 \lt 13\)：割線，各 \(2\) 個。<br>
+              A 錯：把直徑 \(26\) 當成半徑，四個距離都比 \(26\) 小。<br>
+              B 錯：把半徑再除一次 \(2\)，拿 \(6.5\) 當半徑比。<br>
+              C 錯：距離剛好等於半徑時只有 \(1\) 個交點。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 圓 \(O\) 的直徑是 \(20\)，直線 \(L\) 與圓心 \(O\) 的距離是 \(4\)。另一條直線 \(M /\!/ L\)，且 \(L\)、\(M\) 的距離是 \(11\)。直線 \(M\) 與圓 \(O\) 的關係為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-12" value="A"><span class="option-text">A. 一定交於兩點</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-12" value="B"><span class="option-text">B. 可能交於兩點，也可能不相交</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-12" value="C"><span class="option-text">C. 一定不相交</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-12" value="D"><span class="option-text">D. 一定相切</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。半徑是 \(10\)。\(M\) 可能在 \(L\) 的兩側：<br>
+              和 \(O\) 同一側時，\(O\) 到 \(M\) 的距離 \(= 11 - 4 = 7 \lt 10\)，交於兩點；<br>
+              在另一側時，距離 \(= 11 + 4 = 15 \gt 10\)，不相交。<br>
+              A、C 都只想到其中一種位置；D 錯：兩種情形的距離都不是 \(10\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 切線性質
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-person-biking" aria-hidden="true"></i> <span>重點 7：切線的性質——半徑垂直切線</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>直線 \(L\) 切圓 \(O\) 於 \(P\)：\(L\) 上除了 \(P\) 以外的點都在圓外，所以 \(\overline{OP}\) 是 \(O\) 到 \(L\) 最短的距離——<strong>\(\overline{OP} \perp L\)</strong>，而且 \(\overline{OP} = r\)。</li>
+              <li><strong>反過來</strong>：過圓上一點 \(P\)、垂直半徑 \(\overline{OP}\) 的直線就是切線。因為 \(L\) 上其他點 \(Q\) 和 \(O\)、\(P\) 組成直角三角形，\(\overline{OQ}\) 是斜邊，比 \(\overline{OP}\) 長，\(Q\) 在圓外。</li>
+              <li><strong>尺規作切線</strong>：連 \(\overline{OP}\)，過 \(P\) 作 \(\overline{OP}\) 的垂線（作法同 4-3 的「過線上一點作垂線」）。</li>
+              <li><strong>兩條切線圍成的四邊形</strong>：\(\overline{AB}\)、\(\overline{AC}\) 切圓於 \(B\)、\(C\)，\(\angle ABO = \angle ACO = 90^\circ\)，四邊形內角和 \(360^\circ\)，所以 \(\angle A\) 與 \(\angle BOC\) 互補。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・切線性質</span>
+              圓心與切點的連線垂直切線；過圓上一點且垂直半徑的直線是切線
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_roll.webp" alt="油性粉蠟筆單車修理鋪風插圖：一個腳踏車輪直立在平坦的木頭地板上，只有最下面一點碰到地板；小輪蹲在旁邊，用手指沿著從輪軸筆直往下連到碰地點的那一根輻條比劃，阿軸在後面扶著車輪頂端。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-person-biking"></i> 視覺互動探索：車輪碰地的那一點</h3>
+            <p class="interactive-instruction">「轉直線」：讓過 \(P\) 的直線 \(L\) 繞著 \(P\) 轉，什麼角度時 \(L\) 只碰到圓一點？「四邊形」：兩條切線夾 \(\angle A\)，算出 \(\angle BOC\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tan" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tan-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="tan-mode-group">
+                      <button class="pick-btn active" data-tan-mode="turn">轉直線</button>
+                      <button class="pick-btn" data-tan-mode="quad">兩切線的四邊形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="tan-phi-row">
+                    <label for="tan-phi">\(L\) 與 \(\overline{OP}\) 的夾角：<span id="tan-vphi" class="val-num">60°</span></label>
+                    <input type="range" id="tan-phi" min="6" max="30" value="12" step="1">
+                  </div>
+                  <div class="slider-row" id="tan-a-row">
+                    <label for="tan-a">\(\angle A\)：<span id="tan-va" class="val-num">40°</span></label>
+                    <input type="range" id="tan-a" min="4" max="32" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tan-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (切線性質)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 如圖，\(\overline{AB}\)、\(\overline{AC}\) 分別切圓 \(O\) 於 \(B\)、\(C\) 兩點，\(\angle BAC = 34^\circ\)。\(\angle BOC\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q13" width="320" height="200" role="img" aria-label="圓 O 在左，A 在圓外右方，AB 與 AC 分別切圓於上方的 B 與下方的 C，連接 OB、OC；角 A 標 34 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-13" value="A"><span class="option-text">A. \(56^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-13" value="B"><span class="option-text">B. \(34^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-13" value="C"><span class="option-text">C. \(146^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-13" value="D"><span class="option-text">D. \(73^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。切線垂直過切點的半徑：\(\angle ABO = \angle ACO = 90^\circ\)。四邊形 \(ABOC\) 內角和 \(360^\circ\)：
+              \[\begin{aligned} &\angle BOC \\ &= 360^\circ - 90^\circ - 90^\circ - 34^\circ \\ &= 146^\circ \end{aligned}\]
+              A 錯：\(56^\circ = 90^\circ - 34^\circ\)，把 \(\angle BOC\) 和 \(\angle A\) 當成互餘；兩者其實互補。<br>
+              B 錯：\(\angle BOC\) 和 \(\angle A\) 互補，不是相等。<br>
+              D 錯：\(73^\circ\) 是 \(146^\circ\) 的一半，那是 \(\angle BOA\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> \(P\) 是圓 \(O\) 上一點，直線 \(L\) 通過 \(P\)。下列哪一個條件可以確定 \(L\) 是圓 \(O\) 的切線？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-14" value="A"><span class="option-text">A. \(L \perp \overline{OP}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-14" value="B"><span class="option-text">B. \(L\) 上有一點在圓外</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-14" value="C"><span class="option-text">C. \(L\) 與 \(\overline{OP}\) 的夾角是 \(88^\circ\)，非常接近直角</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-14" value="D"><span class="option-text">D. \(L\) 不通過圓心 \(O\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。過圓上一點、垂直該點半徑的直線就是切線：\(L\) 上其他點到 \(O\) 的距離都是直角三角形的斜邊，比半徑長，都在圓外。<br>
+              B 錯：割線上也有圓外的點。<br>
+              C 錯：只要不是 \(90^\circ\)，\(L\) 就會從圓上另一點穿出去，是割線；\(88^\circ\) 時另一個交點離 \(P\) 很近，但還是有。<br>
+              D 錯：不通過圓心的割線很多。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 切線段長
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler" aria-hidden="true"></i> <span>重點 8：求切線段長——連半徑、用畢氏定理</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(P\) 是圓 \(O\) 外一點，直線 \(PA\) 切圓 \(O\) 於 \(A\)：線段 \(\overline{PA}\) 叫做<strong>切線段</strong>。</li>
+              <li>切線是一條直線，<strong>量不出長度</strong>；切線段是「圓外一點到切點」那一段，可以量。</li>
+              <li><strong>先連半徑 \(\overline{OA}\)</strong>：\(\overline{OA} \perp \overline{PA}\)，\(\triangle OAP\) 是直角三角形，直角在切點 \(A\)，<strong>斜邊是 \(\overline{OP}\)</strong>。</li>
+              <li>例：半徑 \(6\)、\(\overline{OP} = 10\)：
+              \[\overline{PA} = \sqrt{10^2 - 6^2} = 8\]</li>
+              <li>已知切線段與 \(\overline{OP}\) 也能反求半徑——一樣是斜邊平方減另一股平方。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・切線段長</span>
+              \(\overline{PA}^2 + \overline{OA}^2 = \overline{OP}^2\)（斜邊是 \(\overline{OP}\)）
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_chain.webp" alt="油性粉蠟筆單車修理鋪風插圖：工作檯上一台倒放的腳踏車，阿軸用雙手把鏈條拉直，鏈條從後輪的齒盤邊緣直直地延伸出去；小輪在旁邊彎腰看鏈條離開齒盤的地方。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-ruler"></i> 視覺互動探索：切線段量尺</h3>
+            <p class="interactive-instruction">選「求切線段」或「求半徑」，調整已知的兩個長度：直角永遠在切點 \(A\)。斜邊是哪一條？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tl" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tl-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求</span>
+                    <div class="btn-group" id="tl-mode-group">
+                      <button class="pick-btn active" data-tl-mode="pa">切線段 \(\overline{PA}\)</button>
+                      <button class="pick-btn" data-tl-mode="r">半徑</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tl-s1"><span id="tl-l1">半徑 r</span>：<span id="tl-v1" class="val-num">5</span></label>
+                    <input type="range" id="tl-s1" min="1" max="9" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tl-s2">\(\overline{OP}\)：<span id="tl-v2" class="val-num">13</span></label>
+                    <input type="range" id="tl-s2" min="2" max="15" value="13" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tl-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (切線段長)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 直線 \(PA\) 切圓 \(O\) 於 \(A\) 點，圓 \(O\) 的半徑是 \(12\)，\(\overline{OP} = 37\)。切線段 \(\overline{PA}\) 的長度是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-15" value="A"><span class="option-text">A. \(25\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-15" value="B"><span class="option-text">B. \(35\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-15" value="C"><span class="option-text">C. \(49\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-15" value="D"><span class="option-text">D. \(\sqrt{1513}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。連 \(\overline{OA}\)，\(\overline{OA} \perp \overline{PA}\)，斜邊是 \(\overline{OP}\)：
+              \[\begin{aligned} &\overline{PA} = \sqrt{37^2 - 12^2} \\ &= \sqrt{1225} = 35 \end{aligned}\]
+              A 錯：\(37 - 12\)，長度不能直接相減。<br>
+              C 錯：\(37 + 12\)。<br>
+              D 錯：\(37^2 + 12^2 = 1513\)，把 \(\overline{OP}\) 當成股了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 直線 \(PA\) 切圓 \(O\) 於 \(A\) 點，切線段 \(\overline{PA} = 40\)、\(\overline{OP} = 41\)。圓 \(O\) 的半徑是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-16" value="A"><span class="option-text">A. \(1\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-16" value="B"><span class="option-text">B. \(81\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-16" value="C"><span class="option-text">C. \(\sqrt{3281}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-16" value="D"><span class="option-text">D. \(9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\overline{OA} = \sqrt{41^2 - 40^2} = \sqrt{81} = 9\]
+              A 錯：\(41 - 40\)，長度不能直接相減。<br>
+              B 錯：\(81\) 是半徑的平方，忘了開根號。<br>
+              C 錯：\(41^2 + 40^2 = 3281\)，把斜邊放錯了。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 切線段性質
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-angles-right" aria-hidden="true"></i> <span>重點 9：圓外一點的兩條切線段</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(P\) 在圓 \(O\) 外，\(\overline{PA}\)、\(\overline{PB}\) 切圓於 \(A\)、\(B\)。連 \(\overline{OA}\)、\(\overline{OB}\)、\(\overline{PO}\)：\(\overline{OA} = \overline{OB}\)、\(\angle OAP = \angle OBP = 90^\circ\)、\(\overline{PO}\) 共用，所以 \(\triangle OAP \cong \triangle OBP\)（<strong>RHS</strong>）。</li>
+              <li>由全等得到三件事：
+                <ol>
+                  <li>\(\overline{PA} = \overline{PB}\)（兩條切線段等長）。</li>
+                  <li>\(\overline{PO}\) 平分 \(\angle APB\)。</li>
+                  <li>\(\overline{PO}\) 垂直平分 \(\overline{AB}\)（等腰 \(\triangle PAB\) 的頂角平分線）。</li>
+                </ol>
+              </li>
+              <li>四邊形 \(OAPB\) 是箏形，周長 \(= 2(\overline{OA} + \overline{PA})\)。</li>
+              <li><strong>求切點連線 \(\overline{AB}\)</strong>：設 \(\overline{AB}\) 交 \(\overline{OP}\) 於 \(M\)，\(\overline{AM}\) 是直角 \(\triangle OAP\) 斜邊上的高，用面積兩種算法：
+              \[\overline{OA} \times \overline{PA} = \overline{OP} \times \overline{AM}\]
+              再乘 \(2\) 得 \(\overline{AB}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・切線段性質</span>
+              \(\overline{PA} = \overline{PB}\)；\(\overline{PO}\) 平分 \(\angle APB\)；\(\overline{PO}\) 垂直平分 \(\overline{AB}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_hang.webp" alt="油性粉蠟筆單車修理鋪風插圖：牆上釘著一根釘子，一條繩子圍住一個腳踏車輪的下半圈，繩子兩端從車輪左右兩側直直往上拉，在釘子上會合，左右兩段一樣長、左右對稱；小輪站在左邊、阿軸站在右邊，一起看著。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-angles-right"></i> 視覺互動探索：從 \(P\) 拉兩條切線</h3>
+            <p class="interactive-instruction">調整半徑與 \(\overline{OP}\)：兩條切線段永遠等長嗎？切換到「切點連線」，看 \(\overline{AB}\) 怎麼用面積算出來。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tt" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">看</span>
+                    <div class="btn-group" id="tt-mode-group">
+                      <button class="pick-btn active" data-tt-mode="eq">等長與平分</button>
+                      <button class="pick-btn" data-tt-mode="ab">切點連線 \(\overline{AB}\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tt-r">半徑：<span id="tt-vr" class="val-num">5</span></label>
+                    <input type="range" id="tt-r" min="2" max="8" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tt-op">\(\overline{OP}\)：<span id="tt-vop" class="val-num">13</span></label>
+                    <input type="range" id="tt-op" min="3" max="14" value="13" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (切線段性質)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 如圖，\(\overline{PA}\)、\(\overline{PB}\) 分別切圓 \(O\) 於 \(A\)、\(B\)，\(\overline{AB}\) 與 \(\overline{OP}\) 交於 \(M\)。圓 \(O\) 的半徑是 \(20\)，\(\overline{OP} = 29\)。\(\overline{AB}\) 的長度是多少？</p>
+            <canvas class="quiz-fig" data-fig="q17" width="320" height="200" role="img" aria-label="圓 O 在左，P 在圓外右方，PA、PB 分別切圓於上方的 A 與下方的 B；AB 與 OP 交於 M；OA 標 20，OP 標 29"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-17" value="A"><span class="option-text">A. \(42\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-17" value="B"><span class="option-text">B. \(\frac{420}{29}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-17" value="C"><span class="option-text">C. \(\frac{840}{29}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-17" value="D"><span class="option-text">D. \(40\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{PA} = \sqrt{29^2 - 20^2} = 21\)。\(\overline{PO}\) 垂直平分 \(\overline{AB}\)，\(\overline{AM}\) 是 \(\triangle OAP\) 斜邊上的高：
+              \[\begin{aligned} &20 \times 21 = 29 \times \overline{AM} \\ &\overline{AM} = \frac{420}{29} \\ &\overline{AB} = 2\overline{AM} = \frac{840}{29} \end{aligned}\]
+              A 錯：\(42\) 是 \(\overline{PA} + \overline{PB}\)。<br>
+              B 錯：那只是 \(\overline{AM}\)，還要乘 \(2\)。<br>
+              D 錯：\(40\) 是直徑；\(\overline{AB}\) 不通過圓心，比直徑短。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> \(\overline{PA}\)、\(\overline{PB}\) 分別切圓 \(O\) 於 \(A\)、\(B\)，\(\angle APB = 48^\circ\)。\(\angle AOP\) 是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-18" value="A"><span class="option-text">A. \(66^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-18" value="B"><span class="option-text">B. \(24^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-18" value="C"><span class="option-text">C. \(132^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-18" value="D"><span class="option-text">D. \(42^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{PO}\) 平分 \(\angle APB\)：\(\angle APO = 24^\circ\)。\(\angle OAP = 90^\circ\)，所以
+              \[\angle AOP = 180^\circ - 90^\circ - 24^\circ = 66^\circ\]
+              B 錯：\(24^\circ\) 是 \(\angle APO\)。<br>
+              C 錯：\(132^\circ\) 是 \(\angle AOB\)，是 \(\angle AOP\) 的 \(2\) 倍。<br>
+              D 錯：\(90^\circ - 48^\circ\) 沒有先把 \(\angle APB\) 平分。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 弦的性質與找圓心
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-crosshairs" aria-hidden="true"></i> <span>重點 10：弦的中垂線通過圓心——找回圓心</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>在圓上畫弦 \(\overline{AB}\)，對摺使 \(A\)、\(B\) 重合：摺線 \(L\) 平分 \(\overline{AB}\)、垂直 \(\overline{AB}\)，而且<strong>通過圓心</strong>——\(L\) 是 \(\overline{AB}\) 的對稱軸，也是圓的對稱軸。</li>
+              <li>連 \(\overline{OA}\)、\(\overline{OB}\)，\(\triangle OAB\) 是等腰三角形，由等腰三角形的性質得到弦的三個性質：
+                <ol>
+                  <li>一弦的<strong>中垂線</strong>必通過圓心。</li>
+                  <li>弦不是直徑時，過圓心且<strong>平分</strong>弦的直線必<strong>垂直</strong>此弦。</li>
+                  <li>過圓心且<strong>垂直</strong>弦的直線必<strong>平分</strong>此弦。</li>
+                </ol>
+              </li>
+              <li>只「平分」或只「垂直」都不夠：平分弦的直線不一定過圓心，垂直弦的直線也不一定平分它，要加上「過圓心」。</li>
+              <li><strong>找圓心</strong>：在弧上取兩條不平行的弦，各作中垂線，交點就是圓心。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・弦的性質</span>
+              弦的中垂線過圓心；兩條弦的中垂線交點 \(=\) 圓心
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_broken.webp" alt="油性粉蠟筆單車修理鋪風插圖：小輪在工作檯上把一段斷掉的彎曲木頭輪框平放在一張大白紙上，左手壓著輪框、右手拿鉛筆沿著輪框內側描線；阿軸手上拿著一副圓規在旁邊等。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-crosshairs"></i> 視覺互動探索：破輪框的圓心</h3>
+            <p class="interactive-instruction">選一段弧，按「下一步」用圓規和直尺作兩條弦的中垂線：它們交在哪裡？最後量一量 \(\overline{OA}\)、\(\overline{OB}\)、\(\overline{OC}\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ctr" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ctr-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">弧</span>
+                    <div class="btn-group" id="ctr-arc-group">
+                      <button class="pick-btn active" data-ctr-arc="0">第 1 段</button>
+                      <button class="pick-btn" data-ctr-arc="1">第 2 段</button>
+                      <button class="pick-btn" data-ctr-arc="2">第 3 段</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="ctr-prev">上一步</button>
+                      <span class="step-counter" id="ctr-step">1 / 9</span>
+                      <button class="pick-btn" id="ctr-next">下一步</button>
+                      <button class="pick-btn" id="ctr-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ctr-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (弦的性質)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 關於圓 \(O\) 的弦，下列敘述何者一定正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-19" value="A"><span class="option-text">A. 平分一條弦的直線一定通過圓心</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-19" value="B"><span class="option-text">B. 一條弦的中垂線一定通過圓心</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-19" value="C"><span class="option-text">C. 通過圓心的直線一定垂直平分每一條弦</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-19" value="D"><span class="option-text">D. 垂直一條弦的直線一定平分這條弦</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。圓心到弦兩端一樣遠，所以圓心在弦的中垂線上。<br>
+              A 錯：通過弦中點的斜線有無限多條，只有垂直的那一條才通過圓心。<br>
+              C 錯：通過圓心的直線只會垂直平分「和它垂直」的弦。<br>
+              D 錯：要「過圓心」且垂直，才能平分；隨便一條垂直線不一定經過中點。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 阿軸撿到一段斷掉的輪框，只剩一段圓弧。下列哪一個作法一定能找出它的圓心？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-20" value="A"><span class="option-text">A. 連接弧的兩個端點，取這條弦的中點</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-20" value="B"><span class="option-text">B. 在弧上取一條弦作中垂線，中垂線與弧的交點</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-20" value="C"><span class="option-text">C. 在弧上取兩條不平行的弦，分別作中垂線，兩線的交點</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-20" value="D"><span class="option-text">D. 在弧上取兩條相交的弦，作它們夾角的角平分線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。每一條中垂線都通過圓心，兩條中垂線的交點就是圓心。<br>
+              A 錯：只有那段弧剛好是半圓時，弦的中點才是圓心。<br>
+              B 錯：中垂線與弧的交點是弧的中點，在圓上，不是圓心。<br>
+              D 錯：角平分線和圓心沒有關係。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 弦心距
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-calculator" aria-hidden="true"></i> <span>重點 11：弦心距——半弦、弦心距、半徑的直角三角形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>圓心到弦的距離 \(\overline{OM}\) 叫做這條弦的<strong>弦心距</strong>。由弦的性質，\(\overline{OM}\) <strong>垂直平分</strong>弦 \(\overline{AB}\)。</li>
+              <li>連半徑 \(\overline{OA}\)：半弦 \(\overline{AM}\)、弦心距 \(\overline{OM}\)、半徑 \(\overline{OA}\) 圍成直角三角形，<strong>半徑是斜邊</strong>：
+              \[\overline{AM}^2 + \overline{OM}^2 = \overline{OA}^2\]</li>
+              <li>三個量知道兩個就能求第三個；求弦長時最後別忘了 \(\overline{AB} = 2\overline{AM}\)。</li>
+              <li><strong>兩條弦</strong>在同一個圓裡：先用一組求出半徑，半徑是共用的，再拿去算另一條弦。</li>
+              <li>例：半徑 \(10\)、弦心距 \(6\)：\(\overline{AM} = \sqrt{100 - 36} = 8\)，弦長 \(16\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・弦心距</span>
+              \(\left(\frac{1}{2}\text{弦長}\right)^2 + \text{弦心距}^2 = \text{半徑}^2\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_spoke.webp" alt="油性粉蠟筆單車修理鋪風插圖：一個腳踏車輪平放在工作檯上，阿軸在輪框內側橫著繃了一條紅色橡皮筋，小輪用一把直尺從輪軸量到橡皮筋。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-calculator"></i> 視覺互動探索：弦心距計算台</h3>
+            <p class="interactive-instruction">選要求的量：求弦長、求弦心距、求半徑，或「兩條弦」先求半徑再求另一條弦。紅色的半弦、藍色的弦心距、黃色的半徑永遠圍成直角三角形。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cd" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cd-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">要求</span>
+                    <div class="btn-group" id="cd-mode-group">
+                      <button class="pick-btn active" data-cd-mode="len">弦長</button>
+                      <button class="pick-btn" data-cd-mode="d">弦心距</button>
+                      <button class="pick-btn" data-cd-mode="r">半徑</button>
+                      <button class="pick-btn" data-cd-mode="two">兩條弦</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cd-s1"><span id="cd-l1">半徑 r</span>：<span id="cd-v1" class="val-num">10</span></label>
+                    <input type="range" id="cd-s1" min="2" max="10" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cd-s2"><span id="cd-l2">弦心距 OM</span>：<span id="cd-v2" class="val-num">6</span></label>
+                    <input type="range" id="cd-s2" min="0" max="9" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="cd-s3-row">
+                    <label for="cd-s3">另一條弦的弦心距 ON：<span id="cd-v3" class="val-num">2</span></label>
+                    <input type="range" id="cd-s3" min="0" max="9" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cd-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (弦心距)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 圓 \(O\) 的半徑是 \(17\)，弦 \(\overline{AB}\) 長 \(30\)。弦 \(\overline{AB}\) 的弦心距是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-21" value="A"><span class="option-text">A. \(2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-21" value="B"><span class="option-text">B. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-21" value="C"><span class="option-text">C. \(\sqrt{611}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-21" value="D"><span class="option-text">D. \(8\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。弦心距垂直平分弦，半弦 \(\overline{AM} = 15\)，半徑是斜邊：
+              \[\overline{OM} = \sqrt{17^2 - 15^2} = \sqrt{64} = 8\]
+              A 錯：\(17 - 15\)，長度不能直接相減。<br>
+              B 錯：\(30 - 17\)。<br>
+              C 錯：\(30^2 - 17^2 = 611\)，弦沒有除以 \(2\)，斜邊也放錯了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 如圖，\(\overline{AB}\) 是圓 \(O\) 的一弦，\(C\) 在 \(\overline{AB}\) 上，\(\overline{AC} = 7\)、\(\overline{BC} = 3\)，\(\overline{AB}\) 的弦心距 \(\overline{OM} = 2\)。\(\overline{OC}\) 的長度是多少？</p>
+            <canvas class="quiz-fig" data-fig="q22" width="320" height="200" role="img" aria-label="圓 O，弦 AB 在圓心下方水平放置，M 是 OM 與 AB 的垂足，C 在 AB 上偏右；AC 標 7、CB 標 3、OM 標 2，連接 OC 為虛線"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-22" value="A"><span class="option-text">A. \(2\sqrt{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-22" value="B"><span class="option-text">B. \(\sqrt{29}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-22" value="C"><span class="option-text">C. \(\sqrt{53}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-22" value="D"><span class="option-text">D. \(2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{AB} = 10\)，\(M\) 是 \(\overline{AB}\) 的中點，\(\overline{AM} = 5\)，所以 \(\overline{CM} = 7 - 5 = 2\)。直角 \(\triangle OMC\) 中：
+              \[\overline{OC} = \sqrt{2^2 + 2^2} = 2\sqrt{2}\]
+              B 錯：\(\sqrt{5^2 + 2^2} = \sqrt{29}\) 是 \(\overline{OA}\)，也就是半徑。<br>
+              C 錯：\(\sqrt{7^2 + 2^2}\) 把 \(\overline{AC}\) 當成直角邊，但直角在 \(M\)，不在 \(A\)。<br>
+              D 錯：\(2\) 是 \(\overline{CM}\)（也剛好等於 \(\overline{OM}\)），還要再用畢氏定理。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 弦心距的性質
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>重點 12：弦愈長、弦心距愈小</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>同一圓中兩弦 \(\overline{AB}\)、\(\overline{CD}\)，弦心距 \(\overline{OM}\)、\(\overline{ON}\)。兩個直角三角形的斜邊都是半徑：
+              \[\overline{AM}^2 + \overline{OM}^2 = \overline{CN}^2 + \overline{ON}^2\]</li>
+              <li><strong>等弦 ⇔ 等弦心距</strong>：兩弦等長，弦心距就相等；反之亦然。</li>
+              <li><strong>弦愈長，弦心距愈小</strong>；弦心距愈小，弦愈長。直徑的弦心距是 \(0\)，所以直徑最長。</li>
+              <li>這些性質要在<strong>同一個圓</strong>（或半徑相等的等圓）裡才成立。兩個大小不同的圓，半徑不同，不能只比弦心距。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・弦心距的性質</span>
+              同圓或等圓中：等弦 ⇔ 等弦心距；弦長大 ⇔ 弦心距小
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_two.webp" alt="油性粉蠟筆單車修理鋪風插圖：店門口並排靠著兩台腳踏車，一台大輪、一台小輪；小輪站在大輪那台旁邊、阿軸站在小輪那台旁邊，兩人一起比較兩個車輪的大小。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-scale-balanced"></i> 視覺互動探索：兩條弦比一比</h3>
+            <p class="interactive-instruction">「同一圓」：調整兩條弦的弦心距，看哪一條比較長。「不同圓」：把兩個圓調成不一樣大，找一組「弦心距比較小、弦卻比較短」的例子。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cmp" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cmp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圓</span>
+                    <div class="btn-group" id="cmp-mode-group">
+                      <button class="pick-btn active" data-cmp-mode="same">同一圓</button>
+                      <button class="pick-btn" data-cmp-mode="diff">不同圓</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cmp-r1">圓 \(O\) 的半徑：<span id="cmp-vr1" class="val-num">6</span></label>
+                    <input type="range" id="cmp-r1" min="3" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="cmp-r2-row">
+                    <label for="cmp-r2">圓 \(P\) 的半徑：<span id="cmp-vr2" class="val-num">7</span></label>
+                    <input type="range" id="cmp-r2" min="2" max="8" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cmp-d1">\(\overline{AB}\) 的弦心距 \(\overline{OE}\)：<span id="cmp-vd1" class="val-num">2</span></label>
+                    <input type="range" id="cmp-d1" min="0" max="5" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cmp-d2">\(\overline{CD}\) 的弦心距：<span id="cmp-vd2" class="val-num">4</span></label>
+                    <input type="range" id="cmp-d2" min="0" max="5" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cmp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (弦心距的性質)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-23">
+            <p class="quiz-question"><strong>Q23.</strong> 同一個圓 \(O\) 中，弦 \(\overline{AB} = 10\)、弦 \(\overline{CD} = 14\)，\(\overline{OE}\)、\(\overline{OF}\) 分別是它們的弦心距。下列何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-23" value="A"><span class="option-text">A. \(\overline{OE} = \overline{OF}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-23" value="B"><span class="option-text">B. \(\overline{OE} \lt \overline{OF}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-23" value="C"><span class="option-text">C. \(\overline{OE} \gt \overline{OF}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-23" value="D"><span class="option-text">D. 不知道半徑，無法比較</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。同一圓中，弦愈短、弦心距愈長。\(\overline{AB}\) 比 \(\overline{CD}\) 短，所以 \(\overline{OE} \gt \overline{OF}\)。<br>
+              用式子看：\(\overline{OE}^2 = r^2 - 25\)、\(\overline{OF}^2 = r^2 - 49\)，不論半徑是多少，前者都比較大。<br>
+              A、B 錯；D 錯：同一個圓，半徑相同，不必知道它是多少。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-24">
+            <p class="quiz-question"><strong>Q24.</strong> 下列關於弦與弦心距的敘述，何者一定正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-24" value="A"><span class="option-text">A. 兩個不同的圓中，弦心距較短的弦一定較長</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-24" value="B"><span class="option-text">B. 半徑相等的兩圓中，弦心距相等的兩弦一定等長</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-24" value="C"><span class="option-text">C. 兩個不同的圓中，等長的兩弦弦心距一定相等</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-24" value="D"><span class="option-text">D. 同一圓中，弦愈短，弦心距也愈短</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。半徑相等的兩圓可以疊成同一個圓，弦心距相等，\(\text{半弦}^2 = r^2 - d^2\) 也相等，兩弦等長。<br>
+              A 錯：例如半徑 \(3\) 的圓裡弦心距 \(0\) 的弦長 \(6\)，半徑 \(10\) 的圓裡弦心距 \(6\) 的弦長 \(16\)，弦心距較短的反而較短。<br>
+              C 錯：兩圓半徑不同時，等長的弦離圓心的距離不同。<br>
+              D 錯：同一圓中，弦愈短，弦心距愈<strong>長</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 13: 弦心距的應用
+           ========================================== -->
+      <section class="concept-section" id="concept13">
+        <h2 class="section-title">
+          <i class="fa-solid fa-archway" aria-hidden="true"></i> <span>重點 13：設半徑為 \(x\)——隧道與下水道</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>隧道的橫切面、圓形水管的截面都是圓的一部分。路面（水面）是一條弦 \(\overline{AB}\)，從弧上最高（最低）點 \(C\) 作 \(\overline{CD} \perp \overline{AB}\)，\(D\) 是 \(\overline{AB}\) 的中點，直線 \(CD\) 通過圓心 \(O\)。</li>
+              <li>半徑不知道時，<strong>設半徑 \(\overline{OA} = \overline{OC} = x\)</strong>，把 \(\overline{OD}\) 寫成「高度 \(- x\)」或「\(x -\) 高度」，再對直角 \(\triangle OAD\) 列畢氏定理：
+              \[x^2 = \overline{OD}^2 + \overline{AD}^2\]</li>
+              <li>\(x^2\) 會在兩邊消掉，剩下一元一次方程式。\(\overline{OD}\) 寫成 \(h - x\) 或 \(x - h\)，平方後是同一條式子。</li>
+              <li>例：路面寬 \(8\)、高 \(2\)：\(x^2 = (x - 2)^2 + 4^2\)，\(4x = 20\)，\(x = 5\)。高度比半徑小，圓心在路面下方。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・弦心距的應用</span>
+              設半徑 \(x\)，\(x^2 = (\text{高} - x)^2 + \left(\frac{1}{2}\text{寬}\right)^2\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk_tunnel.webp" alt="油性粉蠟筆單車修理鋪風插圖：小輪和阿軸各騎一台腳踏車，一前一後騎向山邊一座圓拱形的隧道口，隧道口的拱頂是一段圓弧，路面平直。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-archway"></i> 視覺互動探索：隧道與下水道量半徑</h3>
+            <p class="interactive-instruction">選隧道或下水道，調整弦的寬度與高度（水深）：照「設、量、列、解、查」五步算出半徑。高度比半寬大時，圓心跑到哪裡？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-tun" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="tun-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">情境</span>
+                    <div class="btn-group" id="tun-mode-group">
+                      <button class="pick-btn active" data-tun-mode="tunnel">隧道</button>
+                      <button class="pick-btn" data-tun-mode="pipe">下水道</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="tun-a"><span id="tun-la">路面寬 AB</span>：<span id="tun-va" class="val-num">12</span></label>
+                    <input type="range" id="tun-a" min="1" max="6" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="tun-h"><span id="tun-lh">隧道高 CD</span>：<span id="tun-vh" class="val-num">8</span></label>
+                    <input type="range" id="tun-h" min="1" max="8" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="tun-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (隧道與下水道)</h3>
+
+          <div class="quiz-card" data-quiz="2-1-25">
+            <p class="quiz-question"><strong>Q25.</strong> 一條下水道的截面是圓形。早上水深 \(1\) 公分時，水面寬 \(14\) 公分；下雨後水深變成 \(10\) 公分，這時水面寬多少公分？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-25" value="A"><span class="option-text">A. \(40\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-25" value="B"><span class="option-text">B. \(20\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-25" value="C"><span class="option-text">C. \(50\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-25" value="D"><span class="option-text">D. \(10\sqrt{21}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。設半徑 \(x\) 公分，早上圓心到水面的距離是 \(x - 1\)，半寬是 \(7\)：
+              \[\begin{aligned} &x^2 = (x - 1)^2 + 7^2 \\ &2x = 50,\ x = 25 \end{aligned}\]
+              下雨後圓心到水面 \(= 25 - 10 = 15\)，半寬 \(= \sqrt{25^2 - 15^2} = 20\)，水面寬 \(40\) 公分。<br>
+              B 錯：\(20\) 只是半寬。<br>
+              C 錯：\(50\) 是直徑；水深要到 \(25\) 公分（圓心）水面才有這麼寬。<br>
+              D 錯：把水深 \(10\) 當成圓心到水面的距離，\(2\sqrt{25^2 - 10^2} = 10\sqrt{21}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-1-26">
+            <p class="quiz-question"><strong>Q26.</strong> 某隧道的橫切面是圓的一部分，路面寬 \(\overline{AB} = 14\) 公尺，最高點 \(C\) 到路面的距離 \(\overline{CD} = 16\) 公尺（\(D\) 是 \(\overline{AB}\) 的中點）。設半徑為 \(x\) 公尺，哪一個方程式正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-1-26" value="A"><span class="option-text">A. \(x^2 = (x - 16)^2 + 14^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-26" value="B"><span class="option-text">B. \(x^2 = 16^2 + 7^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-26" value="C"><span class="option-text">C. \((16 - x)^2 = x^2 + 7^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-1-26" value="D"><span class="option-text">D. \(x^2 = (16 - x)^2 + 7^2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{OC} = x\)，\(\overline{OD} = 16 - x\)，\(\overline{AD} = 7\)，直角 \(\triangle OAD\) 的斜邊是半徑 \(\overline{OA} = x\)。<br>
+              A 錯：半寬是 \(7\)，不是 \(14\)。<br>
+              B 錯：把 \(\overline{CD}\) 整段當成 \(\overline{OD}\)，但圓心不在 \(C\)。<br>
+              C 錯：斜邊放錯了，斜邊是半徑 \(x\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 點、直線與圓速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>弧長</strong> \(= 2\pi r \times \frac{x}{360}\)、<strong>扇形面積</strong> \(= \pi r^2 \times \frac{x}{360}\)；弓形 \(=\) 扇形 \(-\) 三角形。</li>
+              <li><strong>點與圓</strong>：比 \(\overline{OP}\) 與 \(r\)；<strong>直線與圓</strong>：比 \(d\) 與 \(r\)（給直徑先除以 2）。</li>
+              <li><strong>切線</strong>：半徑垂直切線；切線段長用畢氏定理，斜邊是 \(\overline{OP}\)。</li>
+              <li><strong>兩條切線段</strong>：\(\overline{PA} = \overline{PB}\)、\(\overline{PO}\) 平分 \(\angle APB\) 且垂直平分 \(\overline{AB}\)。</li>
+              <li><strong>弦</strong>：中垂線過圓心；弦心距垂直平分弦，半弦、弦心距、半徑成直角三角形。</li>
+              <li><strong>同圓或等圓</strong>：等弦 ⇔ 等弦心距；弦愈長，弦心距愈小。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到單車行：車輪為什麼只碰地一點</h4>
+              <h5><i class="fa-solid fa-lightbulb"></i> 地面是車輪的切線</h5>
+              <p>輪軸到地面的距離剛好等於輪子的半徑，所以地面和車輪只交於一點——地面是車輪的切線，碰地點是切點，連到它的那根輻條垂直地面。</p>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 破輪框也能找回圓心</h5>
+              <p>輪框斷成一段弧也不要緊：取兩條弦作中垂線，交點就是輪軸該在的位置，量一下到弧的距離就知道原本的半徑。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節</h5>
+              <p>圓心角和弧還有更多關係：頂點在圓上的「圓周角」又是多少度？下一節來看圓心角、圓周角與弧的關係。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

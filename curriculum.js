@@ -163,13 +163,13 @@
           { "code": "1-1", "title": "連比例", "status": "completed" },
           { "code": "1-2", "title": "比例線段", "status": "completed" },
           { "code": "1-3", "title": "縮放與相似", "status": "completed" },
-          { "code": "1-4", "title": "相似三角形的應用" }
+          { "code": "1-4", "title": "相似三角形的應用", "status": "completed" }
         ]
       },
       {
         "chapter": "第2章 圓",
         "sections": [
-          { "code": "2-1", "title": "點、直線與圓之間的位置關係" },
+          { "code": "2-1", "title": "點、直線與圓之間的位置關係", "status": "completed" },
           { "code": "2-2", "title": "圓心角、圓周角與弧的關係" }
         ]
       },
