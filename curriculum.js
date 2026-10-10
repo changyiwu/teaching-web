@@ -170,14 +170,14 @@
         "chapter": "第2章 圓",
         "sections": [
           { "code": "2-1", "title": "點、直線與圓之間的位置關係", "status": "completed" },
-          { "code": "2-2", "title": "圓心角、圓周角與弧的關係" }
+          { "code": "2-2", "title": "圓心角、圓周角與弧的關係", "status": "completed" }
         ]
       },
       {
         "chapter": "第3章 幾何與證明",
         "sections": [
-          { "code": "3-1", "title": "證明與推理" },
-          { "code": "3-2", "title": "三角形的外心、內心與重心" }
+          { "code": "3-1", "title": "證明與推理", "status": "completed" },
+          { "code": "3-2", "title": "三角形的外心、內心與重心", "status": "completed" }
         ]
       }
     ],

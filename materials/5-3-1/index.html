@@ -4,39 +4,1423 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-1 證明與推理 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-1 證明與推理 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第五冊 (3上) • 第3章 幾何與證明</div>
-    <h1>3-1 證明與推理</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第五冊 • 第三章</span>
+        <h1>3-1 證明與推理</h1>
+        <p>古希臘幾何學院的柱廊下，學徒小歐和阿基在沙盤上畫圖、在蠟板上寫推理。量了再多個圖形都一樣，也只是<strong>舉例</strong>；從<strong>已知條件</strong>與<strong>已確認的性質</strong>一步一步推出<strong>求證結論</strong>，才叫<strong>證明</strong>。這一節先學幾何證明的三段式寫法與逆推的分析方法，練習用全等、相似、面積、特殊三角形寫證明；再學代數證明：用 \(2k\)、\(2k+1\) 表示偶數與奇數，證明奇偶性質、倍數與平方的大小關係。</p>
+      </div>
+      <!-- Progress navigation (12 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-scroll"></i> 已知與求證</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-route"></i> 逆推與書寫</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-clone"></i> 用全等證明</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-plus"></i> 等量加減</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> 用相似證明</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-vector-square"></i> 面積與平行四邊形</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-note-sticky"></i> 摺紙與特殊三角形</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-circle-half-stroke"></i> 奇數與偶數</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-font"></i> 奇偶性質的證明</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-ban"></i> 舉例與反例</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> 證明倍數</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-scale-unbalanced"></i> 平方的大小</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（古希臘陶瓶黑繪風・幾何學院）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(232, 135, 74, 0.3);">
+        <h2 class="section-title" style="color: #e8874a; border-bottom-color: rgba(232, 135, 74, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #e8874a; text-shadow: 0 0 10px rgba(232, 135, 74, 0.4);"></i> 課前暖身漫畫：量了三個，就算證明了嗎？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            小歐在沙盤上畫了三個等腰三角形，量了量，兩個底角每次都一樣大，就宣布「等腰三角形的底角一定相等」。阿基問她：沙盤上畫得完全部的三角形嗎？量再多個也只是<strong style="color:#e8874a">舉例</strong>；要從<strong style="color:#e8874a">已知條件</strong>一步一步推出結論，才能說「每一個都成立」——這就是<strong style="color:#e8874a">證明</strong>。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(27, 19, 16, 0.5);">
+            <img src="motivation_comic.webp" alt="古希臘陶瓶黑繪風四格漫畫：小歐在沙盤上畫了三個等腰三角形，量完底角後宣布底角一定相等；阿基指著沙盤問畫得完全部的三角形嗎；小歐抱著蠟板沉思；最後兩人坐在柱廊下的石階上寫推理，旁白說明從已知一步一步推出結論才叫證明。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 證明的意義與三段式
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scroll" aria-hidden="true"></i> <span>重點 1：證明的意義——已知、求證、證明</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>運用<strong>已知條件</strong>或<strong>已確認性質</strong>，推導出<strong>求證結論</strong>的過程，叫做<strong>證明</strong>。</li>
+              <li>幾何證明常寫成<strong>三段式</strong>：<strong>已知</strong>（題目給的條件）、<strong>求證</strong>（要說明的結論）、<strong>證明</strong>（推理過程，每一步都附上理由）。</li>
+              <li>題目常寫成「……，說明（證明）……」：「說明」前面是已知，後面是求證。</li>
+              <li><strong>已確認性質</strong>是學過的定理，例如對頂角相等、共用邊、三角形全等性質。它們可以寫進證明當理由，但<strong>不是題目給的已知</strong>。</li>
+              <li>圖上<strong>看起來</strong>相等、垂直的東西，不能當已知；推導過程中才得到的結果，也不是已知。</li>
+              <li>例（課本）：等腰 \(\triangle ABC\) 中 \(\overline{AB} = \overline{AC}\)，\(\angle BAC\) 的角平分線交 \(\overline{BC}\) 於 \(D\)，說明 \(\overline{AD}\) 平分 \(\overline{BC}\)。
+              <br>已知：\(\overline{AB} = \overline{AC}\)、\(\angle BAD = \angle CAD\)；求證：\(\overline{AD}\) 平分 \(\overline{BC}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・證明</span>
+              已知條件 ＋ 已確認性質 → 求證結論
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_tablet.webp" alt="古希臘陶瓶黑繪風插圖：柱廊下，小歐雙手捧著一塊蠟板低頭看，阿基站在旁邊伸出一隻手指著蠟板。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-scroll"></i> 視覺互動探索：三段式分揀台</h3>
+            <p class="interactive-instruction">選一道題目，點畫布上每一列敘述，把它分成「已知」「求證」或「不是題目給的」。全部分完會逐列對答案。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sort" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sort-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="sort-prob-group">
+                      <button class="pick-btn active" data-sort-prob="0">平行且相等</button>
+                      <button class="pick-btn" data-sort-prob="1">延長中線</button>
+                      <button class="pick-btn" data-sort-prob="2">等腰底邊</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">操作</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="sort-reset">全部清除</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sort-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (證明的意義)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-1">
+            <p class="quiz-question"><strong>Q1.</strong> 如圖，\(\overline{AC}\) 與 \(\overline{BD}\) 交於 \(O\) 點。題目寫：「若 \(\overline{OA} = \overline{OC}\)、\(\angle A = \angle C\)，說明 \(\overline{AB} = \overline{CD}\)。」下列哪一組<strong>全部</strong>都是這題的「已知」？</p>
+            <canvas class="quiz-fig" data-fig="q1" width="320" height="200" role="img" aria-label="AC 與 BD 交於 O；A 在左上、C 在右下、B 在左下、D 在右上，連接 AB 與 CD"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-1" value="A"><span class="option-text">A. \(\overline{OA} = \overline{OC}\)、\(\angle A = \angle C\)、\(\overline{AB} = \overline{CD}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="B"><span class="option-text">B. \(\overline{OA} = \overline{OC}\)、\(\angle A = \angle C\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="C"><span class="option-text">C. \(\overline{OA} = \overline{OC}\)、\(\angle A = \angle C\)、\(\overline{OB} = \overline{OD}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-1" value="D"><span class="option-text">D. \(\overline{OA} = \overline{OC}\)、\(\overline{AB} = \overline{CD}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。「說明」前面的 \(\overline{OA} = \overline{OC}\)、\(\angle A = \angle C\) 才是題目給的已知。<br>
+              A、D 錯：\(\overline{AB} = \overline{CD}\) 是要說明的<strong>求證結論</strong>，不能當已知。<br>
+              C 錯：\(\overline{OB} = \overline{OD}\) 是證出 \(\triangle AOB \cong \triangle COD\) 之後才得到的結果，題目沒有給。另外 \(\angle AOB = \angle COD\) 是對頂角，屬於已確認性質，也不是已知。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-2">
+            <p class="quiz-question"><strong>Q2.</strong> 關於「證明」，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-2" value="A"><span class="option-text">A. 在圖上用尺量出兩條線段一樣長，就可以把它當成已知條件</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="B"><span class="option-text">B. 畫三個不同的圖都成立，證明就完成了</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="C"><span class="option-text">C. 要證明的結論，也可以拿來當作推理的理由</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-2" value="D"><span class="option-text">D. 推理時除了已知條件，也可以引用已確認的性質，例如「對頂角相等」</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。證明的依據有兩種：題目給的已知條件，以及已經確認的性質（定理）。<br>
+              A 錯：量出來的只是這一張圖的樣子，不是題目給的條件。<br>
+              B 錯：畫再多個圖都只是舉例，沒畫到的圖形不一定成立。<br>
+              C 錯：拿結論當理由是「繞圈子」，等於什麼都沒證。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 逆推分析與正向書寫
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-route" aria-hidden="true"></i> <span>重點 2：從求證往回找，再從已知往前寫</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>分析（逆推）</strong>：從求證結論出發，一層一層問「要得到它，需要先知道什麼？」，直到碰到已知條件或已確認性質。</li>
+              <li>就像走迷宮：從入口找不到路時，<strong>從出口倒著走回入口</strong>往往比較容易。</li>
+              <li><strong>書寫（順推）</strong>：正式寫證明時方向<strong>相反</strong>——從已知出發，先證中間的結果，最後才得到求證結論。</li>
+              <li>每一步都要附上理由，例如（已知）、（共用邊）、（對頂角相等）、（\(\text{SAS}\) 全等性質）、（對應邊相等）。</li>
+              <li>例（課本）：要說明 \(\overline{AD}\) 平分 \(\overline{BC}\)，逆推是「\(\overline{AD}\) 平分 \(\overline{BC}\) ← \(\overline{BD} = \overline{CD}\) ← \(\triangle ABD \cong \triangle ACD\)」；寫的時候倒過來，先證全等、再得 \(\overline{BD} = \overline{CD}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">分析與書寫</span>
+              分析：求證 → 中間結果 → 已知；書寫：已知 → 中間結果 → 求證
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_maze.webp" alt="古希臘陶瓶黑繪風插圖：柱廊下的沙盤裡畫著一座方形迷宮，小歐用細木棍從迷宮的出口沿著通道往回畫，阿基蹲在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-route"></i> 視覺互動探索：推理迷宮</h3>
+            <p class="interactive-instruction">先用「分析」從最上面的求證一層一層往下問；再切到「書寫」，看正式證明怎麼從最下面的已知往上寫。拉動「步驟」一步一步揭開。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-chain" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="chain-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">題目</span>
+                    <div class="btn-group" id="chain-prob-group">
+                      <button class="pick-btn active" data-chain-prob="0">對頂角</button>
+                      <button class="pick-btn" data-chain-prob="1">箏形</button>
+                      <button class="pick-btn" data-chain-prob="2">兩腰中點</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方向</span>
+                    <div class="btn-group" id="chain-mode-group">
+                      <button class="pick-btn active" data-chain-mode="ana">分析（逆推）</button>
+                      <button class="pick-btn" data-chain-mode="write">書寫（順推）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="chain-s">步驟：<span id="chain-vs" class="val-num">1</span></label>
+                    <input type="range" id="chain-s" min="1" max="3" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="chain-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (逆推與書寫)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-3">
+            <p class="quiz-question"><strong>Q3.</strong> 題目：「\(\triangle ABC\) 中 \(\overline{AB} = \overline{AC}\)，\(M\) 是 \(\overline{BC}\) 的中點，證明 \(\overline{AM} \perp \overline{BC}\)。」逆推的分析是：要證垂直，可以先證 \(\angle AMB = \angle AMC\)（兩角互補又相等，就都是 \(90^\circ\)）；要證這兩角相等，可以先證 \(\triangle ABM \cong \triangle ACM\)。正式寫證明時，正確的順序是哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-3" value="A"><span class="option-text">A. \(\angle AMB = \angle AMC\) → \(\triangle ABM \cong \triangle ACM\) → \(\overline{AM} \perp \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="B"><span class="option-text">B. \(\overline{AM} \perp \overline{BC}\) → \(\angle AMB = \angle AMC\) → \(\triangle ABM \cong \triangle ACM\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="C"><span class="option-text">C. \(\triangle ABM \cong \triangle ACM\) → \(\angle AMB = \angle AMC\) → \(\overline{AM} \perp \overline{BC}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-3" value="D"><span class="option-text">D. \(\triangle ABM \cong \triangle ACM\) → \(\overline{AM} \perp \overline{BC}\) → \(\angle AMB = \angle AMC\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。書寫的方向和分析相反：先用 \(\overline{AB} = \overline{AC}\)、\(\overline{BM} = \overline{CM}\)、\(\overline{AM} = \overline{AM}\) 證出 \(\triangle ABM \cong \triangle ACM\)（\(\text{SSS}\)），得到對應角 \(\angle AMB = \angle AMC\)，再因為兩角互補，各是 \(90^\circ\)。<br>
+              A 錯：角相等要靠全等才得到，不能先寫。<br>
+              B 錯：這是分析的方向，把結論寫在第一步等於先假設它成立。<br>
+              D 錯：垂直是由「兩角相等」推出來的，順序反了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-4">
+            <p class="quiz-question"><strong>Q4.</strong> 要證明 \(\overline{PA} = \overline{PB}\)，下列哪一個是最常見、也最合理的逆推想法？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-4" value="A"><span class="option-text">A. 找兩個分別以 \(\overline{PA}\)、\(\overline{PB}\) 為邊的三角形，而且 \(\overline{PA}\)、\(\overline{PB}\) 剛好是對應邊，再設法證明它們全等</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="B"><span class="option-text">B. 先假設 \(\overline{PA} = \overline{PB}\)，再看能不能推出題目的已知條件</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="C"><span class="option-text">C. 用尺量出 \(\overline{PA}\) 與 \(\overline{PB}\) 的長度，相等就完成證明</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-4" value="D"><span class="option-text">D. 證明 \(\triangle PAB\) 是直角三角形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。兩個三角形全等，對應邊就相等；只要 \(\overline{PA}\)、\(\overline{PB}\) 是對應邊，問題就變成「怎麼證全等」，再往下找三組條件。<br>
+              B 錯：從結論推出已知，不能反過來保證結論成立。<br>
+              C 錯：量長度是舉例，不是證明。<br>
+              D 錯：直角三角形和兩邊相等沒有關係；若要用同一個三角形，應該證 \(\angle PAB = \angle PBA\)（等角對等邊），不是證直角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 用全等證明
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-clone" aria-hidden="true"></i> <span>重點 3：找出全等三角形，用對應邊（角）相等證明</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>要證兩條線段（或兩個角）相等：找兩個分別包含它們的三角形，而且它們剛好是<strong>對應邊（對應角）</strong>。</li>
+              <li>證兩三角形全等要湊齊三組條件，配上一個全等性質：\(\text{SSS}\)、\(\text{SAS}\)、\(\text{ASA}\)、\(\text{AAS}\)、\(\text{RHS}\)。</li>
+              <li>條件的來源：已知、<strong>共用邊</strong>、<strong>共用角</strong>、<strong>對頂角</strong>、平行線的截角、「高」給的直角。</li>
+              <li><strong>不能用</strong>的條件：求證的結論本身、還沒證出來的結果、圖上看起來相等的東西。</li>
+              <li>例（課本）：等腰 \(\triangle ABC\) 中 \(\overline{AB} = \overline{AC}\)，\(\overline{BD}\)、\(\overline{CE}\) 是兩腰上的高。在 \(\triangle ABD\) 與 \(\triangle ACE\) 中，\(\angle A\) 共用、\(\angle ADB = \angle AEC = 90^\circ\)、\(\overline{AB} = \overline{AC}\)，由 \(\text{AAS}\) 得全等，所以 \(\overline{BD} = \overline{CE}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">兩段式證明</span>
+              先證三角形全等 → 再用「對應邊（角）相等」得到結論
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_tiles.webp" alt="古希臘陶瓶黑繪風插圖：石桌上平放著兩塊一模一樣的三角形陶片，阿基雙手拿起其中一塊、正要疊到另一塊上面，小歐在對面看著。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-clone"></i> 視覺互動探索：全等條件挑選台</h3>
+            <p class="interactive-instruction">目標是證明等腰三角形兩腰上的高 \(\overline{BD} = \overline{CE}\)。先選一組三角形，再點選你要用的條件（可複選）。挑到三個可以用的條件，就會判斷用哪個全等性質。拉動頂角，形狀變了，證明還成立嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cong" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cong-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">三角形</span>
+                    <div class="btn-group" id="cong-pair-group">
+                      <button class="pick-btn active" data-cong-pair="0">△ABD 與 △ACE</button>
+                      <button class="pick-btn" data-cong-pair="1">△DBC 與 △ECB</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">條件</span>
+                    <div class="btn-group" id="cong-cond-group">
+                      <button class="pick-btn" data-cong-c="0">條件 1</button>
+                      <button class="pick-btn" data-cong-c="1">條件 2</button>
+                      <button class="pick-btn" data-cong-c="2">條件 3</button>
+                      <button class="pick-btn" data-cong-c="3">條件 4</button>
+                      <button class="pick-btn" data-cong-c="4">條件 5</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cong-a">頂角 \(\angle A\)：<span id="cong-va" class="val-num">50°</span></label>
+                    <input type="range" id="cong-a" min="30" max="80" value="50" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cong-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (用全等證明)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-5">
+            <p class="quiz-question"><strong>Q5.</strong> 如圖，四邊形 \(ABCD\) 中，\(\angle DAB = \angle CBA\)、\(\overline{AD} = \overline{BC}\)。要證明 \(\overline{AC} = \overline{BD}\)，先證 \(\triangle ABD \cong \triangle BAC\)，所根據的全等性質是？</p>
+            <canvas class="quiz-fig" data-fig="q5" width="320" height="200" role="img" aria-label="四邊形 ABCD，A 在左下、B 在右下、C 在右上、D 在左上，左右對稱；連接對角線 AC 與 BD"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-5" value="A"><span class="option-text">A. \(\text{SSS}\) 全等性質</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="B"><span class="option-text">B. \(\text{ASA}\) 全等性質</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="C"><span class="option-text">C. \(\text{SAS}\) 全等性質</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-5" value="D"><span class="option-text">D. \(\text{RHS}\) 全等性質</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。在 \(\triangle ABD\) 與 \(\triangle BAC\) 中：
+              \[\begin{aligned} &\overline{AD} = \overline{BC}\ (\text{已知}) \\ &\angle DAB = \angle CBA\ (\text{已知}) \\ &\overline{AB} = \overline{BA}\ (\text{共用邊}) \end{aligned}\]
+              角夾在兩邊中間，是 \(\text{SAS}\)，所以 \(\overline{BD} = \overline{AC}\)（對應邊相等）。<br>
+              A 錯：第三邊 \(\overline{BD} = \overline{AC}\) 正是要證的，不能拿來用。<br>
+              B 錯：只有一組角相等，湊不出兩組角。<br>
+              D 錯：題目沒有直角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-6">
+            <p class="quiz-question"><strong>Q6.</strong> 如圖，\(\overline{AB}\) 與 \(\overline{CD}\) 交於 \(O\)，\(\overline{AC} /\!/ \overline{DB}\)，\(\overline{AO} = \overline{BO}\)。要證 \(\overline{CO} = \overline{DO}\)，在 \(\triangle AOC\) 與 \(\triangle BOD\) 中，下列哪一組條件與理由正確？</p>
+            <canvas class="quiz-fig" data-fig="q6" width="320" height="200" role="img" aria-label="AB 與 CD 交於 O；A 在左上、B 在右下、C 在右上、D 在左下，AC 在上方、DB 在下方，兩線段平行"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-6" value="A"><span class="option-text">A. \(\angle A = \angle B\)（內錯角相等）、\(\overline{AO} = \overline{BO}\)（已知）、\(\angle AOC = \angle BOD\)（對頂角），\(\text{ASA}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="B"><span class="option-text">B. \(\overline{AO} = \overline{BO}\)（已知）、\(\overline{CO} = \overline{DO}\)（求證）、\(\angle AOC = \angle BOD\)（對頂角），\(\text{SAS}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="C"><span class="option-text">C. \(\angle A = \angle B\)（同位角相等）、\(\overline{AO} = \overline{BO}\)（已知）、\(\angle C = \angle D\)（內錯角相等），\(\text{AAS}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-6" value="D"><span class="option-text">D. \(\overline{AC} = \overline{BD}\)（看起來一樣長）、\(\overline{AO} = \overline{BO}\)（已知）、\(\angle A = \angle B\)（內錯角相等），\(\text{SAS}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{AC} /\!/ \overline{DB}\)，\(\overline{AB}\) 是截線，\(\angle OAC\) 與 \(\angle OBD\) 是內錯角；邊 \(\overline{AO}\) 夾在 \(\angle A\) 與 \(\angle AOC\) 之間，所以是 \(\text{ASA}\)，得 \(\overline{CO} = \overline{DO}\)（對應邊相等）。<br>
+              B 錯：用了求證的結論。<br>
+              C 錯：\(\angle A\) 與 \(\angle B\) 是內錯角，不是同位角——理由寫錯，證明就不成立。<br>
+              D 錯：\(\overline{AC} = \overline{BD}\) 題目沒給，看起來一樣長不能當理由。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 等量加減
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-plus" aria-hidden="true"></i> <span>重點 4：先用等量加減湊出條件，再證全等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>有時候三組條件不會直接出現在題目裡，夾角要先用<strong>等量加法</strong>或<strong>等量減法</strong>湊出來。</li>
+              <li><strong>等量加法</strong>：若 \(\angle 1 = \angle 3\)，則 \(\angle 1 + \angle 2 = \angle 3 + \angle 2\)。兩個相等的角各加上<strong>同一個角</strong>，和仍然相等。</li>
+              <li><strong>等量減法</strong>：兩個相等的量各減去同一個量，差仍然相等（線段也適用）。</li>
+              <li>常見的圖：兩個正方形或正三角形共用一個頂點，連出兩條線段要證相等。正方形的直角、正三角形的 \(60^\circ\) 就是「相等的那兩個角」。</li>
+              <li>例（課本）：正方形 \(ABCD\) 與 \(AEFG\) 共用頂點 \(A\)，\(E\) 在 \(\overline{AB}\) 上。\(\overline{AE} = \overline{AG}\)、\(\overline{AD} = \overline{AB}\)、\(\angle DAE = \angle BAG = 90^\circ\)，由 \(\text{SAS}\) 得 \(\overline{DE} = \overline{BG}\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">等量加法</span>
+              若 \(\angle 1 = \angle 3\)，則 \(\angle 1 + \angle 2\)<wbr>\({} = \angle 3 + \angle 2\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_balance.webp" alt="古希臘陶瓶黑繪風插圖：一座兩臂等長的天平保持水平，小歐和阿基一左一右，各自把一顆同樣大小的圓石放進自己面前的秤盤。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-plus"></i> 視覺互動探索：外接圖形的夾角</h3>
+            <p class="interactive-instruction">在 \(\triangle ABC\) 的兩邊往外作正三角形（或正方形）。拉動 \(\angle BAC\) 和 \(\overline{AC}\) 的長度，看兩個夾角是不是永遠相等、連出的兩條線段是不是永遠一樣長；再拉「證明步驟」看完整的推理。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-add" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="add-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">往外作</span>
+                    <div class="btn-group" id="add-mode-group">
+                      <button class="pick-btn active" data-add-mode="tri">正三角形</button>
+                      <button class="pick-btn" data-add-mode="sq">正方形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="add-a">\(\angle BAC\)：<span id="add-va" class="val-num">50°</span></label>
+                    <input type="range" id="add-a" min="30" max="85" value="50" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="add-c">\(\overline{AC}\) 長（\(\overline{AB} = 6\)）：<span id="add-vc" class="val-num">5</span></label>
+                    <input type="range" id="add-c" min="3" max="8" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="add-s">證明步驟：<span id="add-vs" class="val-num">0</span></label>
+                    <input type="range" id="add-s" min="0" max="3" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="add-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等量加減)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-7">
+            <p class="quiz-question"><strong>Q7.</strong> 如圖，\(\overline{AB} = \overline{AD}\)、\(\overline{AC} = \overline{AE}\)，\(\angle BAD = \angle CAE = 38^\circ\)、\(\angle DAC = 27^\circ\)。下列敘述何者正確？</p>
+            <canvas class="quiz-fig" data-fig="q7" width="320" height="200" role="img" aria-label="A 在下方中央，從 A 往上依序放射出 AB、AD、AC、AE 四條線段；角 BAD 與角 CAE 標 38 度，角 DAC 標 27 度；連接 BC 與 DE"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-7" value="A"><span class="option-text">A. \(\angle BAC = \angle DAE = 65^\circ\)，\(\triangle ABC \cong \triangle ADE\)（\(\text{SSS}\)）</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="B"><span class="option-text">B. \(\angle BAC = 38^\circ\)、\(\angle DAE = 65^\circ\)，兩個三角形不一定全等</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="C"><span class="option-text">C. \(\angle BAC = \angle DAE = 76^\circ\)，\(\triangle ABC \cong \triangle ADE\)（\(\text{SAS}\)）</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-7" value="D"><span class="option-text">D. \(\angle BAC = \angle DAE = 65^\circ\)，\(\triangle ABC \cong \triangle ADE\)（\(\text{SAS}\)）</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。等量加法：兩個 \(38^\circ\) 各加上同一個 \(\angle DAC\)：
+              \[\begin{aligned} &\angle BAC = 38^\circ + 27^\circ = 65^\circ \\ &\angle DAE = 27^\circ + 38^\circ = 65^\circ \end{aligned}\]
+              再加上 \(\overline{AB} = \overline{AD}\)、\(\overline{AC} = \overline{AE}\)，夾角相等，\(\text{SAS}\) 得全等（所以 \(\overline{BC} = \overline{DE}\)）。<br>
+              A 錯：\(\overline{BC} = \overline{DE}\) 還沒證出來，不能用 \(\text{SSS}\)。<br>
+              B 錯：\(\angle BAC\) 不只是 \(\angle BAD\)，還要加上 \(\angle DAC\)。<br>
+              C 錯：\(76^\circ\) 是把兩個 \(38^\circ\) 加在一起，加錯了角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-8">
+            <p class="quiz-question"><strong>Q8.</strong> 如圖，正方形 \(ABCD\) 與正方形 \(CEFG\) 有共同頂點 \(C\)，連接 \(\overline{BG}\)、\(\overline{DE}\)。證明 \(\overline{BG} = \overline{DE}\) 時，說明 \(\angle BCG = \angle DCE\) 的正確理由是？</p>
+            <canvas class="quiz-fig" data-fig="q8" width="320" height="200" role="img" aria-label="正方形 ABCD 在左，C 在其右下角；正方形 CEFG 以 C 為頂點斜放在右側，G 在 C 的右上方、E 在 C 的右下方；連接 BG 與 DE"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-8" value="A"><span class="option-text">A. \(\angle BCG\) 與 \(\angle DCE\) 是對頂角</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="B"><span class="option-text">B. \(\angle BCG\) 與 \(\angle DCE\) 都等於 \(90^\circ\) 加上同一個角 \(\angle DCG\)（等量加法）</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="C"><span class="option-text">C. \(\angle BCG\) 與 \(\angle DCE\) 都是正方形的內角，所以都等於 \(90^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-8" value="D"><span class="option-text">D. 圖上 \(\overline{BG}\) 和 \(\overline{DE}\) 一樣長，所以兩角相等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。
+              \(\angle BCD = \angle GCE = 90^\circ\)，所以
+              \[\begin{aligned} &\angle BCG = 90^\circ + \angle DCG \\ &\angle DCE = 90^\circ + \angle DCG \end{aligned}\]
+              兩角相等，再配上 \(\overline{BC} = \overline{DC}\)、\(\overline{CG} = \overline{CE}\)，\(\text{SAS}\) 得 \(\triangle BCG \cong \triangle DCE\)。<br>
+              A 錯：兩個角沒有共用一條直線，不是對頂角。<br>
+              C 錯：這兩個角都比 \(90^\circ\) 大，不是正方形的內角。<br>
+              D 錯：\(\overline{BG} = \overline{DE}\) 是要證的結論。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 用相似證明
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i> <span>重點 5：用 AA 相似性質證明——找出相等的角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>證兩三角形相似，最常用 \(\text{AA}\) 相似性質：找到<strong>兩組</strong>對應角相等就夠了。</li>
+              <li>一組角常常是現成的：直角、正三角形的 \(60^\circ\)、對頂角、共用角。</li>
+              <li>另一組角常靠「<strong>同一個角的餘角（補角）相等</strong>」：若 \(\angle 1 + \angle 2 = 90^\circ\)、\(\angle 3 + \angle 2 = 90^\circ\)，則 \(\angle 1 = \angle 3\)。</li>
+              <li>證出相似之後，就能寫出<strong>對應邊成比例</strong>，用來求長度。寫比例時對應頂點的順序要一致。</li>
+              <li>\(\text{SAS}\) 相似要的是「夾角相等、夾角的兩邊<strong>對應</strong>成比例」——比例要用對應邊來寫，不能只看數字湊得出 \(2 : 3\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">同一個角的餘角相等</span>
+              \(\angle 1 + \angle 2 = 90^\circ\)<wbr>\({} = \angle 3 + \angle 2\)<wbr>\({} \Rightarrow \angle 1 = \angle 3\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_similar.webp" alt="古希臘陶瓶黑繪風插圖：石桌上並排放著一大一小兩塊形狀相同的三角形陶片，阿基拿著一把圓規比著小的那塊，小歐在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-up-right-and-down-left-from-center"></i> 視覺互動探索：直角拐彎器</h3>
+            <p class="interactive-instruction">拉動 \(E\) 點，看 \(\angle 1\) 和 \(\angle 3\) 是不是永遠相等，兩個三角形的對應邊比是不是永遠一樣。切到「正三角形」，看 \(60^\circ\) 的版本。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sim" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sim-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圖形</span>
+                    <div class="btn-group" id="sim-mode-group">
+                      <button class="pick-btn active" data-sim-mode="rect">長方形（直角）</button>
+                      <button class="pick-btn" data-sim-mode="tri">正三角形（60°）</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sim-e"><span id="sim-lab">\(\overline{BE}\)</span>：<span id="sim-ve" class="val-num">3</span></label>
+                    <input type="range" id="sim-e" min="1" max="9" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sim-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (用相似證明)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-9">
+            <p class="quiz-question"><strong>Q9.</strong> 如圖，正方形 \(ABCD\) 的邊長是 \(12\)，\(E\) 在 \(\overline{BC}\) 上且 \(\overline{BE} = 4\)，過 \(E\) 作 \(\overline{EF} \perp \overline{AE}\)，交 \(\overline{CD}\) 於 \(F\)。\(\overline{CF}\) 的長是多少？</p>
+            <canvas class="quiz-fig" data-fig="q9" width="320" height="200" role="img" aria-label="正方形 ABCD，A 左上、B 左下、C 右下、D 右上；E 在 BC 上靠近 B，F 在 CD 上；AE 與 EF 在 E 成直角，標出 BE 等於 4、邊長 12"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-9" value="A"><span class="option-text">A. \(\frac{8}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="B"><span class="option-text">B. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="C"><span class="option-text">C. \(4\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-9" value="D"><span class="option-text">D. \(\frac{16}{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle B = \angle C = 90^\circ\)；\(\angle BAE\) 與 \(\angle CEF\) 都是 \(\angle AEB\) 的餘角，所以相等，\(\triangle ABE \sim \triangle ECF\)（\(\text{AA}\)）。\(\overline{EC} = 12 - 4 = 8\)：
+              \[\begin{aligned} &\overline{AB} : \overline{EC} = \overline{BE} : \overline{CF} \\ &12 : 8 = 4 : \overline{CF},\ \overline{CF} = \frac{8}{3} \end{aligned}\]
+              B 錯：比例的對應寫反了，\(12 : 8 = \overline{CF} : 4\) 才會得 \(6\)。<br>
+              C 錯：以為 \(\overline{CF} = \overline{BE}\)，兩個三角形只是相似，不是全等。<br>
+              D 錯：\(\frac{16}{3} = \frac{8 \times 8}{12}\)，把 \(\overline{EC}\) 乘了兩次。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-10">
+            <p class="quiz-question"><strong>Q10.</strong> 四邊形 \(ABCD\) 的兩條對角線交於 \(O\)，\(\overline{OA} = 6\)、\(\overline{OC} = 9\)、\(\overline{OB} = 4\)。若要 \(\triangle AOB \sim \triangle COD\)（\(A\) 對應 \(C\)、\(B\) 對應 \(D\)），\(\overline{OD}\) 應該是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-10" value="A"><span class="option-text">A. \(\frac{8}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="B"><span class="option-text">B. \(\frac{27}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="C"><span class="option-text">C. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-10" value="D"><span class="option-text">D. \(9\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\angle AOB = \angle COD\)（對頂角），夾這個角的兩邊要對應成比例（\(\text{SAS}\) 相似）：
+              \[\begin{aligned} &\overline{OA} : \overline{OC} = \overline{OB} : \overline{OD} \\ &6 : 9 = 4 : \overline{OD},\ \overline{OD} = 6 \end{aligned}\]
+              A 錯：寫成 \(\overline{OA} : \overline{OC} = \overline{OD} : \overline{OB}\)，夾角的兩邊沒有照 \(A\) 對 \(C\)、\(B\) 對 \(D\) 來對應——這正是課本挑錯題的錯法。<br>
+              B 錯：寫成 \(\overline{OB} : \overline{OA} = \overline{OC} : \overline{OD}\)，那是 \(A\) 對應 \(D\) 的另一種相似，和題目要的對應不同。<br>
+              D 錯：以為 \(\overline{OD}\) 要等於 \(\overline{OC}\)，相似不是全等。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 面積與平行四邊形
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-vector-square" aria-hidden="true"></i> <span>重點 6：用面積推出等邊，判別平行四邊形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>平行四邊形的判別：兩雙對角分別相等、兩雙對邊分別相等、<strong>一雙對邊平行且相等</strong>、<strong>兩對角線互相平分</strong>。</li>
+              <li>兩平行線之間的距離處處相等。底在兩平行線上的三角形<strong>等高</strong>，所以「面積相等 ⇔ 底相等」。</li>
+              <li>例（課本）：四邊形 \(ABCD\) 中 \(\angle 1 = \angle 2\)（內錯角）得 \(\overline{AD} /\!/ \overline{BC}\)；設距離 \(h\)，由 \(\triangle ABC\) 與 \(\triangle ACD\) 面積相等，\(\frac{1}{2} \times \overline{BC} \times h = \frac{1}{2} \times \overline{AD} \times h\)，得 \(\overline{BC} = \overline{AD}\)，是一雙對邊平行且相等。</li>
+              <li>兩個三角形若共用一個頂點、底在同一直線上，也是<strong>等高</strong>：面積比 \(=\) 底的比。對角線切出的四個三角形就是這樣比出「對角線有沒有互相平分」。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">等高的三角形</span>
+              面積比 \(=\) 底的比；面積相等 \(\Leftrightarrow\) 底相等
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_rails.webp" alt="古希臘陶瓶黑繪風插圖：沙盤上畫著兩條平行的直溝，小歐握著細木棍正在沿著上面那條溝畫，阿基跪在對面，用兩隻手掌比著兩條溝之間的寬度。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-vector-square"></i> 視覺互動探索：平行線間的面積秤</h3>
+            <p class="interactive-instruction">「平行線間」：\(\overline{AD} /\!/ \overline{BC}\)，拉 \(\overline{AD}\) 的長度與位置，比較 \(\triangle ABC\) 和 \(\triangle ACD\) 的面積。「對角線切四塊」：拉 \(\overline{AO}\)、\(\overline{BO}\)，看四塊面積什麼時候全部相等。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-area" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="area-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="area-mode-group">
+                      <button class="pick-btn active" data-area-mode="par">平行線間</button>
+                      <button class="pick-btn" data-area-mode="diag">對角線切四塊</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="area-row-ad">
+                    <label for="area-ad">\(\overline{AD}\) 長：<span id="area-vad" class="val-num">5</span></label>
+                    <input type="range" id="area-ad" min="2" max="12" value="5" step="1">
+                  </div>
+                  <div class="slider-row" id="area-row-sh">
+                    <label for="area-sh">\(A\) 往右移：<span id="area-vsh" class="val-num">2</span></label>
+                    <input type="range" id="area-sh" min="-2" max="4" value="2" step="1">
+                  </div>
+                  <div class="slider-row" id="area-row-ao">
+                    <label for="area-ao">\(\overline{AO}\)（\(\overline{OC} = 4\)）：<span id="area-vao" class="val-num">3</span></label>
+                    <input type="range" id="area-ao" min="2" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="area-row-bo">
+                    <label for="area-bo">\(\overline{BO}\)（\(\overline{OD} = 4\)）：<span id="area-vbo" class="val-num">5</span></label>
+                    <input type="range" id="area-bo" min="2" max="6" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="area-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (面積與平行四邊形)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-11">
+            <p class="quiz-question"><strong>Q11.</strong> 四邊形 \(ABCD\) 中，\(\overline{AD} /\!/ \overline{BC}\)，兩平行線的距離是 \(9\)，\(\overline{BC} = 14\)，而且 \(\triangle ACD\) 的面積等於 \(\triangle ABC\) 的面積。四邊形 \(ABCD\) 的面積是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-11" value="A"><span class="option-text">A. \(63\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="B"><span class="option-text">B. \(252\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="C"><span class="option-text">C. 條件不夠，無法求出</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-11" value="D"><span class="option-text">D. \(126\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。兩個三角形的高都是平行線的距離 \(9\)，面積相等所以底相等：\(\overline{AD} = \overline{BC} = 14\)。一雙對邊平行且相等，\(ABCD\) 是平行四邊形：
+              \[\text{面積} = 14 \times 9 = 126\]
+              A 錯：\(63\) 只是 \(\triangle ABC\) 的面積。<br>
+              B 錯：多乘了 \(2\)，平行四邊形面積是底 \(\times\) 高，不必再乘 \(2\)。<br>
+              C 錯：題目沒有直接給 \(\overline{AD}\)，但「等高、面積相等」已經推得出 \(\overline{AD} = 14\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-12">
+            <p class="quiz-question"><strong>Q12.</strong> 四邊形 \(ABCD\) 的對角線交於 \(O\)，\(\triangle AOB\)、\(\triangle BOC\)、\(\triangle COD\)、\(\triangle DOA\) 的面積依序是 \(12\)、\(18\)、\(27\)、\(18\)。下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-12" value="A"><span class="option-text">A. 有兩塊面積相等，所以 \(\overline{OA} = \overline{OC}\)，\(ABCD\) 是平行四邊形</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="B"><span class="option-text">B. \(\overline{OA} : \overline{OC} = 2 : 3\)、\(\overline{OB} : \overline{OD} = 2 : 3\)，對角線沒有互相平分，不能判定為平行四邊形</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="C"><span class="option-text">C. \(\overline{OA} : \overline{OC} = 3 : 2\)、\(\overline{OB} : \overline{OD} = 2 : 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-12" value="D"><span class="option-text">D. \(\triangle AOB\) 與 \(\triangle BOC\) 等高，所以 \(\overline{OA} : \overline{OC} = 12 : 27\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\triangle AOB\) 與 \(\triangle BOC\) 共用頂點 \(B\)、底在 \(\overline{AC}\) 上，等高：\(\overline{OA} : \overline{OC} = 12 : 18 = 2 : 3\)。\(\triangle AOB\) 與 \(\triangle DOA\) 共用頂點 \(A\)、底在 \(\overline{BD}\) 上：\(\overline{OB} : \overline{OD} = 12 : 18 = 2 : 3\)。<br>
+              A 錯：\(\triangle BOC\) 與 \(\triangle DOA\) 相等推不出 \(\overline{OA} = \overline{OC}\)。<br>
+              C 錯：\(\overline{OA}\) 對應的是較小的 \(12\)，比例寫反了。<br>
+              D 錯：\(\triangle BOC\) 的面積是 \(18\)，不是 \(27\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 摺紙與特殊三角形
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-note-sticky" aria-hidden="true"></i> <span>重點 7：摺紙裡的 30°、60°、90° 三角形</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>摺紙的證明，已知條件藏在摺法裡：<strong>摺過去的兩部分全等</strong>，對應邊、對應角都相等；對摺一次得到<strong>中點</strong>。</li>
+              <li>直角三角形三邊比是 \(1 : \sqrt{3} : 2\) 時，對應的角是 \(30^\circ\)、\(60^\circ\)、\(90^\circ\)；反過來，斜邊是短股的 \(2\) 倍，短股對的角就是 \(30^\circ\)。</li>
+              <li>例（課本）：正方形 \(ABCD\) 對摺得中線 \(\overline{PQ}\)，再把 \(C\) 摺到 \(\overline{PQ}\) 上的 \(E\)。因為 \(\overline{BE} = \overline{BC} = 2\overline{BQ}\)，直角 \(\triangle EBQ\) 的邊比是 \(1 : 2 : \sqrt{3}\)，\(\angle EBQ = 60^\circ\)，加上 \(\overline{BE} = \overline{BC}\)，\(\triangle BCE\) 是正三角形。</li>
+              <li>證明裡的每個等號都要說出來源：摺疊（全等）、中點、正方形的邊、特殊直角三角形的邊長比。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">特殊直角三角形</span>
+              邊長比 \(1 : \sqrt{3} : 2 \Leftrightarrow\) 角 \(30^\circ\)、\(60^\circ\)、\(90^\circ\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_fold.webp" alt="古希臘陶瓶黑繪風插圖：小歐在石桌上把一張正方形的奶油色莎草紙對摺，雙手捏著上緣兩個角往下摺，阿基站在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-note-sticky"></i> 視覺互動探索：正方形摺出正三角形</h3>
+            <p class="interactive-instruction">拉動「摺紙步驟」一步一步摺；換一個正方形邊長，看 \(\overline{BQ} : \overline{BE} : \overline{QE}\) 的比是不是永遠一樣。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-fold" width="540" height="520"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="fold-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="fold-st">摺紙步驟：<span id="fold-vst" class="val-num">1</span></label>
+                    <input type="range" id="fold-st" min="1" max="5" value="1" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="fold-s">正方形邊長：<span id="fold-vs" class="val-num">6</span></label>
+                    <input type="range" id="fold-s" min="4" max="8" value="6" step="2">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="fold-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (摺紙與特殊三角形)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-13">
+            <p class="quiz-question"><strong>Q13.</strong> 如圖，照課本的摺法在正方形 \(ABCD\) 中摺出正三角形 \(BCE\)（\(E\) 在正方形內部）。再連接 \(\overline{DE}\)，\(\angle CED\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q13" width="320" height="200" role="img" aria-label="正方形 ABCD，A 左上、B 左下、C 右下、D 右上；正三角形 BCE 的頂點 E 在正方形內部上方；連接 DE"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-13" value="A"><span class="option-text">A. \(60^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="B"><span class="option-text">B. \(75^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="C"><span class="option-text">C. \(30^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-13" value="D"><span class="option-text">D. \(90^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\triangle BCE\) 是正三角形，\(\overline{CE} = \overline{BC} = \overline{CD}\)，\(\triangle CDE\) 是等腰三角形；頂角 \(\angle DCE = 90^\circ - 60^\circ = 30^\circ\)：
+              \[\angle CED = \frac{180^\circ - 30^\circ}{2} = 75^\circ\]
+              A 錯：\(60^\circ\) 是正三角形的內角。<br>
+              C 錯：\(30^\circ\) 是頂角 \(\angle DCE\)，不是底角。<br>
+              D 錯：圖上沒有任何條件讓它成為直角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-14">
+            <p class="quiz-question"><strong>Q14.</strong> 如圖，\(\triangle ABC\) 中 \(\overline{AB} = \overline{AC}\)，\(\angle B = 30^\circ\)，\(D\) 在 \(\overline{BC}\) 上且 \(\overline{AD} \perp \overline{AC}\)。若 \(\overline{AD} = 6\)，\(\overline{BC}\) 是多少？</p>
+            <canvas class="quiz-fig" data-fig="q14" width="320" height="200" role="img" aria-label="等腰三角形 ABC，A 在上方、BC 水平；D 在 BC 上偏左，AD 與 AC 在 A 成直角；角 B 標 30 度、AD 標 6"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-14" value="A"><span class="option-text">A. \(12\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="B"><span class="option-text">B. \(6\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="C"><span class="option-text">C. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-14" value="D"><span class="option-text">D. \(18\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\angle C = \angle B = 30^\circ\)。直角 \(\triangle ADC\) 中 \(\angle C = 30^\circ\)，斜邊 \(\overline{DC} = 2\overline{AD} = 12\)。又 \(\angle BAD = 120^\circ - 90^\circ\)<wbr>\({} = 30^\circ = \angle B\)，\(\triangle ABD\) 等腰，\(\overline{BD} = \overline{AD} = 6\)：
+              \[\overline{BC} = 6 + 12 = 18\]
+              A 錯：\(12\) 只是 \(\overline{DC}\)。<br>
+              B 錯：\(6\sqrt{3}\) 是 \(\overline{AC}\)。<br>
+              C 錯：以為 \(\overline{BD} = \overline{DC}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 奇數與偶數的代數表示
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> <span>重點 8：用 2k、2k + 1 表示偶數與奇數</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>每個偶數都是 \(2\) 的倍數：<strong>偶數</strong>可以寫成 \(2k\)（\(k\) 是整數）。</li>
+              <li>每個奇數都是某個偶數加 \(1\) 或減 \(1\)：<strong>奇數</strong>可以寫成 \(2k + 1\) 或 \(2k - 1\)（\(k\) 是整數）。</li>
+              <li>\(k\) 可以是負數和 \(0\)，所以 \(0\)、\(-2\) 也是偶數，\(-1\)、\(-3\) 也是奇數。</li>
+              <li>判斷一個式子的奇偶：設法把它整理成「\(2 \times\) 整數」（偶數）或「\(2 \times\) 整數 \(+ 1\)」（奇數）。整理不出來，就代入幾個數看看——一個奇、一個偶就是「都有可能」。</li>
+              <li>例（課本）：\(a\) 是整數時，\(2a + 2 = 2(a + 1)\) 一定是偶數；\(a + 1\) 都有可能。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">偶數與奇數（\(k\) 為整數）</span>
+              偶數 \(= 2k\)；奇數 \(= 2k + 1\) 或 \(2k - 1\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_pebbles.webp" alt="古希臘陶瓶黑繪風插圖：石桌上排著七顆圓石，其中六顆兩兩成對排成三對，剩下一顆單獨放在旁邊；阿基用手指著那顆落單的圓石，小歐在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-circle-half-stroke"></i> 視覺互動探索：奇偶檢驗帶</h3>
+            <p class="interactive-instruction">選一個式子，拉動 \(n\)，看它的值是奇數（赤陶色）還是偶數（奶油色）。整條帶子都同色時，再看下方的整理式：它真的能寫成 \(2 \times\) 整數 或 \(2 \times\) 整數 \(+ 1\) 嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-par" width="540" height="380"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="par-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">式子</span>
+                    <div class="btn-group" id="par-expr-group">
+                      <button class="pick-btn active" data-par-expr="0">\(n + 5\)</button>
+                      <button class="pick-btn" data-par-expr="1">\(2n + 6\)</button>
+                      <button class="pick-btn" data-par-expr="2">\(2n - 3\)</button>
+                      <button class="pick-btn" data-par-expr="3">\(3n\)</button>
+                      <button class="pick-btn" data-par-expr="4">\(n(n + 1)\)</button>
+                      <button class="pick-btn" data-par-expr="5">\(6n - 1\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="par-n">\(n\)：<span id="par-vn" class="val-num">2</span></label>
+                    <input type="range" id="par-n" min="-5" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="par-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (奇數與偶數)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-15">
+            <p class="quiz-question"><strong>Q15.</strong> 已知 \(m\) 是整數，下列哪一個式子的值<strong>一定</strong>是奇數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-15" value="A"><span class="option-text">A. \(3m + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="B"><span class="option-text">B. \(m^2 + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="C"><span class="option-text">C. \(2m + 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-15" value="D"><span class="option-text">D. \(5m\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(2m + 7 = 2(m + 3) + 1\)，\(m + 3\) 是整數，所以一定是奇數。<br>
+              A 錯：\(m = 1\) 時 \(3m + 1 = 4\) 是偶數，\(m = 2\) 時是 \(7\)，都有可能。<br>
+              B 錯：\(m = 1\) 時是 \(2\)，\(m = 2\) 時是 \(5\)，都有可能。<br>
+              D 錯：\(m = 2\) 時是 \(10\)，\(m = 1\) 時是 \(5\)，都有可能。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-16">
+            <p class="quiz-question"><strong>Q16.</strong> 已知 \(t\) 是整數。下列哪一個式子，可以用來表示<strong>所有的</strong>奇數？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-16" value="A"><span class="option-text">A. \(2t + 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="B"><span class="option-text">B. \(4t + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="C"><span class="option-text">C. \(2t^2 + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-16" value="D"><span class="option-text">D. \(t + 2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(2t + 5 = 2(t + 2) + 1\)，而且 \(t\) 跑遍所有整數時，\(t + 2\) 也跑遍所有整數，所以每一個奇數都寫得出來（例：\(-1 = 2 \times (-3) + 5\)）。<br>
+              B 錯：\(4t + 1\) 只能表示 \(1\)、\(5\)、\(9\)、\(-3\)……，\(3\)、\(7\) 寫不出來。<br>
+              C 錯：\(2t^2 + 1\) 只有 \(1\)、\(3\)、\(9\)、\(19\)……，\(5\)、\(7\) 寫不出來。<br>
+              D 錯：\(t + 2\) 也可能是偶數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 奇偶性質的證明（用不同的字母）
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-font" aria-hidden="true"></i> <span>重點 9：證明奇偶性質——兩個任意的數要用不同的字母</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>代數證明的寫法：先用字母<strong>假設</strong>（偶數 \(2m\)、奇數 \(2n + 1\)，\(m\)、\(n\) 是整數），再<strong>運算整理</strong>成 \(2 \times (\ldots)\) 或 \(2 \times (\ldots) + 1\)，最後<strong>說明括號裡是整數</strong>，下結論。</li>
+              <li>兩個<strong>任意</strong>的數要用<strong>不同的字母</strong>。若設 \(a = 2m\)、\(b = 2m + 1\)，\(b\) 永遠比 \(a\) 大 \(1\)，就只證到「相鄰的偶數和奇數」。</li>
+              <li>例（課本）：偶數 \(a = 2m\)、奇數 \(b = 2n + 1\)，\(a + b = 2(m + n) + 1\)，\(m + n\) 是整數，所以 \(a + b\) 是奇數。</li>
+              <li>例（課本）：奇數 \(a = 2k + 1\)，\(a^2 = 4k^2 + 4k + 1\)<wbr>\({} = 2(2k^2 + 2k) + 1\)，所以奇數的平方是奇數。</li>
+              <li>結論整理：奇 \(+\) 偶 \(=\) 奇、偶 \(+\) 偶 \(=\) 偶、奇 \(\times\) 奇 \(=\) 奇、偶 \(\times\) 偶 \(=\) 偶。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">代數證明三步</span>
+              用不同字母假設 → 整理成 \(2 \times (\ldots)\) 或 \(2 \times (\ldots) + 1\) → 說明括號裡是整數
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_jars.webp" alt="古希臘陶瓶黑繪風插圖：石桌上並排放著兩個樣式不同的黑繪陶罐，小歐和阿基各自伸手從自己面前的陶罐裡拿出一顆圓石。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-font"></i> 視覺互動探索：字母涵蓋格</h3>
+            <p class="interactive-instruction">選一種運算，再選「不同字母」或「同一個字母」。格子是所有要檢查的數對，亮起來的是這種假設<strong>涵蓋得到</strong>的。拉 \(m\)、\(n\) 看右邊的整理式；同一個字母時，涵蓋到幾格？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-let" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="let-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">運算</span>
+                    <div class="btn-group" id="let-op-group">
+                      <button class="pick-btn active" data-let-op="eo">偶 + 奇</button>
+                      <button class="pick-btn" data-let-op="oo">奇 + 奇</button>
+                      <button class="pick-btn" data-let-op="om">奇 × 奇</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">假設</span>
+                    <div class="btn-group" id="let-set-group">
+                      <button class="pick-btn active" data-let-set="diff">不同字母</button>
+                      <button class="pick-btn" data-let-set="same">同一個字母</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="let-m">\(m\)：<span id="let-vm" class="val-num">1</span></label>
+                    <input type="range" id="let-m" min="-2" max="2" value="1" step="1">
+                  </div>
+                  <div class="slider-row" id="let-row-n">
+                    <label for="let-n">\(n\)：<span id="let-vn" class="val-num">-1</span></label>
+                    <input type="range" id="let-n" min="-2" max="2" value="-1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="let-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (奇偶性質的證明)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-17">
+            <p class="quiz-question"><strong>Q17.</strong> 要證明「任意<strong>三個</strong>奇數的和是奇數」，下列哪一種假設最恰當？（字母都代表整數）</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-17" value="A"><span class="option-text">A. 設三個奇數是 \(2k + 1\)、\(2k + 3\)、\(2k + 5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="B"><span class="option-text">B. 設三個奇數是 \(2m + 1\)、\(2n + 1\)、\(2m + 3\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="C"><span class="option-text">C. 設三個奇數是 \(2p + 1\)、\(2q + 1\)、\(2r + 1\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-17" value="D"><span class="option-text">D. 設三個奇數是 \(1\)、\(3\)、\(5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。三個<strong>任意</strong>的奇數彼此無關，要用三個不同的字母；和是 \(2(p + q + r + 1) + 1\)，是奇數。<br>
+              A 錯：三個數永遠是相鄰的奇數，只證到「連續三個奇數」。<br>
+              B 錯：第三個數永遠比第一個大 \(2\)，兩個數被綁在一起了。<br>
+              D 錯：這是舉例，不是證明。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-18">
+            <p class="quiz-question"><strong>Q18.</strong> 小翊證明「兩個奇數的和是偶數」：設 \(a = 2m + 1\)、\(b = 2n + 1\)（\(m\)、\(n\) 是整數），\(a + b = 2m + 2n + 2\)<wbr>\({} = 2(m + n + 1)\)。要下結論之前，還需要說明哪一件事？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-18" value="A"><span class="option-text">A. \(m + n + 1\) 是偶數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="B"><span class="option-text">B. \(m\) 和 \(n\) 相等</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="C"><span class="option-text">C. \(m + n + 1\) 是正數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-18" value="D"><span class="option-text">D. \(m + n + 1\) 是整數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。偶數的定義是「\(2 \times\) 整數」，所以要說明括號裡的 \(m + n + 1\) 是整數（整數相加還是整數）。<br>
+              A 錯：括號裡是奇數也沒關係，例如 \(2 \times 3 = 6\) 還是偶數。<br>
+              B 錯：\(m\)、\(n\) 本來就是任意的，不需要相等。<br>
+              C 錯：\(0\) 和負的偶數也是偶數，不必是正數。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 舉例不是證明；反例
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ban" aria-hidden="true"></i> <span>重點 10：舉例不是證明，一個反例就能推翻</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>「每一個……都……」的說法，舉再多個成立的例子，也<strong>不是證明</strong>——整數有無限多個，舉不完。</li>
+              <li>要說它<strong>成立</strong>，必須用代數或幾何推理證明。</li>
+              <li>要說它<strong>不成立</strong>，只要找到<strong>一個反例</strong>：符合條件、結論卻不對的例子。</li>
+              <li>例（課本漫畫）：小翊舉了 \(1\)、\(3\)、\(5\)、\(7\)、\(9\) 的平方都是奇數，就說「奇數的平方一定是奇數」——結論恰好是對的，但他做的只是舉例，要用 \(a = 2k + 1\) 才算證明。</li>
+              <li>找反例時，記得試試<strong>負數</strong>、\(0\)、\(1\)、分數這類「邊角」的數。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">成立與不成立</span>
+              說「成立」要證明；說「不成立」舉一個反例就夠
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_swan.webp" alt="古希臘陶瓶黑繪風插圖：柱廊外的水池裡游著四隻奶油白色的天鵝和一隻黑色的天鵝，阿基伸手指著那隻黑天鵝，小歐在旁邊睜大眼睛看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-ban"></i> 視覺互動探索：猜想檢驗器</h3>
+            <p class="interactive-instruction">選一個猜想，拉滑桿自己試幾個數，或按「自動找反例」。找到反例，猜想就被推翻；範圍內全部成立，它仍然只是「舉例」——還需要證明。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cnt" width="540" height="450"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cnt-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">猜想</span>
+                    <div class="btn-group" id="cnt-claim-group">
+                      <button class="pick-btn active" data-cnt-claim="0">\(n^2 + n + 11\)</button>
+                      <button class="pick-btn" data-cnt-claim="1">\(a \gt b\) 與平方</button>
+                      <button class="pick-btn" data-cnt-claim="2">連續三數的和</button>
+                      <button class="pick-btn" data-cnt-claim="3">奇數平方減 1</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">操作</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="cnt-search">自動找反例</button>
+                      <button class="pick-btn" id="cnt-clear">清除紀錄</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cnt-a"><span id="cnt-la">\(n\)</span>：<span id="cnt-va" class="val-num">1</span></label>
+                    <input type="range" id="cnt-a" min="1" max="12" value="1" step="1">
+                  </div>
+                  <div class="slider-row" id="cnt-row-b">
+                    <label for="cnt-b">\(b\)：<span id="cnt-vb" class="val-num">1</span></label>
+                    <input type="range" id="cnt-b" min="-6" max="6" value="1" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cnt-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (舉例與反例)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-19">
+            <p class="quiz-question"><strong>Q19.</strong> 阿基說：「\(n\) 是正整數時，\(2^n + 1\) 一定是質數，因為 \(n = 1\)、\(2\)、\(4\) 時分別是 \(3\)、\(5\)、\(17\)，都是質數。」下列哪一個回應最能說明他錯了？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-19" value="A"><span class="option-text">A. \(n = 3\) 時，\(2^3 + 1 = 9 = 3 \times 3\)，不是質數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="B"><span class="option-text">B. 他只舉了 \(3\) 個例子，例子太少，所以說法一定是錯的</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="C"><span class="option-text">C. 再試 \(n = 8\)：\(2^8 + 1 = 257\) 也是質數，所以他是對的</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-19" value="D"><span class="option-text">D. 要先寫出 \(n = 2k\) 的情形，才能判斷</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。一個反例就推翻「一定」：\(n = 3\) 符合條件，\(2^3 + 1 = 9\) 卻不是質數。<br>
+              B 錯：例子少只代表「還沒證明」，不代表說法錯；要說它錯，得拿出反例。<br>
+              C 錯：再多一個成立的例子，仍然是舉例。<br>
+              D 錯：\(n\) 是任意正整數，只看偶數的情形不夠，而且這裡一個反例就夠了。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-20">
+            <p class="quiz-question"><strong>Q20.</strong> 下列哪一個說法可以用一個反例推翻？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-20" value="A"><span class="option-text">A. 兩個負數的和是負數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="B"><span class="option-text">B. 一個正數的平方，一定比這個數本身大</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="C"><span class="option-text">C. 偶數的平方是偶數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-20" value="D"><span class="option-text">D. 兩個奇數的乘積是奇數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。反例：\(\frac{1}{2}\) 是正數，\(\left(\frac{1}{2}\right)^2 = \frac{1}{4}\) 比 \(\frac{1}{2}\) 小；\(1^2 = 1\) 也沒有比 \(1\) 大。<br>
+              A、C、D 都是對的，找不到反例：兩個負數 \(-a\)、\(-b\)（\(a\)、\(b\) 為正數）的和是 \(-(a + b)\)；\((2k)^2 = 2(2k^2)\)；\((2m + 1)(2n + 1)\)<wbr>\({} = 2(2mn + m + n) + 1\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 證明是某數的倍數
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-cells-large" aria-hidden="true"></i> <span>重點 11：用乘法公式證明「是某數的倍數」</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>要證明一個式子是 \(p\) 的倍數，就把它整理成「\(p \times\) 整數」，並說明括號裡是整數。</li>
+              <li>常用工具：<strong>平方差</strong> \(a^2 - b^2 = (a + b)(a - b)\)、<strong>和的平方</strong> \((a + b)^2 = a^2 + 2ab + b^2\)。</li>
+              <li>例（課本）：直角三角形三邊 \(a\)、\(b\)、\(c\) 都是正整數，\(c\) 是斜邊，\(a^2 = c^2 - b^2 = (c + b)(c - b)\)，所以 \(a^2\) 是 \((b + c)\) 的倍數。</li>
+              <li>例（課本）：\((k + 1)^2 - k^2 = 2k + 1\) 是奇數；\((k + 2)^2 - k^2 = 4(k + 1)\) 是 \(4\) 的倍數。</li>
+              <li>展開時別漏掉中間項：\((a + b)^2\) 不是 \(a^2 + b^2\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">平方差</span>
+              \((k + d)^2 - k^2 = d(2k + d)\)：一定是 \(d\) 的倍數
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_mosaic.webp" alt="古希臘陶瓶黑繪風插圖：石板地上用方形陶磚鋪出一個三乘三的正方形，左下角拿掉了二乘二的四塊、只剩一個 L 形；阿基蹲著把拿掉的陶磚疊在旁邊，小歐站著看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-table-cells-large"></i> 視覺互動探索：平方差拼板</h3>
+            <p class="interactive-instruction">大正方形邊長 \(k + d\)，挖掉邊長 \(k\) 的小正方形，剩下的 L 形可以拼成一條寬 \(d\) 的長條。拉動 \(k\)、\(d\)，看長條的長是多少、它一定是誰的倍數。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sq" width="540" height="440"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sq-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sq-k">\(k\)：<span id="sq-vk" class="val-num">3</span></label>
+                    <input type="range" id="sq-k" min="1" max="6" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sq-d">\(d\)：<span id="sq-vd" class="val-num">2</span></label>
+                    <input type="range" id="sq-d" min="1" max="4" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sq-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (證明倍數)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-21">
+            <p class="quiz-question"><strong>Q21.</strong> 已知 \(n\) 是正整數，關於 \((n + 5)^2 - (n - 5)^2\) 的值，下列敘述何者一定正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-21" value="A"><span class="option-text">A. 一定是 \(25\) 的倍數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="B"><span class="option-text">B. 一定是奇數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="C"><span class="option-text">C. 一定是 \(20\) 的倍數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-21" value="D"><span class="option-text">D. 一定是完全平方數</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。用平方差：
+              設 \(a = n + 5\)、\(b = n - 5\)，則 \(a + b = 2n\)、\(a - b = 10\)：
+              \[\begin{aligned} &(n + 5)^2 - (n - 5)^2 \\ &= (a + b)(a - b) \\ &= 2n \times 10 = 20n \end{aligned}\]
+              \(n\) 是整數，所以是 \(20\) 的倍數。<br>
+              A 錯：\(n = 1\) 時是 \(20\)，不是 \(25\) 的倍數。<br>
+              B 錯：\(20n\) 一定是偶數。<br>
+              D 錯：\(n = 1\) 時是 \(20\)，不是完全平方數。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-22">
+            <p class="quiz-question"><strong>Q22.</strong> 已知 \(p\) 是正整數，要證明 \((3p + 1)^2 - 1\) 是 \(3\) 的倍數。下列哪一個過程正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-22" value="A"><span class="option-text">A. \((3p + 1)^2 - 1\)<wbr>\({} = 9p^2 + 1 - 1\)<wbr>\({} = 9p^2\)，是 \(9\) 的倍數，所以也是 \(3\) 的倍數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="B"><span class="option-text">B. \((3p + 1)^2 - 1\)<wbr>\({} = 9p^2 + 6p\)<wbr>\({} = 3(3p^2 + 2p)\)，\(3p^2 + 2p\) 是正整數，所以是 \(3\) 的倍數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="C"><span class="option-text">C. \((3p + 1)^2 - 1\)<wbr>\({} = 9p^2 + 3p\)<wbr>\({} = 3(3p^2 + p)\)，所以是 \(3\) 的倍數</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-22" value="D"><span class="option-text">D. \(p = 1\) 時是 \(15\)、\(p = 2\) 時是 \(48\)，都是 \(3\) 的倍數，所以得證</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。和的平方要有中間項：
+              \[\begin{aligned} &(3p + 1)^2 - 1 \\ &= 9p^2 + 6p + 1 - 1 \\ &= 3(3p^2 + 2p) \end{aligned}\]
+              A 錯：漏了中間項 \(2 \times 3p \times 1 = 6p\)，雖然結論碰巧對，過程是錯的。<br>
+              C 錯：中間項是 \(6p\)，不是 \(3p\)。<br>
+              D 錯：只是舉例，不是證明。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 兩正數平方的大小
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-unbalanced" aria-hidden="true"></i> <span>重點 12：用平方差比較平方的大小</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>要比較 \(a^2\) 和 \(b^2\)，看 \(a^2 - b^2\) 的正負；而 \(a^2 - b^2 = (a + b)(a - b)\)。</li>
+              <li>兩個因式<strong>同號</strong>（都正或都負），乘積是正的，\(a^2 \gt b^2\)；<strong>異號</strong>時乘積是負的，\(a^2 \lt b^2\)。</li>
+              <li>例（課本）：\(a\)、\(b\) 是正數且 \(a \gt b\)，則 \(a + b \gt 0\)、\(a - b \gt 0\)，所以 \(a^2 - b^2 \gt 0\)，\(a^2 \gt b^2\)。</li>
+              <li>反過來也對：\(a\)、\(b\) 是正數且 \(a^2 \gt b^2\)，因為 \(a + b \gt 0\)，必須 \(a - b \gt 0\)，所以 \(a \gt b\)。</li>
+              <li><strong>「正數」這個條件不能拿掉</strong>：有負數時，\(a + b\) 的正負會改變，大的數平方不一定比較大。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">兩正數</span>
+              \(a \gt b \gt 0 \Leftrightarrow a^2 \gt b^2\)（\(a\)、\(b\) 都是正數）
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr1_plots.webp" alt="古希臘陶瓶黑繪風插圖：沙地上用繩子圍出一大一小兩塊正方形，小歐用細木棍比著小正方形的一邊，阿基站在大正方形旁邊張開雙臂比著它的寬度。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-scale-unbalanced"></i> 視覺互動探索：平方差符號表</h3>
+            <p class="interactive-instruction">拉動 \(a\)、\(b\)，看兩個正方形誰大，並對照 \(a + b\)、\(a - b\) 的正負。什麼時候「\(a \gt b\)」卻得到「\(a^2 \lt b^2\)」？那時候兩個數是正還是負？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cmp" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cmp-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="cmp-a">\(a\)：<span id="cmp-va" class="val-num">5</span></label>
+                    <input type="range" id="cmp-a" min="-6" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="cmp-b">\(b\)：<span id="cmp-vb" class="val-num">3</span></label>
+                    <input type="range" id="cmp-b" min="-6" max="6" value="3" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cmp-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平方的大小)</h3>
+
+          <div class="quiz-card" data-quiz="3-1-23">
+            <p class="quiz-question"><strong>Q23.</strong> 小妍說：「若 \(a^2 \gt b^2\)，則 \(a \gt b\)。」下列哪一組數是她這個說法的反例？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-23" value="A"><span class="option-text">A. \(a = 9\)、\(b = 7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-23" value="B"><span class="option-text">B. \(a = -7\)、\(b = -9\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-23" value="C"><span class="option-text">C. \(a = 9\)、\(b = -7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-23" value="D"><span class="option-text">D. \(a = -9\)、\(b = 7\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。反例要「條件成立、結論不成立」：\((-9)^2 = 81 \gt 49 = 7^2\)，但 \(-9 \lt 7\)。<br>
+              A 錯：\(81 \gt 49\) 且 \(9 \gt 7\)，結論成立，不是反例。<br>
+              B 錯：\(49 \lt 81\)，條件 \(a^2 \gt b^2\) 本身就不成立。<br>
+              C 錯：\(81 \gt 49\) 且 \(9 \gt -7\)，結論成立。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-1-24">
+            <p class="quiz-question"><strong>Q24.</strong> 已知 \(a\)、\(b\) 都是正數，而且 \(a \lt b\)。要證明 \(a^2 \lt b^2\)，下列哪一個推論正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-1-24" value="A"><span class="option-text">A. \(a + b \gt 0\)、\(a - b \lt 0\)，所以 \((a + b)(a - b) \lt 0\)，即 \(a^2 - b^2 \lt 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-24" value="B"><span class="option-text">B. \(a - b \lt 0\)，所以 \(a^2 - b^2 \lt 0\)，不必看 \(a + b\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-24" value="C"><span class="option-text">C. \(a + b \gt 0\)，所以 \(a^2 - b^2 \gt 0\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-1-24" value="D"><span class="option-text">D. 不等式兩邊同時平方，不等號的方向一定不變</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(a^2 - b^2 = (a + b)(a - b)\)，一正一負，乘積是負的，所以 \(a^2 \lt b^2\)。<br>
+              B 錯：\(a^2 - b^2\) 是兩個因式相乘，只看 \(a - b\) 不夠；正因為 \(a + b \gt 0\) 才能下結論。<br>
+              C 錯：只看了一個因式，而且結論方向也錯。<br>
+              D 錯：有負數時就不對，例如 \(-3 \lt 1\)，但 \(9 \gt 1\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 證明與推理速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>證明</strong>：已知條件 \(+\) 已確認性質 → 求證結論；三段式寫「已知、求證、證明」，每一步附理由。</li>
+              <li><strong>分析逆推、書寫順推</strong>：從求證往回找需要的條件，寫的時候從已知往前寫。</li>
+              <li><strong>幾何證明的工具</strong>：全等（對應邊、角相等）、等量加減、\(\text{AA}\) 相似、等高三角形的面積、特殊直角三角形。</li>
+              <li><strong>偶數</strong> \(2k\)、<strong>奇數</strong> \(2k + 1\) 或 \(2k - 1\)；兩個任意的數用不同字母。</li>
+              <li><strong>倍數</strong>：整理成「\(p \times\) 整數」；<strong>平方的大小</strong>：看 \((a + b)(a - b)\) 的正負，記得「正數」的條件。</li>
+              <li><strong>舉例不是證明</strong>；一個反例就能推翻「一定」。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到幾何學院：沙盤上畫不完的三角形</h4>
+              <h5><i class="fa-solid fa-lightbulb"></i> 推理代替測量</h5>
+              <p>小歐量了三個等腰三角形就下結論，阿基提醒她：三角形有無限多個。從「兩腰相等」出發，作頂角的角平分線、證出兩個三角形全等，底角相等就對<strong>每一個</strong>等腰三角形都成立——這才是證明。</p>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 代數也一樣</h5>
+              <p>奇數有無限多個，用 \(2k + 1\) 一次代表全部，整理成 \(2 \times\) 整數 \(+ 1\)，結論就涵蓋了每一個奇數。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一節</h5>
+              <p>用這一節的證明工具，下一節要證出三角形的三條中垂線、三條角平分線、三條中線各自交於一點——外心、內心與重心。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

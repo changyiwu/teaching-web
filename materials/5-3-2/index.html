@@ -4,39 +4,1904 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>3-2 三角形的外心、內心與重心 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>3-2 三角形的外心、內心與重心 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第五冊 (3上) • 第3章 幾何與證明</div>
-    <h1>3-2 三角形的外心、內心與重心</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第五冊 • 第三章</span>
+        <h1>3-2 三角形的外心、內心與重心</h1>
+        <p>古希臘的幾何學院裡，小歐和阿基在沙盤上畫三角形，發現每個三角形都藏著三個特別的點：離三個<strong>頂點</strong>一樣遠的<strong>外心</strong>、離三條<strong>邊</strong>一樣遠的<strong>內心</strong>，以及用一根線吊起來剛好平衡的<strong>重心</strong>。這一節依序認識三心的作法、位置與性質，再把它們用在角度、半徑、長度與面積的計算上。</p>
+      </div>
+      <!-- Progress navigation (17 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-fire"></i> 外心</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-location-crosshairs"></i> 外心位置</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-circle-half-stroke"></i> 直角外接圓</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-angle-up"></i> 外心與角</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-landmark"></i> 等腰外接圓</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-bullseye"></i> 內心</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-code-compare"></i> 外心或內心</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-angles-up"></i> 內心與角</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-chart-pie"></i> 面積比</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-ruler-combined"></i> 面積＝½rs</a>
+        <a href="#concept11" class="nav-item"><i class="fa-solid fa-square"></i> 直角內切圓</a>
+        <a href="#concept12" class="nav-item"><i class="fa-solid fa-grip-lines"></i> 內心與平行線</a>
+        <a href="#concept13" class="nav-item"><i class="fa-solid fa-scale-balanced"></i> 重心</a>
+        <a href="#concept14" class="nav-item"><i class="fa-solid fa-divide"></i> 中線 2 : 1</a>
+        <a href="#concept15" class="nav-item"><i class="fa-solid fa-cubes"></i> 面積六等分</a>
+        <a href="#concept16" class="nav-item"><i class="fa-solid fa-vector-square"></i> 平行四邊形</a>
+        <a href="#concept17" class="nav-item"><i class="fa-solid fa-link"></i> 外心接重心</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（古希臘陶瓶黑繪風・幾何學院）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(232, 135, 74, 0.3);">
+        <h2 class="section-title" style="color: #e8874a; border-bottom-color: rgba(232, 135, 74, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #e8874a; text-shadow: 0 0 10px rgba(232, 135, 74, 0.4);"></i> 課前暖身漫畫：營火要放在哪裡？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            學院的戶外課，三頂帳篷搭在空地上，營火要離三頂帳篷<strong style="color:#e8874a">一樣遠</strong>。阿基想用眼睛估「正中間」，小歐卻拿出繩子和木樁：先找離兩頂帳篷一樣遠的那條線，再找另一條——兩條線的交點，就是這一節的第一個主角<strong style="color:#e8874a">外心</strong>。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(28, 19, 14, 0.5);">
+            <img src="motivation_comic.webp" alt="古希臘陶瓶黑繪風四格漫畫：阿基站在三頂帳篷之間，用手比著說營火就放正中間吧；小歐拿著一條繩子把兩頂帳篷之間的距離對摺找中點；小歐在兩頂帳篷連線的中點插下木樁、拉出一條和連線垂直的繩子；最後兩人坐在營火旁，旁白說到三個點等距的點就是外心。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 外心
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-fire" aria-hidden="true"></i> <span>重點 1：外心——三邊中垂線的交點</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>回顧<strong>中垂線</strong>：點在 \(\overline{AB}\) 的中垂線上 \(\Rightarrow\) 它到 \(A\)、\(B\) 等距（性質）；反過來，到 \(A\)、\(B\) 等距的點一定在 \(\overline{AB}\) 的中垂線上（判別性質）。</li>
+              <li>設 \(\overline{AB}\)、\(\overline{BC}\) 的中垂線交於 \(O\)：
+                <ul>
+                  <li>\(O\) 在 \(\overline{AB}\) 的中垂線上，\(\overline{OA} = \overline{OB}\)；</li>
+                  <li>\(O\) 在 \(\overline{BC}\) 的中垂線上，\(\overline{OB} = \overline{OC}\)；</li>
+                  <li>所以 \(\overline{OA} = \overline{OC}\)，\(O\) 也在 \(\overline{AC}\) 的中垂線上。</li>
+                </ul>
+              </li>
+              <li>三條中垂線交於一點 \(O\)，叫做三角形的<strong>外心</strong>：\(\overline{OA} = \overline{OB} = \overline{OC}\)。</li>
+              <li>以 \(O\) 為圓心、\(\overline{OA}\) 為半徑畫圓，圓通過三個頂點，叫做<strong>外接圓</strong>；外心就是外接圓的圓心。</li>
+              <li><strong>尺規作圖</strong>：只要作出<strong>兩邊</strong>的中垂線，交點就是外心。</li>
+              <li>例：\(O\) 是外心，\(\overline{OA} = 2x + 1\)、\(\overline{OB} = 5x - 8\)，由 \(2x + 1 = 5x - 8\) 得 \(x = 3\)，\(\overline{OC} = 7\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">外心</span>
+              三邊中垂線的交點 → 到三<strong>頂點</strong>等距（外接圓的圓心）
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_tents.webp" alt="古希臘陶瓶黑繪風插圖：學院柱廊外的空地上搭著三頂小帳篷，中間有一堆營火；小歐用細木棍指著營火，阿基抱著一捆繩子站在旁邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-fire"></i> 視覺互動探索：尺規找外心</h3>
+            <p class="interactive-instruction">選一個三角形，按「下一步」用圓規和直尺作兩條中垂線，看它們交在哪裡；最後畫出外接圓，量一量 \(\overline{OA}\)、\(\overline{OB}\)、\(\overline{OC}\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c1" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c1-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">三角形</span>
+                    <div class="btn-group" id="c1-tri-group">
+                      <button class="pick-btn active" data-c1-tri="0">銳角</button>
+                      <button class="pick-btn" data-c1-tri="1">直角</button>
+                      <button class="pick-btn" data-c1-tri="2">鈍角</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="c1-prev">上一步</button>
+                      <span class="step-counter" id="c1-step">1 / 8</span>
+                      <button class="pick-btn" id="c1-next">下一步</button>
+                      <button class="pick-btn" id="c1-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c1-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (外心)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> \(O\) 點為 \(\triangle ABC\) 的外心，若 \(\overline{OA} = 4x - 3\)、\(\overline{OC} = 2x + 9\)，則 \(\overline{OB}\) 的長度為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-1" value="A"><span class="option-text">A. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1" value="B"><span class="option-text">B. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1" value="C"><span class="option-text">C. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-1" value="D"><span class="option-text">D. \(42\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。外心到三頂點等距，\(\overline{OA} = \overline{OB} = \overline{OC}\)：
+              \[\begin{aligned} & 4x - 3 = 2x + 9 \\ & 2x = 12,\; x = 6 \end{aligned}\]
+              \(\overline{OB} = \overline{OC} = 2 \times 6 + 9 = 21\)。<br>
+              A 錯：\(6\) 是 \(x\)，題目問的是長度。<br>
+              D 錯：\(42\) 是外接圓的直徑。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 下列關於三角形外心的敘述，何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-2" value="A"><span class="option-text">A. 外心是三內角平分線的交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2" value="B"><span class="option-text">B. 外心到三角形三邊的距離相等</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2" value="C"><span class="option-text">C. 只要作出任意兩邊的中垂線，它們的交點就是外心</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-2" value="D"><span class="option-text">D. 外心一定在三角形的內部</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩條中垂線的交點到三頂點都等距，第三條中垂線也一定通過它。<br>
+              A 錯：三內角平分線的交點是<strong>內心</strong>。<br>
+              B 錯：外心是到三<strong>頂點</strong>等距，不是到三邊。<br>
+              D 錯：鈍角三角形的外心在外部、直角三角形的外心在斜邊中點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 外心的位置
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i> <span>重點 2：銳角、直角、鈍角三角形的外心位置</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>每一個三角形都有外心，而且只有一個。它在哪裡，由<strong>最大的那個角</strong>決定：
+                <ul>
+                  <li><strong>銳角三角形</strong>：外心在三角形<strong>內部</strong>。</li>
+                  <li><strong>直角三角形</strong>：外心在<strong>斜邊的中點</strong>。</li>
+                  <li><strong>鈍角三角形</strong>：外心在三角形<strong>外部</strong>，和鈍角頂點分在鈍角對邊的兩側。</li>
+                </ul>
+              </li>
+              <li>反過來，外心落在某一邊上，那一邊就是外接圓的直徑，它所對的角是直角。</li>
+              <li>例：三內角是 \(40^\circ\)、\(60^\circ\)、\(80^\circ\)，最大角是銳角，外心在內部。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">看最大角</span>
+              銳角 → 內部；直角 → 斜邊中點；鈍角 → 外部
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_tiles.webp" alt="古希臘陶瓶黑繪風插圖：石桌上並排放著三塊三角形陶片，一塊三個角都尖、一塊有一個方正的直角、一塊有一個很開的鈍角；小歐用木棍指著有鈍角的那一塊，阿基彎腰看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-location-crosshairs"></i> 視覺互動探索：拖曳頂點看外心</h3>
+            <p class="interactive-instruction">拖曳 \(A\)、\(B\)、\(C\)（頂點會吸到格點上），或按上方按鈕換成銳角、直角、鈍角三角形。外心 \(O\) 什麼時候跑出三角形？什麼時候剛好落在邊上？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c2" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c2-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">換成</span>
+                    <div class="btn-group" id="c2-tri-group">
+                      <button class="pick-btn active" data-c2-tri="acute">銳角</button>
+                      <button class="pick-btn" data-c2-tri="right">直角</button>
+                      <button class="pick-btn" data-c2-tri="obtuse">鈍角</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c2-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (外心的位置)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> \(\triangle ABC\) 的外心 \(O\) 恰好落在 \(\overline{BC}\) 上，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-3" value="A"><span class="option-text">A. 是直角三角形，且 \(\angle A = 90^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3" value="B"><span class="option-text">B. 是直角三角形，且 \(\angle B = 90^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3" value="C"><span class="option-text">C. 是鈍角三角形，\(\angle A\) 是鈍角</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-3" value="D"><span class="option-text">D. 是銳角三角形</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(O\) 在 \(\overline{BC}\) 上且 \(\overline{OB} = \overline{OC}\)，\(O\) 是 \(\overline{BC}\) 的中點，\(\overline{BC}\) 是外接圓的直徑，所以它對的 \(\angle A\) 是直角。<br>
+              B 錯：\(B\) 是斜邊的端點，不是直角頂點。<br>
+              C、D 錯：鈍角三角形的外心在外部、銳角三角形的外心在內部，都不會落在邊上。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> 某三角形三個內角的度數比為 \(2 : 3 : 7\)，它的外心在哪裡？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-4" value="A"><span class="option-text">A. 三角形內部</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4" value="B"><span class="option-text">B. 最長邊的中點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4" value="C"><span class="option-text">C. 三角形外部</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-4" value="D"><span class="option-text">D. 最短邊的中點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。三內角分別是
+              \[\begin{aligned} & 180^\circ \times \frac{2}{12} = 30^\circ \\ & 180^\circ \times \frac{3}{12} = 45^\circ \\ & 180^\circ \times \frac{7}{12} = 105^\circ \end{aligned}\]
+              最大角是鈍角，所以是鈍角三角形，外心在外部。<br>
+              B 錯：外心在斜邊中點的是<strong>直角</strong>三角形。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 直角三角形的外接圓半徑
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> <span>重點 3：直角三角形的外接圓半徑＝斜邊的一半</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>直角三角形的<strong>斜邊是外接圓的直徑</strong>，外心 \(O\) 是斜邊的中點。</li>
+              <li>所以<strong>外接圓半徑 \(R = \frac{1}{2} \times\) 斜邊</strong>。</li>
+              <li>\(\overline{OC}\) 也是半徑：直角頂點到斜邊中點的距離（斜邊上的中線）也等於斜邊的一半。</li>
+              <li>例：\(\angle C = 90^\circ\)、\(\overline{AC} = 15\)、\(\overline{BC} = 8\)：
+                \[\begin{aligned} & \overline{AB} = \sqrt{15^2 + 8^2} = 17 \\ & R = \frac{17}{2} \end{aligned}\]
+              </li>
+              <li>已知外接圓半徑，也可以倒推斜邊 \(= 2R\)，再用畢氏定理求另一股。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">直角三角形</span>
+              外心＝斜邊中點，\(R = \frac{1}{2}\) 斜邊
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_plate.webp" alt="古希臘陶瓶黑繪風插圖：石桌上平放著一個圓形陶盤，盤裡放著一塊直角三角形木板，木板的直角頂點和另外兩個頂點都碰到盤緣；阿基用手指按著木板最長的那條邊，小歐在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-circle-half-stroke"></i> 視覺互動探索：斜邊就是直徑</h3>
+            <p class="interactive-instruction">調整兩股 \(\overline{BC}\)、\(\overline{AC}\) 的長，看外心是不是一直在斜邊中點、外接圓半徑是不是一直等於斜邊的一半。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c3" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c3-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c3-a">\(\overline{BC}\)：<span id="c3-va" class="val-num">4</span></label>
+                    <input type="range" id="c3-a" min="2" max="10" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c3-b">\(\overline{AC}\)：<span id="c3-vb" class="val-num">7</span></label>
+                    <input type="range" id="c3-b" min="2" max="10" value="7" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c3-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (直角三角形的外接圓)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> 直角 \(\triangle ABC\) 中，\(\angle C = 90^\circ\)，\(\overline{AC} = 12\)、\(\overline{BC} = 5\)，則它的外接圓半徑為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-5" value="A"><span class="option-text">A. \(13\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5" value="B"><span class="option-text">B. \(6\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5" value="C"><span class="option-text">C. \(\frac{17}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-5" value="D"><span class="option-text">D. \(\frac{13}{2}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。
+              \[\overline{AB} = \sqrt{12^2 + 5^2} = 13\]
+              外心是斜邊中點，半徑 \(= \frac{1}{2} \times 13 = \frac{13}{2}\)。<br>
+              A 錯：\(13\) 是直徑（斜邊）。<br>
+              B 錯：\(6\) 是 \(\overline{AC}\) 的一半，不是斜邊的一半。<br>
+              C 錯：把兩股相加再除以 \(2\)，沒有先算斜邊。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 直角 \(\triangle ABC\) 中，\(\angle C = 90^\circ\)，\(O\) 為外心。若 \(\overline{OC} = \frac{41}{2}\)、\(\overline{BC} = 9\)，則 \(\overline{AC}\) 的長度為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-6" value="A"><span class="option-text">A. \(40\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6" value="B"><span class="option-text">B. \(41\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6" value="C"><span class="option-text">C. \(32\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-6" value="D"><span class="option-text">D. \(50\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。外心到三頂點等距，\(\overline{OA} = \overline{OB} = \overline{OC} = \frac{41}{2}\)，斜邊 \(\overline{AB} = 41\)：
+              \[\begin{aligned} & \overline{AC} = \sqrt{41^2 - 9^2} \\ &= \sqrt{1600} = 40 \end{aligned}\]
+              B 錯：\(41\) 是斜邊。<br>
+              C 錯：\(41 - 9 = 32\)，邊長不能直接相減。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 外心與角度
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-angle-up" aria-hidden="true"></i> <span>重點 4：外心與角度——\(\angle BOC\) 和 \(\angle A\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>以外心 \(O\) 為圓心作外接圓：\(\angle BOC\) 是<strong>圓心角</strong>、\(\angle A\) 是<strong>圓周角</strong>，圓周角是它所對弧的度數的一半。</li>
+              <li><strong>\(\angle A\) 是銳角</strong>：\(\angle A\) 和 \(\angle BOC\) 對同一段弧 \(\overset{\frown}{BC}\)，
+                \[\angle BOC = 2\angle A\]
+              </li>
+              <li><strong>\(\angle A\) 是鈍角</strong>：\(\angle A\) 對的是另一段弧，外心在外部，
+                \[\angle BOC = 360^\circ - 2\angle A\]
+              </li>
+              <li><strong>\(\angle A\) 是直角</strong>：\(O\) 在 \(\overline{BC}\) 上，\(\angle BOC = 180^\circ\)。</li>
+              <li>例：\(\angle A = 52^\circ\) 時 \(\angle BOC = 104^\circ\)；\(\angle A = 118^\circ\) 時 \(\angle BOC = 360^\circ - 236^\circ = 124^\circ\)。</li>
+              <li><strong>反求要小心</strong>：只知道 \(\angle BOC\) 時，\(\angle A\) 可能是 \(\frac{1}{2}\angle BOC\)，也可能是 \(180^\circ - \frac{1}{2}\angle BOC\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">外心與頂角</span>
+              銳角：\(\angle BOC = 2\angle A\)；鈍角：\(\angle BOC = 360^\circ - 2\angle A\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_sandcircle.webp" alt="古希臘陶瓶黑繪風插圖：學院庭院的圓形沙盤上，阿基蹲在沙盤正中央插著一根木樁；小歐站在沙盤邊緣，手上的細木棍伸向沙面。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-angle-up"></i> 視覺互動探索：圓心角與圓周角</h3>
+            <p class="interactive-instruction">調整 \(\angle BOC\)，再把 \(A\) 沿著圓移動：\(A\) 在上方的優弧時，\(\angle A\) 會變嗎？切到「\(A\) 在劣弧上」，\(\angle A\) 和 \(\angle BOC\) 的關係變成什麼？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c4" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c4-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">\(A\) 的位置</span>
+                    <div class="btn-group" id="c4-arc-group">
+                      <button class="pick-btn active" data-c4-arc="major">在優弧上</button>
+                      <button class="pick-btn" data-c4-arc="minor">在劣弧上</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c4-t">\(\angle BOC\)：<span id="c4-vt" class="val-num">120°</span></label>
+                    <input type="range" id="c4-t" min="20" max="180" value="120" step="10">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c4-p">\(A\) 在弧上的位置：<span id="c4-vp" class="val-num">50%</span></label>
+                    <input type="range" id="c4-p" min="12" max="88" value="50" step="2">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c4-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (外心與角度)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 銳角 \(\triangle ABC\) 中，\(O\) 點為外心。若 \(\angle BAC = 63^\circ\)，則 \(\angle BOC\) 的度數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-7" value="A"><span class="option-text">A. \(121.5^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-7" value="B"><span class="option-text">B. \(126^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-7" value="C"><span class="option-text">C. \(117^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-7" value="D"><span class="option-text">D. \(234^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。銳角三角形中，\(\angle BOC\) 是 \(\overset{\frown}{BC}\) 的圓心角、\(\angle BAC\) 是圓周角：\(\angle BOC = 2 \times 63^\circ = 126^\circ\)。<br>
+              A 錯：\(90^\circ + \frac{1}{2} \times 63^\circ = 121.5^\circ\) 是<strong>內心</strong>的 \(\angle BIC\)。<br>
+              D 錯：\(234^\circ = 360^\circ - 126^\circ\)，是另一側的角，不是 \(\triangle BOC\) 的內角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> \(O\) 點為 \(\triangle ABC\) 的外心。若 \(\angle BOC = 138^\circ\)，則 \(\angle BAC\) 的度數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-8" value="A"><span class="option-text">A. 只能是 \(69^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-8" value="B"><span class="option-text">B. 只能是 \(111^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-8" value="C"><span class="option-text">C. \(42^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-8" value="D"><span class="option-text">D. \(69^\circ\) 或 \(111^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。題目沒有說 \(\angle BAC\) 是銳角還是鈍角，兩種都要考慮。<br>
+              若 \(\angle BAC\) 是銳角：\(\angle BAC = \frac{1}{2} \times 138^\circ = 69^\circ\)。<br>
+              若 \(\angle BAC\) 是鈍角：\(\angle BAC = 180^\circ - 69^\circ = 111^\circ\)。<br>
+              C 錯：\(42^\circ = 180^\circ - 138^\circ\)，不是圓心角與圓周角的關係。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 等腰三角形的外接圓半徑
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-landmark" aria-hidden="true"></i> <span>重點 5：等腰三角形的外接圓半徑——設 \(r\) 列方程式</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\overline{AB} = \overline{AC}\) 時，\(A\) 和外心 \(O\) 都在底邊 \(\overline{BC}\) 的中垂線上，所以 \(O\) 落在底邊上的高 \(\overline{AM}\)（或它的延長線）上，\(M\) 是 \(\overline{BC}\) 的中點。</li>
+              <li>設外接圓半徑 \(\overline{OA} = \overline{OB} = r\)，在直角 \(\triangle OBM\) 用畢氏定理列方程式。</li>
+              <li>頂角是銳角，\(O\) 在 \(\overline{AM}\) 上：\(\overline{OM} = \overline{AM} - r\)；頂角是鈍角，\(O\) 在 \(\overline{BC}\) 下方：\(\overline{OM} = r - \overline{AM}\)。兩種平方後是同一條方程式。</li>
+              <li>例：\(\overline{AB} = \overline{AC} = 10\)、\(\overline{BC} = 16\)，則 \(\overline{BM} = 8\)、\(\overline{AM} = \sqrt{10^2 - 8^2} = 6\)：
+                \[\begin{aligned} & r^2 = (r - 6)^2 + 8^2 \\ & 12r = 100 \\ & r = \frac{25}{3} \end{aligned}\]
+              </li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">等腰三角形</span>
+              外心在底邊的高上；\(r^2 = (\overline{AM} - r)^2 + \overline{BM}^2\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_pediment.webp" alt="古希臘陶瓶黑繪風插圖：神殿正面的三角形山牆左右對稱，小歐和阿基站在神殿前的台階下抬頭看，阿基手上拿著一副圓規。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-landmark"></i> 視覺互動探索：山牆的外接圓</h3>
+            <p class="interactive-instruction">調整半底 \(\overline{BM}\) 和高 \(\overline{AM}\)。外心 \(O\) 什麼時候在高上、什麼時候跑到底邊下方？看畫面上的方程式怎麼列、怎麼解。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c5" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c5-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c5-m">半底 \(\overline{BM}\)：<span id="c5-vm" class="val-num">4</span></label>
+                    <input type="range" id="c5-m" min="2" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c5-h">高 \(\overline{AM}\)：<span id="c5-vh" class="val-num">6</span></label>
+                    <input type="range" id="c5-h" min="2" max="8" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c5-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等腰三角形的外接圓)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 等腰 \(\triangle ABC\) 中，\(\overline{AB} = \overline{AC} = 17\)、\(\overline{BC} = 30\)，則它的外接圓半徑為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-9" value="A"><span class="option-text">A. \(\frac{289}{16}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-9" value="B"><span class="option-text">B. \(\frac{17}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-9" value="C"><span class="option-text">C. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-9" value="D"><span class="option-text">D. \(\frac{289}{30}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{BM} = 15\)、\(\overline{AM} = \sqrt{17^2 - 15^2} = 8\)。頂角是鈍角，外心在 \(\overline{BC}\) 下方，\(\overline{OM} = r - 8\)：
+              \[\begin{aligned} & r^2 = (r - 8)^2 + 15^2 \\ & 16r = 289 \\ & r = \frac{289}{16} \end{aligned}\]
+              B 錯：「半徑＝斜邊的一半」只適用於直角三角形。<br>
+              C 錯：\(15\) 是半底 \(\overline{BM}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 等腰 \(\triangle ABC\) 中，\(\overline{AB} = \overline{AC} = 25\)、\(\overline{BC} = 48\)。設它的外接圓半徑為 \(r\)，下列哪一條方程式可以求出 \(r\)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-10" value="A"><span class="option-text">A. \(r^2 = (r + 7)^2 + 24^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-10" value="B"><span class="option-text">B. \(r^2 = (7 - r)^2 + 24^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-10" value="C"><span class="option-text">C. \(r^2 = (7 - r)^2 + 48^2\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-10" value="D"><span class="option-text">D. \(r^2 = (25 - r)^2 + 24^2\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{BM} = 24\)、\(\overline{AM} = \sqrt{25^2 - 24^2} = 7\)。外心在底邊的中垂線上，\(\overline{OM} = r - 7\)，而 \((r - 7)^2 = (7 - r)^2\)，在 \(\triangle OBM\) 中 \(r^2 = (7 - r)^2 + 24^2\)。<br>
+              A 錯：\(O\) 和 \(A\) 在同一條線上，\(\overline{OM}\) 是兩段相減，不是相加。<br>
+              C 錯：直角 \(\triangle OBM\) 的股是半底 \(24\)。<br>
+              D 錯：\(25\) 是腰長，不是高。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 內心
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-bullseye" aria-hidden="true"></i> <span>重點 6：內心——三內角平分線的交點</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>回顧<strong>角平分線</strong>：角平分線上的點到角的兩邊等距（性質）；到角的兩邊等距的點一定在角平分線上（判別性質）。</li>
+              <li>設 \(\angle A\)、\(\angle C\) 的平分線交於 \(I\)，從 \(I\) 作三邊的垂線，垂足 \(P\)、\(Q\)、\(R\) 分別在 \(\overline{AB}\)、\(\overline{BC}\)、\(\overline{CA}\) 上：
+                <ul>
+                  <li>\(I\) 在 \(\angle A\) 的平分線上，\(\overline{IP} = \overline{IR}\)；</li>
+                  <li>\(I\) 在 \(\angle C\) 的平分線上，\(\overline{IQ} = \overline{IR}\)；</li>
+                  <li>所以 \(\overline{IP} = \overline{IQ}\)，\(I\) 也在 \(\angle B\) 的平分線上。</li>
+                </ul>
+              </li>
+              <li>三條內角平分線交於一點 \(I\)，叫做<strong>內心</strong>：\(I\) 到三邊的距離相等。</li>
+              <li>以 \(I\) 為圓心、\(\overline{IP}\) 為半徑畫圓，和三邊都相切，叫做<strong>內切圓</strong>。</li>
+              <li>不管銳角、直角或鈍角三角形，<strong>內心一定在三角形內部</strong>。</li>
+              <li><strong>尺規作圖</strong>：作<strong>兩個角</strong>的平分線，交點就是內心。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">內心</span>
+              三內角平分線的交點 → 到三<strong>邊</strong>等距（內切圓的圓心）
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_paths.webp" alt="古希臘陶瓶黑繪風插圖：三條筆直的石板路圍成一塊三角形草地，草地中間有一個圓形噴水池；小歐站在噴水池旁邊伸出木棍比著，阿基站在其中一條石板路上。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-bullseye"></i> 視覺互動探索：尺規找內心</h3>
+            <p class="interactive-instruction">選一個三角形，按「下一步」作 \(\angle A\)、\(\angle B\) 的平分線，再從交點作三邊的垂線、畫出內切圓。換成鈍角三角形，內心還在裡面嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c6" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c6-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">三角形</span>
+                    <div class="btn-group" id="c6-tri-group">
+                      <button class="pick-btn active" data-c6-tri="0">銳角</button>
+                      <button class="pick-btn" data-c6-tri="1">直角</button>
+                      <button class="pick-btn" data-c6-tri="2">鈍角</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="c6-prev">上一步</button>
+                      <span class="step-counter" id="c6-step">1 / 11</span>
+                      <button class="pick-btn" id="c6-next">下一步</button>
+                      <button class="pick-btn" id="c6-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c6-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (內心)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> \(I\) 點為 \(\triangle ABC\) 的內心，下列敘述何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-11" value="A"><span class="option-text">A. \(I\) 到三個頂點的距離相等</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-11" value="B"><span class="option-text">B. \(I\) 是三邊中垂線的交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-11" value="C"><span class="option-text">C. 以 \(I\) 為圓心、\(I\) 到一邊的距離為半徑畫圓，這個圓和三邊都相切</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-11" value="D"><span class="option-text">D. 直角三角形的內心在斜邊的中點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。內心到三邊等距，這個距離當半徑畫圓，圓和三邊各只碰一點，就是內切圓。<br>
+              A、B 錯：那是<strong>外心</strong>的性質。<br>
+              D 錯：在斜邊中點的是直角三角形的<strong>外心</strong>；內心一定在內部。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 下列哪一種三角形，內心<strong>可能</strong>在三角形的外部？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-12" value="A"><span class="option-text">A. 鈍角三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-12" value="B"><span class="option-text">B. 直角三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-12" value="C"><span class="option-text">C. 等腰三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-12" value="D"><span class="option-text">D. 都不可能，任何三角形的內心都在內部</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。三條內角平分線都從頂點往三角形裡面走，交點一定在內部。<br>
+              A 錯：會跑到外部的是鈍角三角形的<strong>外心</strong>，不是內心。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 外心還是內心
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-code-compare" aria-hidden="true"></i> <span>重點 7：到三「點」等距，還是到三「線」等距？</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>先看題目要「誰」等距：
+                <ul>
+                  <li>到三個<strong>點</strong>（帳篷、村莊、頂點）等距 → 中垂線 → <strong>外心</strong>。</li>
+                  <li>到三條<strong>線</strong>（道路、牆、邊）等距 → 角平分線 → <strong>內心</strong>。</li>
+                </ul>
+              </li>
+              <li>外心到三邊的距離一般<strong>不相等</strong>；內心到三頂點的距離一般也<strong>不相等</strong>。同一個三角形的外心和內心，通常不是同一點。</li>
+              <li>圓心到圓上每一點等距，但到不同長度的弦，距離（弦心距）不相等：弦愈長、弦心距愈短。</li>
+              <li>例：營地裡三頂帳篷，營火要離三頂帳篷一樣遠 → 外心；三條路圍成的公園，遊戲場要離三條路一樣遠 → 內心。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">判斷口訣</span>
+              三點等距找外心（中垂線）；三線等距找內心（角平分線）
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_debate.webp" alt="古希臘陶瓶黑繪風插圖：柱廊下的沙盤前，小歐用細木棍在沙上比劃，阿基雙手抱胸側頭思考，兩人面對面討論。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-code-compare"></i> 視覺互動探索：帳篷還是道路？</h3>
+            <p class="interactive-instruction">拖曳金色的點 \(P\)。先看「到三頂點」的三段距離，找出讓它們一樣長的位置；再切到「到三邊」重找一次。兩次找到的是同一點嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c7" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c7-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">比較</span>
+                    <div class="btn-group" id="c7-look-group">
+                      <button class="pick-btn active" data-c7-look="pts">到三頂點（帳篷）</button>
+                      <button class="pick-btn" data-c7-look="lines">到三邊（道路）</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">三角形</span>
+                    <div class="btn-group" id="c7-tri-group">
+                      <button class="pick-btn active" data-c7-tri="0">第 1 個</button>
+                      <button class="pick-btn" data-c7-tri="1">第 2 個</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">移到</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="c7-toO">外心 \(O\)</button>
+                      <button class="pick-btn" id="c7-toI">內心 \(I\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c7-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (外心還是內心)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 某公園被三條筆直的步道圍成三角形，管理處要在公園裡蓋一座涼亭，讓涼亭到三條步道的距離都相等。涼亭應該蓋在哪裡？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-13" value="A"><span class="option-text">A. 三邊中垂線的交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-13" value="B"><span class="option-text">B. 三內角平分線的交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-13" value="C"><span class="option-text">C. 三條中線的交點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-13" value="D"><span class="option-text">D. 最長那條步道的中點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。要等距的是三條<strong>線</strong>（步道），到兩條線等距的點在角平分線上，三條角平分線的交點是內心。<br>
+              A 錯：中垂線的交點（外心）是到三個<strong>頂點</strong>等距。<br>
+              C 錯：中線的交點是重心，不保證到三邊等距。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> 圓形廣場中有三條長度都不相同的弦 \(\overline{AB}\)、\(\overline{CD}\)、\(\overline{EF}\)，延長三弦會兩兩相交圍成 \(\triangle MNP\)。若要找一點到三條弦所在直線的距離都相等（點在 \(\triangle MNP\) 內），應該取哪一點？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-14" value="A"><span class="option-text">A. 圓心 \(O\)，因為圓心到圓上每一點都等距</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-14" value="B"><span class="option-text">B. \(\triangle MNP\) 的外心</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-14" value="C"><span class="option-text">C. \(\triangle MNP\) 的內心</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-14" value="D"><span class="option-text">D. 三弦中點連成的三角形的重心</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。三條弦所在的直線就是 \(\triangle MNP\) 的三邊，到三邊等距的點是內心。<br>
+              A 錯：三條弦長度不同，圓心到它們的距離（弦心距）也不同；圓心到圓上的<strong>點</strong>等距，不是到弦等距。<br>
+              B 錯：外心是到 \(M\)、\(N\)、\(P\) 三個點等距。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 內心與角度
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-angles-up" aria-hidden="true"></i> <span>重點 8：內心與角度——\(\angle BIC = 90^\circ + \frac{1}{2}\angle A\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(I\) 是內心，\(\overline{BI}\)、\(\overline{CI}\) 分別平分 \(\angle B\)、\(\angle C\)：\(\angle IBC = \frac{1}{2}\angle B\)、\(\angle ICB = \frac{1}{2}\angle C\)。</li>
+              <li>在 \(\triangle IBC\) 中：
+                \[\begin{aligned} & \angle BIC \\ &= 180^\circ - \frac{1}{2}(\angle B + \angle C) \\ &= 180^\circ - \frac{1}{2}(180^\circ - \angle A) \\ &= 90^\circ + \frac{1}{2}\angle A \end{aligned}\]
+              </li>
+              <li>所以 \(\angle BIC\) 一定比 \(90^\circ\) 大。</li>
+              <li>例：\(\angle A = 70^\circ\)，\(\angle BIC = 90^\circ + 35^\circ = 125^\circ\)。反求：\(\angle BIC = 116^\circ\)，則 \(\frac{1}{2}\angle A = 26^\circ\)，\(\angle A = 52^\circ\)。</li>
+              <li>別和外心搞混：外心是 \(\angle BOC = 2\angle A\)（銳角時）。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">內心與頂角</span>
+              \(\angle BIC = 90^\circ + \frac{1}{2}\angle A\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_fold.webp" alt="古希臘陶瓶黑繪風插圖：小歐把一張三角形的莎草紙沿著一個角對摺，讓這個角的兩條邊重疊在一起；阿基在旁邊扶著紙的另一端。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-angles-up"></i> 視覺互動探索：∠BIC 量角器</h3>
+            <p class="interactive-instruction">調整 \(\angle B\)、\(\angle C\)，看 \(\angle BIC\) 怎麼由兩個「半角」算出來，再和 \(90^\circ + \frac{1}{2}\angle A\) 比一比。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c8" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c8-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c8-b">\(\angle B\)：<span id="c8-vb" class="val-num">60°</span></label>
+                    <input type="range" id="c8-b" min="20" max="120" value="60" step="5">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c8-c">\(\angle C\)：<span id="c8-vc" class="val-num">50°</span></label>
+                    <input type="range" id="c8-c" min="20" max="120" value="50" step="5">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c8-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (內心與角度)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> \(I\) 點為 \(\triangle ABC\) 的內心。若 \(\angle A = 64^\circ\)，則 \(\angle BIC\) 的度數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-15" value="A"><span class="option-text">A. \(122^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-15" value="B"><span class="option-text">B. \(128^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-15" value="C"><span class="option-text">C. \(58^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-15" value="D"><span class="option-text">D. \(148^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle BIC = 90^\circ + \frac{1}{2} \times 64^\circ = 122^\circ\)。<br>
+              B 錯：\(2 \times 64^\circ = 128^\circ\) 是銳角三角形<strong>外心</strong>的 \(\angle BOC\)。<br>
+              D 錯：\(180^\circ - 32^\circ = 148^\circ\)，把 \(\frac{1}{2}\angle A\) 當成了 \(\angle IBC + \angle ICB\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> \(I\) 點為 \(\triangle ABC\) 的內心。若 \(\angle BIC = 133^\circ\)，則 \(\angle A\) 的度數為何？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-16" value="A"><span class="option-text">A. \(43^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-16" value="B"><span class="option-text">B. \(66.5^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-16" value="C"><span class="option-text">C. \(47^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-16" value="D"><span class="option-text">D. \(86^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(133^\circ = 90^\circ + \frac{1}{2}\angle A\)，\(\frac{1}{2}\angle A = 43^\circ\)，\(\angle A = 86^\circ\)。<br>
+              A 錯：\(43^\circ\) 只是 \(\angle A\) 的一半。<br>
+              B 錯：把 \(\angle BIC\) 直接除以 \(2\)，那是外心的關係。<br>
+              C 錯：\(180^\circ - 133^\circ = 47^\circ\) 是 \(\angle IBC + \angle ICB\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 內心分出的面積比
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-pie" aria-hidden="true"></i> <span>重點 9：內心分出的三塊面積比＝邊長比</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>連接 \(\overline{IA}\)、\(\overline{IB}\)、\(\overline{IC}\)，把 \(\triangle ABC\) 分成三塊。內心到三邊等距，三塊的<strong>高都是內切圓半徑 \(r\)</strong>。</li>
+              <li>高相同，面積比就是底的比：
+                \[\begin{aligned} & \triangle AIB : \triangle BIC : \triangle CIA \\ &= \overline{AB} : \overline{BC} : \overline{CA} \end{aligned}\]
+              </li>
+              <li>要求其中一塊，就把全面積照邊長比例分配。</li>
+              <li>同樣的道理也適用於一條角平分線：\(\overline{BD}\) 平分 \(\angle B\) 時，\(D\) 到 \(\overline{BA}\)、\(\overline{BC}\) 等距，\(\triangle ABD : \triangle CBD = \overline{AB} : \overline{BC}\)。</li>
+              <li>例：\(\overline{AB} = 7\)、\(\overline{BC} = 8\)、\(\overline{CA} = 9\)，則三塊面積比是 \(7 : 8 : 9\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">等高三角形</span>
+              高都是 \(r\) → 面積比＝底（邊長）比
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_mosaic.webp" alt="古希臘陶瓶黑繪風插圖：學院地面上一塊三角形的馬賽克，從中間一點連到三個角，分成黑、赤陶橘、奶油白三種顏色；小歐蹲著用手掌量其中一條邊，阿基站著看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> 視覺互動探索：三塊面積的比</h3>
+            <p class="interactive-instruction">調整三邊的長。三塊三角形的高都是 \(r\)，面積比會跟著邊長比一起變嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c9" width="540" height="470"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c9-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c9-a">\(\overline{BC}\)：<span id="c9-va" class="val-num">6</span></label>
+                    <input type="range" id="c9-a" min="3" max="12" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c9-b">\(\overline{CA}\)：<span id="c9-vb" class="val-num">5</span></label>
+                    <input type="range" id="c9-b" min="3" max="12" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c9-c">\(\overline{AB}\)：<span id="c9-vc" class="val-num">8</span></label>
+                    <input type="range" id="c9-c" min="3" max="12" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c9-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (內心與面積比)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 直角 \(\triangle ABC\) 中，\(\angle C = 90^\circ\)，\(\overline{AC} = 20\)、\(\overline{BC} = 21\)，\(I\) 點為內心，則 \(\triangle ABI\) 的面積為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-17" value="A"><span class="option-text">A. \(60\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-17" value="B"><span class="option-text">B. \(63\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-17" value="C"><span class="option-text">C. \(87\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-17" value="D"><span class="option-text">D. \(105\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{AB} = \sqrt{20^2 + 21^2} = 29\)，\(\triangle ABC\) 面積 \(= \frac{1}{2} \times 20 \times 21 = 210\)。三塊面積比 \(= 29 : 21 : 20\)：
+              \[\triangle ABI = 210 \times \frac{29}{70} = 87\]
+              A、B 錯：\(60\)、\(63\) 分別是 \(\triangle CIA\)、\(\triangle BIC\)。<br>
+              D 錯：\(105\) 是全面積的一半。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> \(I\) 點為 \(\triangle ABC\) 的內心，\(\triangle AIB : \triangle BIC\)<wbr>\({} : \triangle CIA = 7 : 8 : 13\)。若 \(\triangle ABC\) 的周長是 \(56\)，則 \(\overline{CA}\) 的長度為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-18" value="A"><span class="option-text">A. \(16\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-18" value="B"><span class="option-text">B. \(26\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-18" value="C"><span class="option-text">C. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-18" value="D"><span class="option-text">D. \(28\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。三塊的高都是 \(r\)，面積比就是 \(\overline{AB} : \overline{BC} : \overline{CA} = 7 : 8 : 13\)：
+              \[\overline{CA} = 56 \times \frac{13}{28} = 26\]
+              A 錯：\(16\) 是 \(\overline{BC}\)。<br>
+              C 錯：\(14\) 是 \(\overline{AB}\)。<br>
+              D 錯：\(28\) 是比的總份數，不是邊長。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 面積 = ½ r s
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> <span>重點 10：三角形面積＝\(\frac{1}{2}\) × 內切圓半徑 × 周長</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>設內切圓半徑 \(r\)、周長 \(s\)。三塊三角形的高都是 \(r\)，底加起來就是周長：
+                \[\begin{aligned} & \triangle ABC \\ &= \frac{1}{2}r\,\overline{AB} + \frac{1}{2}r\,\overline{BC} \\ &\quad + \frac{1}{2}r\,\overline{CA} \\ &= \frac{1}{2}rs \end{aligned}\]
+              </li>
+              <li>三個量知道兩個，就能求第三個：\(r = 2 \times\) 面積 \(\div\, s\)、\(s = 2 \times\) 面積 \(\div\, r\)。</li>
+              <li>求內切圓半徑的常見流程：先用畢氏定理求高 → 算面積 → 算周長 → \(r = 2 \times\) 面積 \(\div\) 周長。</li>
+              <li>例：三邊 \(13\)、\(14\)、\(15\)，面積 \(84\)、周長 \(42\)，\(84 = \frac{1}{2} \times r \times 42\)，\(r = 4\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">內心性質</span>
+              \(\triangle ABC\) 面積 \(= \frac{1}{2}rs\)（\(s\) 是周長）
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_rug.webp" alt="古希臘陶瓶黑繪風插圖：小歐和阿基一起把一塊三角形的織毯平鋪在石地上，織毯中央織著一個圓形圖案，圓剛好碰到織毯的三條邊。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-ruler-combined"></i> 視覺互動探索：把三塊攤平</h3>
+            <p class="interactive-instruction">選一個三角形。上面是內心切出的三塊，下面把三塊的底接成一列——總長是周長、高都是 \(r\)。面積公式就是這樣來的。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c10" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c10-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">三邊</span>
+                    <div class="btn-group" id="c10-tri-group">
+                      <button class="pick-btn active" data-c10-tri="0">13、14、15</button>
+                      <button class="pick-btn" data-c10-tri="1">5、5、6</button>
+                      <button class="pick-btn" data-c10-tri="2">10、13、13</button>
+                      <button class="pick-btn" data-c10-tri="3">9、10、17</button>
+                      <button class="pick-btn" data-c10-tri="4">3、4、5</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c10-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (面積與內切圓半徑)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 某三角形的面積為 \(105\)，內切圓半徑為 \(3.5\)，則這個三角形的周長為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-19" value="A"><span class="option-text">A. \(30\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-19" value="B"><span class="option-text">B. \(60\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-19" value="C"><span class="option-text">C. \(367.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-19" value="D"><span class="option-text">D. \(120\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(105 = \frac{1}{2} \times 3.5 \times s\)，\(s = 105 \times 2 \div 3.5 = 60\)。<br>
+              A 錯：漏了 \(\frac{1}{2}\)，算成 \(105 \div 3.5\)。<br>
+              C 錯：把面積和半徑相乘。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> 等腰 \(\triangle ABC\) 中，\(\overline{AB} = \overline{AC} = 17\)、\(\overline{BC} = 16\)，則它的內切圓半徑為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-20" value="A"><span class="option-text">A. \(\frac{24}{5}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-20" value="B"><span class="option-text">B. \(\frac{15}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-20" value="C"><span class="option-text">C. \(5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-20" value="D"><span class="option-text">D. \(\frac{12}{5}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。底邊上的高 \(= \sqrt{17^2 - 8^2} = 15\)，面積 \(= \frac{1}{2} \times 16 \times 15 = 120\)，周長 \(= 50\)：
+              \[120 = \frac{1}{2} \times r \times 50,\quad r = \frac{24}{5}\]
+              B 錯：\(\frac{15}{2}\) 是高的一半。<br>
+              D 錯：漏了 \(\frac{1}{2}\) 的那個 \(2\)，算成 \(120 \div 50\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 11: 直角三角形的內切圓半徑
+           ========================================== -->
+      <section class="concept-section" id="concept11">
+        <h2 class="section-title">
+          <i class="fa-solid fa-square" aria-hidden="true"></i> <span>重點 11：直角三角形的內切圓半徑</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\angle C = 90^\circ\)，內切圓切三邊於 \(P\)、\(Q\)、\(R\)。四邊形 \(CPIQ\) 三個角是直角、\(\overline{IP} = \overline{IQ} = r\)，是<strong>邊長 \(r\) 的正方形</strong>。</li>
+              <li>圓外一點到圓的兩條<strong>切線段等長</strong>：\(\overline{AP} = \overline{AR}\)、\(\overline{BQ} = \overline{BR}\)。</li>
+              <li>所以
+                \[\begin{aligned} & \overline{AC} + \overline{BC} \\ &= \overline{AR} + \overline{BR} + 2r \\ &= \overline{AB} + 2r \end{aligned}\]
+                移項得
+                \[r = \frac{\text{兩股和} - \text{斜邊}}{2}\]
+              </li>
+              <li>例：兩股 \(9\)、\(12\)，斜邊 \(15\)，\(r = \frac{9 + 12 - 15}{2} = 3\)。也可以用 \(\frac{1}{2}rs\) 驗算：\(54 = \frac{1}{2} \times 3 \times 36\)。</li>
+              <li>這條公式只適用於<strong>直角三角形</strong>。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">直角三角形</span>
+              兩股和＝斜邊 \(+ 2r\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_setsquare.webp" alt="古希臘陶瓶黑繪風插圖：一塊直角三角形的木框平放在石桌上，框內放著一個圓形銅盤，銅盤剛好碰到木框的三條邊；阿基用手指按著木框的直角，小歐在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-square"></i> 視覺互動探索：切線段接龍</h3>
+            <p class="interactive-instruction">調整兩股的長。金色兩段一樣長、藍色兩段一樣長，綠色正方形的邊長是 \(r\)：兩股加起來，比斜邊多了多少？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c11" width="540" height="480"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c11-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c11-a">\(\overline{BC}\)：<span id="c11-va" class="val-num">8</span></label>
+                    <input type="range" id="c11-a" min="2" max="10" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c11-b">\(\overline{AC}\)：<span id="c11-vb" class="val-num">5</span></label>
+                    <input type="range" id="c11-b" min="2" max="10" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c11-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (直角三角形的內切圓)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-21">
+            <p class="quiz-question"><strong>Q21.</strong> 直角 \(\triangle ABC\) 中，\(\angle B = 90^\circ\)，\(\overline{AB} = 12\)、\(\overline{AC} = 37\)，則它的內切圓半徑為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-21" value="A"><span class="option-text">A. \(10\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-21" value="B"><span class="option-text">B. \(\frac{37}{2}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-21" value="C"><span class="option-text">C. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-21" value="D"><span class="option-text">D. \(5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overline{BC} = \sqrt{37^2 - 12^2} = 35\)：
+              \[r = \frac{12 + 35 - 37}{2} = 5\]
+              A 錯：忘了除以 \(2\)。<br>
+              B 錯：\(\frac{37}{2}\) 是<strong>外接圓</strong>半徑。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-22">
+            <p class="quiz-question"><strong>Q22.</strong> 某直角三角形的斜邊長 \(25\)，內切圓半徑為 \(3\)，則這個直角三角形的周長為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-22" value="A"><span class="option-text">A. \(31\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-22" value="B"><span class="option-text">B. \(53\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-22" value="C"><span class="option-text">C. \(56\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-22" value="D"><span class="option-text">D. \(59\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。兩股和 \(=\) 斜邊 \(+ 2r = 25 + 6 = 31\)，周長 \(= 31 + 25 = 56\)。<br>
+              A 錯：\(31\) 只是兩股和，還要加上斜邊。<br>
+              B 錯：把兩股和算成 \(25 + 3\)，漏了 \(2r\) 的 \(2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 12: 內心與平行線
+           ========================================== -->
+      <section class="concept-section" id="concept12">
+        <h2 class="section-title">
+          <i class="fa-solid fa-grip-lines" aria-hidden="true"></i> <span>重點 12：過內心作平行線——小三角形的周長</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(I\) 是內心，過 \(I\) 作 \(\overline{DE} \parallel \overline{BC}\)，\(D\) 在 \(\overline{AB}\) 上、\(E\) 在 \(\overline{AC}\) 上。</li>
+              <li>\(\overline{BI}\) 平分 \(\angle B\)：\(\angle DBI = \angle IBC\)；\(\overline{DE} \parallel \overline{BC}\)：\(\angle DIB = \angle IBC\)（內錯角）。</li>
+              <li>所以 \(\angle DBI = \angle DIB\)，\(\triangle DBI\) 是等腰三角形，\(\overline{DB} = \overline{DI}\)；同理 \(\overline{EC} = \overline{EI}\)。</li>
+              <li>小三角形的周長把 \(\overline{DI}\)、\(\overline{IE}\) 換掉：
+                \[\begin{aligned} & \overline{AD} + \overline{DE} + \overline{EA} \\ &= \overline{AD} + \overline{DB} + \overline{EC} + \overline{EA} \\ &= \overline{AB} + \overline{AC} \end{aligned}\]
+              </li>
+              <li>例：\(\overline{AB} = 9\)、\(\overline{AC} = 8\)，\(\triangle ADE\) 的周長 \(= 17\)，和 \(\overline{BC}\) 多長無關。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">角平分線＋平行線</span>
+              → 等腰三角形；\(\triangle ADE\) 周長 \(= \overline{AB} + \overline{AC}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_beam.webp" alt="古希臘陶瓶黑繪風插圖：學院工坊裡，阿基扶著一個三角形的木架，小歐把一根橫木條水平地架在三角形木架的兩條斜邊之間。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-grip-lines"></i> 視覺互動探索：等腰三角形藏在哪</h3>
+            <p class="interactive-instruction">拖曳 \(A\)、\(B\)、\(C\)，或換一條要平行的邊。金色兩段一樣長、藍色兩段一樣長，紫色小三角形的周長永遠等於哪兩邊的和？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c12" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c12-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">平行於</span>
+                    <div class="btn-group" id="c12-side-group">
+                      <button class="pick-btn active" data-c12-side="A">\(\overline{BC}\)</button>
+                      <button class="pick-btn" data-c12-side="B">\(\overline{CA}\)</button>
+                      <button class="pick-btn" data-c12-side="C">\(\overline{AB}\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c12-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (內心與平行線)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-23">
+            <p class="quiz-question"><strong>Q23.</strong> 如圖，\(I\) 點為 \(\triangle ABC\) 的內心，過 \(I\) 作 \(\overline{DE} \parallel \overline{BC}\)，分別交 \(\overline{AB}\)、\(\overline{AC}\) 於 \(D\)、\(E\)。若 \(\overline{AB} = 11\)、\(\overline{AC} = 13\)、\(\overline{BC} = 16\)，則 \(\triangle ADE\) 的周長為多少？</p>
+            <canvas class="quiz-fig" data-fig="q23" width="320" height="200" role="img" aria-label="三角形 ABC，A 在上、B 在左下、C 在右下；I 為內心，過 I 的水平線段 DE 平行 BC，D 在 AB 上、E 在 AC 上；AB 標 11、AC 標 13、BC 標 16，BI、CI 以虛線連接"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-23" value="A"><span class="option-text">A. \(29\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-23" value="B"><span class="option-text">B. \(24\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-23" value="C"><span class="option-text">C. \(27\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-23" value="D"><span class="option-text">D. \(40\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{DB} = \overline{DI}\)、\(\overline{EC} = \overline{EI}\)，所以 \(\triangle ADE\) 的周長 \(= \overline{AB} + \overline{AC} = 11 + 13 = 24\)。<br>
+              A、C 錯：用到了 \(\overline{BC}\)；小三角形的周長和平行的那一邊 \(\overline{BC}\) 無關。<br>
+              D 錯：\(40\) 是 \(\triangle ABC\) 的周長。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-24">
+            <p class="quiz-question"><strong>Q24.</strong> 承上題的圖，為什麼 \(\overline{DB} = \overline{DI}\)？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-24" value="A"><span class="option-text">A. \(\angle DBI = \angle IBC = \angle DIB\)，所以 \(\triangle DBI\) 是等腰三角形</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-24" value="B"><span class="option-text">B. \(I\) 到 \(\overline{AB}\)、\(\overline{BC}\) 的距離相等</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-24" value="C"><span class="option-text">C. \(D\) 是 \(\overline{AB}\) 的中點</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-24" value="D"><span class="option-text">D. \(\overline{DE}\) 是 \(\triangle ABC\) 的中線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{BI}\) 平分 \(\angle B\) 得 \(\angle DBI = \angle IBC\)；\(\overline{DE} \parallel \overline{BC}\) 得 \(\angle DIB = \angle IBC\)（內錯角）。兩底角相等，所以 \(\overline{DB} = \overline{DI}\)。<br>
+              B 錯：這句話對，但它說的是 \(I\) 到兩條<strong>邊</strong>的距離，推不出 \(\overline{DB} = \overline{DI}\)。<br>
+              C 錯：\(D\) 一般不是中點（這裡 \(\overline{DE}\) 通過內心，不是中點連線）。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 13: 重心
+           ========================================== -->
+      <section class="concept-section" id="concept13">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>重點 13：重心——三條中線的交點</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>物體的重量可以看成集中在一點，叫做<strong>重心</strong>；在重心往上施力，物體就能平衡不動。</li>
+              <li>把均勻的三角形紙板從頂點 \(A\) 吊起來，靜止後畫出過 \(A\) 的鉛垂線，它會通過對邊 \(\overline{BC}\) 的<strong>中點</strong>。</li>
+              <li>三角形的頂點和對邊中點的連線叫做<strong>中線</strong>。三條中線交於一點 \(G\)，就是三角形的<strong>重心</strong>。</li>
+              <li><strong>尺規作圖</strong>：作兩邊的中垂線找出中點，再連出兩條中線，交點就是重心。（中垂線只用來找中點，重心<strong>不是</strong>中垂線的交點。）</li>
+              <li>不管銳角、直角或鈍角三角形，<strong>重心一定在三角形內部</strong>。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">重心</span>
+              三中線的交點（頂點連對邊中點）；一定在內部
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_hang.webp" alt="古希臘陶瓶黑繪風插圖：柱廊下的橫樑垂下一條細繩，細繩綁在一塊三角形木板的一個角上，木板靜止垂掛；細繩下方另吊著一個小鉛錘，鉛垂線貼著木板往下；小歐拿著細木棍準備沿著鉛垂線畫線，阿基在旁邊扶著橫樑的柱子。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-scale-balanced"></i> 視覺互動探索：吊起紙板找重心</h3>
+            <p class="interactive-instruction">「懸吊」：依序吊起不同的頂點，看鉛垂線（紅色虛線）通過對邊的哪一點；畫兩條就找到重心。「尺規」：按步驟用圓規和直尺作兩條中線。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c13" width="540" height="540"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c13-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">方法</span>
+                    <div class="btn-group" id="c13-mode-group">
+                      <button class="pick-btn active" data-c13-mode="hang">懸吊</button>
+                      <button class="pick-btn" data-c13-mode="cg">尺規</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">三角形</span>
+                    <div class="btn-group" id="c13-tri-group">
+                      <button class="pick-btn active" data-c13-tri="0">銳角</button>
+                      <button class="pick-btn" data-c13-tri="1">直角</button>
+                      <button class="pick-btn" data-c13-tri="2">鈍角</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="c13-hang-row">
+                    <span class="btn-group-label">吊起</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="c13-hangA">\(A\)</button>
+                      <button class="pick-btn" id="c13-hangB">\(B\)</button>
+                      <button class="pick-btn" id="c13-hangC">\(C\)</button>
+                      <button class="pick-btn" id="c13-clear">重來</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row" id="c13-step-row" style="display:none">
+                    <span class="btn-group-label">步驟</span>
+                    <div class="btn-group">
+                      <button class="pick-btn" id="c13-prev">上一步</button>
+                      <span class="step-counter" id="c13-step">1 / 9</span>
+                      <button class="pick-btn" id="c13-next">下一步</button>
+                      <button class="pick-btn" id="c13-all">全部顯示</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c13-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (重心)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-25">
+            <p class="quiz-question"><strong>Q25.</strong> 下列哪一種線段，三條一定都會通過三角形的重心？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-25" value="A"><span class="option-text">A. 三邊的中垂線</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-25" value="B"><span class="option-text">B. 三內角的平分線</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-25" value="C"><span class="option-text">C. 從頂點到對邊的垂直線段（高）</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-25" value="D"><span class="option-text">D. 頂點與對邊中點的連線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。頂點與對邊中點的連線是<strong>中線</strong>，三條中線交於重心。<br>
+              A 錯：中垂線交於外心。<br>
+              B 錯：角平分線交於內心。<br>
+              C 錯：高一般不通過對邊中點，不會通過重心。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-26">
+            <p class="quiz-question"><strong>Q26.</strong> 下列關於三角形三心的敘述，何者正確？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-26" value="A"><span class="option-text">A. 外心、內心、重心一定都在三角形內部</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-26" value="B"><span class="option-text">B. 內心、重心一定在三角形內部，外心不一定</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-26" value="C"><span class="option-text">C. 重心到三個頂點的距離相等</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-26" value="D"><span class="option-text">D. 重心是三邊中垂線的交點</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。內心、重心一定在內部；外心在銳角三角形內部、直角三角形斜邊中點、鈍角三角形外部。<br>
+              A 錯：鈍角三角形的外心在外部。<br>
+              C 錯：到三頂點等距的是外心；重心到三頂點的距離一般不相等。<br>
+              D 錯：重心是三<strong>中線</strong>的交點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 14: 重心分中線 2:1
+           ========================================== -->
+      <section class="concept-section" id="concept14">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> <span>重點 14：重心把中線分成 \(2 : 1\)</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(G\) 是重心，\(\overline{AD}\)、\(\overline{BE}\)、\(\overline{CF}\) 是中線：
+                <ul>
+                  <li>\(\overline{AG} : \overline{GD} = 2 : 1\)，\(\overline{BG} : \overline{GE} = 2 : 1\)，\(\overline{CG} : \overline{GF} = 2 : 1\)；</li>
+                  <li>\(\overline{AG} = \frac{2}{3}\overline{AD}\)、\(\overline{GD} = \frac{1}{3}\overline{AD}\)，其他兩條同理。</li>
+                </ul>
+              </li>
+              <li>理由：連接 \(\overline{DE}\)，兩邊中點連線 \(\overline{DE} \parallel \overline{AB}\) 且 \(\overline{DE} = \frac{1}{2}\overline{AB}\)；內錯角相等，\(\triangle DEG \sim \triangle ABG\)（AA），所以 \(\overline{GD} : \overline{AG} = 1 : 2\)。</li>
+              <li>注意：\(\overline{AG}\)、\(\overline{BG}\)、\(\overline{CG}\) 三段一般<strong>不相等</strong>（三條中線本來就不一樣長）。</li>
+              <li>例：\(\overline{AD} = 15\)，則 \(\overline{AG} = 10\)、\(\overline{GD} = 5\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">重心性質</span>
+              頂點到重心 : 重心到對邊中點 \(= 2 : 1\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_balance.webp" alt="古希臘陶瓶黑繪風插圖：阿基伸出一根食指，從下方頂住一塊水平的三角形木板，木板穩穩地平衡在指尖上；小歐彎腰從側面看木板是不是水平。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-divide"></i> 視覺互動探索：中線上的 2 : 1</h3>
+            <p class="interactive-instruction">拖曳頂點、換一條中線，比較金色（頂點到重心）和橘色（重心到中點）兩段；按「看理由」看相似三角形。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c14" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c14-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">中線</span>
+                    <div class="btn-group" id="c14-med-group">
+                      <button class="pick-btn active" data-c14-med="A">\(\overline{AD}\)</button>
+                      <button class="pick-btn" data-c14-med="B">\(\overline{BE}\)</button>
+                      <button class="pick-btn" data-c14-med="C">\(\overline{CF}\)</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">理由</span>
+                    <div class="btn-group" id="c14-proof-group">
+                      <button class="pick-btn active" data-c14-proof="off">只看比例</button>
+                      <button class="pick-btn" data-c14-proof="on">看理由</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c14-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (重心與中線)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-27">
+            <p class="quiz-question"><strong>Q27.</strong> \(\triangle ABC\) 的三中線 \(\overline{AD}\)、\(\overline{BE}\)、\(\overline{CF}\) 交於 \(G\) 點。若 \(\overline{AD} = 24\)、\(\overline{BE} = 21\)、\(\overline{CF} = 30\)，則 \(\overline{GD} + \overline{GE} + \overline{GF}\) 為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-27" value="A"><span class="option-text">A. \(25\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-27" value="B"><span class="option-text">B. \(50\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-27" value="C"><span class="option-text">C. \(75\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-27" value="D"><span class="option-text">D. \(37.5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。重心到對邊中點是中線的 \(\frac{1}{3}\)：
+              \[\frac{1}{3}(24 + 21 + 30) = 25\]
+              B 錯：\(50\) 是 \(\overline{AG} + \overline{BG} + \overline{CG}\)。<br>
+              D 錯：把重心當成中線的中點，算成一半。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-28">
+            <p class="quiz-question"><strong>Q28.</strong> \(G\) 點為 \(\triangle ABC\) 的重心，\(\overline{AD}\) 是中線。若 \(\overline{AG} = 4x - 2\)、\(\overline{GD} = x + 3\)，則 \(\overline{AD}\) 的長度為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-28" value="A"><span class="option-text">A. \(14\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-28" value="B"><span class="option-text">B. \(7\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-28" value="C"><span class="option-text">C. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-28" value="D"><span class="option-text">D. \(28\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{AG} = 2\overline{GD}\)：
+              \[\begin{aligned} & 4x - 2 = 2(x + 3) \\ & 2x = 8,\; x = 4 \end{aligned}\]
+              \(\overline{AG} = 14\)、\(\overline{GD} = 7\)，\(\overline{AD} = 21\)。<br>
+              A、B 錯：只算了 \(\overline{AG}\) 或 \(\overline{GD}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 15: 重心與面積
+           ========================================== -->
+      <section class="concept-section" id="concept15">
+        <h2 class="section-title">
+          <i class="fa-solid fa-cubes" aria-hidden="true"></i> <span>重點 15：重心把面積三等分、三中線把面積六等分</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>中線把三角形分成<strong>等底同高</strong>的兩半，面積相等。</li>
+              <li>\(\overline{CF}\) 是中線：\(\triangle ACF = \triangle BCF\)、\(\triangle AGF = \triangle BGF\)，相減得 \(\triangle ACG = \triangle BCG\)。同理可得：
+                \[\begin{aligned} & \triangle GAB = \triangle GBC \\ &= \triangle GCA = \frac{1}{3}\triangle ABC \end{aligned}\]
+              </li>
+              <li>每一塊再被中線切成一半：<strong>三條中線把面積六等分</strong>，每塊都是 \(\frac{1}{6}\triangle ABC\)，形狀不同也一樣大。</li>
+              <li>由幾塊拼成的圖形，就數它占了幾個 \(\frac{1}{6}\)：例如四邊形 \(AFGE\) 是兩塊，\(= \frac{1}{3}\triangle ABC\)。</li>
+              <li>例：\(\triangle ABC\) 面積 \(36\)，則 \(\triangle GAB = 12\)、\(\triangle GBD = 6\)、四邊形 \(AFGE = 12\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">重心與面積</span>
+              連三頂點：三等分；三中線：六等分
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_bread.webp" alt="古希臘陶瓶黑繪風插圖：石桌上放著一塊三角形的大麵餅，小歐和阿基面對面坐著，準備一起分麵餅。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-cubes"></i> 視覺互動探索：每一塊一樣大</h3>
+            <p class="interactive-instruction">拖曳頂點（吸在格點上），切換「三等分」「六等分」「四邊形 \(AFGE\)」。每一塊中央的數字是它的面積（方格），形狀再怎麼歪，數字都一樣嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c15" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c15-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">切法</span>
+                    <div class="btn-group" id="c15-cut-group">
+                      <button class="pick-btn active" data-c15-cut="3">三等分</button>
+                      <button class="pick-btn" data-c15-cut="6">六等分</button>
+                      <button class="pick-btn" data-c15-cut="quad">四邊形 \(AFGE\)</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c15-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (重心與面積)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-29">
+            <p class="quiz-question"><strong>Q29.</strong> \(G\) 點為 \(\triangle ABC\) 的重心，\(D\)、\(E\)、\(F\) 分別是 \(\overline{BC}\)、\(\overline{CA}\)、\(\overline{AB}\) 的中點。若 \(\triangle GBD\) 的面積為 \(15\)，則四邊形 \(AFGE\) 的面積為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-29" value="A"><span class="option-text">A. \(15\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-29" value="B"><span class="option-text">B. \(45\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-29" value="C"><span class="option-text">C. \(60\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-29" value="D"><span class="option-text">D. \(30\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。三中線把面積六等分，每一塊都是 \(15\)；四邊形 \(AFGE\) 由 \(\triangle GAF\)、\(\triangle GAE\) 兩塊組成，面積 \(= 2 \times 15 = 30\)。<br>
+              A 錯：四邊形是兩塊，不是一塊。<br>
+              B 錯：\(45\) 是三塊，是 \(\triangle ABC\) 的一半。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-30">
+            <p class="quiz-question"><strong>Q30.</strong> 直角 \(\triangle ABC\) 中，\(\angle A = 90^\circ\)，\(\overline{AB} = 14\)、\(\overline{AC} = 15\)。\(D\)、\(E\) 分別是 \(\overline{AB}\)、\(\overline{AC}\) 的中點，\(\overline{CD}\) 與 \(\overline{BE}\) 交於 \(P\)，則四邊形 \(ADPE\) 的面積為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-30" value="A"><span class="option-text">A. \(17.5\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-30" value="B"><span class="option-text">B. \(70\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-30" value="C"><span class="option-text">C. \(35\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-30" value="D"><span class="option-text">D. \(52.5\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\overline{CD}\)、\(\overline{BE}\) 是兩條中線，\(P\) 是重心。\(\triangle ABC\) 面積 \(= \frac{1}{2} \times 14 \times 15 = 105\)，四邊形 \(ADPE\) 是六塊中的兩塊：
+              \[105 \times \frac{2}{6} = 35\]
+              A 錯：只算了一塊。<br>
+              D 錯：\(52.5\) 是全面積的一半。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 16: 平行四邊形裡的重心
+           ========================================== -->
+      <section class="concept-section" id="concept16">
+        <h2 class="section-title">
+          <i class="fa-solid fa-vector-square" aria-hidden="true"></i> <span>重點 16：藏在平行四邊形裡的重心</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>平行四邊形 \(ABCD\) 的對角線<strong>互相平分</strong>，交點 \(O\) 是 \(\overline{AC}\)、\(\overline{BD}\) 的中點。</li>
+              <li>\(E\) 是 \(\overline{BC}\) 的中點時，在 \(\triangle ABC\) 裡 \(\overline{AE}\)、\(\overline{BO}\) 都是中線，交點 \(G\) 是 <strong>\(\triangle ABC\) 的重心</strong>：
+                <ul>
+                  <li>\(\overline{BG} = 2\overline{GO}\)，\(\overline{BO} = 3\overline{GO}\)，\(\overline{BD} = 6\overline{GO}\)；</li>
+                  <li>\(\triangle AGO = \frac{1}{6}\triangle ABC = \frac{1}{12}\) 平行四邊形 \(ABCD\)。</li>
+                </ul>
+              </li>
+              <li>\(E\) 換成 \(\overline{CD}\) 的中點，\(G\) 就是 \(\triangle ACD\) 的重心，作法相同。</li>
+              <li>關鍵是先找出「藏起來的三角形」與它的兩條中線，再套重心性質。</li>
+              <li>例：\(\overline{OG} = 3\)，則 \(\overline{BG} = 6\)、\(\overline{BO} = 9\)、\(\overline{BD} = 18\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">先找三角形</span>
+              對角線互相平分 → \(O\) 是中點 → 兩條中線 → 重心
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_tilefloor.webp" alt="古希臘陶瓶黑繪風插圖：學院走廊的地面鋪著一塊塊平行四邊形的石板，小歐蹲在其中一塊石板旁，用細木棍從一個角畫到對角；阿基站在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-vector-square"></i> 視覺互動探索：找出藏起來的三角形</h3>
+            <p class="interactive-instruction">調整平行四邊形的底、傾斜與高，切換 \(E\) 的位置。金色三角形就是 \(G\) 當重心的那一個；藍色與橘色兩段的比，是不是一直 \(2 : 1\)？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c16" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c16-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">\(E\) 是</span>
+                    <div class="btn-group" id="c16-e-group">
+                      <button class="pick-btn active" data-c16-e="BC">\(\overline{BC}\) 的中點</button>
+                      <button class="pick-btn" data-c16-e="CD">\(\overline{CD}\) 的中點</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c16-w">底 \(\overline{BC}\)：<span id="c16-vw" class="val-num">6</span></label>
+                    <input type="range" id="c16-w" min="4" max="8" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c16-k">傾斜：<span id="c16-vk" class="val-num">2</span></label>
+                    <input type="range" id="c16-k" min="-3" max="3" value="2" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c16-h">高：<span id="c16-vh" class="val-num">4</span></label>
+                    <input type="range" id="c16-h" min="3" max="6" value="4" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c16-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平行四邊形與重心)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-31">
+            <p class="quiz-question"><strong>Q31.</strong> 如圖，平行四邊形 \(ABCD\) 的兩對角線交於 \(O\) 點，\(E\) 是 \(\overline{BC}\) 的中點，\(\overline{AE}\) 與 \(\overline{BD}\) 交於 \(G\) 點。若 \(\overline{OG} = 7\)，則 \(\overline{BD}\) 的長度為多少？</p>
+            <canvas class="quiz-fig" data-fig="q31" width="320" height="200" role="img" aria-label="平行四邊形 ABCD，A 在左上、B 在左下、C 在右下、D 在右上；對角線 AC、BD 交於 O；E 是 BC 中點，AE 與 BD 交於 G；OG 標 7"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-31" value="A"><span class="option-text">A. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-31" value="B"><span class="option-text">B. \(28\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-31" value="C"><span class="option-text">C. \(35\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-31" value="D"><span class="option-text">D. \(42\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。對角線互相平分，\(O\) 是 \(\overline{AC}\) 的中點，\(G\) 是 \(\triangle ABC\) 的重心：\(\overline{BG} = 2 \times 7 = 14\)、\(\overline{BO} = 21\)，\(\overline{BD} = 2 \times 21 = 42\)。<br>
+              A 錯：\(21\) 只是 \(\overline{BO}\)。<br>
+              B 錯：把 \(\overline{BD}\) 當成 \(\overline{BG}\) 的兩倍。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-32">
+            <p class="quiz-question"><strong>Q32.</strong> 平行四邊形 \(ABCD\) 的兩對角線交於 \(O\) 點，\(E\) 是 \(\overline{BC}\) 的中點，\(\overline{AE}\) 與 \(\overline{BD}\) 交於 \(G\) 點。若 \(\triangle ABG\) 的面積為 \(10\)，則平行四邊形 \(ABCD\) 的面積為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-32" value="A"><span class="option-text">A. \(30\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-32" value="B"><span class="option-text">B. \(40\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-32" value="C"><span class="option-text">C. \(60\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-32" value="D"><span class="option-text">D. \(120\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(G\) 是 \(\triangle ABC\) 的重心，\(\triangle ABG = \frac{1}{3}\triangle ABC\)，所以 \(\triangle ABC = 30\)；平行四邊形是 \(\triangle ABC\) 的兩倍，面積 \(= 60\)。<br>
+              A 錯：\(30\) 只是 \(\triangle ABC\)。<br>
+              D 錯：把 \(\triangle ABG\) 當成六等分中的一小塊。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 17: 直角三角形的重心與外心
+           ========================================== -->
+      <section class="concept-section" id="concept17">
+        <h2 class="section-title">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> <span>重點 17：直角三角形——外心接重心</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>直角 \(\triangle ABC\)（\(\angle B = 90^\circ\)）的外心是斜邊中點 \(E\)：\(\overline{EA} = \overline{EB} = \overline{EC} = \frac{1}{2}\overline{AC}\)。</li>
+              <li>\(\overline{BE}\) 也是斜邊上的<strong>中線</strong>，重心 \(G\) 在它上面，\(\overline{BG} : \overline{GE} = 2 : 1\)：
+                \[\begin{aligned} \overline{BG} &= \frac{2}{3}\overline{BE} = \frac{1}{3}\overline{AC} \\ \overline{GE} &= \frac{1}{3}\overline{BE} = \frac{1}{6}\overline{AC} \end{aligned}\]
+              </li>
+              <li>兩個性質接力：先用外心把 \(\overline{BE}\) 換成斜邊的一半，再用重心的 \(2 : 1\)。</li>
+              <li>題目若說「\(\overline{AB}\) 是圓的直徑、\(C\) 在圓上」，\(\angle C\) 就是直角，圓心是斜邊中點，同樣可以接力。</li>
+              <li>例：\(\overline{AC} = 18\)，則 \(\overline{BE} = 9\)、\(\overline{BG} = 6\)、\(\overline{GE} = 3\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">直角三角形</span>
+              \(\overline{BG} = \frac{1}{3}\) 斜邊、\(\overline{GE} = \frac{1}{6}\) 斜邊
+            </div>
+
+            <div class="illustration-container">
+              <img src="gr2_lever.webp" alt="古希臘陶瓶黑繪風插圖：阿基站在一根長木槓桿旁，把木槓桿架在一塊三角形的石頭支點上，雙手壓著槓桿的一端；小歐站在另一端旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-link"></i> 視覺互動探索：斜邊的 ½、⅓、⅙</h3>
+            <p class="interactive-instruction">調整兩股的長。斜邊中點 \(E\) 是外心，金色 \(\overline{BG}\) 和橘色 \(\overline{GE}\) 各是斜邊的幾分之幾？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-c17" width="540" height="490"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="c17-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="c17-a">\(\overline{BC}\)：<span id="c17-va" class="val-num">6</span></label>
+                    <input type="range" id="c17-a" min="2" max="10" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="c17-b">\(\overline{AB}\)：<span id="c17-vb" class="val-num">5</span></label>
+                    <input type="range" id="c17-b" min="2" max="10" value="5" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="c17-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (直角三角形的重心與外心)</h3>
+
+          <div class="quiz-card" data-quiz="3-2-33">
+            <p class="quiz-question"><strong>Q33.</strong> \(G\) 點為直角 \(\triangle ABC\) 的重心，\(\angle B = 90^\circ\)，\(\overline{BG}\) 的延長線交 \(\overline{AC}\) 於 \(E\) 點。若 \(\overline{BG} = 14\)，則斜邊 \(\overline{AC}\) 的長度為多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-33" value="A"><span class="option-text">A. \(42\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-33" value="B"><span class="option-text">B. \(21\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-33" value="C"><span class="option-text">C. \(28\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-33" value="D"><span class="option-text">D. \(56\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(E\) 是 \(\overline{AC}\) 的中點，\(\overline{BE}\) 是中線：\(\overline{BE} = \frac{3}{2} \times 14 = 21\)。\(E\) 也是外心，\(\overline{AC} = 2\overline{BE} = 42\)。<br>
+              B 錯：\(21\) 是 \(\overline{BE}\)。<br>
+              C 錯：把 \(\overline{BG}\) 直接乘以 \(2\)，忘了重心分中線是 \(2 : 1\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="3-2-34">
+            <p class="quiz-question"><strong>Q34.</strong> 如圖，\(\overline{AB}\) 是圓 \(O\) 的直徑，\(C\) 點在圓上，\(D\)、\(E\) 分別是 \(\overline{AC}\)、\(\overline{BC}\) 的中點，\(\overline{AE}\) 與 \(\overline{BD}\) 交於 \(G\) 點。若圓 \(O\) 的面積為 \(48\pi\)，則 \(\overline{OG}\) 的長度為多少？</p>
+            <canvas class="quiz-fig" data-fig="q34" width="320" height="200" role="img" aria-label="圓 O，直徑 AB 水平，C 在上方圓周上；D、E 分別是 AC、BC 的中點，AE 與 BD 交於 G"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q3-2-34" value="A"><span class="option-text">A. \(\frac{4\sqrt{3}}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-34" value="B"><span class="option-text">B. \(\frac{8\sqrt{3}}{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-34" value="C"><span class="option-text">C. \(4\sqrt{3}\)</span></label>
+              <label class="option-label"><input type="radio" name="q3-2-34" value="D"><span class="option-text">D. \(2\sqrt{3}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(G\) 是 \(\triangle ABC\) 的重心；\(O\) 是 \(\overline{AB}\) 的中點，\(\overline{CO}\) 是第三條中線，延長 \(\overline{OG}\) 會通過 \(C\)。半徑 \(\overline{OC} = \sqrt{48} = 4\sqrt{3}\)：
+              \[\overline{OG} = \frac{1}{3}\overline{OC} = \frac{4\sqrt{3}}{3}\]
+              B 錯：\(\frac{8\sqrt{3}}{3}\) 是 \(\overline{CG}\)。<br>
+              C 錯：\(4\sqrt{3}\) 是半徑。<br>
+              D 錯：把 \(G\) 當成 \(\overline{OC}\) 的中點。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 三心速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>外心 \(O\)</strong>：三邊中垂線的交點；\(\overline{OA} = \overline{OB} = \overline{OC}\)（外接圓半徑）；銳角在內、直角在斜邊中點、鈍角在外；銳角時 \(\angle BOC = 2\angle A\)。</li>
+              <li><strong>內心 \(I\)</strong>：三內角平分線的交點；到三邊等距（內切圓半徑 \(r\)）；一定在內部；\(\angle BIC = 90^\circ + \frac{1}{2}\angle A\)。</li>
+              <li>內心與面積：三塊面積比＝邊長比；面積 \(= \frac{1}{2}rs\)；直角三角形的 \(r =\)（兩股和 \(-\) 斜邊）\(\div 2\)。</li>
+              <li><strong>重心 \(G\)</strong>：三中線的交點；一定在內部；分中線 \(2 : 1\)；連三頂點面積三等分、三中線面積六等分。</li>
+              <li>判斷用哪一心：到三<strong>點</strong>等距 → 外心；到三<strong>線</strong>等距 → 內心；平衡、中線、中點 → 重心。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到幾何學院：三個問題、三個點</h4>
+              <h5><i class="fa-solid fa-fire"></i> 營火放哪裡</h5>
+              <p>離三頂帳篷一樣遠——作兩條中垂線，交點就是外心；以它為圓心畫圓，三頂帳篷都在圓上。</p>
+              <h5><i class="fa-solid fa-road"></i> 遊戲場放哪裡</h5>
+              <p>離三條路一樣遠——作兩條角平分線，交點就是內心；以它為圓心的圓剛好碰到三條路。</p>
+              <h5><i class="fa-solid fa-scale-balanced"></i> 木板吊在哪裡會平衡</h5>
+              <p>吊起兩個頂點畫出兩條鉛垂線，它們都是中線，交點就是重心：用一根手指頂住它，三角形木板就能水平地停住。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

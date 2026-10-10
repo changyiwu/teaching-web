@@ -4,39 +4,1250 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../header-logo.svg">
-  <title>2-2 圓心角、圓周角與弧的關係 - 課堂教學資料庫</title>
-  <!-- FontAwesome for icons -->
+  <title>2-2 圓心角、圓周角與弧的關係 - 互動教學網頁</title>
+
+  <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 佔位頁共用樣式 -->
-  <link rel="stylesheet" href="../pending.css">
-  <!-- 共用課堂元件 -->
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共用課堂元件（課堂工具側邊欄 / 上下節導覽 / 課堂畫筆） -->
   <link rel="stylesheet" href="../../tools-sidebar.css">
   <link rel="stylesheet" href="../../lesson-nav.css">
+  <link rel="stylesheet" href="../../annotate.css">
+
+  <!-- MathJax for rendering professional LaTeX equations -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 <body>
 
+  <!-- Floating animated background blobs -->
   <div class="background-blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
   </div>
 
-  <div class="card">
-    <div class="icon-container">
-      <i class="fa-solid fa-screwdriver-wrench"></i>
-    </div>
-    <div class="breadcrumb">第五冊 (3上) • 第2章 圓</div>
-    <h1>2-2 圓心角、圓周角與弧的關係</h1>
-    <div class="badge"><i class="fa-solid fa-person-digging" style="margin-right: 6px;"></i>教學資源待施工</div>
-    <p class="desc">此小節的教學網頁與專屬資料夾已成功建立。相關教學簡報、學習單或互動教材將陸續存入此目錄中。</p>
-    <a href="../../index.html" class="btn">
-      <i class="fa-solid fa-house"></i> 返回主網頁
-    </a>
+  <div class="container">
+    <!-- Header Navigation -->
+    <header>
+      <div class="nav-back">
+        <a href="../../index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i> 返回主網頁
+        </a>
+      </div>
+      <div class="lesson-title">
+        <span class="badge">第五冊 • 第二章</span>
+        <h1>2-2 圓心角、圓周角與弧的關係</h1>
+        <p>單車修理鋪裡，小輪和阿軸繼續跟車輪打交道。輻條從輪軸放射出去，兩根輻條夾出<strong>圓心角</strong>，也夾出一段輪框——這段<strong>弧的度數</strong>就等於圓心角。換個位置，站在輪框上看同一段弧，得到的是<strong>圓周角</strong>，它剛好是弧的一半。這一節從弧的度數出發，學圓周角的各種性質：同弧的圓周角相等、半圓的圓周角是直角、平行弦截出相等的弧，最後是<strong>圓內接四邊形</strong>的對角互補。</p>
+      </div>
+      <!-- Progress navigation (10 points) -->
+      <nav class="lesson-nav">
+        <a href="#concept1" class="nav-item active"><i class="fa-solid fa-circle-notch"></i> 弧的度數</a>
+        <a href="#concept2" class="nav-item"><i class="fa-solid fa-equals"></i> 等弧與等弦</a>
+        <a href="#concept3" class="nav-item"><i class="fa-solid fa-eye"></i> 圓周角</a>
+        <a href="#concept4" class="nav-item"><i class="fa-solid fa-people-group"></i> 同弧圓周角</a>
+        <a href="#concept5" class="nav-item"><i class="fa-solid fa-divide"></i> 圓心角的一半</a>
+        <a href="#concept6" class="nav-item"><i class="fa-solid fa-plus"></i> 弧的加法</a>
+        <a href="#concept7" class="nav-item"><i class="fa-solid fa-ruler-combined"></i> 半圓直角</a>
+        <a href="#concept8" class="nav-item"><i class="fa-solid fa-grip-lines"></i> 平行弦</a>
+        <a href="#concept9" class="nav-item"><i class="fa-solid fa-vector-square"></i> 圓內接四邊形</a>
+        <a href="#concept10" class="nav-item"><i class="fa-solid fa-arrow-up-right-from-square"></i> 外角</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           引起動機: 四格漫畫（油性粉蠟筆・單車修理鋪）
+           ========================================== -->
+      <section class="concept-section" id="motivation-comic" style="margin-bottom: 2.5rem; border-color: rgba(242, 200, 121, 0.3);">
+        <h2 class="section-title" style="color: #f2c879; border-bottom-color: rgba(242, 200, 121, 0.2);">
+          <i class="fa-solid fa-book-open" aria-hidden="true" style="color: #f2c879; text-shadow: 0 0 10px rgba(242, 200, 121, 0.4);"></i> 課前暖身漫畫：兩個反光片轉了一樣多嗎？
+        </h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+          <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto;">
+            阿軸在同一根輻條上夾了兩個反光片，一個靠近輪軸、一個靠近輪框。輪子轉一下，靠近輪軸的那個走得比較少嗎？小輪說：它們跟著同一根輻條轉，<strong style="color:#f2c879">轉過的角度一樣</strong>，只是外圈走的路比較長——<strong style="color:#f2c879">弧的度數等於圓心角</strong>，弧長還要看半徑。
+          </p>
+          <div class="illustration-container" style="max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; background: rgba(18, 28, 30, 0.5);">
+            <img src="motivation_comic.webp" alt="油性粉蠟筆單車修理鋪風四格漫畫：阿軸在同一根輻條上夾了兩個反光片，一個靠近輪軸、一個靠近輪框，轉動車輪後問靠近輪軸的那個是不是轉得比較少；小輪指著那根輻條，說兩個反光片跟著同一根輻條轉過一樣的角度；小輪用手指沿著輪框比劃，說外圈走的路比較長；旁白說弧的度數等於圓心角，半徑大的弧比較長。" style="width: 100%; height: auto; display: block; transition: transform 0.3s;" class="comic-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 1: 弧的度數與弧長
+           ========================================== -->
+      <section class="concept-section" id="concept1">
+        <h2 class="section-title">
+          <i class="fa-solid fa-circle-notch" aria-hidden="true"></i> <span>重點 1：弧的度數等於圓心角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>把圓周分成 \(360\) 等分，每一等分的弧所對的圓心角是 \(1^\circ\)，就說這段弧的度數是 \(1^\circ\)。所以<strong>弧的度數 = 它所對圓心角的度數</strong>：\(\angle AOB = x^\circ\) 時，記作 \(\overset{\frown}{AB} = x^\circ\)。</li>
+              <li>\(\overset{\frown}{AB}\) 這個記號有三種意思：<strong>弧本身</strong>、<strong>弧的度數</strong>、<strong>弧的長度</strong>，要看前後文分辨。</li>
+              <li>弧的長度 \(=\) 圓周長 \(\times \frac{x}{360}\)。</li>
+              <li><strong>同圓或等圓</strong>中：度數相同的弧長度也相同；度數較大的弧也比較長。</li>
+              <li><strong>半徑不同</strong>的兩圓（例如同心圓）：同一個圓心角夾出的兩段弧<strong>度數相同、長度不同</strong>，長度比 \(=\) 半徑比。</li>
+              <li>例：同心圓的半徑是 \(8\) 與 \(10\)，\(\angle AOB = \angle COD = 150^\circ\)。兩段弧的度數都是 \(150^\circ\)；長度分別是
+              \[\begin{aligned} &2\pi \times 8 \times \frac{5}{12} = \frac{20}{3}\pi \\ &2\pi \times 10 \times \frac{5}{12} = \frac{25}{3}\pi \end{aligned}\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・弧的度數</span>
+              圓上一弧的度數，就是它所對圓心角的度數
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_reflector.webp" alt="油性粉蠟筆單車修理鋪風插圖：阿軸在一根直輻條上夾了兩個反光片，一個靠近輪軸、一個靠近輪框，小輪在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-circle-notch"></i> 視覺互動探索：同心輪框量弧台</h3>
+            <p class="interactive-instruction">內圈、外圈是同一個圓心的兩個輪框。拉動圓心角與兩個半徑：兩段弧的<strong>度數</strong>會不會不一樣？<strong>長度</strong>呢？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-deg" width="540" height="484"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="deg-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="deg-x">圓心角 \(\angle AOB\)：<span id="deg-vx" class="val-num">100°</span></label>
+                    <input type="range" id="deg-x" min="2" max="34" value="10" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="deg-a">內圈半徑：<span id="deg-va" class="val-num">5</span></label>
+                    <input type="range" id="deg-a" min="2" max="6" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="deg-b">外圈半徑：<span id="deg-vb" class="val-num">10</span></label>
+                    <input type="range" id="deg-b" min="7" max="12" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="deg-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (弧的度數與弧長)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-1">
+            <p class="quiz-question"><strong>Q1.</strong> 兩個同心圓的圓心是 \(O\)，半徑分別為 \(15\) 與 \(6\)。\(A\)、\(B\) 在大圓上，\(C\)、\(D\) 在小圓上，且 \(\angle AOB = \angle COD\)。若 \(\overset{\frown}{AB}\) 的長度是 \(9\pi\)，則 \(\overset{\frown}{CD}\) 的長度是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-1" value="A"><span class="option-text">A. \(9\pi\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1" value="B"><span class="option-text">B. \(\frac{45}{2}\pi\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1" value="C"><span class="option-text">C. \(\frac{18}{5}\pi\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-1" value="D"><span class="option-text">D. \(\frac{9}{5}\pi\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。設 \(\angle AOB = x^\circ\)：
+              \[\begin{aligned} &2\pi \times 15 \times \frac{x}{360} = 9\pi \\ &\frac{x}{360} = \frac{3}{10},\ x = 108 \end{aligned}\]
+              \(\angle COD = 108^\circ\)，所以
+              \[\overset{\frown}{CD} = 2\pi \times 6 \times \frac{3}{10} = \frac{18}{5}\pi\]
+              也可以用「長度比 \(=\) 半徑比 \(= 6 : 15 = 2 : 5\)」：\(9\pi \times \frac{2}{5} = \frac{18}{5}\pi\)。<br>
+              A 錯：兩弧的<strong>度數</strong>相同，但半徑不同，長度不同。<br>
+              B 錯：比例倒過來了，小圓的弧應該比較短。<br>
+              D 錯：算弧長時漏乘了 \(2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-2">
+            <p class="quiz-question"><strong>Q2.</strong> 圓 \(O\) 的半徑是 \(14\)，圓周被等分成 \(8\) 段。\(A\)、\(B\) 是其中兩個分點，劣弧 \(\overset{\frown}{AB}\) 恰好包含 \(3\) 段。\(\overset{\frown}{AB}\) 的度數與長度分別是多少？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-2" value="A"><span class="option-text">A. \(135^\circ\)、\(\frac{21}{2}\pi\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2" value="B"><span class="option-text">B. \(135^\circ\)、\(21\pi\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2" value="C"><span class="option-text">C. \(45^\circ\)、\(\frac{7}{2}\pi\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-2" value="D"><span class="option-text">D. \(135^\circ\)、\(\frac{147}{2}\pi\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。每一段是 \(360^\circ \div 8 = 45^\circ\)，\(3\) 段是 \(135^\circ\)，占圓周的 \(\frac{3}{8}\)：
+              \[\overset{\frown}{AB} = 2\pi \times 14 \times \frac{3}{8} = \frac{21}{2}\pi\]
+              B 錯：把直徑 \(28\) 當成半徑代入。<br>
+              C 錯：只算了 \(1\) 段。<br>
+              D 錯：\(\pi \times 14^2 \times \frac{3}{8}\) 是扇形面積，不是弧長。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 2: 等弧對等弦、等弦對等弧
+           ========================================== -->
+      <section class="concept-section" id="concept2">
+        <h2 class="section-title">
+          <i class="fa-solid fa-equals" aria-hidden="true"></i> <span>重點 2：等弧對等弦、等弦對等弧</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>同圓中，\(\overset{\frown}{AB} = \overset{\frown}{CD}\)（度數相等）\(\Rightarrow \angle AOB = \angle COD\)，再加上四條半徑等長，\(\triangle AOB \cong \triangle COD\)（SAS），所以 \(\overline{AB} = \overline{CD}\)：<strong>等弧對等弦</strong>。</li>
+              <li>反過來，\(\overline{AB} = \overline{CD}\) \(\Rightarrow \triangle AOB \cong \triangle COD\)（SSS）\(\Rightarrow \angle AOB = \angle COD\)，弧也相等：<strong>等弦對等弧</strong>。</li>
+              <li>這兩個性質都要在<strong>同圓或等圓</strong>中才成立：大圓、小圓裡等長的弦，對的弧不一定一樣大。</li>
+              <li>正 \(n\) 邊形的頂點都在圓上時，\(n\) 條邊是 \(n\) 條等長的弦，把圓周分成 \(n\) 段相等的弧，每段 \(\frac{360^\circ}{n}\)。例：正五邊形 \(ABCDE\) 中，\(\overset{\frown}{ABC} = 360^\circ \times \frac{2}{5} = 144^\circ\)，所以 \(\angle AOC = 144^\circ\)。</li>
+              <li>兩弦等長時，它們對的弧相等；兩段弧扣掉共同的部分，剩下的也相等。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">同圓或等圓中</span>
+              弧相等 \(\Leftrightarrow\) 圓心角相等 \(\Leftrightarrow\) 弦相等
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_bolts.webp" alt="油性粉蠟筆單車修理鋪風插圖：阿軸用六角扳手鎖腳踏車齒盤上的螺絲，五顆螺絲等距排在一個圓上，小輪在旁邊扶著曲柄。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-equals"></i> 視覺互動探索：輻條夾出的弦</h3>
+            <p class="interactive-instruction">「比較兩弦」：調整兩個圓心角，什麼時候兩條弦一樣長？「正多邊形」：正 \(n\) 邊形把圓周切成幾段相等的弧？從 \(A\) 數過去第 \(k\) 個頂點，圓心角是幾度？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-chord" width="540" height="484"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="chord-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="chord-mode-group">
+                      <button class="pick-btn active" data-chord-mode="cmp">比較兩弦</button>
+                      <button class="pick-btn" data-chord-mode="poly">正多邊形</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="chord-p-row">
+                    <label for="chord-p">\(\angle AOB\)：<span id="chord-vp" class="val-num">100°</span></label>
+                    <input type="range" id="chord-p" min="2" max="16" value="10" step="1">
+                  </div>
+                  <div class="slider-row" id="chord-q-row">
+                    <label for="chord-q">\(\angle COD\)：<span id="chord-vq" class="val-num">70°</span></label>
+                    <input type="range" id="chord-q" min="2" max="16" value="7" step="1">
+                  </div>
+                  <div class="slider-row" id="chord-n-row">
+                    <label for="chord-n">邊數 \(n\)：<span id="chord-vn" class="val-num">6</span></label>
+                    <input type="range" id="chord-n" min="3" max="10" value="6" step="1">
+                  </div>
+                  <div class="slider-row" id="chord-k-row">
+                    <label for="chord-k">跨過的邊數 \(k\)：<span id="chord-vk" class="val-num">2</span></label>
+                    <input type="range" id="chord-k" min="1" max="5" value="2" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="chord-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (等弧與等弦)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-3">
+            <p class="quiz-question"><strong>Q3.</strong> 正十二邊形 \(ABCDEFGHIJKL\) 的頂點都在圓 \(O\) 上。\(\angle AOE\)（小於 \(180^\circ\) 的那一個）是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-3" value="A"><span class="option-text">A. \(30^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3" value="B"><span class="option-text">B. \(150^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3" value="C"><span class="option-text">C. \(60^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-3" value="D"><span class="option-text">D. \(120^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(12\) 條邊等長，等弦對等弧，每段弧是 \(360^\circ \div 12 = 30^\circ\)。從 \(A\) 到 \(E\) 經過 \(AB\)、\(BC\)、\(CD\)、\(DE\) 共 \(4\) 段：
+              \[\begin{aligned} &\angle AOE = \overset{\frown}{ABE} \\ &= 4 \times 30^\circ = 120^\circ \end{aligned}\]
+              A 錯：只算了一段弧。<br>
+              B 錯：\(A\) 到 \(E\) 有 \(5\) 個字母，但中間只有 \(4\) 條邊。<br>
+              C 錯：\(60^\circ\) 是對同一段弧的圓周角，不是圓心角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-4">
+            <p class="quiz-question"><strong>Q4.</strong> \(A\)、\(B\)、\(C\) 是圓上三點，\(\overline{AB} = \overline{AC}\)，且不含 \(A\) 的 \(\overset{\frown}{BC} = 76^\circ\)。不含 \(C\) 的 \(\overset{\frown}{AB}\) 是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-4" value="A"><span class="option-text">A. \(76^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4" value="B"><span class="option-text">B. \(142^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4" value="C"><span class="option-text">C. \(104^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-4" value="D"><span class="option-text">D. \(38^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{AB} = \overline{AC}\)，等弦對等弧，兩段弧一樣大。三段弧合起來是整個圓：
+              \[\overset{\frown}{AB} = (360^\circ - 76^\circ) \div 2 = 142^\circ\]
+              A 錯：題目只說 \(\overline{AB} = \overline{AC}\)，弦 \(\overline{BC}\) 不一定和它們一樣長。<br>
+              C 錯：圓周是 \(360^\circ\)，不是 \(180^\circ\)。<br>
+              D 錯：弧的度數不必除以 \(2\)，除以 \(2\) 的是圓周角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 3: 圓周角與它所對的弧
+           ========================================== -->
+      <section class="concept-section" id="concept3">
+        <h2 class="section-title">
+          <i class="fa-solid fa-eye" aria-hidden="true"></i> <span>重點 3：圓周角是所對弧的一半</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li><strong>圓周角</strong>：頂點在<strong>圓上</strong>、兩邊都是<strong>弦</strong>的角。\(\angle BAC\) 所對的弧，是夾在兩邊之間、<strong>不含頂點 \(A\)</strong> 的 \(\overset{\frown}{BC}\)。</li>
+              <li><strong>圓周角的度數 = 所對弧度數的一半</strong>：\(\angle BAC = \frac{1}{2}\overset{\frown}{BC}\)。</li>
+              <li>證明分三種情形：
+                <ul class="bullet-list">
+                  <li>圓心在一邊上：\(\triangle OAB\) 等腰，\(\angle BOC\) 是外角：\[\begin{aligned} &\angle BOC = \angle A + \angle OBA \\ &= 2\angle A \end{aligned}\]</li>
+                  <li>圓心在角的內部：作直徑 \(\overline{AD}\)，\(\angle BAC = \angle BAD + \angle DAC\)，兩塊各是一半，加起來還是一半。</li>
+                  <li>圓心在角的外部：作直徑 \(\overline{AD}\)，改用兩角相減，結果一樣。</li>
+                </ul>
+              </li>
+              <li>頂點<strong>不在圓上</strong>的角（圓心、兩弦在圓內的交點、圓外一點）不是圓周角，不能直接取「弧的一半」。</li>
+              <li>例：\(\overset{\frown}{BC} = 100^\circ\) \(\Rightarrow \angle BAC = 50^\circ\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・圓周角</span>
+              \(\angle BAC = \frac{1}{2}\overset{\frown}{BC}\)（頂點在圓上，弧不含頂點）
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_truing.webp" alt="油性粉蠟筆單車修理鋪風插圖：小輪把一個腳踏車輪架上工作檯的校正架，阿軸彎腰從旁邊看著輪框。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-eye"></i> 視覺互動探索：輪框上的量角器</h3>
+            <p class="interactive-instruction">「頂點在圓上」：讓 \(A\) 在圓上移動，看圓心什麼時候在角的一邊上、內部、外部，三種情形都會得到「一半」。「頂點不在圓上」：把頂點 \(P\) 沿著 \(\overline{OA}\) 推進推出，角還是弧的一半嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ins" width="540" height="500"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ins-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">頂點</span>
+                    <div class="btn-group" id="ins-mode-group">
+                      <button class="pick-btn active" data-ins-mode="on">頂點在圓上</button>
+                      <button class="pick-btn" data-ins-mode="off">頂點不在圓上</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="ins-a">\(\overset{\frown}{BC}\)：<span id="ins-va" class="val-num">100°</span></label>
+                    <input type="range" id="ins-a" min="1" max="8" value="5" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="ins-t">\(A\) 的位置（方向角）：<span id="ins-vt" class="val-num">120°</span></label>
+                    <input type="range" id="ins-t" min="-9" max="9" value="3" step="1">
+                  </div>
+                  <div class="slider-row" id="ins-k-row">
+                    <label for="ins-k">\(\overline{OP}\) 是半徑的幾倍：<span id="ins-vk" class="val-num">0.7</span></label>
+                    <input type="range" id="ins-k" min="4" max="15" value="7" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ins-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圓周角)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-5">
+            <p class="quiz-question"><strong>Q5.</strong> \(A\)、\(B\)、\(C\) 是圓 \(O\) 上三點，不含 \(A\) 的 \(\overset{\frown}{BC} = 128^\circ\)。\(\angle BAC\) 是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-5" value="A"><span class="option-text">A. \(64^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5" value="B"><span class="option-text">B. \(128^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5" value="C"><span class="option-text">C. \(116^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-5" value="D"><span class="option-text">D. \(26^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle BAC\) 是圓周角，所對的弧就是不含 \(A\) 的 \(\overset{\frown}{BC}\)：
+              \[\angle BAC = \frac{1}{2} \times 128^\circ = 64^\circ\]
+              B 錯：\(128^\circ\) 是圓心角 \(\angle BOC\)，圓周角只有它的一半。<br>
+              C 錯：\(116^\circ\) 是 \(180^\circ - 64^\circ\)，那是頂點在另一段弧上的圓周角。<br>
+              D 錯：\((180^\circ - 128^\circ) \div 2 = 26^\circ\) 是等腰 \(\triangle OBC\) 的底角。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-6">
+            <p class="quiz-question"><strong>Q6.</strong> 如圖，\(A\)、\(B\)、\(C\)、\(D\) 在圓上，弦 \(\overline{AC}\) 與 \(\overline{BD}\) 交於圓內一點 \(E\)，\(\angle AEB = 72^\circ\)。下列敘述何者正確？</p>
+            <canvas class="quiz-fig" data-fig="q6" width="320" height="200" role="img" aria-label="圓上有 A、B、C、D 四點，弦 AC 與弦 BD 在圓內交於 E 點，角 AEB 標 72 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-6" value="A"><span class="option-text">A. \(\angle AEB\) 是圓周角，所以 \(\overset{\frown}{AB} = 144^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6" value="B"><span class="option-text">B. \(\angle ACB\) 是圓周角，它所對的弧是不含 \(C\) 的 \(\overset{\frown}{AB}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6" value="C"><span class="option-text">C. \(\angle AEB = \angle CED\)，所以 \(\overset{\frown}{AB} = \overset{\frown}{CD}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-6" value="D"><span class="option-text">D. \(\angle ADB\) 所對的弧是含有 \(C\) 的 \(\overset{\frown}{ACB}\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\angle ACB\) 的頂點 \(C\) 在圓上，兩邊 \(\overline{CA}\)、\(\overline{CB}\) 都是弦，是圓周角；它夾住的是不含 \(C\) 的 \(\overset{\frown}{AB}\)。<br>
+              A 錯：\(E\) 在圓內，不在圓上，\(\angle AEB\) 不是圓周角，不能用「弧的一半」反推。<br>
+              C 錯：對頂角相等，但 \(E\) 不在圓上，推不出兩段弧相等。<br>
+              D 錯：\(\overset{\frown}{ACB}\) 經過 \(D\) 自己；\(\angle ADB\) 夾住的是不含 \(D\) 的 \(\overset{\frown}{AB}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 4: 同弧所對的圓周角相等
+           ========================================== -->
+      <section class="concept-section" id="concept4">
+        <h2 class="section-title">
+          <i class="fa-solid fa-people-group" aria-hidden="true"></i> <span>重點 4：同弧所對的圓周角相等</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>一段弧可以有很多個圓周角：\(\angle APB\)、\(\angle AQB\)、\(\angle ARB\) 的頂點都在 \(\overset{\frown}{AB}\) 以外的圓上，都等於 \(\frac{1}{2}\overset{\frown}{AB}\)，所以<strong>同弧所對的圓周角相等</strong>。</li>
+              <li>「同弧」是指夾住<strong>同一段</strong>弧：頂點跑到 \(\overset{\frown}{AB}\) 上時，它夾住的是另一段弧，角度變成 \(180^\circ - \frac{1}{2}\overset{\frown}{AB}\)。</li>
+              <li>在同圓或等圓中，<strong>等弧</strong>所對的圓周角也相等。</li>
+              <li>找相等的圓周角：看兩個角的兩邊是不是通過同樣的兩個端點，而且頂點在這兩點的同一側。</li>
+              <li>例：\(A\)、\(B\)、\(C\)、\(D\) 在圓上，\(\angle ADC = 44^\circ\)，\(\angle ABC\) 和它都對 \(\overset{\frown}{AC}\)，所以 \(\angle ABC = 44^\circ\)。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・同弧所對的圓周角</span>
+              同圓中，同弧所對的圓周角度數相等
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_gaze.webp" alt="油性粉蠟筆單車修理鋪風插圖：牆上掛著一個腳踏車輪，小輪站在左邊、阿軸站在右邊，兩人從不同位置抬頭看著同一個車輪。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-people-group"></i> 視覺互動探索：從圓上三個位置看同一段弧</h3>
+            <p class="interactive-instruction">\(Q\)、\(R\) 固定在圓上，\(P\) 可以繞圓一圈。三個人看的是同一段 \(\overset{\frown}{AB}\) 嗎？\(P\) 走到哪裡時，\(\angle APB\) 會跟另外兩個不一樣？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-same" width="540" height="484"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="same-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="same-a">\(\overset{\frown}{AB}\)：<span id="same-va" class="val-num">80°</span></label>
+                    <input type="range" id="same-a" min="1" max="8" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="same-p">\(P\) 的位置（方向角）：<span id="same-vp" class="val-num">102.5°</span></label>
+                    <input type="range" id="same-p" min="0" max="71" value="20" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="same-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (同弧所對的圓周角)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-7">
+            <p class="quiz-question"><strong>Q7.</strong> 如圖，\(A\)、\(B\)、\(C\)、\(D\) 依序在圓上，\(\overline{AC}\) 與 \(\overline{BD}\) 交於 \(P\)。若 \(\angle BAC = 38^\circ\)、\(\angle ACD = 29^\circ\)，則 \(\angle BPC\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q7" width="320" height="200" role="img" aria-label="圓上依序有 A、B、C、D 四點，AC 與 BD 交於 P；角 BAC 標 38 度，角 ACD 標 29 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-7" value="A"><span class="option-text">A. \(58^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7" value="B"><span class="option-text">B. \(76^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7" value="C"><span class="option-text">C. \(67^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-7" value="D"><span class="option-text">D. \(113^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。\(\angle BDC\) 與 \(\angle BAC\) 都對 \(\overset{\frown}{BC}\)，所以 \(\angle BDC = 38^\circ\)。在 \(\triangle PCD\) 中，\(\angle BPC\) 是 \(P\) 的外角：
+              \[\begin{aligned} &\angle BPC = \angle PCD + \angle PDC \\ &= 29^\circ + 38^\circ = 67^\circ \end{aligned}\]
+              A 錯：\(58^\circ = 2 \times 29^\circ\)，把圓周角當成弧再加一次。<br>
+              B 錯：\(76^\circ\) 是 \(\overset{\frown}{BC}\) 的度數，不是 \(\angle BPC\)。<br>
+              D 錯：\(113^\circ\) 是 \(\angle CPD\)，和 \(\angle BPC\) 互補。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-8">
+            <p class="quiz-question"><strong>Q8.</strong> 如圖，\(\overline{AC}\) 是圓 \(O\) 的直徑，\(B\)、\(D\) 在圓上，\(\overline{BD}\) 交 \(\overline{AC}\) 於 \(E\)。下列哪一個推理正確？</p>
+            <canvas class="quiz-fig" data-fig="q8" width="320" height="200" role="img" aria-label="圓 O 的直徑 AC 水平，B 在左下方、D 在右上方，BD 交 AC 於 E，四邊形 ABCD 的四邊都畫出"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-8" value="A"><span class="option-text">A. \(\angle AEB = \angle CED\)（對頂角），所以 \(\overset{\frown}{AB} = \overset{\frown}{CD}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-8" value="B"><span class="option-text">B. \(\angle BAD\) 與 \(\angle BCD\) 的兩邊都通過 \(B\)、\(D\)，所以兩角相等</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-8" value="C"><span class="option-text">C. \(\angle ABD\) 與 \(\angle CBD\) 的頂點都是 \(B\)，所以兩角相等</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-8" value="D"><span class="option-text">D. \(\angle CAB\) 與 \(\angle CDB\) 都對 \(\overset{\frown}{BC}\)，所以兩角相等</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(A\)、\(D\) 都在 \(\overset{\frown}{BC}\) 以外的圓上，\(\angle CAB\)、\(\angle CDB\) 夾住同一段 \(\overset{\frown}{BC}\)，同弧所對的圓周角相等。<br>
+              A 錯：\(E\) 不在圓上，\(\angle AEB\) 不是圓周角，推不出弧相等。<br>
+              B 錯：\(A\)、\(C\) 在 \(B\)、\(D\) 的<strong>兩側</strong>，兩角夾住的是不同的兩段弧（合起來是整個圓），兩角互補而不是相等。<br>
+              C 錯：頂點相同不代表相等，\(\angle ABD\) 對 \(\overset{\frown}{AD}\)、\(\angle CBD\) 對 \(\overset{\frown}{CD}\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 5: 圓周角是圓心角的一半
+           ========================================== -->
+      <section class="concept-section" id="concept5">
+        <h2 class="section-title">
+          <i class="fa-solid fa-divide" aria-hidden="true"></i> <span>重點 5：圓周角是圓心角的一半</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>圓心角 \(=\) 所對的弧，圓周角 \(= \frac{1}{2}\) 所對的弧。對<strong>同一段弧</strong>時：<strong>圓周角 \(= \frac{1}{2}\) 圓心角</strong>，圓心角 \(= 2 \times\) 圓周角。</li>
+              <li>先確認兩個角對的是不是同一段弧。\(\angle AOC = 140^\circ\) 時：
+                <ul class="bullet-list">
+                  <li>優弧上的 \(B\)：\(\angle ABC\) 對 \(\overset{\frown}{AC}\)，\(\angle ABC = 70^\circ\)。</li>
+                  <li>劣弧上的 \(D\)：\(\angle ADC\) 對優弧 \(\overset{\frown}{ABC} = 360^\circ - 140^\circ = 220^\circ\)，\(\angle ADC = 110^\circ\)。</li>
+                </ul>
+              </li>
+              <li>已知圓周角反求：\(\angle ABC = 24^\circ\) 對 \(\overset{\frown}{AC}\)，那麼 \(\angle AOC = 48^\circ\)。</li>
+              <li>搭配等腰三角形：\(\overline{OA} = \overline{OC}\)，所以 \(\angle OCA = (180^\circ - \angle AOC) \div 2\)。例：\(\angle ABC = 65^\circ\) 時，\[\begin{aligned} &\angle AOC = 130^\circ \\ &\angle OCA = 25^\circ \end{aligned}\]</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">對同一段弧</span>
+              圓周角 \(= \frac{1}{2}\) 圓心角
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_notebook.webp" alt="油性粉蠟筆單車修理鋪風插圖：小輪坐在木頭工作檯前用鉛筆在筆記本上寫字，阿軸站在旁邊雙手扶著一個車輪。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-divide"></i> 視覺互動探索：圓心角換圓周角</h3>
+            <p class="interactive-instruction">選「已知圓心角」或「已知圓周角」，再選頂點在優弧上的 \(B\) 或劣弧上的 \(D\)。兩個頂點對的是同一段弧嗎？等腰 \(\triangle OAC\) 的底角又是多少？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-cen" width="540" height="484"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="cen-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">已知</span>
+                    <div class="btn-group" id="cen-mode-group">
+                      <button class="pick-btn active" data-cen-mode="fwd">已知圓心角</button>
+                      <button class="pick-btn" data-cen-mode="inv">已知圓周角</button>
+                    </div>
+                  </div>
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">頂點</span>
+                    <div class="btn-group" id="cen-view-group">
+                      <button class="pick-btn active" data-cen-view="maj">優弧上的 B</button>
+                      <button class="pick-btn" data-cen-view="min">劣弧上的 D</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="cen-t-row">
+                    <label for="cen-t">\(\angle AOC\)：<span id="cen-vt" class="val-num">100°</span></label>
+                    <input type="range" id="cen-t" min="2" max="16" value="10" step="1">
+                  </div>
+                  <div class="slider-row" id="cen-g-row">
+                    <label for="cen-g">圓周角 <span id="cen-lg">∠ABC</span>：<span id="cen-vg" class="val-num">50°</span></label>
+                    <input type="range" id="cen-g" min="2" max="16" value="10" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="cen-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圓周角與圓心角)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-9">
+            <p class="quiz-question"><strong>Q9.</strong> 如圖，\(A\)、\(B\)、\(C\)、\(D\) 是圓 \(O\) 上相異四點，\(\angle AOC = 136^\circ\)，\(B\) 在優弧上、\(D\) 在劣弧上。\(\angle ADC\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q9" width="320" height="200" role="img" aria-label="圓 O 中半徑 OA、OC 夾 136 度；B 在下方的優弧上，D 在上方的劣弧上，B、D 都與 A、C 連線"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-9" value="A"><span class="option-text">A. \(68^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-9" value="B"><span class="option-text">B. \(112^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-9" value="C"><span class="option-text">C. \(136^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-9" value="D"><span class="option-text">D. \(224^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(D\) 在劣弧上，\(\angle ADC\) 夾住的是不含 \(D\) 的優弧 \(\overset{\frown}{ABC}\)：
+              \[\begin{aligned} &\overset{\frown}{ABC} = 360^\circ - 136^\circ = 224^\circ \\ &\angle ADC = \frac{1}{2} \times 224^\circ = 112^\circ \end{aligned}\]
+              A 錯：\(68^\circ\) 是 \(\angle ABC\)，\(B\) 在優弧上才是對 \(\overset{\frown}{AC}\)。<br>
+              C 錯：圓周角不等於圓心角。<br>
+              D 錯：\(224^\circ\) 是弧的度數，還沒除以 \(2\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-10">
+            <p class="quiz-question"><strong>Q10.</strong> 如圖，\(A\)、\(B\)、\(C\) 在圓 \(O\) 上，\(C\) 在劣弧 \(\overset{\frown}{AB}\) 上，\(\angle ACB = 116^\circ\)。\(\angle OAB\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q10" width="320" height="200" role="img" aria-label="圓 O，A 在左上、B 在右上，C 在 A、B 之間的上方劣弧上；連接 OA、OB、AB、CA、CB，角 ACB 標 116 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-10" value="A"><span class="option-text">A. \(26^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-10" value="B"><span class="option-text">B. \(58^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-10" value="C"><span class="option-text">C. \(32^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-10" value="D"><span class="option-text">D. \(64^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle ACB\) 夾住的是不含 \(C\) 的優弧，這段優弧是 \(2 \times 116^\circ = 232^\circ\)，所以
+              \[\begin{aligned} &\angle AOB = 360^\circ - 232^\circ = 128^\circ \\ &\angle OAB = (180^\circ - 128^\circ) \div 2 \\ &= 26^\circ \end{aligned}\]
+              B 錯：\(116^\circ \div 2\)，把 \(\angle ACB\) 當成圓心角。<br>
+              C 錯：\((180^\circ - 116^\circ) \div 2\)，把 \(\angle ACB\) 當成等腰三角形的頂角。<br>
+              D 錯：\(180^\circ - 116^\circ\)，沒有用到圓心角。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 6: 把弧加起來求圓周角
+           ========================================== -->
+      <section class="concept-section" id="concept6">
+        <h2 class="section-title">
+          <i class="fa-solid fa-plus" aria-hidden="true"></i> <span>重點 6：把弧加起來求圓周角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>圓周角夾住的弧常常由好幾段組成。步驟：① 找出<strong>不含頂點</strong>的那段弧；② 把各段<strong>加起來</strong>；③ 除以 \(2\)。</li>
+              <li>例：\(A\)、\(B\)、\(C\)、\(D\) 依序在圓 \(O\) 上，\(\angle COD = 80^\circ\)、\(\overset{\frown}{AD} = 70^\circ\)。\(\angle ABC\) 夾住 \(\overset{\frown}{ADC}\)：
+              \[\angle ABC = \frac{1}{2}(70^\circ + 80^\circ) = 75^\circ\]</li>
+              <li>反過來，已知圓周角可以求弧：上例中若 \(\angle DAB = 110^\circ\)，則 \(\overset{\frown}{DCB} = 220^\circ\)，\(\overset{\frown}{BC} = 220^\circ - 80^\circ = 140^\circ\)。</li>
+              <li>等分點與比例：圓周被 \(n\) 等分時每段 \(\frac{360^\circ}{n}\)；四段弧的比是 \(a : b : c : d\) 時，每段 \(= 360^\circ \times\) 它所占的比例。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">三步驟</span>
+              找不含頂點的弧 → 各段相加 → 除以 2
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_clips.webp" alt="油性粉蠟筆單車修理鋪風插圖：一個腳踏車輪平放在工作檯上，阿軸在輪框上夾了四個不同顏色的木頭曬衣夾，小輪在對面看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-plus"></i> 視覺互動探索：四個夾子的輪框</h3>
+            <p class="interactive-instruction">調整三段弧（第四段自動補滿 \(360^\circ\)），再挑一個圓周角。它夾住的是哪幾段弧？加起來除以 \(2\) 是多少？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-sum" width="540" height="484"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="sum-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">圓周角</span>
+                    <div class="btn-group" id="sum-ang-group">
+                      <button class="pick-btn active" data-sum-ang="ABC">∠ABC</button>
+                      <button class="pick-btn" data-sum-ang="DAB">∠DAB</button>
+                      <button class="pick-btn" data-sum-ang="ACB">∠ACB</button>
+                      <button class="pick-btn" data-sum-ang="BDC">∠BDC</button>
+                      <button class="pick-btn" data-sum-ang="CAD">∠CAD</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="sum-ab">\(\overset{\frown}{AB}\)：<span id="sum-vab" class="val-num">80°</span></label>
+                    <input type="range" id="sum-ab" min="2" max="11" value="8" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sum-bc">\(\overset{\frown}{BC}\)：<span id="sum-vbc" class="val-num">60°</span></label>
+                    <input type="range" id="sum-bc" min="2" max="11" value="6" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="sum-cd">\(\overset{\frown}{CD}\)：<span id="sum-vcd" class="val-num">90°</span></label>
+                    <input type="range" id="sum-cd" min="2" max="11" value="9" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="sum-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (弧的加法)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-11">
+            <p class="quiz-question"><strong>Q11.</strong> 如圖，\(A\)、\(B\)、\(C\)、\(D\) 依序在圓 \(O\) 上，\(\angle COD = 84^\circ\)、\(\overset{\frown}{AD} = 62^\circ\)、\(\angle DAB = 107^\circ\)。不含 \(A\) 的 \(\overset{\frown}{BC}\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q11" width="320" height="200" role="img" aria-label="圓 O 上依序有 A、B、C、D，畫出四邊形 ABCD 與半徑 OC、OD；角 COD 標 84 度，角 DAB 標 107 度，弧 AD 標 62 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-11" value="A"><span class="option-text">A. \(65^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-11" value="B"><span class="option-text">B. \(68^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-11" value="C"><span class="option-text">C. \(23^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-11" value="D"><span class="option-text">D. \(130^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\overset{\frown}{CD} = \angle COD = 84^\circ\)。\(\angle DAB\) 夾住不含 \(A\) 的 \(\overset{\frown}{DCB} = \overset{\frown}{CD} + \overset{\frown}{BC}\)：
+              \[\begin{aligned} &\overset{\frown}{DCB} = 2 \times 107^\circ = 214^\circ \\ &\overset{\frown}{BC} = 214^\circ - 84^\circ = 130^\circ \end{aligned}\]
+              A 錯：\(65^\circ\) 是 \(\frac{1}{2}\overset{\frown}{BC}\)，最後還要乘 \(2\)。<br>
+              B 錯：多減了 \(\overset{\frown}{AD}\)，但 \(\overset{\frown}{AD}\) 含有頂點 \(A\) 那一側，不在 \(\overset{\frown}{DCB}\) 裡。<br>
+              C 錯：\(107^\circ - 84^\circ\)，把圓周角和弧的度數直接相減。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-12">
+            <p class="quiz-question"><strong>Q12.</strong> 圓上四點 \(A\)、\(B\)、\(C\)、\(D\) 依序把圓周分成四段：\(\overset{\frown}{AB}\)、\(\overset{\frown}{BC}\)、\(\overset{\frown}{CD}\)、\(\overset{\frown}{DA}\) 的度數比是 \(5 : 3 : 7 : 9\)。\(\angle ABC\) 是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-12" value="A"><span class="option-text">A. \(60^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-12" value="B"><span class="option-text">B. \(105^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-12" value="C"><span class="option-text">C. \(120^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-12" value="D"><span class="option-text">D. \(240^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。比例的和是 \(24\)，每一份 \(360^\circ \div 24 = 15^\circ\)，四段弧依序是 \(75^\circ\)、\(45^\circ\)、\(105^\circ\)、\(135^\circ\)。\(\angle ABC\) 夾住不含 \(B\) 的 \(\overset{\frown}{ADC} = \overset{\frown}{CD} + \overset{\frown}{DA}\)：
+              \[\begin{aligned} &\angle ABC = \frac{1}{2}(105^\circ + 135^\circ) \\ &= 120^\circ \end{aligned}\]
+              A 錯：用了含有 \(B\) 的 \(\overset{\frown}{AB} + \overset{\frown}{BC}\)。<br>
+              B 錯：加錯了段，\(\overset{\frown}{AB}\) 的一端是頂點 \(B\)，不在 \(\angle ABC\) 夾住的弧裡。<br>
+              D 錯：\(240^\circ\) 是弧的度數，還沒除以 \(2\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 7: 半圓的圓周角是直角
+           ========================================== -->
+      <section class="concept-section" id="concept7">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> <span>重點 7：半圓的圓周角是直角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>\(\overline{AB}\) 是直徑時，\(\overset{\frown}{ADB}\) 是半圓，度數 \(180^\circ\)。圓上任一點 \(C\) 的 \(\angle ACB = \frac{1}{2} \times 180^\circ = 90^\circ\)：<strong>直徑（半圓）所對的圓周角是直角</strong>。</li>
+              <li>所以 \(A\)、\(B\)、\(C\) 在圓上且 \(\overline{AB}\) 是直徑 \(\Rightarrow \triangle ABC\) 是直角三角形，斜邊就是直徑。</li>
+              <li>也可以連 \(\overline{OC}\)，用兩個等腰三角形與內角和 \(180^\circ\) 說明：兩個底角加起來剛好是內角和的一半。</li>
+              <li>例：半圓中 \(\angle CAB = 36^\circ\)，則 \[\begin{aligned} &\angle ABC = 180^\circ - 90^\circ - 36^\circ \\ &= 54^\circ \end{aligned}\]</li>
+              <li>應用：過圓外一點 \(P\) 作切線。以 \(\overline{OP}\) 為直徑作圓 \(Q\)，交圓 \(O\) 於 \(M\)、\(N\)，則 \(\angle OMP = \angle ONP = 90^\circ\)，\(PM\)、\(PN\) 就是切線。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・半圓的圓周角</span>
+              直徑或半圓所對的圓周角是直角
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_square.webp" alt="油性粉蠟筆單車修理鋪風插圖：一個沒有輻條的圓形輪框平放在工作檯上，小輪把一把L形的木工角尺放進輪框裡，角尺的直角頂點貼在輪框內緣，阿軸在對面按住輪框。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-ruler-combined"></i> 視覺互動探索：直徑撐出的直角</h3>
+            <p class="interactive-instruction">「直徑上的圓周角」：移動 \(C\)，\(\angle ACB\) 會變嗎？「圓外一點作切線」：以 \(\overline{OP}\) 為直徑畫圓，交點 \(M\)、\(N\) 為什麼正好是切點？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-semi" width="540" height="472"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="semi-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="semi-mode-group">
+                      <button class="pick-btn active" data-semi-mode="semi">直徑上的圓周角</button>
+                      <button class="pick-btn" data-semi-mode="tan">圓外一點作切線</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="semi-a-row">
+                    <label for="semi-a">\(\angle CAB\)：<span id="semi-va" class="val-num">40°</span></label>
+                    <input type="range" id="semi-a" min="2" max="16" value="8" step="1">
+                  </div>
+                  <div class="slider-row" id="semi-d-row">
+                    <label for="semi-d">\(\overline{OP}\)：<span id="semi-vd" class="val-num">2 倍半徑</span></label>
+                    <input type="range" id="semi-d" min="13" max="26" value="20" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="semi-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (半圓的圓周角)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-13">
+            <p class="quiz-question"><strong>Q13.</strong> 如圖，\(\overline{AB}\) 是圓 \(O\) 的直徑，\(C\) 在圓上，\(\angle CAB = 33^\circ\)。不含 \(B\) 的 \(\overset{\frown}{AC}\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q13" width="320" height="200" role="img" aria-label="圓 O 的直徑 AB 水平，C 在上半圓偏右；連接 AC、BC，角 CAB 標 33 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-13" value="A"><span class="option-text">A. \(66^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-13" value="B"><span class="option-text">B. \(114^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-13" value="C"><span class="option-text">C. \(57^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-13" value="D"><span class="option-text">D. \(123^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\overline{AB}\) 是直徑，\(\angle ACB = 90^\circ\)：
+              \[\begin{aligned} &\angle ABC = 180^\circ - 90^\circ - 33^\circ \\ &= 57^\circ \\ &\overset{\frown}{AC} = 2 \times 57^\circ = 114^\circ \end{aligned}\]
+              A 錯：\(2 \times 33^\circ = 66^\circ\) 是 \(\angle CAB\) 夾住的 \(\overset{\frown}{BC}\)。<br>
+              C 錯：\(57^\circ\) 是圓周角 \(\angle ABC\)，弧要再乘 \(2\)。<br>
+              D 錯：\(90^\circ + 33^\circ\) 沒有根據。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-14">
+            <p class="quiz-question"><strong>Q14.</strong> \(P\) 在圓 \(O\) 外。以 \(\overline{OP}\) 為直徑作圓 \(Q\)，與圓 \(O\) 交於 \(M\)、\(N\)。說明「\(PM\) 是圓 \(O\) 的切線」最直接的理由是哪一個？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-14" value="A"><span class="option-text">A. \(\angle OMP\) 是圓 \(Q\) 中半圓所對的圓周角，等於 \(90^\circ\)，所以 \(\overline{PM} \perp \overline{OM}\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-14" value="B"><span class="option-text">B. \(\overline{QM} = \overline{QP}\)，所以 \(\triangle QMP\) 是等腰三角形</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-14" value="C"><span class="option-text">C. \(\overline{PM} = \overline{PN}\)，所以 \(PM\) 是切線</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-14" value="D"><span class="option-text">D. \(\angle MON = 90^\circ\)，所以 \(PM\) 是切線</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\overline{OP}\) 是圓 \(Q\) 的直徑，\(M\) 在圓 \(Q\) 上，\(\angle OMP\) 對半圓，是直角。\(PM\) 垂直半徑 \(\overline{OM}\) 的外端，所以是切線。<br>
+              B 錯：等腰三角形說明不了 \(PM\) 和半徑垂直。<br>
+              C 錯：切線段等長是「已經是切線」之後的性質，不能拿來證明它是切線。<br>
+              D 錯：\(\angle MON\) 的大小隨 \(\overline{OP}\) 改變，一般不是 \(90^\circ\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 8: 平行弦截出相等的弧
+           ========================================== -->
+      <section class="concept-section" id="concept8">
+        <h2 class="section-title">
+          <i class="fa-solid fa-grip-lines" aria-hidden="true"></i> <span>重點 8：平行弦截出相等的弧</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>圓中兩弦 \(AB \parallel CD\)：連接 \(\overline{BC}\)，內錯角 \(\angle ABC = \angle BCD\)。這兩個角分別是對 \(\overset{\frown}{AC}\)、\(\overset{\frown}{BD}\) 的圓周角，所以 \(\frac{1}{2}\overset{\frown}{AC} = \frac{1}{2}\overset{\frown}{BD}\)，即 <strong>\(\overset{\frown}{AC} = \overset{\frown}{BD}\)</strong>。</li>
+              <li>反過來，\(\overset{\frown}{AC} = \overset{\frown}{BD}\) \(\Rightarrow\) 內錯角相等 \(\Rightarrow AB \parallel CD\)。</li>
+              <li>被兩條平行弦夾住的，是<strong>兩弦之間、左右兩側</strong>的那兩段弧（\(A\) 連到 \(C\) 那一側、\(B\) 連到 \(D\) 那一側）。</li>
+              <li>平行的也可以是直徑或半徑：若 \(AB\) 平行於半徑 \(\overline{OC}\)，就把 \(\overline{CO}\) 延長成直徑，再用這個性質。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">平行弦的截弧</span>
+              \(AB \parallel CD \Leftrightarrow \overset{\frown}{AC} = \overset{\frown}{BD}\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_rails.webp" alt="油性粉蠟筆單車修理鋪風插圖：一個腳踏車輪平放在工作檯上，輪框上橫向繃著兩條互相平行的紅色橡皮筋，阿軸按住輪框，小輪在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-grip-lines"></i> 視覺互動探索：輪框上的兩條平行弦</h3>
+            <p class="interactive-instruction">調整兩條弦的長短（以它們對的圓心角表示），兩段夾住的弧還相等嗎？再把 \(\overline{CD}\) 轉一點點，讓兩弦不平行，弧會怎樣？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-par" width="540" height="484"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="par-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="par-p">弦 \(\overline{AB}\) 對的圓心角：<span id="par-vp" class="val-num">80°</span></label>
+                    <input type="range" id="par-p" min="1" max="7" value="4" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="par-q">弦 \(\overline{CD}\) 對的圓心角：<span id="par-vq" class="val-num">60°</span></label>
+                    <input type="range" id="par-q" min="1" max="7" value="3" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="par-t">\(\overline{CD}\) 轉動：<span id="par-vt" class="val-num">0°（平行）</span></label>
+                    <input type="range" id="par-t" min="-3" max="3" value="0" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="par-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (平行弦)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-15">
+            <p class="quiz-question"><strong>Q15.</strong> 如圖，圓 \(O\) 中弦 \(AB \parallel\) 半徑 \(\overline{OC}\)，\(\overset{\frown}{AB} = 64^\circ\)，\(D\) 在不含 \(A\)、\(B\) 的那一側。\(\overset{\frown}{CDB}\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q15" width="320" height="200" role="img" aria-label="圓 O，半徑 OC 水平朝左，弦 AB 在上方與 OC 平行，弧 AB 標 64 度，D 在圓的最下方"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-15" value="A"><span class="option-text">A. \(122^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-15" value="B"><span class="option-text">B. \(244^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-15" value="C"><span class="option-text">C. \(238^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-15" value="D"><span class="option-text">D. \(58^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。延長 \(\overline{CO}\) 交圓於 \(E\)，\(\overline{CE}\) 是直徑，且 \(AB \parallel CE\)，平行弦截出相等的弧：\(\overset{\frown}{CA} = \overset{\frown}{BE}\)。上半圓是 \(180^\circ\)：
+              \[\begin{aligned} &\overset{\frown}{CA} = \overset{\frown}{BE} \\ &= (180^\circ - 64^\circ) \div 2 = 58^\circ \\ &\overset{\frown}{CDB} = 180^\circ + 58^\circ = 238^\circ \end{aligned}\]
+              A 錯：\(180^\circ - 58^\circ\)，少算了下半圓。<br>
+              B 錯：\(180^\circ + 64^\circ\)，\(\overset{\frown}{CDB}\) 裡沒有 \(\overset{\frown}{AB}\)。<br>
+              D 錯：\(58^\circ\) 只是 \(\overset{\frown}{BE}\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-16">
+            <p class="quiz-question"><strong>Q16.</strong> 如圖，圓上兩弦 \(AB \parallel CD\)，\(\angle BAD = 41^\circ\)。左側的 \(\overset{\frown}{AC}\)（不含 \(B\)、\(D\)）是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q16" width="320" height="200" role="img" aria-label="圓上兩條水平的弦，AB 在上、CD 在下，A、C 在左，B、D 在右；連接 AD，角 BAD 標 41 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-16" value="A"><span class="option-text">A. \(41^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-16" value="B"><span class="option-text">B. \(98^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-16" value="C"><span class="option-text">C. \(139^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-16" value="D"><span class="option-text">D. \(82^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。\(\angle BAD\) 夾住右側的 \(\overset{\frown}{BD}\)，\(\overset{\frown}{BD} = 2 \times 41^\circ = 82^\circ\)。\(AB \parallel CD\)，兩段截弧相等：\(\overset{\frown}{AC} = \overset{\frown}{BD} = 82^\circ\)。<br>
+              A 錯：\(41^\circ\) 是圓周角，弧要乘 \(2\)。<br>
+              B 錯：\(180^\circ - 82^\circ\)，平行弦截出的兩段弧相等，不是互補。<br>
+              C 錯：\(180^\circ - 41^\circ\) 沒有根據。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 9: 圓內接四邊形的對角互補
+           ========================================== -->
+      <section class="concept-section" id="concept9">
+        <h2 class="section-title">
+          <i class="fa-solid fa-vector-square" aria-hidden="true"></i> <span>重點 9：圓內接四邊形的對角互補</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>四個頂點都在同一個圓上的四邊形，叫做<strong>圓內接四邊形</strong>。</li>
+              <li>\(\angle A = \frac{1}{2}\overset{\frown}{BCD}\)、\(\angle C = \frac{1}{2}\overset{\frown}{BAD}\)，這兩段弧合起來是整個圓：
+              \[\angle A + \angle C = \frac{1}{2} \times 360^\circ = 180^\circ\]
+              同理 \(\angle B + \angle D = 180^\circ\)：<strong>對角互補</strong>。</li>
+              <li>例：圓內接四邊形中 \(\angle A = 70^\circ\)，則 \(\angle C = 110^\circ\)。</li>
+              <li>反過來想：如果一個四邊形的對角<strong>不</strong>互補，它就不可能是圓內接四邊形。</li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">KEY POINT・圓內接四邊形</span>
+              \(\angle A + \angle C = 180^\circ\)，\(\angle B + \angle D = 180^\circ\)
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_string.webp" alt="油性粉蠟筆單車修理鋪風插圖：一個腳踏車輪平放在工作檯上，輪框上夾著四個曬衣夾，一條黃色細繩依序繞過四個夾子圍成四邊形，小輪拉著繩頭，阿軸在旁邊看。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-vector-square"></i> 視覺互動探索：輪框上的四邊形</h3>
+            <p class="interactive-instruction">調整三段弧，看四個內角怎麼變；對角加起來永遠是多少？再把 \(D\) 移到圓內或圓外，對角還互補嗎？</p>
+            <div class="canvas-container">
+              <canvas id="canvas-quad" width="540" height="484"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="quad-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">D 的位置</span>
+                    <div class="btn-group" id="quad-d-group">
+                      <button class="pick-btn active" data-quad-d="on">在圓上</button>
+                      <button class="pick-btn" data-quad-d="in">移到圓內</button>
+                      <button class="pick-btn" data-quad-d="out">移到圓外</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row">
+                    <label for="quad-ab">\(\overset{\frown}{AB}\)：<span id="quad-vab" class="val-num">90°</span></label>
+                    <input type="range" id="quad-ab" min="3" max="11" value="9" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="quad-bc">\(\overset{\frown}{BC}\)：<span id="quad-vbc" class="val-num">70°</span></label>
+                    <input type="range" id="quad-bc" min="3" max="11" value="7" step="1">
+                  </div>
+                  <div class="slider-row">
+                    <label for="quad-cd">\(\overset{\frown}{CD}\)：<span id="quad-vcd" class="val-num">80°</span></label>
+                    <input type="range" id="quad-cd" min="3" max="11" value="8" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="quad-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圓內接四邊形)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-17">
+            <p class="quiz-question"><strong>Q17.</strong> 四邊形 \(ABCD\) 是圓內接四邊形，\(\angle A = (3x + 14)^\circ\)、\(\angle C = (2x - 4)^\circ\)。\(\angle C\) 是多少度？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-17" value="A"><span class="option-text">A. \(64^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-17" value="B"><span class="option-text">B. \(116^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-17" value="C"><span class="option-text">C. \(34^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-17" value="D"><span class="option-text">D. \(136^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 A。\(\angle A\)、\(\angle C\) 是對角，互補：
+              \[\begin{aligned} &(3x + 14) + (2x - 4) = 180 \\ &5x = 170,\ x = 34 \\ &\angle C = 2 \times 34 - 4 = 64^\circ \end{aligned}\]
+              B 錯：\(116^\circ\) 是 \(\angle A\)。<br>
+              C 錯：\(34\) 是 \(x\)，還要代回去。<br>
+              D 錯：把兩角的和寫成 \(360^\circ\)，解出 \(x = 70\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-18">
+            <p class="quiz-question"><strong>Q18.</strong> 下列各組依序是四邊形 \(ABCD\) 的 \(\angle A\)、\(\angle B\)、\(\angle C\)、\(\angle D\)。哪一組<strong>不可能</strong>是圓內接四邊形？</p>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-18" value="A"><span class="option-text">A. \(83^\circ\)、\(97^\circ\)、\(97^\circ\)、\(83^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-18" value="B"><span class="option-text">B. \(76^\circ\)、\(101^\circ\)、\(104^\circ\)、\(79^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-18" value="C"><span class="option-text">C. \(91^\circ\)、\(88^\circ\)、\(89^\circ\)、\(92^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-18" value="D"><span class="option-text">D. \(72^\circ\)、\(108^\circ\)、\(72^\circ\)、\(108^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 D。四組的內角和都是 \(360^\circ\)，要再檢查對角：\(\angle A + \angle C\) 與 \(\angle B + \angle D\) 都要是 \(180^\circ\)。<br>
+              A：\(83^\circ + 97^\circ = 180^\circ\)、\(97^\circ + 83^\circ = 180^\circ\)，可以。<br>
+              B：\(76^\circ + 104^\circ = 180^\circ\)、\(101^\circ + 79^\circ = 180^\circ\)，可以。<br>
+              C：\(91^\circ + 89^\circ = 180^\circ\)、\(88^\circ + 92^\circ = 180^\circ\)，可以。<br>
+              D：\(\angle A + \angle C = 72^\circ + 72^\circ = 144^\circ\)，對角不互補。這是一個不是長方形的平行四邊形，不可能內接於圓。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           重點 10: 圓內接四邊形的外角
+           ========================================== -->
+      <section class="concept-section" id="concept10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> <span>重點 10：圓內接四邊形的外角等於內對角</span>
+        </h2>
+
+        <div class="grid-content">
+          <div class="explanation-card">
+            <h3><i class="fa-solid fa-circle-info"></i> 重點整理與敘述</h3>
+            <ul class="bullet-list">
+              <li>圓內接四邊形 \(ABCD\) 中，延長 \(\overline{BC}\) 到 \(E\)：\(\angle DCE + \angle BCD = 180^\circ\)（平角），\(\angle BAD + \angle BCD = 180^\circ\)（對角互補），所以 <strong>\(\angle DCE = \angle BAD\)</strong>：外角等於它的<strong>內對角</strong>。</li>
+              <li>例：\(\angle BAD = 115^\circ\) \(\Rightarrow \angle DCE = 115^\circ\)；\(\angle ABC = 70^\circ\) \(\Rightarrow \angle ADC = 110^\circ\)。</li>
+              <li>兩組對邊延長相交時，搭配三角形的外角：\(AB\)、\(DC\) 延長交於 \(E\)，\(AD\)、\(BC\) 延長交於 \(F\)。若 \(\angle A = 50^\circ\)、\(\angle F = 35^\circ\)：
+                <ul class="bullet-list">
+                  <li>\(\angle DCB = 180^\circ - 50^\circ = 130^\circ\)（對角互補）</li>
+                  <li>\(\angle CBE = 50^\circ + 35^\circ = 85^\circ\)（\(\triangle ABF\) 的外角）</li>
+                  <li>\(\angle E = 130^\circ - 85^\circ = 45^\circ\)（\(\triangle CBE\) 的外角）</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="formula-box">
+              <span class="formula-label">圓內接四邊形的外角</span>
+              \(\angle DCE = \angle BAD\)（外角 \(=\) 內對角）
+            </div>
+
+            <div class="illustration-container">
+              <img src="bk2_door.webp" alt="油性粉蠟筆單車修理鋪風插圖：小輪和阿軸各牽著一台腳踏車，一前一後走出單車修理鋪的店門口。" class="illustration" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          </div>
+
+          <div class="interactive-card">
+            <h3><i class="fa-solid fa-arrow-up-right-from-square"></i> 視覺互動探索：延長線上的角</h3>
+            <p class="interactive-instruction">「延長一邊」：延長 \(\overline{BC}\) 到 \(E\)，\(\angle DCE\) 跟哪個內角相等？「兩組對邊延長」：已知 \(\angle A\) 與 \(\angle F\)，用對角互補和三角形外角接力，算出 \(\angle E\)。</p>
+            <div class="canvas-container">
+              <canvas id="canvas-ext" width="540" height="484"></canvas>
+              <div class="control-panel">
+                <div class="value-display">
+                  <span id="ext-formula" style="font-weight:700; font-size:1.05rem;">載入中...</span>
+                </div>
+
+                <div class="btn-group-wrapper">
+                  <div class="btn-group-row">
+                    <span class="btn-group-label">模式</span>
+                    <div class="btn-group" id="ext-mode-group">
+                      <button class="pick-btn active" data-ext-mode="ext">延長一邊</button>
+                      <button class="pick-btn" data-ext-mode="ef">兩組對邊延長</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="slider-wrapper">
+                  <div class="slider-row" id="ext-a-row">
+                    <label for="ext-a">\(\angle BAD\)：<span id="ext-va" class="val-num">100°</span></label>
+                    <input type="range" id="ext-a" min="6" max="13" value="10" step="1">
+                  </div>
+                  <div class="slider-row" id="ext-b-row">
+                    <label for="ext-b">\(\angle ABC\)：<span id="ext-vb" class="val-num">80°</span></label>
+                    <input type="range" id="ext-b" min="6" max="13" value="8" step="1">
+                  </div>
+                  <div class="slider-row" id="ext-p-row">
+                    <label for="ext-p">\(\angle A\)：<span id="ext-vp" class="val-num">55°</span></label>
+                    <input type="range" id="ext-p" min="8" max="14" value="11" step="1">
+                  </div>
+                  <div class="slider-row" id="ext-f-row">
+                    <label for="ext-f">\(\angle F\)：<span id="ext-vf" class="val-num">30°</span></label>
+                    <input type="range" id="ext-f" min="4" max="12" value="6" step="1">
+                  </div>
+                </div>
+
+                <div class="visual-feedback" id="ext-feedback">載入中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3><i class="fa-solid fa-pen-clip"></i> 形成性評量 (圓內接四邊形的外角)</h3>
+
+          <div class="quiz-card" data-quiz="2-2-19">
+            <p class="quiz-question"><strong>Q19.</strong> 如圖，四邊形 \(ABCD\) 是圓內接四邊形，\(B\)、\(C\)、\(E\) 三點共線，\(\angle ABC = 73^\circ\)、\(\angle BAD = 118^\circ\)。\(\angle DCE\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q19" width="320" height="200" role="img" aria-label="圓內接四邊形 ABCD，BC 延長到圓外的 E；角 ABC 標 73 度，角 BAD 標 118 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-19" value="A"><span class="option-text">A. \(62^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-19" value="B"><span class="option-text">B. \(118^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-19" value="C"><span class="option-text">C. \(107^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-19" value="D"><span class="option-text">D. \(73^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 B。\(\angle BCD = 180^\circ - \angle BAD = 62^\circ\)，\(\angle DCE = 180^\circ - 62^\circ = 118^\circ\)，也就是外角等於內對角 \(\angle BAD\)。<br>
+              A 錯：\(62^\circ\) 是 \(\angle BCD\)，不是外角。<br>
+              C 錯：\(107^\circ\) 是 \(\angle ADC = 180^\circ - 73^\circ\)。<br>
+              D 錯：\(\angle DCE\) 的內對角是 \(\angle BAD\)，不是相鄰的 \(\angle ABC\)。</p>
+            </div>
+          </div>
+
+          <div class="quiz-card" data-quiz="2-2-20">
+            <p class="quiz-question"><strong>Q20.</strong> 如圖，四邊形 \(ABCD\) 是圓內接四邊形，\(AB\)、\(DC\) 的延長線交於 \(E\)，\(AD\)、\(BC\) 的延長線交於 \(F\)。若 \(\angle A = 46^\circ\)、\(\angle F = 39^\circ\)，則 \(\angle E\) 是多少度？</p>
+            <canvas class="quiz-fig" data-fig="q20" width="320" height="200" role="img" aria-label="圓內接四邊形 ABCD，AB 與 DC 延長交於 E，AD 與 BC 延長交於 F；角 A 標 46 度，角 F 標 39 度"></canvas>
+            <div class="options-container">
+              <label class="option-label"><input type="radio" name="q2-2-20" value="A"><span class="option-text">A. \(85^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-20" value="B"><span class="option-text">B. \(95^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-20" value="C"><span class="option-text">C. \(49^\circ\)</span></label>
+              <label class="option-label"><input type="radio" name="q2-2-20" value="D"><span class="option-text">D. \(134^\circ\)</span></label>
+            </div>
+            <button class="btn-check-ans" disabled>提交答案</button>
+            <div class="explanation-box">
+              <div class="explanation-title"></div>
+              <p class="explanation-desc"><strong>解析：</strong>答案為 C。
+              \[\begin{aligned} &\angle DCB = 180^\circ - 46^\circ = 134^\circ \\ &\angle CBE = 46^\circ + 39^\circ = 85^\circ \\ &\angle E = 134^\circ - 85^\circ = 49^\circ \end{aligned}\]
+              第一行用對角互補，第二行是 \(\triangle ABF\) 的外角，第三行是 \(\triangle CBE\) 的外角 \(\angle DCB = \angle CBE + \angle E\)。<br>
+              A 錯：\(85^\circ\) 是 \(\angle CBE\)。<br>
+              B 錯：\(95^\circ\) 是 \(\angle ABC\)。<br>
+              D 錯：\(134^\circ\) 是 \(\angle DCB\)。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           小節總結
+           ========================================== -->
+      <section class="summary-section" id="summary">
+        <h2 class="section-title">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 小節總結與核心回顧
+        </h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h4><i class="fa-solid fa-clipboard-list"></i> 角與弧速查表</h4>
+            <ul class="bullet-list">
+              <li><strong>圓心角</strong> \(=\) 所對弧的度數；<strong>圓周角</strong> \(= \frac{1}{2}\) 所對弧的度數。</li>
+              <li>圓周角對的是<strong>不含頂點</strong>的那段弧；頂點不在圓上就不是圓周角。</li>
+              <li>同圓或等圓中：<strong>等弧 ⇔ 等弦</strong>；同弧（或等弧）所對的圓周角相等。</li>
+              <li><strong>半圓</strong>所對的圓周角是直角。</li>
+              <li>兩弦平行 ⇔ 夾住的兩段弧相等。</li>
+              <li><strong>圓內接四邊形</strong>：對角互補，外角等於內對角。</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="context-story">
+              <h4><i class="fa-solid fa-book-open"></i> 回到單車行：兩個反光片</h4>
+              <h5><i class="fa-solid fa-lightbulb"></i> 轉過的角度一樣</h5>
+              <p>同一根輻條上的兩個反光片，跟著輻條轉過同一個圓心角，所以走過的弧<strong>度數</strong>相同；外圈的半徑大，走過的弧比較長。</p>
+              <h5><i class="fa-solid fa-magnifying-glass"></i> 從輪框上看</h5>
+              <p>站在輪框上任何一點看同一段弧，看到的角都一樣大，而且剛好是圓心角的一半——這就是圓周角。</p>
+              <h5><i class="fa-solid fa-forward"></i> 下一章</h5>
+              <p>學會了角與弧的關係，下一章要練習幾何<strong>證明</strong>，並認識三角形的外心、內心與重心。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer>
+      <p>© 2026 國中數學教學整合網. 專為高效課堂互動設計.</p>
+    </footer>
   </div>
 
-  <!-- 共用課堂元件：課堂工具側邊欄與上下節導覽 -->
+  <!-- Main JavaScript Logic -->
+  <script src="../math-canvas.js"></script>
+  <script src="canvas.js"></script>
+
+  <!-- 共用課堂元件：課程資料、課堂工具側邊欄、上下節導覽、課堂畫筆 -->
   <script src="../../curriculum.js"></script>
   <script src="../../tools-sidebar.js" data-home="../../index.html"></script>
   <script src="../../lesson-nav.js"></script>
-
+  <script src="../../annotate.js"></script>
 </body>
 </html>

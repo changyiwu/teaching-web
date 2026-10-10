@@ -4,12 +4,12 @@
 
    共用工具在 ../math-canvas.js（f／fi／drawTitle／textCenter／wrapFeedback／
    wbrEq／typeset／bindPickGroup／drawWithFonts、q* 有理數、hb* 幾何、cg* 尺規…）。
-   ⚠️ 本頁不修改共用檔；本節自己的工具一律用 bk 前綴、色票用 BK_ 前綴。
+   本節自己的工具一律用 bk 前綴、色票用 BK_ 前綴。
 
    本檔分三層：
      0. 本節色票（BK_）；
-     1. 本節工具（bk）：含上橫線線段名、弧記號、分數與根號的一行字（bkRich）、
-        圓與扇形的畫法、有理數 × π 與有理數 × √m 的字串；
+     1. 本節工具（bk）：延長線、有理數 × √m 的字串、邊長標籤、輻條；
+        圓弧、扇形、點、一行混排字（bkRich）等圓工具已抽進共用檔；
      2. 13 個互動與評量附圖。
 
    所有長度一律以「平方值是整數」的方式精確運算（hbRoot 化成最簡根式），
@@ -56,6 +56,9 @@ const BK_FAINT = 'rgba(246, 236, 214, 0.28)';
 const BK_TONE = ['#fcd34d', '#5eead4', '#7dd3fc', '#fda4af', '#6ee7b7', '#d8b4fe',
                  '#fdba74', '#f9a8d4', '#a5b4fc', '#bef264', '#67e8f9', '#fca5a5', '#f0abfc'];
 
+// 共用圓工具（bk*）的標籤底色與點外圈
+bkUsePalette({ tagBg: 'rgba(14, 22, 24, 0.88)', rim: 'rgba(10, 18, 20, 0.9)' });
+
 // 尺規播放引擎（共用檔 cgRender）的配色
 cgUsePalette({
   ink: BK_CREAM, honey: BK_KRAFT, brass: '#d9a441', brassDk: '#5b3f0c',
@@ -66,101 +69,15 @@ cgUsePalette({
    1. 本節工具（bk 前綴）
    ========================================================================== */
 
-// 由數學方向角（度，逆時針、y 朝上）畫圓弧：從 a0 逆時針走到 a1（a1 > a0）
-function bkArc(ctx, C, R, a0, a1, color, w, dash) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = w || 3;
-  ctx.lineCap = 'round';
-  if (dash) ctx.setLineDash(dash);
-  ctx.beginPath();
-  ctx.arc(C.x, C.y, R, -a0 * HB_RAD, -a1 * HB_RAD, true);
-  ctx.stroke();
-  ctx.restore();
-}
-
-// 扇形（含圓心）或弓形（不含圓心，弦封口）的填色
-function bkFill(ctx, C, R, a0, a1, color, alpha, withCenter) {
-  ctx.save();
-  ctx.globalAlpha = alpha;
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  if (withCenter) ctx.moveTo(C.x, C.y);
-  ctx.arc(C.x, C.y, R, -a0 * HB_RAD, -a1 * HB_RAD, true);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-}
-
-// 整個圓（車輪的外圈）
-function bkCircle(ctx, C, R, color, w, dash) {
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = w || 3;
-  if (dash) ctx.setLineDash(dash);
-  ctx.beginPath();
-  ctx.arc(C.x, C.y, R, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.restore();
-}
-
-// 實心點加深色外圈
-function bkPt(ctx, P, color, r) {
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.strokeStyle = 'rgba(10, 18, 20, 0.9)';
-  ctx.lineWidth = 1.6;
-  ctx.beginPath();
-  ctx.arc(P.x, P.y, r || 5, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
-}
-
-// 點名（深色描邊）
-function bkName(ctx, P, text, color, dx, dy) {
-  cgLabel(ctx, P, text, color, dx, dy, fi(800, 17));
-}
-
-// ∠PVQ（取小於 180° 的那一側）；量出來是 90° 時畫直角記號
-function bkAng(ctx, V, P, Q, r, color, o) {
-  const a = hbHead(V, P), b = hbHead(V, Q);
-  const d = ((b - a) % 360 + 360) % 360;
-  let s0 = a, sw = d;
-  if (d > 180) { s0 = b; sw = 360 - d; }
-  const right = Math.abs(sw - 90) < 0.01;
-  hbSector(ctx, V, s0, right ? 90 : sw, r, color, Object.assign({ right, alpha: 0.3 }, o || {}));
-}
-
 // 點 P 往 Q 的方向延長（兩端各延長 ext）
 function bkLine(ctx, P, Q, color, w, ext, dash) {
   const a = hbBeyond(Q, P, ext), b = hbBeyond(P, Q, ext);
   hbSeg(ctx, a, b, color, w, dash);
 }
 
-// 隱藏或顯示一整列滑桿
-function bkShow(id, on) {
-  const el = hbEl(id);
-  if (el) el.style.display = on ? '' : 'none';
-}
-
 /* --------------------------------------------------------------------------
-   精確數值的字串：有理數 × π、有理數 × √m（m 不含平方因數）
+   精確數值的字串：有理數 × √m（m 不含平方因數）；有理數 × π 在共用檔
    -------------------------------------------------------------------------- */
-
-// 有理數 × π 的 LaTeX 與畫布文字
-function bkPiTex(q) {
-  const [n, d] = reduce(q[0], q[1]);
-  if (n === 0) return '0';
-  if (d === 1) return (n === 1 ? '' : String(n)) + '\\pi';
-  return `\\frac{${n}}{${d}}\\pi`;
-}
-function bkPiTxt(q) {
-  const [n, d] = reduce(q[0], q[1]);
-  if (n === 0) return '0';
-  if (d === 1) return (n === 1 ? '' : String(n)) + 'π';
-  return `{${n}/${d}}π`;
-}
 
 // 有理數 q × √m
 function bkSqTex(q, m) {
@@ -180,145 +97,6 @@ function bkSqTxt(q, m) {
 function bkRoot(N) {
   const h = hbRoot(N);
   return { k: h.k, m: h.r, tex: h.tex, txt: h.txt, val: h.val, exact: h.exact };
-}
-
-// 度數（有理數）的畫布文字
-function bkDegTxt(q) {
-  const [n, d] = reduce(q[0], q[1]);
-  return d === 1 ? `${n}°` : `{${n}/${d}}°`;
-}
-
-/* --------------------------------------------------------------------------
-   bkRich：一行混排的字
-     [AB]     上面加一條橫線的線段名（斜體）
-     «AB»     上面加一段弧的弧名（斜體）
-     {n/d}    直式分數（分子分母可含 π、√）
-     √12      根號：√ 後面連續的數字加上橫線
-     `字`     反引號裡照原樣、直立
-     英文字母 自動斜體（後面的 ' 一起算）
-   parts 是 [[字串, 顏色], …]；超過 maxW 會自動縮字。
-   -------------------------------------------------------------------------- */
-const BK_UPRIGHT = ['RHS', 'SAS', 'SSS'];
-
-function bkTok(str, color) {
-  const out = [];
-  let buf = '';
-  const flush = () => { if (buf) { out.push({ k: 'up', s: buf, c: color }); buf = ''; } };
-  for (let i = 0; i < str.length; i++) {
-    const ch = str[i];
-    if (ch === '[' || ch === '«') {
-      const j = str.indexOf(ch === '[' ? ']' : '»', i);
-      flush(); out.push({ k: ch === '[' ? 'ov' : 'arc', s: str.slice(i + 1, j), c: color }); i = j; continue;
-    }
-    if (ch === '{') {
-      const j = str.indexOf('}', i);
-      const p = str.slice(i + 1, j).split('/');
-      flush(); out.push({ k: 'fr', n: p[0], d: p[1], c: color }); i = j; continue;
-    }
-    if (ch === '`') {
-      const j = str.indexOf('`', i + 1);
-      buf += str.slice(i + 1, j); i = j; continue;
-    }
-    if (/[A-Za-z]/.test(ch)) {
-      flush();
-      let s = ch;
-      while (i + 1 < str.length && /[A-Za-z']/.test(str[i + 1])) s += str[++i];
-      if (BK_UPRIGHT.indexOf(s) >= 0) { buf += s; continue; }
-      out.push({ k: 'it', s, c: color });
-      continue;
-    }
-    buf += ch;
-  }
-  flush();
-  return out;
-}
-
-// 直立文字裡的根號：√ 後面連續的數字上加一條橫線（先畫字、再補線）
-function bkVinc(ctx, s, x, y, size) {
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] !== '√') continue;
-    let j = i + 1;
-    while (j < s.length && /[0-9]/.test(s[j])) j++;
-    if (j === i + 1) continue;
-    const x0 = x + ctx.measureText(s.slice(0, i + 1)).width - size * 0.06;
-    const x1 = x + ctx.measureText(s.slice(0, j)).width + 1;
-    ctx.fillRect(x0, y - size * 0.62, x1 - x0, Math.max(1.3, size * 0.08));
-  }
-}
-
-function bkTokW(ctx, t, s) {
-  if (t.k === 'fr') {
-    ctx.font = f(700, s * 0.74);
-    return Math.max(ctx.measureText(t.n).width, ctx.measureText(t.d).width) + 6;
-  }
-  ctx.font = t.k === 'up' ? f(700, s) : fi(700, s);
-  return ctx.measureText(t.s).width + (t.k === 'up' ? 0 : 1.5);
-}
-
-function bkTokD(ctx, t, x, y, s) {
-  ctx.fillStyle = t.c;
-  ctx.textBaseline = 'middle';
-  ctx.textAlign = 'left';
-  if (t.k === 'fr') {
-    const w = bkTokW(ctx, t, s);
-    const fs = s * 0.74;
-    ctx.font = f(700, fs);
-    const wn = ctx.measureText(t.n).width, wd = ctx.measureText(t.d).width;
-    const xn = x + (w - wn) / 2, xd = x + (w - wd) / 2;
-    ctx.fillText(t.n, xn, y - s * 0.46);
-    bkVinc(ctx, t.n, xn, y - s * 0.46, fs);
-    ctx.fillText(t.d, xd, y + s * 0.52);
-    bkVinc(ctx, t.d, xd, y + s * 0.52, fs);
-    ctx.fillRect(x + 1.5, y - 0.9, w - 3, 1.8);
-    return w;
-  }
-  ctx.font = t.k === 'up' ? f(700, s) : fi(700, s);
-  ctx.fillText(t.s, x, y);
-  const w = ctx.measureText(t.s).width;
-  if (t.k === 'up') bkVinc(ctx, t.s, x, y, s);
-  if (t.k === 'ov') ctx.fillRect(x + 1.5, y - s * 0.72, w - 0.5, 1.7);
-  if (t.k === 'arc') {
-    ctx.save();
-    ctx.strokeStyle = t.c;
-    ctx.lineWidth = 1.7;
-    ctx.beginPath();
-    const cx = x + w / 2 + 1, rr = w / 2 + 2;
-    ctx.ellipse(cx, y - s * 0.62, rr, s * 0.22, 0, Math.PI, 2 * Math.PI);
-    ctx.stroke();
-    ctx.restore();
-  }
-  return w + (t.k === 'up' ? 0 : 1.5);
-}
-
-function bkRich(ctx, parts, x, y, size, o) {
-  const opt = o || {};
-  const toks = [];
-  parts.forEach(p => bkTok(p[0], p[1]).forEach(t => toks.push(t)));
-  const maxW = opt.maxW || ctx.canvas.width - 28;
-  ctx.save();
-  let s = size;
-  const width = () => toks.reduce((a, t) => a + bkTokW(ctx, t, s), 0);
-  let w = width();
-  while (w > maxW && s > 10) { s -= 0.5; w = width(); }
-  let x0 = opt.align === 'left' ? x : x - w / 2;
-  if (opt.bg) {
-    ctx.fillStyle = 'rgba(14, 22, 24, 0.88)';
-    roundRect(ctx, x0 - 5, y - s * 0.8, w + 10, s * 1.6, 6);
-    ctx.fill();
-  }
-  toks.forEach(t => { x0 += bkTokD(ctx, t, x0, y, s); });
-  ctx.restore();
-  return w;
-}
-
-// 置中的一行字（單色）
-function bkRow(ctx, str, y, color, size) {
-  return bkRich(ctx, [[str, color]], ctx.canvas.width / 2, y, size || 16);
-}
-
-// 圖上的小標籤：深色底、置中在 (x, y)
-function bkTag(ctx, str, x, y, color, size) {
-  return bkRich(ctx, [[str, color]], x, y, size || 14, { bg: true });
 }
 
 // 邊長標籤：放在 PQ 中點、往遠離 G 的那一側外推（開發約束 18）
@@ -454,13 +232,13 @@ const BK_QUIZ_FIGS = {
     hbSeg(ctx, A, hbBeyond(A, C, 14), BK_TOMATO, 2.4);
     hbSeg(ctx, O, B, BK_CREAM, 2);
     hbSeg(ctx, O, C, BK_CREAM, 2);
-    bkAng(ctx, A, B, C, 34, BK_KRAFT);
+    dkAng(ctx, A, B, C, 34, BK_KRAFT);
     bkTag(ctx, '34°', A.x - 54, A.y, BK_KRAFT, 13);
     [O, A, B, C].forEach(p => bkPt(ctx, p, BK_CREAM, 3.5));
-    bkName(ctx, O, 'O', BK_CREAM, -15, 0);
-    bkName(ctx, A, 'A', BK_CREAM, 15, 0);
-    bkName(ctx, B, 'B', BK_CREAM, -4, -15);
-    bkName(ctx, C, 'C', BK_CREAM, -4, 15);
+    dkName(ctx, O, 'O', BK_CREAM, -15, 0);
+    dkName(ctx, A, 'A', BK_CREAM, 15, 0);
+    dkName(ctx, B, 'B', BK_CREAM, -4, -15);
+    dkName(ctx, C, 'C', BK_CREAM, -4, 15);
   },
 
   // Q17：PA、PB 切圓 O 於 A、B，半徑 20、OP = 29（依比例），AB 交 OP 於 M
@@ -478,11 +256,11 @@ const BK_QUIZ_FIGS = {
     hbSeg(ctx, A, B, BK_SKY, 2.2);
     hbSeg(ctx, O, A, BK_CREAM, 1.8, [5, 4]);
     [O, P, A, B, M].forEach(p => bkPt(ctx, p, BK_CREAM, 3.5));
-    bkName(ctx, O, 'O', BK_CREAM, -14, 2);
-    bkName(ctx, P, 'P', BK_CREAM, 14, 0);
-    bkName(ctx, A, 'A', BK_CREAM, 2, -15);
-    bkName(ctx, B, 'B', BK_CREAM, 2, 15);
-    bkName(ctx, M, 'M', BK_CREAM, 12, 13);
+    dkName(ctx, O, 'O', BK_CREAM, -14, 2);
+    dkName(ctx, P, 'P', BK_CREAM, 14, 0);
+    dkName(ctx, A, 'A', BK_CREAM, 2, -15);
+    dkName(ctx, B, 'B', BK_CREAM, 2, 15);
+    dkName(ctx, M, 'M', BK_CREAM, 12, 13);
     bkSideTag(ctx, O, A, M, '20', BK_KRAFT, 13, 13);
     bkTag(ctx, '29', (M.x + P.x) / 2 + 4, O.y - 11, BK_KRAFT, 13);
   },
@@ -497,13 +275,13 @@ const BK_QUIZ_FIGS = {
     hbSeg(ctx, A, B, BK_TOMATO, 2.6);
     hbSeg(ctx, O, M, BK_SKY, 2.2);
     hbSeg(ctx, O, C, BK_KRAFT, 2, [5, 4]);
-    bkAng(ctx, M, O, B, 12, BK_SKY);
+    dkAng(ctx, M, O, B, 12, BK_SKY);
     [O, A, B, M, C].forEach(p => bkPt(ctx, p, BK_CREAM, 3.5));
-    bkName(ctx, O, 'O', BK_CREAM, 0, -15);
-    bkName(ctx, A, 'A', BK_CREAM, -14, 4);
-    bkName(ctx, B, 'B', BK_CREAM, 14, 4);
-    bkName(ctx, M, 'M', BK_CREAM, -2, 16);
-    bkName(ctx, C, 'C', BK_CREAM, 2, 16);
+    dkName(ctx, O, 'O', BK_CREAM, 0, -15);
+    dkName(ctx, A, 'A', BK_CREAM, -14, 4);
+    dkName(ctx, B, 'B', BK_CREAM, 14, 4);
+    dkName(ctx, M, 'M', BK_CREAM, -2, 16);
+    dkName(ctx, C, 'C', BK_CREAM, 2, 16);
     bkTag(ctx, '7', (A.x + C.x) / 2 - 12, A.y + 30, BK_KRAFT, 13);
     bkTag(ctx, '3', (C.x + B.x) / 2, A.y + 30, BK_KRAFT, 13);
     bkTag(ctx, '2', O.x - 13, O.y + k, BK_SKY, 13);
@@ -574,7 +352,7 @@ function initNameCanvas() {
       } else {
         bkArc(ctx, O, R, arcR[0], arcR[1], part === 'minor' ? BK_TEAL_L : BK_PLUM, 7);
         hbSeg(ctx, A, B, BK_FAINT, 2, [6, 5]);
-        if (part === 'major') { bkPt(ctx, Cp, BK_PLUM); bkName(ctx, Cp, 'C', BK_PLUM, 0, topSmall ? 18 : -18); }
+        if (part === 'major') { bkPt(ctx, Cp, BK_PLUM); dkName(ctx, Cp, 'C', BK_PLUM, 0, topSmall ? 18 : -18); }
         if (part === 'minor') {
           row1 = '較小的弧是劣弧，記作 «AB»';
           row2 = `兩個端點 A、B 就夠了（兩半徑夾 ${small}°）`;
@@ -626,7 +404,7 @@ function initNameCanvas() {
     bkPt(ctx, O, BK_CREAM, 4.5);
     bkPt(ctx, A, BK_CREAM);
     bkPt(ctx, B, BK_CREAM);
-    bkName(ctx, O, 'O', BK_CREAM, part === 'angle' ? 0 : -16, part === 'angle' ? 18 : 6);
+    dkName(ctx, O, 'O', BK_CREAM, part === 'angle' ? 0 : -16, part === 'angle' ? 18 : 6);
     hbVLabel(ctx, A, O, 'A', BK_CREAM, 18);
     hbVLabel(ctx, B, O, 'B', BK_CREAM, 18);
 
@@ -795,9 +573,9 @@ function initBowCanvas() {
     bkFill(ctx, O, R, a0, a1, BK_TOMATO, 0.5, false);
     bkArc(ctx, O, R, a0, a1, BK_ROSE, 5);
     hbSeg(ctx, A, B, BK_ROSE, 4);
-    bkAng(ctx, O, A, B, Math.min(24, R * 0.4), BK_KRAFT);
+    dkAng(ctx, O, A, B, Math.min(24, R * 0.4), BK_KRAFT);
     bkPt(ctx, O, BK_CREAM, 4); bkPt(ctx, A, BK_CREAM); bkPt(ctx, B, BK_CREAM);
-    bkName(ctx, O, 'O', BK_CREAM, 0, 18);
+    dkName(ctx, O, 'O', BK_CREAM, 0, 18);
     hbVLabel(ctx, A, O, 'A', BK_CREAM, 17);
     hbVLabel(ctx, B, O, 'B', BK_CREAM, 17);
     bkSideTag(ctx, O, A, B, String(r), BK_CREAM, 14, 13);
@@ -885,10 +663,10 @@ function initPtCanvas() {
     bkCircle(ctx, O, r * U, BK_TOMATO, 3.4);
     if (N > 0) hbSeg(ctx, O, P, BK_SKY, 2.6, [6, 4]);
     bkPt(ctx, O, BK_CREAM, 4);
-    bkName(ctx, O, 'O', BK_CREAM, -12, 14);
+    dkName(ctx, O, 'O', BK_CREAM, -12, 14);
     const col = where === 'in' ? BK_KRAFT : where === 'on' ? BK_TOMATO : BK_SKY;
     bkPt(ctx, P, col, 6.5);
-    bkName(ctx, P, 'P', col, 14, -14);
+    dkName(ctx, P, 'P', col, 14, -14);
 
     const op = bkRoot(N);
     const opT = N === 0 ? '0' : op.exact ? String(op.k) : `√${N}` + (op.k > 1 ? ` = ${op.txt}` : '');
@@ -972,7 +750,7 @@ function initLineCanvas() {
 
     if (d > 0) {
       hbSeg(ctx, O, P, BK_SKY, 2.4, [6, 4]);
-      bkAng(ctx, P, O, L1, 11, BK_SKY);
+      dkAng(ctx, P, O, L1, 11, BK_SKY);
       bkTag(ctx, `d = ${d}`, O.x + 30, (O.y + P.y) / 2, BK_SKY, 13);
     }
     // 交點：真的用直線與圓求交
@@ -981,9 +759,9 @@ function initLineCanvas() {
     if (nPts === 2) xs.forEach(q => bkPt(ctx, q, BK_LIME, 6));
     if (nPts === 1) bkPt(ctx, P, BK_TOMATO, 6.5);
     bkPt(ctx, O, BK_CREAM, 4);
-    bkName(ctx, O, 'O', BK_CREAM, 15, -12);
-    if (d > 0 && nPts !== 1) bkName(ctx, P, 'P', BK_SKY, 14, 16);
-    if (nPts === 1) bkName(ctx, P, 'P', BK_TOMATO, 14, 16);
+    dkName(ctx, O, 'O', BK_CREAM, 15, -12);
+    if (d > 0 && nPts !== 1) dkName(ctx, P, 'P', BK_SKY, 14, 16);
+    if (nPts === 1) dkName(ctx, P, 'P', BK_TOMATO, 14, 16);
 
     const rT = rq[1] === 1 ? String(rq[0]) : `{${rq[0]}/${rq[1]}}`;
     bkRow(ctx, give === 'r' ? `半徑 r = ${g}` : `直徑 ${g}，半徑 r = 直徑的一半 = ${rT}`, 374, BK_KRAFT, 16);
@@ -1042,7 +820,7 @@ function initTanCanvas() {
     const lcol = tan ? BK_TOMATO : BK_LIME;
     hbSeg(ctx, L0, L1, lcol, 3.4);
     // 夾角記號（PO 與 L 往右的那一段）
-    bkAng(ctx, P, O, L1, 24, BK_SKY);
+    dkAng(ctx, P, O, L1, 24, BK_SKY);
     const lab = hbAt(P, (hbHead(P, O) + hbHead(P, L1)) / 2, 44);
     bkTag(ctx, `${phi}°`, lab.x, lab.y, BK_SKY, 13);
 
@@ -1054,7 +832,7 @@ function initTanCanvas() {
       const Q = hbV(P.x + dir.x * 120, P.y + dir.y * 120);
       hbSeg(ctx, O, Q, BK_SKY, 2.2, [6, 4]);
       bkPt(ctx, Q, BK_SKY, 5);
-      bkName(ctx, Q, 'Q', BK_SKY, 4, 16);
+      dkName(ctx, Q, 'Q', BK_SKY, 4, 16);
       const ratio = hbDist(O, Q) / R;
       rowB = `L 上其他點 Q：[OQ] 是直角△OPQ 的斜邊，[OQ] > [OP] = r`;
       rowC = `所以 Q 在圓外，L 只碰到圓一點 P：L 是切線`;
@@ -1062,7 +840,7 @@ function initTanCanvas() {
       fbHtml = '\\(L \\perp \\overline{OP}\\)：\\(L\\) 上除了 \\(P\\)，每一點到 \\(O\\) 的距離都是直角三角形的<strong>斜邊</strong>，比半徑長，所以都在圓外——\\(L\\) 是<strong>切線</strong>。';
     } else {
       bkPt(ctx, other, BK_LIME, 6);
-      bkName(ctx, other, "P'", BK_LIME, 14, -12);
+      dkName(ctx, other, "P'", BK_LIME, 14, -12);
       const chord = hbDist(P, other) / R;
       rowB = `L 又穿過圓上另一點 P'：交於兩點`;
       rowC = `沒有垂直 [OP]，L 是割線，不是切線`;
@@ -1070,8 +848,8 @@ function initTanCanvas() {
       fbHtml = `\\(L\\) 和 \\(\\overline{OP}\\) 夾 \\(${phi}^\\circ\\)，不是直角，它還會從圓上另一點 \\(P'\\) 穿出來，是<strong>割線</strong>。調到 \\(90^\\circ\\) 看看。`;
     }
     bkPt(ctx, O, BK_CREAM, 4); bkPt(ctx, P, BK_TOMATO, 6);
-    bkName(ctx, O, 'O', BK_CREAM, -14, -10);
-    bkName(ctx, P, 'P', BK_TOMATO, -14, 16);
+    dkName(ctx, O, 'O', BK_CREAM, -14, -10);
+    dkName(ctx, P, 'P', BK_TOMATO, -14, 16);
     bkRow(ctx, tan ? `∠OPQ = 90°：L ⊥ [OP]` : `∠ = ${phi}° ≠ 90°`, 386, BK_SKY, 16.5);
     bkRow(ctx, rowB, 418, BK_CREAM, 15.5);
     bkRow(ctx, rowC, 450, lcol, 16.5);
@@ -1095,19 +873,19 @@ function initTanCanvas() {
     hbSeg(ctx, A, hbBeyond(A, C, 22), BK_TOMATO, 3.2);
     hbSeg(ctx, O, B, BK_CREAM, 2.6);
     hbSeg(ctx, O, C, BK_CREAM, 2.6);
-    bkAng(ctx, B, O, A, 13, BK_SKY);
-    bkAng(ctx, C, O, A, 13, BK_SKY);
-    bkAng(ctx, A, B, C, 30, BK_KRAFT);
-    bkAng(ctx, O, B, C, 22, BK_LIME);
+    dkAng(ctx, B, O, A, 13, BK_SKY);
+    dkAng(ctx, C, O, A, 13, BK_SKY);
+    dkAng(ctx, A, B, C, 30, BK_KRAFT);
+    dkAng(ctx, O, B, C, 22, BK_LIME);
     if (a >= 100) bkTag(ctx, `${a}°`, A.x + 44, A.y + 22, BK_KRAFT, 13);
     else bkTag(ctx, `${a}°`, A.x - 52, A.y, BK_KRAFT, 13);
     if (180 - a >= 60) bkTag(ctx, `${180 - a}°`, O.x + 40, O.y, BK_LIME, 13);
     else bkTag(ctx, `${180 - a}°`, O.x - 34, O.y + 26, BK_LIME, 13);
     [O, A, B, C].forEach(p => bkPt(ctx, p, BK_CREAM, 4.5));
-    bkName(ctx, O, 'O', BK_CREAM, -16, 0);
-    bkName(ctx, A, 'A', BK_CREAM, 16, 0);
-    bkName(ctx, B, 'B', BK_CREAM, -2, -17);
-    bkName(ctx, C, 'C', BK_CREAM, -2, 17);
+    dkName(ctx, O, 'O', BK_CREAM, -16, 0);
+    dkName(ctx, A, 'A', BK_CREAM, 16, 0);
+    dkName(ctx, B, 'B', BK_CREAM, -2, -17);
+    dkName(ctx, C, 'C', BK_CREAM, -2, 17);
     bkRow(ctx, `切線垂直過切點的半徑：∠ABO = ∠ACO = 90°`, 386, BK_SKY, 16);
     bkRow(ctx, `四邊形 ABOC 的內角和是 360°`, 416, BK_CREAM, 15.5);
     bkRow(ctx, `∠BOC = 360° − 90° − 90° − ${a}° = ${180 - a}°`, 450, BK_LIME, 17.5);
@@ -1174,11 +952,11 @@ function initTlCanvas() {
     hbSeg(ctx, O, A, BK_KRAFT, 3);
     hbSeg(ctx, A, P, BK_TOMATO, 4);
     hbSeg(ctx, O, P, BK_SKY, 2.6);
-    bkAng(ctx, A, O, P, 13, BK_CREAM);
+    dkAng(ctx, A, O, P, 13, BK_CREAM);
     [O, A, P].forEach(p => bkPt(ctx, p, BK_CREAM, 4.5));
-    bkName(ctx, O, 'O', BK_CREAM, -15, 6);
-    bkName(ctx, A, 'A', BK_CREAM, -4, -17);
-    bkName(ctx, P, 'P', BK_CREAM, 14, 6);
+    dkName(ctx, O, 'O', BK_CREAM, -15, 6);
+    dkName(ctx, A, 'A', BK_CREAM, -4, -17);
+    dkName(ctx, P, 'P', BK_CREAM, 14, 6);
     const G = hbCentroid([O, A, P]);
     bkSideTag(ctx, O, A, G, mode === 'pa' ? `r = ${rR.txt}` : 'r = ?', BK_KRAFT, 18, 13);
     bkSideTag(ctx, A, P, G, mode === 'pa' ? '?' : paR.txt, BK_TOMATO, 16, 13);
@@ -1247,8 +1025,8 @@ function initTtCanvas() {
     hbSeg(ctx, P, A, BK_TOMATO, 3.6);
     hbSeg(ctx, P, B, BK_TOMATO, 3.6);
     hbSeg(ctx, O, P, BK_SKY, 2.4);
-    bkAng(ctx, A, O, P, 12, BK_CREAM);
-    bkAng(ctx, B, O, P, 12, BK_CREAM);
+    dkAng(ctx, A, O, P, 12, BK_CREAM);
+    dkAng(ctx, B, O, P, 12, BK_CREAM);
     hbTick(ctx, P, A, 2, BK_TOMATO);
     hbTick(ctx, P, B, 2, BK_TOMATO);
     const angP = Math.asin(r / op) / HB_RAD;
@@ -1257,17 +1035,17 @@ function initTtCanvas() {
       hbSector(ctx, P, 180, angP, 30, BK_LIME, { alpha: 0.25 });
     } else {
       hbSeg(ctx, A, B, BK_PLUM, 3);
-      bkAng(ctx, M, A, P, 11, BK_PLUM);
+      dkAng(ctx, M, A, P, 11, BK_PLUM);
       hbTick(ctx, A, M, 1, BK_PLUM);
       hbTick(ctx, M, B, 1, BK_PLUM);
       bkPt(ctx, M, BK_PLUM, 4);
-      bkName(ctx, M, 'M', BK_PLUM, 13, 14);
+      dkName(ctx, M, 'M', BK_PLUM, 13, 14);
     }
     [O, A, B, P].forEach(p => bkPt(ctx, p, BK_CREAM, 4.5));
-    bkName(ctx, O, 'O', BK_CREAM, -15, 0);
-    bkName(ctx, P, 'P', BK_CREAM, 14, 0);
-    bkName(ctx, A, 'A', BK_CREAM, -2, -17);
-    bkName(ctx, B, 'B', BK_CREAM, -2, 17);
+    dkName(ctx, O, 'O', BK_CREAM, -15, 0);
+    dkName(ctx, P, 'P', BK_CREAM, 14, 0);
+    dkName(ctx, A, 'A', BK_CREAM, -2, -17);
+    dkName(ctx, B, 'B', BK_CREAM, -2, 17);
 
     const paT = pa.exact ? String(pa.k) : pa.txt;
     if (mode === 'eq') {
@@ -1473,27 +1251,27 @@ function initCdCanvas() {
     bkCircle(ctx, O, rv * k, BK_CREAM, 3);
     hbSeg(ctx, A, B, BK_TOMATO, 3.6);
     hbSeg(ctx, O, A, BK_KRAFT, 2.6);
-    if (d2 > 0) { hbSeg(ctx, O, M, BK_SKY, 2.8); bkAng(ctx, M, O, B, 11, BK_SKY); }
+    if (d2 > 0) { hbSeg(ctx, O, M, BK_SKY, 2.8); dkAng(ctx, M, O, B, 11, BK_SKY); }
     hbTick(ctx, A, M, 1, BK_TOMATO);
     hbTick(ctx, M, B, 1, BK_TOMATO);
     [A, B, M].forEach(p => bkPt(ctx, p, BK_CREAM, 4));
-    bkName(ctx, A, 'A', BK_CREAM, -14, 8);
-    bkName(ctx, B, 'B', BK_CREAM, 14, 8);
-    bkName(ctx, M, 'M', BK_CREAM, 0, 17);
+    dkName(ctx, A, 'A', BK_CREAM, -14, 8);
+    dkName(ctx, B, 'B', BK_CREAM, 14, 8);
+    dkName(ctx, M, 'M', BK_CREAM, 0, 17);
     if (mode === 'two') {
       const cv2 = Math.sqrt(c2), ev = Math.sqrt(D2);
       const Ny = O.y - ev * k;
       const Cc = hbV(O.x - cv2 * k, Ny), D = hbV(O.x + cv2 * k, Ny), N = hbV(O.x, Ny);
       hbSeg(ctx, Cc, D, BK_PLUM, 3.6);
       hbSeg(ctx, O, Cc, BK_KRAFT, 2.2, [5, 4]);
-      if (D2 > 0) { hbSeg(ctx, O, N, BK_SKY, 2.4); bkAng(ctx, N, O, D, 10, BK_SKY); }
+      if (D2 > 0) { hbSeg(ctx, O, N, BK_SKY, 2.4); dkAng(ctx, N, O, D, 10, BK_SKY); }
       [Cc, D, N].forEach(p => bkPt(ctx, p, BK_CREAM, 4));
-      bkName(ctx, Cc, 'C', BK_CREAM, -14, -6);
-      bkName(ctx, D, 'D', BK_CREAM, 14, -6);
-      bkName(ctx, N, 'N', BK_CREAM, 12, -12);
+      dkName(ctx, Cc, 'C', BK_CREAM, -14, -6);
+      dkName(ctx, D, 'D', BK_CREAM, 14, -6);
+      dkName(ctx, N, 'N', BK_CREAM, 12, -12);
     }
     bkPt(ctx, O, BK_CREAM, 4.5);
-    bkName(ctx, O, 'O', BK_CREAM, -14, -8);
+    dkName(ctx, O, 'O', BK_CREAM, -14, -8);
 
     const y0 = mode === 'two' ? 384 : 398;
     rows.forEach((rw, i) => bkRow(ctx, rw[0], y0 + i * 32, rw[1], 16));
@@ -1528,12 +1306,12 @@ function initCmpCanvas() {
     const y = O.y + (up ? -dpx : dpx);
     const P = hbV(O.x - half, y), Q = hbV(O.x + half, y), F = hbV(O.x, y);
     hbSeg(ctx2, P, Q, col, 3.6);
-    if (dpx > 0) { hbSeg(ctx2, O, F, BK_SKY, 2.4); bkAng(ctx2, F, O, Q, 10, BK_SKY); }
+    if (dpx > 0) { hbSeg(ctx2, O, F, BK_SKY, 2.4); dkAng(ctx2, F, O, Q, 10, BK_SKY); }
     bkPt(ctx2, P, col, 4); bkPt(ctx2, Q, col, 4);
-    bkName(ctx2, P, names[0], col, -13, up ? -8 : 8);
-    bkName(ctx2, Q, names[1], col, 13, up ? -8 : 8);
+    dkName(ctx2, P, names[0], col, -13, up ? -8 : 8);
+    dkName(ctx2, Q, names[1], col, 13, up ? -8 : 8);
     bkPt(ctx2, F, BK_SKY, 3.5);
-    bkName(ctx2, F, names[2], BK_SKY, 12, up ? -12 : 13);
+    dkName(ctx2, F, names[2], BK_SKY, 12, up ? -12 : 13);
   }
 
   function draw() {
@@ -1558,7 +1336,7 @@ function initCmpCanvas() {
       chordAt(ctx, O, r1 * k, d1 * k, true, BK_TOMATO, ['A', 'B', 'E']);
       chordAt(ctx, O, r1 * k, d2 * k, false, BK_PLUM, ['C', 'D', 'F']);
       bkPt(ctx, O, BK_CREAM, 4.5);
-      bkName(ctx, O, 'O', BK_CREAM, -14, 0);
+      dkName(ctx, O, 'O', BK_CREAM, -14, 0);
       ok = true;
     } else {
       const k = Math.min(15, 112 / Math.max(r1, r2));
@@ -1568,8 +1346,8 @@ function initCmpCanvas() {
       chordAt(ctx, O1, r1 * k, d1 * k, false, BK_TOMATO, ['A', 'B', 'E']);
       chordAt(ctx, O2, r2 * k, d2 * k, false, BK_PLUM, ['C', 'D', 'F']);
       bkPt(ctx, O1, BK_CREAM, 4.5); bkPt(ctx, O2, BK_CREAM, 4.5);
-      bkName(ctx, O1, 'O', BK_CREAM, -14, -8);
-      bkName(ctx, O2, 'P', BK_CREAM, -14, -8);
+      dkName(ctx, O1, 'O', BK_CREAM, -14, -8);
+      dkName(ctx, O2, 'P', BK_CREAM, -14, -8);
       // 「弦心距較小的弦較長」在這組數字是否成立
       ok = (d1 < d2 && h1 > h2) || (d1 > d2 && h1 < h2) || (d1 === d2 && h1 === h2);
     }
@@ -1672,13 +1450,13 @@ function initTunCanvas() {
     hbSeg(ctx, A, B, BK_TOMATO, 3.4);
     hbSeg(ctx, C, D, BK_PLUM, 2.8);
     hbSeg(ctx, O, A, BK_KRAFT, 2.6, [6, 4]);
-    bkAng(ctx, D, A, C, 11, BK_CREAM);
+    dkAng(ctx, D, A, C, 11, BK_CREAM);
     [A, B, C, D, O].forEach(p => bkPt(ctx, p, BK_CREAM, 4.2));
-    bkName(ctx, A, 'A', BK_CREAM, -14, tunnel ? 12 : -12);
-    bkName(ctx, B, 'B', BK_CREAM, 14, tunnel ? 12 : -12);
-    bkName(ctx, C, 'C', BK_PLUM, 14, tunnel ? -10 : 12);
-    bkName(ctx, D, 'D', BK_CREAM, 13, tunnel ? 13 : -13);
-    bkName(ctx, O, 'O', BK_KRAFT, -15, 0);
+    dkName(ctx, A, 'A', BK_CREAM, -14, tunnel ? 12 : -12);
+    dkName(ctx, B, 'B', BK_CREAM, 14, tunnel ? 12 : -12);
+    dkName(ctx, C, 'C', BK_PLUM, 14, tunnel ? -10 : 12);
+    dkName(ctx, D, 'D', BK_CREAM, 13, tunnel ? 13 : -13);
+    dkName(ctx, O, 'O', BK_KRAFT, -15, 0);
 
     const xT = bkSqTxt(xq, 1);
     const odAbs = cmp >= 0 ? `${h} − x` : `x − ${h}`;

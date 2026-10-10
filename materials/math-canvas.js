@@ -2217,3 +2217,211 @@ function dkNames(ctx, pts, names, color, dist) {
 function dkShow(ids, on) {
   ids.forEach(id => { const el = hbEl(id); if (el) el.style.display = on ? '' : 'none'; });
 }
+
+/* ==========================================================================
+   圓工具（bk*）：5-2-1 寫的，5-2-2 也用，抽出來共用
+     角度一律是數學方向角（度，逆時針、y 朝上），與 hb* 相同。
+     bkRich 是 dkRich 的擴充版：多了 «AB»（上加一段弧的弧名）與 √12
+     （根號後的數字加橫線），分數的上下位置也不同；兩者並存、不合併，
+     免得改到 5-1-3／5-1-4 的畫面。點名、角記號、字寬直接用 dkName／
+     dkAng／dkTokW（逐字相同）。
+   配色：標籤底色與點的外圈由頁面在 canvas.js 開頭呼叫一次 bkUsePalette()
+   登記（共用檔不放主題色）；其餘顏色一律由呼叫端傳入。
+   ========================================================================== */
+let BKR_PAL = { tagBg: 'rgba(15, 23, 42, 0.88)', rim: 'rgba(15, 23, 42, 0.9)' };
+
+function bkUsePalette(p) {
+  BKR_PAL = Object.assign({}, BKR_PAL, p);
+}
+
+// 由數學方向角（度，逆時針、y 朝上）畫圓弧：從 a0 逆時針走到 a1（a1 > a0）
+function bkArc(ctx, C, R, a0, a1, color, w, dash) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = w || 3;
+  ctx.lineCap = 'round';
+  if (dash) ctx.setLineDash(dash);
+  ctx.beginPath();
+  ctx.arc(C.x, C.y, R, -a0 * HB_RAD, -a1 * HB_RAD, true);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 扇形（含圓心）或弓形（不含圓心，弦封口）的填色
+function bkFill(ctx, C, R, a0, a1, color, alpha, withCenter) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  if (withCenter) ctx.moveTo(C.x, C.y);
+  ctx.arc(C.x, C.y, R, -a0 * HB_RAD, -a1 * HB_RAD, true);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+// 整個圓（車輪的外圈）
+function bkCircle(ctx, C, R, color, w, dash) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = w || 3;
+  if (dash) ctx.setLineDash(dash);
+  ctx.beginPath();
+  ctx.arc(C.x, C.y, R, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 實心點加深色外圈
+function bkPt(ctx, P, color, r) {
+  ctx.save();
+  ctx.fillStyle = color;
+  ctx.strokeStyle = BKR_PAL.rim;
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.arc(P.x, P.y, r || 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 隱藏或顯示一整列滑桿
+function bkShow(id, on) {
+  const el = hbEl(id);
+  if (el) el.style.display = on ? '' : 'none';
+}
+
+// 有理數 × π 的 LaTeX 與畫布文字
+function bkPiTex(q) {
+  const [n, d] = reduce(q[0], q[1]);
+  if (n === 0) return '0';
+  if (d === 1) return (n === 1 ? '' : String(n)) + '\\pi';
+  return `\\frac{${n}}{${d}}\\pi`;
+}
+
+function bkPiTxt(q) {
+  const [n, d] = reduce(q[0], q[1]);
+  if (n === 0) return '0';
+  if (d === 1) return (n === 1 ? '' : String(n)) + 'π';
+  return `{${n}/${d}}π`;
+}
+
+// 度數（有理數）的畫布文字
+function bkDegTxt(q) {
+  const [n, d] = reduce(q[0], q[1]);
+  return d === 1 ? `${n}°` : `{${n}/${d}}°`;
+}
+
+const BKR_UPRIGHT = ['RHS', 'SAS', 'SSS'];
+
+function bkTok(str, color) {
+  const out = [];
+  let buf = '';
+  const flush = () => { if (buf) { out.push({ k: 'up', s: buf, c: color }); buf = ''; } };
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i];
+    if (ch === '[' || ch === '«') {
+      const j = str.indexOf(ch === '[' ? ']' : '»', i);
+      flush(); out.push({ k: ch === '[' ? 'ov' : 'arc', s: str.slice(i + 1, j), c: color }); i = j; continue;
+    }
+    if (ch === '{') {
+      const j = str.indexOf('}', i);
+      const p = str.slice(i + 1, j).split('/');
+      flush(); out.push({ k: 'fr', n: p[0], d: p[1], c: color }); i = j; continue;
+    }
+    if (ch === '`') {
+      const j = str.indexOf('`', i + 1);
+      buf += str.slice(i + 1, j); i = j; continue;
+    }
+    if (/[A-Za-z]/.test(ch)) {
+      flush();
+      let s = ch;
+      while (i + 1 < str.length && /[A-Za-z']/.test(str[i + 1])) s += str[++i];
+      if (BKR_UPRIGHT.indexOf(s) >= 0) { buf += s; continue; }
+      out.push({ k: 'it', s, c: color });
+      continue;
+    }
+    buf += ch;
+  }
+  flush();
+  return out;
+}
+
+// 直立文字裡的根號：√ 後面連續的數字上加一條橫線（先畫字、再補線）
+function bkVinc(ctx, s, x, y, size) {
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] !== '√') continue;
+    let j = i + 1;
+    while (j < s.length && /[0-9]/.test(s[j])) j++;
+    if (j === i + 1) continue;
+    const x0 = x + ctx.measureText(s.slice(0, i + 1)).width - size * 0.06;
+    const x1 = x + ctx.measureText(s.slice(0, j)).width + 1;
+    ctx.fillRect(x0, y - size * 0.62, x1 - x0, Math.max(1.3, size * 0.08));
+  }
+}
+
+function bkTokD(ctx, t, x, y, s) {
+  ctx.fillStyle = t.c;
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+  if (t.k === 'fr') {
+    const w = dkTokW(ctx, t, s);
+    const fs = s * 0.74;
+    ctx.font = f(700, fs);
+    const wn = ctx.measureText(t.n).width, wd = ctx.measureText(t.d).width;
+    const xn = x + (w - wn) / 2, xd = x + (w - wd) / 2;
+    ctx.fillText(t.n, xn, y - s * 0.46);
+    bkVinc(ctx, t.n, xn, y - s * 0.46, fs);
+    ctx.fillText(t.d, xd, y + s * 0.52);
+    bkVinc(ctx, t.d, xd, y + s * 0.52, fs);
+    ctx.fillRect(x + 1.5, y - 0.9, w - 3, 1.8);
+    return w;
+  }
+  ctx.font = t.k === 'up' ? f(700, s) : fi(700, s);
+  ctx.fillText(t.s, x, y);
+  const w = ctx.measureText(t.s).width;
+  if (t.k === 'up') bkVinc(ctx, t.s, x, y, s);
+  if (t.k === 'ov') ctx.fillRect(x + 1.5, y - s * 0.72, w - 0.5, 1.7);
+  if (t.k === 'arc') {
+    ctx.save();
+    ctx.strokeStyle = t.c;
+    ctx.lineWidth = 1.7;
+    ctx.beginPath();
+    const cx = x + w / 2 + 1, rr = w / 2 + 2;
+    ctx.ellipse(cx, y - s * 0.62, rr, s * 0.22, 0, Math.PI, 2 * Math.PI);
+    ctx.stroke();
+    ctx.restore();
+  }
+  return w + (t.k === 'up' ? 0 : 1.5);
+}
+
+function bkRich(ctx, parts, x, y, size, o) {
+  const opt = o || {};
+  const toks = [];
+  parts.forEach(p => bkTok(p[0], p[1]).forEach(t => toks.push(t)));
+  const maxW = opt.maxW || ctx.canvas.width - 28;
+  ctx.save();
+  let s = size;
+  const width = () => toks.reduce((a, t) => a + dkTokW(ctx, t, s), 0);
+  let w = width();
+  while (w > maxW && s > 10) { s -= 0.5; w = width(); }
+  let x0 = opt.align === 'left' ? x : x - w / 2;
+  if (opt.bg) {
+    ctx.fillStyle = BKR_PAL.tagBg;
+    roundRect(ctx, x0 - 5, y - s * 0.8, w + 10, s * 1.6, 6);
+    ctx.fill();
+  }
+  toks.forEach(t => { x0 += bkTokD(ctx, t, x0, y, s); });
+  ctx.restore();
+  return w;
+}
+
+// 置中的一行字（單色）
+function bkRow(ctx, str, y, color, size) {
+  return bkRich(ctx, [[str, color]], ctx.canvas.width / 2, y, size || 16);
+}
+
+// 圖上的小標籤：深色底、置中在 (x, y)
+function bkTag(ctx, str, x, y, color, size) {
+  return bkRich(ctx, [[str, color]], x, y, size || 14, { bg: true });
+}
